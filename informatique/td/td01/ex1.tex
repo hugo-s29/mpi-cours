@@ -1,0 +1,53 @@
+\section{Listes, listes, listes !}
+
+\begin{enumerate}
+	\item On a $\forall \ell \in \mathcal{L},\,\red{\mathtt{@}}([~],\ell) = \ell$\/ ; $\forall  \ell_1, \ell \in \mathcal{L},\,\red{\mathtt{@}}\big(\red{::}(x, \ell_1), \ell\big) = \red{::}\big(x,\red{\mathtt{@}}(\ell_1, \ell)\big)$.
+	\item On fait une induction. Comme dans l'énoncé, on passe le `$@$\/' en infixe.
+		Notons $P_\ell : ``\ell\mathrel{@} [~] = \ell$\/''.
+
+		Montrons $P_{[~]}$\/ : on sait que $[~]\mathrel{@} [~] = [~]$\/ par définition de $@$.
+
+		On suppose $P_\ell$\/ est vraie pour une certaine liste $\ell \in \mathcal{L}$. Montrons que, $\forall x \in \N,\,P_{{::}(x,\ell)}$\/ vrai. Soit $x \in \N$.
+		\begin{align*}
+			\big({::}(x,\ell)\big)\mathrel{@}[~] &\mathrel{\mathop{=}^{\text{(def)}}} {::}(x, \ell \mathrel{@}[~])\\
+			&\mathrel{\mathop{=}^{(P_\ell)}} {::}(x, \ell).
+		\end{align*}
+	\item Notons $P_{\ell_1} : ``\forall \ell_2,\ell_3 \in \mathcal{L},\,(\ell_1\mathrel@\ell_2)\mathrel@\ell_3 = \ell_1 \mathrel@ (\ell_2 \mathrel@ \ell_3)"$, où $\ell_1 \in \mathcal{L}$\/ est une liste.
+
+		Soient $\ell_2, \ell_3 \in \mathcal{L}$\/ deux listes. On a, par définition de $@$, $([~]\mathrel@ \ell_2) \mathrel@ \ell_3 = \ell_2 \mathrel@ \ell_3$\/ et $[~]\mathrel@(\ell_2\mathrel@\ell_3) = \ell_2 \mathrel@ \ell_3$.
+
+		Soit $\ell_1 \in \mathcal{L}$\/ une liste telle que $P_{\ell_1}$. Soient $\ell_2, \ell_2 \in \mathcal{L}$\/ deux listes. Soit $x \in \N$. Montrons que $P\big({::}(x,\ell_1)\big)$ :
+		\begin{align*}
+			\big({::}(x, \ell_1)\mathrel @ \ell_2\big)\mathrel@ \ell_3 &= {::}(x, \ell_1 \mathrel@ \ell_2) \mathrel@ \ell_3 \\
+			&= {::}\big(x, (\ell_1 \mathrel@ \ell_2) \mathrel@ \ell_3\big)  \\
+			&\mathrel{\mathop=^{(H)}} {::}\big(x, \ell_1 \mathrel@(\ell_2 \mathrel@ \ell_3)\big)  \\
+			&= {::}(x, \ell_1)\mathrel@(\ell_2 \mathrel@ \ell_3). \\
+		\end{align*}
+	\item Notons  $P_{\ell_1} : ``\forall \ell_2 \in \mathcal{L},\,{\tt rev}\/(\ell_1\mathrel@\ell_2) = {\tt rev}\/(\ell_2) \mathrel@ {\tt rev}\/(\ell_1)$. Soit $\ell_2 \in \mathcal{L}$.
+
+		On a ${\tt rev}\/([~]\mathrel@\ell_2) = {\tt rev}\/(\ell_2) = {\tt rev}\/(\ell_2)\mathrel@{\tt rev}\/([~])$.
+
+		On suppose $P_{\ell_1}$\/ vraie pour une certaine liste $\ell_1 \in \mathcal{L}$.
+		Soit $x \in \N$.
+		\begin{align*}
+			{\tt rev}\/({::}x, \ell_1)\mathrel@ \ell_2) &= {\tt rev}\/({::}(x, \ell_1\mathrel@\ell_2) \\
+			&= {\tt rev}\/(\ell_1\mathrel@\ell_2) \mathrel@ {::}(x, [~]) \\
+			&= \big({\tt rev}\/(\ell_2)\mathrel@{\tt rev}\/(\ell_1)\big) \mathrel@ {::}(x, [~]) \\
+			&= {\tt rev}\/(\ell_2)\mathrel@ \big({\tt rev}\/(\ell_1) \mathrel@ {::}(x, [~])\big) \\
+			&= {\tt rev}\/(\ell_2)\mathrel@{\tt rev}\/\big({::}(x, \ell_1)\big) \\
+		\end{align*}
+	\item Notons, pour toute liste $\ell \in \mathcal{L}$, $P_\ell : ``{\tt rev}\/\big({\tt rev}\/(\ell)\big) = \ell"$.
+
+		Montrons que $P_{[~]}$\/ est vraie : ${\tt rev}\/({\tt rev}\/([~])) = {\tt rev}\/([~]) = [~]$.
+
+		Soit une liste $\ell \in \mathcal{L}$\/ telle que $P_\ell$\/ soit vraie. Soit $n \in \N$. Montrons que $P_{{::}(x, \ell)}$\/ vraie :
+
+		\begin{align*}
+			{\tt rev}\/({\tt rev}\/({::}(x,\ell))) &= {\tt rev}\/({\tt rev}\/(\ell) \mathrel@ {::}(x,[~])) \\
+			&= {\tt rev}\/({::}(x, [~])) \mathrel@{::}(x, \ell)\mathrel@\ell \\
+			&= [~]\mathrel@{::}(x, [~])\mathrel@\ell \\
+			&= {::}(x, [~]) \mathrel@\ell \\
+			&= {::}(x, \ell). \\
+		\end{align*}
+\end{enumerate}
+

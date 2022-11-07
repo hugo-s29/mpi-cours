@@ -1,0 +1,61 @@
+\section{Propriétés sur les mots}
+
+\begin{enumerate}
+	\item Soit $u_2, v_2 \in \Sigma^*$\/ tels que $w = uu_2$\/ et $w = v v_2$. Si $|u_2| = |v_2|$, alors $u = v = v \varepsilon$\/ donc $v$\/ est préfixe de $u$. Si $|u_2| < |v_2|$, $u_2$\/ est suffixe de $v_2$. Soit $u_3 \in \Sigma^*$\/ tel que $v_2 = u_2 u_3$. Ainsi, $w = v u_3 u_2 = u u_2$, d'où $u = vu_3$. On en déduit que $v$\/ est un préfixe de $u$. Similairement, si $|u_2| > |v_2|$, par symétrie du problème, en inversant $u$\/ et $v$, puis $u_2$\/ et $v_2$, on se trouve bien dans le cas précédent. Ainsi, on a bien $u$\/ est un préfixe de $v$.
+
+		\begin{figure}[H]
+			\centering
+			\begin{asy}
+				size(5cm);
+				draw(box((0,0), (10, 1)));
+				draw(box((0,2), (10, 3)));
+				label("$u$", (0, 2.5), align=E);
+				label("$v$", (0, 0.5), align=E);
+				label("$u_2$", (10, 2.5), align=W);
+				label("$v_2$", (10, 0.5), align=W);
+				label("$w$", (10, 2), align=NE);
+				label("$w$", (10, 0), align=NE);
+				draw(brace((8, -0.5),(4, -0.5)));
+				label("$u_3$", (6, -1), align=S);
+				draw((8,-0.5)--(8,3), dotted+gray);
+				draw((4,-0.5)--(4,3), dotted+gray);
+				draw((8,2)--(8,3));
+				draw((4,0)--(4,1));
+			\end{asy}
+		\end{figure}
+
+\item Soit $u = u_1\ldots u_n$\/ avec, pour tout $i \in \left\llbracket 1,n \right\rrbracket$, $u_i \in \Sigma$. Or, $au = ub$\/ donc $au_1\ldots u_n = u_1 \ldots u_n b$\/ donc, pour tout $i \in \left\llbracket 1,n-1 \right\rrbracket$, $u_i = u_{i+1}$. Or, $u_1 = a$. De proche en proche, on a $\forall i \in \left\llbracket 1,n \right\rrbracket,\:u_i = a$. Or, $u_n = b$\/ et donc $a = b$. On en déduit également que $u \in a^*$.
+
+		\begin{figure}[H]
+			\centering
+			\begin{asy}
+				size(5cm);
+				draw(box((0,0), (10, 1)));
+				draw(box((0,2), (10, 3)));
+				draw((8,2)--(8,3));
+				draw((4,0)--(4,1));
+				label("$a$", (0, 2.5), align=E);
+				label("$u$", (0, 0.5), align=E);
+				label("$u$", (10, 2.5), align=W);
+				label("$b$", (10, 0.5), align=W);
+			\end{asy}
+		\end{figure}
+
+	\item La suite de la correction de cet exercice est disponible sur \textit{cahier-de-prepa}.
+		\begin{figure}[H]
+			\centering
+			\begin{asy}
+				size(5cm);
+				draw(box((0,0), (10, 1)));
+				draw(box((0,2), (10, 3)));
+				draw((3,2)--(3,3));
+				draw((7,0)--(7,1));
+				draw((7,2)--(7,3), dotted);
+				draw((3,0)--(3,1), dotted);
+				label("$x$", (0, 2.5), align=E);
+				label("$y$", (0, 0.5), align=E);
+				label("$y$", (10, 2.5), align=W);
+				label("$x$", (10, 0.5), align=W);
+			\end{asy}
+		\end{figure}
+\end{enumerate}

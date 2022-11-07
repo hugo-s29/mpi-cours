@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (-5.25, 0) {$i$};
+		\node [style=new style 0] (3) at (3, 0) {4};
+		\node [style=new style 0] (5) at (6, 0) {$f$};
+		\node [style=none] (9) at (-1.5, 0.75) {$d^*aa\mid (ac\mid b) \cdot (cc)^* \cdot (b\mid ca)$};
+		\node [style=none] (13) at (4.75, 0.75) {$d\mid e$};
+		\node [style=none] (14) at (4.5, -0.5) {$\varepsilon$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (3) to (5);
+		\draw [style=arrow, in=75, out=30, loop] (3) to ();
+		\draw [style=arrow] (0) to (3);
+	\end{pgfonlayer}
+\end{tikzpicture}

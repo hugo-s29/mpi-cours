@@ -1,0 +1,92 @@
+\section{Trois manières de converger}
+\subsection{Convergence simple et convergence uniforme}
+
+\begin{rap}[Suites et séries numériques]
+	Les suites $(u_n)$\/ et les séries $\sum u_n$\/ ont une nature mais pas de valeurs. Les valeurs $u_n$\/ et $\sum_{k=0}^n u_k$\/ sont respectivement le $n$-ième terme de la suite, et la somme partielle de la série. Le reste $\sum_{k=n+1}^\infty u_k$\/ est défini que si la série $\sum u_n$, et il tend vers 0. La somme $\sum_{k=0}^{\infty}$\/ est définie si la série $\sum u_n$\/ converge.
+\end{rap}
+
+Nous avons vu au chapitre précédent les suites de fonctions, et les deux types de convergence : simple et uniforme. Dans ce chapitre, on s'intéresse aux séries de fonctions. Mais, au lieu de deux méthodes de convergence, il y en a trois pour les séries : normale, simple et uniforme. On a \[
+	\text{convergence simple}\quad\substack{\\\ds\impliedby\\\ds\centernot{\implies}}\quad\text{convergence uniforme}\quad\substack{\\\ds\impliedby\\\ds\centernot{\implies}}\quad\text{convergence normale}.
+\]
+
+\red{\textsc{Attention}} : les théorèmes sur les séries numériques \textsc{ne sont pas}, en général, \textsc{vrais} pour les séries de fonctions.
+
+\begin{rap}
+	La suite de fonctions $(f_n)_{n\in\N}$\/ converge simplement vers la fonction $f$\/ si, et seulement si \[
+		\forall x,\qquad f_n(x) \tendsto{n\to \infty} f(x)
+	.\]
+	Et, elle converge uniformément vers $f$\/ si, et seulement si \[
+		\sup_{x \in I}\:\big|f_n(x) - f(x)\big| \tendsto{n\to \infty} 0
+	.\]
+\end{rap}
+
+\begin{defn}
+	La série de fonctions $\sum f_n$\/ converge simplement vers la fonction $S$\/ si \[
+		\forall x,\quad S_n(x) \tendsto{n\to \infty} S(x),\quad \text{où}\quad S_n(x) = \sum_{k=0}^n f_k(x)
+	.\]
+	De même que pour les suites, la série de fonctions $\sum f_n$\/ converge uniformément vers la fonction~$S$\/ si \[
+		\sup_{x \in I}\:\big|S_n(x) - S(x)\big| \tendsto{n\to \infty} 0
+	.\]
+\end{defn}
+
+\begin{rmk}
+	On pose des notations similaires que pour les séries numériques pour la somme et pour le reste.
+\end{rmk}
+
+\begin{met}
+	\begin{align*}
+		&\text{la série de fonctions $\ts\sum f_n$\/ converge uniformément sur $I$\/ vers la fonction $S$}\\
+		\iff& \text{le reste $R_n$\/ (fonction) converge uniformément vers $\tilde 0$\/ (fonction nulle)}\\
+		\implies& \text{la suite de fonctions $(f_n)_{n\in\N}$\/ converge uniformément vers $\tilde 0$\/ (fonction nulle)}.
+	\end{align*}
+\end{met}
+
+\begin{prv}
+	On sait que, par définition, la série de fonctions $\sum f_n$\/ converge uniformément vers $S$\/ sur $I$\/ si et seulement si $\sup_{x \in I}\:\big|S_n(x) - S(x)\big| \tendsto{n\to \infty} 0$. Or, $\forall x \in I$, $S(x) - S_n(x) = R_n(x)$. D'où, la série de fonctions $\sum f_n$\/ converge uniformément vers $S$\/ sur $I$\/ si et seulement si $\sup_{x \in I}\:\big|R_n(x)\big| \tendsto{n\to \infty} 0$, donc si et seulement si (par définition), la suite de fonctions $(R_n)_{n\in\N}$\/ converge uniformément vers 0.
+	À présent, on veut montrer que $\sup_{x \in I}\:|f_n(x)| \longrightarrow 0$. Or, $\forall n \in \N^*$, $\forall x \in I$, $R_n(x) = \sum_{k=n+1}^{\infty} f_k(x)$, et donc $f_n(x) = R_{n-1}(x) - R_n(x)$. D'où $\big|f_n(x)\big| \le \big|R_{n-1}(x)\big| \mathbin{\red+} \big|R_n(x)\big|$. Attention, on ne peut pas passer au $\sup$\/ directement. Or, $\big|R_{n-1}(x) - R_n(x)\big| \le \sup_{x \in I}\:\big|R_{n-1}(x)\big| + \sup_{x \in I}\:\big|R_n(x)\big|$, qui est un majorant.
+	D'où, $0 \le \sup_{x\in I}\:|f_n(x)| \le \sup_{x\in I}\:|R_{n-1}(x)| + \sup_{x\in I}\:|R_n(x)|\tendsto{n\to \infty} 0$. Donc, par théorème d'existence de la limite par encadrement, $\sup_{x \in I}\:|f_n(x)|\tendsto{n\to \infty} 0$.
+\end{prv}
+
+\begin{exo}
+	\textsl{Soit, pour $n \in \N$, $f_n(x) = x^n$. Montrer que 
+		\begin{enumerate}
+			\item la série de fonctions $\sum f_n$\/ converge simplement sur $]-1,1[$\/ vers la fonction $S : x\mapsto \frac{1}{1-x}$\/ ;
+			\item elle ne converge pas uniformément sur $]-1,1[$\/ ;
+			\item elle converge uniformément sur tout segment inclus dans $]-1,1[$.
+	\end{enumerate}}
+
+	\begin{enumerate}
+		\item Soit $x \in{]-1,1[}$. On veut montrer que la série numérique $\sum f_n(x)$\/ converge vers le réel $\frac{1}{1-x}$. On calcule
+			\begin{align*}
+				\sum_{k=0}^n x^k = 1 + x + \cdots + x^n &= \frac{1 - x^{n+1}}{1-x} \text{ car } x \neq 1\\
+				&\tendsto{n\to \infty} \frac{1}{1-x} \text{ car } |x| < 1.
+			\end{align*}
+		\item
+			\begin{itemize}
+				\item[\textsc{1\tsup{ère} manière}] On va montrer que la suite de fonctions $(f_n)_{n\in\N}$\/ ne converge pas uniformément vers la fonction nulle : \[
+						\sup_{x \in\:{]-1,1[}} \big|f_n(x) - 0\big| \centernot{\tendsto{n\to \infty}} 0
+					.\] On a, pour $x \in{]-1,1[}$, $|f_n(x) - 0| = |x^n|$. Or, $\sup_{x \in\:{]-1,1[}}\:|x^n| = 1\centernot{\tendsto{n\to \infty}} 0$. D'où, la suite de fonctions $(f_n)_{n\in\N}$\/ ne converge pas uniformément vers la fonction nulle. Ainsi, d'après la méthode 4, la série $\sum f_n$\/ ne converge pas uniformément sur $]-1,1[$.
+				\item[\textsc{2\tsup{nde} manière}] La série de fonctions $\sum f_n$\/ converge uniformément vers $S$\/ sur $]-1,1[$\/ si, et seulement si la suite de fonctions $(S_n)_{n \in \N}$\/ converge uniformément vers $S$, donc si, et seulement si $\sup_{x \in\:{]-1,1[}}\:\big|S_n(x) - S(x)\big| \tendsto{n\to \infty} 0$. On calcule \[
+						\forall n,\:\forall x \in{]-1,1[},\quad\big|S_n(x) - S(x)\big| = \left|\frac{1-x^{n+1}}{1-x}-\frac{1}{1-x} \right| = \left| \frac{x^{n+1}}{1-x} \right| = \frac{|x|^{n+1}}{1-x}
+					.\]
+					D'où, \[
+						\sup_{x \in\:{]-1,1[}}\:\frac{|x|^{n+1}}{1-x} = +\infty\centernot{\tendsto{n\to \infty}} 0
+					.\] La série de fonctions $\sum f_n$\/ ne converge pas uniformément sur $]-1,1[$.
+				\item[\textsc{3\tsup{ème} manière}] On a $\forall n \in \N$, $\forall x \in {]-1,1[}$, $\big|S_n(x) - S(x)\big| = \frac{|x|^{n+1}}{1-x}$. On pose, pour~$n \in \N$,~$u_n = 1 - \frac{1}{n + 1}$. Montrons que $S_n(u_n) - S(u_n)\centernot{\tendsto{n\to \infty}} 0$. On calcule \[
+						\left|S_n\left( 1 - \frac{1}{n} \right)  - S\left( 1 - \frac{1}{n} \right)\right| = \frac{\left( 1-\frac{1}{n+1} \right)^{n+1}}{1 - \left( 1 - \frac{1}{n} \right)} = (n+1) \times \left( 1 - \frac{1}{n+1} \right)^{n+1}
+					.\]
+					Or, $\left( 1 - \frac{1}{n+1} \right)^{n+1} = \mathrm{e}^{(n+1) \ln \left( 1 - \frac{1}{n+1} \right)}$. Et, \[(n+1)\ln\left( 1 - \frac{1}{n+1} \right) = (n+1)\left( \frac{-1}{n+1} + \po\left( \frac{1}{n+1} \right) \right) = -1 + \po(1) \tendsto{n\to \infty} -1.\]
+					Ainsi, $\left( 1-\frac{1}{n+1} \right)^{n+1} \longrightarrow \mathrm{e}^{-1}$\/ par continuité de la fonction exponentielle. Et donc, $S_n(u_n) - S(u_n) \tendsto{n\to \infty} +\infty$\/ car $n+1 \longrightarrow +\infty$\/ et $\left( 1 - \frac{1}{n+1} \right)^{n+1} \longrightarrow \mathrm{e}^{-1}$. Or, $\sup_{x \in \:{]-1,1[}}\:\big|S_n(x) - S(x)\big| \ge \big|S_n(u_n) - S(u_n)\big|$, et d'où $\sup_{x \in \:{]-1,1[}}\:\big|S_n(x) - S(x)\big| \centernot{\tendsto{n\to \infty}} 0$.
+			\end{itemize}
+		\item On considère l'intervalle $[\alpha,\beta] \subset {]-1,1[}$. Sans perte de généralité, on choisit un segment $[-a,a]$\/ avec $0 < a < 1$. On veut montrer que $\sup_{x\in [-a,a]}\:\big|S_n(x) - S(x)\big|\tendsto{n\to \infty} 0$. On calcule \[
+			\forall x \in [-a,a],\:0\le \big|S_n(x) - S(x)\big| = \frac{|x|^{n+1}}{1-x}\le \frac{a^{n+1}}{1-a},
+		\] qui est un majorant. D'où, $0 \le \sup_{x \in [-a,a]}\:\big|S_n(x) - S(x)\big| \le \frac{a^{n+1}}{1-a} \tendsto{n\to \infty} 0$\/ car $|a| < 1$. Donc, d'après le théorème d'existence de la limite par encadrement, \[
+			\sup_{x \in [-a,a]}\:\big|S_n(x) - S(x)\big| \tendsto{n\to \infty} 0
+		.\]
+	\end{enumerate}
+\end{exo}
+
+\subsection{Convergence normale}
+
+
+

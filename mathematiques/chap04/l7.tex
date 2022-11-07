@@ -1,0 +1,145 @@
+\section{Le théorème de {\scshape Cayley} \& {\scshape Hamilton} et les sous-espaces caractéristiques}
+\begin{thm}[de {\scshape Cayley} \& {\scshape Hamilton}]
+	Le polynôme caractéristique d'une matrice $A \in \mathscr{M}_{n,n}(\mathds{K})$\/ est un polynôme annulateur de cette matrice : \[
+		\chi_A(A) = 0
+	.\] \qed
+\end{thm}
+
+\begin{rap}
+	Un polynôme $P$\/ est annulateur de la matrice $A$\/ si et seulement si $P$\/ divise $\mu_A$.
+\end{rap}
+
+\begin{crlr}
+	Le polynôme minimal divise le polynôme caractéristique.
+\end{crlr}
+
+\begin{exo}
+	{\slshape Déterminer le polynôme minimal de la matrice $E$\/ de l'exercice 20 : \[
+		E = \begin{pmatrix}
+			7&0&1\\
+			0&3&0\\
+			0&0&7
+		\end{pmatrix}
+	.\]}
+
+	On doit donc déterminer le polynôme unitaire de degré minimal annulateur de $E$.
+	D'après le théorème de {\sc Cayley \& Hamilton}, $\chi_E$\/ est un polynôme annulateur. Or, $\chi_E(X) = (X-7)^2\:(X-3)$\/ car c'est un déterminant triangulaire.
+	D'où $\mu_E(X)$\/ est égal à $(X-7)^2\:(X-3)$\/ ou $(X-7)(X-3)$\/ ou $(X-7)^2$\/ ou $(X-7)$\/ ou $(X-3)$.
+	Or,
+	\begin{align*}
+		(E-7I_3)\cdot (E-3I_3) &= \begin{pmatrix}
+			0&0&1\\
+			0&-4&0\\
+			0&0&0
+		\end{pmatrix}\cdot \begin{pmatrix}
+			4&0&1\\
+			0&0&0\\
+			0&0&4
+		\end{pmatrix} \\
+		&= \begin{pmatrix}
+			*&*&4\\
+			*&*&*\\
+			*&*&*
+		\end{pmatrix} \neq 0_{\mathscr{M}_{3,3}(\mathds{K})} \\
+	\end{align*}
+	Ainsi, $\mu_A(X) \neq (X-7)(X-3)$\/ et $\mu_A(X) \neq (X-7)$.
+	Et,
+	\[
+		(E-3I_3)^2 = \begin{pmatrix}
+			0&0&1\\
+			0&-4&0\\
+			0&0&0
+		\end{pmatrix}^2 = \begin{pmatrix}
+			*&*&*\\
+			*&16&*\\
+			*&*&*
+		\end{pmatrix} \neq 0_{\mathscr{M}_{3,3}(\mathds{K})}
+	.\]
+	Ainsi, $\mu_A(X) \neq (X-3)^2$\/ et aussi $\mu_A(X) \neq (X-3)$. On en déduit que $\mu_A = \chi_E$.
+\end{exo}
+
+\begin{defn}
+	Si le polynôme caractéristique d'une matrice $A \in \mathscr{M}_{n,n}(\mathds{K})$\/ est scindé, alors le {\it sous-espace caractéristique}\/ de $A$\/ associé à chaque valeur propre $\lambda$\/ est \[
+		C_\lambda = \Ker(\lambda I_n - A)^{m_\lambda},
+	\] où $m_\lambda$\/ est la multiplicité de la racine $\lambda$\/ dans le polynôme caractéristique.
+\end{defn}
+
+\begin{prop}
+	Les sous-espaces caractéristiques sont supplémentaires : \[
+		E = \bigoplus_{\lambda \in \Sp(A)} C_\lambda
+	\] et de dimensions $\dim C_\lambda = m_\lambda$.
+\end{prop}
+
+\begin{prv}
+	Comme le polynôme $\chi_A$\/ est scindé, alors \[
+		\chi_A(X) = (X-\lambda_1)^{m_{\lambda_1}} \times \cdots \times (X-\lambda_r)^{m_{\lambda_r}}
+	\] et donc, d'après le théorème des noyaux, \[
+		\Ker\big(\chi_A(M)\big) = \bigoplus_{\lambda \in \Sp(A)} \Ker\Big(M - \lambda I_n\Big)^{m_\lambda}
+	\] car les polynômes $(X-\lambda_i)$\/ sont premiers deux à deux.
+	En particulier, si $M = A$, alors \[
+		E = \bigoplus_{\lambda \in \Sp(A)} \overbrace{\Ker\big((\lambda I_n - A)^{m_\lambda}\big)}^{\mathclap{\text{sous-espace caractéristique de $A$\/ associé à $\lambda$\/ : $C_\lambda$\/}}}
+	.\]
+\end{prv}
+
+\section{Polynômes annulateurs}
+
+Si $\vec{x} \in E$\/ est un vecteur propre de $u \in \mathscr{L}(E)$, associé à la valeur propre $\lambda \in \mathds{K}$, alors
+\[
+	u^2(\vec{x}) = u\big(u(\vec{x})\big) = u(\lambda \vec{x}) = \lambda u(\vec{x}) = \lambda^2 \vec{x}
+.\]
+Ainsi, par récurrence, \[
+	\forall k \in \N^*,\quad u^{k}(\vec{x}) = \lambda^{k}\,\vec{x}
+.\]
+Mais, comme $u^{0} = \id_{E}$, on a donc $u^{0}(\vec{x}) = \id_E(\vec{x}) = \vec{x} = \lambda^{0}\,\vec{x}$, et le résultat précédent est également vrai pour $k = 0$.
+Par linéarité, si $P(X) = a_0 + a_1X + \cdots + a_d X^{d}$, alors $P(u) = a_0\id_E + a_1 u + \cdots + a_d u^d$, et donc $P(u)(\vec{x}) = a_0 \vec{x} + a_1 \lambda \vec{x} + \cdots + a_d \lambda^d \vec{x} = P(\lambda)\:\vec{x}$.
+
+\begin{prop}[très souvent utile]
+	Soit $P \in \mathds{K}[X]$\/ un polynôme annulateur de $u \in \mathscr{L}(E)$.
+	Si $\lambda$\/ est une valeur propre de $u$ (i.e.\ $P(u) = 0$), alors $\lambda$\/ est racine de $P$\/ : \[
+		\forall \lambda \in \mathds{K},\qquad \lambda \in \Sp(u)\quad\substack{\\\ds\implies\\\ds\centernot{\impliedby}}\quad P(\lambda) = 0
+	.\]
+	Autrement dit, le spectre de $u$\/ est inclus dans l'ensemble des racines d'un polynôme annulateur de $u$.
+	Mais, en général, il n'y a pas égalité.
+\end{prop}
+
+\begin{rmkn}
+	{\color{red} La réciproque de la proposition est fausse.} Par exemple, $(X-1)(X-7)$\/ est annulateur de $I_n$, mais $\Sp(I_n) = \{1\} \subsetneq \{1,7\}$, qui est l'ensemble des racines de $(X-1)(X-7)$.
+\end{rmkn}
+
+\begin{prv}
+	Si $\vec{x}$\/ est un vecteur propre de $u$\/ associé à la valeur propre $\lambda$\/ (i.e.\ $\vec{x} \neq \vec{0}$\/ et $u(\vec{x}) = \lambda \vec{x}$), alors $P(\lambda) = 0$\/ car $\vec{x} \neq \vec{0}$.
+\end{prv}
+
+Néanmoins, il y a égalité pour certains polynômes : le polynôme caractéristique (d'après le théorème 7), et le polynôme minimal (dans la proposition 32, suivante).
+
+\begin{prop}
+	Le spectre de $u$\/ est égal à l'ensemble des racines du polynôme minimal (qui a donc les même racines que le polynôme caractéristique).
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item[\sc Méthode 1] (à l'aide du théorème de {\sc Cayley}\/ et {\sc Hamilton})
+			On veut montrer que le polynôme caractéristique et le polynôme minimal ont les même racines.
+
+			\begin{itemize}
+				\item Tout d'abord, On sait que le polynôme minimal divise le polynôme caractéristique. Ainsi, il existe un polynôme $Q$, tel que $\chi_A(X) = \mu_A(X)\times Q(X)$. Ainsi, toute racine du polynôme minimal $\mu_A$\/ est aussi racine du polynôme caractéristique $\chi_A$.
+
+				\item Puis, soit $\lambda$\/ une racine de $\chi_A$.
+					D'où $\lambda$\/ est une valeur propre de $A$.
+					D'où $\lambda \in \Sp(A)$.
+					Or, le spectre de $A$\/ est inclus dans l'ensemble des racines de $\mu_A$\/ car $\mu_A$\/ est polynôme annulateur (d'après la proposition 31).
+					D'où $\lambda$\/ est racine de $\mu_A$.
+			\end{itemize}
+		\item[\sc Méthode 2] (sans le théorème de {\sc Cayley}\/ et {\sc Hamilton})
+			\begin{itemize}
+				\item La démonstration précédente n'utilisant pas, dans ce sens là, le théorème de {\sc Cayley}\/ et {\sc Hamilton}. On sait donc que l'ensemble des racines de $\chi_A$\/ est inclus dans l'ensemble des racines de $\mu_A$.
+				\item Reste à montrer l'autre inclusion : l'ensemble des racines de $\mu_A$\/ est inclus dans l'ensemble des racines de $\chi_A$, qui est le spectre de $A$. Soit $\lambda$\/ une racine de $\mu_A$.
+					Alors, il existe un polynôme $Q$, tel que $\mu_A(X) = (X - \lambda) \times Q(X)$.
+					D'où $0_{\mathscr{M}_{n,n}(\mathds{K})} = \mu_A(A) = (A - \lambda I_n) \times Q(A)$.
+					Or, $Q(A) \neq 0_{\mathscr{M}_{n,n}(\mathds{K})}$. En effet, si $Q(A) = 0_{\mathscr{M}_{n,n}(\mathds{K})}$, alors, comme $\deg Q < \deg \mu_A$, on a donc un polynôme annulateur de $A$\/ ayant un degré plus petit celui du polynôme minimal : ce qui est absurde.
+					Il existe donc $X \in \mathscr{M}_{n,n}(\mathds{K})$\/ tel que $Q(A)\cdot X \neq 0$. Soit $U$\/ ce vecteur : $U = Q(A) \cdot X$. Alors, comme $(A-\lambda I_n) \times Q(A) = 0_{\mathscr{M}_{n,n}(\mathds{K})}$, on en déduit que $(A-\lambda I_n) \cdot Q(A) \cdot X = 0 \cdot X$. D'où $(A - \lambda I_n) \cdot U = 0$, et donc $A\cdot U = \lambda U$, et comme $U \neq 0$, on en déduit que $\lambda \in \Sp(A)$.
+			\end{itemize}
+	\end{itemize}
+\end{prv}
+
+

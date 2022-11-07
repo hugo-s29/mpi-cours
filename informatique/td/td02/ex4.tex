@@ -1,0 +1,25 @@
+\section{Conséquence sémantique}
+
+\begin{enumerate}
+	\item Soit $\rho \in \mathds{B}^{\mathcal{P}}$. On suppose $\left\llbracket A \lor B \right\rrbracket^\rho = \mathbf{V}$, $\left\llbracket A \to C \right\rrbracket^\rho = \mathbf{V}$\/ et $\left\llbracket B \to C \right\rrbracket^\rho = \mathbf{V}$.
+		\begin{itemize}
+			\item Si $\left\llbracket A \right\rrbracket^\rho = \mathbf{V}$, alors, comme $\left\llbracket A \to C \right\rrbracket^\rho = \mathbf{V}$, $\left\llbracket C \right\rrbracket^\rho = \mathbf{V}$.
+			\item Si $\left\llbracket B \right\rrbracket^\rho = \mathbf{V}$, alors, comme $\left\llbracket B \to C \right\rrbracket^\rho = \mathbf{V}$, $\left\llbracket C \right\rrbracket^\rho = \mathbf{V}$.
+		\end{itemize}
+		D'où $\{A \lor B, A \to C, B \to C\} \models C$.
+	\item Soit $\rho \in \mathds{B}^{\mathcal{P}}$. On suppose $\left\llbracket A \to B \right\rrbracket^\rho = \mathbf{V}$. Si $\left\llbracket B \right\rrbracket^\rho = \mathbf{F}$ (i.e.\ $\left\llbracket \lnot B \right\rrbracket^\rho = \mathbf{V}$), alors $\left\llbracket A \right\rrbracket^\rho = \mathbf{F}$, par implication. Et donc, $\left\llbracket \lnot A \right\rrbracket^\rho = \mathbf{V}$. On a donc bien $\left\llbracket \lnot B \to \lnot A \right\rrbracket^\rho$. On en déduit que $A \to B \models \lnot B \to \lnot A$.
+\end{enumerate}
+\vspace{-5mm}
+\begin{multicols}{4}
+	\begin{enumerate}
+		\item[3.] oui
+		\item[4.] non
+		\item[5.] oui
+		\item[6.] non
+		\item[7.] oui
+		\item[8.] non
+		\item[9.] oui
+		\item[10.] non
+	\end{enumerate}
+\end{multicols}
+

@@ -1,0 +1,126 @@
+\begin{thm}[{\scshape Kleene}]
+	Un langage est régulier si et seulement s'il est reconnaissable. Et, on a donné un algorithme effectuant ce calcul dans les deux sens.
+\end{thm}
+
+\section{La classe des langages réguliers}
+
+\begin{figure}[H]
+	\centering
+	\tikzfig{ensembles-de-langages}
+	\caption{Ensembles de langages}
+\end{figure}
+
+\begin{prop}
+	La classe des langages réguliers/reconnaissables est stable par passage au complémentaire.
+\end{prop}
+
+\begin{prv}
+	Soit $L \in \mathrm{LR}$. Soit $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ un automate reconnaissant le langage $L$. Soit $\mathcal{A}'= (\Sigma, \mathcal{Q}', I', F', \delta')$\/ un automate déterministe et complet équivalent à $\mathcal{A}$. Soit $\mathcal{A}'' = (\Sigma, \mathcal{Q}', I', \mathcal{Q}'\setminus F', \delta')$.
+	Alors (à prouver à la maison) $\mathcal{L}(\mathcal{A}'') = \Sigma^* \setminus \mathcal{L}(\mathcal{A}) = \Sigma^* \setminus L$\/ et donc $\Sigma^* \setminus L$\/ est reconnaissable/régulier.
+\end{prv}
+
+\begin{crlr}
+	On a la stabilité par intersection. En effet, \[
+		L \cap L' = \Big(L^{\mathrm{c}} \cup (L')^{\mathrm{c}}\Big)^{\mathrm{c}}
+	\] où $L^{\mathrm{c}}$\/ est le complémentaire de $L$.
+\end{crlr}
+
+\begin{crlr}
+	Si $L$\/ et $L'$\/ sont deux langages réguliers (quelconques), alors $L \setminus L'$\/ est un langage régulier. En effet, \[
+		L \setminus L' = L \cap (L')^\mathrm{c}
+	.\]
+\end{crlr}
+
+\begin{crlr}
+	Si $L$\/ et $L'$\/ sont deux langages réguliers. Alors $L \mathbin\triangle L'$\/ \footnotemark\ est un langage régulier. En effet \[
+		L \mathbin\triangle L' \mathrel{\mathop=^{\mathrm{(def)}}} (L \cup L') \setminus (L \cap L')
+	.\]
+\end{crlr}
+\footnotetext{$\triangle$ est la différence symétrique}
+
+\subsection{Limite de la classe/Lemme de l'étoile}
+
+\begin{thm}[Lemme de l'étoile]
+	Soit $L$\/ un langage reconnu par un automate à $n$\/ états.
+	Pour tout mot $u \in L$\/ de longueur supérieure ou égale à $n$, il existe trois mots $x$, $y$\/ et $z$\/ tels que \[
+		u = x \cdot y \cdot z,\qquad|x\cdot y| \le n,\qquad y \neq \varepsilon, \qquad\text{et}\qquad \forall p \in \N,\:x\cdot y^p \cdot z \in L
+	.\]
+\end{thm}
+
+\begin{prv}
+	Soit $L$\/ un langage reconnu par un automate $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ à $n$\/ états. Soit $u$\/ un mot d'un alphabet $\Sigma$\/ de longueur supérieure ou égale à $n$\/ ($u \in \Sigma^{\ge n}$) tel que $u \in L$.
+	Alors, il existe un exécution acceptante \[
+		q_0 \xrightarrow{u_1} q_1 \xrightarrow{u_2} q_2 \to \cdots \to q_{m-1} \xrightarrow{u_m} q_m
+	\] avec $m \ge n$.
+	Par principe des tiroirs, l'ensemble $\{(i,j) \in \left\llbracket 0,m \right\rrbracket^2  \mid i < j \text{ et } q_i = q_j\}$\/ est non vide.
+	Et donc $A = \{j \in \left\llbracket 0,m \right\rrbracket  \mid \exists i \in \left\llbracket 0,j-1 \right\rrbracket,\:q_i = q_j\}$\/ est non vide.
+	Soit alors $j_0 = \min A$\/ bien défini. Alors, par définition de $A$, il existe $i_0 \in \left\llbracket 0,j_0-1 \right\rrbracket$\/ tel que $q_{i_0} = q_{j_0}$\/ et $j_0 \le n$. On pose donc \[
+		\underbrace{q_0 \xrightarrow{u_1} q_1 \xrightarrow{u_2} \cdots \xrightarrow{u_{i_0}}}_x q_{i_0} \underbrace{\xrightarrow{u_{i_0+1}} q_{i_0 + 1} \to \cdots \xrightarrow{u_{j_0}}}_y q_{j_0} \underbrace{\xrightarrow{u_{j_0+1}} q_{j_0 + 1} \to \cdots \xrightarrow{u_m}}_z q_m\::
+	\] $x = u_1u_2\ldots u_{i_0}$, $y = u_{i_0+1}\ldots u_{j_0}$\/ et $z_{j_0 + 1}\ldots u_m$.
+	On a donc $y \neq \varepsilon$\/ : en effet $i_0 < j_0$.
+	Également, on a $|x\cdot y| = j_0 \le n$\/ et $u = x\cdot y\cdot z$.
+	Montrons alors que $\forall p \in \N,\,x \cdot y^p \cdot z \in L$.
+	La suite de transitions \[
+		q_0 \xrightarrow{u_1} q_1 \to \cdots \xrightarrow{u_{i_0}} q_{i_0} \xrightarrow{u_{j_0+1}}  q_{j_0+1} \to \cdots \xrightarrow{u_m} q_m
+	\] est une exécution acceptante donc $x \cdot z \in L$. De proche en proche, on en déduit que $x \cdot y^p \cdot z \in L$\/ pour tout $p \in \N$.
+\end{prv}
+
+\begin{crlr}
+	Il y a des langages non réguliers/reconnaissables.
+\end{crlr}
+
+\begin{prv}
+	Soit $L = \{a^n \cdot b^n  \mid n \in \N\}$. Montrons que $L$\/ n'est pas régulier par l'absurde. Supposons~$L$\/ reconnaissable par un automate $\mathcal{A}$\/ à $n$\/ états, et soit $u = a^n \cdot b^n$. Alors $|u| \ge n$. D'où, d'après le lemme de l'étoile, il existe un triplet $(x,y,z) \in  (\Sigma^*)^3$\/ tel que $y \neq \varepsilon$, $u = x \cdot y \cdot z$, $|x\cdot y| \le n$\/ et $x\cdot y^*\cdot z \subseteq L$ $(*)$.
+	Il existe donc $p \in \left\llbracket 1,n \right\rrbracket$\/ tel que $y = a^p$. De même, il existe $q \in \left\llbracket 0,n-p \right\rrbracket$\/ tel que $x = a^q$\/ et $z = a^{n-p-q}\cdot b^n$. Donc, d'après $(*)$, $x\cdot y\cdot y\cdot z \in L$\/ et donc $a^q\cdot a^p\cdot a^p\cdot a^{n-p-q}\cdot b^n \in L$, d'où $a^{n+p} \cdot b^n \in L$. Or, comme $p \neq 0$, $n + p \neq n$\/ : une contradiction.
+\end{prv}
+
+\begin{exo}
+	On considère le langage $L_2 = \{w \in \Sigma^*  \mid  |w|_a = |w|_b\}$.
+	{\slshape Le langage $L_2$\/ est-il régulier ?}\/ La même démonstration fonction en remplaçant $L$\/ par $L_2$. Mais, nous allons procéder autrement, par l'absurde : on suppose $L_2$\/ régulier. Or, on sait que, d'après la preuve précédente, $L = L_2 \cap a^* \cdot b^*$, et $a^* \cdot b^*$\/ est régulier. D'où $L$\/ régulier, ce qui est absurde.
+\end{exo}
+
+\begin{exo}
+	On considère le langage $L = \{w \in \Sigma^*  \mid |w|_a \equiv |w|_b\mod 3\}$.
+	{\slshape Le langage $L$\/ est-il régulier ?}\/ Oui, l'automate de la figure suivante reconnait le langage $L$ (les états représentent la différence $|w|_a - |w|_b\ \mathrm{mod}\ 3$).
+
+	Montrons à présent qu'un automate à moins de trois états n'est pas possible : si $\delta^*(i_0, a^x) = \delta^*(i_0, a^y)$\/ avec $\left\llbracket 0,2 \right\rrbracket \ni x < y \in \left\llbracket 0,2 \right\rrbracket$, alors pour tout $z \in \N$, $\delta^*(i_0, a^{x+z}) = \delta^*(i_0, a^{y+z})$. On pose $z = 3 -y$. Alors \[
+		\delta^*(i_0, \underset{\substack{\vrt{\not\in}\\F}}{a^{x+3-y}}) = 
+		\delta^*(i_0, \underset{\substack{\vrt{\in}\\F}}{a^{3}})
+	.\] 
+
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-14}
+		\caption{Automate reconnaissant le langage $\{w \in \Sigma^*  \mid |w|_a \equiv |w|_b \mod 3\}$}
+	\end{figure}
+\end{exo}
+
+\begin{exo}
+	Soit $\Sigma = \{0,1,`(\text{'},`)\text{'}, `\{\text{'}, `\}\text{'},`,\text{'}\}$.
+	On écrit en OCaml la fonction {\tt to\_string}\/ définie telle que si $({\tt affiche}\/\ \mathcal{A})$ et $({\tt affiche}\/\ \mathcal{A}')$ donnent le même affichage, alors $\mathcal{A} = \mathcal{A}'$.
+
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-15}
+		\caption{Codage d'un automate par une chaîne de caractères}
+	\end{figure}
+
+	Par exemple, on représente l'automate ci-dessus par \[
+		``\big(\{0,1,10\},\{0\}, \{10\}, \{(0,0,1),(1,0,10),(10,0,1),(1,1,0)\}\big)."
+	\]
+
+	\begin{lstlisting}[language=caml,caption=Fonction {\tt affiche}\/ affichant un automate]
+let affiche (%*$Q$*),%*$I$*),%*$F$*),%*$\delta$*)) = 
+	\end{lstlisting}
+	\todo{Recopier le code}
+\end{exo}
+
+\begin{exo}
+	Supposons que tout langage est reconnaissable.
+	Soit $L = \{w \in \Sigma^*  \mid \exists \mathcal{A},\:w \leftarrow {\tt affiche}\/\ \mathcal{A}\:\text{et}\:w \not\in \mathcal{L}(\mathcal{A})\}$.
+	Soit $B$\/ un automate tel que $L = \mathcal{L}(B)$.
+	Soit $w \in {\tt affiche}\/\ B$. Si $w \in L$, alors il existe un automate tel que $w = {\tt affiche}\/\ \mathcal{A}$\/ et $w \not\in  \mathcal{L}(\mathcal{A})$. D'où $\mathcal{A} = B$\/ par injectivité et donc $w \not\in  \mathcal{L}(B) = L$, ce qui est absurde.
+	Sinon, si $w \not\in L$, alors $w = {\tt affiche}\/\ B$\/ avec $w \not\in  \mathcal{L}(B)$\/ et $w \in L$, ce qui est absurde.
+\end{exo}
+
+

@@ -1,0 +1,463 @@
+\usepackage[utf8]{inputenc}
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
+\usepackage[OT2,OT1,T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[bookmarks]{hyperref}
+\usepackage[french]{babel}
+\usepackage[fontsize=8pt]{fontsize}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{tkz-tab}
+\usepackage[inline]{asymptote}
+\usepackage{frcursive}
+\usepackage{verbatim}
+\usepackage{moresize}
+\usepackage{pifont}
+\usepackage{xfrac}
+\usepackage{thmtools}
+\usepackage{diagbox}
+\usepackage{centernot}
+\usepackage{multicol}
+\usepackage{nicematrix}
+\usepackage{accents}
+\usepackage{stmaryrd}
+\usepackage{setspace}
+\usepackage{cancel}
+\usepackage[f]{esvect}
+\usepackage{wrapfig}
+\usepackage{floatflt}
+\usepackage{dsfont}
+\usepackage{subcaption}
+\usepackage{pdflscape}
+\usepackage{soulutf8}
+\usepackage[Rejne]{fncychap}
+\usepackage{listings}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{graphicx}
+\usepackage{qtree}
+\usepackage{adjustbox}
+\usepackage[thinlines]{easytable}
+\usepackage{hep-math-font}
+\usepackage{algorithm}
+\usepackage[rightComments=false,beginComment=$\qquad\triangleright$~]{algpseudocodex}
+\usepackage{yhmath}
+\usepackage{calligra}
+\usepackage{enumitem}
+\usepackage{tgschola}
+\usepackage{dutchcal}
+\usepackage{BOONDOX-calo}
+
+\frenchspacing
+\reversemarginpar
+\newif\ifsimple
+
+% better underline
+\setuldepth{a}
+
+\usetikzlibrary{babel}
+\theoremstyle{definition}
+
+\definecolor{green}{HTML}{60A917}
+\def\asydir{asy}
+\newcommand{\cwd}{.}
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+%\pdfminorversion=7
+%\usepackage{pdfpages}
+%\usepackage{transparent}
+%\newcommand{\incfig}[1]{%
+%	\def\svgwidth{\columnwidth}
+%	\import{\cwd/figures/}{#1.pdf_tex}
+%}
+
+\usepackage{float}
+\usepackage{tikz-cd}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage{etoolbox}
+\usepackage{footnote}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\let\ge\geqslant
+\let\le\leqslant
+\let\preceq\preccurlyeq
+\let\succeq\succcurlyeq
+
+\renewcommand{\C}{\mathds{C}}
+\newcommand{\R}{\mathds{R}}
+\newcommand{\Z}{\mathds{Z}}
+\newcommand{\N}{\mathds{N}}
+\newcommand{\Q}{\mathds{Q}}
+\renewcommand{\O}{\emptyset}
+
+\renewcommand\Re{\mathop{\expandafter\mathfrak{Re}}}
+\renewcommand\Im{\mathop{\expandafter\mathfrak{Im}}}
+
+\renewcommand{\thepart}{\Roman{part}}
+\newcommand{\centered}[1]{\begin{center}#1\end{center}}
+
+\let\th\relax
+\let\det\relax
+\DeclareMathOperator{\Arccos}{Arccos}
+\DeclareMathOperator{\Arcsin}{Arcsin}
+\DeclareMathOperator{\Arctan}{Arctan}
+\DeclareMathOperator{\Argsh}{Argsh}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\sh}{sh}
+\DeclareMathOperator{\th}{th}
+\DeclareMathOperator{\Card}{Card}
+\DeclareMathOperator{\com}{com}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\rg}{rg}
+\DeclareMathOperator{\PPCM}{PPCM}
+\DeclareMathOperator{\PGCD}{PGCD}
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\cotan}{cotan}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\det}{det}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\Cl}{\mathcal{C}\!\ell}
+\DeclareMathOperator*{\po}{\text{\cursive o}}
+\DeclareMathOperator*{\gO}{\mathcal{O}}
+\DeclareMathOperator*{\dom}{dom}
+\DeclareMathOperator*{\sgn}{sgn}
+\DeclareMathOperator*{\codim}{codim}
+\DeclareMathOperator*{\simi}{\sim}
+\DeclareMathOperator{\Reg}{Reg}
+\DeclareMathOperator{\Rec}{Rec}
+\DeclareMathOperator{\lit}{lit}
+
+%\pdfsuppresswarningpagegroup=1
+
+\newcommand{\emptyenv}[2][{}] {
+	\newenvironment{#2}[1][{}] {
+		\vspace{-16pt}
+		#1
+		\vspace{16pt}
+		\expandafter\noindent\comment
+	}{
+		\expandafter\noindent\endcomment
+	}
+}
+
+\mdfsetup{skipabove=1em,skipbelow=1em, innertopmargin=1.1em, innerbottommargin=6pt,}
+
+\newmdenv[frametitlerule=true,roundcorner=5pt,subtitlebelowline=true,subtitleaboveline=true]{recap-box}
+
+\declaretheoremstyle[
+	mdframed={ },
+	headpunct={:},
+	numbered=no,
+	headfont=\normalfont\bfseries,
+	bodyfont=\normalfont,
+	postheadspace=1em]{defnstyle}
+
+\declaretheoremstyle[
+	mdframed={
+		rightline=false, topline=false, bottomline=false,
+		innerlinewidth=0.4pt,outerlinewidth=0.4pt,
+		middlelinewidth=2pt,
+		linecolor=black,middlelinecolor=white,
+	},
+	headpunct={:},
+	numbered=no,
+	headfont=\normalfont\bfseries,
+	bodyfont=\normalfont,
+	postheadspace=1em]{thmstyle}
+
+\declaretheoremstyle[
+	headpunct={:},
+	postheadspace=\newline,
+	numbered=no,
+	headfont=\normalfont\scshape]{rmkstyle}
+
+\declaretheoremstyle[
+	headfont=\normalfont\itshape,
+	numbered=no,
+	postheadspace=\newline,
+	mdframed={ rightline=false, topline=false, bottomline=false },
+	headpunct={:},
+	qed=\qedsymbol]{prvstyle}
+
+\declaretheorem[style=defnstyle, name=Définition]{defn}
+\declaretheorem[style=defnstyle, name=Algorithme]{algo}
+\declaretheorem[style=defnstyle, name=Propriété -- Définition]{prop-defn}
+
+\declaretheorem[style=thmstyle, name=Théorème]{thm}
+\declaretheorem[style=thmstyle, name=Axiome]{axm}
+\declaretheorem[style=thmstyle, name=Propriété]{prop}
+\declaretheorem[style=thmstyle, name=Corollaire]{crlr}
+\declaretheorem[style=thmstyle, name=Lemme]{lem}
+
+\declaretheorem[style=rmkstyle, name=Remarque]{rmk}
+\declaretheorem[style=rmkstyle, name=Rappel]{rap}
+
+
+\AtBeginDocument{
+	\ifsimple
+		\emptyenv{exm}
+		\emptyenv{cexm}
+		\emptyenv{exo}
+		\emptyenv[\hfill$\blacksquare$]{prv}
+	\else
+		\declaretheorem[style=rmkstyle, name=Exemple]{exm}
+		\declaretheorem[style=rmkstyle, name=Contre-exemple]{cexm}
+		\declaretheorem[style=rmkstyle, name=Exercice]{exo}
+		\declaretheorem[style=prvstyle, name=Preuve]{prv}
+	\fi
+}
+
+\makeatother
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead[R]{}
+\fancyhead[L]{\thepart}
+\fancyhead[C]{\parttitle}
+
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{}
+\fancyfoot[R]{}
+
+\newcommand*\parttitle{}
+\let\origpart\part
+\renewcommand*{\part}[2][]{%
+   \ifx\\#1\\% optional argument not present?
+      \origpart{#2}%
+      \renewcommand*\parttitle{#2}%
+   \else
+      \origpart[#1]{#2}%
+      \renewcommand*\parttitle{#1}%
+   \fi
+}
+
+\makeatletter
+
+\newcommand{\tendsto}[1]{\xrightarrow[#1]{}}
+\newcommand{\danger}{{\large\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}\;}
+\newcommand{\ex}{\fbox{ex}\;}
+\renewcommand{\mod}[1]{~\left[ #1 \right]}
+\newcommand{\todo}[1]{{\color{blue} À faire : #1}}
+\newcommand{\vrt}[1]{\rotatebox{-90}{$#1$}}
+\newcommand{\avrt}[1]{\rotatebox{90}{$#1$}}
+\newcommand{\tsup}[1]{\textsuperscript{\underline{#1}}}
+\newcommand{\revs}[1]{\rotatebox{180}{$#1$}}
+
+\DeclareMathOperator{\ou}{\text{ ou }}
+\DeclareMathOperator{\et}{\text{ et }}
+\DeclareMathOperator{\si}{\text{ si }}
+\DeclareMathOperator{\non}{\text{ non }}
+
+\newcommand{\iffdef}{\mathop{\iff}^{\text{def.}}}
+
+\renewcommand{\title}[2]{
+	\AtBeginDocument{
+		\begin{titlepage}
+			\begin{center}
+				\vspace{10cm}
+				{\Large \sc Chapitre #1}\\
+				\vspace{1cm}
+				{\HUGE \calligra #2}\\
+				\vfill
+				Hugo {\sc Salou} MPI${}^{\star}$\\
+				{\ssmall Dernière mise à jour le \@date }
+			\end{center}
+		\end{titlepage}
+	}
+}
+
+\newcommand{\titletd}[2]{
+	\AtBeginDocument{
+		\begin{titlepage}
+			\begin{center}
+				\vspace{10cm}
+				{\Large \sc Td \rm n${}^{\mathrm{o}}$ #1}\\
+				\vspace{1cm}
+				{\HUGE \calligra #2}\\
+				\vfill
+				Hugo {\sc Salou} MPI${}^{\star}$\\
+				{\ssmall Dernière mise à jour le \@date }
+			\end{center}
+		\end{titlepage}
+	}
+}
+
+\let\bx\boxed
+\newcommand{\s}{\text{\cursive s}}
+\renewcommand{\t}{{}^t\!}
+\newcommand{\T}{{\!\!\,\top}}
+\newcommand{\eme}{\ensuremath{{}^{\text{ème}}}~}
+%\let\oldfract\fract
+%\renewcommand{\fract}[2]{\oldfract{\displaystyle #1}{\displaystyle #2}}
+% \let\textstyle\displaystyle
+% \let\scriptstyle\displaystyle
+% \let\scriptscriptstyle\displaystyle
+%\everymath{\displaystyle}
+
+
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+\newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\cdot}}
+%\newcommand{\bigcupdot}{\charfusion[\mathop]{\bigcup}{\cdot}}
+\newcommand{\plusbar}{\charfusion[\mathbin]{+}{\color{blue}/}}
+\let\olddiamond\diamond
+\renewcommand{\diamond}{\ensuremath{\,\olddiamond\,}}
+\newcommand{\missingpart}{\centered{\color{red} \Large Il manque une partie du cours ici}}
+
+\newcommand{\cbox}[2]{{\color{#1}{\fbox{\color{black} #2}}}}
+\newcommand{\clrhl}[2]{{\large\sc\color{#1} #2}}
+\newcommand{\mat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\mathunderline}[1]{\text{\underline{$#1$}}}
+\let\oldboxtimes\boxtimes
+\renewcommand{\boxtimes}{\raisebox{-0.2mm}{$\;\oldboxtimes\;$}}
+\newcommand{\addrecap}{\ifsimple\else\startrecap\input{\cwd/recap.tex}\fi}
+\newcommand{\indep}{\perp\!\!\!\!\!\:\perp}
+\newcommand{\startrecap}{
+	\part{Bilan}
+	\setlength{\abovedisplayskip}{0pt}
+	\setlength{\belowdisplayskip}{0pt}
+	\setlength{\abovedisplayshortskip}{0pt}
+	\setlength{\belowdisplayshortskip}{0pt}
+}
+
+
+\definecolor{white}{HTML}{faf4ed}
+\definecolor{black}{HTML}{575279}
+\definecolor{mauve}{HTML}{907aa9}
+\definecolor{blue}{HTML}{286983}
+\definecolor{red}{HTML}{d7827e}
+\definecolor{yellow}{HTML}{ea9d34}
+\definecolor{gray}{HTML}{9893a5}
+\definecolor{grey}{HTML}{9893a5}
+
+\setlength{\parskip}{7pt}
+
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\green}[1]{{\color{green}#1}}
+\newcommand{\blue}[1]{{\color{cyan}#1}}
+
+\pagecolor{white}
+\color{black}
+
+% code syntax highlighting
+\lstset{ %
+	basicstyle=\ttfamily\footnotesize,
+	backgroundcolor=\color{white},    % choose the background color
+	commentstyle=\color{blue},        % comment style
+	keywordstyle=\bfseries\color{mauve},       % keyword style
+	stringstyle=\color{pink},         % string literal style
+	captionpos=b,                    % sets the caption-position to bottom
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	breaklines=true,                 % automatic line breaking only at whitespace
+	numbers=left,                    
+	numbersep=5pt,
+	tabsize=2,
+	xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+}
+
+\renewcommand{\lstlistingname}{{\sc Code}}
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}
+\newcommand\ubar[1]{\underaccent{\bar}{#1}}
+
+\begin{asydef}
+	settings.prc = false;
+	settings.render=0;
+
+	white = rgb("faf4ed");
+	black = rgb("575279");
+	blue = rgb("286983");
+	red = rgb("d7827e");
+	yellow = rgb("f6c177");
+	orange = rgb("ea9d34");
+	gray = rgb("9893a5");
+	grey = rgb("9893a5");
+	deepcyan = rgb("56949f");
+	pink = rgb("b4637a");
+	magenta = rgb("eb6f92");
+	green = rgb("a0d971");
+	purple = rgb("907aa9");
+
+	defaultpen(black + fontsize(8pt));
+
+	import three;
+	currentlight = nolight;
+\end{asydef}
+
+%\let\sc\scshape
+%\let\bf\bfseries
+%\let\it\itshape
+
+\makeatletter
+\g@addto@macro\bfseries{\boldmath}
+\makeatother
+\let\ds\displaystyle
+\let\ts\textstyle
+\def\bfm#1{\mathbf{#1}}
+
+\newcommand\ZdZ{\ensuremath{\sfrac\Z{2\Z}}}
+
+\def\algorithmicrequire{\textbf{Entrée}}
+\def\algorithmicensure{\textbf{Sortie}}
+\def\algorithmicend{\textbf{fin}}
+\def\algorithmicif{\textbf{si}}
+\def\algorithmicthen{\textbf{alors}}
+\def\algorithmicelse{\textbf{sinon}}
+\def\algorithmicelsif{\algorithmicelse\ \algorithmicif}
+\def\algorithmicendif{\algorithmicend\ \algorithmicif}
+\def\algorithmicfor{\textbf{pour}}
+\def\algorithmicforall{\textbf{pour tout}}
+\def\algorithmicdo{\textbf{faire}}
+\def\algorithmicendfor{\algorithmicend\ \algorithmicfor}
+\def\algorithmicwhile{\textbf{tant que}}
+\def\algorithmicendwhile{\algorithmicend\ \algorithmicwhile}
+\def\algorithmicloop{\textbf{répéter indéfiniment}}
+\def\algorithmicendloop{\algorithmicend\ \algorithmicloop}
+\def\algorithmicrepeat{\textbf{répéter}}
+\def\algorithmicuntil{\textbf{jusqu'à que}}
+\def\algorithmicprint{\textbf{afficher}}
+\def\algorithmicreturn{\textbf{retourner}}
+\def\algorithmictrue{\textsc{vrai}}
+\def\algorithmicfalse{\textsc{faux}}
+
+\let\Sortie\Ensure
+\let\Entree\Require
+\floatname{algorithm}{Algorithme}
+
+\let\mathscr\mathcal
+
+\newcommand{\snput}[1]{
+	\begin{center}
+		\Large \texttt{#1}
+	\end{center}
+	\input{#1}
+}
+
+\newbox\tmpbox
+
+%red cross, green tick
+\def\rcs{\ensuremath{{\color{red}\times}}}
+\def\gtk{\ensuremath{{\color{green}\vee}}}

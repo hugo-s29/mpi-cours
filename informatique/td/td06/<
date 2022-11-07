@@ -1,0 +1,248 @@
+\subsection{Algorithme \textsc{id3}}
+
+L'algorithme des $k$\/ plus proches voisins (sans arbres $k$-dimensionnels) n'a pas de \textit{phase d'apprentissage} : en effet, les données ne sont pas réorganisées. Mais, par exemple, pour l'utilisation des arbres $k$-dimensionnels, les données sont réorganisées dans un arbre.
+
+Ce qu'on aimerai avoir, c'est des \textit{bordures} entre les différentes classes. Par exemple, dans l'exemple précédent, on aimerai avoir les différentes zones ci-dessous.
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(5cm);
+		draw(box((-1,-1),(1,1)));
+		draw((-1,0)--(1,0));
+		draw((0,-1)--(0,1));
+		void s(string t, pair v, real r, int k) {
+			real a = v.x;
+			real b = v.y;
+			for(int i = 0; i < k; ++i) {
+				pair off = unitrand() * r * expi(unitrand() * 2pi);
+				label(t, off + (a,b));
+			}
+		}
+		srand(0);
+		s("$\circ$", (-0.5, 0.5), 0.5, 20);
+		s("$\diamond$", (0.5, 0.5), 0.5, 10);
+		s("$\star$", (-0.5, -0.5), 0.5, 40);
+		s("$\times$", (0.5, -0.5), 0.5, 50);
+	\end{asy}
+	\caption{Représentation de \textit{bordures} entre les différentes classes}
+\end{figure}
+
+De ces zones, on peut construire un algorithme qui classifie les données, que l'on représente sous forme d'arbre. Ce type d'arbre est un \textit{arbre de décision}. Dans l'exemple précédent, on peut donc créer l'arbre ci-dessous.
+
+\begin{figure}[H]
+	\centering
+	\Tree[.$x<\frac12$ [.$y<\frac12$ $\diamond$ $\times$ ] [.$y<\frac12$ $\circ$ $\star$ ]]
+	\caption{Arbre de décision pour la classification}
+	\todo{Refaire l'arbre plus proprement}
+\end{figure}
+
+Dans le reste de cette section, on s'intéresse uniquement à des données de $\mathds{B}^n$\/ (une liste de $n$\/ booléens) pour un certain $n \in \N$.
+
+On considère l'exemple dont les données ci-dessous.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c|c|c|c|c|c}
+		Transport & Moteur & Rails & Sous-terre & $\ge 320\:\mathrm{km/h}$\/ & Train ?\\ \hline
+		\textsc{a380}&\gtk&\rcs&\rcs&\gtk&\rcs\\
+		\textsc{tgv}&\gtk&\gtk&\rcs&\gtk&\gtk\\
+		Métro&\gtk&\gtk&\gtk&\rcs&\gtk\\
+		Wagonnet&\rcs&\gtk&\gtk&\rcs&\rcs\\
+		Draisine&\rcs&\gtk&\rcs&\rcs&\rcs\\
+		Tram&\gtk&\gtk&\rcs&\rcs&\gtk\\
+	\end{tabular}
+	\caption{Exemple de données}
+\end{table}
+
+\paragraph{Entropie}
+
+\begin{defn}
+	Étant donné un variable aléatoire finie $X$\/ à valeurs dans $E$. On note $p_X : E \to [0,1]$\/ sa loi de probabilité : \[
+		\forall x \in E,\quad p_X(x) = P(X = x)
+	.\]
+	On définit l'\textit{entropie} $H(X)$\/ de cette variable aléatoire comme \[
+		\mathrm{H}(X) = -\sum_{x \in E} p_X(x)\:\ln\big(p_X(x)\big)
+	.\]
+	On prolonge $p_X(x) \ln(p_X(x))$\/ par continuité à la valeur $0$\/ lorsque $p_X(x) = 0$.
+\end{defn}
+
+\begin{exm}
+	On considère la variable aléatoire $X$\/ à valeur dans $\{\red\bullet,\green\bullet\}$\/ telle que $P(X = \red\bullet) = 1$\/ et $P(X = \green\bullet) = 0$. On a \[
+		\mathrm{H}(X) = - 0 \ln 0 - 1 \ln 1 = 0
+	.\]
+\end{exm}
+
+\begin{exm}
+	On considère la variable aléatoire $X$\/ à valeur dans $\{\red\bullet,\green\bullet\}$\/ telle que $P(X = \red\bullet) = p$\/ et $P(X = \green\bullet) = 1 -p$, avec $p \in [0,1]$. On a alors \[
+		\mathrm{H}(X) = -p \ln p - (1- p) \ln (1-p)
+	\]
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		size(4cm);
+		draw((-0.2, 0) -- (1.2, 0), Arrow(TeXHead));
+		draw((0,-0.2) -- (0,0.2+log(2)), Arrow(TeXHead));
+		real f(real p) {
+			if (p == 0 || p == 1) return 0;
+			else return - p * log(p) - (1-p) * log(1-p);
+		}
+		draw(graph(f, 0, 1), magenta);
+		draw((-0.2, 0.5) -- (1.2, 0.5), dashed+grey);
+	\end{asy}
+	\caption{Représentation graphique de $\mathrm{H}(X)$\/ en fonction de $p$}
+\end{figure}
+
+\begin{lem}
+	Si $(p_i)_{i\in\left\llbracket 1,n \right\rrbracket} \in {]0,1]}^n$ sont tels que $\sum_{i=1}^n p_i = 1$. Soit $(q_i)_{i\in\left\llbracket 1,n \right\rrbracket}$\/ tels que $\forall i$, $q_i = \frac{1}{n}$. On a alors \[
+		- \sum_{i=1}^n p_i \ln p_i \le - \sum_{i=1}^n p_i \ln(q_i)
+	.\]
+\end{lem}
+
+\begin{prv}
+	On a \[
+		\sum_{i=1}^n p_i \ln(q_i) - \sum_{i=1}^n p_i \ln(p_i) =
+		\sum_{i=1}^n p_i \ln\left( \frac{p_i}{q_i} \right) \le \ln\left( \sum_{i=1}^n p_i \frac{q_i}{p_i} \right) = 0
+	.\]
+\end{prv}
+
+\begin{prop}
+	Soit $n= |E|$. L'entropie d'une variable aléatoire à valeurs dans $E$\/ est maximale lorsque \[
+		\forall e \in E,\:P(X = e) = \frac{1}{n}
+	.\]
+\end{prop}
+
+\begin{prv}
+	On conclut, d'après le lemme précédent, que \ldots
+\end{prv}
+
+\begin{defn}
+	Étant donné un jeu de données classifiés $(S, c)$ où $c : \mathds{S} \to E$, on appelle \textit{entropie} de ce jeu de données l'entropie de la variable aléatoire $c(Y)$\/ où $Y \sim \mathcal{U}(S)$.
+	On a donc \[
+		\mathrm{H}\big((S,c)\big) = -\sum_{e \in E} \frac{\Card\:c^{-1}\big(\{e\}\big)}{\Card S} \ln\left( \frac{\Card\:c^{-1}\big(\{e\}\big)}{\Card S} \right) 
+	.\]
+\end{defn}
+
+\begin{defn}
+	Étant donné un jeu de données une partition $\{S_1, S_2, \ldots, S_p\}$\/ d'un jeu de données classifié $(S, c)$, l'\textit{entropie} de cette partition est la moyenne (pondérée par les cardinaux et renormalisée) : \[
+		\mathrm{H}\big(\big(\{S_1,\ldots,S_p\}, c\big)\big) = \sum_{i=1}^p \frac{\Card S_i}{\Card S}\:\mathrm{H}\big((S_i,c)\big)
+	.\]
+\end{defn}
+
+L'entropie de $\{w,a,t,d,r,m\}$\/ est $\mathrm{H} = -\frac{3}{6}\ln\left( \frac{3}{6} \right) - \frac{3}{6} \ln\left(\frac{3}{6}\right) = \ln 2 \simeq 0{,}69$.
+Mais, avec le découpage de l'arbre de décision ci-dessous, on obtient l'entropie
+\begin{align*}
+	\mathrm{H} &= \frac{2}{6} \mathrm{H}(\{w;d\}) + \frac{4}{6} \mathrm{H}(\{a,t,r,m\}) \\
+	&= \frac{2}{6} \times  0 + \frac{4}{6} \times \left( -\frac{1}{4} \ln\left(\frac{1}{4}\right) - \frac{3}{4} \ln\left( \frac{3}{4} \right) \right) \\
+	&\simeq 0{,}37.  \\
+\end{align*}
+\begin{figure}[H]
+	\centering
+	\Tree[.{moteur ?} {$\substack{\text{Wagonnet}\\\text{Draisine}}$} {$\substack{\textsc{a320}\\\text{Tram}\\\text{Métro}\\\textsc{tgv}}$} ]
+	\caption{Arbre de décision possible se basant sur le moteur}
+\end{figure}
+
+Avec un autre arbre (comme celui ci-dessous), on obtient une entropie différente :
+\begin{align*}
+	\mathrm{H} &= \frac{1}{6}\mathrm{H}(\{a\}) + \frac{5}{6} \mathrm{H}(\{w,d,t,r,m\})\\
+	&= \frac{5}{6} \left( -\frac{2}{5} \ln\left( \frac{2}{5} \right) - \frac{3}{5} \ln\left( \frac{3}{5} \right) \right) \\
+	&\simeq 0{,}56.
+\end{align*}
+\begin{figure}[H]
+	\centering
+	\Tree[.{rails ?} \textsc{a320} {$\substack{\textsc{a320}\\\text{Tram}\\\text{Métro}\\\textsc{tgv}\\\text{Draisine}}$} ]
+	\caption{Arbre de décision possible se basant sur les rails}
+\end{figure}
+
+Pour le sous-terrain, on a $\mathrm{H} = \ln 2$.
+\begin{figure}[H]
+	\centering
+	\Tree[.{sous-terrain ?} {$\substack{\textsc{a320}\\\text{Métro}\\\text{Tram}\\\text{Métro}\\\text{Draisine}}$} {$\substack{\textsc{a320}\\\text{Tram}\\\text{Métro}\\\textsc{tgv}\\\text{Draisine}}$} ]
+	\caption{Arbre de décision possible se basant sur sous-terrain}
+	\todo{Vérifier}
+\end{figure}
+
+\todo{Autre cas}
+
+
+Ainsi, on choisit de commencer avec la condition ``moteur'' car l'entropie est la plus faible avec cette condition. Ainsi, l'arbre de décision ressemble à celui ci-dessous.
+\begin{figure}[H]
+	\centering
+	\Tree[.{moteur ?} \textsc{Non} $a,t,r,m$ ]
+	\caption{Arbre de décision partiel}
+\end{figure}
+
+On réitère avec les autres conditions. L'entropie en se basant sur la vitesse est $\frac{1}{2} \ln 2 \simeq 0{,}34$. En effet, l'arbre de décision possible ressemble à celui ci-dessous.
+\begin{figure}[H]
+	\centering
+	\Tree[.Vitesse $r,m$ $t,a$ ]
+	\caption{Arbre de décision possible se basant sur le moteur puis la vitesse}
+\end{figure}
+
+Mais, en se basant sur sous-terrain, on obtient une entropie de $\frac{3}{4}\left( -\frac{2}{3}\ln\left( \frac{2}{3} \right) - \frac{1}{3}\ln\left( \frac{1}{3} \right) \right) \simeq 0{,}48$.
+
+\begin{figure}[H]
+	\centering
+	\Tree[.Sous-terrain $t,r,a$ $m$ ]
+	\caption{Arbre de décision possible se basant sur le moteur puis sous-terrain}
+\end{figure}
+
+Et, en se basant sur les rails, on obtient une entropie de 0.
+
+\begin{figure}[H]
+	\centering
+	\Tree[.Rails $a$ $t,r,m$ ]
+	\caption{Arbre de décision possible se basant sur le moteur puis les rails}
+\end{figure}
+
+On en déduit que l'arbre final de décision est celui ci-dessous.
+\begin{figure}[H]
+	\centering
+	\Tree[.{Moteur ?} \textsc{Non} [.{Rails ?} \textsc{Non} \textsc{Oui} ]]
+	\caption{Arbre de décision final pour la classification de trains}
+\end{figure}
+
+Les données que l'on a utilisées sont pour l'apprentissage. On teste notre arbre de décision sur les données ci-dessous.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c|c|c|c|c|c}
+		Nom & Moteur & Rail & Sous-terre & Vitesse & Résultat de l'algorithme\\ \hline
+		Bus & \gtk & \rcs & \rcs & \rcs & \rcs\\
+		\textsc{ter} & \gtk & \gtk & \rcs & \rcs & \gtk\\
+		Cheval & \rcs & \rcs & \rcs & \rcs & \rcs\\
+		Ascenseur spatial & \gtk & \gtk & \rcs & \rcs & \gtk
+	\end{tabular}
+	\caption{Test de l'arbre de décision créé}
+\end{table}
+
+Attention : il ne faut pas faire du \textit{sur-apprentissage}, comme montré sur la figure ci-dessus.
+\todo{Figure sur-apprentissage}
+Aussi, il faut faire attention aux critères : par exemple, lors de la classification de photos de chats et de chiens, les photos de chiens sont en général prises en extérieur et l'algorithme ID3 aurait donc pu choisir de baser sa décision sur l'emplacement de la photo, même si elle n'importe pas dans la différenciation chat/chiens.
+
+Autre exemple : on considère la table de données ci-dessous. Utilisons l'algorithme ID3 sur ces données, et trouvons l'arbre de décision.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c|c|c|c|c}
+		$A$&$B$&$C$&$D$&Classification\\ \hline
+		\gtk & \rcs & \rcs & \gtk & $\red\bullet$\\
+		\gtk & \gtk & \rcs & \gtk & $\green\bullet$\\
+		\gtk & \rcs & \gtk & \gtk & $\red\bullet$\\
+		\gtk & \gtk & \gtk & \gtk & $\red\bullet$\\
+		\rcs & \rcs & \gtk & \gtk & $\green\bullet$\\
+		\rcs & \gtk & \gtk & \rcs & $\red\bullet$\\
+		\rcs & \rcs & \rcs & \rcs & $\green\bullet$\\
+		\rcs & \gtk & \rcs & \gtk & $\red\bullet$
+	\end{tabular}
+	\caption{Table de données d'exemple}
+\end{table}
+
+% A -> 0.28
+% B -> 0.28
+% C -> 0.28
+% D -> 0.47
+
+

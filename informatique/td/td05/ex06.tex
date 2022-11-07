@@ -1,0 +1,13 @@
+\section{Exercice 6 : Langages reconnaissables ou non}
+
+\paragraph{Q.\ 7}
+{\slshape Le carré d'un langage est le langage $L_2 = \{u\cdot u \mid u \in L\}$. Si $L$\/ est reconnaissable, $L_2$\/ est-il nécessairement reconnaissable ?}
+
+Avec $\Sigma = \{a,b\}$, soit $L = \mathcal{L}(a^* \cdot b^*)$. On a donc $L_2 = \{a^n \cdot b^m \cdot a^n \cdot b^m  \mid (n,m) \in \N^2\}$. Supposons $L_2$\/ reconnaissable. Soit $\mathcal{A}$\/ un automate à $n$\/ états reconnaissant $L_2$.
+On pose $u = a^{2n} \cdot b^n \cdot a^{2n} \cdot b^n \in L_2$. D'après le lemme de l'étoile, il existe $(x,y,z) \in (\Sigma^*)^3$\/ tel que $u = x\cdot y\cdot z$, $|xy| \le n$, $\mathcal{L}(x\cdot y^* \cdot z) \subseteq L_2$, et $y \neq \varepsilon$. Ainsi, il existe $m \in \left\llbracket 1,n \right\rrbracket$\/ et $p \in \left\llbracket 1,n \right\rrbracket$\/ tels que $y = a^{m}$, $x = a^{p}$\/ et $z = a^{2n-m-p} \cdot  b^{n} \cdot a^{2n} \cdot b^n$. Et alors, $x\cdot y^2\cdot z = a^{p}\cdot a^{2m} \cdot a^{n-m-p} \cdot  b^n \cdot a^{2n}\cdot b^n = a^{2n+m} \cdot b^n \cdot a^{2n} \cdot b^n \not\in L_2$.
+
+\paragraph{Q.\ 5} {\slshape Le langage $L_5 = \{a^{n^3}  \mid n \in \N\}$\/ est-il reconnaissable ?}
+Soit $\mathcal{A}$\/ un automate à $N$\/ états, et soit $u = a^{N^3}$.
+D'après le lemme de l'étoile, il existe $(x,y,z) \in (\Sigma^*)^3$\/ tel que $u = x\cdot y\cdot z$, $|xy| \le N$, $\mathcal{L}(x\cdot y^*\cdot z) \subseteq L_5$\/ et $y \neq \varepsilon$.
+D'où $x\cdot y^{0}\cdot z \in L$, et donc $a^{N^3 - i} \in L$, avec $i\le N$. Or, $\forall k \in \N,\:N^3 - i \neq k^3$, ce qui est absurde.
+

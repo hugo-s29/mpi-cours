@@ -1,0 +1,33 @@
+\section{Exercice 5}
+
+\paragraph{1.}
+
+On a $e = a(ab \mid b^*)  \mid a$, $f = a_1(a_2b_1 \mid b_2^*)  \mid a_3$\/et $f_\varphi = e$\/ où \[
+	\varphi : \left(\begin{array}{ccc}
+		\forall i,\:a_i&\longmapsto&a\\
+		\forall i,\:b_i&\longmapsto&b
+	\end{array}\right)
+.\]
+D'où
+\[
+	\begin{array}{c|c|c|c|c}
+		&\Lambda&P&S&F\\\hline
+		a_1&\O&a_1&a_1&\O\\
+		a_2&\O&a_2&a_2&\O\\
+		b_2^*&\varepsilon&b_2&b_2&b_1b_2\\
+		a_2b_1 \mid b_2^*&\varepsilon&a_2,b_2&b_1,b_2&a_2b_1,b_2b_2\\
+		a_3&\O&a_3&a_3&\O\\
+		a_1(a_2b_1 \mid b_2^*)&\O&a_1&b_1,b_2,a_1&a_1a_2,a_1b_2,a_2b_1,b_2b_2\\
+		f&\O&a_1,a_3&b_1,b_2,a_3,a_1&a_1a_2,a_1b_2,a_3b_1,b_2b_2
+	\end{array}
+.\]
+
+Automate à faire\ldots
+
+\paragraph{2.}
+On pose $e = (\varepsilon  \mid a)^* \cdot ab\cdot (a \mid b)^*$\/ et $f = (\varepsilon  \mid a_1)^* \cdot a_2b_1\cdot (a_3 \mid b_2)^*$\/ et \[
+	\varphi : \left(\begin{array}{ccc}
+		\forall i,\:a_i&\longmapsto&a\\
+		\forall i,\:b_i&\longmapsto&b
+	\end{array}\right)
+\] d'où $f_\varphi = e$.

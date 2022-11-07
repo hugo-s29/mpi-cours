@@ -1,0 +1,566 @@
+\documentclass[a4paper]{article}
+
+\input{../preamble.tex}
+\usepackage{pgfornament}
+
+\begin{document}
+	\clearpage
+	\centerline{\LARGE Cadeaux du 14/09/22}
+	\bigskip
+	\bigskip
+	{\bf Cadeau 1} :\\
+	\slshape
+	Soit $A$\/ un anneau commutatif et soit $x \in A$. On dit que $x$\/ est {\it nilpotent}\/ (ou {\it nihilpotent}) si \[
+		\exists n \in \N,\:x^n = 0_A
+	.\]
+	\begin{enumerate}
+		\item Montrer que, si $x$\/ est nilpotent, alors $x$\/ n'est pas inversible mais $1_A - x$\/ est inversible.
+		\item Montrer que l'ensemble des éléments nilpotents de $A$\/ est un idéal de $A$.
+	\end{enumerate}
+	\upshape
+	\bigskip
+	\bigskip
+
+	{\bf Réponse du cadeau 1} :
+	\begin{enumerate}
+		\item On procède par l'absurde. On suppose que $x$\/ est nilpotent. Soit $n \in \N$\/ le plus petit possible tel que $x^n = 0_A$. On suppose qu'il existe $y \in A$\/ tel que $x\cdot y = 1_A$. D'où, $(xy)^n$\/ est, d'une part $x^n \cdot y^n = 0_A \cdot y^n = 0_A$\/ par commutativité, et d'autre part, $(xy)^n = {1_A}^{n} = 1_A \neq 0_A$. Ce qui est absurde.
+
+			On suppose à présent $x \neq 1_A$. On sait que $A \ni \sum_{k=0}^{n-1} x^k = (1-x^n) / (1-x) = 1 / (1-x)$. On a donc trouvé l'inverse de $1-x$.
+		\item Soit $x$\/ un élément nilpotent de $A$, et $y$\/ un élément de $A$. Soit $n \in \N$\/ tel que $x^n = 0_A$. $x\cdot y$\/ est aussi un élément nilpotent de $A$. En effet, $(xy)^n = x^n \cdot y^n = 0_A \cdot y^n = 0_A$. On nomme $\mathcal{I}$\/ l'ensemble des éléments nilpotents de $A$. Montrons que $(\mathcal{I},+)$\/ est un sous-groupe additif de $(A, +)$. On a bien $0 \in \mathcal{I}$\/ car $0^{k} = 0$.
+			Soient $x$\/ et $y$\/ deux éléments nilpotents. Montrons que $x -y  \in \mathcal{I}$. Soient $n_1$\/ et $n_2 \in \N^*$\/ tels que $x^{n_1} = 0$\/ et $y^{n_2} = 0$. On veut montrer qu'il existe $n \in \N^*$\/ tel que $(x-y)^n = 0$. Soit $n = n_1 + n_2$. On a \[
+				(x-y)^n = \sum_{k=0}^n (-1)^{n-k}{n \choose k} x^k y^{n-k}
+				= \underbrace{\sum_{k=0}^{n_1} (-1)^{n-k}{n\choose k} x^y y^{n-k}}_{(1)} + \underbrace{\sum_{k=n_1 + 1}^{n_1 + n_2} (-1)^{n-k}{n\choose k} x^y y^{n-k}}_{(2)}
+			.\] Or, dans la somme (1), $n-k = n_1 + n_2 - k = n_2 + (n_1 - k) \ge n_2$\/ et, dans la somme (2), $k \ge n_1$.
+	\end{enumerate}
+
+	\bigskip
+	\bigskip
+	
+	\centerline{\pgfornament[width=3cm]{88}}
+
+	\bigskip
+	\bigskip
+	
+	{\bf Cadeau 2} :\\
+	\slshape
+	Soit $F$\/ l'ensemble des matrices de la forme ${x\hfil y\choose -5y\quad x+4y}$\/ où $(x, y) \in \R^2$. On note $J = {-2\quad1\choose -5\quad2}$.
+	\begin{enumerate}
+		\item Montrer que $F$\/ est un sous-espace vectoriel de $\mathscr{M}_{2,2}(\R)$\/ et que $(I_2, J)$\/ est une base de $F$.
+		\item Calculer $J^2$\/ puis $(x\:I_2 + y J)\cdot (x'\:I + y'\:J)$\/ pour tout $(x,y,x',y') \in \R^4$. Qu'en déduire ?
+	\end{enumerate}
+
+	\upshape
+	\bigskip
+	\bigskip
+
+	{\bf Réponse du cadeau 2} :
+	\begin{enumerate}
+		\item On cherche à trouver $\alpha, \beta \in \R^2$\/ tels que ${x\hfil y\choose -5\quad x+4y} = \alpha I_2 + \beta J$. On a
+			\begin{align*}
+				\alpha I_2 + \beta J \iff& \begin{pmatrix}
+					x &y\\
+					-5y&x+4y
+				\end{pmatrix} = \begin{pmatrix}
+					\alpha & 0\\
+					0&\alpha
+				\end{pmatrix} + \begin{pmatrix}
+					-2\beta & \beta\\
+					-5\beta& 2\beta
+				\end{pmatrix}\\
+				\iff&
+				\begin{cases}
+					x = \alpha - 2\beta\\
+					y = \beta\\
+					-5\beta = -5y\\
+					2\beta + \alpha = x+ y
+				\end{cases}\\
+				\iff& \begin{cases}
+					\beta = y\\
+					\alpha = x + 2y\\
+				\end{cases}
+			\end{align*}
+		\item On a $J^2 = -I_2$\/ et, en calculant minutieusement, on trouve, pour tout $(x,y,x',y') \in \R^4$, $(x\,I_2+ y\,J)\cdot (x'\,I_2 + y'\,J) = \cdots = (xx' - yy')\,I_2 + (x'y + xy')\,J$.
+			On remarque que $(F, +, \cdot)$\/ est isomorphe à $(\C, +, \times)$. C'est un isomorphisme d'anneaux. Or, comme l'anneau $(\C, +, \times)$\/ est un corps donc $F$\/ l'est aussi.
+	\end{enumerate}
+	\clearpage
+	\centerline{\LARGE Cadeau du 19/09/22}
+	\bigskip
+	\bigskip
+	{\bf Cadeau} :\\
+	\slshape
+	Soit $(\vec\imath, \vec\jmath, \vec k)$\/ une base orthonormée de $\R^3$. On pose $f: \R^3 \to \R^3$\/ un endomorphisme défini tel que \[
+		A = \begin{bNiceMatrix}[last-row,last-col]
+			0&0&1&\vec\imath\\
+			1&0&0&\vec\jmath\\
+			0&1&0&\vec k\\
+			f(\vec\imath)&f(\vec\jmath)&f(\vec k)\\
+		\end{bNiceMatrix} = \big[f\big]_{(\vec\imath,\vec\jmath,\vec k)}
+	.\]
+	Interpréter géométriquement $f$.
+
+	\upshape
+	\bigskip
+	\bigskip
+
+	{\bf Réponse du cadeau} :\\
+	Soit $\mathscr{B}$\/ une base et $A = [f]_\mathscr{B}$, alors $f(\vec\imath) = \vec\jmath$, $f(\vec\jmath) = \vec k$, et $f(\vec k) = \vec\imath$.
+	$f$\/ est la rotation d'angle $\sfrac{2\pi}3$\/ autour de $\Vect(\vec \imath + \vec \jmath + \vec k)$.
+
+	On peut également le montrer en décomposant $f = g  \circ h$, où $g$\/ est la symétrie par rapport à $\Vect(\vec{\imath}+\vec{\jmath},\vec{k})$\/ et parallèlement à $\Vect(\vec{\imath},\vec{\jmath})$\/ ; et $h$\/ la symétrie par rapport à $\Vect(\vec{\imath} + \vec{k},\vec{\jmath})$\/ parallèlement à $\Vect(\vec{\imath},\vec{k})$.
+
+	\clearpage
+	\centerline{\LARGE Cadeaux du 22/09/22}
+	\bigskip
+	\bigskip
+	{\bf Cadeau 1} :\\
+	\slshape
+	Soit $(u_n)_{n\in\N}$\/ une suite positive, telle que la suite $S_n = \sum_{k=0}^n u_k$\/ diverge. En calculant $\ln \frac{S_n}{S_{n-1}}$, montrer que la série $\sum \frac{u_n}{S_n}$\/ diverge.
+	\upshape
+
+	\bigskip
+	\bigskip
+	
+	\centerline{\pgfornament[width=3cm]{88}}
+
+	\bigskip
+	\bigskip
+	
+	{\bf Cadeau 2} :\\
+	\slshape
+	On pose \[
+		D(x) = 
+		\begin{vmatrix}
+			7-x&14-x&3-x\\
+			8-x&2-x&-x\\
+			13-x&-1-x&2-x
+		\end{vmatrix}
+	.\]
+	Montrer qu'il existe deux réels $\alpha$\/ et $\beta$\/ tels que, pour tout $x \in \R$, $D(x) = \alpha x + \beta$. Déterminer $\alpha$\/ et $\beta$.
+	\clearpage
+	\centerline{\LARGE Cadeau du 23/09/22}
+	\bigskip
+	\bigskip
+	{\bf Cadeau} :\\
+	\slshape
+	Montrer qu'il n'existe pas $P \in \mathrm{GL}_2(\R)$\/ telle que, $A' = P^{-1}AP$\/ où \[
+		A = \begin{bmatrix} 0&7\\0&0 \end{bmatrix}\qquad\text{et}\qquad
+		A' = \begin{bmatrix} \lambda&0\\0&\mu \end{bmatrix}
+	.\]
+	\upshape
+	\bigskip
+	\bigskip
+
+	{\bf Réponse du cadeau} :\\
+	\begin{itemize}
+		\item[{\sc Analyse}] On suppose $P^{-1} A P = {\lambda\:0\choose 0\:\mu}$. Alors, $\det A = \det A'$, d'où $0 = \lambda\cdot\mu$.
+			Et, $\tr A = \tr A'$, d'où $\lambda + \mu = 0$.
+			On en déduit donc que $\lambda = 0 = \mu$.
+		\item[{\sc Synthèse}] On a \[
+				P^{-1} A P = \begin{bmatrix} 0&0\\0&0 \end{bmatrix}
+			.\] D'où, en multipliant à gauche par $P$\/ et à droite par $P^{-1}$, on a \[
+				A = \begin{bmatrix} 0&0\\0&0 \end{bmatrix} 
+			.\]
+	\end{itemize}
+	On en conclut que la matrice $A$\/ n'est pas diagonalisable.
+	\clearpage
+	\centerline{\LARGE Cadeaux du 28/09/22}
+	\bigskip
+	\bigskip
+	{\bf Cadeau 1} :\\
+	\slshape
+	On considère la matrice \[
+		M =
+		\begin{pNiceMatrix}[last-row,last-col]
+			0&0&1&\vec{\imath}\\
+			1&0&0&\vec{\jmath}\\
+			0&1&0&\vec{k}\\
+			f(\vec{\imath})&f(\vec{\jmath})&f(\vec{k})
+		\end{pNiceMatrix} = \Big[\:f\:\Big]_{(\vec{\imath},\vec{\jmath},\vec{k})}
+	.\]
+	Trouver et interpréter un vecteur propre et une valeur propre de $M$\/ (et, de même, de $f$).\\
+	\upshape
+	\bigskip
+	\bigskip
+
+	{\bfseries Indication :}\\
+	On a $M \left( \substack{1\\1\\1} \right) = 1 \times \left( \substack{1\\1\\1} \right)$. Le vecteur $\vec{\imath}+\vec{\jmath}+\vec{k}$\/ est un vecteur directeur de l'axe de rotation. Montrer que les seuls vecteurs propres sont colinéaire au vecteur $\left( \substack{1\\1\\1} \right)$.
+	\clearpage
+	\centerline{\LARGE Cadeaux du 06/10/22}
+	\bigskip
+	\bigskip
+	{\bf Cadeau} :\\
+	\slshape
+	On considère la matrice \[
+		A = \begin{pmatrix}
+			0&1&1\\
+			-1&1&1\\
+			-1&1&2
+		\end{pmatrix}
+	.\]
+	\begin{enumerate}
+		\item Quel est le spectre de la matrice $A$\/ ?
+		\item Déterminer une base de chaque sous-espace propre de la matrice $A$.
+		\item Montrer que la matrice $A$\/ est trigonalisable mais pas diagonalisable.
+		\item Soit $T$\/ la matrice ci-dessous. Déterminer une matrice $P$\/ telle que $P^{-1} \cdot A \cdot P = T$ : \[
+				T = \begin{pmatrix}
+					1&1&0\\
+					0&1&1\\
+					0&0&1
+				\end{pmatrix}
+			\]
+		\item Résoudre sur $\R$\/ le système d'équation différentielle $(\Sigma)$\/ ci-dessous : \[
+				(\Sigma) : \begin{cases}
+					x'(t) = y(t) + z(t)\\
+					y'(t) = -x(t) + y(t) + z(t)\\
+					z'(t) = -x(t) + y(t) + 2z(t)
+				\end{cases}
+			\]
+	\end{enumerate}
+	\upshape
+	\bigskip
+	\bigskip
+	{\bf Réponse au cadeau 1:}\\
+	\begin{enumerate}
+		\item On calcule
+			\begin{align*}
+				\chi_A(x) = \det(xI_3 - A) &=
+				\begin{vmatrix}
+					x & -1 & -1\\
+					1 & x - 1 & -1\\
+					1 & -1 & x - 2
+				\end{vmatrix}\\
+				&= x
+				\begin{vmatrix}
+					x-1&-1\\
+					-1&x-2
+				\end{vmatrix} -
+				\begin{vmatrix}
+					-1&-1\\
+					-1&x-2
+				\end{vmatrix} +
+				\begin{vmatrix}
+					-1&-1\\
+					x-1&-1
+				\end{vmatrix}\\
+				&= x\big((x-1)(x-2) - 1\big) - (2-x) - 1  + (-1 + x - 1) \\
+				&= x(x^2 -3x + 1) -2 + 2x \\
+				&= x^3 - 3x^2 + 3x - 1 \\
+				&= (x-1)^3 \\
+			\end{align*}
+			On en déduit que \[
+				\boxed{\Sp(A) = \{1\}.}
+			\]
+		\item On cherche une base de $\mathrm{SEP}(1)$\/ : on cherche $X = \left( \substack{x\\y\\z} \right) \in \mathscr{M}_{3,1}(\R)$, tel que $AX = X$.
+			\begin{align*}
+				\begin{pmatrix}
+					0&1&1\\
+					-1&1&1\\
+					-1&1&2
+				\end{pmatrix} \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix} = \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix} \iff& \begin{cases}
+					y + z = x\\
+					-x + y + z = y\\
+					-x + y + 2z = z
+				\end{cases}\\
+				\iff& \begin{cases}
+					y = 0\\
+					x = z\\
+				\end{cases}\\
+				\iff& X = x \begin{pmatrix}
+					1\\
+					0\\
+					1
+				\end{pmatrix}\\
+				\iff& X \in \Vect\begin{pmatrix}
+					1\\0\\1
+				\end{pmatrix}
+			\end{align*}
+			Ainsi, la base $\mathscr{B} = \left( \left( \substack{1\\0\\1} \right)\right)$.
+		\item La matrice $A$\/ n'est pas diagonalisable : en effet, on a $\dim \R^3 = 3 \neq \dim(\mathrm{SEP}(1)) = 1$. Mais, le polynôme $\chi_A$\/ est scindé donc la matrice $A$\/ est trigonalisable.
+		\item
+			On cherche $P \in \mathrm{GL}_n(\R)$\/ tel que \[
+				P^{-1} \cdot A \cdot P = T = 
+				\begin{pNiceMatrix}[last-row,last-col]
+					1&1&0&\varepsilon_1\\
+					0&1&1&\varepsilon_2\\
+					0&0&1&\varepsilon_3\\
+					f(\varepsilon_1)&f(\varepsilon_2)&f(\varepsilon_3)
+				\end{pNiceMatrix}
+			.\]
+			On cherche donc $(\varepsilon_1, \varepsilon_2, \varepsilon_3)$\/ une base de $\R^3$\/ tel que \[
+				\begin{cases}
+					f(\varepsilon_1) = \varepsilon_1 \qquad\qquad&(1)\\
+					f(\varepsilon_2) = \varepsilon_1+\varepsilon_2 \qquad\qquad&(2)\\
+					f(\varepsilon_3) = \varepsilon_2 + \varepsilon_3 \qquad\qquad&(3).
+				\end{cases}
+			\]
+			On choisit $\varepsilon_1 = \left( \substack{1\\0\\1} \right)$, d'après la question 2.
+			Puis, on calcule
+			\begin{align*}
+				\underbrace{\begin{pmatrix}
+					0&1&1\\
+					-1&1&1\\
+					-1&1&2
+				\end{pmatrix}}_{\smash{A}} \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix} = \begin{pmatrix}
+					1\\0\\1
+				\end{pmatrix} + \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix} \iff& \begin{cases}
+					-x + y + z = 1\\
+					-x+z=0\\
+					-x + y +z = 1
+				\end{cases}\\
+				\iff& \begin{cases}
+					-x+y+z=1\\
+					-x+z = 0
+				\end{cases}\\
+				\iff& \begin{cases}
+					x = z\\
+					y = 1
+				\end{cases}\\
+				\iff& \varepsilon_2 = \begin{pmatrix}
+					x\\1\\x
+				\end{pmatrix} = \begin{pmatrix}
+					0&1&0
+				\end{pmatrix} + x \begin{pmatrix}
+					1\\0\\1
+				\end{pmatrix}
+			\end{align*}
+			On choisit donc $\varepsilon_2 = \left( \substack{0\\1\\0} \right)$\/ (en choisissant $x = 0$). De même, on choisit $\varepsilon_3 = \left( \substack{0\\-1\\1} \right)$.
+			Donc, si \[
+				P =
+				\begin{pNiceMatrix}[last-row,last-col]
+					1&0&0&e_1\\
+					0&1&-1&e_2\\
+					1&0&1&e_3\\
+					\varepsilon_1&\varepsilon_2&\varepsilon_3
+				\end{pNiceMatrix}
+			\] alors $P^{-1} \cdot A \cdot P$, et on a bien $\det P = 1$.
+		\item
+			\begin{align*}
+				(\Sigma) \iff& X'(t) = A\cdot X(t) \text{ où } X(t) \begin{pmatrix}
+					x(t)\\y(t)\\z(t)
+				\end{pmatrix}\\
+				\iff& U'(t) = T\cdot U(t) \text{ où } U(t) = \begin{pmatrix}
+						u(t)\\v(t)\\w(t)
+					\end{pmatrix} = P^{-1}\cdot X(t)\\
+				\iff& \begin{cases}
+					u'(t) = u(t) + v(t)&\qquad(1)\\
+					v'(t) = v(t) + w(t)&\qquad(2)\\
+					w'(t) = w(t) &\qquad(3)
+				\end{cases}
+			\end{align*}
+			D'où
+			\[
+				(3) \iff \exists K \in \R,\:\forall t \in \R,\;w(t) = K\mathrm{e}^{t},
+			\] et \[
+				(2) \iff v'(t) - v(t) = K \mathrm{e}^{t}
+			.\]
+			On résout l'équation homogène associé : \[
+				v'(t) = v(t) \iff \exists L \in \R,\:\forall t \in \R,\:v(t) = L\mathrm{e}^{t}
+			.\]
+			On pose $v(t) = \ell(t)\:\mathrm{e}^{t}$, et donc
+			\begin{align*}
+				(2) \iff& \ell'(t)\:\mathrm{e}^{t} + \ell(t)\:\mathrm{e}^{t} - \ell(t)\:\mathrm{e}^{t} = K\mathrm{e}^t\\
+				\iff& \ell'(t) = K\\
+				\iff& \ell(t) = K\,t + L\\
+				\iff& v(t) = (K t + L)\: \mathrm{e}^{t}
+			\end{align*}
+			Et donc
+			\begin{align*}
+				(1) \iff& u'(t) = u(t) + v(t) = u(t) + (Kt + L)\:\mathrm{e}^{t}\\
+				\iff& u(t) - u(t) = (Kt + L)\:\mathrm{e}^{t}\\
+			\end{align*}
+			On résout l'équation homogène associée : \[
+				u'(t) - u(t) = 0 \iff \exists M \in \R,\:\forall t \in \R\:u(t) = M \mathrm{e}^{t}
+			.\]
+			On pose $u(t) = m(t)\:\mathrm{e}^{t}$.
+			\begin{align*}
+				(2) \iff& m'(t)\:\mathrm{e}^{t} - m(t) = (Kt + L)\:\mathrm{e}^{t}\\
+				\iff& m'(t) = K t + L\\
+				\iff& m(t) = \frac{1}{2} Kt^2 + Lt + M\\
+				\iff& u(t) = \left( \frac{1}{2} Kt^2 + L t + M \right)\:\mathrm{e}^{t}
+			\end{align*}
+			Ainsi, \[
+				(\Sigma) \iff \exists (K,L,M) \in \R^3,\:\forall t \in \R,\: \begin{cases}
+					u(t) = \left( \frac{1}{2} Kt^2 + Lt + M \right)\:\mathrm{e}^{t}\\
+					v(t) = (Kt + L)\:\mathrm{e}^{t}\\
+					w(t) = K\:\mathrm{e}^{t}.
+				\end{cases}
+			\] Or, $X(t) = P \cdot U(t)$, et donc
+			\begin{align*}
+				(2) \iff& \exists (K,L,M) \in \R^3,\:\forall t \in \R,\: \begin{cases}
+					x(t) = u(t)\\
+					y(t) = v(t) - w(t)\\
+					z(t) = u(t) + w(t)
+				\end{cases}\\
+				\iff& \exists (K,L,M) \in \R^3,\:\forall t \in \R,\: \begin{cases}
+					x(t) = \left( \frac{1}{2} K t^2 + LT + M \right) \mathrm{e}^{t}\\
+					y(t) = \left( Kt + L - K \right)\mathrm{e}^{t}\\
+					z(t) = \left( \frac{1}{2}Kt^2 + Lt + M + K \right)\mathrm{e}^{t}
+				\end{cases}
+			\end{align*}
+	\end{enumerate}
+	\bigskip
+	\bigskip
+	{\bf Cadeau 2} (matrices stochastiques) :\\
+	\slshape
+	Soit une matrice carrée $A = (a_{i,j}) \in \mathscr{M}_n(\R)$\/ telle que \[
+		\forall i,j \in \left\llbracket 1,n \right\rrbracket,\:a_{i,j} \ge 0\qquad\text{ et }\qquad \forall i \in \left\llbracket 1,n \right\rrbracket,\:\sum_{j=1}^n a_{i,j} = 1
+	.\]
+	\begin{enumerate}
+		\item Montrer que $1 \in \Sp(A)$.
+		\item Montrer que, si $\lambda$\/ est une valeur propre de $A$, alors $|\lambda| \le 1$.
+	\end{enumerate}
+	\upshape
+
+	\bigskip
+	\bigskip
+	{\bf Cadeau 3} (matrices à diagonale strictement dominante) :\\
+	\slshape
+	Soit $A = (a_{i,j}) \in \mathscr{M}_{n}(\R)$\/ telle que \[
+		\forall  i \in \left\llbracket 1,n \right\rrbracket,\:|a_{i,j}| > \sum_{j \neq i} |a_{i,j}|
+	.\] Montrer que $A$\/ est inversible.
+	\upshape
+	\clearpage
+	\centerline{\LARGE Cadeau du 12/10/22}
+	\bigskip
+	\bigskip
+	{\bf Cadeau} :\\
+	\slshape
+	Soit $A \in \mathscr{M}_2(\R)$ tell que $A^2 = -I_2$. Montrer qu'il existe $P$\/ une matrice inversible telle que \[
+		P^{-1}\cdot A\cdot P = \begin{pmatrix}
+			0&-1\\
+			1&0
+		\end{pmatrix} = M
+	.\]
+	\upshape
+	\bigskip
+	\bigskip
+
+	{\bf Réponse au cadeau}\/\\
+	\begin{comment}
+		Le polynôme $Q(X) = X^2 + 1 = (X-i)(X+i)$\/ est annulateur de la matrice~$A$. D'où~$\Sp_\C (A) \subset \{-i,i\}$. Le polynôme~$Q$\/ est scindé à racines simples dans~$\C[X]$, d'où la matrice est diagonalisable dans~$\mathscr{M}_2(\C)$. Or, le spectre est stable par conjugaison car~$A \in \mathscr{M}_2(\R)$, d'où~$\Sp_\C(A) = \{-i,i\}$. De même, on remarque~$M^2 = I_2$, et donc tout ce qui est dit précédemment est aussi vrai pour cette matrice.
+		Ainsi, il existe une matrice inversible $P \in \mathrm{GL}_2(\C)$\/ telle que \[
+			P^{-1}\cdot A\cdot P = \begin{pmatrix}
+				i&0\\
+				0&-i
+			\end{pmatrix}\qquad\text{et}\qquad \begin{pmatrix}
+				0&-1\\
+				1&0
+			\end{pmatrix} \sim \begin{pmatrix}
+				i&0\\
+				0&-i
+			\end{pmatrix}
+		.\]
+		D'où $A$\/ et ${0\hfill\:-1\choose1\hfill\:0}$\/ sont semblables dans $\mathscr{M}_2(\C)$.
+	\end{comment}
+
+	On remarque que $A \sim {i\hfill\:0\choose0\hfill\:-i}$. D'où, il existe $\varepsilon \in \mathscr{M}_{2,1}(\C)$, tel que $A\cdot \varepsilon = i \varepsilon$. Également, $A \cdot \bar\varepsilon = -i \bar\varepsilon$. Soient $U = \varepsilon + \bar\varepsilon \in \mathscr{M}_{2,1}(\R)$, et $V = i(\varepsilon + \bar\varepsilon) \in \mathscr{M}_{2,1}(\R)$, puis on calcule
+	\begin{align*}
+		A \cdot U &= A\cdot \varepsilon + A\cdot \bar\varepsilon \\
+		&= i \varepsilon - i\bar\varepsilon \\
+		&= i(\varepsilon - \bar\varepsilon) \\
+		&= V.
+	\end{align*}
+	\clearpage
+	\centerline{\LARGE Cadeau du 19/10/22}
+	\bigskip
+	\bigskip
+	{\bf Cadeau} :\\
+	\slshape
+	Soit $f$\/ une fonction continue sur $[0, +\infty[$, telle que $\ds\int_{0}^{+\infty} f(t)~\mathrm{d}t$\/ converge. 
+	\begin{enumerate}
+		\item Montrer que ça n'implique pas que $f(x) \tendsto{x\to +\infty} 0$.
+		\item Montrer que, si $f(x) \tendsto{x\to +\infty} \ell \in \R$, alors $\ell = 0$.
+		\item Montrer que, si $f$\/ est uniformément continue, alors $f(x) \tendsto{x\to +\infty} 0$.
+	\end{enumerate}
+	\upshape
+	\bigskip
+	\bigskip
+
+	{\bf Réponse du cadeau} :
+	\begin{enumerate}
+		\item c.f.\ remarque 7 du cours
+		\item Quitte à remplacer $\ell$\/ par $-\ell$, on suppose $\ell > 0$. Ainsi, il existe $X \ge 0$\/ tel que \[\forall x \ge X,\: f(x) \ge \frac{\ell}{2}.\] Or, l'intégrale \[\int_{X}^{+\infty} \frac{\ell}{2}~\mathrm{d}x\] diverge. D'où \[\int_{X}^{+\infty} f(x)~\mathrm{d}x\] diverge également. Ce qui est absurde.
+			On en déduit que $\ell = 0$.
+		\item On suppose $f$\/ uniformément continue. Par l'absurde, supposons que $f(x) \centernot{\tendsto{x\to +\infty}} 0$, d'où \[
+				\exists \varepsilon > 0,\:\exists (u_n)_{n \in \N} \text{ tendant vers } +\infty,\:\forall n \in \N,\:f(u_n) \ge \varepsilon
+			.\] Or, comme $f$\/ est uniformément continue, il existe $\delta > 0$\/ tel que \[
+				\forall n \in \N,\:\forall x \in \R^+,\quad |x-u_n| \le \delta \implies |f(x) - f(y)| \le \frac{\varepsilon}{2}
+			.\] D'où, \[
+			\int_{0}^{+\infty} f(x)~\mathrm{d}x \ge \int_{0}^{+\infty} \frac{\varepsilon}{2}~\mathrm{d}t
+			\] qui diverge. Ce qui est absurde.
+	\end{enumerate}
+	\clearpage
+	\centerline{\LARGE Cadeau du 21/10/22}
+
+	\centerline{\textit{Théorème d'interpolation de Lagrange}}
+	\bigskip
+	\bigskip
+	{\bf Cadeau} :\\
+	\slshape
+	Soient $(a_0, a_1, \ldots, a_n)$ une suite de $n+1$\/ réels distincts deux à deux.
+	Soient aussi $(b_0, b_1, \ldots, b_n)$\/ une suite de $n+1$\/ réels (qui peuvent être égales).
+	Alors, \[
+		\exists ! P \in \R_n[X],\:\forall k \in \left\llbracket 0,n \right\rrbracket,\:P(a_k) = b_k
+	.\]
+	\upshape
+	\bigskip
+	\bigskip
+
+	{\bf Réponse du cadeau} :\\
+	\begin{itemize}
+		\item[\sc Méthode 1] Soient $n+1$\/ réels $a_0$, $a_1$, \ldots, $a_n$\/ distincts deux à deux. L'application \begin{align*}
+				f: \R_n[X] &\longrightarrow \R^{n+1} \\
+				P &\longmapsto \Big(P(a_0), P(a_1), \ldots, P(a_n)\Big)
+			\end{align*}
+			est linéaire et la dimension de l'espace vectoriel de départ est égale à la dimension de l'espace vectoriel d'arrivée. Soit $P$\/ un polynôme réel de degré au plus $n$.
+			\begin{align*}
+				P \in \Ker f \iff& f(P) = (0, 0, \ldots, 0)\\
+				\implies& P(a_1) = P(a_2) = \cdots = P(a_n) = 0\\
+				\implies& P \text{ a au moins } n + 1 \text{ racines}\\
+				\implies& P = 0_{\R_n[X]} \text{ car } \# \text{racines} > \deg(P)
+			\end{align*}
+			D'où $\Ker f = \{0_{\R_n[X]}\}$.
+			On en déduit que $f$\/ est injective. Et, d'après le théorème du rang, $f$\/ est surjective (car $\dim \R_n[X] = \dim \R^{n+1}$).
+		\item[\sc Méthode 2] On reprend la fonction $f$\/ de la {\sc méthode 1}.
+			Soit $\mathscr{B}$\/ la base canonique de $\R_n[X]$\/ : $\mathscr{B} = (1, X, \ldots, X^n)$\/ ; et, soit $\mathscr{C}$\/ la base canonique de $\R^{n+1}$\/ : $\mathscr{C} = (e_1, e_2, \ldots, e_{n+1})$.
+			On a \[
+				\big[f\big]_\mathscr{B}^{\mathscr{C}} = \Mat_{\mathscr{B},\mathscr{C}}(f) =
+				\begin{pNiceMatrix}[last-row,last-col]
+					1 & a_0 & a_0^n & \cdots & a_0^n & e_1\\
+					1 & a_1 & a_1^n & \cdots & a_1^n & e_2\\
+					1 & a_2 & a_2^n & \cdots & a_2^n & e_3\\
+					\vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+					1 & a_n & a_n^2 & \cdots & a_n^n & e_{n+1}\\
+					f(1) & f(X) & f(X^2) & \ldots & f(X^n)
+				\end{pNiceMatrix} = V
+			.\]
+			On reconnaît un déterminant de {\sc Vandermonde}\/ :
+			\begin{align*}
+				\det V &= (a_n - a_{n-1}) \cdots (a_n - a_1)(a_n - a_0)\\
+							 &\times (a_{n-1} - a_{n-2}) \cdots (a_{n-1} - a_{n-2}) \cdots (a_{n-1} - a_0)\\
+							 &\times\\
+							 &\:\vdots\\
+							 &\times (a_2 - a_1) \cdot (a_2 - a_0)\\
+							 &\times (a_1 - a_0)\\
+							 &= \prod_{i>j} (a_i - a_j)\\
+			\end{align*}
+			D'où $\det V \neq 0$\/ car les $(a_i)$\/ sont distincts deux à deux. Donc $V$\/ est inversible, et d'où $f$\/ est bijective.
+		\item[\sc Méthode 3]
+			On va prouver la surjectivité en déterminant {\bf un}\/ polynôme $P$\/ tel que $P(a_0) = b_0$, $P(a_1) = b_1$, \ldots, $P(a_n) = b_n$. Le voilà :
+			\begin{align*}
+				P &= b_0 \frac{(X-a_1)(X-a_2) \cdots (X- a_n)}{(a_0 - a_1)(a_0 - a_2) \cdots (a_0 - a_n)}\\
+				&+ b_1 \frac{(X-a_0)(X-a_1) \cdots (X-a_n)}{(a_1 - a_0)(a_1 - a_2) \cdots (a_1 - a_n)} \\
+				&\:\vdots \\
+				&+ b_n \frac{(X-a_0)(X-a_1)\cdots(X-a_{n-1})}{(a_n - a_0)(a_n - a_1) \cdots (a_n - a_{n-1})}. \\
+			\end{align*}
+			Ce polynôme interpole les $n+1$\/ points et $\deg P \le n$.
+	\end{itemize}
+\end{document}

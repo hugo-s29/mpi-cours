@@ -1,0 +1,206 @@
+\begin{exm}
+	Deux expressions régulières peuvent donner le même langage :
+	on a $\mathcal{L}(\O) = \O$\/ mais également $\mathcal{L}(\O \mid \O) = \mathcal{L}(\O) \cup \mathcal{L}(\O) = \O \cup \O = \O$.
+	De même, $\mathcal{L}\big(a \mid (b\cdot b^*)\big) = \{a, b, bb, bbb, \ldots\} = \mathcal{L}\big((bb^*) \mid a\big)$.
+\end{exm}
+
+\begin{defn}
+	On définit sur $\Reg(\Sigma)$\/ la fonction ``$\mathrm{vars}$\/'' définie comme
+	\begin{align*}
+		\mathrm{vars}: \Reg(\Sigma) &\longrightarrow \wp(\Sigma) \\
+		\O &\longmapsto \O\\
+		\varepsilon &\longmapsto \O\\
+		a \in \Sigma &\longmapsto \{a\}\\
+		e_1\cdot e_2 &\longmapsto \mathrm{vars}(e_1) \cup \mathrm{vars}(e_2)\\
+		e_1 \mid e_2 &\longmapsto \mathrm{vars}(e_1) \cup \mathrm{vars}(e_2)\\
+		e^* &\longmapsto \mathrm{vars}(e).
+	\end{align*}
+\end{defn}
+
+\begin{prop}
+	Un langage $L$\/ est régulier si et seulement s'il existe $e \in \Reg(\Sigma)$\/ telle que $\mathcal{L}(e) = L$.
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\impliedby$\/'']
+			Montrons que, pour toute expression régulière $e \in \Reg(\Sigma)$, $P_e : \hbox{}$\/``le langage $\mathcal{L}(e)$\/ est régulier.''
+			On procède par induction.
+			\begin{itemize}
+				\item $P_\O$\/ : $\mathcal{L}(\O) = \O \in \mathrm{LR}$\/ ;
+				\item $P_{\varepsilon}$\/ : $\mathcal{L}(\varepsilon) = \{\varepsilon\} = \O^* \in \mathrm{LR}$\/ ;
+				\item Soit $a \in \Sigma$. Montrons $P_a$\/ : $\mathcal{L}(a) = \{a\} \in \mathrm{LR}$\/ ;
+				\item Soient $e_1$\/ et $e_2$\/ deux expressions régulières telles que $P_{e_1}$\/ et $P_{e_2}$\/ soient vrais. Montrons $P_{e_1 \cdot e_2}$\/ : $\mathcal{L}(e_1 \cdot e_2) = \underset{\in \mathrm{LR}}{\mathcal{L}(e_1)} \cdot \underset{\in \mathrm{LR}}{\mathcal{L}(e_2)} \in \mathrm{LR}$\/
+				\item Soient $e_1$\/ et $e_2$\/ deux expressions régulières telles que $P_{e_1}$\/ et $P_{e_2}$\/ soient vrais. Montrons $P_{e_1 \mid e_2}$\/ : $\mathcal{L}(e_1 \mid e_2) = \underset{\in \mathrm{LR}}{\mathcal{L}(e_1)} \cup \underset{\in \mathrm{LR}}{\mathcal{L}(e_2)} \in \mathrm{LR}$\/
+			\end{itemize}
+		\item[``$\implies$\/''] Montrons que, pour tout langage régulier $L$, il existe une expression régulière $e$\/ de l'alphabet $\Sigma$\/ telle que $\mathcal{L}(e) = L$. 
+			Soit $X$\/ l'ensemble des langages $L$\/ tels qu'il existent une expression régulière $e$\/ de l'alphabet $\Sigma$\/ telle que $\mathcal{L}(e) = L$. On a \[
+				X \supseteq \{ \underset{\mathclap{\substack{\vrt=\\\mathcal{L}(\O)}}}{\O} \} \cup \big\{ \underset{\mathclap{\substack{\vrt=\\\mathcal{L}(a)}}}{\{a\}} \:\big|\: a \in \Sigma \big\}
+			.\]
+
+			De plus, si deux langages $L_1$\/ et $L_2$\/ sont dans $X$, alors il existent $e_1$\/ et $e_2$\/ deux expressions régulières de $\Sigma$\/ telle que $\mathcal{L}(e_1) = L_1$\/ et $\mathcal{L}(e_2) = L_2$. Or, $\mathcal{L}(e_1  \mid e_2) = \mathcal{L}(e_1) \cup \mathcal{L}(e_2) = L_1 \cup L_2$\/ et donc $L_1 \cup L_2$.
+
+			De même pour $L_1\cdot L_2$.
+
+			Si un langage $L$\/ est dans $X$, alors il existe une expression régulière $e$\/ d'un alphabet $\Sigma$\/ telle que $\mathcal{L}(e) = L$, alors $\mathcal{L}(e^*) = L^* \in X$.
+			
+			$X$\/ contient les langages $\O$\/ et $\{a\}$\/ (avec $a \in \Sigma$) et $X$\/ est stable par $\cup $, $\cdot $\/ et $*$. Or, $\mathrm{LR}$\/ est défini comme le plus petit ensemble vérifiant les propriétés et donc $\mathrm{LR} \subseteq X$.
+	\end{itemize}
+\end{prv}
+
+\begin{rmk}[Notation]
+	Les notations $\Reg(\Sigma)$\/ et ${\Reg}{\exp}(\Sigma)$ sont équivalentes.
+\end{rmk}
+
+\section{Automates finis (sans $\varepsilon$-transitions)}
+
+On considère l'automate représenté par les états suivants. L'entrée est représentée par la flèche sans nœud de départ et la sortie par celle sans nœud d'arrivée.
+\begin{figure}[H]
+	\centering
+	\scalebox{1.5}{\tikzfig{automates-finis-intro}}
+	\caption{Exemple d'automate}
+\end{figure}
+On représente une séquence d'état par un mot comme $aaba$\/ (qui correspond à une séquence valide) ou $bbab$\/ (qui n'est pas valide).
+
+\subsection{Définitions}
+
+\begin{defn}
+	Un {\it automate fini}\/ (sans $\varepsilon$-transition) est un quintuplet $(Q, \Sigma, I, F, \delta)$\/ où
+	\begin{itemize}
+		\item $Q$\/ est un ensemble d'états ;
+		\item $\Sigma$\/ est son alphabet de travail ;
+		\item $I \subseteq Q$\/ est l'ensemble des états initiaux ;
+		\item $F \subseteq Q$\/ est l'ensemble des états finaux.
+		\item $\delta \subseteq Q \times \Sigma \times Q$.
+	\end{itemize}
+\end{defn}
+
+\begin{figure}[H]
+	\centering
+	\scalebox{1.5}{\tikzfig{automates-finis-2}}
+	\caption{Exemple d'automate (2)}
+\end{figure}
+
+\begin{exm}
+	L'automate ci-dessus est donc représenté mathématiquement par \[
+		\Big(\underbrace{\{0,1,2\}}_Q, \underbrace{\{a,b\}}_\Sigma,\underbrace{\{0,2\}}_I,\underbrace{\{1\}}_F,\underbrace{\big\{(0,a,1),(0,b,2),(1,a,0),(2,a,1),(2,b,2)\big\}}_{\delta}\Big)
+	.\]
+\end{exm}
+
+\begin{defn}
+	On dit d'une suite $(q_0, q_1, q_2, \ldots, q_n) \in Q^{n+1}$\/ qu'elle est {\it une suite de transition de l'automate}\/ $\mathcal{A} = (Q, \Sigma, I, F, \delta)$\/ dès lors qu'il existe $(a_1, a_2, \ldots, a_n) \in \Sigma^n$\/ tels que, pour out $i \in \left\llbracket 1,n \right\rrbracket$, $(q_{i-1}, a_i, q_i) \in \delta$. On note parfois une telle suite de transition par \[
+		q_0 \xrightarrow{a_1} q_1 \xrightarrow{a_2} q_2 \xrightarrow{a_3} q_3 \to \cdots \to q_n-1\xrightarrow{a_n} q_n
+	.\]
+\end{defn}
+
+\begin{exm}
+	$1 \xrightarrow a 0 \xrightarrow b 2 \xrightarrow b 2$ est une suite de transitions de l'automate ci-avant.
+\end{exm}
+
+\begin{defn}
+	On dit qu'une suite $(q_0, q_1, \ldots, q_n)$\/ est une {\it exécution}\/ dans l'automate $\mathcal{A} = (Q, \Sigma, I, F, \delta)$\/ si c'est une suite de transition de $A$\/ telle que $q_0 \in I$.
+	On dit également qu'elle est {\it acceptante}\/ si $q_n \in F$.
+
+	Lorsque $q_0 \xrightarrow{a_1} q_1 \xrightarrow{a_2} q_2 \to \cdots \to q_{n-1} \xrightarrow{a_n} q_n$\/ est une suite de transitions d'un automate $\mathcal{A}$, on dit que le mot $a_1a_2\ldots a_n$\/ est l'{\it étiquette}\/ de cette transition.
+\end{defn}
+
+\begin{defn}[Langage reconnu par un automate]
+	On dit qu'un mot $w \in \Sigma^*$\/ est {\it reconnu}\/ par un automate $\mathcal{A} = (Q, \Sigma, I, F, \delta)$\/ s'il est l'étiquette d'une exécution acceptante de $\mathcal{A}$.
+	On note alors $\mathcal{L}(\mathcal{A})$\/ l'ensemble des mots reconnus par l'automate $\mathcal{A}$.
+\end{defn}
+
+\begin{defn}
+	On dit d'un langage $L$\/ qu'il est {\it reconnaissable}\/ s'il existe un automate $\mathcal{A}$\/ tel que $\mathcal{L}(\mathcal{A}) = L$. On note $\mathrm{Rec}(\Sigma)$\/ l'ensemble des mots reconnaissables.
+\end{defn}
+
+\begin{exm}
+	Avec $\Sigma = \{a,b\}$, on cherche $\mathcal{A}$\/ tel que
+	\begin{itemize}
+		\item$\mathcal{L}(\mathcal{A}) = \Sigma^*$
+		\item $\mathcal{L}(\mathcal{A}) = (\Sigma^2)^*$\/
+	\end{itemize}
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	$\quad$\\
+	\begin{subfigure}{0.35\textwidth}
+		\centering
+		\scalebox{1.5}{\tikzfig{exemples-automates-minimal-1}}
+		\caption{Automate minimal pour $\mathcal{L}(\mathcal{A}) = \Sigma^*$}
+	\end{subfigure}
+	$\quad$
+	\begin{subfigure}{0.35\textwidth}
+		\centering
+		\scalebox{1.5}{\tikzfig{exemples-automates-minimal-2}}
+		\caption{Automate minimal pour $\mathcal{L}(\mathcal{A}) = (\Sigma^2)^*$}
+	\end{subfigure}
+	$\quad$\\
+	\begin{subfigure}{0.35\textwidth}
+		\centering
+		\scalebox{1.5}{\tikzfig{exemples-automates-minimal-3}}
+		\caption{Automate minimal pour $\mathcal{L}(\mathcal{A}) = \{a\}^* \cup \{b\}^*$}
+	\end{subfigure}
+	$\quad$
+	\begin{subfigure}{0.35\textwidth}
+		\centering
+		\scalebox{1.5}{\tikzfig{exemples-automates-minimal-4}}
+		\caption{Automate minimal pour $\mathcal{L}(\mathcal{A}) = \Sigma^* \cdot \{a\}$}
+	\end{subfigure}
+	$\quad$\\
+	\caption{Automates minimaux pour différentes valeurs de $\mathcal{L}(\mathcal{A})$}
+\end{figure}
+
+\begin{defn}[Automate déterministe]
+	On dit d'un automate $\mathcal{A} = (Q, \Sigma, I, F, \delta)$\/ qu'il est {\it déterministe}\/ si
+	\begin{enumerate}
+		\item $|I| = 1$\/ ;
+		\item $\forall (q, q_1, q_2) \in Q^3,\,\forall a \in \Sigma,\:(q,a,q_1) \in \delta \mathrel{\text{et}} (q, a, q_2) \in \delta \implies q_1 = q_2$ ;
+	\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+	$(2)$\/ est équivalent à \[
+		\forall (q,a) \in Q \times \Sigma,\,\big|\{q' \in Q  \mid (q,a,q') \in \delta\}\big| \le 1
+	.\]
+\end{rmk}
+
+\begin{defn}[Automate complet]
+	On dit d'un automate $\mathcal{A} = (Q, \Sigma, I, F, \delta)$ qu'il est {\it complet}\/ si \[
+		\forall (q,a) \in Q\times \Sigma,\,\exists q' \in Q,\,(q,a,q') \in \delta
+	.\]
+\end{defn}
+
+\begin{exm}
+	Les automates ci-avant sont
+	\begin{enumerate}
+		\item[(a)] complet et déterministe ;
+		\item[(b)] complet et déterministe ;
+		\item[(c)] non complet et non déterministe ;
+		\item[(d)] non complet et non déterministe.
+	\end{enumerate}
+\end{exm}
+
+\subsection{Transformations en automates équivalents}
+
+On peut représenter le langage utilisé par l'automate ci-dessous avec une expression régulière : $a^* \cdot (a  \mid bab)$. L'arbre ci-dessous n'est pas déterministe. On cherche à le rendre déterministe : pour cela, on trace un arbre contenant les nœuds accédés en fonctions de l'expression lue.
+\begin{figure}[H]
+	\centering
+	\scalebox{1.5}{\tikzfig{automates-non-deterministe}}
+	\caption{Automate non déterministe ayant pour expression régulière $a^* \cdot (a  \mid bab)$}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	{\small\tikzfig{arbre-possibilites}}
+	\caption{Nœuds possibles par rapport à l'expression lue}
+\end{figure}
+
+À l'aide de cet arbre, on peut trouver un automate déterministe équivalent à l'automate précédent.
+
+\begin{figure}[H]
+	\centering
+	{\tikzfig{automates-deterministe}}
+	\caption{Automate déterministe ayant pour expression régulière $a^* \cdot (a  \mid  bab)$}
+\end{figure}
+

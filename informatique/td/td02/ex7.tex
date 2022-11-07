@@ -1,0 +1,67 @@
+\section{Énigmes en logique propositionnelle}
+\subsection{Fraternité}
+
+\begin{enumerate}
+	\item Ou les deux mentent, ou les deux disent la vérité. D'où $(A_1 \land C_1) \lor (\lnot A_1 \land \lnot C_1)$.
+	\item On a $A_1 = G \lor R$, et $C_1 = \lnot G$.
+	\item On développe l'expression trouvée dans la question 1.\ :
+		\begin{align*}
+			(A_1 \land C_1) \lor (\lnot A_1 \land \lnot C_1) \equiv& \big((G \lor R) \land \lnot G\big) \lor \big(\lnot (G \lor R) \land \lnot \lnot G\big)\\
+			\equiv& (G \land \lnot G \lor R \land \lnot G) \lor \big((\lnot G \land \lnot R) \land G\big)\\
+			\equiv& (\bot \lor R \land \lnot G) \lor (\lnot G \land G \land \lnot R)\\
+			\equiv& (R \land \lnot G) \lor (\bot \land \lnot R)\\
+			\equiv& (R \land \lnot G) \lor \bot\\
+			\equiv& R \land \lnot G.
+		\end{align*}
+		La cérémonie se tiendra donc dans le réfectoire et non dans le gymnase.
+	\item $H = (A_2 \land B_2 \land C_2) \lor (\lnot A_2 \land \lnot B_2 \land \lnot C_2)$.
+	\item $A_2 = E_1 \lor E_3$, $B_2 = E_2 \to \lnot E_3$, $C_2 = E_1 \land \lnot E_2$.
+	\item \[
+			\begin{array}{ccc|ccc|c}
+				E_1&E_2&E_3&A_2&B_2&C_2&H \\ \hline
+				\mathbf{F} & \mathbf{F} & \mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F}\\
+				\mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F}\\
+				\mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F}\\
+				\mathbf{F} & \mathbf{V} & \mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{F} & \mathbf{V}\\
+				\mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{V} & \mathbf{F}\\
+				\mathbf{V} & \mathbf{F} & \mathbf{V} & \mathbf{V} & \mathbf{V} & \mathbf{V} & \mathbf{V}\\
+				\mathbf{V} & \mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F}\\
+				\mathbf{V} & \mathbf{V} & \mathbf{V} & \mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{F}\\
+			\end{array}
+		\] L'escalier 3 conduit bien à l'intronisation.
+	\item Si les trois mentent, alors on peut aussi prendre l'escalier 2.
+\end{enumerate}
+
+\subsection{Alice au pays des merveilles}
+
+\begin{enumerate}
+	\item $I_R = \bar{J} \land B$, $I_J = \bar{R} \to \bar{B}$, et $I_B = B \land (\bar{R} \lor \bar{J})$.
+	\item Oui, la situation où le flacon jaune contient le poison ($\bar{J}$) satisfait ces formules.
+	\item Oui, on a $I_B \models I_R$.
+	\item Oui, les instructions sur le flacon rouge et le bleu sont fausses. En effet, le flacon jaune ne contient pas de poison, et il n'y a pas ``au moins l'un des deux autres flacons contenant du poison.''
+	\item Oui, comme vu précédemment, la configuration où le poison est seulement dans le flacon jaune est valide. Si le flacon rouge contient du poison ou le flacon bleu contient du poison, on a une contradiction avec l'une des instructions. La configuration trouvée précédemment est la seule valide.
+	\item À cette condition, deux autres configurations sont possibles : le poison est dans les flacons jaune et rouge, ou le poison est dans les flacons rouge et bleu.
+\end{enumerate}
+
+\subsection{\textsc{Socrate} et Cerbère}
+
+\begin{enumerate}
+	\item On a $H = (I_1 \land I_2 \land I_3) \lor (\lnot I_1 \land \lnot I_2\land \lnot I_3)$.
+	\item On a $I_1 = C_1 \land C_3$, $I_2 = C_2 \to \bar{C}_3$, et $I_3 = C_1 \land \bar{C}_2$.
+	\item \[
+			\begin{array}{ccc|ccc|c}
+				C_1&C_2&C_3&I_1&I_2&I_3&H\\ \hline
+				\mathbf{F} & \mathbf{F} & \mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F}\\
+				\mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{V} & \mathbf{F}\\
+				\mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F}\\
+				\mathbf{V} & \mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F}\\
+				\mathbf{F} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{V} & \mathbf{F} & \mathbf{F}\\
+				\mathbf{V} & \mathbf{F} & \mathbf{V} & \mathbf{V} & \mathbf{V} & \mathbf{V} & \mathbf{V}\\
+				\mathbf{F} & \mathbf{V} & \mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{F} & \mathbf{V}\\
+				\mathbf{V} & \mathbf{V} & \mathbf{V} & \mathbf{V} & \mathbf{F} & \mathbf{F} & \mathbf{F}\\
+			\end{array}
+		\] \textsc{Socrate} doit suivre le couloir 3.
+	\item En supposant que Cerbère ait menti, on suppose que les trois têtes ont menti, et donc que $I_1$, $I_2$\/ et $I_3$\/ sont fausses. On aurait aussi pu choisir le couloir 2.
+\end{enumerate}
+
+

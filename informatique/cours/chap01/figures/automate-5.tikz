@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-3, 0) {};
+		\node [style=new style 0] (1) at (-1, 0) {0};
+		\node [style=new style 0] (2) at (1, 0) {1};
+		\node [style=none] (3) at (3, 0) {};
+		\node [style=none] (4) at (0, 0.75) {$a$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow, bend left] (1) to (2);
+		\draw [style=arrow] (0.center) to (1);
+		\draw [style=arrow] (2) to (3.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

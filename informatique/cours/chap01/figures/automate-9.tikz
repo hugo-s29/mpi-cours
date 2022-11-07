@@ -1,0 +1,43 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (-9.5, 1) {};
+		\node [style=new style 0] (1) at (-6.5, 1) {};
+		\node [style=new style 0] (2) at (-3.5, 1) {};
+		\node [style=new style 0] (3) at (-0.5, 1) {};
+		\node [style=new style 0] (4) at (-6.5, -2) {};
+		\node [style=none] (5) at (-8.5, -2) {};
+		\node [style=none] (8) at (-11.5, 1) {};
+		\node [style=none] (9) at (-5.5, 3) {$\varepsilon$};
+		\node [style=none] (10) at (-5, 0.75) {$\varepsilon$};
+		\node [style=none] (11) at (-8, 0.75) {$a$};
+		\node [style=none] (12) at (-2, 0.75) {$b$};
+		\node [style=new style 0] (13) at (7, 1) {};
+		\node [style=new style 0] (14) at (9.5, 1) {};
+		\node [style=new style 0] (15) at (7, -1) {};
+		\node [style=new style 0] (16) at (9.5, -1) {};
+		\node [style=none] (17) at (11.25, 1) {};
+		\node [style=none] (18) at (11.25, -1) {};
+		\node [style=none] (19) at (8, 1.5) {$a$};
+		\node [style=none] (20) at (8, -0.75) {$b$};
+		\node [style=none] (21) at (1.5, -2.75) {$\varepsilon$};
+		\node [style=none] (22) at (0.25, -1.25) {$\varepsilon$};
+		\node [style=none] (23) at (3.75, 1.75) {$\varepsilon$};
+		\node [style=none] (24) at (2.25, 0.5) {$\varepsilon$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (8.center) to (0);
+		\draw [style=arrow] (0) to (1);
+		\draw [style=arrow] (1) to (2);
+		\draw [style=arrow] (2) to (3);
+		\draw [style=arrow] (5.center) to (4);
+		\draw [style=arrow, bend right] (3) to (0);
+		\draw [style=arrow] (15) to (16);
+		\draw [style=arrow] (16) to (18.center);
+		\draw [style=arrow] (14) to (17.center);
+		\draw [style=arrow] (13) to (14);
+		\draw [style=arrow, bend right=15] (4) to (13);
+		\draw [style=arrow, bend right=15] (4) to (15);
+		\draw [style=arrow, bend left=15] (3) to (13);
+		\draw [style=arrow, bend left=15] (3) to (15);
+	\end{pgfonlayer}
+\end{tikzpicture}

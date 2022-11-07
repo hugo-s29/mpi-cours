@@ -1,0 +1,169 @@
+\begin{defn}
+	Soient $E$\/ un $\mathds{K}$-espace vectoriel et $F$\/ un sous-espace vectoriel de $E$. Soit $f : E \to E$\/ un endomorphisme. On dit que $F$\/ est stable par $f$\/ si $\forall \vec{x} \in F,\:f(\vec{x}) \in F$\/ i.e.\ $f(F) \subset F$.
+\end{defn}
+
+Si $F$\/ est stable par $f$, alors l'application \begin{align*}
+	 f\big|_F = g: F &\longrightarrow F \\
+	\vec{x} &\longmapsto f(\vec{x})
+\end{align*}
+existe et on dit que c'est l'{\it endomorphisme induit}\/ par $f$\/ sur $F$.
+
+\begin{rap}
+	On dit que $f(F)$\/ est l'{\it image directe}\/ de $F$\/ par $f$.
+\end{rap}
+
+\begin{exm}
+	\begin{enumerate}
+		\item $\R_n[X]$\/ est stable par l'application $D$\/ définie comme \begin{align*}
+				D: \R[X] &\longrightarrow \R[X] \\
+				P(X) &\longmapsto P'(X).
+			\end{align*}
+		\item Soient $F$\/ et $G$\/ deux sous-espaces vectoriels supplémentaires dans un espace vectoriel $E$. Alors $F$\/ et $G$\/ sont stables par le projecteur $p$\/ sur $F$\/ parallèlement à $G$. Et, aussi par la symétrie $\s$\/ par rapport à $F$\/ parallèlement à $G$. On a aussi
+			\begin{multicols}{4}
+					$\ds p\big|_F = \id_F$\/ ;
+
+					$\ds p\big|_G = \tilde 0$\/ ;
+
+					$\ds \s\big|_F = \id_F$\/ ;
+
+					$\ds \s\big|_G = -\id_G$.
+			\end{multicols}
+	\end{enumerate}
+\end{exm}
+
+\begin{exo}
+	On pose $(i,j,k)$\/ une base de $\R^3$. Et, on pose \[
+		A =  \big[f\big]_{(\vec\imath,\vec\jmath,\vec k)} = \begin{pmatrix}
+			0&1&0\\
+			1&0&0\\
+			0&0&1
+		\end{pmatrix}
+	.\]
+	L'application $f$\/ est la symétrie par rapport à $\Vect(\vec\imath+\vec\jmath,\vec k)$\/ parallèlement à $\Vect(\vec\imath - \vec\jmath)$.
+	Les droites vectorielles $\Vect(\vec{\imath}-\vec{\jmath})$, $\Vect(\vec{\imath}+ \vec{\jmath})$\/ et $\Vect(\vec{k})$\/ sont stables par $f$.
+
+	On cherche maintenant une base $\mathscr{C}$\/ telle que $f$\/ soit diagonale. Avec $\mathscr{C} = (\vec{\imath} - \vec\jmath,\vec{\imath} + \vec\jmath, \vec{k})$, on a \[
+		\big[\mathscr{C}\big]_{\mathscr{C}} =
+		\begin{bNiceMatrix}[last-row, last-col]
+			-1&0&0&\vec{\varepsilon}_1\\
+			0&1&0&\vec{\varepsilon}_2\\
+			0&0&1&\vec{\varepsilon}_3\\
+			f(\vec{\varepsilon}_1)&f(\vec{\varepsilon}_2)&f(\vec{\varepsilon}_3)
+		\end{bNiceMatrix}
+	\] car $f(\vec{\varepsilon}_1) = -\vec{\varepsilon}_1$\/ car $f(\vec\imath - \vec\jmath) = -(\vec\imath - \vec\jmath)$\/ car \[
+		\begin{bmatrix}
+			0&1&0\\
+			1&0&0\\
+			0&0&1
+		\end{bmatrix}
+		\begin{bmatrix} 1\\-1\\0 \end{bmatrix} 
+		= \begin{bmatrix} -1\\1\\0 \end{bmatrix}
+	.\]
+	On procède de même pour $\varepsilon_2$\/ et $\varepsilon_3$.
+\end{exo}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import three;
+		size(5cm);
+		real m = sqrt(2);
+		draw(-X--X, Arrow3(TeXHead2));
+		draw(-Y--Y, Arrow3(TeXHead2));
+		draw(-Z--Z, Arrow3(TeXHead2));
+		label("$\vec\imath$", X, align=SW);
+		label("$\vec\jmath$", Y, align=SE);
+		label("$\vec k$", Z, align=N);
+		draw((X+Y)/m--(-X-Y)/m, orange);
+		draw((X-Y)/m--(-X+Y)/m, magenta);
+	\end{asy}
+	\caption{Dessin pour l'application $f$}
+\end{figure}
+
+\begin{prop}
+	Soient $u : E \to E$\/ et $v : E \to E$\/ deux endomorphismes tels que $u \circ v = v  \circ u$, alors le noyau $\Ker u$\/ ($\star$) et l'image $\Im u$\/ ($\star\star$) sont des sous-espaces vectoriels stables par $v$.
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item[$(\star)$ :]
+			On veut montrer que $\forall \vec{x} \in \Ker u,\,v(\vec{x}) \in \Ker u$. Soit $\vec{x} \in \Ker u$.
+			On a $u(\vec{x}) = \vec{0}$\/ d'où $v(u(\vec{x})) = v(\vec{0}) = \vec{0}$\/ i.e.\ $v  \circ u (\vec{x}) = \vec{0}$\/ d'où $u  \circ v (\vec{x}) = \vec{0}$\/ i.e.\ $u(v(\vec{x})) = \vec{0}$\/ d'où $v(\vec{x}) \in \Ker u$.
+		\item[$(\star\star)$ :]
+			On veut montrer que $\forall \vec{y} \in \Im u,\:v(\vec{y}) \in \Im u$.
+			Soit $\vec{y} \in \Im u$. D'où, il existe $\vec{x} \in E$\/ tel que $\vec{y} = u(\vec{x})$. Alors, $v(\vec{y}) = v(u(\vec{x})) = v  \circ u (\vec{x})$\/ d'où $v(\vec{y}) = u  \circ v(\vec{x}) = u(v(\vec{x}))$.
+	\end{itemize}
+\end{prv}
+
+\begin{exo}
+	Soient $u$\/ et $v$\/ deux endomorphismes tels que $u \circ v = v  \circ u$.
+	L'ensemble des vecteurs invariants par $u$\/ est $\Ker(u - \id_E)$\/ car \[
+		u(\vec{x}) = \vec{x} \iff u(\vec{x}) - \vec{x} = \vec{0} \iff (u - \id_E)(\vec{x}) = \vec{0} \iff \vec{x} \in \Ker(u - \id_E)
+	.\] Comme cet ensemble est un noyau, c'est un sous-espace vectoriel de $E$.
+	Or, $u-\id_E$\/ et $v$\/ commutent d'après la démonstration qui suit, d'où $\Ker(u- \id_E)$\/ est stable par $v$.
+
+	\begin{align*}
+		\forall \vec{x} \in E,\,(u-\id_E)  \circ v (\vec{x}) &= (u-\id_E)\big(v(\vec{x})\big) \\
+		&= u(v(\vec{x})) - v(\vec{x}) \\
+		&= u  \circ v(\vec{x}) - v(\vec{x}) \\
+		&= v  \circ u(\vec{x}) - v(\vec{x}) \\
+	\end{align*}
+	car $u  \circ v$\/ commutent par hypothèse.
+	D'où $(u - \id_E)  \circ v(\vec{x}) = v  \circ (u - \id_E)(\vec{x})$\/ donc $(u-\id_E) \circ v = v  \circ (u - \id_E)$.
+\end{exo}
+
+\begin{met}
+	c.f.\ poly
+\end{met}
+
+\begin{exo}
+	c.f.\ poly
+\end{exo}
+
+\begin{defn}
+	Soit $P = \sum_{k=0}^{N} a_k X^k \in \mathds{K}[X]$\/ un polynôme.
+
+	Avec $P(X) = X^k$, alors $P(A) = A^k = \overbrace{A \times A \times \cdots \times A}^{k \text{ fois}}$, et $P(u) = u^k = \overbrace{u  \circ u  \circ\cdots  \circ u}^{k \text{ fois}}$\/ pour tout $k \in \N^*$. Avec $k = 0$, on a $P(X) = X^0$, et donc $P(A) = A^0 = I_n$, et $P(u) = u^0 = \id_E$.
+
+	Avec $P(X) = 2 + 8X + 4X^7$, on a donc $P(A) = 2I_n + 8A + 4A^7$\/ et $P(u) = 2\id_E + 8u + 4u^7$.
+\end{defn}
+
+Si $E$\/ est de dimension finie, on a $\big[P(u)\big]_\mathscr{B} = P\big([u]_\mathscr{B}\big)$.
+
+
+\begin{prop}
+	Soient $P,Q \in \mathds{K}[X]$\/ et $\alpha,\beta \in \mathds{K}$, on a \[
+		(\alpha P + \beta Q)(u) = \alpha P(u) + \beta Q(u)\qquad\text{et}\qquad(P\times Q)(u) = P(u) \circ Q(u)
+	.\]
+	De même, on a \[
+		(\alpha P + \beta Q)(A) = \alpha P(A) + \beta Q(A)\qquad\text{et}\qquad(P\times Q)(A) = P(A) \cdot Q(A)
+	.\]
+\end{prop}
+
+\begin{exmn}
+	On pose $P(X) = 2 + 3X^4$\/ et $Q(X) = 7 + 8X^2$, on a $P(X) \times Q(X) = 14 + 16X^2 + 21X^4 + 24X^6$, d'où, d'après la définition 18, on a, d'une part, \[
+		P \times Q(u) = 14\id + 16u^2 + 21u^4 + 24u^6
+	.\]
+	D'autre part, en évaluant $P$\/ en $u$, on a $P(u) = 2\id + 3u^4$\/ et $Q(u) = 7\id + 8u^2$, et donc \[
+		P(u)  \circ Q(u) = (2\id + 3u^4)  \circ (7\id + 8u^2) = 14\id + 16u^2 + 21u^4 + 24u^6
+	.\]
+\end{exmn}
+
+\begin{exo}
+	\slshape Soient $A$\/ et $B$\/ deux matrices semblables et $P$\/ un polynôme. Montrer que $P(A)$\/ et $P(B)$\/ sont semblables et $P(A^\T) = P(A)^\T$.\upshape
+
+	Il existe un matrice $Q \in \mathrm{GL}_n(\mathds{K})$\/ telle que $B = Q^{-1}AQ$. D'où $B^2 = (Q^{-1} AQ)(Q^{-1} A Q) = Q^{-1} A^2 Q$. On peut démontrer que $B^k = Q^{-1} A^k Q$\/ par récurrence avec cette même méthode pour $k \in \N^*$.
+	On pose $P = a_0 + a_1 X + \cdots + a_d X^d$.
+	On calcule
+	\begin{align*}
+		Q^{-1}P(B) Q &= Q^{-1}(a_0I_n + a_1 B + \cdots + a_d B^d) Q \\
+		&= Q^{-1} I_n Q + a_1 Q^{-1} B Q + a_2 Q^{-1} B^2 Q + \cdots + a_d Q^{-1} B^d Q \\
+		&= P(A). \\
+	\end{align*}
+
+	Se rappeler que $(AB)^\top = B^\top\cdot A^\top$. Ainsi, $(A^2)^\top = (A \cdot A)^\top  =(A^\top)^2$. D'où $\forall k \in \N^*$, $(A^k)^\top = (A \times \cdots \times A)^\top = A^\top \cdots A^\top = (A^\top )^k$.
+	De plus, $(A^0)^\top = I_n^\top = I_n = (A^\top)^0$. Et, comme la transposition est linéaire ($\forall \alpha, \beta$, $\forall A,B$, $(\alpha A + \beta B)^\top = \alpha A^\top + \beta B^\top$), on en déduit que \[
+		\forall P \in \mathds{K}[X],\,P(A^\top) = \big(P(A)\big)^\top
+	.\]
+\end{exo}
+

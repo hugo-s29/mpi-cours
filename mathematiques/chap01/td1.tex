@@ -1,0 +1,151 @@
+\section{Exercice 1}
+
+\subsection{Question 10}
+
+Comme
+\begin{align*}
+	\left( \frac{1}{n} - 1 \right)^n &= (-1)^n \left( 1 - \frac{1}{n} \right)^n \\
+	&= (-1)^n \mathrm{e}^{n \ln\left( 1 - \frac{1}{n} \right)} \\
+	&= (-1)^n \mathrm{e}^{n(-\frac{1}{n} + \po\left( \frac{1}{n} \right)} \\
+	&= (-1)^n \mathrm{e}^{-1 + \po(1)} \centernot{\tendsto{n\to +\infty}} 0, \\
+\end{align*}
+la série $\sum \left( \frac{1}{n} - 1 \right)^n$\/ diverge.
+
+\subsection{Question 12}
+
+\begin{align*}
+	\sin\left( \pi\sqrt{n^2 + 1} \right) &= \sin\left( n \pi\sqrt{1 + \frac{1}{n^2}} \right) \\
+	&= \sin\left( n\pi\left( 1 + \frac{1}{2n^2} - \frac{1}{8} \frac{1}{n^4} + \cdots \right) \right) \\
+	&= \sin\left( n\pi + \frac{\pi}{2n} - \frac{\pi}{8n^3} + \cdots \right) \\
+	&= \cos(n\pi) \cdot \sin\left( \frac{\pi}{2n} - \frac{\pi}{8n^3} \right) + \sin(n\pi) \cdot \cos\left( \frac{\pi}{2n} - \frac{\pi}{8n^3} \right) \\
+	&= (-1)^n \sin\left( \frac{\pi}{2n} - \frac{\pi}{8n^3} + \cdots \right) \\
+	&= (-1)^n \left( \frac{\pi}{2n} - \frac{\pi}{8n^3} - \frac{\left(\frac{\pi}{2n}\right)}{3!} + \cdots \right) \\
+	&= (-1)^n \frac{\pi}{2n} + \po\left( \frac{1}{n^2} \right) \\
+\end{align*}
+
+D'où $\sum u_n = \sum (-1)^n \frac{\pi}{2n} + \sum \po\left( \frac{1}{n^2} \right)$. Or, d'après le théorème des séries alternées converge d'après le théorème des séries alternées.
+Et, comme $\sum \frac{1}{n^2}$\/ converge et $\frac{1}{n^2}$\/ est positive, alors $\sum \po\left( \frac{1}{n^2} \right)$\/ converge.
+
+\subsection{Exercice 4}
+
+\paragraph{Ma solution}
+
+Soit $(u_n)_{n\in\N}$\/ une suite définie telle que $\sum u_n$\/ converge mais ne converge pas absolument.
+Comme on sait que $\forall n\in \N,\,|u_n| = P_n + (-M_n)$. La série $\sum |u_n$\/ diverge. On suppose que seul $\sum P_n$\/ ou seul $\sum M_n$\/ diverge ; on suppose, sans perte de généralité que $\sum P_n$\/ diverge et que $\sum M_n$\/ converge vers un certain réel $\ell$. Comme on sait que $\forall n \in \N,\,u_n = P_n + M_n$, et que $\sum u_n$\/ converge (vers un certain réel $\ell'$), alors $\sum u_n - \sum P_n$\/ converge vers $\ell' - \ell$\/ mais $\forall n \in \N,\,M_n = u_n - P_n$\/ : contradiction. On en déduit que $\sum P_n$\/ et $\sum M_n$\/ divergent.
+
+\paragraph{Correction}
+
+Soit $(u_n)_{n\in\N}$\/ une suite définie telle que $\sum u_n$\/ converge mais ne converge pas absolument. On pose $P_n = \max(0, u_n)$\/ et $M_n = \min(0, u_n)$. Les suite sont, par exemple comme, \[
+	\begin{cases}
+		P_n : \phantom{-}0,\,\phantom{-}0,\,\phantom{-}8,\,\phantom{-}0,\,\phantom{-}0,\,\phantom{-}4,\ldots\\
+		M_n : -1,\,-2,\,\phantom{-}0,\,-3,\,-2,\,\phantom{-}0,\ldots\\
+	\end{cases}
+\] On remarque que $u_n = P_n + M_n$\/ et $|u_n| = P_n - M_n$. Or, $\sum u_n$\/ converge et $\sum u_n = \sum P_n + \sum M_n$, d'où $\sum P_n$\/ et $\sum M_n$\/ sont de même nature.
+On suppose que $\sum P_n$\/ et $\sum M_n$\/ convergent, ce qui est absurde car $\sum |u_n| = \sum P_n - \sum M_n$\/ qui diverge. On en déduit que \[
+	\boxed{\ts\text{les séries } \sum P_n \text{ et } \sum M_n \text{ divergent.}}
+\]
+\noindent {\large Suite de l'exercice.}
+
+Si $\sum u_n$\/ converge mais ne converge pas absolument, alors en changeant l'ordre des termes, on peut faire converger la série $\sum u_n$\/ vers la limite que l'on veut. La somme n'est plus commutative.
+
+Si $\sum u_n$\/ converge et converge absolument, alors la somme est commutative (la famille est sommable).
+
+
+\section{Exercice 3}
+\subsection{Question 1}
+
+Soient $n$\/ et $k$\/ deux entiers naturels.
+
+\[
+	\int_{0}^{1} t^{2k}~\mathrm{d}t = \left[ \frac{t^{2k+1}}{2k+1} \right]_0^{1} = \frac{1}{2k+1}
+.\]
+\[
+	\sum_{k=0}^{n} (-1)^k t^{2k} = \sum_{k=0}^n (-t^2)^k = \frac{1 - (-t^2)^{n+1}}{1 + t^2} = \frac{1 + (-1)^nt^{2n+2}}{1+t^2}
+.\]
+
+\subsection{Question 2}
+
+La série $\sum (-1)^k / (2k+1)$\/ est alternée et, pour tout $k \ge 0$, $1 / (2k+1) \ge 0$\/ et tends vers 0 en décroissant. On en déduit, par le théorème des séries alternées que $\sum (-1)^k / (2k+1)$\/ converge. On cherche maintenant sa valeur :
+
+Soit $n$\/ un entier naturel. On a
+\begin{align*}
+	\sum_{k=0}^n \frac{(-1)^n}{2k+1} = \sum_{k=0}^n(-1)^n\int_{0}^{1} t^{2k}~\mathrm{d}t &= \int_{0}^{1} \sum_{k=0}^n (-1)^n t^{2k} ~\mathrm{d}t\\
+	&= \int_{0}^{1} \frac{1}{1+t^2}~\mathrm{d}t + (-1)^n \int_{0}^{1} \frac{t^{2n+2}}{1+t^2}~\mathrm{d}t \\
+	&= \Arctan 1 - \Arctan 0 + (-1)^n \int_{0}^{1} \frac{t^{2n+2}}{1+t^2}~\mathrm{d}t \\
+	&= \frac{\pi}{4} + (-1)^n \int_{0}^{1} \frac{t^{2n+2}}{1+t^2}~\mathrm{d}t. \\
+\end{align*}
+
+Soit $t \in [0,1[$. On sait que $\ds \frac{t^{2n+2}}{1+t^2} \tendsto{n\to +\infty} 0$. On en déduit donc que \[
+	\sum_{k=0}^\infty \frac{(-1)^n}{2k+1} = \lim_{n\to +\infty} \sum_{k=0}^n \frac{(-1)^n}{2k+1} = \frac{\pi}{4}
+.\]
+
+\section{Exercice 6}
+
+Soient $x \in {]0, \pi[}$\/ et $n \in \N^*$. 
+
+\begin{align*}
+	\sum_{k=1}^n f_k(x) = \sum_{k=1}^n \cos^{k-1} x \cdot \cos \big((k-1) x\big) \quad?
+\end{align*}
+
+\section{Exercice 7}
+\subsection{Question 1}
+
+On sait, d'après le critère de {\sc Riemann}\/ que la série $\sum \frac{1}{n^\alpha}$\/ converge si et seulement si $\alpha > 1$. La fonction $\zeta$\/ est donc correctement définie sur l'intervalle $I= {]1,+\infty[}$.
+
+\subsection{Question 2}
+
+Soit $x$\/ et $y \in I$\/ tels que $x < y$. Soit $n \in \N^*$. On sait que \[
+	n^x \le n^y \qquad\text{d'où}\qquad \frac{1}{n^x} \le \frac{1}{n^y}
+\] et, par linéarité de la somme, on a \[
+	\sum_{k=1}^n \frac{1}{n^x} \le \sum_{k=1}^n \frac{1}{n^y}
+.\] En passant à la limite, on obtient bien $\zeta(x) \le \zeta(y)$. La fonction $\zeta$ est donc décroissante sur $I$.
+
+\subsection{Question 3}
+
+Soit $n \ge 2$\/ et $x \in I$. On utilise une comparaison série-intégrale : \[
+	\begin{array}{ccccc}
+		\ds\int_{2}^{n+1} \frac{1}{t^x}~\mathrm{d}t &\le&\ds\sum_{k=1}^n \frac{1}{k^x} &\le&\ds\int_{1}^{n} \frac{1}{t^x}~\mathrm{d}t\\[2mm]
+		\vrt=&&\vrt=&&\vrt=\\[2mm]
+		\ds\left[ \frac{t^{-x+1}}{-x+1} \right]_2^{n+1} &\le& \ds\sum_{k=1}^n \frac{1}{k^x} &\le&\ds\left[ \frac{t^{-x+1}}{-x+1} \right]_1^n\\[2mm]
+		\vrt=&&\vrt=&&\vrt=\\[2mm]
+		\ds\frac{(n+1)^{1-x}}{1-x} - \frac{2^{1-x}}{1-x} &\le&\ds \sum_{k=1}^n \frac{1}{k^x}&\le&\ds\frac{n^{1-x}}{1-x} - \frac{1}{1-x}
+	\end{array}
+\]
+On passe à la limite pour $n \to +\infty$, on a donc \[
+	1 + \frac{1}{(x-1)2^{x-1}} \le \zeta(x) \le 1 + \frac{1}{x-1}
+\] car $1-x \in {]-\infty,0[}$.
+
+\subsection{Question 4}
+
+On sait que \[
+	1 + \frac{1}{x-1} \tendsto{x\to +\infty} 1
+	\qquad\text{et}\qquad
+	1+ \frac{1}{(x-1)2^{x-1}} \tendsto{x\to +\infty} 1.
+\]
+Par théorème des gendarmes, on en déduit que $\lim_{x\to +\infty} \zeta(x) = 1$.
+
+De même, on sait que \[
+	1+\frac{1}{(x-1)2^{x-1}} \tendsto{x\to 1^+} +\infty
+\] d'où, par minoration, on en déduit que $\lim_{x\to 1^+} \zeta(x) = +\infty$.
+
+
+Montrons que $\ds\frac{1}{1-x} \simi_{x\to 1^+} \zeta(x) - 1$ : on a \[
+	\frac{1}{(x-1)2^{x-1}} \le \zeta(x) - 1 \le \frac{1}{x-1}
+.\]
+On calcule donc \[
+	\frac{\ds \frac{1}{x-1}}{\ds\frac{1}{(x-1)2^{x-1}}} = \frac{(x-1)2^{x-1}}{x-1} = 2^{x-1} \tendsto{x\to 1^+} 1
+.\]
+
+\section{Exercice 2}
+\subsection{Question 1}
+
+Soit $\alpha > 1$. On sait, d'après le critère de {\sc Riemann}\/ que la série $\sum \frac{1}{n^\alpha}$\/ converge. Ainsi, le reste $R_n$\/ existe. Or, comme \[
+	\forall n \in \N^*,\,S_n - R_n = \sum_{k=1}^\infty \frac{1}{k^\alpha} \qquad\text{où}\qquad S_n = \sum_{k=1}^n \frac{1}{k^\alpha},
+\] on en déduit, en passant à la limite, que la suite $(R_n)$\/ tends vers 0.
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+L'interpolation n'est pas toujours une bonne approximation.
+
+\begin{exm}[phénomène de Runge]
+	La fonction \begin{align*}
+		f: \R &\longrightarrow \R \\
+		x &\longmapsto \frac{1}{1+x^2}
+	\end{align*}
+	peut être approché par un polynôme à l'aide des polynômes interpolateur de {\sc Lagrange}\/ : on choisit plusieurs points sur la courbe de $f$, et on interpole entre ces points.
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		draw((0,-1) -- (0, 5), Arrow(TeXHead));
+		draw((-5,0) -- (5, 0), Arrow(TeXHead));
+		size(8cm);
+		real f(real x) { return 4 / (1 + x * x); }
+		draw(graph(f, -5, 5), magenta);
+		/*
+		pair pt(int i, int m) {
+
+		}
+		real a(real x) {
+			real p = 1;
+			for(int i = 0; i < 10; ++i) {
+				pair x = pt(i, 10);
+				p *= (
+			}
+			return p;
+		}
+		*/
+	\end{asy}
+	\caption{Graphe de $f : x\mapsto \frac{1}{1+x^2}$}
+	\todo{Interpolation de {\sc Lagrange}}
+\end{figure}
+
+\begin{thm}[Weierstra\ss]
+	Si une fonction $f : [a,b] \to \R$\/ continue sur le segment $[a,b]$, alors il existe une suite de polynômes $P_n$\/ qui converge uniformément vers $f$\/ telle que \[
+		\sup_{[a,b]}\:|f - P_n| \tendsto{n\to \infty} 0
+	.\]
+\end{thm}
+
+\begin{thm}[théorème des moments]
+	Soit $f$\/ une fonction continue sur un segment $[a,b]$\/ vers $\R$.
+	Montrer que, si \[\forall n \in \N,\:\int_{a}^{b} x^n f(x)~\mathrm{d}x = 0,\] alors la fonction $f$\/ est nulle.
+	Soit $P \in \R[X]$, il existe donc $a_0$, $a_1$, \ldots, $a_n \in \R^{n+1}$\/ tels que $P(X) = a_0 + a_1 X + \cdots + a_n X^n$. Alors, \[
+		\int_{a}^{b} P(x)\cdot f(x)~\mathrm{d}x = \int_{a}^{b} \Big(\sum_{k=0}^n a_k x^k \Big) \cdot f(x)~\mathrm{d}x = \sum_{k=1}^n a_k \underbrace{\int_{a}^{b} x^k f(x)~\mathrm{d}x}_{0} = 0
+	.\] Or, d'après le théorème de {\sc Weierstra\ss}, il existe une suite de polynômes $(P_n)_{n\in\N}$\/ qui convergent uniformément vers $f$. D'où, \[
+		\forall n \in \N,\: \int_{a}^{b} P_n(x)\cdot f(x)~\mathrm{d}x
+	.\] On va montrer que \[
+		\int_{a}^{b} P_n(x) \cdot f(x)~\mathrm{d}x \tendsto{n\to \infty} \int_{a}^{b} f(x)\cdot f(x)~\mathrm{d}x.
+	\] Or, d'après le théorème de {\sc Weierstra\ss}, la suite de polynômes $(P_n)_{n\in\N}$\/ converge uniformément vers $f$. D'où,
+	\[
+		\Big|P_n(x) f(x) - f(x) \cdot f(x)\Big|
+		= \underbrace{\Big|P_n(x) - f(x)\Big|}_{\le \sup_{[a,b]}\:|f - P_n|} \times \underbrace{\Big|f(x)\Big|}_{\le M} \\
+	\] 
+	où $M$\/ est le majorant qui existe car toute fonction continue sur un segment est bornée. D'où, \[
+		\Big|P_n(x) f(x) - f(x) \cdot f(x)\Big| \le M \times \sup_{[a,b]}\:|f - P_n|
+	.\]
+	D'où \[
+		0 = \lim_{n\to \infty}\int_{a}^{b} P_n(x)\cdot f(x)~\mathrm{d}x = \int_{a}^{b} \lim_{n\to \infty} P_n(x)\cdot f(x)~\mathrm{d}x
+	.\] On en déduit donc que \[
+		\int_{a}^{b} f^2(x)~\mathrm{d}x = 0
+	.\] Or, si l'intégrale d'une fonction positive {\color{red}et continue} est nulle, alors la fonction est nulle. Donc \[
+		\forall x \in [a,b],\quad f(x) = 0
+	.\]
+\end{thm}
+

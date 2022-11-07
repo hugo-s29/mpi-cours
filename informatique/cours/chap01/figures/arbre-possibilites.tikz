@@ -1,0 +1,38 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 1] (0) at (0, 0) {$\{0\}$};
+		\node [style=new style 1] (1) at (4, 4) {$\{0,3\}$};
+		\node [style=new style 1] (2) at (4, -4) {$\{1\}$};
+		\node [style=new style 1] (3) at (8, -2) {$\{2\}$};
+		\node [style=new style 1] (4) at (8, -6) {$\O$};
+		\node [style=new style 1] (5) at (8, 6) {$\{0, 3\}$};
+		\node [style=none] (7) at (9.25, 6.75) {\reflectbox{$\ddots$}};
+		\node [style=new style 1] (8) at (8, 2) {$\{1\}$};
+		\node [style=none] (9) at (5.5, 5.5) {$aa$};
+		\node [style=none] (10) at (6, 2.5) {$ab$};
+		\node [style=none] (11) at (5.5, -2.5) {$ba$};
+		\node [style=none] (12) at (5.5, -5.5) {$bb$};
+		\node [style=new style 1] (13) at (11, -1) {$\O$};
+		\node [style=new style 1] (14) at (11, -3) {$\{3\}$};
+		\node [style=none] (15) at (9.25, -1) {$baa$};
+		\node [style=none] (16) at (9.25, -3) {$bab$};
+		\node [style=new style 1] (17) at (14, -2) {$\O$};
+		\node [style=new style 1] (18) at (14, -4.5) {$\O$};
+		\node [style=none] (19) at (12.25, -2) {$baba$};
+		\node [style=none] (20) at (12.25, -4.25) {$babb$};
+		\node [style=none] (21) at (1.75, 2.5) {$a$};
+		\node [style=none] (22) at (1.5, -2) {$b$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (0) to (1);
+		\draw [style=arrow] (0) to (2);
+		\draw [style=arrow] (1) to (5);
+		\draw [style=arrow] (2) to (3);
+		\draw [style=arrow] (2) to (4);
+		\draw [style=arrow] (3) to (13);
+		\draw [style=arrow] (3) to (14);
+		\draw [style=arrow] (14) to (17);
+		\draw [style=arrow] (14) to (18);
+		\draw [style=arrow] (1) to (8);
+	\end{pgfonlayer}
+\end{tikzpicture}

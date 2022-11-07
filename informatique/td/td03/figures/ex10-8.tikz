@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-5, 0) {};
+		\node [style=new style 0] (3) at (-3, 0) {\phantom{a}};
+		\node [style=new style 0] (4) at (0, 0) {\phantom{a}};
+		\node [style=none] (6) at (-1.5, 1) {$b$};
+		\node [style=none] (8) at (-3, -2) {$a,c$};
+		\node [style=none] (9) at (0, -2) {$a,b,c$};
+		\node [style=none] (11) at (-3, 2) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (0.center) to (3);
+		\draw [style=arrow, bend left] (3) to (4);
+		\draw [style=arrow, in=-120, out=-60, loop] (3) to ();
+		\draw [style=arrow, in=-120, out=-60, loop] (4) to ();
+		\draw [style=arrow] (3) to (11.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

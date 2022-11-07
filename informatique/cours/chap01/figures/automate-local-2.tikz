@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-3, 0) {};
+		\node [style=none] (1) at (-1, 2) {};
+		\node [style=new style 0] (2) at (-1, 0) {$\varepsilon$};
+		\node [style=new style 0] (3) at (1, -2) {$c$};
+		\node [style=new style 0] (4) at (2, 2) {$a$};
+		\node [style=new style 0] (5) at (4, 0) {$b$};
+		\node [style=none] (6) at (6, 0) {};
+		\node [style=none] (7) at (1.75, -1.5) {$c$};
+		\node [style=none] (8) at (-0.75, -1.5) {$c$};
+		\node [style=none] (9) at (0.25, 1.75) {$a$};
+		\node [style=none] (10) at (2, 0.25) {$a$};
+		\node [style=none] (11) at (4, 1.75) {$b$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (0.center) to (2);
+		\draw [style=arrow] (2) to (1.center);
+		\draw [style=arrow, bend left=15] (2) to (4);
+		\draw [style=arrow, bend left=45] (4) to (5);
+		\draw [style=arrow, bend left=45] (5) to (4);
+		\draw [style=arrow] (5) to (6.center);
+		\draw [style=arrow, in=105, out=45, loop] (3) to ();
+		\draw [style=arrow, bend right] (2) to (3);
+	\end{pgfonlayer}
+\end{tikzpicture}

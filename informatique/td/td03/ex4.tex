@@ -1,0 +1,77 @@
+\section{Propriétés sur les opérations régulières}
+
+\begin{enumerate}
+	\item On a \[
+			\O^* = \{\varepsilon\}\;;\qquad\qquad\O\cdot A = \O\;;\qquad\qquad \{\varepsilon\} \cdot A = A.
+		\]
+	\item
+		\begin{enumerate}[label=\textit{(\arabic*)}]
+			\item On procède par double-inclusion.
+				\begin{itemize}
+					\item[``$\subseteq$''] Soit $w \in (A \cdot B)\cdot C$. On pose $w = u \cdot v$\/ avec $u \in A\cdot B$\/ et $v \in C$. On pose ensuite $u = x \cdot y$\/ avec $x \in A$\/ et $y \in B$.
+						Or, comme l'opération ``$\cdot$,'' pour les mots, est associative, on a bien $w = (x \cdot y) \cdot v = x \cdot (y \cdot v)$, et donc $w \in A \cdot (B \cdot C)$.
+					\item[``$\supseteq$''] Soit $w \in A \cdot (B\cdot C)$. On pose $w = u \cdot v$\/ avec $u \in A$\/ et $v \in B \cdot C$. On pose ensuite $v = x\cdot y$\/ avec $x \in B$\/ et $y \in C$. Or, comme l'opération ``$\cdot$,'' pour les mots, est associative, alors $w = u \cdot (x\cdot y) = (u\cdot x) \cdot y$\/ et donc $w \in A\cdot (B\cdot C)$.
+				\end{itemize}
+			\item On suppose $A \subseteq B$.  On a donc $B = A \cup (B \setminus A)$, et par définition $A^* = \bigcup_{n \in \N}  A^n$, et $B^* = \bigcup_{n \in \N} B^n$. Montrons par récurrence, pour $n \in \N$, $P(n): ``A^n \subseteq B^n."$
+				\begin{itemize}
+					\item On a $A^0 = \{\varepsilon\} \subseteq B^0 = \{\varepsilon\}$\/ d'où $P(0)$.
+					\item Soit $n \in \N$\/ tel que $A^n \subseteq B^n$. On a $A^{n+1} = A^n \cdot A$\/ et $B^{n+1} = B^n \cdot B$. Or, comme $A^n \subseteq B^n$\/ et $A \subseteq B$, et que ``$\cdot$''est croissant (dans l'inclusion), on en déduit que $A^{n+1} \subseteq B^{n+1}$. D'où $P(n+1)$.
+				\end{itemize}
+			\item On procède par double-inclusion.
+				\begin{itemize}
+					\item[``$\supseteq$''] On a $A^* = (A^*)^1 \subseteq \bigcup_{n \in \N} (A^*)^n = (A^*)^*$.
+					\item[``$\subseteq$\/''] Soit $w \in (A^*)^*$. On pose donc $w = u_1\ldots u_n$\/ avec, pour tout $i \in \left\llbracket 1,n \right\rrbracket$, $u_i \in A^*$. On pose également, pour tout $i \in \left\llbracket 1,n \right\rrbracket$, $u_i = v_{i,1}\ldots v_{i,m_i}$\/ où, pour tout $j \in \left\llbracket 1,m_i \right\rrbracket$, $v_{i,j} \in A$.
+						D'où, $w = v_{11}\ldots v_{1,m_1}v_{21}\ldots v_{2,m_2}\ldots v_{n,m_n} \in A^*$. On en déduit que $(A^*)^* \subseteq A^*$.
+				\end{itemize}
+			\item On procède par double-inclusion.
+				\begin{itemize}
+					\item[``$\subseteq$''] On a $\{\varepsilon\} \subseteq A^*$\/ et donc $A^* = A^* \cdot \{\varepsilon\}  \subseteq A^* \cdot A^*$. D'où $A^* \subseteq A^* \cdot A^*$.
+					\item[``$\supseteq$''] Soit $w \in A^* \cdot A^*$. On décompose ce mot : soient $u_1, u_2 \in A^*$\/ tels que $w = u_1 \cdot u_2$. On pose $n = |u_1|$, et $m = |u_2|$. On décompose également ces deux mots : soient $(w_{1},w_{2},\ldots,w_{n}) \in A^n$\/ et $(w_{n+1},w_{n+2},\ldots,w_{n+m}) \in A^m$\/ tels que $u_1 = w_{1}\cdot w_{2}\cdot \ldots \cdot w_{n}$\/ et $u_2 = w_{n+1}\cdot w_{n+2}\cdot \ldots\cdot w_{n+m}$. Ainsi, \[
+							w = w_1 \cdot w_2 \cdot \ldots \cdot w_n \cdot w_{n+1} \cdot \ldots \cdot w_{n+m} \in A^*.
+						\] D'où $A^* \cdot A^* \subseteq A^*$.
+				\end{itemize}
+			\item On procède par double-inclusion.
+				\begin{itemize}
+					\item[``$\subseteq$''] Soit $w \in A \cup B$.
+						\begin{itemize}
+							\item Si $w \in A$, alors $w \in A^*$, et donc $w = w \cdot \varepsilon \in A^* \cdot B^*$.
+							\item Si $w \in B$, alors $w \in B^*$, et donc $w = \varepsilon \cdot w \in A^* \cdot B^*$.
+						\end{itemize}
+						On a donc bien $A \cup B \subseteq A^* \cdot B^*$, et par croissance de l'étoile, on a bien $(A \cup B)^* \subseteq (A^* \cdot B^*)^*$.
+					\item[``$\supseteq$''] Soit $w \in (A^* \cdot B^*)^*$. On pose
+						\begin{align*}
+							w =& \mathbin{\phantom{\cdot}}u_{11}\ldots u_{1,n_1}v_{11}\ldots v_{1,m_1}\\
+								 & \cdot u_{21}\ldots u_{2,n_2}v_{21}\ldots v_{2,n_2}\\
+								 &\,\vdots\\
+								 &\cdot u_{p,1}\ldots u_{p,n_p}v_{p,1}\ldots v_{p,m_p}
+						\end{align*}
+						où, $u_{i,j} \in A$\/ et $v_{i,j} \in B$. On a donc $w \in (A \cup  B)^*$.
+				\end{itemize}
+			\item On procède par double-inclusion.
+				\begin{itemize}
+					\item[``$\subseteq$''] Soit $w \in A \cdot (B \cup C)$. On pose $w = u \cdot v$\/ avec $u \in A$\/ et $v \in B \cup C$.
+						\begin{itemize}
+							\item  Si $v \in B$, alors $w = u \cdot v \in A \cdot B$\/ et donc $w \in (A \cdot B) \cup (A\cdot C)$.
+							\item  Si $v \in C$, alors $w = u \cdot v \in A \cdot C$\/ et donc $w \in (A \cdot B) \cup (A\cdot C)$.
+						\end{itemize}
+						On a bien montré $A \cdot (B \cup C) \subseteq (A\cdot B) \cup (A\cdot C)$.
+					\item[``$\supseteq$''] Soit $w \in (A\cdot B) \cup (A\cdot C)$.
+						\begin{itemize}
+							\item Si $w \in A\cdot B$, on pose alors $w = u \cdot v$\/ avec $u \in A$\/ et $v \in B \subseteq B \cup C$. Ainsi, on a bien $w = u \cdot v \in A \cdot (B \cup C)$.
+							\item Si $w \in A\cdot C$, on pose alors $w = u \cdot v$\/ avec $u \in A$\/ et $v \in C \subseteq B \cup C$. Ainsi, on a bien $w = u \cdot v \in A \cdot (B \cup C)$.
+						\end{itemize}
+						On a bien montré $A \cdot (B \cup C) \supseteq (A\cdot B) \cup (A\cdot C)$.
+				\end{itemize}
+		\end{enumerate}
+	\item
+		\begin{enumerate}[label=\textit{(\arabic*)}]
+			\item Soit $A = \{a\}$\/ et $B = \{b\}$\/ avec $a \neq b$. On sait que $abab \in (A\cdot B)^*$. Or, $abab \not\in A^* \cdot B^*$\/ donc $L_1 \not\subseteq L_2$.
+				De plus, $a \in A^* \cdot B^*$\/ et $a \not\in  (A\cdot B)^*$\/ donc $L_2 \not\subseteq L_1$. Il n'y a aucune relation entre $L_1$\/ et $L_2$.
+			\item On sait que $(A\cdot B)^* \subseteq (A^* \cdot B^*)^*$\/ (car $A \cdot B \subseteq A^* \cdot B^*$ et par croissance de l'étoile). Mais, $(A\cdot B)^* \not\supseteq (A^* \cdot B^*)^*$. En effet, avec $A = \{a\}$\/ et $B = \{b\}$\/ où $a \neq b$, on a $ba \in (A^* \cdot B^*)^*$\/ (d'après la question précédente) mais $ba \not\in (A\cdot B)^*$. On a donc seulement $L_1 \subseteq L_2$.
+			\item On a $L_1 \subseteq L_2$. En effet, $A \cap B \subseteq B$\/ donc $(A \cap B)^* \subseteq B^*$\/ par croissance l'étoile. De même, $A \cap B \subseteq A$\/ donc $(A \cap B)^* \subseteq A^*$. D'où $(A\cap B)^* \subseteq A^* \cap B^*$. Mais, $L_1 \not\supseteq L_2$. En effet, avec $A = \{a\}$\/ et $B = \{aa\}$, on a $A \cap B = \O$\/ et donc $L_1 = (A \cap B)^* = \{\varepsilon\}$, mais, $L_2 = A^* \cap B^* = B^*$\/ (car $A^* \subseteq B^*$), et donc $L_2 \not\subseteq L_1$.
+			\item Comme $A^* \subseteq (A \cup B^*)$\/ et $B^* \subseteq (A \cup B)^*$, alors $A^* \cup B^* \subseteq (A \cup B)^*$. Mais, $A^* \cup B^* \not\supseteq (A \cup B)^*$. En effet, si $A = \{a\}$\/ et $B = \{b\}$\/ où $a \neq b$, alors on a $ba \in (A \cup B)^*$\/ mais $ba\not\in A^* \cup B^*$. On a donc seulement $L_1 \subseteq L_2$.
+			\item On a $L_1 \subseteq L_2$. En effet, soit $w \in A \cdot (B \cap C)$. On pose $w = u \cdot v$\/ avec $u \in A$\/ et $v \in B \cap C$. Comme $v \in B$, alors $w= u\cdot v \in A \cdot B$. De même, comme $v \in C$, alors $w = u\cdot v \in A \cdot C$. On a donc bien $w \in (A \cdot B) \cap (A \cdot C)$. D'où $L_1 \subseteq L_2$. Mais, $L_1 \not\supseteq L_2$. En effet, avec $A = \{a,aa\}$, $B = \{b\}$\/ et $C = \{ab\}$\/ où $a \neq b$, on a $aab \not\in B \cap C = \O$\/ mais, $aab \in A\cdot B$\/ et $aab \in A\cdot C$, donc $aab \in L_2$.
+				On a donc seulement $L_1 \subseteq L_2$.
+			\item On a, d'après la question 2.\ \[L_1 = (A^* \cup B)^* = \big((A^*)^* \cdot B^*\big)^* = (A^* \cdot B^*)^* = (A \cup B)^* = L_2.\]
+		\end{enumerate}
+\end{enumerate}

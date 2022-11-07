@@ -1,0 +1,26 @@
+\section{Exercice 4}
+
+\paragraph{Q.\ 1}
+
+\begin{algo}
+	\textsl{Entrée} : Un automate $\mathcal{A}$\/ ;\\
+	\textsl{Sortie} : $\mathcal{L}(\mathcal{A}) = \O$\/ ;\\
+	On fait un parcours en largeur depuis les états initiaux et on regarde si on atteint un état final.
+\end{algo}
+
+\begin{algo}[Nathan F.]
+	{\sl Entrée} : Deux automates $\mathcal{A}$\/ et $\mathcal{B}$\/ \\
+	{\sl Sortie} : $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{B})$\/ ;
+	Soit $\mathcal{C}$\/ l'automate reconnaissant $\mathcal{L}(\mathcal{A}) \mathbin\triangle \mathcal{L}(\mathcal{B})$. On retourne $\mathcal{L}(\mathcal{C}) \mathrel{\ds\mathop=^?} \O$\/ à l'aide de l'algorithme précédent.
+\end{algo}
+
+Autre possibilité, on procède par double inclusion :
+
+\begin{algo}[$\subseteq$]
+	{\sl Entrée} : Deux automates $\mathcal{A}$\/ et $\mathcal{B}$\/ \\
+	{\sl Sortie} : $\mathcal{L}(\mathcal{A}) \subseteq \mathcal{L}(\mathcal{B})$\/ ;
+	On retourne $\mathcal{A} \setminus \mathcal{B} \mathrel{\ds\mathop=^?} \O$.
+\end{algo}
+
+\paragraph{Q.\ 2}
+L'algorithme reconnaissant $\mathcal{L}(\mathcal{A}) \mathrel\triangle \mathcal{L}(\mathcal{B})$\/ doit être déterminisé, sa complexité est donc au moins de $2^n$.

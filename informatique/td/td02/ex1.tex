@@ -1,0 +1,81 @@
+\section{Logique avec \texttt{If}}
+
+\setbox\tmpbox=\hbox{\Large $\mathbf{\mathcal{F}}$}
+\subsection{Représentatibilité des fonctions booléennes par formules de \box\tmpbox\!\textsubscript{\texttt{if}}}
+
+\begin{enumerate}
+	\item On pose $G = {\tt if}\/\ p\ {\tt then}\/\ \top\ {\tt else}\/\ (\underbrace{{\tt if}\/\ q\ {\tt then}\/\ \top\ {\tt else}\/\ r}_{A})$, et on a
+		\begin{align*}
+			\left\llbracket G \right\rrbracket^\rho
+			&= \left\llbracket p \right\rrbracket^\rho \cdot \left\llbracket \top \right\rrbracket^\rho + \overline{\left\llbracket p \right\rrbracket^\rho}  \cdot \left\llbracket A \right\rrbracket^\rho \\
+			&= \rho(p) + \overline{\rho(p)} \cdot  \left( \left\llbracket q \right\rrbracket^\rho \cdot \left\llbracket \top \right\rrbracket^\rho + \overline{\left\llbracket q \right\rrbracket^\rho} \cdot \left\llbracket r \right\rrbracket^\rho \right) \\
+			&= \rho(p) + \overline{\rho(p)} \cdot  \left( \rho(q) + \overline{\rho(q)} \cdot \rho(r) \right) \\
+			&= \rho(p) + \overline{\rho(p)}\cdot \rho(q) + \overline{\rho(p)} \cdot  \overline{\rho(q)} \cdot \rho(r) \\
+			&= \rho(p) + \rho(q) + \rho(r). \\
+		\end{align*}
+	\item \[
+			\left\llbracket {\tt if}\/\ C\ {\tt then}\/\ G\ {\tt else}\/\ H \right\rrbracket^\rho = \begin{cases}
+				\left\llbracket G \right\rrbracket^\rho &\text{ si }\left\llbracket C \right\rrbracket^\rho = {\bfm V}\\
+				\left\llbracket H \right\rrbracket^\rho &\text{ if } \left\llbracket C \right\rrbracket^\rho = {\bfm F}
+			\end{cases}
+		.\]
+	\item Soit $G \in \mathds{F}$.
+		\begin{itemize}
+			\item[Cas 1] Soit $\mathcal{P} = \{p\}$\/
+				\begin{itemize}
+					\item Sous-cas 1 : $f: \rho \mapsto {\bfm V}$\/ est associée à $\top$.
+					\item Sous-cas 2 :  la fonction dont la table de vérité est ci-dessous est associée à $p$.
+						\begin{center}
+							\begin{tabular}{c|c}
+								$p$&$f$\\ \hline
+								${\bfm F}$ & ${\bfm F}$\/ \\
+								${\bfm V}$ & ${\bfm V}$\/ \\
+							\end{tabular}
+						\end{center}
+					\item Sous-cas 3 :  la fonction dont la table de vérité est ci-dessous est associée à $\bar{p}$.
+						\begin{center}
+							\begin{tabular}{c|c}
+								$p$&$f$\\ \hline
+								${\bfm F}$ & ${\bfm V}$\/ \\
+								${\bfm V}$ & ${\bfm F}$\/ \\
+							\end{tabular}
+						\end{center}
+					\item Sous-cas 4 : $f: \rho \mapsto {\bfm F}$\/ est associée à $\bot$.
+				\end{itemize}
+			\item[Cas 2] Soit $\mathcal{P} = \{p_1, \ldots,p_n\}$\/ et on pose \[
+					P_r : ``\,\forall f : \mathds{B}^{\{p_1, \ldots, p_r\}}\to \mathds{B},\,\exists G \in \mathcal{F}_{{\tt if}},\,\left\llbracket G \right\rrbracket = f."
+				\]
+				Soit $r \in  \left\llbracket 2,n \right\rrbracket$\/ et $f$\/ une fonction booléenne définie sur $\mathds{B}^{\{p_1, \ldots, p_r\}}$\/ à valeurs dans $\mathds{B}$. Soit \begin{align*}
+					g: \mathds{B}^{\{p_1,\ldots,p_{r-1}\}} &\longrightarrow \mathds{B} \\
+					\rho' &\longmapsto f\big(\rho' \uplus (p_r \mapsto {\bfm V}\/)\big).
+				\end{align*}
+				où $\uplus$\/ est défini comme dans l'exemple $(p\mapsto {\bfm V}, q\mapsto {\bfm F}) \uplus (r \mapsto {\bfm V}) = (p\mapsto {\bfm V}, q\mapsto {\bfm F}, r \mapsto {\bfm V})$.
+				Soit alors $G$\/ par hypothèse de récurrence tel que $\left\llbracket G \right\rrbracket = g$.
+				Soit \begin{align*}
+					h: \mathds{B}^{\{p_1, \ldots,p_{r-1}\}} &\longrightarrow \mathds{B} \\
+					\rho' &\longmapsto f\big(\rho'\uplus (p_r \mapsto {\bfm F})\big).
+				\end{align*}
+				Soit alors $H$\/ par hypothèse de récurrence tel que $\left\llbracket H \right\rrbracket = h$.
+
+				On pose alors $A = {\tt if}\/\ p_r\ {\tt then}\/\ G\ {\tt else}\/\ H$. Montrons que $\left\llbracket A \right\rrbracket = f$. Soit $\rho \in \mathds{B}^{\{p_1,\ldots,p_r\}}$.
+				\begin{itemize}
+					\item Si $\rho(p_r) = {\bfm V}$\/ alors
+						\begin{align*}
+							\left\llbracket A \right\rrbracket^\rho &=  \left\llbracket G \right\rrbracket^\rho\\
+							&= \left\llbracket G \right\rrbracket^{\rho_{|\{p_1,\ldots,p_{r-1}\}}}\\
+							&= g\left(\rho_{|\{p_1, \ldots, p_{r-1}\}}\right) \\
+							&= f\left( \rho_{|\{p_1,\ldots,p_{r-1}\}} \uplus (p_r \mapsto {\bfm V}) \right) \\
+							&= f(\rho) \\
+						\end{align*}
+					\item Si $\rho(p_r) = \mathbf{F}$, alors
+						\begin{align*}
+							\left\llbracket A \right\rrbracket^\rho &= \left\llbracket H \right\rrbracket^\rho \\
+							&= \left\llbracket H \right\rrbracket^{\rho_{|\{p_1,\ldots,p_{r-1}\}}} \\
+							&= h\left( \rho_{|\{p_1,\ldots,p_{r-1}\}} \right) \\
+							&= f\left(\rho_{|\{p_1,\ldots,p_{r-1}\}}\uplus (p_r \mapsto \mathbf{F})\right) \\
+							&= f(\rho) \\
+						\end{align*}
+				\end{itemize}
+		\end{itemize}
+\end{enumerate}
+

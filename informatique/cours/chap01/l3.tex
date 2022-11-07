@@ -1,0 +1,114 @@
+\begin{defn}
+	On dit de deux automates $\mathcal{A}$\/ et $\mathcal{A}'$\/ qu'ils sont {\it équivalents}\/ si $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{A}')$.
+\end{defn}
+
+\begin{thm}
+	Pour tout automate $\mathcal{A}$, il existe un automate déterministe $\mathcal{A}'$\/ tel que $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{A}')$.
+\end{thm}
+
+\begin{prv}
+	Soit $\mathcal{A} = (\mathcal{Q}, \Sigma, I, F, \delta)$\/ un automate.
+	On pose $\Sigma' = \Sigma$, $\mathcal{Q}' = \wp(\mathcal{Q})$, $I' = \{I\}$, $F = \{Q \in \wp(\mathcal{Q})  \mid  Q \cap F \neq \O\}$\/ et \[
+		\delta' = \bigg\{(Q,a, Q') \in \mathcal{Q}'\times \Sigma\times\mathcal{Q}'\:\bigg|\:Q' = \big\{q' \in \mathcal{Q}  \mid \exists q \in Q,\,(q,a,q') \in \delta\big\}\bigg\}
+	.\]
+	On pose alors l'automate $\mathcal{A}' = (\mathcal{Q}',\Sigma',I',F',\delta')$. Montrons que $\mathcal{L}(\mathcal{A}') = \mathcal{L}(\mathcal{A})$. On procède par double-inclusion.
+	\begin{itemize}
+		\item[``$\subseteq$''] Soit $w \in \mathcal{L}(\mathcal{A})$. Il existe donc une exécution acceptante $I \ni q_0\xrightarrow{w_1}q_1\xrightarrow{w_2}q_2\to\cdots\to q_{n-1}\xrightarrow{w_n}q_n \in F$\/ telle que $w = w_1w_2\ldots w_n$.
+			On pose $Q_0 = I$, et, pour tout entier $i \in \left\llbracket 1,n \right\rrbracket$,  \[
+				Q_i = \big\{q' \in \mathcal{Q}  \mid \exists q \in Q_{i-1},\,(q,w_i,q') \in \delta\big\}
+			.\]
+			Remarquons que, pour tout entier $i \in \left\llbracket 1,n \right\rrbracket$, on a $(Q_{i-1},w_i,Q_i) \in \delta'$. On a donc $I' \ni Q_0 \xrightarrow{w_1} Q_1 \to \cdots \to Q_{n-1} \xrightarrow{w_n} Q_n$\/ est une exécution de $\mathcal{A}'$.
+			Montrons que, pour tout $i \in \left\llbracket 0,n \right\rrbracket$, on a $q_i \in Q_i$ par récurrence finie.
+			\begin{itemize}
+				\item $q_0 \in I = Q_0$.
+				\item Soit $p < n$\/ tel que $q_p \in Q_p$\/ alors $q_{p+1}$\/ est tel que $(q_p, w_{p+1}, q_{p+1}) \in \delta$\/ et $q_{p+1}$\/ est tel qu'il existe $q \in Q_p$\/ tel que $(q, w_{p+1}, q_{p+1}) \in \delta$. On en déduit $q_{p+1} \in Q_{p+1}$.
+			\end{itemize}
+			On a donc $q_n \in Q_n$\/ et $q_n \in F$\/ donc $Q_n \cap F \neq \O$\/ et donc $Q_n \in F'$.
+			L'exécution $Q_0 \xrightarrow{w_1} Q_1 \to \cdots \to Q_{n-1} \xrightarrow{w_n} Q_n$ est donc acceptante dans $\mathcal{A}'$\/ et donc $w = w_1\ldots w_n \in \mathcal{L}(\mathcal{A}')$.
+		\item[``$\supseteq$''] Soit $w \in \mathcal{L}(\mathcal{A}')$. Soit donc $I'\ni Q_0 \xrightarrow{w_1} Q_1\to \cdots\to Q_{n-1}\xrightarrow{w_n} Q_n \in F'$\/ une exécution acceptante de $w$\/ dans $\mathcal{A}'$.
+		$Q_n \cap  F \neq \O$. Soit donc $q_n \in Q_n \cap F$. Soit $q_{n-1} \in Q_{n-1}$\/ tel que $(q_{n-1}, w_n, q_n) \in \delta$ (par définition de $(Q_{n-1}, w_n, Q_n) \in \delta'$).
+			``\,De proche en proche,'' il existe $q_0,q_1,\ldots,q_{n-2}$\/ tels que, pour tout $i \in \left\llbracket 1,n \right\rrbracket$, $(q_{i-1}, w_i, q_i) \in \delta$ et $q_i \in Q_i$.
+			Or, $q_0 \in Q_0 \in I' = \{I\}$\/ donc $Q_0 = I$ et donc $q_0 \in I$.
+			On rappelle que $q_n \in F$. On en déduit donc que $q_0 \xrightarrow{w_1} q_1 \to \cdots \to q_{n-1} \xrightarrow{w_n} q_n$ une exécution acceptante da ns $\mathcal{A}$\/ et donc $w \in \mathcal{L}(\mathcal{A}')$.
+	\end{itemize}
+\end{prv}
+
+Pour comprendre la construction de l'automate dans la preuve, on fait un exemple. On considère l'automate non-déterministe ci-dessous.
+
+\begin{figure}[H]
+	\centering
+	\scalebox{1.5}{\tikzfig{automates-non-deterministe2}}
+	\caption{Automate non déterministe}
+\end{figure}
+
+On construit la {\it table de transition}\/ :
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c|c|c}
+		&$a$&$b$\\\hline
+		$\O$&$\O$&$\O$\\ \hline
+		$\{0\}$&$\{0,1\}$&$\{2\}$\\ \hline
+		$\{1\}$&
+	\end{tabular}
+	\caption{Table de transition de l'automate ci-avant}
+\end{table}
+\todo{Finir la table de transition}
+
+
+\begin{rmk}
+	L'automate $\mathcal{A}'$\/ construit dans le théorème précédent est complet mais son nombre de nœud suit une exponentielle.
+\end{rmk}
+
+\begin{prop}
+	Soit $\mathcal{A}$\/ un automate fini à $n$\/ états. Il existe un automate $\mathcal{A}'$\/ ayant $n+1$\/ états tel que $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{A}')$\/ avec $\mathcal{A}'$\/ complet.
+\end{prop}
+
+\begin{prv}
+	Soit $\mathcal{A} = (\mathcal{Q}, \Sigma, I, F, \delta)$ un automate à $n$\/ états. Soit $P \not\in \mathcal{Q}$. On pose $\Sigma' = \Sigma$, $\mathcal{Q}' = \mathcal{Q} \cupdot \{P\}$, $I' = I$, $F' = F$\/ et \[
+		\delta' = \delta \cupdot \Big\{\big(q,\ell,P\big) \in \mathcal{Q}' \times \Sigma \times \{P\} \:\Big|\: \forall  q' \in \mathcal{Q}',\,\big(q, \ell,q'\big) \not\in \delta\Big\}
+	.\]
+	Montrons que $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{A}')$.
+	\todo{Preuve à faire}
+
+	% on prend une transition
+	% deux cas
+	% passe par le puits -> reste dans le puits
+	%                    -> sort du puits
+	% ne passe pas par le puits -> déjà une exécution de A
+\end{prv}
+
+\begin{defn}
+	Soit $\mathcal{A} = (\mathcal{Q}, \Sigma, I, F, \delta)$\/ un automate. On dit d'un état $q \in \mathcal{Q}$ qu'il est
+	\begin{itemize}
+		\item {\it accessible}\/ s'il existe une exécution $I \ni q_0 \xrightarrow{w_1} q_1 \to \cdots \to q_{n-1} \xrightarrow{w_n} q_n = q$.
+		\item {\it co-accessible}\/s'il existe une suite de transitions $q \xrightarrow{w_1} q_1 \to \cdots \to q_{n-1} \xrightarrow{w_n} q_n \in F$.
+
+	\end{itemize}
+\end{defn}
+
+Dans l'automate ci-dessous, l'état 0 n'est pas accessible et l'état 2 n'est pas co-accessible.
+
+\begin{figure}[H]
+	\centering
+	\tikzfig{noeuds-accessibles-co-accessibles}
+	\caption{Non-exemples d'états accessibles et co-accessibles}
+\end{figure}
+
+\begin{defn}
+	On dit d'un automate $\mathcal{A}$\/ qu'il est {\it émondé}\/ dès lors que chaque état est accessible et co-accessible.
+\end{defn}
+
+\begin{prop}
+	Soit $\mathcal{A}$\/ un automate. Il existe $\mathcal{A}'$\/ un automate émondé tel que $\mathcal{L}(\mathcal{A}') = \mathcal{L}(\mathcal{A})$.
+\end{prop}
+
+\begin{prv}
+	Soit $\mathcal{A} = (\mathcal{Q}, \Sigma, I, F, \delta)$. On pose $\Sigma' = \Sigma$, $\mathcal{Q}' = \{q \in \mathcal{Q}  \mid q \text{ accessible ou co-accessible}\:\}$, $I' = I \cap R'$, $F' = F \cap R'$\/ et  \[
+		\delta = \big\{(q,\ell,q') \in \mathcal{Q}' \times \Sigma \times \mathcal{Q}'\:\big|\: (q, \ell, q') \in \delta\big\} = (\mathcal{Q}', \Sigma, \mathcal{Q}') \cap \delta
+	.\]
+	Montrons que $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{A}')$. On procède par double inclusion. On vérifie aisément que $\mathcal{L}(A') \subseteq \mathcal{L}(\mathcal{A})$. On montre maintenant $\mathcal{L}(\mathcal{A}) \subseteq \mathcal{L}(\mathcal{A}')$. Soit $w \in \mathcal{L}(\mathcal{A}')$. Soit $q_0,\ldots,q_n$\/ tels que $q_0\xrightarrow{w_1} q_1 \to \cdots \to q_{n-1}\xrightarrow{w_n} q_n$\/ est une exécution acceptante. Or, pour tout $i \in \left\llbracket 0,n \right\rrbracket$, $q_i$\/ est accessible et co-accessible donc $q_i \in \mathcal{Q}'$. De plus, $q_0 \in I'$\/ et $q_n \in F'$. De plus, pour tout $i \in \left\llbracket 0,n-1 \right\rrbracket$, $(q_i, w_{i+1}, q_{i+1}) \in \delta'$. Donc, $q_0 \xrightarrow{w_1} q_1 \to \cdots \to q_{n-1}\xrightarrow{w_n} q_n$\/ est une exécution acceptante de $\mathcal{A}'$.
+\end{prv}
+
+
+

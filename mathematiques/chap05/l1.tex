@@ -1,0 +1,117 @@
+\section{Deux manières de converger}
+
+\begin{defn}
+	Soit $T$\/ une partie de $\R$. Soit, pour $n \in \N$, $f_n : T \to \R$, une fonction. Soit également une fonction $f : T \to \R$. On dit que la suite de fonctions $(f_n)_{n \in \N}$\/ :
+	\begin{enumerate}
+		\item {\it converge simplement}\/ sur $T$\/ vers $f$, si \hfill$\ds\forall t \in T,\:f_n(t)\tendsto{n\to +\infty} f(t)$\/ ;\hfill\null
+		\item {\it converge uniformément}\/ sur $T$\/ vers $f$, si \hfill$\ds\sup_{t \in T}\: {|f_n(t) - f(t)|} \tendsto{n\to +\infty} 0$.\hfill\null
+	\end{enumerate}
+\end{defn}
+
+Si une suite de fonctions $(f_n)_{n\in\N}$\/ converge uniformément vers $f$, alors la suite de fonctions $(f_n)_{n\in\N}$\/ converge simplement vers $f$. {\color{red}Mais, la réciproque est fausse} : \[
+	\boxed{\text{convergence uniforme}\quad\substack{\\\ds\implies\\\ds\centernot\impliedby} \quad \text{ convergence simple}.}
+\]
+
+\begin{exo}
+	On considère, pour $n \in \N$, la fonction \begin{align*}
+		f_n: \overbrace{[0,1]}^T &\longrightarrow \R \\
+		t &\longmapsto t^n.
+	\end{align*}
+	Soit $t \in [0,1]$. Alors, \[
+		f_n(t) = t^n \tendsto{t\to +\infty} \begin{cases}
+			0 &\text{ si } t \in [0,1[\\
+			1 &\text{ si } t = 1.
+		\end{cases}
+	\]
+	D'où la suite de fonctions $(f_n)_{n\in\N}$\/ converge simplement vers la fonction $f$\/ définie ci-dessous : 
+	\begin{align*}
+		f: [0,1] &\longrightarrow \R \\
+		t &\longmapsto \begin{cases}
+			0&\text{ si } t \in [0,1[,\\
+			1&\text{ si } t = 1.
+		\end{cases}
+	\end{align*}
+	Cette convergence n'est {\color{red}pas} uniforme car, comme $\sup_{t \in [0,1]} f_n(t) = 1$, d'où $\sup_{t \in [0,1]}\:|f_n(t) - f(t)| = 1 \centernot{\tendsto{n\to +\infty}} 0$.
+
+	\bigskip
+	\bigskip
+
+	2\tsup{ème} méthode : montrer qu'une suite de fonctions ne converge pas uniformément. \marginpar{\danger Méthode}
+	soit $(u_n)_{n\in\N}$\/ une suite de réels définis, pour $n \in \N^*$\/ par $u_n = 1 - \frac{1}{n}$, qui converge vers 1 en $+\infty$. Alors, \[
+		f_n(u_n) = \left( 1 - \frac{1}{n} \right)^n = \mathrm{e}^{n \ln \left( 1 - \frac{1}{n} \right)} = \mathrm{e}^{n \times \left( -\frac{1}{n} + \po\left( \frac{1}{n} \right)  \right)} = \mathrm{e}^{-1 + \po(1)} \tendsto{n\to +\infty} \mathrm{e}^{-1}
+	.\] D'où, $f(u_n) - f(u_n) = \left( 1 - \frac{1}{n} \right)^n - 0\:\smash{\centernot{\tendsto{n\to +\infty}}} 0$.
+	Or, $\sup\:|f_n - f| \ge  |f_n(u_n) - f(u_n)|$. D'où $\sup\:|f_n - f|\:\smash{\centernot{\tendsto{n\to +\infty}}} 0$.
+
+	\bigskip
+	\bigskip
+
+	Soit $a \in [0,1[$. Mais, la suite de fonctions $(f_n)_{n\in\N}$\/ converge uniformément sur $[0,a]$\/ : en effet, montrons que \[
+		\sup_{t \in [0,a]}\:\left| f_n(t) - f(t) \right|  \tendsto{n\to +\infty} 0
+		\qquad\text{aussi noté}\qquad
+		\sup_{[0,a]}\:\left| f_n - f \right|  \tendsto{n\to +\infty} 0
+	.\] Calculons $|f_n(t) - f(t)| = |f_n(t) - 0| = |t^n| \le a^n$. D'où $a^n$\/ est un majorant. Ainsi, par définition de la borne supérieure,\footnote{La borne supérieure est définie comme le plus petit majorant.} $\sup_{[0,a]}\:|f_n - f| \le a^n$. Or, $\sup_{[0,a]}\:|f_n - f| \ge 0$, et donc, d'après le théorème d'existence de la limite par encadrement, \[
+		\sup_{t \in [0,a]}\:|f_n(t) - f(t)| \tendsto{n\to +\infty} 0
+	.\]
+\end{exo}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		draw((-0.1, 0) -- (1.1, 0), Arrow(TeXHead));
+		draw((0,-0.1) -- (0, 1.1), Arrow(TeXHead));
+		size(5cm);
+		pen a = orange;
+		pen b = yellow;
+		for(int n = 1; n < 10; ++n) {
+			real f(real x) { return x^n; }
+			real t = n / 9;
+			pen p = b * t + a * (1 - t);
+			draw(graph(f, 0, 1), p);
+		}
+		draw((0,0)--(1,0), magenta);
+		dot((1,1), magenta);
+	\end{asy}
+	\caption{Convergence de la suite de fonctions $(t^n)_{n \in \N}$}
+\end{figure}
+
+\begin{rmk}[sert rarement sauf pour prouver le théorème 6]
+	\begin{enumerate}
+		\item $(f_n)_{n\in\N}$\/ converge simplement sur $T$\/ vers $f$\/ si et seulement si \[
+				\forall t \in T,\:\forall \varepsilon > 0,\:\overbrace{\exists N \in \N,\:\forall n \ge N,\:\:|f_n(t) - f(t)| \le \varepsilon}^{\text{\guillemotleft~à partir d'un certain rang~\guillemotright}}
+			.\]
+			Ici, le $N$\/ dépend de $t$\/ et de $\varepsilon$.
+
+		\item $(f_n)_{n\in\N}$\/ converge uniformément sur $T$\/ vers $f$\/ si et seulement si \[
+			\forall \varepsilon > 0,\:\exists N \in \N,\:\forall n \ge N,\:\forall t \in T,\:\:|f_n(t) - f(t) | \le \varepsilon
+		.\] Ici, le $N$\/ ne dépend que de $\varepsilon$\/ et pas de $t$\/ : le même $N$\/ convient pour tous les $t$.
+	\end{enumerate}
+\end{rmk}
+
+\begin{exo}
+	\[
+		(f_n)_{n \in \N} \text{ converge simplement vers } f \text{ sur } [0,1] \iffdef \forall x \in [0,1],\:f_n(x) \tendsto{n\to +\infty} f(x)
+	.\]
+	Or, si $x \in {]0,1]}$, alors $f_n(x) \tendsto{n\to +\infty} 0$\/ car, à partir d'un certain rang $N$, $\forall n \ge N,\:f_n(x) = 0$ ; et, si $x = 0$, $f_n(x) = f_n(0) = 1 \tendsto{n\to +\infty} 1$. Soit ainsi \begin{align*}
+		f: [0,1] &\longrightarrow [0,1] \\
+		x &\longmapsto \begin{cases}
+			0 &\text{ si } x \in {]0,1]}\\
+			1 &\text{ si } x = 0.
+		\end{cases}
+	\end{align*}
+	Alors, la suite de fonctions $(f_n)_{n\in\N}$\/ converge vers la fonction $f$.
+	\[
+		(f_n)_{n\in\N} \text{ converge uniformément vers } f\iffdef\!\!\!\!\sup_{x \in [0,1]}|f_n(x) - f(x)| \tendsto{n\to +\infty} 0
+	.\] Or, $\sup_{x \in [0,1]}\:|f_n(x) - f(x)| = 1 \centernot{\tendsto{n\to +\infty}} 0$.
+
+	\bigskip
+
+	\centerline{------------------------------------------------}
+
+	\bigskip
+
+	Soit $x \in [0,1]$. Si $x = 0$, alors $f_n(x) = f_n(0) = 0 \tendsto{n \to +\infty} 0$\/ ; si $x \in {]0,1]}$, alors $f_n(x) = 0$\/ à partir d'un certain rang, et donc $f_n(x) \tendsto{n\to +\infty} 0$. D'où la suite de fonctions $(f_n)_{n\in\N}$\/ converge simplement vers la fonction nulle. Mais, la convergence n'est pas uniforme : \[
+		\sup_{x \in [0,1]}\:|f_n(x) - 0| = 2n + 2 \centernot{\tendsto{n\to +\infty}} 0
+	.\]
+\end{exo}
+

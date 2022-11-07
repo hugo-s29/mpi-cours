@@ -1,0 +1,39 @@
+\section{Exercice 1 : Vérification d'égalité polynomiale}
+
+\begin{enumerate}
+	\item Étant donnés deux tableaux représentant deux polynômes, on peut calculer leurs produit en concaténant ce tableau. La complexité du produit de polynômes avec cet algorithme est en $\mathcal{O}(nm)$\/ où $n$\/ est le degré du 1er polynôme, et $m$\/ est le degré du second. En effet, \textit{dans le pire des cas}, tous les polynômes représentant les deux polynômes sont des monômes, or, la concaténation étant en $\mathcal{O}(nm)$ (pour un tableau de taille $n$\/ et un de taille $m$). D'où la complexité en $\mathcal{O}(nm)$.
+	\item Afin d'évaluer ces polynômes, on utilise l'algorithme de \textsc{Horner}, qui est en $\mathcal{O}(n)$, donc en temps linéaire.
+	\item En développant ces polynômes, la complexité serait en $\mathcal{O}(n^3)$. En effet, la multiplication de deux polynômes de degrés $n$\/ a une complexité en $\mathcal{O}(n^2)$. D'où la complexité en $\mathcal{O}(n^3)$\/ pour la multiplication de deux polynômes ayant chacun un degré $n$.
+	\item Un polynôme de degré $n$\/ a, au plus, $n$\/ racines. D'où, le polynôme $P - Q$, a au plus $n$\/ racines (où $n = \max(\deg P, \deg Q)$). Ainsi, s'il a $n+1$\/ racines, c'est alors le polynôme nul, et donc $P = Q$.
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}
+				\State {\bf Entrée}\/ : $P = (P_{i})_{i \in \left\llbracket 1,m \right\rrbracket }$\/ et $Q = (Q_j)_{j \in \left\llbracket 1,p \right\rrbracket }$\/ deux polynômes
+				\State $n \gets \deg P$\/
+				\For{$i \in \left\llbracket 0,n \right\rrbracket$}
+					\If{$P(i) \neq Q(i)$} \Comment{Avec l'algorithme de \textsc{Horner}, évaluation en $\mathcal{O}(n)$}
+						\State \Return {\sc Non}\/
+					\EndIf
+				\EndFor
+				\State \Return {\sc Oui}\/
+			\end{algorithmic}
+			\caption{Algorithme déterministe pout tester l'égalité polynomiale en $\mathcal{O}(n^2)$}
+		\end{algorithm}
+
+	\item~
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\Entree $P = (P_{i})_{i \in \left\llbracket 1,n \right\rrbracket }$\/ et $Q = (Q_j)_{j \in \left\llbracket 1,n \right\rrbracket }$\/ deux polynômes, et $k \in \N$\/ un entier
+				\State $x \gets \mathcal{U}(\left\llbracket 1,k\times n \right\rrbracket)$\/ \phantom{$\frac00$}
+				\If{$P(x) \neq Q(x)$}
+					\State\Return {\sc Non}\/
+				\EndIf
+				\State\Return {\sc Oui}\/
+			\end{algorithmic}
+			\caption{Algorithme probabiliste pout tester l'égalité polynomiale en $\mathcal{O}(n)$}
+		\end{algorithm}
+
+		Soit $X$\/ la variable aléatoire de $\mathcal{U}(\left\llbracket 1,k\times n \right\rrbracket)$.
+		L'événement ``$P \neq Q$\/ mais l'algorithme retourne {\sc Oui}'' arrive si $X \in \{j \in \left\llbracket 1,kn \right\rrbracket  \mid P(j) = Q(j)\} = A$. Or $|A| \le n$, et $A \subseteq \left\llbracket 1,kn \right\rrbracket$. Ainsi, l'événement a une probabilité de $\frac{1}{k}$.
+\end{enumerate}

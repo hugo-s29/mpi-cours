@@ -1,0 +1,39 @@
+\section{$\mathcal{N}$}
+
+\newcommand{\ofact}{\charfusion[\mathbin]{\bigcirc}{\scriptstyle!}}
+
+\begin{enumerate}
+	\item On définit par induction la fonction suivante \begin{align*}
+			\oplus: \mathcal{N}^2 &\longrightarrow \mathcal{N} \\
+			(\mathbf{S}(x),y) &\longmapsto \oplus(x, \mathbf{S}(y))\\
+			(\mathbf{0}, x) &\longmapsto x.
+		\end{align*}
+	\item Soit $(x,y) \in \mathcal{N}^2$.
+		\begin{itemize}
+			\item Si $f(x) = 0$, alors $\oplus(x,y) = y$\/ et donc $f(\oplus(x,y)) = f(y) = f(x) + f(y)$.
+			\item Si $f(x) \ge 1$, alors  $x = \mathbf{S}(z)$\/ avec $z \in \mathcal{N}$. Ainsi, $\oplus(x,y) = \oplus(z, \mathbf{S}(y))$. Or, $f(z) = f(x) - 1 \le f(x)$. Et donc, par définition de $\oplus$\/ puis par hypothèse d'induction, on a $f(\oplus(x,y)) = f(\oplus(z, \mathbf{S}(y)) = f(z) + f(\mathbf{S}(y))$. On en déduit que $f(\oplus(x,y)) = f(x) - 1 + f(y) + 1 = f(x) + f(y)$.
+		\end{itemize}
+		Par induction, on a bien $\forall (x,y) \in \mathcal{N}^2,\:f\big({\oplus}(x,y)\big) = f(x) + f(y)$.
+	\item On définit par induction la fonction suivante \begin{align*}
+			\otimes: \mathcal{N}^2 &\longrightarrow \mathcal{N} \\
+			(\mathbf{S}(x), y) &\longmapsto {\oplus}\big(y, {\otimes}(x,y)\big)\\
+			(\mathbf{0}, y) &\longmapsto \mathbf{0}.
+		\end{align*}
+	\item Soit $(x,y) \in \mathcal{N}^2$.
+		\begin{itemize}
+			\item Si $f(x) = 0$, alors $\otimes(x,y) = \mathbf{0}$, et donc $f(\otimes(x,y)) = 0 = f(x) \times f(y)$.
+			\item Si $f(x) \ge 1$, alors $x = \mathbf{S}(z)$\/ avec $z \in \mathcal{N}$. Ainsi, par définition de $\otimes$, on a $\otimes(x,y) = \oplus(y, \otimes(z,y))$. Or, par hypothèse d'induction, $f(\otimes(z,y)) = f(z) \times f(y)$\/ (car $f(z) < f(x)$), et donc $f(\otimes(x,y)) = f(y) + f(\otimes(z,y)) = f(y) + f(z) \times f(y) = f(y) \times (1 + f(z)) = f(y) \times f(x)$.
+		\end{itemize}
+		Par induction, on a bien $\forall (x,y) \in \mathcal{N}^2,\:f\big({\otimes}(x,y)\big) = f(x) \times f(y)$.
+	\item On définit par induction la fonction suivante \begin{align*}
+			\ofact : \mathcal{N} &\longrightarrow \mathcal{N} \\
+			\mathbf{0} &\longmapsto \mathbf{S}(\mathbf{0})\\
+			\mathbf{S}(x) &\longmapsto {\otimes}\big(\mathbf{S}(x), \ofact(x)\big).
+		\end{align*}
+	\item Soit $x \in \mathcal{N}$.
+		\begin{itemize}
+			\item Si $f(x)= 0$, alors $\ofact(x) = \mathbf{S}(\mathbf{0})$\/ par définition, et donc $f(\ofact(x)) = 1 = 0! = f(x) !\:$.
+			\item Si $f(x) \ge 1$, alors $x = \mathbf{S}(z)$\/ avec $z \in \mathcal{N}$. Ainsi, par définition de $\ofact$, on a $\ofact(x) = \otimes(x, \ofact(z))$, et donc, par hypothèse de récurrence, $f(\ofact(x)) = f(x) \times f(\ofact(z)) = f(x) \times \big(f(z)!\big)$. Or, comme $f(z) = f(x) - 1$, on a donc $f(\ofact(x)) = f(x) \times \big(f(x) - 1\big)! = f(x)!$\:.
+		\end{itemize}
+		Par induction, on a bien $\forall x \in \mathcal{N},\:f\big({\ofact}(x)\big) = f(x)!\:$.
+\end{enumerate}

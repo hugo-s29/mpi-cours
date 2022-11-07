@@ -1,0 +1,15 @@
+\begin{exo}
+	{\it Montrer que le noyau d'un morphisme d'anneaux commutatif est idéal.}
+
+	Soient $(A, +, \times)$\/ et $(B, +, \times)$\/ deux anneaux.
+	Soit $\varphi : A \to B$\/ un morphisme d'anneaux : 
+	\[
+		\varphi(a+b) = \varphi(a) + \varphi(b) \qquad \varphi(a \times b) = \varphi(a) \times \varphi(b) \qquad \varphi(1_A) = 1_B
+	.\]
+
+	Montrons que $(\Ker \varphi, +)$\/ est un sous-groupe de $(A, +)$.
+	On sait que $\varphi(0_A) = 0_B$\/ donc $0_A \in \Ker \varphi$\/ et donc $\Ker \varphi \neq \O$.
+	Soient $a,b \in \Ker \varphi$. On a $\varphi(a-b) = \varphi(a) - \varphi(b) = 0 - 0 = 0$ donc $(a-b) \in \Ker \varphi$.
+
+	Soient $\varepsilon \in \Ker \varphi$\/ et $b \in A$. On a $\varphi(\varepsilon \times b) = \varphi(\varepsilon) \times \varphi(b) = 0$.
+\end{exo}

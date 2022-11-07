@@ -1,0 +1,163 @@
+\centerline{La limite $\ln(\cos x) / x^2$\/ existe-t-elle pour $x \to 0$\/ ? Si oui, quelle est sa valeurs.}
+
+On utilise un développement limité pour $\ln(\cos x)$\/ et on obtient $\ln(\cos x) = \ln\left( 1 - \frac{x^2}{2} + \po(x^2) \right) = -\frac{x^2}{2} + \po(x^2)$. Et donc, en divisant ce développement limité par $x^2$, on obtient \[
+	\frac{\ln(\cos x)}{x^2} = \frac{-\frac{x^2}{2} + \po(x^2)}{x^2} = -\frac{1}{2} + \po(1) \tendsto{x \to 0} -\frac{1}{2}
+.\]
+
+\centerline{Même question avec $\big(\sqrt[3]{8+x} - 2\sqrt{1+x}\big) / x$.}
+
+\bigskip
+
+On a $\sqrt[3]{8+x} = (8+x)^{1 / 3} = 2 \left( 1 + \frac{x}{8} \right)^{1 / 3} = 2\times (1 + u)$\/ où $u = \frac{x}{8}$\/ tends vers $0$.
+On en déduit que \[
+	\begin{cases}
+		\ds\sqrt{1+x} &=\ds 1 + \frac{1}{2}x + \po(x)\\
+		\ds\sqrt[3]{8 + x} &=\ds 2 + \frac{2}{3} \frac{x}{8} + \po(x).
+	\end{cases}
+\] 
+D'où, \[
+	\sqrt[3]{8 + x}  - 2\sqrt{1+x} = 2 + \frac{1}{12} x + \po(x) - 2 + x + \po(x) = - \frac{11}{12} + \po(x)
+.\]
+On en conclut donc que \[
+	\frac{\sqrt[3]{8+ x - 2\sqrt{1+x}}}{x} = -\frac{11}{12} + \po(1) \tendsto{x \to 0} -\frac{11}{12}
+.\]
+
+\bigskip
+
+Cadeau de plus : $(n - \frac{1}{2}) \ln\left( 1 - \frac{1}{n} \right) + 1 \simi_{n\to +\infty}$\/ ?
+
+\bigskip
+
+\bigskip
+
+\begin{center}
+	\large\sc I.5 \quad Le critère de d'Alembert
+\end{center}
+
+\bigskip
+
+\begin{thm}[Critère de d'Alembert]
+	Soit $(u_n)_{n\in\N}$\/ une suite strictement positive telle que \[
+		\lim_{n\to +\infty} \frac{u_{n+1}}{u_n} = \ell
+	.\]
+
+	\begin{enumerate}
+		\item Si $\ell < 1$, alors la série $\sum u_n$\/ converge.
+		\item Si $\ell > 1$, alors la série $\sum u_n$\/ diverge.
+		{\color{gray}\item Si $\ell = 1$, on ne sait pas (BOF).}
+	\end{enumerate}
+\end{thm}
+
+\begin{prv}
+	On suppose $u_n > 0$\/ et $\frac{u_{n+1}}{u_n} \tendsto{n\to +\infty} \ell < 1$.
+	%On pose $\lambda = (1 + \ell) / 2 < 1$.
+	$u_{n+1} / u_n$\/ tends vers un réel $\ell$\/ inférieur à 1 d'où, il existe un certain $\lambda$\/ inférieur à 1 tel qu'à partir d'un certain rang $n_0$\/ \[
+		\frac{u_{n+1}}{u_n} \le \lambda
+	.\]Soit $n \ge n_0$. On a \[
+		u_n = \overbrace{\frac{u_n}{\cancel{u_{n-1}}}}^{\le \lambda} \times \underbrace{\frac{\cancel{u_{n-1}}}{\cancel{u_{n-2}}}}_{\le \lambda} \times \cdots \times \overbrace{\frac{\cancel{u_{n_0 + 1}}}{\cancel{u_{n_0}}}}^{\le \lambda} \times u_{n_0}
+	.\]
+	D'où, $u_n \le \lambda^{n - n_0} \times u_{n_0}$ i.e. \[
+		u_n \le \lambda^n \times \mathop{\boxed{\frac{u_{n_0}}{\lambda^{n_0}}}}_{=\mathrm{const}}\quad\text{donc}\quad 0 < u_n \le \mathrm{const}\times \lambda^n
+	.\]
+	Or, $\sum \mathrm{const} \times \lambda^n = \mathrm{const} \times \sum \lambda^n$\/ la série de droite est une série géométrique de raison $\lambda < 1$.
+
+	\begin{rap}[séries géométriques]
+		\begin{align*}
+			\underbrace{\lambda^0 + \lambda^1 + \cdots + \lambda^n}_{= S_n} &= \frac{1 - \lambda^{n+1}}{1 - \lambda} \text{ si } \lambda \neq 1\\
+			&\tendsto{n\to +\infty} \frac{1}{1-\lambda}.
+		\end{align*}
+	\end{rap}
+	\noindent Fin du {\sc Rappel}.
+
+	\bigskip
+
+	Or, $\sum \lambda^n$\/ converge car $\lambda < 1$\/ et donc $\sum u_n$\/ converge.
+\end{prv}
+
+\begin{rmk}
+	%
+\end{rmk}
+
+\begin{exo}
+	La série $\sum a^n / n$\/ converge-t-elle ?
+
+	Comme on n'a pas d'information sur le signe de $a$, on s'interesse à la convergence de la série~$\sum \big|a^n / n\big|$. Or, $\big| a^n / n \big| = |a|^n / n$. On étudie plusieurs cas.
+	\begin{itemize}
+		\item Si $|a| < 1$, alors $|a|^n / n \le |a|^n$ et, comme $\sum |a|^n$\/ converge (série géométrique), la série~$|a|^n / n$\/ converge et donc $a^n / n$\/ également.
+		\item Si $|a| = 1$, alors
+			\begin{itemize}
+				\item si $a = 1$, alors la série $\sum \frac{1}{n}$\/ converge.
+				\item si $a = -1$, alors série $\sum (-1)^n / n$\/ converge.
+			\end{itemize}
+		\item Si $|a| > 1$, alors $|a|^n \centernot{\tendsto{n\to +\infty}} 0$ car
+			\begin{align*}
+				\begin{rcases*}
+					|a|^n = \mathrm{e}^{n \ln |a|}\\
+					n = \mathrm{e}^{\ln n}
+				\end{rcases*} \implies \frac{|a|^n}{n} = \frac{\mathrm{e}^{n \ln |a|}}{\mathrm{e}^{\ln n}} = \mathrm{e}^{n \ln |a| - \ln n} \text{ or } n \ln |a| - \ln n \tendsto{n\to +\infty} +\infty.
+			\end{align*}
+			D'où, $a^n / n \centernot{\tendsto{n\to \infty}} 0$\/ donc $\sum a^n / n$\/ diverge.
+	\end{itemize}
+
+	La série $\sum a^n / n!$\/ converge-t-elle ?
+
+	Comme pour la 1\tsup{ère} série, on n'a pas d'information sur le signe de $a$, on utilise des valeurs absolue : soit $u_n = |a|^n / n!$. On utilise le critère d'{\sc Alembert}\/ : \[
+		\frac{u_{n+1}}{u_n} = \frac{\frac{|a|^{n+1}}{(n+1)!}}{\frac{|a|^n}{n!}} = \frac{|a|^{n+1}}{|a|^n} \times \frac{n!}{(n+1)!} \tendsto{n\to +\infty} 0 = \ell < 1
+	.\] D'où, $\sum |a|^n / n!$\/ converge et donc \[
+		\boxed{\sum \frac{a^n}{n!} \text{ converge } \forall a \in \R}
+	.\]
+	On remarque que$\ds\sum_{n=0}^{\infty} \frac{a^n}{n!} = \mathrm{e}^a$\/ d'où $\ds \sum_{n=0}^\infty \frac{1}{n!} = \mathrm{e}$.
+\end{exo}
+
+\bigskip
+
+\begin{center}
+	\large\sc I.6 \quad Sommer les $\sim$, $\po$, $\gO$
+\end{center}
+
+\bigskip
+
+\begin{lem}
+	\begin{enumerate}
+		\item Si $\sum v_n$\/ converge et $u_n \sim v_n$, alors le reste $\sum_{k = n+1}^\infty v_k$\/ de $\sum v_n$\/ existe et il est équivalent au reste de $\sum u_n$.
+		\item Si $\sum v_n$\/ diverge et si $u_n \sim v_n$, alors le reste de $\sum v_n$\/ n'existe pas mais on peut utiliser la somme partielle et elle est équivalente à celle de $\sum u_n$.
+	\end{enumerate}
+	\medskip
+	\noindent Le {\sc Lemme}\/ ci-dessus est également vrai en remplaçant $\sim$\/ par $\po$\/ ou $\gO$.
+\end{lem}
+
+\begin{thm}
+	%
+\end{thm}
+
+\begin{exo}
+	\begin{enumerate}
+		\item On sait que $u_n \sim v_n$\/ car
+			\begin{gather*}
+				v_n = \frac{\cancel n - (\cancel n - 1)}{n(n-1)} = \frac{1}{n(n-1)} \sim \frac{1}{n^2}\\
+				\text{{\sc ou}\/}\\
+				v_n = \frac{1}{n} \times  \left( \frac{1}{1 - \frac{1}{n}} - 1 \right) = \frac{1}{n} \times \left( 1 + \frac{1}{n} + \po\left( \frac{1}{n} \right) - 1 \right) = \frac{1}{n^2} + \po\left( \frac{1}{n^2} \right) \sim \frac{1}{n^2}.
+			\end{gather*}
+			D'où, $\smash{\sum u_n}$\/ et $\smash{\sum v_n}$\/ ont la même nature, et comme $\smash{\sum u_n}$\/ converge, alors $\smash{\sum v_n}$\/ converge.
+
+			Soient $\smash{U_n = \sum_{k=n+1}^{\infty} u_k}$\/ et $\smash{V_n = \sum_{k=n+1}^{\infty} v_k}$.
+			D'après le {\sc Théorème}\/ 14, on a $U_n \sim V_n$.
+			On peut calculer $V_n$\/ (somme télescopique) : 
+			\begin{align*}
+				\sum_{k=n+1}^{N} \left( \frac{1}{k-1} - \frac{1}{k} \right) &= \frac{1}{n} - \cancel{\frac{1}{n+1}} + \cancel{\frac{1}{n+1}} - \cancel{\frac{1}{n+2}} + \cdots + \cancel{\frac{1}{N - 1}} - \frac{1}{N} \\
+				&= \frac{1}{n} - \frac{1}{N} \\
+			\end{align*}
+			Or, quand $N\to \infty$, on a $\smash{V_n = \sum_{k=n+1}^\infty = \frac{1}{n}}$. D'où, $U_n \sim \frac{1}{n}$.
+		\item On a $u_n = \frac{1}{n}$\/ et $v_n = \ln n - \ln (n-1)$. On sait que $u_n \sim v_n$\/ car \ldots\ D'où les séries $\sum u_n$\/ et $\sum v_n$\/ ont la même nature. Or, $\sum \frac{1}{n}$\/ diverge\footnote{On peut calculer, comme fait après, une expression de $V_n$, et en déduire que, comme elle diverge, $\sum \frac{1}{n}$\/ diverge également.} donc les deux séries divergent.
+			Soient $U_n = \sum_{k=2}^{n} \frac{1}{k}$\/ et $V_n = \sum_{k=2}^{n}\big(\ln k - \ln (k-1)\big)$. Grace au {\sc Théorème 14}, on a $U_n \sim V_n$.
+			On peut calculer $V_n$\/ (somme télescopique) : 
+			\begin{align*}
+				V_n &= \sum_{k=2}^{n} \big(\ln k - \ln (k-1)\big)\\
+				&= \cancel{\ln 2} - \ln 1 + \cancel{\ln 3} - \cancel{\ln 2} + \cdots + \ln n - \cancel{\ln(n-1)} \\
+				&= \ln n - \ln 1 \\
+				&= \ln n. \\
+			\end{align*}
+	\end{enumerate}
+\end{exo}
+
+

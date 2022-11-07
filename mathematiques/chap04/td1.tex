@@ -1,0 +1,99 @@
+\section{Exercice ? : Matrice compagnon}
+
+On considère la matrice \[
+	A = \begin{pNiceMatrix}
+		0&\Ldots&&&0&-a_0\\
+		1&\Ddots&&&\Vdots&-a_1\\
+		0&\Ddots&&&&\Vdots\\
+		\Vdots&&&&\\
+		0&\Ldots&0&1&0&-a_{p-1}\\
+		0&\Ldots&0&0&1&-a_p
+	\end{pNiceMatrix}
+.\]
+Ainsi, dans un système d'équation différentielles, on a
+\begin{align*}
+	&\begin{pNiceMatrix}
+		x'_0(t)\\
+		x'_1(t)\\
+		\Vdots\\
+		x'_p(t)
+	\end{pNiceMatrix} = \begin{pNiceMatrix}
+		0&\Ldots&&&&0&-a_0\\
+		1&\Ddots&&&&\Vdots&-a_1\\
+		0&\Ddots&&&&&\Vdots\\
+		\Vdots&&&&&\\
+		0&\Ldots&&0&1&0&-a_{p-1}\\
+		0&\Ldots&0&0&1&-a_p
+	\end{pNiceMatrix}^\top \begin{pNiceMatrix}
+		x_0(t)\\
+		x_1(t)\\
+		\Vdots\\
+		x_p(t)
+	\end{pNiceMatrix}\\
+	\iff&\begin{pNiceMatrix}
+		x'_0(t)\\
+		x'_1(t)\\
+		\Vdots\\
+		x'_p(t)
+	\end{pNiceMatrix} = \begin{pNiceMatrix}
+	0&1&0&\Ldots&0\\
+	\Vdots&\Ddots&\Ddots&\Ddots&\Vdots\\
+	&&&&0\\
+	&&&&1\\
+	0&\Ldots&&&0\\
+	-a_0&-a_1&\Ldots&-a_{p-1}&-a_p
+	\end{pNiceMatrix} \begin{pNiceMatrix}
+		x_0(t)\\
+		x_1(t)\\
+		\Vdots\\
+		x_p(t)
+	\end{pNiceMatrix}\\
+	\iff& \begin{cases}
+		x_0'(t) = x_1(t)\\
+		x_1'(t) = x_2(t)\\
+		\vdots\\
+		x'_{p-1}(t) = x_p\\
+		x'_p(t) = -a_0x_0(t) - a_1x_1(t) - \cdots - a_p x_p(t)
+	\end{cases}\\
+	\leadsto& \begin{cases}
+		\hfil\text{\begin{TAB}(e,7mm,7mm){|c|}{|c|}
+				Notations
+		\end{TAB}}\hfil\\
+		x^{(p+1)}(t) + a_0x(t) + a_1x'(t) + \cdots + a_p x^{(p)}(t) = 0
+	\end{cases}
+\end{align*}
+
+La dernière ligne du système est un équation différentielle d'ordre $p+1$.
+
+Calculons $\det(xI_{p+1} - A)$.
+On note \[
+	D_i = 
+	\begin{vmatrix}
+		x&0&\ldots&\ldots&a_i\\
+		-1&\ddots&\ddots&&a_{i+1}\\
+		0&\ddots&\ddots&\ddots&\vdots\\
+		\vdots&\ddots&\ddots&\ddots&0\\
+		0&\ldots&0&-1&x + a_{p}
+	\end{vmatrix}
+.\]
+D'où $D_0 = x D_1 + a_0$, $D_1 = xD_2 + a_1$, et donc
+\begin{align*}
+	D_0 &= x(xD_2 + a_1) + a_0 \\ 
+	&= xD_2 + xa_1+a_0 \\
+	&= \cdots \\
+	&= x^{p-1}D_{p-1} + \sum_{k=0}^{p-2} x^k a_k\\
+	&= x^{p-1}(x(x+a_p) + a_{p-1}) + \sum_{k=0}^{p-2}x^k a_k \\
+	&= \sum_{k=0}^p x^k a_k + x^{p+1}
+\end{align*}
+
+
+Autre méthode : 
+\begin{align*}
+	\det(x I_{p+1} - A) &= \begin{vNiceMatrix}[last-col]
+		x&0&\ldots&0&a_i&\leftarrow L_0 + xL_1 + \cdots + x^p L_p\\
+		-1&\ddots&\ddots&\vdots&a_0&\leftarrow L_1\\
+		0&\ddots&\ddots&0&\vdots&\quad\vdots\\
+		\vdots&\ddots&\ddots&x&a_{p-1}&\quad\vdots\\
+		0&\ldots&0&-1&x + a_{p}&\leftarrow L_p
+	\end{vNiceMatrix}\\
+\end{align*}

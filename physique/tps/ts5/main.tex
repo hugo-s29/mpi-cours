@@ -1,0 +1,109 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\fancyhead[L]{Hugo {\sc Salou}, Alan {\sc Le Brech}, Nicolas {\sc Vincent}, {\it MPI}\/$^\star$}
+\fancyhead[r]{{\sc tp ts5}\/}
+\pagecolor{truewhite}
+\color{trueblack}
+
+\begin{document}
+\begin{multicols}2
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/scope_1.png}
+	\caption{Réponse d'un filtre passe-pas à un signal créneau de fréquence $f = 2\:\mathrm{kHz}$}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture12.png}
+	\caption{Acquisition du signal créneau avec $N = 2000\:\mathrm{point}$\/ et $T_\text{e} = 1\:\mathrm{\mu s}$}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture14.png}
+	\caption{Décomposition en séries de {\sc Fourier}\/ du signal créneau}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture15.png}
+	\caption{Signal filtré et sa décomposition en séries de {\sc Fourier}\/}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[H]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/scope_25.png}
+		\caption{}
+	\end{subfigure}
+
+	\begin{subfigure}[H]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/scope_26.png}
+		\caption{}
+	\end{subfigure}
+
+	\begin{subfigure}[H]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{figures/scope_28.png}
+		\caption{}
+	\end{subfigure}
+
+	\caption{Modifications des valeurs de $R$\/ et $C$\/ afin de vérifier le caractère pseudo-intégrateur du filtre passe-bas}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture16.png}
+	\caption{Signal triangulaire d'entrée et sa décomposition en séries de {\sc Fourier}\/}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture17.png}
+	\caption{Signal filtré et sa décomposition en séries de {\sc Fourier}\/}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/scope_30.png}
+	\caption{Signal en sortie du filtre analogique}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture18.png}
+	\caption{Spectre du signal audio \guillemotleft~{\sc Bach} et gazouillis~\guillemotright\ avant le filtrage}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture19.png}
+	\caption{Spectre du signal audio après un filtrage d'ordre~1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture20.png}
+	\caption{Spectre du signal audio \guillemotleft~{\sc Chopin}, pinsons et gazouillis~\guillemotright\ avant un filtrage d'ordre~2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture21.png}
+	\caption{Filtrage du signal avec un filtre passe-bas d'ordre~2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.45\textwidth]{figures/Capture22.png}
+	\caption{Filtrage du signal avec un filtre passe-bas {\it Butterworth}}
+\end{figure}
+\end{multicols}
+\end{document}

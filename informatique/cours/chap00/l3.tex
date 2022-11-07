@@ -1,0 +1,188 @@
+\begin{rmk}
+	La relation $\equiv$\/ est une relation d'équivalence. De plus, si $G \equiv G'$\/ et $H \equiv H'$, alors
+	\vspace{-3mm}
+	\begin{multicols}{3}
+		\begin{itemize}
+			\item $G \land H \equiv G' \land H'$\/ ;
+			\item $G \lor H \equiv G' \lor H'$\/ ;
+			\item $G \to H \equiv G' \to H'$\/ ;
+			\item $G \leftrightarrow H \equiv G' \leftrightarrow H'$\/ ;
+			\item $\lnot G \equiv \lnot G'$.
+		\end{itemize}
+	\end{multicols}
+	\vspace{-4mm}
+	\noindent Une telle relation est parfois appelée une {\it congruence}.
+\end{rmk}
+
+\begin{defn}
+	On dit d'une formule $H \in \mathcal{F}$\/ qu'elle est 
+	\begin{itemize}
+		\item {\it valide}\/ ou {\it tautologique}\/ dès lors que $\forall \rho \in \mathds{B}^\mathcal{P},\,\left\llbracket H \right\rrbracket^\rho = {\bfm V}\/$ ;
+		\item {\it satisfiable}\/ dès lors qu'il existe $\rho \in \mathds{B}^\mathcal{P},\,\left\llbracket H \right\rrbracket^\rho = {\bfm V}\/$\/ ;
+		\item {\it insatisfiable}\/ dès lors qu'il n'est pas satisfiable.
+	\end{itemize}
+
+	On dit de $\rho \in \mathds{B}^\mathcal{P}$\/ tel que $\left\llbracket H \right\rrbracket^\rho = {\bfm V}\/$\/ que $\rho$\/ est un {\it modèle}\/ de $H$.
+\end{defn}
+
+\begin{exm}
+	\begin{itemize}
+		\item $p \lor\lnot p$\/ est une tautologie. En effet, soit $\rho \in \mathcal{B}^\mathcal{P}$, on a \[
+				\left\llbracket p\lor\lnot p \right\rrbracket^\rho = \left\llbracket p \right\rrbracket^\rho + \overline{\left\llbracket p \right\rrbracket^\rho} = {\bfm V}
+			.\]
+		\item $p$\/ est satisfiable mais non valide. En effet, \[
+				\left\llbracket p \right\rrbracket^{(p\mapsto {\bfm V})} = {\bfm V}\/\qquad\text{et}\qquad\left\llbracket p \right\rrbracket^{(p\mapsto {\bfm F})} = {\bfm F}
+			.\]
+		\item $p \land \lnot p$\/ est insatisfiable. En effet, soit $\rho \in \mathds{B}^\mathcal{P}$, on a \[
+					\left\llbracket p \land \lnot p \right\rrbracket^\rho = \left\llbracket p \right\rrbracket^\rho \cdot \overline{\left\llbracket p \right\rrbracket^\rho} = {\bfm F}.
+			\]
+	\end{itemize}
+\end{exm}
+
+\begin{defn}
+	Si $\Gamma$\/ est un ensemble de formules, on écrit $\Gamma \models H$\/ pour dire que \[
+		\forall \rho \in \mathds{B}^\mathcal{P},\,(\forall G \in \Gamma,\,\left\llbracket G \right\rrbracket^\rho = {\bfm V}\/) \implies \left\llbracket H \right\rrbracket^\rho = {\bfm V}\/
+	.\]
+\end{defn}
+
+\begin{rmk}
+	Si $\Gamma$\/ est fini, alors on a \[
+		\Gamma \models H \iff \Big(\bigwedge_{G \in \Gamma} G\Big) \models H
+	.\]
+
+	On doit faire la preuve, pour $n \ge 1$, \[
+		\{G_1, G_2, \ldots, G_n\} \models H \iff (\cdots((G_1 \land G_2) \land G_3) \cdots \land G_n) \models H
+	.\]
+\end{rmk}
+
+\section{Le problème {\scshape Sat}\/ -- Le problème Validité}
+
+On définit le problème {\sc Sat}\/ comme ayant pour donnée une formule $H$\/ et pour question ``$H$\/ est-elle satisfiable ?\,'' et le problème Valide comme ayant pour donnée une formule $H$\/ et pour question ``$H$\/ est-elle valide ?\,''
+
+\subsection{Résolution par tables de vérité}
+
+\begin{exm}
+	\null
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|c|c|c|c|c|c|c}
+			$a$\/ &$b$\/ &$c$\/ &$a\land b$\/ &$\lnot b$\/ &$\lnot c$\/ &$\lnot b \lor \lnot c$\/&$(a \land b) \to (\lnot b \lor \lnot c)$\\\hline
+			$\bfm V$&$\bfm V$&$\bfm V$&$\bfm V$&$\bfm F$&$\bfm F$&$\bfm F$&$\bfm F$\\
+			$\bfm V$&$\bfm F$&$\bfm V$&$\bfm F$&$\bfm V$&$\bfm F$&$\bfm V$&$\bfm V$\\
+			$\bfm V$&$\bfm F$&$\bfm F$&$\bfm F$&$\bfm V$&$\bfm V$&$\bfm V$&$\bfm V$\\
+			$\bfm V$&$\bfm V$&$\bfm F$&$\bfm V$&$\bfm F$&$\bfm V$&$\bfm V$&$\bfm V$\\
+			$\bfm F$&$\bfm V$&$\bfm V$&$\bfm F$&$\bfm F$&$\bfm F$&$\bfm F$&$\bfm V$\\
+			$\bfm F$&$\bfm F$&$\bfm V$&$\bfm F$&$\bfm V$&$\bfm F$&$\bfm V$&$\bfm V$\\
+			$\bfm F$&$\bfm F$&$\bfm F$&$\bfm F$&$\bfm V$&$\bfm V$&$\bfm V$&$\bfm V$\\
+			$\bfm F$&$\bfm V$&$\bfm F$&$\bfm V$&$\bfm F$&$\bfm V$&$\bfm V$&$\bfm V$\\
+		\end{tabular}
+		\caption{Table de vérité de $(a \land b) \to (\lnot b \lor \lnot c)$}
+	\end{table}
+\end{exm}
+
+Le problème {\sc Sat}\/ lit la colonne résultat, on cherche un ${\bfm V}\/$. Le problème Valide lit la colonne résultat et vérifie qu'il n'y a que des ${\bfm V}\/$.
+
+\begin{rmk}
+	Deux formules sont équivalent si et seulement si elles ont la même colonne résultat.
+\end{rmk}
+
+On essaie d'énumérer toutes les possibilités : si $|\mathcal{P}| = n \in \N$, alors le nombre de classes d'équivalences pour $\equiv$\/ est au plus $2^{2^n}$.
+On cherche donc un meilleur algorithme.
+
+\section{Représentation des fonction booléennes}
+
+\subsection{Par des formules ?}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c|c|c|c}
+		$p$\/ & $q$\/ & $r$\/ & $S$\/\\[2mm]\hline
+		$\bfm F$&$\bfm F$&$\bfm F$&$\bfm V$\\
+		$\bfm F$&$\bfm F$&$\bfm V$&$\bfm F$\\
+		$\bfm F$&$\bfm V$&$\bfm F$&$\bfm F$\\
+		$\bfm F$&$\bfm V$&$\bfm V$&$\bfm V$\\
+		$\bfm V$&$\bfm F$&$\bfm F$&$\bfm V$\\
+		$\bfm V$&$\bfm F$&$\bfm V$&$\bfm F$\\
+		$\bfm V$&$\bfm V$&$\bfm F$&$\bfm V$\\
+		$\bfm V$&$\bfm V$&$\bfm V$&$\bfm F$\\
+	\end{tabular}
+	\caption{Table de vérité d'une formule inconnue}
+\end{table}
+
+On regarde les cas où la sortie est ${\bfm V}$\/ et on crée une formule permettant de tester cette combinaison de $p$, $q$\/ et $r$\/ uniquement. On unie toutes ces formules par des $\lor$. Dans l'exemple ci-dessus, on obtient \[
+	(\lnot p \land \lnot q \land \lnot r) \lor (\lnot p \land \lnot q \land r) \lor (p \land \lnot q \land \lnot r) \lor (p \land q \land \lnot r)
+.\]
+
+\begin{thm}
+	Soit $f: \mathds{B}^\mathcal{P} \to \mathds{B}$\/ une fonction booléenne avec $\mathcal{P}$\/ fini. Il existe une formule $H \in \mathcal{F}$\/ telle que $\left\llbracket H \right\rrbracket = f$.
+\end{thm}
+
+Avant de prouver ce théorème, on démontre d'abord les deux lemme suivants et on définit $\lit_\rho$.
+
+\begin{defn}
+	Soit $\rho \in \mathds{B}^\mathcal{P}$. On définit \[
+		\lit_\rho(p) = \begin{cases}
+			p &\text{ si } \rho(p) = {\bfm V}\/ ;\\
+			\lnot p &\text{ sinon}.
+		\end{cases}
+	\]
+\end{defn}
+
+\begin{lem}
+	\[
+		\forall \rho \in \mathds{B}^\mathcal{P},\,\exists G \in \mathcal{F},\,\big(
+			\forall \rho' \in \mathds{B}^\mathcal{P},\,\left\llbracket G \right\rrbracket^{\rho'} = {\bfm V}\/  \iff \rho = \rho'\big)
+	.\] 
+\end{lem}
+
+On prouve ce lemme :
+\begin{prv}
+	$\mathcal{P}$\/ est fini. Notons donc $\mathcal{P} = \{p_1, \ldots, p_n\}$\/ ses variables. Soit alors $\rho \in \mathds{B}^\mathcal{P}$, on définit \[
+		H_\rho = \bigwedge_{i=1}^n \lit_\rho(p_i)
+	.\]
+	Montrons que $\left\llbracket H_\rho \right\rrbracket^{\rho'} = {\bfm V}\/ \iff \rho = \rho'$. Soit $\rho' \in \mathds{B}^\mathcal{P}$.
+	\begin{itemize}
+		\item Si $\rho = \rho'$, alors
+			\begin{align*}
+				\left\llbracket H_\rho \right\rrbracket^{\rho'} &= \Big\llbracket \bigwedge_{i=1}^n \lit_\rho(p_i) \Big\rrbracket^{\rho'}\\
+				&= \mathop{\charfusion[\mathop]{\phantom{\prod}}{\bullet}}_{i=1}^n \left\llbracket \lit_\rho(p_i) \right\rrbracket^{\rho'} \\
+			\end{align*}
+
+			Soit $i \in \left\llbracket 1,n \right\rrbracket$. Si $\rho(p_i) = {\bfm V}\/$\/ alors $\rho'(p_i) = {\bfm V}\/$, or, $\lit_\rho(p_i) = p_i$\/ et donc $\left\llbracket \lit_\rho(p_i) \right\rrbracket^{\rho'} = \left\llbracket p_i \right\rrbracket^{\rho'} = {\bfm V}$\/ ; sinon si $\rho(p_i) = {\bfm F}$, alors $\rho'(p_i) = {\bfm F}$, or, $\lit_\rho(p_i) = \lnot p_i$\/ et donc \[
+				\left\llbracket \lit_\rho(p_i) \right\rrbracket^{\rho'} = \left\llbracket \lnot p_i \right\rrbracket^{\rho'} = \left\llbracket p_i \right\rrbracket^{\rho'} = \rho'(p_i) = \bar{{\bfm F}} = {\bfm V}.
+			\] et comme ceci étant vrai pour tout $i \in \left\llbracket 1,n \right\rrbracket$, on a \[
+				\charfusion[\mathop]{\phantom{\prod}}{\bullet}_{i=1}^n \left\llbracket \lit_{\rho}(p_i) \right\rrbracket^{\rho'} = {\bfm V}
+			.\]
+		\item Sinon ($\rho \neq \rho'$), soit donc $p_i \in \mathcal{P}$\/ tel que $\rho(p_i) \neq \rho'(p_i)$. Si $\rho(p_i) = {\bfm V}$\/ alors $\rho'(p_i) = {\bfm F}$\/ et donc $\lit_{\rho}(p_i) = p_i$\/ et $\left\llbracket \lit_{\rho} p_i \right\rrbracket^{\rho'} = \rho'(p_i) = {\bfm F}$\/ ; sinon si $\rho(p_i) = {\bfm F}$, alors $\rho'(p_i) = {\bfm V}$\/ et donc $\lit_\rho(p_i) = \lnot p_i$\/ et $\left\llbracket \lit_\rho(p_i) \right\rrbracket^{\rho'} = \left\llbracket \lnot p_i \right\rrbracket^{\rho'} = \overline{\left\llbracket p_i \right\rrbracket^{\rho'}} = \bar{{\bfm V}} = {\bfm F}$.
+	\end{itemize}
+	On en déduit donc que \[
+		\left\llbracket H_\rho \right\rrbracket^{\rho'} = \charfusion[\mathop]{\phantom{\prod}}{\bullet}_{j=1}^n \left\llbracket \lit_\rho(p_j) \right\rrbracket^{\rho'} = {\bfm F}
+	\] car il existe $i \in \left\llbracket 1,n \right\rrbracket$\/ tel que $\left\llbracket \lit_\rho(p_i) \right\rrbracket^{\rho'} = {\bfm F}$.
+\end{prv}
+
+On peut donc maintenant prouver le théorème :
+
+\begin{lem}
+	Considérons alors la formule \[
+		H = \bigvee_{\substack{\rho \in \mathds{B}^\mathcal{P}\\f(\rho) = {\bfm V}}} H_\rho
+	.\]
+	On a $\left\llbracket H \right\rrbracket = f$.
+\end{lem}
+
+\begin{prv}
+	\begin{itemize}
+		\item Soit $\rho \in \mathds{B}^\mathcal{P}$\/ tel que $f(\rho) = {\bfm V}$, on a donc \[
+			\left\llbracket H \right\rrbracket^\rho = \Big\llbracket \bigvee_{\substack{\rho' \in \mathds{B}^\mathcal{P}\\f(\rho') = {\bfm V}}} H_{\rho'} \Big\rrbracket^\rho
+		.\] $H_\rho$\/ apparaît donc dans cette disjonction. Or, $\left\llbracket H_\rho \right\rrbracket = {\bfm V}$\/ et donc $\left\llbracket H \right\rrbracket^\rho = {\bfm V}$.
+
+		Si $f(\rho) = {\bfm F}$, alors on a vu que $\forall \rho'$\/ tel que $f(\rho') = {\bfm V}$, alors $\rho' \neq \rho$\/ et donc $\left\llbracket H_{\rho'} \right\rrbracket^{\rho} = {\bfm F}$\/ et donc \[
+			\Big\llbracket \bigvee_{\substack{\rho' \in \mathds{B}^\mathcal{P}\\f(\rho') = {\bfm V}}} H_{\rho'} \Big\rrbracket = {\bfm F}
+		.\] Finalement $\left\llbracket H \right\rrbracket = f$.
+	\end{itemize}
+\end{prv}
+
+Le théorème est prouvé directement à l'aide des deux lemmes précédents.
+
+On connaît donc la réponse à la question du nom de ce paragraphe, à savoir ``peut-on représenter les fonctions booléennes par des formules ?'' Oui.
+

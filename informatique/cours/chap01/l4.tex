@@ -1,0 +1,161 @@
+Parfois, on veut pouvoir ``sauter'' d'un état à un autre dans un automate. On utilise pour cela des $\varepsilon$-transitions.
+
+\section{Automates finis avec $\varepsilon$-transitions}
+
+\begin{defn}
+	On dit d'un automate sur l'alphabet $\Sigma \cupdot \{\blue \varepsilon\}$\/ que c'est un automate avec $\varepsilon$-transition.
+\end{defn}
+
+\begin{exm}
+	L'automate ci-dessous est un automate avec $\varepsilon$-transitions.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-avec-epsilon-transition}
+		\caption{Exemple d'automate avec $\varepsilon$-transition}
+	\end{figure}
+\end{exm}
+
+\begin{defn}
+	Soit $w \in \big(\Sigma \cupdot \{\blue\varepsilon\}\big)^*$. On définit alors $\tilde w$\/ le mot obtenu en supprimant les occurrences de $\blue \varepsilon$\/ dans $w$.
+\end{defn}
+
+\begin{exm}
+	Avec $\Sigma = \{a,b\}$\/ et $w = ab\blue\varepsilon aa \blue\varepsilon\blue\varepsilon a$, on a $\tilde w = abaaa$.
+
+	On a également $\tilde \varepsilon = \varepsilon$ ; pour deux mots $w_1$\/ et $w_2$, on a $\widetilde{w_1\cdot w_2} = \tilde w_1 \cdot \tilde w_2$\/ ; on a également $\tilde a = a$\/ pour $a \in \Sigma$ et $\tilde{\blue\varepsilon} = \varepsilon$.
+\end{exm}
+
+\begin{defn}
+	Soit $\mathcal{A}$\/ un automate avec $\varepsilon$-transition. On pose $\tilde{\mathcal{L}}(\mathcal{A})$\/ est le langage de l'automate sur l'alphabet $\Sigma \cupdot \{\blue \varepsilon\}$.
+	On appelle {\it langage}\/ de $A$, l'ensemble  \todo{retrouver la formule}.
+\end{defn}
+
+\begin{exm}
+	On peut trouver un automate reconnaissant la concaténation des langages des deux automates ci-dessous.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-2}
+		\caption{Automate reconnaissant le langage $(ba)^* \cdot \big(c \mid a(ba)^*\big)$}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-3}
+		\caption{Automate reconnaissant le langage $(a \mid baa)(bbaa)^*  \mid (b \mid abb)(aabb)^*$}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-1}
+		\caption{Automate reconnaissant la concaténation des deux précédents}
+	\end{figure}
+\end{exm}
+
+\subsection{Cloture par concaténation}
+
+\begin{prop}
+	Soient $\mathcal{A} = (\Sigma, Q, I, F, \delta)$\/ et $\mathcal{A}' = (\Sigma', Q', I', F', \delta')$\/ deux automates avec $Q \cap Q' = \O$. Alors $\mathcal{L}(\mathcal{A}) \cdot \mathcal{L}(\mathcal{A}')$\/ est un langage reconnaissable. Il est d'ailleurs reconnu par l'automate $\mathcal{A}^\cdot = (\Sigma^\cdot, Q^\cdot, I^\cdot, F^\cdot, \delta^\cdot)$\/ défini avec $\Sigma^\cdot= \Sigma \cup \Sigma'$, $Q^\cdot Q \cup Q'$, $I^\cdot = I$, $F^\cdot = F'$\/ et \[
+		\delta^\cdot = \{(q,\varepsilon,q)  \mid q \in F,\, q' \in I'\}.
+	\]
+\end{prop}
+
+\begin{prv}
+	Montrons que $\mathcal{L}(\mathcal{A}^\cdot) = \mathcal{L}(\mathcal{A}) \cdot \mathcal{L}(\mathcal{A}')$. On procède par double inclusion.
+	\begin{itemize}
+		\item[``$\subseteq$''] Soit $w \in \mathcal{L}(\mathcal{A}^\cdot)$\/ et soit \[
+				Q \supseteq I = I^\cdot \ni q_0 \xrightarrow{u_1} q_1 \xrightarrow{u_2} q_2 \to \cdots \to q_{n-1} \xrightarrow{u_n} q_n \in F^\cdot = F' \subseteq Q
+			\]  une exécution acceptante de $\mathcal{A}^\cdot$\/ telle que $\tilde u = w$. On pose $i_0 = \min \{ i \in \left\llbracket 1,n \right\rrbracket  \mid q_i \in Q\}$. On a alors, $\forall i \in \left\llbracket 1,i_0-1 \right\rrbracket,\:q_i \in Q$. Montrons que $\forall i \in \left\llbracket i_0,n \right\rrbracket$, $q_i \in Q'$\/ par récurrence finie. On a $q_{i_0} \in Q'$. De plus, si $q_i \in Q'$\/ et $(q_i, u_{i + 1}, q_{i+1}) \in \delta^\cdot$\/ donc $q_{i+1} \in Q'$.
+			Inspectons $(Q \ni q_{i_0-1}, u_{i_0}, q_{i_0} \in Q') \in \delta^\cdot$. On sait que $(q_{i_0 - 1}, u_{i_0}, q_{i_0}) \not\in \delta$\/ car $q_{i_0} \in Q'$\/ ; de même, $(q_{i_0 - 1}, u_{i_0}, q_{i_0}) \not\in \delta'$\/ car $q_{i_0- 1} \in Q$\/ donc $(q_{i_0-1},u_{i_0}, q_{i_0}) \in \{(q,\varepsilon,q')  \mid q \in Fn q' \in I'\}$. On a donc que $q_{i_0-1} \in F$\/ et $q_{i_0} \in I$. Ainsi \[
+				I \ni \underbrace{q_0 \xrightarrow{u_1} q_1 \to \cdots \to \overset{\substack{F\\\ni}}{q_{i}}} \xrightarrow\varepsilon \underbrace{\overset{\substack{I'\\\ni}}{q_{i_0}} \xrightarrow{u_{i_0}} \to \cdots \to q_n} \in F
+			\]
+			\begin{multicols}{2}
+				est une exécution acceptante de $\mathcal{A}$\/ d'étiquette $\widetilde{u_1\ldots u_{i_0-1}}$.
+
+				est une exécution acceptante de $\mathcal{A}'$\/ d'étiquette $\widetilde{u_{i_0+1}\ldots u_{n}}$.
+			\end{multicols}
+			donc $\widetilde{u_{|\left\llbracket 1,i_0-1 \right\rrbracket}} \in \mathcal{L}(\mathcal{A})$\/ et $\widetilde{u_{|\left\llbracket i_0+1,n \right\rrbracket}} \in \mathcal{L}(\mathcal{A}')$.
+			\begin{align*}
+				w = \tilde u &= \widetilde{u_{|\left\llbracket 1,i_0-1 \right\rrbracket} \cdot u_{i_0}\cdot u_{|\left\llbracket i_0+1,n \right\rrbracket}}\\
+					&= \widetilde{u_{|\left\llbracket 1,i_0+1 \right\rrbracket}} \cdot  \widetilde{u_{|\left\llbracket i_0 + 1,n \right\rrbracket}} \\
+			\end{align*}
+		\item[``$\supseteq$''] Montrons que $\mathcal{L}(\mathcal{A}) \cdot \mathcal{L}(\mathcal{A}') \subseteq \mathcal{L}(\mathcal{A}^*)$. Soit $w \in \mathcal{L}(\mathcal{A}) \cdot \mathcal{L}(\mathcal{A}^\cdot)$, il existe donc \[
+			I \ni q_0\xrightarrow{u_1} q_1 \to \cdots \to q_n \in F
+		\] une exécution acceptante dans $\mathcal{A}$\/ d'étiquette $\widetilde{u_1\ldots u_n}$. Il existe également \[
+			I' \ni q_{n+1} \xrightarrow{u_{n+2}} q_{n+1} \to \cdots \to q_m \in F
+		\] une exécution acceptante dans $\mathcal{A}'$\/ d'étiquette $\widetilde{u_{n+2}\ldots u_{m}}$. Or, $\delta \subseteq \delta^\cdot$\/ et $\delta' \subseteq \delta^\cdot $\/ donc $\forall i \in \left\llbracket 1,n \right\rrbracket,\,(q_{i-1}, u_i, q_i) \in \delta^\cdot$\/ et $\forall i \in \left\llbracket n+2,m \right\rrbracket,\,(q_{i-1}, u_i, q_i) \in \delta^\cdot$. Or, $q_n \in F$\/ et $q_{n+1} \in I'$\/ donc $(q_n, \varepsilon, q_{n+1}) \in \delta^\cdot$. Finalement \todo{recopier}.
+	\end{itemize}
+\end{prv}
+
+\subsection{Cloture par étoile}
+
+\begin{prop}
+	Soit $\mathcal{A} = (\Sigma, Q, I, F, \delta)$\/ un automate fini.
+	Alors $\mathcal{L}(\mathcal{A})^*$\/ est un automate reconnaissable, il est de plus reconnu par l'automate $\mathcal{A}_* = (\Sigma_*, Q_*, I_*, F_*, \delta_*)$\/ défini avec $\Sigma_* = \Sigma$, $Q_* = Q \cupdot \{V\}$\/ où $V \not\in Q$. \todo{recopier ici}\ldots
+\end{prop}
+
+\begin{exm}~
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-4}
+		\caption{Automate reconnaissant $\mathcal{L}(\mathcal{A})^*$}
+	\end{figure}
+\end{exm}
+
+\subsection{Cloture par union}
+
+\begin{prop}
+	Soit $\mathcal{A} = (\Sigma, Q, I, F, \delta)$\/ et $\mathcal{A}' = (\Sigma', Q', I', F', \delta')$\/ deux automates avec $Q \cap Q' = \O$. Alors, $\mathcal{L}(\mathcal{A}) \cup \mathcal{L}(\mathcal{A}')$\/ est un langage reconnaissable.
+	Il est, de plus, reconnu par $\mathcal{A}^\cup = (\Sigma^\cup, Q^\cup, I^\cup, F^\cup, \delta^\cup)$\/ avec $\Sigma^\cup  = \Sigma\cup \Sigma'$, $Q^\cup = Q \cup Q'$, $I^\cup = I \cup I'$, $F^\cup = F \cup F'$\/ et $\delta^\cup = \delta\cup \delta'$.
+\end{prop}
+
+\begin{prv}
+	Montrons que $\mathcal{L}(\mathcal{A}^\cup) \subseteq \mathcal{L}(\mathcal{A}) \cup \mathcal{L}(\mathcal{A}')$. Supposons, sans perte de généralité que les automates $\mathcal{A}$\/ et $\mathcal{A}'$\/ sont sans $\varepsilon$-transitions.
+	Soit $w \in \mathcal{L}(\mathcal{A}^\cup)$. Il existe une exécution acceptante \[
+		I^\cup \ni q_0 \xrightarrow{w_1} q_1 \to \cdots \to q_{n-1} \xrightarrow{w_n} q_n \in F^\cup
+	\] avec $w = w_0\ldots w_{n}$.
+
+	Montrons que, en supposant $q_0 \in I$\/ sans perte de généralité, $\forall i \in \left\llbracket 1,n \right\rrbracket,\:q_i \in Q$ de proche en proche.
+
+	On a donc $q_n \in Q \cap F^\cup = F$ et on a alors, pour tout $i \in \left\llbracket 1,n \right\rrbracket$, $(q_{i-1},w_i, q_i) \in \delta^\cup$. Or, $q_{i-1} \in Q$\/ et $(q_{i-1}, w_i, q_i) \in \delta'$\/ donc $(q_{i-1}, w_i, q_i) \in \delta$.
+
+	Finalement, $q_0 \xrightarrow{w_1} q_1 \to \cdots \to q_n$\/ est un exécution acceptante de $\mathcal{A}$ donc $w \in \mathcal{L}(\mathcal{A})$.
+\end{prv}
+
+\begin{rmk}
+	Pour tout $a \in \Sigma$, $\{a\}$\/ est reconnaissable : par exemple, 
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-5}
+		\caption{Automate reconnaissant $\{a\}$ avec $a \in \Sigma$}
+	\end{figure}
+\end{rmk}
+
+\begin{rmk}
+	$\O$\/ est reconnaissable : par exemple, 
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-6}
+		\caption{Automate reconnaissant $\O$}
+	\end{figure}
+\end{rmk}
+
+\begin{prop}
+	De ce qui précède, on en déduit que l'ensemble des langages reconnaissables par automates avec $\varepsilon$-transition est au moins l'ensemble des langages réguliers.
+\end{prop}
+
+\begin{thm}
+	Si $\mathcal{A}$\/ est un automate avec $\varepsilon$-transitions, alors il existe un automate $\mathcal{A}'$\/ sans $\varepsilon$-transition tel que $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{A}')$.
+\end{thm}
+
+\begin{exm}~
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-7}
+		\caption{Automate avec $\varepsilon$-transition}
+	\end{figure}
+	L'automate avec $\varepsilon$-transition ci-dessus peut être transformé en automate sans $\varepsilon$-transition comme celui ci-dessous.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-8}
+		\caption{Automate sans $\varepsilon$-transition}
+	\end{figure}
+\end{exm}
+

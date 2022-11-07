@@ -1,0 +1,217 @@
+\section{Motivation}
+
+L'intelligence artificielle est vu comme un \guillemotleft~objet magique~\guillemotright\ mais ce n'est pas le cas : c'est ce que nous allons étudier dans ce chapitre.
+Il existe plusieurs méthodes permettant l'apprentissage : descente de gradient, ?, \ldots
+
+La base de donnée la plus utilisée est {\sc mnist}\/ : elle contient 60\,000 images de $28 \times 28$\/ pixels représentant un chiffre, et le chiffre correspondant.
+L'idée de l'apprentissage est de \guillemotleft~deviner~\guillemotright\ le chiffre dessiné en connaissant l'image.
+
+\section{Vocabulaire}
+
+\begin{defn}
+	On appelle {\it signature de données}\/ un $n$-uplet de paires nom, ensemble ; on le typographie \[
+		\big(\text{nom}_1 : S_1, \text{nom}_2 : S_2, \ldots, \text{nom}_n : S_n\big)
+	.\]
+\end{defn}
+
+\begin{exm}
+	\begin{enumerate}
+		\item $\mathds{S}_1 = \big(\text{titre} : \text{string}, \text{longueur} : \N, \text{date} : \N\big)$,
+		\item $\mathds{S}_2 = \big(x : \R, y : \R\big)$,
+		\item $\mathds{S}_3 = \big( R : \left\llbracket 0,255 \right\rrbracket, G : \left\llbracket 0, 255 \right\rrbracket, B : \left\llbracket 0,255 \right\rrbracket\big)$.
+	\end{enumerate}
+\end{exm}
+
+\begin{defn}
+	Étant donné une signature de données $\mathds{S} = \big(\text{nom}_1 : S_1, \ldots, \text{nom}_n : S_n\big)$, on appelle {\it donnée}\/ un vecteur \[
+		\bar{v} = (v_1, v_2, \ldots, v_n) \in S_1 \times S_2 \times \cdots \times S_n
+	.\]
+\end{defn}
+
+\begin{exm}
+	\begin{enumerate}
+		\item $\big(\text{``2001, a space odyssey''}, 139, 1968\big)$\/ est une donnée/un vecteur de signature~$\mathds{S}_1$.
+		\item $\big(\pi, \sqrt{2}\big)$\/ est une donnée/un vecteur de signature $\mathds{S}_2$.
+	\end{enumerate}
+\end{exm}
+
+\begin{defn}
+	Étant donné une signature de données $\mathds{S}$, on appelle {\it jeu de données}\/ un ensemble fini de vecteurs de signature $\mathds{S}$.
+\end{defn}
+
+\begin{defn}
+	Étant donnée une signature de données $\mathds{S}$\/ et un ensemble de classes $\mathcal{C}$, on appelle {\it jeu de données classifié}\/ la donnée
+	\begin{itemize}
+		\item d'un jeu de données $S$,
+		\item d'une fonction $f: S \to \mathcal{C}$\/ de classification.
+	\end{itemize}
+\end{defn}
+
+\begin{comment}
+On distingue deux méthodes d'apprentissage :
+\begin{enumerate}
+	\item l'apprentissage supervisé où l'algorithme tente de classifier et est corrigé
+	\item l'apprentissage non supervisé où l'algorithme 
+\end{enumerate}
+\end{comment}
+
+\section{Apprentissage supervisé}
+
+L'objectif de cette section est de construire des fonctions de classification, à partir d'un jeu de données classifié.
+
+\begin{defn}
+	Étant donné une signature de données $\mathds{S}$, et un ensemble de classes $\mathcal{C}$, on appelle {\it fonction de classification}\/ une fonction des données de de signature $\mathds{S}$\/ dans $\mathcal{C}$.
+\end{defn}
+
+\begin{rmk}
+	On discutera de la \guillemotleft~qualité~\guillemotright\ d'une fonction de classification en fonction de ses résultats sur les données d'un jeu de données et sur des exemples de tests.
+\end{rmk}
+
+\subsection{$k$\/ plus proches voisins}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+		draw(box((-1,-1),(1,1)));
+		void s(string t, pair v, real r, int k) {
+			real a = v.x;
+			real b = v.y;
+			for(int i = 0; i < k; ++i) {
+				pair off = unitrand() * r * expi(unitrand() * 2pi);
+				label(t, off + (a,b));
+			}
+		}
+		srand(0);
+		s("$\circ$", (-0.5, 0.5), 0.5, 20);
+		s("$\diamond$", (0.5, 0.5), 0.5, 10);
+		s("$\star$", (-0.5, -0.5), 0.5, 40);
+		s("$\times$", (0.5, -0.5), 0.5, 50);
+	\end{asy}
+	\caption{Représentation de l'algorithme des $k$\/ plus proches voisins}
+\end{figure}
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree Un jeu de données classifié $(S, c)$, un vecteur d'entrée $\bar{v}$\/ 
+		\State On trie $S$\/ par distance à croissante de $v$\/ en $d_1$, $d_2$, \ldots, $d_{k}$, $d_{k+1}$, \ldots
+		\State Soit $D$\/ un dictionnaire de $\mathcal{C}$\/ vers $\N$\/ initialisé à 0\footnotemark
+		\For{$j \in \left\llbracket 1,k \right\rrbracket$}
+		\State $D\big[c(d_j)\big] \gets D\big[c(d_j)\big] + 1$
+		\EndFor
+		\State\Return $\argmax_{d \in \mathcal{C}} D[d]$\/
+	\end{algorithmic}
+	\caption{$k$-NN ($k$\/ {\sl nearest neighbors})}
+\end{algorithm}
+\footnotetext{où toutes les valeurs sont initialisées à 0, pas un dictionnaire vide}
+
+\begin{rmk}
+	On doit avoir $k \le n$, et l'espace doit être muni d'une distance.
+	Les résultats de l'algorithme dépendent fortement du jeu de données, du paramètre $k$\/ et de la distance choisie.
+\end{rmk}
+
+\paragraph{Matrice de confusion}
+
+\begin{defn}
+	On appelle {\it matrice de confusion}\/ d'un algorithme de prédiction $\mathcal{A}$\/ sur un jeu de données classifié $(T, c)$, la matrice \[
+		\Big(\Card \{t \in T \mid \mathcal{A}(t) = i \text{ et } c(t) = j\}\Big)_{(i,j) \in \mathcal{C}^2}
+	.\]
+
+	Dans le cas particulier dans le cas d'une classification $(\bfm V, \bfm F)$, on nomme
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|c|c}
+			\diagbox{$\mathcal{A}$}{vrai}&$\bfm F$&$\bfm V$\\ \hline
+			$\bfm F$& vrai négatif & faux négatif\\ \hline
+			$\bfm V$& faux positif& vrai positif
+		\end{tabular}
+		\caption{Matrice de confusion dans le cas d'une classification en $\bfm V$\/ et  $\bfm F$}
+	\end{table}
+\end{defn}
+
+{\slshape Comment améliorer la performance de l'algorithme des $k$\/ plus proches voisins ?} En dimension~1, on peut utiliser une dichotomie. Mais, dans des dimensions plus grandes, l'ordre lexicographique, et l'ordre produit ne fonctionnent pas. Mais, on peut appliquer une ``dichotomie'' en changeant de dimension. Par exemple, en deux dimension, on a 
+
+\begin{figure}[H]
+	\centering
+	\todo{Représenter le schéma}
+	%      |    |
+	% 5    |    4
+	%---2--+    |
+	%  |   +-1------
+	%  |   0
+	%  |   |
+	%  3   |
+	%  |   |
+	\caption{Représentation de la ``dichotomie'' en dimension 2}
+\end{figure}
+
+Pour représenter cette structure de données, on utilise un arbre binaire comme montré ci-dessous. Cet arbre est appelé un arbre $k$-dimensionnels.
+
+\begin{figure}[H]
+	\centering
+	\todo{Faire l'arbre}
+	\caption{Arbre $2$-dimensionnel représentant la ``dichotomie'' précédente}
+\end{figure}
+
+\subsection{Arbres $k$-dimensionnels}
+
+\begin{rmk}[Notations]
+	Étant donné un jeu de données $S$, on note pour $v \in S$,\[
+		S^{\le_i v} = \{u \in S  \mid u_i \le v_i\}\qquad\text{et}\qquad
+		S^{>_i v} = \{u \in S  \mid u_i > v_i\}
+	.\]
+\end{rmk}
+
+\begin{algorithm}[H]
+	\centering
+	\caption{``F'' : Fabrication d'un arbre $k$-dimensionnel}
+	\begin{algorithmic}[1]
+		\Entree $\mathcal{V}$\/ un jeu de données et $i \in \left\llbracket 0,n-1 \right\rrbracket$, où $n$\/ est la dimension des données
+		\If{$\mathcal{V} = \O$}
+		\State\Return Vide
+		\Else
+		\State On cherche $v \in \mathcal{V}$\/ tel que $v_i$\/ est la médiane de $\{ u_i  \mid u \in \mathcal{V}\}$\/ 
+		\State\Return $\text{Nœud}\Big((v,i), \text{F}\big((\mathcal{V} \setminus \{v\})^{\le_i v}, i + 1\ \mathrm{mod}\ n\big), \text{F}\big((\mathcal{V} \setminus \{v\})^{>_i v}, i+1\ \mathrm{mod}\ n\big)\Big)$
+		\EndIf
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+	\centering
+	\caption{``R'' : Recherche du point le plus proche}
+	\begin{algorithmic}[1]
+		\Entree Un arbre $k$-dimensionnel et un vecteur $v$\/
+		\If{$T$ est vide}
+			\State\Return $\O$\/
+		\Else
+			\State $\text{Nœud}\big((u,i), G, D\big) \gets T$
+			\If{$u_i \le v_i$}
+				\State $W \gets \text{R}(D, v)$\/
+				\If{$W = \text{None}$}
+					\State $W' \gets \text{R}(G, v)$\/ 
+					\If{$W' = \O$}
+						\State\Return $\text{Some}(u)$\/ 
+					\Else
+						\State $\text{Some}(z) \gets W'$\/
+						\State \Return le plus proche de $v$\/ entre $u$\/ et $z$\/
+					\EndIf
+				\Else
+					\State $\text{Some}(w) \gets W$\/ 
+					\If{$v_i - u_i \le d(w, v)$} \Comment{$d(w,v)$\/ représente la distance entre $w$\/ et $v$}
+						\State $W' \gets \text{R}(G, v)$\/ 
+						\If{$W' = \text{None}$}
+							\State\Return $\text{Some}(\text{plus proche de } v \text{ entre } u \text{ et } w)$\/ 
+						\Else
+							\State $\text{Some}(z) \gets w$\/
+							\State\Return $\text{Some}(\text{plus proche de } v \text{ entre } u,\ z, \text{ et } w)$\/
+						\EndIf
+					\Else\State\Return $W$\/
+					\EndIf
+				\EndIf
+			\EndIf
+		\EndIf
+	\end{algorithmic}
+\end{algorithm}
+
+

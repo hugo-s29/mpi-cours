@@ -1,0 +1,260 @@
+\section{(Ne pas) être diagonalisable}
+
+\begin{defn}
+	Soit une matrice carrée $A$. On dit que $A$\/ est {\it diagonalisable}\/ s'il existe une matrice inversible~$P \in \mathrm{GL}_n(\mathds{K})$\/ telle que $P^{-1}\cdot A\cdot P$\/ est diagonale.
+\end{defn}
+
+\begin{exo}
+	\begin{enumerate}
+		\item Montrons que la matrice $B = {7\: 1\choose 0\:7}$\/ n'est pas diagonalisable.
+			Par l'absurde : on suppose qu'il existe $P \in \mathrm{GL}_2(\R)$\/ et $(\lambda_1, \lambda_2) \in \R^2$\/ tels que \[
+				P^{-1} \cdot B \cdot P = \begin{bmatrix}
+					\lambda_1 & 0\\
+					0&\lambda_2
+				\end{bmatrix}
+			.\] On applique la trace $\tr$\/ et le déterminant $\det$\/ :
+			\begin{gather*}
+				\tr(B) = \tr{\lambda_1\:0\choose 0\:\lambda_2} \quad\text{d'où}\quad \lambda_1 + \lambda_2 = 7 + 7 = 14 = \s\\
+				\det(B) = \det{\lambda_1\:0\choose 0\:\lambda_2} \quad\text{d'où}\quad \lambda_1 \times \lambda_2 = 7 \times 7 = 49 = p
+			\end{gather*}
+			D'où $\lambda_1$\/ et $\lambda_2$\/ sont des solutions de l'équation $X^2 - \s X + p = 0$. Or
+			\begin{align*}
+				X^2 - \s X + p = 0 \iff& X^2 - 14X + 49 = 0\\
+				\iff& (X-7)^2 = 0\\
+				\iff& X = 7.
+			\end{align*}
+			D'où 
+			\begin{align*}
+				B = P P^{-1} B P P^{-1} = P \begin{pmatrix}
+					7&0\\
+					0&7
+				\end{pmatrix} P^{-1} = P \cdot 7I_2\cdot P^{-1} = 7I_2.
+			\end{align*}
+			La matrice $B$\/ n'est donc pas diagonalisable.
+
+			De même, montrons que la matrice $A$\/ n'est pas diagonalisable. On remarque que \[
+				A \cdot \mat{1\\1\\1} = \begin{pmatrix}
+					0&1&2\\
+					1&0&2\\
+					0&0&3
+				\end{pmatrix} \begin{pmatrix}
+					1\\1\\1
+				\end{pmatrix} = \begin{pmatrix}
+					3\\3\\3
+				\end{pmatrix} = 3\begin{pmatrix}
+					1\\1\\1
+				\end{pmatrix} 
+			.\] Ainsi, \[
+				P^{-1}\cdot A\cdot P = \begin{pmatrix}
+					3&0&0\\
+					0&?&0\\
+					0&0&?
+				\end{pmatrix}\qquad\text{où}\qquad P = \begin{pmatrix}
+					1&?&?\\
+					1&?&?\\
+					1&?&?
+				\end{pmatrix}
+			.\] De même, $A\left( \substack{1\\1\\0} \right) = 1 \times \left( \substack{1\\1\\0} \right)$. D'où \[
+				P^{-1}\cdot A\cdot P = \begin{pmatrix}
+					3&0&0\\
+					0&1&0\\
+					0&0&?
+				\end{pmatrix}\qquad\text{où}\qquad P = \begin{pmatrix}
+					1&1&?\\
+					1&1&?\\
+					1&0&?
+				\end{pmatrix}
+			.\] Finalement, on en conclut que \[
+				P = \begin{pmatrix}
+					3&0&0\\
+					0&1&0\\
+					0&0&-1
+				\end{pmatrix} \qquad \text{et}\qquad P^{-1}\cdot A\cdot P = \begin{pmatrix}
+					1&1&1\\
+					1&1&-1\\
+					1&0&0
+				\end{pmatrix} = D
+			.\]
+			De plus, la matrice $P$\/ est inversible car $\det P \neq 0$.
+		\item Pour calculer $A^n$, on pourrait chercher un polynôme annulateur $Q$\/ de $A$, et on exprime $X^n = Q \times T_n + R_n$, et donc $A^n = R_n(A)$.
+			Mais, on peut également diagonaliser $A$\/ (si elle est diagonalisable).
+			Ainsi,  \[
+				D^n = (P^{-1}\cdot A\cdot P)^n = P^{-1}\cdot A\cdot \cancel P\cdot \cancel{P^{-1}} \cdot \ldots\cdot \cancel{P^{-1}} \cdot A \cdot P = P^{-1}\cdot  A^n\cdot P
+			.\] D'où $A^n = P \cdot D^n \cdot P^{-1}$. Or, \[
+				D^n = \begin{pmatrix}
+					3&0&0\\
+					0&1&0\\
+					0&0&-1
+				\end{pmatrix}^n = \begin{pmatrix}
+					3^n&0&0\\
+					0&1^n&0\\
+					0&0&(-1)^n
+				\end{pmatrix}
+			.\]
+			On calcule donc $A^{n}$\/ en calculant l'inverse de $P$\/ : \[
+				A^n = \begin{pmatrix}
+					1&1&1\\
+					1&1&-1\\
+					1&0&0
+				\end{pmatrix} \begin{pmatrix}
+					3^n&0&0\\
+					0&1^n&0\\
+					0&0&(-1)^n
+				\end{pmatrix} \cdot P^{-1}
+			.\]
+		\item
+			\begin{align*}
+				\begin{rcases*}
+					\hfill u_{n+1} = v_n + 2w_n\\
+					\hfill v_{n+1} = u_n + 2w_n\\
+					\hfill w_{n+1} = 3w_n
+				\end{rcases*} \iff& \begin{pmatrix}
+					u_{n+1}\\v_{n+1}\\w_{n+1}
+				\end{pmatrix} = \begin{pmatrix}
+					0&1&2\\
+					1&0&2\\
+					0&0&3
+				\end{pmatrix} \begin{pmatrix}
+					u_n\\ v_n\\ w_n
+				\end{pmatrix}\\
+				\iff& U_{n+1} = A\cdot U_n\\
+				\iff& U'_{n+1} = D \cdot U'_{n}
+			\end{align*}
+			où $D = P^{-1} \cdot A \cdot P$, $U'_{n+1} = P\cdot U_{n+1}$\/ et $U'_n = P\cdot U_n$.
+			\begin{align*}
+				\phantom{\begin{rcases*}
+					\hfill mm_{n+1} = v_n + 2w_n\\
+					\hfill v_{n+1} = u_n + 2w_n\\
+					\hfill w_{n+1} = 3w_n
+				\end{rcases*}} \iff&
+				\begin{pmatrix}
+					u'_{n+1}\\v'_{n+1}\\w'_{n+1}
+				\end{pmatrix} = \begin{pmatrix}
+					3&0&0\\
+					0&1&0\\
+					0&0&-1
+				\end{pmatrix} \cdot \begin{pmatrix}
+					u'_n\\
+					v'_n\\
+					w'_n
+				\end{pmatrix}\\
+				\iff& \begin{cases}
+					u'_{n+1} = 3u'_n\\
+					v'_{n+1} = v'_n\\
+					w'_{n+1} = -w'_n
+				\end{cases}\\
+				\iff& \begin{cases}
+					u'_n = K\times  3^n\\
+					v'_n = L\\
+					w'_n = M \times (-1)^n
+				\end{cases}
+			\end{align*}
+			Ainsi, \[
+				\begin{pmatrix}
+					u_n\\v_n\\w_n
+				\end{pmatrix} = \underbrace{\begin{pmatrix}
+					1&1&1\\
+					1&1&-1\\
+					1&0&0
+				\end{pmatrix}}_P \cdot \begin{pmatrix}
+					K\times 3^n\\
+					L\\
+					M\times (-1)^n
+				\end{pmatrix}
+			.\] D'où $u_n = K\cdot 3^n + L + M \cdot (-1)^n$, $v_n = K\times 3^n + L - M \cdot (-1)^n$\/ et $w_n = K\cdot 3^n$, où les constantes $K$, $L$\/ et $M$\/ sont des constantes fixées par les conditions initiales.
+		\item
+			\begin{align*}
+				\begin{rcases*}
+					\hfill x'(t) = y(t) + 2z(t)\\
+					\hfill y'(t) = x(t) + 2z(t)\\
+					\hfill z'(t) = 3z(t)
+				\end{rcases*} \iff& \begin{pmatrix}
+					x'(t)\\
+					y'(t)\\
+					z'(t)
+				\end{pmatrix} = \begin{pmatrix}
+					0&1&2\\
+					1&0&2\\
+					0&0&3
+				\end{pmatrix} \cdot \begin{pmatrix}
+					x(t)\\
+					y(t)\\
+					z(t)
+				\end{pmatrix}\\
+				\iff& X'(t) = A\cdot X(t)\\
+				\iff& U'(t) = D \cdot U(t) \text{ avec } D = P^{-1} \cdot A\cdot P \text{ et } X(t) = P\cdot U(t)\\
+				\iff& \begin{pmatrix}
+					u'(t)\\
+					v'(t)\\
+					w'(t)
+				\end{pmatrix} = \begin{pmatrix}
+					3&0&0\\
+					0&1&0\\
+					0&0&-1
+				\end{pmatrix} \cdot \begin{pmatrix}
+					u(t)\\
+					v(t)\\
+					w(t)
+				\end{pmatrix}\\
+				\iff& \begin{cases}
+					u'(t) = 3u(t)\\
+					v'(t) = v(t)\\
+					w'(t) = -w(t)
+				\end{cases}\\
+				\iff& \begin{cases}
+					u(t) = K \cdot \mathrm{e}^{3t}\\
+					v(t) = L \cdot \mathrm{e}^{t}\\
+					w(t) = M \cdot \mathrm{e}^{-t}
+				\end{cases}
+			\end{align*}
+			Ainsi \[
+				\begin{pmatrix}
+					x(t)\\
+					y(t)\\
+					z(t)
+				\end{pmatrix} = \underbrace{\begin{pmatrix}
+					1&1&1\\
+					1&1&-1\\
+					1&0&0
+				\end{pmatrix}}_P \cdot \begin{pmatrix}
+					K \times \mathrm{e}^{3t}\\
+					L \cdot \mathrm{e}^{t}\\
+					M \cdot \mathrm{e}^{-t}
+				\end{pmatrix}
+			.\] 
+			D'où $x(t) = K\cdot \mathrm{e}^{3t} + L \cdot \mathrm{e}^{t} + M \cdot \mathrm{e}^{-t}$, $y(t) = K \cdot \mathrm{e}^{3t} + L \cdot \mathrm{e}^{t} - M \cdot \mathrm{e}^{-t}$\/ et $z(t) = K\cdot \mathrm{e}^{3t}$. Les constantes $K$, $L$\/ et $M$\/ peuvent être déterminées à partir des conditions initiales.
+	\end{enumerate}
+\end{exo}
+
+\begin{rmkn}[équations différentielles]
+	On considère l'équation différentielle $(*)$ : $x'(t) = \lambda \cdot x(t)$.
+	Les fonctions $x : t \mapsto K\cdot \mathrm{e}^{\lambda t}$\/ sont des solutions de cette équation. On peut utiliser la méthode de {\sc Lagrange}\/ : la méthode de la~\guillemotleft~variation de la constante.~\guillemotright\@ On cherche des solutions sous la forme $x(t) = k(t) \cdot \mathrm{e}^{\lambda t}$ (vision du~physicien). D'où $k(t) = x(t) / \mathrm{e}^{\lambda t}$\/ (vision du mathématicien). De plus, $x'(t) = k'(t) \mathrm{e}^{\lambda t} + k(t) \lambda \mathrm{e}^{\lambda t}$.
+	Ainsi, on injecte ce $k(t)$\/ dans l'équation différentielle :
+	\begin{align*}
+		(*) \iff& k'(t) \mathrm{e}^{\lambda t} + k(t) \lambda \mathrm{e}^{\lambda t} = \lambda k(t)\mathrm{e}^{\lambda t}\\
+		\iff& k'(t) \mathrm{e}^{\lambda t} = 0\\
+		\iff& k'(t) = 0\\
+		\iff& \exists K \in \R\,\:k(t) = K.
+	\end{align*}
+	Les solutions trouvées dans l'exercice précédent sont donc les uniques solutions du système d'équations différentielles.
+
+	De même, pour résoudre une équation différentielle avec 2\tsup{nd} membre de la forme \[
+		(**) : \qquad x'(t) - \lambda \cdot x(t) = b(t)
+	.\]
+	La fonction $t \mapsto x(t)$\/ est une solution de l'équation {\sc sans}\/ 2\tsup{nd} membre si et seulement si \[
+		\exists K \in \R,\:\forall t \in \R,\quad x(t) = K \cdot \mathrm{e}^{\lambda t}
+	.\]
+	\begin{center}
+		\slshape Comment résoudre l'équation différentielle {\scshape avec}\/ 2\tsup{nd} membre si on connaît la solution générale de l'équation {\scshape sans}\/ 2\tsup{nd} membre ?
+	\end{center}
+	On utilise la méthode le la variation de la constante.
+	Soit $x(t) = k(t) \cdot \mathrm{e}^{\lambda t}$. Ainsi, en injectant cette expression de $x$\/ dans l'équation $(**)$, on trouve
+	\begin{align*}
+		(**) \iff& k'(t) \mathrm{e}^{\lambda t} + k(t) \cdot \lambda \mathrm{e}^{\lambda t} = \lambda k(t) \mathrm{e}^{\lambda t} + b(t)\\
+		\iff& k'(t) \mathrm{e}^{\lambda t} = b(t)\\
+		\iff& k'(t) = b(t) \cdot \mathrm{e}^{-\lambda t}\\
+		\iff& k(t) = \int_{0}^{t} b(u)\cdot \mathrm{e}^{-\lambda u}~\mathrm{d}u + K\\
+		\iff& x(t) = \left( \int_{0}^{t} b(u) \cdot \mathrm{e}^{-\lambda u}~\mathrm{d}u + K \right) \mathrm{e}^{\lambda t}\\
+		\iff& x(t) = \underbrace{\int_{0}^{t} b(u) \cdot \mathrm{e}^{\lambda (t-u)}~\mathrm{d}u}_{\text{solution particulière}} + \underbrace{K \cdot \mathrm{e}^{\lambda t}}_{\substack{\text{solution}\\\text{générale}\\\text{de $(*)$}}}.
+	\end{align*}
+\end{rmkn}

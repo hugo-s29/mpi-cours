@@ -1,0 +1,63 @@
+\begin{rmk}
+	Montrons que $\int_{\pi}^{+\infty} \left| \frac{\sin t}{t} \right| ~\mathrm{d}t$\/ diverge. On va montrer que $\smash{\sum_{k\ge 1}^N \int_{k\pi}^{(k+1)\pi} \underbrace{\ts\left| \frac{\sin t}{t} \right|}_{u_k}~\mathrm{d}t}$\/ tend vers $+\infty$\/ quand $N \to +\infty$. On sait que \[
+		u_k \ge \int_{k\pi}^{(k+1)\pi} \frac{|\sin t|}{(k+1)\pi}~\mathrm{d}t
+	.\] Or, $\int_{k\pi}^{(k+1)\pi} \frac{|\sin t|}{(k+1)\pi}~\mathrm{d}t = \frac{1}{(k+1)\pi} \int_{k\pi}^{(k+1)\pi} |\sin t|~\mathrm{d}t = \frac{1}{(k+1)\pi} \int_{0}^{\pi} |\sin t|~\mathrm{d}t$\/ car $|\sin|$\/ est $\pi$-périodique.
+	Or, \[
+		\int_{0}^{\pi} |\sin t|~\mathrm{d}t = \int_{0}^{\pi} \sin t~\mathrm{d}t = \Big[-\cos t\Big]_0^\pi = 2
+	.\] D'où \[
+		\forall k \in \N^*,\quad u_k \ge \frac{2}{(k+1)\pi} \ge 0
+	.\] Or, $\sum \frac{{\color{gray} 2}}{(k+1){\color{gray} \pi}}$\/ diverge, d'où $\sum u_k$\/ diverge et donc \[
+		\int_{0}^{+\infty} \left| \frac{\sin t}{t} \right| ~\mathrm{d}t \text{ diverge}
+	.\]
+\end{rmk}
+
+\begin{prop}
+	Soit $\varphi$\/ une fonction de classe $\mathscr{C}^1$\/ strictement croissante sur $[\alpha, \beta[$. On pose $a = \varphi(\alpha)$\/ et $b = \lim_{x\to \beta^-} \varphi(x)$. Si $f$\/ est continue par morceaux sur $[a,b[$, alors
+	\begin{enumerate}
+		\item les intégrales $\int_{a}^{b} f(t)~\mathrm{d}t$\/ et $\int_{\alpha}^{\beta} f\big(\varphi(u)\Big) \cdot \varphi'(u)~\mathrm{d}u$\/ sont de même nature ;
+		\item si ces intégrales convergent, alors \[
+			\int_{a}^{b} f(t)~\mathrm{d}t = \int_{\alpha}^{\beta} f\big(\varphi(u)\big) \cdot \varphi'(u)~\mathrm{d}u
+		.\]
+	\end{enumerate}
+\end{prop}
+
+\begin{exo}
+	On considère l'intégrale $F(x) = \int_{0}^{x} \frac{1}{\ch t}~\mathrm{d}t$, d'où $F(x) = \int_{0}^{x} \frac{2}{\mathrm{e}^{t} + \mathrm{e}^{-t}}~\mathrm{d}t$.
+	On fait le {\it changement de variable}\/ suivant : $u(t) = \mathrm{e}^{t}$, d'où $\mathrm{d}u = \mathrm{e}^{t}\,\mathrm{d}t = u\,\mathrm{d}t$, et $t \in [0,x] \leftrightarrow u \in [1,\mathrm{e}^{x}]$. Ainsi \[
+		F(x) = \int_{1}^{\mathrm{e}^{x}} \frac{2}{u + \frac{1}{u}} \times \frac{1}{u}~\mathrm{d}u = \int_{1}^{\mathrm{e}^{x}} \frac{2}{1+u^2}~\mathrm{d}u = \Big[2\Arctan u\Big]_1^{\mathrm{e}^x} = 2\Arctan(\mathrm{e}^{x}) - \frac{\pi}{2}
+	.\] Si $x \to +\infty$, alors $\mathrm{e}^{x} \to +\infty$. D'où $\Arctan(\mathrm{e}^{x}) \longrightarrow \frac{\pi}{2}$.
+	Et donc \[
+		F(x) \tendsto{x\to +\infty} \frac{2\pi}{2} - \frac{\pi}{2} = \frac{\pi}{2}.
+	\]
+\end{exo}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+
+		size(5cm);
+
+		real f(real x) { return cosh(x); }
+		real g(real x) { return sinh(x); }
+
+		draw(graph(f, -2.5, 2.5, 300), magenta);
+		draw(graph(g, -2.5, 2.5, 300), deepcyan);
+
+		label("\small$1$", (0, 1), align=SW);
+
+		real eps = 0.3;
+		draw((-eps, 1)--(eps, 1));
+
+		draw((-2.7,0) -- (2.7,0), Arrow(TeXHead));
+		draw((0,g(-2.4)) -- (0,f(2.4)), Arrow(TeXHead));
+
+		draw(scale(0.8) * (dir(45) -- dir(45 + 180)), red, Arrows(TeXHead));
+		draw((-0.8, 1) -- (0.8, 1), red, Arrows(TeXHead));
+
+		label("\small$\sh$", (-2.4, g(-2.4)), deepcyan, align=E);
+		label("\small$\ch$", (-2.4, f(-2.4)), magenta, align=W);
+	\end{asy}
+	\caption{Graphe de $\ch t$\/ et $\sh t$}
+\end{figure}
+

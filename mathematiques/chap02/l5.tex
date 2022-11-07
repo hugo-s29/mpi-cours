@@ -1,0 +1,67 @@
+\begin{rmk}
+	Soit $A \in \mathscr{M}_{n,n}(\mathds{K})$. L'application \begin{align*}
+		e_A: \mathds{K}[X] &\longrightarrow \mathscr{M}_{n,n}(\mathds{K}) \\
+		P &\longmapsto P(A)
+	\end{align*} évalue chaque polynôme $P$\/ en $A$. C'est un morphisme d'anneaux, d'espaces vectoriels et même d'algèbres.
+\end{rmk}
+
+\begin{defn}
+	On dit qu'un endomorphisme $u$\/ est {\it nilpotent}\/ s'il existe $k \in \N^*$\/ tel que $u^k = 0$\/ ; on dit qu'une matrice carrée $A$\/ est nilpotente s'il existe $k \in \N^*$\/ tel que $A^k = 0$.
+\end{defn}
+
+\begin{exo}
+	Soit $A \in \mathscr{M}_{n,n}(\mathds{K})$\/ une matrice nilpotente d'indice $r$ : $A^r = 0$\/ mais $A^{r-1} \neq 0$.
+	\begin{enumerate}
+		\item Alors $\mu_A = X^r$\/ : $\mu_A(A) = A^r = 0$\/ d'où $\mu_A$\/ est annulateur. Le polynôme $\mu_A$\/ est unitaire.
+			Il n'existe pas de polynôme annulateur unitaire $P$\/ de degré strictement inférieur à $r$\/ car, sinon, $P  \mid X^r$\/ d'où il existe $n < r$, $P = X^k$, or, si $P(A) = A^k = 0$, alors $A$\/ est nilpotente d'indice $k < r$, ce qui est absurde.
+		\item {\color{cyan}(Tarte à la crème)} On veut montrer que $r \le n$.
+			On pose $f: E \to E$\/ telle que $[f]_\mathscr{B} = A$\/ où $E$\/ est un espace de dimension $n$, et ayant une base $\mathscr{B}$.
+			On a $A^r = 0$\/ si et seulement si $f^r = 0$\/ ; et, $A^{r-1} \neq 0$\/ si et seulement si $f^{r-1} \neq 0$.
+			On veut donc montrer que $r \le \dim E$.
+			Or, comme $f^{r-1} \neq 0_{\mathscr{L}(E)}$, il existe $x \in E$\/ tel que $f^{r-1}(x) \neq 0_E$.
+			Considérons maintenant $\big(x, f(x), f^2(x), \ldots, f^{r-1}(x)\big)$, une famille de $r$\/ vecteurs, et cette partie est libre car : si (Hyp) : $\alpha_0 + \alpha_1 f(x) + \alpha_2 f^2(x) + \cdots + \alpha_{r-1} f^{r-1}(x) = 0$, alors $f^{r-1}(\text{Hyp})$\/ donne $\alpha_0 f^{r-1}(x) = 0$\/ (grâce à la nilpotence de $f$), or $f^{r-1}(x) \neq 0$\/ d'où $\alpha_0 = 0$. On applique maintenant $f^{r-2}$, on a $\alpha_1 = 0$. De proche en proche, on a \[
+				\alpha_0 = \alpha_1 = \alpha_2 = \cdots = \alpha_n
+			.\]
+			D'où $\Vect\big(x, f(x), \ldots, f^{r-1}(x)\big)$\/ est un sous-espace vectoriel de dimension $r$. Or, $\dim E = n$\/ et donc $r \le n$.
+		\item On a $A^r$\/ et $r \le n$\/ d'où $A^n = A^r \cdot A^{n-r} = 0 \times A^{n-r} = 0$.
+	\end{enumerate}
+\end{exo}
+
+\begin{lem}[des noyaux]
+	Soit $u$\/ un endomorphisme de $E$. On considère un polynôme $P$\/ annulateur de $u$.
+	On factorise ce polynôme en $r$\/ polynômes : $P(X) = \prod_{k=1}^r P_k(X)$.
+	Alors, \[
+		E = \bigoplus_{k=1}^r \Ker P_k(u)
+	.\]
+	Si le polynôme n'est pas annulateur, on remplace $E$\/ par $\Ker P(u)$\/ dans l'expression précédente (même si la plupart du temps, en {\sc td}, on utilise le cas où $P$\/ est annulateur).
+\end{lem}
+
+\begin{prv}[par récurrence]
+	On initialise avec deux polynômes $P_1$\/ et $P_2$, premiers entre-eux.
+	D'où, d'après le théorème de {\sc Bézout}, il existe deux polynômes $A_1$\/ et $A_2$\/ de $\mathds{K}[X]$\/ tels que $A_1(X)\times P_1(X) + A_2(X)\times P_2(X) = 1$. En particulier, $A_1(u)  \circ P_1(u) + A_2(u)  \circ P_2(u) = \id_E$.
+	D'où, pour $x \in E$, $\big(A_1(u)  \circ P_1(u)\big)(x) + \big(A_2(u)  \circ P_2(u)\big)(x) = x$\/ ($*$).
+	On veut montrer que $\Ker\big((P_1\times P_2)(u)\big) = \Ker\big(P_1(u)\big) \oplus \Ker\big(P_2(u)\big)$.
+	\begin{itemize}
+		\item Montrons que $\Ker\big(P_1(u)\big) \cap \Ker\big(P_2(u)\big) = \{0_E\}$.
+			Soit $x \in \Ker\big(P_1(u)\big) \cap \Ker\big(P_2(u)\big)$. Alors $P_1(u)(x) = 0_E$, et, de même, $P_2(u)(x) = 0_E$. Or, \[
+				\big(A_1(u)  \circ \underbrace{P_1(u)\big)(x)}_{0_E} + \big(A_2(u)  \circ \underbrace{P_2(u)\big)(x)}_{0_E} = x
+			.\] D'où $x = 0_E$.
+		\item Montrons que $\Ker P_1(u) + \Ker P_2(u) \subset \Ker\:(P_1P_2)(u)$.
+			Soit $x \in \Ker P_1(u) + \Ker P_2(u)$. Alors, il existe $x_1 \in \Ker P_1(u)$\/ et $x_2 \in \Ker P_2(u)$\/ tels que $x = x_1 + x_2$.
+			Or, $\big(P_1(u)  \circ P_2(u)\big) (x_2) = P_1(u)\big(P_2(u)(x_2\big) = 0_E$\/ et $\big(P_2(u)  \circ P_1(u)\big) (x_1) = P_2(u)\big(P_1(u)(x_1\big) = 0_E$.
+			D'où $\big(P_1(u)  \circ P_2(u)\big) (x) = 0_E$.
+			D'où $P_1P_2(u)(x) = 0_E$\/ et donc $x \in \Ker\:(P_1P_2)(x)$.
+		\item Montrons que $\Ker P_1(u) + \Ker P_2(u) \supset \Ker\:(P_1P_2)(u)$.
+			Soit $x \in \Ker\:(P_1P_2)(u)$. D'après $(*)$, $x = x_1 + x_2$\/ avec $x_1 = \big(A_1(u)  \circ P_1(u)\big)(x)$\/ et $x_2 = \big(A_2(u)  \circ P_2(u)\big)(x)$.
+			Alors
+			\begin{align*}
+				P_2(u)(x_1) &= P_2(u)\Big(\big(A_1(u) \circ P_1(u)\big)(x)\Big)\\
+				&= P_2(u) \circ A_1(u) \circ P_1(u)(x) = A_1(u) \circ P_1(u)  \circ P_2(u)(x)\\
+				&= A_1(u) \circ\smash{\underbrace{P_1(u)  \circ P_2(u)(x)}_{0_E}} \\
+				&= 0_E \\
+			\end{align*}
+			De même, $P_1(u)(x_2) = 0_E$.
+			D'où $x \in \Ker P_1(u) + \Ker P_2(u)$.
+	\end{itemize}
+\end{prv}
+

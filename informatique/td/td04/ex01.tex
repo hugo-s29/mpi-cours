@@ -1,0 +1,16 @@
+\section{Déterminisation de taille exponentielle}
+
+\begin{enumerate}
+	\item En notant $n$\/ le nombre d'états de $\mathcal{A}$, alors le nombre d'états de $\det(\mathcal{A})$\/ est, au plus, $2^n$. En effet, les états sont des éléments de $\wp(Q)$\/ et $|\wp(Q)| = 2^n$.
+	\item $\mathcal{A}$ : \tikzfig{ex1-q2a} $\mathcal{B}$ : \tikzfig{ex1-q2b}\\
+		mais $\det(\mathcal{A})$\/ : \tikzfig{ex1-q2c}
+	\item $\mathcal{A}_n$\/ : \tikzfig{ex1-q3}
+	\item $\mathcal{A}_3$\/ : \tikzfig{ex1-q4}\\
+		et, $\det(\mathcal{A}_3)$\/ : \tikzfig{ex1-q4b}
+	\item Soit $i_0 = \max \{k \in \left\llbracket 1,n \right\rrbracket  \mid u_k \neq v_k\}$. Soit $m \in \Sigma^{i_0}$\/ tel que $u \cdot m \in L_n$\/ mais $v\cdot m \not\in L_n$. Or, $\delta^*(i, u\cdot m) = \delta^*(\delta^*(i,u), m)$\/ et $\delta^*(i,v\cdot m) = \delta^*(\delta^*(i,v),m)$. D'où $\delta^*(i,u\cdot m) \in F$\/ et $\delta^*(i,v\cdot m) \not\in F$. Ce qui est absurde.
+	\item Ainsi, l'application \begin{align*}
+			f: \Sigma^* &\longrightarrow Q \\
+			u &\longmapsto \delta^*(i,u)
+		\end{align*} est injective. D'où, $\mathcal{D}_n = |Q| \ge |\Sigma^*| = 2^n$.
+	\item D'où, d'après les questions 1 et 6, on en déduit que le nombre d'états utilisés pour la déterminisation de $\mathcal{A}_n$\/ est de $\mathcal{D}_n \ge 2^n$.
+\end{enumerate}

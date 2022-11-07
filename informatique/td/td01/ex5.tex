@@ -1,0 +1,14 @@
+\section{Ordres bien fondés en vrac}
+
+\begin{enumerate}
+	\item Non, l'ensemble $(\N, \sqsubseteq)$\/ n'est pas un ensemble ordonné. En effet, en posant $n = 4$\/ et $m = 8$, on a $\forall i \in \N$, $\frac{n}{2^i}\pmod 2 = 0$, et $\forall i \in \N$, $\frac{m}{2^i} \pmod 2 = 0$. Ainsi, on a $n \sqsubseteq m$, et $m \sqsubseteq n$, mais comme $n \neq m$, la relation ``$\sqsubseteq$'' n'est pas anti-symétrique, ce n'est donc pas une relation d'ordre (et donc encore moins un ordre bien fondé).
+	\item Non, l'ensemble $(\Sigma^*, \sqsubseteq)$\/ n'est pas un ensemble ordonné. En effet, en posant $\Sigma = \{a,b\}$, et $u = aa$\/ et $v = ab$\/ deux mots de $\Sigma$, on a $|u| = |v|$\/ et donc $u  \sqsubseteq v$\/ et $u \sqsupseteq v$ mais comme $u \neq v$, la relation ``$ \sqsubseteq$'' n'est pas anti-symétrique, ce n'est donc pas une relation d'ordre (et donc encore moins un ordre bien fondé).
+	\item Oui, l'ensemble $(\Sigma^*, \sqsubseteq)$\/ est un ensemble ordonné, et cet ordre est total. En effet, soit $u$, $v$\/ et $w$ trois mots. On a bien $u \sqsubseteq u$\/ (avec $\phi = \id_{\left\llbracket 0,|u|-1 \right\rrbracket}$). Également, si $u \sqsubseteq v$\/ et $v\sqsubseteq u$, alors $|u| = |v|$, et par stricte croissance de $\phi$, on a bien $u = v$. Aussi, si $u \sqsubseteq v$\/ et $v \sqsubseteq w$, alors soit $\phi$\/ l'extractrice de la suite $v$\/ de $u$, et soit $\varphi$\/ l'extractrice de la suite $w$\/ de $v$. Alors, la fonction $\phi  \circ \varphi$\/ est strictement croissante, et $\forall i \in \left\llbracket |u|-1 \right\rrbracket$, $u_i = v_{\phi(i)} = w_{\phi(\varphi(i))}$, et donc $u \sqsubseteq w$. Ainsi, la relation ``$\sqsubseteq$'' est une relation d'ordre.
+
+		Montrons à présent que l'ordre est bien fondé. Soit $L$\/ une partie non vide de $\Sigma^*$.
+		Soit $x \in L$.
+		Si $\varepsilon \in L$, alors $x \sqsupseteq \varepsilon$.
+
+	\item Non, l'ensemble $(\wp(E), \sqsubseteq)$\/ n'est pas un ensemble ordonné. En effet, on pose $E = \N$. Soit $A$\/ une partie finie de $E$. On sait que son plus grand élément existe, et on le note $m$. Par définition du maximum, $\forall y \in A$, $y \preceq m$. Et donc $A \not\sqsubseteq A$. La relation ``$\sqsubseteq$'' n'est donc pas une relation d'ordre (et donc encore moins un ordre bien fondé).
+\end{enumerate}
+

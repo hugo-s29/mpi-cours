@@ -1,0 +1,91 @@
+\begin{exm}
+	On pose $f$, le sinus cardinal :  \begin{align*}
+		f: \R^* &\longrightarrow \R \\
+		t &\longmapsto \frac{\sin t}{t}.
+	\end{align*}
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			import graph;
+			size(10cm);
+			draw((-10, 0) -- (10, 0), Arrow(TeXHead));
+			draw((0, -3) -- (0, 5), Arrow(TeXHead));
+			real f(real x) {
+				if(x == 0) { return 3; }
+				else {return 3*sin(x) / x;}
+			}
+			draw(graph(f, -10, 10), magenta);
+		\end{asy}
+		\caption{Sinus cardinal}
+	\end{figure}
+
+	La fonction $f$\/ est continue sur ${]0,8]}$\/ mais $\lim_{t\to 0} \frac{\sin t}{t} = 1$. D'où $\int_{0}^{8} \frac{\sin t}{t}~\mathrm{d}t$\/ est faussement impropre en $0$\/ et donc convergente.
+
+
+	Mais attention ! On ne dit pas \guillemotleft~{\color{red}soit $f : t \mapsto \frac{1}{t}$. L'intégrale $\int_{8}^{+\infty} \frac{1}{t}~\mathrm{d}t$\/ est faussement impropre en $+\infty$\/ car $\lim_{t\to +\infty}\frac{1}{t} = 0$}.~\guillemotright
+\end{exm}
+
+\section{Intégrer les $\mathbf{\sim}$, $\po$, et \textit{O}}
+
+\begin{thm}
+	\hfill$\O$\hfill\null
+\end{thm}
+
+\begin{thm}
+	Le 2.\ n'est pas la réciproque du 1.\ mais la contraposée.
+\end{thm}
+
+\begin{prop}
+	\hfill$\O$\hfill\null
+\end{prop}
+
+\begin{exm}
+	On considère l'intégrale $\int_{2}^{+\infty} \frac{1}{t^2+ \cos t}~\mathrm{d}t$, c'est une intégrale impropre en $+\infty$.
+	On recherche un équivalent de $\frac{1}{t^2 + \cos t}$\/ en $+\infty$ : \[
+		\frac{1}{t^2 + \cos t} \simi_{t\to +\infty} \frac{1}{t^2}
+	\] qui ne change pas de signe. Or, $\int_{2}^{+\infty} \frac{1}{t^2}~\mathrm{d}t$\/ converge car c'est une intégrale de {\sc Riemann}\/ avec $\alpha = 2 > 1$.
+	On en déduit que l'intégrale $I$\/ converge.
+
+	On procède autrement : \[
+		0 \le \frac{1}{t^2 + \cos t} \le \frac{1}{t^2 - 1}
+	.\] Or, $\int_{2}^{+\infty} \frac{1}{t^2 - 1}~\mathrm{d}t$\/ converge car
+	\begin{align*}
+		\int_{2}^{x} \frac{1}{t^2 - 1}~\mathrm{d}t &= \int_{2}^{x} \left( \frac{\sfrac12}{t-1} - \frac{\sfrac12}{t+1} \right) ~\mathrm{d}t \\
+		&= \frac{1}{2} \int_{2}^{x} \frac{1}{t-1}~\mathrm{d}t - \frac{1}{2}\int_{2}^{x} \frac{1}{t+1}~\mathrm{d}t \\
+		&= \frac{1}{2} \Big[\ln|t-1|\Big]_2^x - \frac{1}{2}\Big[\ln |t+1|\Big]_2^x \\
+	\end{align*}
+	D'où \[
+		\int_{2}^{x} \frac{1}{t^2 - 1}~\mathrm{d}t = \frac{1}{2} \left[ \ln\left| \frac{t-1}{t+1} \right| \right]_2^x = \frac{1}{2}\ln \left| \frac{x-1}{x+1} \right| + \frac{1}{2} \ln 3 \tendsto{x\to +\infty} \frac{1}{2} \ln 3
+	.\] donc l'intégrale $I$\/ converge et $I \le \frac{1}{2} \ln_3$.
+\end{exm}
+
+\begin{exo}
+	\begin{enumerate}
+		\item L'intégrale $I = \int_{0}^{1} \frac{\sin t}{t^2}~\mathrm{d}t$\/ est impropre en 0. On utilise un équivalent : $\sin t \simi_{t\to 0} t$\/ qui ne change pas de signe. Or, $\int_{0}^{t} \frac{1}{t}~\mathrm{d}t$\/ diverge (par critère de {\sc Riemann}). Donc $I$\/ diverge.
+			
+			L'intégrale $J = \int_{1}^{+\infty} \sin \frac{1}{t}~\mathrm{d}t$\/ est généralisée en $+\infty$. On cherche un équivalent en $+\infty$\/ : \[
+				\sin \frac{1}{t} \simi_{t\to +\infty} \frac{1}{t}
+			\] qui ne change pas de signe. Or, $\int_{1}^{+\infty} \frac{1}{t}~\mathrm{d}t$\/ diverge par critère de {\sc Riemann}. On en déduit que $J$\/ diverge également.
+		\item L'intégrale $\int_{0}^{+\infty} \frac{1}{t^2}~\mathrm{d}t$\/ est impropre, {\bf et}\/ en 0, {\bf et}\/ en $+\infty$. Le théorème ne marche donc pas.
+			En effet $t\mapsto \frac{1}{t^2}$\/ n'est pas continue par morceaux en 0, ce qui était le cas pour $t\mapsto \frac{1}{1+t^2}$.
+	\end{enumerate}
+\end{exo}
+
+\begin{rmkn}[Retour sur la {\sc remarque}\/ 5]
+	L'intégrale $\int_{0}^{+\infty} \frac{1}{\ln(1+t)}~\mathrm{d}t$\/ est impropre en 0 {\bf et}\/ en $+\infty$. $\int_{0}^{+\infty} \frac{1}{\ln(1+t)}~\mathrm{d}t$\/ converge si et seulement si $\int_{0}^{7} \frac{1}{\ln(1+t)}~\mathrm{d}t$\/ {\bf et}\/ $\int_{7}^{+\infty} \frac{1}{\ln(1+t)}~\mathrm{d}t$\/ convergent.
+	Et si elles convergent \[
+		\int_{0}^{+\infty} \frac{1}{\ln(1+t)}~\mathrm{d}t = \int_{0}^{7} \frac{1}{\ln(1+t)}~\mathrm{d}t + \int_{7}^{+\infty} \frac{1}{\ln(1+t)}~\mathrm{d}t
+	.\]
+	On n'utilise pas deux barrières en même temps. Sinon, les intégrales doublement impropres peuvent, et converger, et diverger.
+\end{rmkn}
+
+\begin{prop}[avec $\sim$]
+	Si $f(t) \simi_{t\to b} g(t)$\/ qui ne change pas de signe. Alors,
+	\begin{itemize}
+		\item ou bien $\ds\int_{a}^{b} f(t)~\mathrm{d}t$\/ et $\ds\int_{a}^{b} g(t)~\mathrm{d}t$\/ convergent et $\ds \int_{x}^{b} f(t)~\mathrm{d}t \simi_{x\to b} \int_{x}^{b} g(t)~\mathrm{d}t$.
+		\item ou bien $\ds\int_{a}^{b} f(t)~\mathrm{d}t$\/ et $\ds\int_{a}^{b} g(t)~\mathrm{d}t$\/ divergent et $\ds\int_{a}^{x} f(t)~\mathrm{d}t \simi_{x\to b} \int_{a}^{x} g(t)~\mathrm{d}t$.
+	\end{itemize}
+	Cette proposition est équivalente à le {\sc lemme}\/ 13 sur les séries.
+\end{prop}
+
+

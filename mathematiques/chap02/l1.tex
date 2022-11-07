@@ -1,0 +1,257 @@
+\begin{rap}
+	La {\it dimension}\/ d'un espace vectoriel est le nombre de vecteurs dans une base de cet espace vectoriel.
+\end{rap}
+
+Soit $E$\/ un espace vectoriel de dimension finie, $n$.
+On a \[
+	{\color{red} P} =
+	\begin{pNiceMatrix}[last-col, last-row]
+		p_{11}&p_{12}&\ldots&p_{1n}&\vec{e}_1\\
+		p_{21}&p_{22}&\ldots&p_{2n}&\vec{e}_2\\
+		\vdots&\vdots&\ddots&\vdots&\vdots\\
+		p_{n1}&p_{n2}&\ldots&p_{nn}&\vec{e}_n\\
+		\vec{\varepsilon}_1&\vec{\varepsilon}_2&\ldots&\vec{\varepsilon}_n
+	\end{pNiceMatrix}
+.\]
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+		label("Vielle base", (-5, 3));
+		label("Nouvelle base", (5, 3));
+		label("$\mathscr{B} = (\vec e_1, \vec e_2, \ldots, \vec e_n)$", (-5, 2));
+		label("$\mathscr{B}' = (\vec\varepsilon_1, \vec\varepsilon_2, \ldots, \vec\varepsilon_n)$", (5, 2));
+		label("$[\vec x]_{\mathscr{B}} = X = \begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}$", (-5, 0));
+		label("$[\vec x]_{\mathscr{B}'} = X = \begin{pmatrix}x'_1\\x'_2\\\vdots\\x'_n\end{pmatrix}$", (5, 0));
+		draw((-2, 2)--(2, 2), red, Arrow(TeXHead));
+		label("$P$", (0, 2), red, align=S);
+		label("\fbox{$X = {\color{red} P} X'$}", (0, 0));
+	\end{asy}
+	\vspace{8mm}
+	\caption{Formule de passage (vecteurs)}
+\end{figure}
+
+On considère maintenant un endomorphisme $f$.
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+		label("Vielle base", (-5, 3));
+		label("Nouvelle base", (5, 3));
+		label("$\mathscr{B} = (\vec e_1, \vec e_2, \ldots, \vec e_n)$", (-5, 2));
+		label("$\mathscr{B}' = (\vec\varepsilon_1, \vec\varepsilon_2, \ldots, \vec\varepsilon_n)$", (5, 2));
+		label("$[f]_{\mathscr{B}} = A \in \mathscr M_{n,n}(\mathds K)$", (-5, 0));
+		label("$[f]_{\mathscr{B}'} = A' \in \mathscr M_{n,n}(\mathds K)$", (5, 0));
+		draw((-2, 2)--(2, 2), red, Arrow(TeXHead));
+		label("$P$", (0, 2), red, align=S);
+		label("\fbox{$A' = {\color{red} P^{-1}} X' {\color{red} P}$}", (0, 0));
+	\end{asy}
+	\vspace{8mm}
+	\caption{Formule de passage (endomorphismes)}
+\end{figure}
+
+On a \[
+	A = [f]_\mathscr{B} =
+	\begin{pNiceMatrix}[last-row,last-col]
+		a_{11}&a_{12}&\ldots&a_{1n}&\vec{e}_1\\
+		a_{21}&a_{22}&\ldots&a_{2n}&\vec{e}_2\\
+		\vdots&\vdots&\ddots&\vdots&\vdots\\
+		a_{n1}&a_{n2}&\ldots&a_{nn}&\vec{e}_n\\
+		f(\vec{e}_1)&f(\vec{e}_2)&\ldots&f(\vec{e}_n)
+	\end{pNiceMatrix}
+.\]
+
+\begin{exo}
+	On doit montrer qu'il existe $P \in \mathrm{GL}_2(\R)$\/ telle que $A' = P^{-1}\cdot A\cdot P$.
+	On appelle la vielle base $\mathscr{B} = (\vec{\imath},\vec{\jmath})$\/ et la nouvelle $\mathscr{B}' = (\vec{\varepsilon}_1,\vec{\varepsilon}_2)$.
+	On a \[
+		A =
+		\begin{pNiceMatrix}[last-col,last-row]
+			\cos \theta&\sin \theta&\vec{\imath}\\
+			\sin \theta&-\cos\theta&\vec{\jmath}\\
+			f(\vec{\imath})&f(\vec{\imath})
+		\end{pNiceMatrix} \qquad\text{et}\qquad
+		\begin{pNiceMatrix}[last-col,last-row]
+			1&0&\vec{\varepsilon}_1\\
+			0&-1&\vec{\varepsilon}_2\\
+			f(\vec{\varepsilon}_1)&f(\vec{\varepsilon}_2)
+		\end{pNiceMatrix}
+	.\]
+	La question devient donc de trouver $\vec{\varepsilon}_1$\/ et $\vec{\varepsilon}_2$.
+	
+
+	On a $f(\vec{\varepsilon}_1) = \vec{\varepsilon}_1$\/ et $f(\vec{\varepsilon}_2) = \vec{\varepsilon}_2$.
+	L'endomorphisme $f$\/ est la symétrie par rapport à $\Vect(\vec{\varepsilon}_1)$\/ où $\vec{\varepsilon}_1 = {\cos\sfrac\theta2\choose\sin\sfrac\theta2}$. On représente la situation dans la {\sc figure}\/ ci-dessous.
+
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			size(7cm);
+			pair O = (0, 0);
+			draw(O -- (1, 0), yellow, Arrow(TeXHead));
+			draw(O -- (0, 1), yellow, Arrow(TeXHead));
+			label("$\vec\imath$", (1, 0), yellow, align=SE);
+			label("$\vec\jmath$", (0, 1), yellow, align=NE);
+			real theta = 0.8;
+			draw(rotate(theta*180/pi) * (O -- (1,0)), red, Arrow(TeXHead));
+			draw(rotate(theta*180/pi) * (O -- (0,-1)), red, Arrow(TeXHead));
+			label("$f(\vec\imath\,)$", expi(theta)*(1, 0), red, align=NE);
+			label("$f(\vec\jmath\,)$", expi(theta)*(0,-1), red, align=SE);
+			draw(circle(O, 1));
+			draw(arc(O, 0.3, 0.0, theta * 180/pi), Arrow(TeXHead));
+			draw(arc(O, 0.8, 0.0, theta * 90/pi), magenta, Arrow(TeXHead));
+			label("$\theta$", expi(theta/2)*0.3, align=E);
+			label("$\sfrac\theta2$", expi(theta/4)*0.8, magenta, align=E);
+			draw(-2expi(theta/2)/sqrt(2) -- 2expi(theta/2)/sqrt(2), dashed+magenta);
+		\end{asy}
+		\caption{Schéma représentant l'{\sc exercice}\/ 1}
+	\end{figure}
+	On en déduit la matrice $\red P$\/ : \[
+		\red P = \begin{pmatrix}
+			\cos \frac{\theta}{2} & -\sin \frac{\theta}{2}\\[2mm]
+			\sin \frac{\theta}{2}&\cos \frac{\theta}{2}
+		\end{pmatrix}
+	.\] Cette matrice n'est, par contre, pas unique : elle peut être multipliée par un réel non nul sur chacune des colonnes et répondre quand même au problème. Par exemple, \[
+		\begin{pmatrix}
+			8 \cos\frac{\theta}{2}&-3\sin\frac{\theta}{2}\\[2mm]
+			8\sin\frac{\theta}{2}&3\cos\frac{\theta}{2}
+		\end{pmatrix}
+	\] est aussi une matrice valide.
+
+
+	Autre méthode. On ``sort les expressions des vecteurs d'un chapeau'' : soient $\vec{\varepsilon}_1 = \begin{pmatrix}
+		\cos(\theta/2)\\
+		\sin(\theta/2)\\
+	\end{pmatrix}$\/ et $\vec{\varepsilon}_2 = \begin{pmatrix}
+		-\sin(\theta / 2)\\
+		\cos(\theta / 2)\\
+	\end{pmatrix}$. Alors,
+	\begin{align*}
+		A \begin{pmatrix}
+			\cos \frac{\theta}{2}\\[2mm]
+			\sin\frac{\theta}{2}
+		\end{pmatrix} &= \begin{pmatrix}
+		\cos\theta&\sin\theta\\
+		\sin\theta&-\cos\theta
+		\end{pmatrix} \begin{pmatrix}
+			\cos \frac{\theta}{2} \\[2mm]
+			\sin \frac{\theta}{2}
+		\end{pmatrix} \\
+		&= \begin{pmatrix}
+			\cos \theta\:\cos \frac{\theta}{2} + \sin \theta\:\sin \frac{\theta}{2} \\[2mm]
+			\sin \theta \cos \frac{\theta}{2} - \cos \theta\:\sin\frac{\theta}{2}
+		\end{pmatrix} \\
+		&= \begin{pmatrix}
+			\cos\frac{\theta}{2}\\[2mm]
+			\sin \frac{\theta}{2}
+		\end{pmatrix} \\
+	\end{align*}
+	D'où, $f(\vec{\varepsilon}_1) = \vec{\varepsilon}_1$. De la même manière, on vérifie $f(\vec{\varepsilon}_2) = -\vec{\varepsilon}_2$.
+
+	Avant de quitter l'{\sc exercice 1}\/ : on vérifie que la matrice $P$\/ est inversible. On rappelle qu'une matrice est inversible si et seulement si $\det(P) \neq 0$, si et seulement si les colonnes de $P$\/ forment une base (ou les lignes), si et seulement si le rang de $P$\/ est le même que la taille de $P$.
+\end{exo}
+
+La trace est une opération linéaire : $\tr(\alpha A + \beta B) = \alpha\tr A+ \beta\tr B$. Attention, ce \red{n'est pas} vrai pour le déterminent : $\det(\alpha A) = \alpha^n \det A \neq \alpha\det A$\/ où $n$\/ est la taille de $A$. Il est cependant linéaire par rapport à chacune de ses colonnes.
+
+\[
+	\tr(AB) = \tr(BA) \neq \tr A \times \tr B\qquad\text{mais}\qquad\det(ABà = \det(BA) = \det A \times \det B
+.\]
+
+Le trace et le déterminant sont invariants par changement de base (par des opérations sur les lignes et les colonnes) : on dit que ces opérations sont invariantes par similitude.
+
+Le noyau de $f$, noté $\Ker f$\/ est l'ensemble des $x$\/ pour lesquels $f(x) = 0_F$. L'image de $f$, noté $\Im f$\/ est l'ensemble des $f(x)$\/ pour $x$\/ dans $E$.
+
+On a \[
+	\Ker f = \{0_E\} \iff f \text{ injective }\qquad\text{et}\qquad\Im f = F \iff f \text{ surjective}
+.\]
+
+On rappelle le théorème du rang : \[
+	\boxed{\dim E = \dim \Ker(f) + \dim \Im(f) = \dim \Ker(f) + \rg(f).}
+\]
+
+Dans le cas particulier où $\dim E = \dim F$, on a \[
+	\boxed{f \text{ injective } \iff f \text{ surjective } \iff f \text{ bijective}.}
+\]
+
+\begin{exo}
+	Soit $E$\/ un $\mathds{K}$-espace vectoriel et soit \begin{align*}
+		u: E &\overset{\text{linéaire}}\longrightarrow E \\
+		\vec{x} &\underset{\phantom{\text{linéaire}}}\longmapsto u(\vec{x}).
+	\end{align*}
+	On considère $S$\/ un supplémentaire de $\Ker u$\/ : $\Ker u \oplus S = E$. Ce supplémentaire existe d'après le théorème de la base incomplète. On montre que $S$\/ est isomorphe à $\Im u$.
+	On pose \begin{align*}
+		f: S &\longrightarrow \Im u \\
+		\vec{x} &\longmapsto u(\vec{x})
+	\end{align*}
+
+	On montre aisément que $f$\/ est linéaire car $u$\/ est, elle-même, linéaire.
+
+	Soit $\vec{x} \in S$.
+	\begin{align*}
+		\vec{x} \in \Ker f \iff& f(\vec{x}) = \vec{0} = u(\vec{x})\\
+		\iff& \vec{x} \in \Ker(u) \cap S\\
+		\iff& \vec{x} = \vec{0}
+	\end{align*}
+	Donc $f$\/ est injective.
+
+	Soit $\vec{y} \in \Im u$. Soit $\vec{x} \in E$\/ tel que $u(\vec{x}) = \vec{y}$. Soient $\vec{a} \in S$\/ et $\vec{b} \in \Ker u$\/ tels que $\vec{x} = \vec{a} + \vec{b}$. On a $u(\vec{x}) = u(\vec{a}) = f(\vec{a}) = y$. On en déduit que $f$\/ est surjective.
+
+	On en déduit donc que $\dim(\Ker u) + \dim(\Im u) = \dim E$ : le théorème du rang.
+\end{exo}
+
+\begin{exo}
+	Une forme linéaire $\varphi$\/ est une application linéaire d'un $\mathds{K}$-espace vectoriel dans $\mathds{K}$.
+	\begin{enumerate}
+		\item Montrons que $\varphi$\/ est, ou bien nulle, ou bien surjective.
+			On vérifie aisément le cas où $\varphi$\/ est nulle.
+			Si $\varphi$\/ n'est pas nulle, il existe $\vec{x} \in E$\/ tel que $\varphi(\vec{x}) \neq 0_{\mathds{K}}$. Alors, on sait que $\varphi(\sfrac{\vec{x}}{\varphi(x)}) = 1$ par linéarité. Donc, pour tout $\lambda \in \mathds{K}$, on peut trouver un antécédent $\vec{y} = \frac{\lambda}{\varphi(\vec{x})} \vec{x}$\/ de $\lambda$\/ :  $\varphi(\vec{y}) = \lambda$.
+
+			On rappelle également que le noyau d'une forme linéaire non nulle est un {\it hyperplan} (la dimension vue l'année dernière d'un hyperplan comme un sous-espace vectoriel de dimension $n-1$\/ n'est pas valable en dimension finie ; cette nouvelle définition est valable en dimension infinie). C'est ce que nous allons montrer dans les deux prochaines questions.
+		\item Soit $H$\/ un hyperplan. On sait donc que $H = \Ker \varphi$\/ où $\varphi$\/ est une forme linéaire non nulle (par définition). Ainsi, d'après le théorème du rang, $\dim E = \dim \Ker(\varphi) + \dim \Im(\varphi)$. Ainsi, d'après la question 1., comme $\varphi$\/ est non nulle, elle est surjective et donc $\dim \Im(\varphi) = 1$. On en conclut que \[
+				\dim E = \dim H + 1\qquad\text{i.e.}\qquad\dim H = n - 1
+			.\]
+		\item Réciproquement, on suppose $\dim H = n - 1$. Montrons que $H$\/ est un hyperplan i.e.\ montrons qu'il existe une forme linéaire $\varphi$ telle que $H = \Ker \varphi$. Je choisi une base $(\vec{\varepsilon}_1, \vec{\varepsilon}_2, \ldots, \vec{\varepsilon}_{n-1})$ de $H$. Par le théorème de la base incomplète, soit $\vec{\varepsilon}_n$\/ tel que $(\vec{\varepsilon}_1,\ldots,\vec{\varepsilon}_n)$\/~soit une base de $E$.
+			Soit $\varphi$\/ une application linéaire de $E$\/ dans $\mathds{K}$\/ définie comme \begin{align*}
+				\varphi:\qquad E\quad\xrightarrow[\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad]{}&\quad\mathds{K} \\
+				{\scriptsize\vec{x} = x_1 \vec{\varepsilon}_1 + x_2 \vec{\varepsilon}_2 + \cdots + x_{n-1}\vec{\varepsilon}_{n-1} + x_{n-1} \vec{\varepsilon}_n}\quad \longmapsto&\quad x_n.
+			\end{align*}
+			$\varphi$\/ n'est pas nulle car $\varphi(\vec{\varepsilon}_n) = 1 \neq 0$. On a donc $\Ker \varphi = H$.
+		\item L'application $\tr$\/ est une forme linéaire de $\mathscr{M}_{nn}(\mathds{K})$\/ dans $\mathds{K}$. Soit $M \in \mathscr{M}_{nn}(\mathds{K})$. On pose \[
+				M = \begin{pmatrix}
+					a_{11}&a_{12}&\ldots&a_{1n}\\
+					a_{21}&a_{22}&\ldots&a_{2n}\\
+					\vdots&\vdots&\ddots&\vdots\\
+					a_{n1}&a_{n2}&\ldots&a_{nn}
+				\end{pmatrix}
+			.\]
+			On sait que $M \in \Ker \varphi$\/ si et seulement si $a_{11} + a_{22} + \cdots + a_{nn} = 0$ i.e.\ $a_{nn} = -a_{11}-a_{22}-\cdots-a_{n-1,n-1}$. Il y a donc $n - 1$\/ contraintes (i.e.\ coordonnées). Ainsi, \[
+				M \in \Ker\tr \iff M = \begin{pmatrix}
+					a_{11}&a_{12}&\ldots&a_{1,n-1}&a_{1,n}\\
+					a_{21}&a_{22}&\ldots&a_{2,n-1}&a_{2n}\\
+					\vdots&\vdots&\ddots&\vdots&\vdots\\
+					a_{n1}&a_{n2}&\ldots&a_{n-1,n-1}&k
+				\end{pmatrix}
+			\] où  $k = -a_{11}-a_{22}-\cdots-a_{n-1,n-1}$. D'où,
+			\[
+				M \in \Ker \varphi \iff M = a_{11} \begin{pmatrix}
+					1\\
+					&0\\
+					&&\ddots\\
+					&&&0\\
+					&&&&-1
+				\end{pmatrix} + a_{22} \left(\begin{array}{cccccccc}
+					0\\
+					&1\\
+					&&0\\
+					&&&\ddots\\
+					&&&&0\\
+					&&&&&-1\\
+					&&&&&&0\\
+				\end{array} \right) + \cdots
+			.\] Donc, ces $n^2 - 1$\/ matrices forment une base de $\Ker \tr$.
+			
+	\end{enumerate}
+\end{exo}
+

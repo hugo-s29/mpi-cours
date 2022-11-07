@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (-5.25, 0) {$i$};
+		\node [style=new style 0] (5) at (6, 0) {$f$};
+		\node [style=none] (9) at (0.25, -0.5) {$d^*aa\mid (ac\mid b) \cdot (cc)^* \cdot (b\mid ca)(d\mid e)^*$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (0) to (5);
+	\end{pgfonlayer}
+\end{tikzpicture}

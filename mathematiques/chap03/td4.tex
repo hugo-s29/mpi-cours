@@ -1,0 +1,40 @@
+\section{Exercice 6}\relax
+{\slshape Quelle est la nature de l'intégrale \[
+	A = \int_{0}^{+\infty} \left( x+2-\sqrt{x^2 + 4x + 1} \right)~\mathrm{d}x\ ?
+\]}
+
+L'intégrale $A$\/ est impropre en $+\infty$. On calcule donc $a(M) = \int_{0}^{M} \left( x + 2 - \sqrt{x^2 + 4x + 1} \right) ~\mathrm{d}x$\/ et on étudie sa limite quand $M$\/ tend vers $+\infty$.
+
+Soit $x \in \R$. On pose $f : x \mapsto x + 2 + \sqrt{x^2 + 4x + 1}$, et on effectue un développement limité :
+\begin{align*}
+	f(x) &= x + 2 - \Big( 1 + (x^2 + 4x)\Big)^{\frac{1}{2}} \\
+	&= x + 2 - 1 - \frac{1}{2}(x^2 + 4x) + \po(x) \\
+	&= \frac{x^2}{2} + 1 + - x + \po(x)  \\
+	&= \frac{x^2}{2} + \po(x^2) \\
+\end{align*}
+Or, l'intégrale $\int_{0}^{+\infty} \frac{x^2}{2}~\mathrm{d}x$\/ diverge par critère de {\sc Riemann}, et $\int_{0}^{+\infty} \po(x^2)~\mathrm{d}x$ aussi, et donc \[
+	\boxed{\text{l'intégrale } A \text{ diverge}.}
+\]
+
+\begin{comment}
+\section{Exercice 4}
+\begin{enumerate}
+	\item
+		\begin{figure}[H]
+			\centering
+			\begin{asy}
+				import graph;
+				real f(real t) { return 1/t - floor(1/t);}
+				bool3 fcheck(real t) { return t > 0 && f(t) < 10; }
+				draw((0,0)--(10,0), Arrow(TeXHead));
+				draw((0,0)--(0,10), Arrow(TeXHead));
+				draw(graph(f, 0, 10, 500, fcheck), magenta);
+				size(5cm);
+			\end{asy}
+			\caption{La fonction $\ds f(t) = \frac{1}{t} - \left\lfloor \frac{1}{t} \right\rfloor$}
+		\end{figure}
+		La fonction $t \mapsto \frac{1}{t}$\/ est continue par morceaux sur $]0,+\infty[$, et la fonction $u \mapsto \left\lfloor u \right\rfloor$\/ est continue par morceaux. Or, comme la composée et la différence de deux fonctions continues par morceaux est continue par morceaux, on en déduit que la fonction $f$\/ est continue par morceaux.
+	\item
+		L'intégrale $\int_{0}^{1} f(t)~\mathrm{d}t$.
+\end{enumerate}
+\end{comment}

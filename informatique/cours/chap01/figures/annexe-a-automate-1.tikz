@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-4, 2) {};
+		\node [style=new style 0] (1) at (-2, 2) {$({\bf F}, 0)$};
+		\node [style=new style 0] (2) at (2.5, 2) {$({\bf F},1)$};
+		\node [style=new style 0] (3) at (-2, -2) {$({\bf V}, 0)$};
+		\node [style=new style 0] (4) at (2.5, -2) {$({\bf V}, 1)$};
+		\node [style=none] (5) at (-2, -4) {};
+		\node [style=none] (6) at (0.25, 3.25) {$b$};
+		\node [style=none] (7) at (0.25, 0.75) {$b$};
+		\node [style=none] (8) at (0.25, -0.75) {$b$};
+		\node [style=none] (9) at (0.25, -3.25) {$b$};
+		\node [style=none] (10) at (3.25, 0.25) {$a$};
+		\node [style=none] (11) at (-2, 0.25) {$a$};
+		\node [style=none] (12) at (3.5, -2.75) {$a$};
+		\node [style=none] (13) at (-3.5, -2.75) {$a$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow, bend right] (1) to (2);
+		\draw [style=arrow, bend right] (2) to (1);
+		\draw [style=arrow, in=135, out=-165, loop] (3) to ();
+		\draw [style=arrow, bend left=15] (1) to (3);
+		\draw [style=arrow, bend left=15] (2) to (4);
+		\draw [style=arrow, in=-15, out=45, loop] (4) to ();
+		\draw [style=arrow, bend left] (4) to (3);
+		\draw [style=arrow, bend left] (3) to (4);
+		\draw [style=arrow] (3) to (5.center);
+		\draw [style=arrow] (0.center) to (1);
+	\end{pgfonlayer}
+\end{tikzpicture}

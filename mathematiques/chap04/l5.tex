@@ -1,0 +1,137 @@
+\begin{exo}
+	Soient $\lambda_1, \ldots, \lambda_r \in \R$\/ distincts deux à deux.
+	Montrons que, si $\forall x \in \R$, $\alpha_1 \mathrm{e}^{\lambda_1 x} + \cdots + \alpha_r \mathrm{e}^{\lambda_r x} = 0$, alors $\alpha_1 = \cdots = \alpha_r$.
+	On peut procéder de différentes manières : le déterminant de {\sc Vandermonde}, par analyse-sythèse, ou, en utilisant \[
+		\frac{\mathrm{d}}{\mathrm{d}x}\left( \mathrm{e}^{\lambda_k x} \right) = \lambda_k \mathrm{e}^{\lambda_k x},\quad\text{d'où}\quad\varphi(f_k) = \lambda_k f_k, \text{ avec } f_k : x \mapsto \mathrm{e}^{\lambda_k x}\quad\text{et}\quad\varphi:f\mapsto f'
+	.\]
+	On doit vérifier que les $f_k$\/ sont des vecteurs et l'application $\varphi$\/ soit un endomorphisme. On se place donc dans l'espace vectoriel $\mathscr{C}^{\infty}$. (On ne peut pas se placer dans l'espace $\mathscr{C}^k$, car sinon l'application $\varphi$\/ est de l'espace $\mathscr{C}^k$\/ à $\mathscr{C}^{k-1}$, ce n'est donc pas un endomorphisme ; ce n'est pas le cas pour l'espace $\mathscr{C}^\infty$.)
+	Or, les $\lambda_k$\/ sont distincts deux à deux d'où les vecteurs propres $f_k$\/ sont linéairement indépendants. Et donc si $\alpha_1 f_1 + \alpha_2 f_2 + \cdots + \alpha_r f_r = 0$\/ alors $\alpha_1 = \cdots = \alpha_r=0$.
+	Mais, comme $\forall x \in \R$, $\alpha_1 f_1(x) + \alpha_2 f_2(x) + \cdots + \alpha_r f_r(x) = 0$, on en déduit que \[
+		\boxed{\alpha_1 = \cdots = \alpha_r = 0.}
+	\]
+\end{exo}
+
+\section{Critères de diagonalisabilité}
+
+\begin{prop}[une condition \underline{suffisante} pour qu'une matrice soit diagonalisable]
+	Soit $A$\/ une matrice carrée de taille $n \ge 2$. {\color{red}Si} $A$\/ possède $n$\/ valeurs propres distinctes deux à deux, {\color{red}alors} $A$\/ est diagonalisable.
+\end{prop}
+
+\begin{rmkn}
+	La réciproque est fausse : par exemple, pour $n > 1$, $7 I_n$\/ est diagonalisable car elle est diagonale. Mais, elle ne possède pas $n$\/ valeurs propres distinctes deux à deux.
+\end{rmkn}
+
+\begin{prv}
+	On suppose que la matrice $A \in \mathscr{M}_{n,n}(\mathds{K})$\/ possède $n$\/ valeurs propres distinctes deux à deux (i.e.~$\Card \Sp(A) = n$). D'où, d'après la proposition 16, les $n$\/ vecteurs propres associés $\varepsilon_1,\ldots,\varepsilon_n$\/ sont libres. D'où $(\varepsilon_1, \ldots, \varepsilon_n)$\/ est une base formée de vecteurs propres. Donc, d'après la définition 5, la matrice $A$\/ est diagonalisable.
+\end{prv}
+
+\begin{thm}[conditions \underline{nécessaires et suffisantes} pour qu'une matrice soit diagonalisable]
+	Soient $E$\/ un espace vectoriel de dimension finie et $u : E \to E$\/ un endomorphisme.
+	Alors,
+	\begin{align*}
+		(1)\quad u \text{ diagonalisable } \iff& E = \bigoplus_{\lambda \in \Sp(u)} \Ker(\lambda\id_E - u) \quad(2)\\
+		\iff& \dim E = \sum_{\lambda \in \Sp(u)} \dim(\mathrm{SEP}(\lambda))\quad(3)\\
+		\iff& \chi_u \text{ scindé et } \forall \lambda \in \Sp(u),\:\dim(\mathrm{SEP}(\lambda)) = m_\lambda\quad(4)
+	\end{align*}
+	où $m_\lambda$\/ est la multiplicité de la racine $\lambda$\/ du polynôme $\chi_u$.
+\end{thm}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$(1)\implies(2)$''] On suppose $u$\/ diagonalisable. Il existe donc une base $(\varepsilon_1$, \ldots, $\varepsilon_n)$\/ de $E$\/ formée de vecteurs propres de $u$. On les regroupes par leurs valeurs propres : $(\varepsilon_i, \ldots, \varepsilon_{i+j})$\/ forme une base de $\mathrm{SEP(\lambda_k)}$. D'où la base $(\varepsilon_1, \ldots, \varepsilon_n)$\/ de l'espace vectoriel $E$\/ est une concaténation des bases des sous-espaces propres de $u$. D'où \[
+				E = \bigoplus_{\lambda \in \Sp(u)} \mathrm{SEP}(\lambda)
+			.\]
+		\item[``$(2)\implies(1)$''] On suppose que $E = \mathrm{SEP}(\lambda_1) \oplus \mathrm{SEP}(\lambda_2) \oplus \cdots \oplus \mathrm{SEP}(\lambda_r)$.
+			Soient $(\varepsilon_1, \ldots, \varepsilon_{d_1})$\/ une base de $\mathrm{SEP}(\lambda_1)$, $(\varepsilon_{d_1 + 1}, \ldots, \varepsilon_{d_1 + d_2})$\/ une base de $\mathrm{SEP}(\lambda_2)$, \ldots, $(\varepsilon_{d_1+\cdots + d_{r-1}+1}$, \ldots, $\varepsilon_{d_1+ \cdots + d_r})$\/ une base de $\mathrm{SEP}(\lambda_r)$.
+			En concaténant ces base, on obtient une base de $E$, d'après l'hypothèse. Dans cette base, tous les vecteurs sont propres donc $u$\/ est diagonalisable.
+		\item[``$(2)\implies(3)$''] On suppose $E = \mathrm{SEP}(\lambda_1) \oplus \mathrm{SEP}(\lambda_2) \oplus \cdots \oplus \mathrm{SEP}(\lambda_r)$. D'où  \[
+					\dim E = \dim(\mathrm{SEP}(\lambda_1)) + \dim(\mathrm{SEP}(\lambda_2)) + \cdots + \dim(\mathrm{SEP}(\lambda_r))
+			\] car la dimension d'une somme directe est égale à la somme des dimensions.
+		\item[``$(3)\implies(1)$''] On suppose $\dim E = \dim(\mathrm{SEP}(\lambda_1)) + \dim(\mathrm{SEP}(\lambda_2)) + \cdots + \dim(\mathrm{SEP}(\lambda_r))$. Or, les sous-espaces propres sont en somme directe, d'après la proposition 16. D'où $\dim\Big(\sum_{\lambda \in \Sp(u)} \mathrm{SEP}(\lambda) \Big)= \sum_{\lambda \in \Sp(u)} \dim(\mathrm{SEP}(\lambda))$. Donc $\sum_{\lambda \in \Sp(u)} \mathrm{SEP}(\lambda) = E$.
+		\item[``$(4)\implies(3)$''] On suppose (a) $\chi_u$\/ scindé et (b) $\dim(\mathrm{SEP}(\lambda)) = m_\lambda$. D'où, d'après (a): \[
+				\chi_u(x) = (x - \lambda_1)^{m_{\lambda_1}}(x - \lambda_2)^{m_{\lambda_2}} \cdots (x - \lambda_r)^{m_{\lambda_r}} = x^n + \cdots
+			\] d'où $m_{\lambda_1} + m_{\lambda_2} + \cdots + m_{\lambda_r} = n$, et d'où \[
+				\dim(\mathrm{SEP}(\lambda_1)) + \dim(\mathrm{SEP}(\lambda_2)) + \cdots + \dim(\mathrm{SEP}(\lambda_r)) = n
+			\] d'après l'hypothèse (b).
+		\item[``$(1)\implies(4)$'']
+			On suppose $u$\/ diagonalisable. D'où, dans une certaine base $\mathscr{B}$, la matrice $\big[u\big]_\mathscr{B}$\/ est diagonale. Quitte à changer l'ordre des éléments de $\mathscr{B} = (\varepsilon_1,\ldots,\varepsilon_r)$, on peut supposer que $\big[u\big]_\mathscr{B}$\/ est de la forme \[
+				\big[u\big]_\mathscr{B} = 
+				\begin{bNiceArray}{c|c|c|c}[last-col]
+					\begin{array}{cccc}\lambda_1\\&\lambda_1\\&&\ddots\\&&&\lambda_1\end{array}&0&0&0&\begin{array}{l}\varepsilon_1\\\varepsilon_2\\\vdots\\\varepsilon_{d_1}\\\end{array}\\ \hline
+					0&\begin{array}{cccc}\lambda_2\\&\lambda_2\\&&\ddots\\&&&\lambda_2\end{array}&0&0&\begin{array}{l}\varepsilon_{d_1+1}\\\varepsilon_{d_1+2}\\\vdots\\\varepsilon_{d_1+d_2}\\\end{array}\\ \hline
+					 &&\ddots&&\vdots\\ \hline
+					0&0&0&0\begin{array}{cccc}\lambda_r\\&\lambda_r\\&&\ddots\\&&&\lambda_r\end{array}&\begin{array}{l}\varepsilon_{d_1+\cdots + d_{r-1} + 1}\\\varepsilon_{d_1+\cdots + d_{r-1}+2}\\\vdots\\\varepsilon_{d_1 + \cdots + d_r}\\\end{array}\\
+				\end{bNiceArray}
+			.\] D'où $\forall k \in \left\llbracket 1,r \right\rrbracket$, $d_k = \dim(\mathrm{SEP}(\lambda_k))$. En outre, $\chi_u(x) = \det(x\id - u) = (x - \lambda_1)^{d_1}\cdot (x-\lambda_2)^{d_2} \cdots (r - \lambda_r)^{d_r}$.
+			D'où $\forall k \in \left\llbracket 1,r \right\rrbracket$, $d_k = m_{\lambda_k}$\/ et $\chi_u$\/ est scindé.
+	\end{itemize}
+\end{prv}
+
+\begin{exo}
+	{\slshape On considère la matrice $E$\/ ci-dessous \[
+		E = \begin{pmatrix}
+			7&0&1\\
+			0&3&0\\
+			0&0&7
+		\end{pmatrix}.
+	\] La matrice $E$\/ ci-dessous est-elle diagonalisable ?}
+
+	Soit $\lambda \in \R$. On sait que $\lambda \in \Sp(E)$\/ si et seulement si $\det(\lambda I_3 - E) = 0$. Or \[
+		\det(\lambda I_3 - E) =
+		\begin{vmatrix}
+			\lambda - 7&0&-1\\
+			0&\lambda-3&0\\
+			0&0&\lambda - 7
+		\end{vmatrix} = (\lambda - 7)^2\cdot  (\lambda - 3)^1
+	.\] Donc $\Sp(E) = \{3,7\}$, $1 \le \dim\big(\mathrm{SEP}(3)\big) \le 1$, et $1 \le \dim\big(\mathrm{SEP}(7)\big) \le 2$.
+	La matrice $E$\/ est diagonalisable si et seulement si $\dim(\mathrm{SEP}(3)) + \dim(\mathrm{SEP}(7)) = 3$, donc si et seulement si $\dim(\mathrm{SEP}(7)) = 2$. On cherche donc la dimension de ce sous-espace propre : soit $X = \left( \substack{x\\y\\z} \right) \in \mathscr{M}_{3,1}(\R)$. On sait que
+	\begin{align*}
+		X \in \mathrm{SEP}(7) \iff& E\cdot X = 7X\\
+		\iff& \begin{pmatrix}
+			7&0&1\\
+			0&3&0\\
+			0&0&7
+		\end{pmatrix} \begin{pmatrix}
+			x\\y\\z
+		\end{pmatrix} = 7 \begin{pmatrix}
+			x\\y\\z
+		\end{pmatrix}\\
+		\iff& \begin{cases}
+			7x + 0y + 1z = 7x\\
+			3y = 7y\\
+			7z = 7z
+		\end{cases}\\
+		\iff& \begin{cases}
+			z = 0\\
+			y = 0
+		\end{cases}\\
+		\iff& X = \begin{pmatrix}
+			x\\0\\y
+		\end{pmatrix} = x \underbrace{\begin{pmatrix}
+			1\\0\\0
+		\end{pmatrix}}_{\varepsilon_1}
+	\end{align*}
+	Donc $\mathrm{SEP}(7) = \Vect(\varepsilon_1)$, d'où $\dim(\mathrm{SEP}(7)) = 1$. Donc la matrice $E$\/ n'est pas diagonalisable.
+\end{exo}
+
+\section{Trigonalisation}
+
+Trigonaliser une matrice ne sert que si la matrice n'est pas diagonalisable.
+
+\begin{defn}
+	On dit d'une matrice carrée $A \in \mathscr{M}_{n,n}(\mathds{K})$\/ qu'elle est {\it trigonalisable}\/ s'il existe une matrice inversible $P$\/ telle que $P^{-1} \cdot A \cdot P$\/ est triangulaire : \[
+		P^{-1} \cdot A \cdot P = \begin{pNiceMatrix}
+			\lambda_1&\Block{2-2}*&\\
+			\Block{2-2}0&\Ddots&\\
+			&&\lambda_r
+		\end{pNiceMatrix}
+	.\]
+\end{defn}
+
+\begin{rmk}
+	$\O$\/
+\end{rmk}
+
+\begin{thm}
+	Une matrice carrée $A \in \mathscr{M}_{n,n}(\mathds{K})$\/ est trigonalisable si et seulement si son polynôme caractéristique $\chi_A \in \mathds{K}[X]$\/ est scindé.
+\end{thm}

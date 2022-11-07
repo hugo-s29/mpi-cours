@@ -1,0 +1,167 @@
+\section{Algorithme de type {\scshape Las-Vegas}}
+
+On étudie le tri rapide. On considère les fonctions ``\,Partitionner,'' puis ``\,Tri Rapide.''
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree $T$\/ le tableau à trier, $g$, $d$\/ et $p$\/ trois entiers (bornes du tableau)
+		\Sortie un entier $J$\/ et le sous-tableau $T[g..d]$\/ est modifié en $\bar{T}$\/ de sorte que $\bar{T}\footnotemark\relax[J] = \ubar{T}[p]$, et $\forall i \in \left\llbracket g, J-1 \right\rrbracket$, $\bar{T}[i] \le \bar{T}[J]$, et $\forall i \in \left\llbracket J+1, d \right\rrbracket$, $\bar{T}[i] \ge \bar{T}[J]$, et $\forall i \in \left\llbracket 0,n-1 \right\rrbracket \setminus \left\llbracket g,d \right\rrbracket$, $\bar{T}[i] = \ubar{T}[i]$, et $\bar{T}$\/ est une permutation de $\ubar{T}$.
+		\State \Call{Échanger}{$T, g, d$} 
+		\State $J \gets g$\/
+		\State  $I \gets g$\/ 
+		\While{$I < d$}
+			\If{$T[I] > T[d]$} \Comment{Cas ``$T[I] > \mathrm{pivot}$''}
+				\State $I \gets I + 1$\/ 
+			\Else \Comment{Cas ``$T[I] \le \mathrm{pivot}$''}
+				\State \Call{Échanger}{$T, I, J$}
+				\State $J \gets J + 1$\/
+				\State $I \gets I + 1$\/
+			\EndIf
+		\EndWhile
+		\State \Call{Échanger}{$T, J, d$}
+		\State\Return $J$\/
+	\end{algorithmic}
+	\caption{Fonction ``Partitionner'' utilisée dans le tri rapide}
+\end{algorithm}
+\footnotetext{La notation $\bar{T}$\/ représente le tableau $T$\/ après l'algorithme, et la notation $\ubar{T}$\/ représente le tableau $T$\/ avant l'algorithme.}
+
+\begin{rmk}
+	On admet que $\bar{T}$\/ est une permutation de $\ubar{T}$. On admet également que, $\forall i \in \left\llbracket 0,n-1 \right\rrbracket \setminus \left\llbracket g,d \right\rrbracket$, $\bar{T}[i] = \ubar{T}[i]$.
+\end{rmk}
+
+\begin{lem}
+	``Partitionner'' est correct.
+\end{lem}
+
+\begin{prv}
+	On considère \[
+		(\mathcal{I}) : \begin{cases}
+			\forall k \in \left\llbracket g, I \right\rrbracket,\:T[k] \le T[d]&\qquad(1)\\
+			\forall k \in \left\llbracket J,I-1 \right\rrbracket,\: T[k] > T[d]&\qquad(2)\\
+			g \le J \le I \le d&\qquad(3)
+		\end{cases}
+	.\]
+	\begin{itemize}
+		\item Montrons que $\mathcal{I}$\/ est vrai initialement : à l'initialisation, $I = g$\/ et $J = g$, donc les trois propriétés $(\mathcal{I})$\/ sont trivialement vraies.
+		\item Montrons que l'invariant $(\mathcal{I})$\/ se propage. Notons $\ubar{I}$, $\ubar{J}$, et $\ubar{T}$\/ les valeurs de $I$, $J$\/ et $T$\/ avant itération de boucle. Notons également $\bar{I}$, $\bar{J}$\/ et $\bar{T}$\/ les valeurs de $I$, $J$\/ et $T$\/ après cette même itération de boucle. Supposons que $\ubar{I}$, $\ubar{J}$\/ et $\ubar{T}$\/ vérifient $(\mathcal{I})$, et la condition de boucle. Montrons que $\bar{I}$, $\bar{J}$\/ et $\bar{T}$\/ vérifient $(\mathcal{I})$.
+			On a donc, d'après $(\mathcal{I})$, \[
+				\begin{cases}
+					\forall k \in \left\llbracket g, \ubar{J} - 1 \right\rrbracket,\: \ubar{T}[k] \le \ubar{T}[d]\\
+					\forall k \in \left\llbracket \ubar{T}, \ubar{I}- 1 \right\rrbracket,\: \ubar{T}[k] > \ubar{T}[d]\\
+					g \le \ubar{J} \le \ubar{I} \le d.
+				\end{cases}
+			\] Mais aussi, d'après la condition de boucle, $\ubar{I} \le d$.
+			Mais également, d'après le programme,
+			\begin{itemize}
+				\item si $\ubar{T}[\ubar{I}] > \ubar{T}[d]$, alors $\bar{I} = \ubar{I} + 1$, $\bar{T} = \ubar{T}$, et $\bar{J} = \ubar{J}$\/ ;
+				\item sinon si $\ubar{T}[\ubar{I}] \le \ubar{T}[d]$, et donc $\bar{J} = \ubar{J} + 1$, $\bar{I} = \ubar{I} + 1$, $\forall k \in \left\llbracket 0n,-1 \right\rrbracket \setminus \{\ubar{I},\ubar{J}\} $, $\bar{T}[k] = \ubar{T}[k]$, et $\bar{T}[\bar{I}] = \ubar{T}[\ubar{J}]$, et $\bar{T}[\ubar{J}] = \ubar{T}[\ubar{I}]$.
+			\end{itemize}
+			\begin{itemize}
+				\item[{\sc Cas 1}] $\ubar{T}[\ubar{I}] > \ubar{T}[d]$, alors
+					\begin{itemize}
+						\item[$(3)$] $g \le \ubar{J} = \bar{J} \le \ubar{I} < \bar{I} \le d$.
+						\item[$(1)$] Soit $k \in \left\llbracket g, \bar{J} - 1 \right\rrbracket$, on a donc $k \in \left\llbracket g, \ubar{J} - 1 \right\rrbracket$, et donc $\bar{T}[k] = \ubar{T}[k] \le \ubar{T}[d] = \bar{T}[d]$.
+						\item[$(2)$] Soit $k \in \left\llbracket \bar{J}, \bar{I} - 1 \right\rrbracket$,
+							\begin{itemize}
+								\item si $k \in \left\llbracket \ubar{J}, \ubar{I} - 1 \right\rrbracket$, alors $\bar{T}[k] = \ubar{T}[k] > \ubar{T}[d] = \bar{T}[d]$.
+								\item si $k = \bar{I} - 1 = \ubar{I}$, par condition {\tt if}, alors $\bar{T}[\ubar{I}] = \ubar{T}[\ubar{I}] > \ubar{T}[d] = \bar{T}[d]$.
+							\end{itemize}
+					\end{itemize}
+				\item[{\sc Cas 2}] $\ubar{T}[\ubar{I}] \le \ubar{T}[d]$\/ 
+					\begin{itemize}
+						\item[$(3)$] On a $\ubar{J} \le \ubar{I}$, donc $\ubar{J} + 1 \le \ubar{I} + 1$, d'où $g \le \ubar{J} + 1 = \bar{J} \le \bar{I} \le d$.
+						\item[$(1)$] Soit $k \in \left\llbracket g, \bar{J} - 1 \right\rrbracket$, donc
+							\begin{itemize}
+								\item si $k \in \left\llbracket g, \ubar{J} - 1 \right\rrbracket$, alors $\bar{T}[k] = \ubar{T}[k] \le \ubar{T}[d] = \bar{T}[d]$.
+								\item si $k = \bar{J} - 1 = \ubar{J}$, alors $\bar{T}[k] = \bar{T}[\ubar{J}] = \ubar{T}[\ubar{I}] \le \ubar{T}[d] = \bar{T}[d]$.
+							\end{itemize}
+						\item[$(2)$] Soit $k \in \left\llbracket \bar{J}, \bar{I} - 1 \right\rrbracket$, alors
+							\begin{itemize}
+								\item si $k \in \left\llbracket \bar{J}, \ubar{J} - 1 \right\rrbracket$, alors, comme $\bar{J} \ge  \ubar{J}$, et donc $\bar{T}[k] = \ubar{T}[k] > \ubar{T}[d] = \bar{T}[d]$.
+								\item si $k = \bar{I} - 1 = \ubar{I}$, et donc $\bar{T}[k] = \bar{T}[\ubar{I}] = \bar{T}[\ubar{J}] > \ubar{T}[d] = \bar{T}[d]$.
+							\end{itemize}
+					\end{itemize}
+			\end{itemize}
+	\end{itemize}
+
+	Ainsi, $(\mathcal{I})$\/ est un invariant, et donc, en sortie de boucle, $I$, $J$\/ et $T$\/ sont tels que \[
+		\begin{rcases*}
+			\forall k \in \left\llbracket g, J-1 \right\rrbracket,\: T[k] \le T[d]\\
+			\forall k \in \left\llbracket J, I - 1 \right\rrbracket,\: T[k] > T[d]\\
+			g \le J \le I \le d
+		\end{rcases*} \quad \text{et} \quad I \ge d,
+	\] la négation de la condition de boucle. On a donc $I = d$, et donc en fin de programme, \[
+		\forall k \in \left\llbracket g, J-1 \right\rrbracket,\:T[k] \le T[J]
+		\quad\text{et}\quad
+		\forall k \in \left\llbracket J+1,I \right\rrbracket,\:T[k] > T[J]
+	.\]
+\end{prv}
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree $T$\/ un tableau, $g$\/ et $d$\/ les bornes de ce tableau
+		\If{$d > g$}
+			\State $p \gets \text{\Call{ChoixPivot}{$T, g, d$}}$
+			\State $J \gets \text{\Call{Partition}{$T, g, d, p$}}$
+			\State \Call{TriRapide}{$T, g, J-1$}
+			\State \Call{TriRapide}{$T, J+1, d$}
+		\EndIf
+	\end{algorithmic}
+	\caption{Tri rapide}
+\end{algorithm}
+
+La fonction ``\Call{Tri}{$T$}'' est donc définie comme \Call{TriRapide}{$T, 0, n-1$} si $T$\/ est un tableau de taille $n$.
+
+\noindent\centerline{\underline{Étudions rapidement l'influence du choix du pivot.}}
+
+\begin{itemize}
+	\item[{\sc Cas 1}] On définit ``$\mathrm{ChoixPivot}(T, g, d) = g$.''
+		Ainsi
+		\begin{figure}[H]
+			\centering
+			\begin{comment}
+				0, n-1
+				-> 0, -1
+				-> 1, n-1
+				--> 1, 0
+				--> 2, n-1
+				---> ...
+				-..-> (n-1,n)
+			\end{comment}
+			\todo{Figure}
+			\caption{Arbre des appels récursifs de ``TriRapide'' avec le pivot à gauche}
+		\end{figure}
+		Ainsi, la complexité de cet algorithme, avec ce choix de pivot, est en $(n-1) + (n-2) + (n-3) + \cdots + 2 = \mathrm{\Theta}(n^2)$.
+	\item[{\sc Cas 2}] On définit maintenant le choix du pivot comme l'indice de la médiane.
+		\begin{figure}[H]
+			\centering
+			\begin{comment}
+				0, 2^p - 1
+				-> 0, 2^p - 1
+				--> ...
+				-> 2^(p-1), 2^p - 1
+				--> ...
+			\end{comment}
+			\todo{Figure}
+			\caption{Arbre des appels récursifs de ``TriRapide'' avec le pivot à la médiane}
+		\end{figure}
+		Rédigeons-le rigoureusement : soit $C_n = \max_{T \text{ tableau de taille } n} C(T)$.
+		Posons $(u_p)_{p \in \N} = (C_{2^p})_{p \in \N}$. D'après l'algorithme de ``TriRapide,'' on a
+		\begin{align*}
+			u_{p+1} &= 2^{p+1} - 1 + u_p + u_p\\
+			&= 2^{p+1} - 1 + 2u_p \\
+			&= (2^{p+1} - 1) + 2(2^p - 1) + 2^2 u_{p-1} \\
+			&= 2^{p+1} - 1 + 2^{p+1} - 2 + 2^2 u_{p-1} \\
+			&= 2^{p+1} - 1 + 2^{p+1} - 2 + 2^2(2^{p-1} - 1 + 2u_{p-2}) \\
+			&= 2^{p+1} - 1 + 2^{p+1} - 2 + 2^{p+1} - 2^2 + 2^3 u_{p-2}. \\
+		\end{align*}
+		On a donc $u_0 = 1$\/ et $u_p = p \times {2^p} - (2^p - 1)$. Or, la suite $(c_n)_{n\in\N}$\/  est croissante. Or, \[
+			\forall n \in \N,\:2^{\left\lfloor \log_2 n \right\rfloor} \le n \le 2^{\left\lfloor \log_2n \right\rfloor + 1}
+		\] donc \[
+			u_{\left\lfloor \log_2 n \right\rfloor} \le C_n \le u_{\left\lfloor \log_2 n \right\rfloor + 1}
+		.\] D'où \[
+			c_n \le (\left\lfloor \log_2 n \right\rfloor + 1) \times 2^{\left\lfloor \log_2 n \right\rfloor + 1} - 2^{\left\lfloor \log_2 n \right\rfloor - 1}
+		.\] Et donc, on en déduit que $c_n = \mathrm{\Theta}\big(n \log_2(n)\big)$.
+\end{itemize}

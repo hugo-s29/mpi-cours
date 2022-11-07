@@ -1,0 +1,37 @@
+\section{Exercice 5}
+
+\begin{multicols}{2}
+	Le circuit étudié est un convertisseur courant-tension.
+
+	\begin{align*}
+		{\color{orange}\rm(LM)}:\quad &v_s + u_R + \varepsilon = 0\quad\\
+		\implies& v_s = -u_R = R\,i_R
+	\end{align*}
+	car $\varepsilon = 0$\/ par hypothèse.
+
+	Or, $i_- = i_+ = 0$, d'où $i_R = I_p$\/ d'où \[
+		v_s = -R I_p
+	.\]
+\end{multicols}
+
+\begin{figure}[H]
+	\centering
+	\begin{circuitikz}
+		\draw (0,0)node[en amp](E){};
+		\draw (E.out) -- (4, 0);
+		\draw (E.-) -- (-2, 0.3) to[short, i=$I_p$] (-3, 0.3) to [D,photodiode] (-5, 0.3) node[ground]{};
+		\draw (E.+) -- (-2, -0.3) node[ground]{};
+		\draw (-2, 0.3) -- (-2, 2) to[R=$R$] (2, 2) -- (2, 0);
+		\draw (4, -1) node[ground]{};
+		\draw[->] (4, -1) -- (4,-0.1);
+		\node[right] at (4, -0.55) {$v_s$};
+		\node[left] at (-5, 0.2) {$v_-$};
+		\node[left] at (-2, -0.4) {$v_+$};
+		\draw[->] (-2,-0.25) -- (-2, 0.25);
+		\node[right] at (-2,0) {$\varepsilon$};
+		\draw(-1.6, 0.32) to[short, i=$i_-$] (E.-);
+		\draw(-1.6, -0.32) to[short, i=$i_+$] (E.+);
+		\draw[->, orange] (0,-2) -- (3,-2) -- (3, 1.5) -- (-1.8, 1.5) -- (-1.8, -2) -- (0, -2);
+	\end{circuitikz}
+	\caption{Circuit électrique de l'exercice 5}
+\end{figure}

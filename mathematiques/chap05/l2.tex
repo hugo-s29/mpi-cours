@@ -1,0 +1,50 @@
+\section{Continuité}
+
+\begin{exm}
+	Dans l'exercice 2, chaque fonction $f_n : t \mapsto t^n$\/ est continue sur $[0,1]$\/ mais la limite $f$\/ n'est pas continue sur $[0,1]$\/ (car elle n'est pas continue en $1$).
+\end{exm}
+
+\begin{thm}
+	Soit $a$\/ un réel dans un intervalle $T$\/ de $\R$. Si une suite de fonctions $(f_n)_{n\in\N}$\/ continues en $a$\/ converge uniformément sur $T$\/ vers une fonction $f$, alors $f$\/ est aussi continue en $a$.
+\end{thm}
+
+\begin{prv}
+	On suppose les fonctions $f_n$\/ continues en $a$\/ ($f_n(x) \longrightarrow f_n(a)$) et que la suite de fonctions $(f_n)_{n\in\N}$\/ converge uniformément vers $f$\/ ($\sup\:|f_n -f| \longrightarrow 0$). On veut montrer que $f$\/ est continue en $a$\/ : $f(x) \tendsto{x \to a} f(a)$, i.e.\ \[
+		\forall \varepsilon > 0,\:\exists \delta > 0,\: \forall x \in T,\quad|x-a| \le \delta \implies |f(x) - f(a)| \le \varepsilon
+	.\]
+	Soit $\varepsilon > 0$. On calcule \[
+		\big|f(x) - f(a)\big| \le \big|f(x) - f_n(x)\big| + \big|f_n(x) - f_n(a)\big| + \big|f_n(a) - f(a)\big|
+	\] par inégalité triangulaire. Or, par hypothèse, il existe un rang $N \in \N$\/ (qui ne dépend pas de $x$\/ ou de $a$), tel que, $\forall n \ge N$, $\big|f(x) - f_n(x)\big| \le \frac{1}{3} \varepsilon$, et $\big|f_n(a) - f(a)\big| \le \frac{1}{3} \varepsilon$.
+	De plus, par hypothèse, il existe $\delta >0$\/ tel que si $|x - a| \le \delta$, alors $|f_n(x) - f_n(a)| \le \frac{1}{3}\varepsilon$.\footnote{C'est là où l'hypothèse de la convergence uniforme est utilisée : on a besoin que le $N$\/ ne dépende pas de $x$\/ car on le fait varier.}
+	On en déduit que $\big|f(x) - f(a)\big| \le \varepsilon$.
+\end{prv}
+
+\begin{crlr}
+	Soit $T$\/ un intervalle de $\R$. Si une suite de fonctions $(f_n)_{n\in\N}$\/ continues sur $T$\/ converge uniformément sur $T$\/ vers une fonction continue sur $T$.
+\end{crlr}
+
+\begin{met}[Stratégie de la barrière]
+	\begin{enumerate}
+		\item La continuité (la dérivabilité aussi) est une propriété {\it locale}. Pour montrer qu'une fonction est continue sur un intervalle $T$, il suffit donc de montrer qu'elle est continue sur tout segment inclus dans $T$.
+		\item Mais, la convergence uniforme est une propriété {\it globale}. La convergence sur tout segment inclus dans un intervalle n'implique pas la convergence uniforme sur l'intervalle (voir l'exercice 2).
+		\item On n'écrit pas \[
+				\substack{\ds\text{convergence uniforme}\\\ds\text{avec barrière}} \mathop{\red\implies} \substack{\ds\text{convergence uniforme}\\\ds\text{sans barrière}} \implies \substack{\ds\text{continuité}\\\ds\text{sans barrière}}
+			\] mais plutôt \[
+				\substack{\ds\text{convergence uniforme}\\\ds\text{avec barrière}} \implies \substack{\ds\text{continuité}\\\ds\text{avec barrière}} \implies \substack{\ds\text{continuité}\\\ds\text{sans barrière}}
+			.\]
+		\item Si, pour tous $a$\/ et $b$, $f$\/ est bornée sur $[a,b] \subset T$, mais cela n'implique pas que $f$\/ est bornée. Contre-exemple : la fonction $f : x \mapsto \frac{1}{x}$\/ est bornée sur tout intervalle $[a,b]$\/ avec $a$, $b \in \R^+_*$, \red{\sc mais} $f$\/ n'est pas bornée sur $]0,+\infty[$.
+	\end{enumerate}
+\end{met}
+
+\begin{thm}[double-limite ou d'interversion des limites]
+	Soit une suite de fonctions $(f_n)_{n\in\N}$\/ définies sur un intervalle $T$, et, soit $a$\/ une extrémité (éventuellement infinie)\footnote{autrement dit, $a \in \bar\R = \R \cup \{+\infty,-\infty\}$} de cet intervalle. Si la suite de fonctions $(f_n)_{n\in\N}$\/ converge \underline{uniformément} sur $T$\/ vers $f$\/ et si chaque fonction $f_n$\/ admet une limite finie $b_n$\/ en $a$, alors la suite de réels $b_n$\/ converge vers un réel $b$, et $\lim_{t\to a} f(t) = b$. Autrement dit, \[
+		\lim_{t\to a} \Big(\underbrace{\lim_{n\to +\infty} f_n(t)}_{f(x)}\Big) = \lim_{n\to +\infty} \Big(\underbrace{\lim_{t\to a} f_n(t)}_{b_n}\Big)
+	.\] \qed
+\end{thm}
+
+\begin{rmkn}
+	Le théorème de la double-limite \guillemotleft~contient~\guillemotright\ le théorème 6 (théorème de préservation/transmission de la continuité), c'est un cas particulier. En effet, si les fonctions $f_n$\/ sont continues, alors \[
+		\lim_{x \to a}f(x) = \underbrace{\lim_{n\to +\infty} f_n(a)}_{f(a)}
+	.\]
+\end{rmkn}
+

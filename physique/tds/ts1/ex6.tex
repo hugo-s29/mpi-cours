@@ -1,0 +1,36 @@
+\section{Exercice 6}
+
+\begin{enumerate}
+	\item 
+		\begin{enumerate}
+			\item Fausse car problème d'homogénéité : $\left[ \frac{\omega}{RC} \right] = \mathrm{T}^{-2} \neq [1]$\/ ;
+			\item OK à priori
+			\item Fausse car problème d'homogénéité : $[L\omega] = ``\,\mathrm{\Omega}\," \neq [1]$\/ \footnote{Ici le $``\,\mathrm{\Omega}\,"$\/ montre que c'est un résultat s'exprimant en $\mathrm{\Omega}$, ce qui est plus simple à écrire que $\mathrm{M}\cdot \mathrm{L}^2 \cdot \mathrm{T}^{-3} \cdot \mathrm{I}^{-2}$} ;
+			\item Fausse car problème d'homogénéité : $[R] = [L \omega] = ``\,\mathrm{\Omega}\," \neq [LC\omega^2] = [1]$.
+		\end{enumerate}
+	\item On a $\ubar{Z}_1 = \frac{1}{\mathrm{j}C\omega}$\/ et $\ubar{Z}_2 = 1 / \left( \frac{1}{R} + \frac{1}{\mathrm{j}L\omega} \right)$. D'où, d'après le pont diviseur de tension
+		\begin{align*}
+			\ubar{H} &= \frac{\ubar{Z}_2}{\ubar{Z}_1 + \ubar{Z}_2}\\
+			&= \frac{1}{1+\frac{\ubar{Z}_1}{\ubar{Z}_2}} \\
+			&= \frac{1}{1 + \frac{1}{\mathrm{j}C\omega}\left( \frac{1}{R} + \frac{1}{\mathrm{j}L\omega} \right)} \\
+			&= \frac{LC\omega^2}{LC\omega^2 - \mathrm{j}\frac{L}{R}\omega - 1} \\
+		\end{align*}
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\begin{circuitikz}
+		\draw (0,0) to[C=$C$] (4, 0) to[R=$R$] (4, -2) -- (0, -2);
+		\draw (4, 0) -- (5, 0) to[american,cute inductors,L=$L$] (5, -2) -- (4, -2);
+		\draw[->](5.7, -1.8) -- (5.7, -0.2);
+		\node at (6.2, -1) {$s(t)$};
+		\draw[<-] (0.2, -0.2) -- (0.2, -1.8);
+		\node at (-0.3, -1) {$e(t)$};
+		\draw[orange, thick, dashed] (1, -1) rectangle (3, 1);
+		\draw[magenta, thick, dashed] (3.5, 0.5) rectangle (5.6, -2.5);
+		\node[orange] at (1, 1.3) {$\ubar{Z}_1$};
+		\node[magenta] at (5.9, -2.5) {$\ubar{Z}_2$};
+	\end{circuitikz}
+	\caption{Circuit électrique de l'exercice 6}
+\end{figure}
+

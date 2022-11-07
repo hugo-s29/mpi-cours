@@ -1,0 +1,215 @@
+\subsubsection{Stabilité}
+\paragraph{Intersection}
+
+\begin{prop}
+	Si $L_1$\/ et $L_2$\/ sont deux langages locaux, alors $L_1 \cap L_2$\/ est un langage local.
+\end{prop}
+
+\begin{prv}
+	Soit $L_1 = \Lambda_1 \cup \big(P_1 \Sigma^* \cap \Sigma^* S_1\big)\setminus\big(\Sigma^* N_1 \Sigma^*\big)$, et $L_2 = \Lambda_2 \cup \big(P_2 \Sigma^* \cap \Sigma^* S_2\big)\setminus\big(\Sigma^* N_2 \Sigma^*\big)$. On pose $F_1 = \Sigma^2 \setminus N_1$\/ et $F_2 = \Sigma^2 \setminus N_2$.
+	On pose alors $\Lambda_\cap = \Lambda_1 \cap \Lambda_2$\/ ; $P_\cap = P_1 \cap P_2$\/ ; $S_\cap = S_1 \cap S_2$\/ ; $F_\cap = F_1 \cap F_2$\/ ; $N_\cap = \Sigma^2 \setminus F_\cap$. On a \[
+		L_1 \cap L_2 = \Lambda_\cap \cup \big(P_\cap \Sigma^* \cap \Sigma^* S_\cap \big) \setminus \Sigma^* N_\cap \Sigma^*
+	.\]
+	En effet,
+	\begin{align*}
+		L_1 \cap L_2 &= (\Lambda_1 \cap \Lambda_2) \\
+		&\mathrel{\phantom=}\cap\: (\Lambda_1 \cap (P_2\Sigma^* \cap \Sigma^*S_2) \setminus \Sigma^* N_2 \Sigma^*)\\
+		&\mathrel{\phantom=}\cap\: \big(((P_1\Sigma^* \cap \Sigma^*S_1)\setminus \Sigma^* N_1 \Sigma^*) \cap \Lambda_2\big) \\
+		&\mathrel{\phantom=}\cap\:\big(((P_1 \Sigma^* \cap \Sigma^* S_1)\setminus \Sigma^* N_1 \Sigma^*) \cap (P_2 \Sigma^* \cap (P_2 \Sigma^* \cap \Sigma^* S_2)\setminus \Sigma^* N_2 \Sigma^*\big)\\
+		&= (\Lambda_1 \cap \Lambda_2) \big((P_1 \cap P_2) \Sigma^* \cap \Sigma^* (S_1 \cap S_2) \big) \setminus \Sigma^* (N_1 \cap N_2) \Sigma^* \\
+	\end{align*}
+\end{prv}
+
+\paragraph{Union}
+
+\begin{cexm}
+	Avec $L_1 = ab$\/ et $L_2 = ba$, on a $\Lambda_1 = \Lambda_2 = \O$, $P_1 = \{a\}$, $P_2 = \{b\}$, $S_1 = \{b\}$, $S_2 = \{b\}$, $F_1 = \{ab\}$\/ et $F_2 = \{ba\}$.
+	Le langage $L_1 \cup L_2 = \{ab,ba\} $\/ n'est pas local : en effet, on a $\Lambda = \O$, $P = \{a,b\}$, $S= \{a,b\}$, et $F = ab,ba$. Le mot $aba$\/ est donc dans le langage local engendré.
+\end{cexm}
+
+On doit donc ajouter une contrainte afin d'éviter ce type de contre-exemples.
+L'intersection des alphabets est vide.
+
+\begin{prop}
+	Soient $L_1$\/ un langage local sur un alphabet $\Sigma_1$\/ et $L_2$\/ un langage local sur un alphabet $\Sigma_2$\/ avec $\Sigma_1 \cap \Sigma_2 = \O$.
+	Alors $L_1 \cup L_2$\/ est local.
+\end{prop}
+
+\begin{prv}
+	Soient $\Lambda_1$, $S_1$, $P_1$, $N_1$, $F_1$\/ tels que $L_1$\/ soit défini par $(\Lambda_1, S_1, P_1, N_1, F_1)$.
+	De même, soient $\Lambda_2$, $S_2$, $P_2$, $N_2$, $F_2$\/ tels que $L_2$\/ soit défini par $(\Lambda_2, S_2, P_2, N_2, F_2)$.
+	Construisons alors $\Lambda_\cup = \Lambda_1 \cup \Lambda_2$, $P_\cup = P_1 \cup P_2$, $S_\cup = S_1 \cup S_2$, $F_\cup = F_1 \cup F_2$ et $N_\cup = (\Sigma_1 \cup \Sigma_2)^2 \setminus F_\cup$. On note $\Sigma = \Sigma_1 \cup \Sigma_2$.
+	Montrons alors que \[
+		L_1 \cup L_2 = \underbrace{\Lambda_\cup \cup (P_\cup \Sigma^* \cap \Sigma^* S_\cup) \setminus (\Sigma^* N_\cup \Sigma^*)}_{L_\cup}
+	.\]
+	On procède par double-inclusion.
+	\begin{itemize}
+		\item[``$\subseteq$''] Soit $w \in L_1 \cup L_2$.
+			\begin{itemize}
+				\item[{\sc Cas 1}] $w = \varepsilon$, alors $\Lambda_1 = \{\varepsilon\}$\/ ou $\Lambda_2 = \{\varepsilon\}$\/ donc $L_1 \cup L_2 = \{\varepsilon\}$\/ et donc $w \in L_\cup$.
+				\item[{\sc Cas 2}] $w \neq \varepsilon$. On pose $w = w_1\ldots w_n$. Sans perte de généralité, on suppose $w \in L_1$\/ et $w \not\in L_2$. D'où $w_1 \in P_1$\/ et $w_n \in S_1$.
+					Et, pour $i \in \left\llbracket 1,n-1 \right\rrbracket$, $w_iw_{i+1} \in F_1$\/ donc $w_1 \in P_1 \cup P_2$, $w_n  \in S_1 \cup S_2$\/ et $\forall i \in \left\llbracket 1,n-1 \right\rrbracket,\: w_i w_{i+1} \in F_1 \cup F_2$.
+					D'où $w \in L_\cup$.
+			\end{itemize}
+		\item[``$\supseteq$'']
+			\begin{itemize}
+				\item[{\sc Cas 1}] $w = \varepsilon$\/ alors $w \in \Lambda_\cup = L_1 \cup L_2$\/ donc $w \in \Lambda_1$\/ ou $w \in \Lambda_2$\/ donc $w \in L_1$\/ ou $w \in L_2$.
+				\item[{\sc Cas 2}] $w \neq \varepsilon$. On pose $w = w_1 w_2 \ldots w_n$\/ avec $w_1 \in P_\cup$, $w_n \in S_\cup$\/ et $\forall  i \in \left\llbracket 1,n-1 \right\rrbracket,\: w_i w_{i+1} \in F_\cup$. Alors, sans perte de généralité, on suppose $w_1 \in \Sigma_1$. Montrons par récurrence que $\forall p \in \left\llbracket 1,n \right\rrbracket,\: w_p \in \Sigma_1$.
+					\begin{itemize}
+						\item On sait que $w_1 \in \Sigma_1$\/ par hypothèse.
+						\item On suppose que $w_p \in \Sigma_1$\/ avec $p < n$.
+							Alors, $w_p w_{p+1} \in F_\cup = F_1 \cup F_2$.
+							Or, $F_2 \subseteq (\Sigma_2)^2$\/ et $w_p \in \Sigma_1$\/ avec $\Sigma_1 \cap \Sigma_2 = \O$\/ donc $w_{p+1} \in \Sigma_1$.
+					\end{itemize}
+					On conclut par récurrence que $\forall i \in \left\llbracket 1,n \right\rrbracket$, $w_i \in \Sigma_i$.
+					Or, $w_n \in S_1 \cup S_2$\/ et $S_2 \cap \Sigma_1 = \O$\/ donc $w_n \in S_1$.
+					De plus, pour $i \in \left\llbracket 1,n-1 \right\rrbracket$, $w_iw_{i+1} \in F_1 \cup F_2$\/ donc $w_i w_{i+1} \in F_1$\/ et donc $w \in L_1$.
+			\end{itemize}
+	\end{itemize}
+\end{prv}
+
+\paragraph{Concaténation}
+
+\begin{cexm}
+	Avec $L_1 = \{ab\}$\/ et $L_2 = \{ab\}$, deux langages locaux, alors $L_1 \cdot L_2 = \{abba\}$\/ n'est pas local. En effet, $P = \{a\}$, $S = \{a\}$, $F = \{ab, bb, ba\}$\/ ; or $aba \not\in  L_1 \cdot L_2$.
+\end{cexm}
+
+\begin{prop}
+	Soient $L_1$\/ un langage local sur un alphabet $\Sigma_1$ et $L_2$\/ un langage local sur un alphabet $\Sigma_2$, avec $\Sigma_1 \cap \Sigma_2 = \O$.
+	Alors $L_1 \cdot L_2$\/ est un langage local.
+\end{prop}
+
+\begin{prv}
+	Soient $\Lambda_1$, $S_1$, $P_1$, $N_1$, $F_1$\/ définissant $L_1$\/ et soient $\Lambda_2$, $S_2$, $P_2$, $N_2$, $F_2$\/ définissant $L_2$.
+	Construisons $\Lambda_\bullet = \Lambda_1 \cap \Lambda_2$, $P_\bullet = P_1 \cup \Lambda_1 \cdot P_2$, $S_\bullet = S_2 \cup \Lambda_2 \cdot S_1$, $F_\bullet = F_1 \cup F_2 \cup S_1\cdot P_2$, $\Sigma = \Sigma_1 \cup \Sigma_2$.
+	Montrons que \[
+		L_1 \cdot L_2 = \underbrace{\Lambda_\bullet \cup (P_\bullet \Sigma^* \cap \Sigma^* S_\bullet) \setminus \Sigma^* N_\bullet \Sigma^*}_{L^\bullet}
+	.\]
+	On procède par double inclusion.
+	\begin{itemize}
+		\item[``$\subseteq$''] Soit $w \in L_1\cdot L_2$.
+			\begin{itemize}
+				\item Si $w = \varepsilon$, alors $\varepsilon \in L_1$\/ et $\varepsilon \in L_2$\/ donc $w = \varepsilon \in \Lambda_\bullet \subseteq  L^\bullet$.
+				\item Sinon, $w = u \cdot v$\/ avec $u \in L_1$\/ et $v \in L_2$.
+					On sait que $|u| > 0$\/ ou $|v| > 0$.
+					\begin{itemize}
+						\item Si $ u\neq \varepsilon$, alors $u = u_1 \ldots u_p$\/ avec $p \ge 1$. On sait que $u_1 \in P_1$, $u_p \in S_1$\/ et, pour $i \in \left\llbracket 1,p-1 \right\rrbracket$, $u_1 u_{i+1} \in F_1$.
+							\begin{itemize}
+								\item[{\sc Sous-cas 1}] Si $v = \varepsilon$, alors $\Lambda_2 = \{\varepsilon\}$, et donc $S_1 \subseteq S_\bullet$. Or, $P_1 \subseteq P_\bullet$\/ et $F_1 \subseteq F_\bullet$.
+									On en déduit que $w = u \in L^\bullet$.
+								\item[{\sc Sous-cas 2}] $v \neq \varepsilon$, alors $v = v_1 \ldots v_q$\/ avec $v_1 \in P_2$, $v_q \in S_2$\/ et, pour $i \in \left\llbracket 1,nq-1 \right\rrbracket$, $v_iv_{i+1} \in F_2$. Or, $u_p v_1 \in S_1 \cdot P_2$\/ et donc $w = u\cdot v \in L^\bullet$.
+							\end{itemize}
+						\item Si $u = \varepsilon$, on procède de la même manière.
+					\end{itemize}
+			\end{itemize}
+		\item[``$\supseteq$'']
+			Soit $w \in L^\bullet$.
+			\begin{itemize}
+				\item Si $w = \varepsilon$, alors $\varepsilon \in \Lambda_\bullet$\/ et donc $\varepsilon \in L_1$\/ et $\varepsilon \in L_2$. D'où $\varepsilon \in L_1 \cdot L_2$.
+				\item Sinon, on pose $w = w_1 \ldots w_n$.
+					\begin{itemize}
+						\item[{\sc Sous-cas 1}] Si $\{i \in \left\llbracket 1,n \right\rrbracket  \mid w_i \in \Sigma_2\} = \O$, on a donc $\forall i \in \left\llbracket 1,n \right\rrbracket$, $w_i \in \Sigma_1$. De plus, $w_1 \in P_\bullet$, $w_n \in S_\bullet$\/ et, pour $i \in \left\llbracket 1,n-1 \right\rrbracket$, $w_i w_{i+1} \in F_\bullet$.
+							Or, $P_\bullet \cap \Sigma_1 = P_1$, $S_\bullet \cap \Sigma_1 = S_1$, $\Lambda_2 = \{\varepsilon\}$\/ et $\forall i \in \left\llbracket 1,n-1 \right\rrbracket \ w_i w_{i+1} \in F_1$.
+							On en déduit que $w = w_1\ldots w_n \cdot \varepsilon \in L_1 \cdot L_2$.
+						\item[{\sc Sous-cas 2}] Si $M = \{i \in \left\llbracket 1, n \right\rrbracket  \mid w_i \in \Sigma_2\} \neq \O$. Soit $i_0 = \min (M)$. D'où \[
+							w = \underbrace{w_1 \ldots w_{i_0-1}}_{\in \Sigma_1} \cdot \underbrace{w_{i_0}}_{\in \Sigma_2} \ldots w_n
+						.\]
+						Si, $\ell_1,\ell_2 \in F_\bullet$, et $\ell_1 \in \Sigma_2$, alors $\ell_2 \in \Sigma_2$. De proche en proche, on en déduit que $\forall i \in \left\llbracket i_0,n \right\rrbracket,\,w_i \in \Sigma_2$.
+						\begin{itemize}
+							\item Si $i_0 = 1$, alors $w_1 \in \Sigma_2$, $w_1 \in P_\bullet$, $w_1 \in P_2$, $w_1 \in P_2$, $\Lambda_1 = \{\varepsilon\}$, et $w_n \in S_\bullet \cap \Sigma_2$, et $w_n \in S_2$.
+								De plus, pour $i \in \left\llbracket 1,n-1 \right\rrbracket$, $w_iw_{i+1} \in F_\bullet \cap (\Sigma_2)^2$\/ donc $w_iw_{i+1} \in F_2$. D'où $w = \varepsilon \cdot w_1\ldots w_n \in L_1 \cdot L_2$.
+							\item Si $i_0 > 1$, alors $w_1 \in \Sigma_1 \cap P^\bullet = P_1$, $w_n \in \Sigma_2 \cap S^\bullet = S_2$, et $\forall i \in \left\llbracket 1,i_0-2 \right\rrbracket$, $w_i w_{i+1} \in F^\bullet \cap (\Sigma_1)^2 = F_1$.
+								D'où $w_{i_0 - 1} w_{i_0} \in F^\bullet \cap \Sigma_1 \Sigma_2 = S_1 P_2$\/ donc $w_{i_0 - 1} \in S_1$\/ et $w_{i_0} \in P_2$\/ donc $w_1 \ldots w_{i_0 - 1} \in L_1$. Finalement, $\forall i \in \left\llbracket i_0,n-1 \right\rrbracket$, $w_i w_{i_1 \in F_\bullet \cap (\Sigma)^2}$\/ donc \todo{Finir la preuve}.
+						\end{itemize}
+					\end{itemize}
+			\end{itemize}
+	\end{itemize}
+\end{prv}
+
+\paragraph{Étoile}
+
+\begin{prop}
+	Soit $L$\/ un langage local, alors $L^*$\/ est un langage local.
+\end{prop}
+
+\begin{prv}
+	Soient $\Lambda$, $P$, $S$, $F$\/ et $N$\/ définissant $L$.
+	Alors $\Lambda_* = \{\varepsilon\}$, $P_* = P$, $S_* = S$\/ et $F_* = F \cup S\cdot P$.
+	\todo{preuve à faire à la maison.}
+\end{prv}
+
+\begin{exm}
+	Avec $L = \{a,b\}$, un langage local, on a $\Lambda_* = \{\varepsilon\}$, $P_* = S_* = \{a,b\}$\/ (car $P = \{a,b\} = S$), et $S_* = \{ab, ba, aa, bb\}$.
+\end{exm}
+
+\subsection{Expressions régulières linéaires}
+
+\begin{defn}
+	Un expression régulière est dite {\it linéaire}\/ si chacune de ses lettres apparaît une fois au plus dans l'expression.
+\end{defn}
+
+\begin{exm}
+	~\\
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline
+			\sc Oui&\sc Non\\ \hline
+			$a$&$aa$\\ \hline
+			$a|b$&$a|ba$\\\hline
+		\end{tabular}
+		\caption{Exemples et non-exemples d'expressions régulières linéaires}
+	\end{table}
+\end{exm}
+
+\begin{exm}
+	On définit une fonction booléenne permettant de vérifier si une expression régulière est linéaire : \[
+		\text{linéaire} :
+		\left(\begin{array}{rcl}
+			\O&\mapsto&\top\\
+			\varepsilon&\mapsto&\top\\
+			a \in \Sigma&\mapsto&\top\\
+			e_1 \cdot e_2&\mapsto& (\mathrm{vars}(e_1) \cap \mathrm{vars}(e_2) = \O) \mathrel{\text{et}} \text{linéaire}(e_1) \mathrel{\text{et}} \text{linéaire}(e_2)\\
+			e_1 \mid e_2&\mapsto& (\mathrm{vars}(e_1) \cap \mathrm{vars}(e_2) = \O) \mathrel{\text{et}} \text{linéaire}(e_1) \mathrel{\text{et}} \text{linéaire}(e_2)\\
+			{e_1}^*&\mapsto& \text{linéaire}(e_1)
+		\end{array}\right)
+	.\]
+\end{exm}
+
+\begin{prop}
+	Le langage d'une expression régulière est local.
+\end{prop}
+
+\begin{prv}
+	Il nous suffit de montrer le résultat sur le cas de base.
+
+	$\mathcal{L}(\O) : \O$\/ qui correspond à $\Lambda = \O$, $S = \O$, $P = \O$, $F = \O$.
+
+	$\mathcal{L}(\varepsilon) = \{\varepsilon\}$\/ qui correspond à $\Lambda = \{\varepsilon\}$\/ et $S = P = F = \O$.
+
+	$\mathcal{L}(a) = \{a\}$\/ qui correspond à $\Lambda = \O$, $S = \{a\}$, $P = \{a\}$\/ et $F = \O$.
+\end{prv}
+
+\begin{rmk}
+	Les grandeurs $\Lambda$, $P$, $S$\/ et $F$\/ sont de plus définies individuellement par la table suivante.
+
+	\begin{table}[H]
+		\centering
+		%\begin{adjustbox}{center}
+			\[
+				\begin{array}{c|c|c|c|c}
+					e&\Lambda&P&S&F\\\hline
+					\O&\O&\O&\O&\O\\ \hline
+					\varepsilon&\{\varepsilon\}&\O&\O&\O\\ \hline
+					a&\O&\{a\}&\{a\}&\O\\ \hline
+					{e_1}^*& \{\varepsilon\}&P(e_1)&S(e_1)&F(e_1) \cup S(e_1) \cdot P(e_1)\\ \hline
+					e_1 \cdot e_2& \Lambda(e_1) \cap \Lambda(e_1)&P(e_1) \cup \Lambda(e_2)\cdot P(e_2)&S(e_2) \cup \Lambda(e_2) \cdot S(e_1)&F(e_1)\cup F(e_2) \cup S(e_1) \cdot P(e_2)\\ \hline
+					e_1 \mid e_2& \Lambda(e_1) \cup \Lambda(e_2)&P(e_1) \cup P(e_2)&S(e_1)\cup S(e_2)&F(e_1) \cup F(e_2)
+				\end{array}
+			\]
+		%\end{adjustbox}
+		\caption{Construction de $\Lambda$, $P$, $S$ et $F$ dans différents cas}
+	\end{table}
+\end{rmk}
+
+

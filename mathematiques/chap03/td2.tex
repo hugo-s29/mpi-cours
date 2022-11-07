@@ -1,0 +1,82 @@
+\section{Exercice 3}
+
+{\bf Indication}\/ : pour la $G$, on applique la relation de {\sc Chasles}\/ : l'intégrale $\int_0^7 \mathrm{e}^{-x}\ln x~\mathrm{d}x$\/ converge si et seulement si $\int_0^1 \mathrm{e}^{-x}\ln x\mathrm{d}x$\/ converge et $\int_1^7\mathrm{e}^{-x}\ln x~\mathrm{d}x$\/ converge (qui n'est même pas impropre).
+
+L'intégrale $H = \int_0^1 \frac{\mathrm{e}^{\sin t}}{t}~\mathrm{d}t$\/ est impropre en 0. On sait que $\sin t \tendsto{t\to 0} 0$, et donc, par continuité de la fonction $\exp$\/ en $0$, $\mathrm{e}^{\sin t}\tendsto{t\to 0}e^0 = 1$.
+Ainsi, $\frac{\mathrm{e}^{\sin t}}{t} = \mathrm{e}^{\sin t} \times \frac{1}{t} \simi_{t\to 0} \frac{1}{t}$\/ qui ne change pas de signe. Or, $\int_0^1 \frac{1}{t}~\mathrm{d}t$\/ diverge, donc l'intégrale $H$\/ diverge.
+
+L'intégrale $I = \int_{1}^{+\infty} \frac{\mathrm{e}^{\sin t}}{t}~\mathrm{d}t$\/ est impropre en $+\infty$. Par croissance de la fonction exponentielle, on a $\frac{\mathrm{e}^{\sin t}}{t} \ge \frac{\mathrm{e}^{-1}}{t} \ge 0$. Or, l'intégrale $\int_{1}^{+\infty} \frac{1}{t}~\mathrm{d}t$\/ diverge, donc l'intégrale diverge aussi.
+
+L'intégrale $K$, est l'intégrale d'une fonction Gau\ss ienne, et elle est impropre en $+\infty$. On la \guillemotleft~découpe~\guillemotright\ : \[
+	\int_{0}^{+\infty} \mathrm{e}^{-x^2}~\mathrm{d}x \text{ converge si et seulement si } \int_{0}^{1} \mathrm{e}^{-x^2}~\mathrm{d}x \text{ converge et } \int_{1}^{+\infty} \mathrm{e}^{-x^2}~\mathrm{d}x \text{ converge.}
+\] L'intégrale $\int_{0}^{1} \mathrm{e}^{-x^2}~\mathrm{d}x$\/ n'est même pas impropre, elle converge donc. Et, pour $x \in [1,+\infty[$, on sait, comme $x^2 \ge x$, $0 \le \mathrm{e}^{-x^2} \le \mathrm{e}^{-x}$. Or, $\int_{1}^{+\infty} \mathrm{e}^{-x}~\mathrm{d}x$\/ converge donc $\int_{0}^{+\infty} \mathrm{e}^{-x^2}~\mathrm{d}x$\/ aussi.
+On calculera la valeur de cette intégrale dans le {\sc td}\/ \guillemotleft~Intégrales paramétrées.~\guillemotright
+
+Autre méthode pour déterminer la nature de $K$\/ : 
+$\mathrm{e}^{-x^2} = \po(\mathrm{e}^{-x})$\/ car $\mathrm{e}^{-x^2} = \underbrace{\mathrm{e}^{-x^2 + x}}_{\to 0} \times \mathrm{e}^{-x}$, car $\mathrm{e}^{-x^2 + x} = \mathrm{e}^{-x^2 \left( 1 - \frac{1}{x} \right)}$\/ et $-x^2\left( 1 - \frac{1}{x} \right) \to -\infty \times 1$.
+Et $\int_0^{+\infty} \mathrm{e}^{-x}~\mathrm{d}x$\/ converge donc $\int_0^{+\infty} \mathrm{e}^{-x^2}~\mathrm{d}x$\/ converge.
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		size(10cm);
+		draw((-10, 0) -- (10, 0), Arrow(TeXHead));
+		draw((0, -3) -- (0, 5), Arrow(TeXHead));
+		real f(real x) {
+			return 4*exp(-(x/4)^2);
+		}
+		draw(graph(f, -10, 10), magenta);
+	\end{asy}
+	\caption{Courbe Gau\ss ienne}
+\end{figure}
+
+L'intégrale $F = \int_{7}^{+\infty} \mathrm{e}^{-x}\ln x~\mathrm{d}x$\/ est impropre en $+\infty$. Attention : la fonction n'est pas \guillemotleft~{\color{red} faussement impropre en $+\infty$}.~\guillemotright\ Mais, on peut remarquer que \[
+	\mathrm{e}^{-x} \ln x = \mathrm{e}^{-\frac{x}{2}} \underbrace{\mathrm{e}^{-\frac{x}{2}} \ln x}_{\tendsto{x\to +\infty} 0} = \po(\mathrm{e}^{-\frac{x}{2}})
+.\] Or, $\int_{7}^{+\infty} \mathrm{e}^{-x}~\mathrm{d}x$\/ converge donc l'intégrale $F$\/ converge aussi.
+
+L'intégrale $G = \int_{0}^{7} \mathrm{e}^{-x}\ln x~\mathrm{d}x$\/ est impropre en 0.
+Or, $\mathrm{e}^{-x}\ln x \simi_{x\to 0} \ln x$\/ qui ne change pas de signe au voisinage de 0. Or, $\int_{0}^{7}  \ln x~\mathrm{d}x$\/ converge donc l'intégrale $G$\/ converge également.
+
+L'intégrale $E = \int_{1}^{+\infty} \frac{\ln x}{\sqrt{x}}~\mathrm{d}x$\/ est impropre en $+\infty$. Or, $\forall x \ge \mathrm{e}$, $\frac{\ln(x)}{\sqrt{x}} \ge \frac{1}{\sqrt{x}} \ge 0$\/ converge.
+Or, $\int_{1}^{+\infty}  \frac{1}{x^{\sfrac{1}{2}}}~\mathrm{d}x$\/ diverge d'après le critère de {\sc Riemann}\/ en $+\infty$\/ car $\frac{1}{2} < 1$.
+D'où l'intégrale $D$\/ diverge.
+
+Autre méthode : intégration par parties. On peut même arriver à calculer une primitive de ${\ln x}\:/{\sqrt{x}}$.
+
+L'intégrale $D = \int_{0}^{1} \frac{\ln x}{\sqrt{x}}~\mathrm{d}x$\/ est impropre en 0. On peut remarque que \[
+	0 \le -\frac{\ln x}{\sqrt{x}} = -\frac{x^{0{,}1} \ln x}{x^{0{,}6}} = \po\left( \frac{1}{x^{0{,}6}} \right) \quad\text{car}\quad x^{0{,}1} \ln x \tendsto{x\to 0} 0
+\] par croissances comparées.
+Or, $\int_{0}^{1} \frac{1}{x^{0{,}6}}~\mathrm{d}x$\/ converge d'après le critère de {\sc Riemann}. D'où $-D$\/ converge et donc $D$\/ converge.
+
+L'intégrale $J = \int_{1}^{+\infty} \frac{\sin t}{\sqrt{t} + \sin t}~\mathrm{d}t$\/ est impropre en $+\infty$. On calcule
+\[
+	f(t) = \frac{\sin t}{\sqrt{t} + \sin t} = \frac{\sin t}{\sqrt{t}} \times \frac{1}{1+\frac{\sin t}{\sqrt{t}}}
+\] et $\frac{\sin t}{\sqrt{t}} \tendsto{t\to +\infty} 0$. D'où \[
+	\frac{1}{1+\frac{\sin t}{\sqrt{t}}} = 1  - \frac{\sin t}{\sqrt{t}} + \frac{\sin^2 t}{t} + \po\left( \frac{\sin^2 t}{t} \right)
+\] et donc \[
+	f(t) = \frac{\cos t}{\sqrt{t}} + \frac{\sin^2 t}{t} + \po\left( \frac{\sin^2 t}{t} \right)
+.\]
+L'intégrale $\int_{1}^{+\infty} \frac{\sin t}{\sqrt{t}}~\mathrm{d}t$\/ est impropre en $+\infty$.
+Soit $x \ge 1$. On calcule avec une intégration par parties,
+\[
+	\int_{1}^{x} \sin t \times \frac{1}{\sqrt{t}}~\mathrm{d}t = \int_{1}^{x} u'(t)\cdot v(t)~\mathrm{d}t
+\] où $u(t) = - \cos t$\/ et $v(t) = \frac{1}{\sqrt{t}} = t^{-\frac{1}{2}}$. Donc
+\begin{align*}
+	\int_{1}^{x} \frac{\sin t}{\sqrt{t}}~\mathrm{d}t &= \Big[f(t)g(t)\Big]_1^x - \int_{1}^{x} f(t)\cdot g'(t)~\mathrm{d}t\\
+	&= \left[ - \frac{\cos t}{\sqrt{t}} \right]_1^x - \int_{1}^{x} (-\cos t)\left( -\frac{1}{2}t^{-\frac{3}{2}} \right)~\mathrm{d}t \\
+\end{align*}
+D'où \[
+	\int_{1}^{x} \frac{\sin t}{\sqrt{t}}~\mathrm{d}t = \cos 1 - \frac{\cos x}{\sqrt{x}} - \frac{1}{2} \int_{1}^{x} \frac{\cos t}{t^{\sfrac{3}{2}}}~\mathrm{d}t
+.\]
+Or, d'une part $\cos x \times \frac{1}{\sqrt{x}} \tendsto{x\to +\infty} 0$\/ car $\cos$\/ est bornée et $\frac{1}{\sqrt{x}}\tendsto{x\to +\infty} 0$.
+Et, d'autre part $\int_{1}^{+\infty} \frac{\cos t}{t^{\sfrac{3}{2}}}~\mathrm{d}t$\/ converge car $\forall t \in [1,+\infty[$, $\left| \frac{\cos t}{t^{\sfrac{3}{2}}} \right| \le \frac{1}{t^{\sfrac{3}{2}}}$\/ et $\int_{1}^{+\infty} \frac{1}{t^{\sfrac{3}{2}}}~\mathrm{d}t$\/ converge.
+Pour le 2\tsup{nd} terme du développement limité, on fait une {\sc ipp}, on trouve un terme en $\frac{1}{t^2}$\/ et donc son intégrale converge par critère de {\sc Riemann}. S'il y a des problèmes, voir en {\sc td}.
+On étudie maintenant le 3\tsup{ème} terme : \[
+	\int_{1}^{+\infty}  \po\left( \frac{\sin t}{t} \right) ~\mathrm{d}t \text{ converge car } \int_{1}^{+\infty} \frac{\sin^2 t}{t} ~\mathrm{d}t \text{ converge et } t\mapsto \frac{\sin^2 t}{t} \text{ est positive}.
+\]
+Autre méthode : on a \[
+	\frac{\sin^2 t}{t} + \po\left( \frac{\sin^2 t}{t} \right) \simi_{t\to +\infty} \frac{\sin^2 t}{t} \text{ qui ne change pas de signe}
+.\] Or, $\int_{1}^{+\infty} \frac{\sin^2 t}{t}~\mathrm{d}t$\/ converge et donc \[
+	\int_{1}^{+\infty} \left( \frac{\sin^2 t}{t} + \po\left( \frac{\sin^2 t}{t} \right) \right) ~\mathrm{d}t
+.\]

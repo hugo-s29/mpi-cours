@@ -1,0 +1,309 @@
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathrsfs}
+\usepackage{textcomp}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{cancel}
+\usepackage{frcursive}
+\usepackage[inline]{asymptote}
+\usepackage{tikz}
+\usepackage[european,straightvoltages,europeanresistors]{circuitikz}
+\usepackage{tikz-cd}
+\usepackage{tkz-tab}
+\usepackage[b]{esvect}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{centernot}
+\usepackage{diagbox}
+\usepackage{dsfont}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{nicematrix}
+\usepackage{pdflscape}
+\usepackage{stmaryrd}
+\usepackage{xfrac}
+\usepackage{hep-math-font}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{indentfirst}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{accents}
+\usepackage{soulutf8}
+\usepackage{mathtools}
+\usepackage{bodegraph}
+\usepackage{slashbox}
+\usepackage{enumitem}
+\usepackage{calligra}
+\usepackage{cinzel}
+\usepackage{BOONDOX-calo}
+
+% Tikz
+\usetikzlibrary{babel}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+
+% global settings
+\frenchspacing
+\reversemarginpar
+\setuldepth{a}
+
+%\everymath{\displaystyle}
+
+\frenchbsetup{StandardLists=true}
+
+\def\asydir{asy}
+
+%\sisetup{exponent-product=\cdot,output-decimal-marker={,},separate-uncertainty,range-phrase=\;à\;,locale=FR}
+
+\setlength{\parskip}{1em}
+
+\theoremstyle{definition}
+
+% Changing math
+\let\emptyset\varnothing
+\let\ge\geqslant
+\let\le\leqslant
+\let\preceq\preccurlyeq
+\let\succeq\succcurlyeq
+\let\ds\displaystyle
+\let\ts\textstyle
+
+\newcommand{\C}{\mathds{C}}
+\newcommand{\R}{\mathds{R}}
+\newcommand{\Z}{\mathds{Z}}
+\newcommand{\N}{\mathds{N}}
+\newcommand{\Q}{\mathds{Q}}
+
+\renewcommand{\O}{\emptyset}
+
+\newcommand\ubar[1]{\underaccent{\bar}{#1}}
+
+\renewcommand\Re{\expandafter\mathfrak{Re}}
+\renewcommand\Im{\expandafter\mathfrak{Im}}
+
+\let\slantedpartial\partial
+\DeclareRobustCommand{\partial}{\text{\rotatebox[origin=t]{20}{\scalebox{0.95}[1]{$\slantedpartial$}}}\hspace{-1pt}}
+
+% merging two maths characters w/ \charfusion
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+% custom math commands
+\newcommand{\T}{{\!\!\,\top}}
+\newcommand{\avrt}[1]{\rotatebox{-90}{$#1$}}
+\newcommand{\bigcupdot}{\charfusion[\mathop]{\bigcup}{\cdot}}
+\newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\cdot}}
+%\newcommand{\danger}{{\large\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}\;}
+\newcommand{\tendsto}[1]{\xrightarrow[#1]{}}
+\newcommand{\vrt}[1]{\rotatebox{90}{$#1$}}
+\newcommand{\tsup}[1]{\textsuperscript{\underline{#1}}}
+\newcommand{\tsub}[1]{\textsubscript{#1}}
+
+\renewcommand{\mod}[1]{~\left[ #1 \right]}
+\renewcommand{\t}{{}^t\!}
+\newcommand{\s}{\text{\calligra s}}
+
+% custom units / constants
+%\DeclareSIUnit{\litre}{\ell}
+\let\hbar\hslash
+
+% header / footer
+\pagestyle{fancy}
+\fancyhead{} \fancyfoot{}
+\fancyfoot[C]{\thepage}
+
+% fonts
+\let\sc\scshape
+\let\bf\bfseries
+\let\it\itshape
+\let\sl\slshape
+
+% custom math operators
+\let\th\relax
+\let\det\relax
+\DeclareMathOperator*{\codim}{codim}
+\DeclareMathOperator*{\dom}{dom}
+\DeclareMathOperator*{\gO}{O}
+\DeclareMathOperator*{\po}{\text{\cursive o}}
+\DeclareMathOperator*{\sgn}{sgn}
+\DeclareMathOperator*{\simi}{\sim}
+\DeclareMathOperator{\Arccos}{Arccos}
+\DeclareMathOperator{\Arcsin}{Arcsin}
+\DeclareMathOperator{\Arctan}{Arctan}
+\DeclareMathOperator{\Argsh}{Argsh}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Card}{Card}
+\DeclareMathOperator{\Cl}{\mathcal{C}\!\ell}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\PGCD}{PGCD}
+\DeclareMathOperator{\PPCM}{PPCM}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\com}{com}
+\DeclareMathOperator{\cotan}{cotan}
+\DeclareMathOperator{\det}{det}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\rg}{rg}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\sh}{sh}
+\DeclareMathOperator{\th}{th}
+\DeclareMathOperator{\tr}{tr}
+
+% colors and page style
+\definecolor{truewhite}{HTML}{ffffff}
+\definecolor{white}{HTML}{faf4ed}
+\definecolor{trueblack}{HTML}{000000}
+\definecolor{black}{HTML}{575279}
+\definecolor{mauve}{HTML}{907aa9}
+\definecolor{blue}{HTML}{286983}
+\definecolor{red}{HTML}{d7827e}
+\definecolor{yellow}{HTML}{ea9d34}
+\definecolor{gray}{HTML}{9893a5}
+\definecolor{grey}{HTML}{9893a5}
+\definecolor{green}{HTML}{a0d971}
+
+\pagecolor{white}
+\color{black}
+
+\begin{asydef}
+	settings.prc = false;
+	settings.render=0;
+
+	white = rgb("faf4ed");
+	black = rgb("575279");
+	blue = rgb("286983");
+	red = rgb("d7827e");
+	yellow = rgb("f6c177");
+	orange = rgb("ea9d34");
+	gray = rgb("9893a5");
+	grey = rgb("9893a5");
+	deepcyan = rgb("56949f");
+	pink = rgb("b4637a");
+	magenta = rgb("eb6f92");
+	green = rgb("a0d971");
+	purple = rgb("907aa9");
+
+	defaultpen(black + fontsize(8pt));
+
+	import three;
+	currentlight = nolight;
+\end{asydef}
+
+% theorems, proofs, ...
+
+\mdfsetup{skipabove=1em,skipbelow=1em, innertopmargin=6pt, innerbottommargin=6pt,}
+
+\declaretheoremstyle[
+	headfont=\normalfont\itshape,
+	numbered=no,
+	postheadspace=\newline,
+	headpunct={:},
+	qed=\qedsymbol]{demstyle}
+
+\declaretheorem[style=demstyle, name=Démonstration]{dem}
+
+\newcommand\veczero{\kern-1.2pt\vec{\kern1.2pt 0}} % \vec{0} looks weird since the `0' isn't italicized
+
+\makeatletter
+\renewcommand{\title}[2]{
+	\AtBeginDocument{
+		\begin{titlepage}
+			\begin{center}
+				\vspace{10cm}
+				{\Large \sc Chapitre #1}\\
+				\vspace{1cm}
+				{\Huge \calligra #2}\\
+				\vfill
+				Hugo {\sc Salou} MPI${}^{\star}$\\
+				{\small Dernière mise à jour le \@date }
+			\end{center}
+		\end{titlepage}
+	}
+}
+
+\newcommand{\titletp}[4]{
+	\AtBeginDocument{
+		\begin{titlepage}
+			\begin{center}
+				\vspace{10cm}
+				{\Large \sc tp #1}\\
+				\vspace{1cm}
+				{\Huge \textsc{\textit{#2}}}\\
+				\vfill
+				{#3}\textit{MPI}${}^{\star}$\\
+			\end{center}
+		\end{titlepage}
+	}
+	\fancyfoot{}\fancyhead{}
+	\fancyfoot[R]{#4 \textit{MPI}${}^{\star}$}
+	\fancyhead[C]{{\sc tp #1} : #2}
+	\fancyhead[R]{\thepage}
+}
+
+\newcommand{\titletd}[2]{
+	\AtBeginDocument{
+		\begin{titlepage}
+			\begin{center}
+				\vspace{10cm}
+				{\Large \sc td #1}\\
+				\vspace{1cm}
+				{\Huge \calligra #2}\\
+				\vfill
+				Hugo {\sc Salou} MPI${}^{\star}$\\
+				{\small Dernière mise à jour le \@date }
+			\end{center}
+		\end{titlepage}
+	}
+}
+\makeatother
+
+\newcommand{\sign}{
+	\null
+	\vfill
+	\begin{center}
+		{
+			\fontfamily{ccr}\selectfont
+			\textit{\textbf{\.{\"i}}}
+		}
+	\end{center}
+	\vfill
+	\null
+}
+
+\renewcommand{\thefootnote}{\emph{\alph{footnote}}}
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+	\def\svgwidth{\columnwidth}
+	\import{./figures/}{#1.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+\ctikzset{tripoles/european not symbol=circle}
+
+\newcommand{\missingpart}{{\large\color{red} Il manque quelque chose ici\ldots}}

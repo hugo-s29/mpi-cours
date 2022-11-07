@@ -1,0 +1,48 @@
+\section{Exercice 4}
+
+Soit $\varphi$\/ l'endomorphisme défini comme \begin{align*}
+	\varphi: \R[X] &\longrightarrow \R[X] \\
+	P &\longmapsto X\cdot \big(P(X) - P(X-1)\big).
+\end{align*}
+\begin{enumerate}
+	\item {\slshape Déterminer le noyau de $\varphi$. L'endomorphisme $\varphi$\/ est-il injectif ? surjectif ?}
+		Soit $P$\/ un polynôme réel. On pose $P(X) = a_n X^n + \cdots + a_1 X + a_0$.
+		\begin{align*}
+			P \in \Ker \varphi \iff& \varphi(P(X)) = 0\\
+			\iff& X\big(P(X-1) - P(X)\big) = 0\\
+			\iff& P(X - 1) = P(X)\\
+			\iff& P \text{ constant}.
+		\end{align*}
+		Ainsi, $\Ker \varphi = \R_1[X]$.
+		L'application $\varphi$\/ n'est donc pas injective, $\Ker \varphi \neq \{0\}$.
+		
+		On remarque que le polynôme $P(X) = 1$\/ n'a pas d'antécédents. En effet, pour tout polynôme $Q(X)$ de degré supérieur à 1, $\deg \varphi(Q) = \deg Q + 1 > \deg Q$, et pour tout polynôme de degré inférieur ou égal à 1, $\deg \varphi(Q) = \deg 0 = -\infty$. L'application $\varphi$\/ n'est donc pas surjective.
+	\item
+		On pose $P(X) = a_n X^n + \cdots + a_1 X + a_0 \in \R_n[X]$, avec $n \ge 1$.
+		Ainsi,
+		\begin{align*}
+			&\mathrel{\phantom=}\varphi(P)(X)\\
+			&= X\big(P(X) - P(X-1)\big) \\
+			&= X \Big(\sum_{k=1}^n a_k X^k - \sum_{k=1}^n a_k (X-1)^k\Big) \\
+			&= X \Big(\sum_{k=1}^n a_k X^k - \sum_{k=1}^n a_k \sum_{j=1}^k {k\choose j} X^j (-1)^{k-j}\Big) \\
+			&= X \Big(a_n X^n - a_n\sum_{j=1}^n {n\choose j} X^j (-1)^{n-j} + \sum_{k=1}^{n-1} a_k X^k - \sum_{k=1}^{n-1} a_k \sum_{j=1}^k {k\choose j} X^j (-1)^{k-j} \Big)\\
+			&= X\Big(a_n X^n - a_n X^n - \sum_{j=1}^{n-1} {n\choose j} X^j (-1)^{n-j} + \sum_{k=1}^{n-1} a_k X^k - \sum_{k=1}^{n-1} a_k \sum_{j=1}^k {k\choose j} X^j (-1)^{n-j} \Big) \\
+			&= -\sum_{j=1}^{n-1} X^{j+1} (-1)^{n-j} + \sum_{k=1}^{n-1} {n\choose j} X^{j+1} (-1)^{n-j} + \sum_{k=1}^{n-1} a_k X^{k+1} - \sum_{k=1}^{n-1} a_k \sum_{j=1}^{k} {k\choose j} X^{j+1} (-1)^{n-j} \\
+			&\in \R_n[X].
+		\end{align*}
+	\item \marginpar{Vérifier le binôme de {\sc Newton}}
+		On a, \[
+			\forall k \in \N^*,\:\varphi(X^k) = X \cdot (X^k - (X-1)^k) = X \cdot \Big(X^k - \sum_{k=1}^n {n \choose k} X^k (-1)^{n-k}\Big) = -\sum_{k=1}^{n-1} {n\choose k} X^{k+1} (-1)^{n-k}
+		.\]
+		\[
+			\big[\varphi\big]_{(1, X, \ldots, X^n)} =
+			\begin{pmatrix}%[last-row, last-col]
+				0&0&0&0&
+				0&1&-1
+				0&0&2&
+				\vdots&\vdots&
+				0&0&
+			\end{pmatrix}
+		.\] 
+\end{enumerate}
+

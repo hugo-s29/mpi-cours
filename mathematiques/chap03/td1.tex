@@ -1,0 +1,43 @@
+\section{Exercice 1}
+
+\begin{enumerate}
+	\item Soit $t > 0$. Montrons que $t - \ln t \ge 1$\/ i.e.\ $\ln t - t + 1 \le 0$. Or, la fonction $\ln$\/ étant convexe, sa courbe est donc au dessous de ses tangentes.
+		En particulier, de la tangente en 1. On en déduit que \[
+			\ln t \le \ln'(t) (t-1) + \ln(1) = t - 1
+		.\]
+	\item Soit $x> 0$. Comme la fonction $\id - \ln$\/ est continue et ne s'annule pas sur $\R^+_*$, alors, par composition avec la fonction inverse, $x\mapsto \frac{1}{t - \ln t}$\/ existe et est continue sur $\R_*^+$. Et, comme $x > 0$, si $t \in [2x, x]$, alors $t > 0$.
+		On en déduit que la fonction $F$\/ est définie sur $\R^+_*$.
+
+		Par croissance de l'intégrale, et comme la fonction $\id - \ln$\/ ne s'annule pas sur $\R^+_*$, on a \[
+			0 \le \int_{x}^{2x} 0~\mathrm{d}t \le \int_{x}^{2x} \frac{1}{t - \ln t}~\mathrm{d}t \le \int_{x}^{2x} 1~\mathrm{d}t = \big[t\big]_x^{2x} = x
+		.\] On a montré que, $0 \le F(x) \le x$.
+	\item D'après le théorème des gendarmes, et, à l'aide de l'inégalité de la question précédente, on a $F(x) \tendsto{x\to 0^+} 0$.
+	\item On détermine une équivalent de $\frac{1}{t - \ln t} - \frac{1}{t}$ quand $t \to +\infty$. Soit $t \ge 20$. Tout d'abord, on sait que \[
+			\frac{1}{t - \ln t} - \frac{1}{t} = \frac{1}{t} \times \left( \frac{1}{1 - \frac{\ln t}{t}} - 1 \right)
+		.\] On sait que $\frac{\ln t}{t} \longrightarrow 0$\/ par croissances comparées et donc $\frac{\ln t}{t} = 0 + \po(1)$. On en déduit que \[
+			\frac{1}{1 - \frac{\ln t}{t}} = 1 - \frac{\ln t}{t} + \po\left( \frac{\ln t}{t} \right)
+		.\] D'où \[
+			\frac{1}{t} \times \left( \frac{1}{1 - \frac{\ln t}{t}} - 1 \right) = \frac{1}{t} \times \left( \frac{\ln t}{t} + \po\left( \frac{\ln t}{t} \right) \right) = \frac{\ln t}{t^2} + \po\left( \frac{\ln t}{t^2} \right)
+		.\] On en déduit que  \[
+			\boxed{\frac{1}{t - \ln t} - \frac{1}{t} \simi_{t\to +\infty} \frac{\ln t}{t^2}.}
+		\]
+		Ainsi, comme $\frac{\ln t}{t^2} \ge 0$, on en déduit qu'il existe un certain $t_1$\/ tel que \[
+			t \ge t_1 \quad\implies\quad \frac{1}{t-\ln t} - \frac{1}{t} \ge 0
+		.\] Et, comme $\frac{1}{t - \ln t} - \frac{1}{t} \sim \frac{\ln t}{t^2}$, alors il existe une application $\varepsilon : \R \to \R$\/ telle que \[
+			\frac{1}{t - \ln t} - \frac{1}{t} = \frac{\ln t}{t^2} (1 + \varepsilon(t)) \quad\text{et}\quad\varepsilon(t)\tendsto{t\to +\infty} 0
+		.\] On en déduit qu'il existe $t_2 > 0$\/ tel que $\varepsilon(t) \le 1$, et donc \[
+			t\ge t_2 \quad\implies\quad \frac{1}{t - \ln t} - \frac{1}{t} \le (1+1) \frac{\ln t}{t^2}
+		.\] On pose $T = \max(t_1, t_2)$, et donc \[
+			\boxed{\forall t \ge T,\quad 0\le \frac{1}{t - \ln t} - \frac{1}{t} \le 2\cdot \frac{\ln t}{t^2}.}
+		\]
+	\item Soit $x >0$. On calcule l'intégrale $\int_{x}^{2x} \frac{\ln t}{t^2}~\mathrm{d}t$\/ à l'aide d'une intégration par parties.
+		Ainsi,
+		\begin{align*}
+			\int_{x}^{2x} \frac{\ln t}{t^2}~\mathrm{d}t &= \bigg[-\frac{\ln t}{t}\bigg]_x^{2x} + \int_{x}^{2x} \frac{1}{t^3}~\mathrm{d}t\\
+			&= \frac{\ln x}{x} - \frac{\ln (2x)}{2x} + \left[ -\frac{4}{t^4} \right]_x^{2x}\\
+			&= \frac{\ln x}{x} - \frac{\ln (2x)}{2x} + \frac{1}{4^3 x^4} - \frac{4}{x^4}
+		\end{align*}
+	\item On sait que \[
+			\frac{\ln t}{t^2}  + \po\left( \frac{\ln t}{t^2} \right) = \frac{1}{t - \ln t} - \frac{1}{t}
+		.\]
+\end{enumerate}

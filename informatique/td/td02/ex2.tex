@@ -1,0 +1,22 @@
+\section{Définitions de cours : syntaxe}
+
+\begin{enumerate}
+	\item On considère la formule $H_1 = r \lor (p \land ( \lnot q \to r))$. Son arbre syntaxique est
+		\begin{center}
+			\Tree[.$\lor$ $r$ [.$\land$ $p$ [.$\to$ [.$\lnot$ $q$ ] $r$ ]]]
+		\end{center}
+		Ses sous-formules sont $r \lor (p \land (\lnot q \to r))$, $r$, $p \land (\lnot q \to  r)$, $p$, $\lnot q \to r$, $\lnot q$, et $q$. Ses variables sont $p$, $q$\/ et $r$.
+	\item On considère la formule $H_2 = p \land (r \land (\lnot q \to \lnot p))$. Son arbre syntaxique est
+		\begin{center}
+			\Tree[.$\land$ $p$ [.$\land$ $r$ [.$\to$ [.$\lnot$ $q$ ] [.$\lnot$ $p$ ]]]]
+		\end{center}
+		Ses sous-formules sont $p \land (r \land (\lnot q \to \lnot p))$, $p$, $r \land (\lnot q \to \lnot p)$, $r$, $\lnot q \to \lnot p$, $\lnot q$, $q$, et $\lnot p$. Ses variables sont $p$, $q$\/ et $r$.
+	\item On considère la formule $H_3 = ((q \lor \lnot p) \to (\lnot \lnot q \lor \lnot p)) \land((\lnot \lnot  q \lor\lnot p) \to (\lnot p \lor q))$. Son arbre syntaxique est
+		\begin{center}
+			\Tree[.$\land$
+				[.$\to$ [.$\lor$ $q$ [.$\lnot$ $p$ ]] [.$\lor$ [.$\lnot$ [.$\lnot$ $q$ ]] [.$\lnot$ $p$ ]]] 
+				[.$\to$ [.$\lor$ [.$\lnot$ [.$\lnot$ $q$ ]] [.$\lnot$ $p$ ]] [.$\lor$ [.$\lnot$ $p$ ] $q$ ]]]
+		\end{center}
+		Ses sous-formules sont $((q \lor \lnot p) \to (\lnot \lnot q \lor \lnot p)) \land((\lnot \lnot  q \lor\lnot p) \to (\lnot p \lor q))$, $(q \lor \lnot p) \to (\lnot \lnot q \lor \lnot p)$, $(\lnot \lnot  q \lor\lnot p) \to (\lnot p \lor q)$, $q \lor \lnot p$, $\lnot \lnot q \lor \lnot p$, $\lnot p \lor q$, $q$, $\lnot p$, $\lnot \lnot q$, $p$, et $\lnot q$. Ses variables sont $p$\/ et $q$.
+\end{enumerate}
+

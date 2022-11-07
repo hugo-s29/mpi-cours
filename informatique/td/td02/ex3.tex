@@ -1,0 +1,49 @@
+\section{Formules duales}
+
+\begin{enumerate}
+	\item On définit par induction $(\cdot)^\star$\/ comme
+		\begin{multicols}{3}
+			\begin{itemize}
+				\item $\top^\star = \bot$\/ ;
+				\item $\bot^\star = \top$\/ ;
+				\item $(G \lor H)^\star = G^\star \land H^\star$\/ ;
+				\item $(G \land H)^\star = G^\star \lor H^\star$\/ ;
+				\item $(\lnot G)^\star = \lnot G^\star$\/ ;
+				\item $p^\star = p$.
+			\end{itemize}
+		\end{multicols}
+	\item Soit $\rho \in \mathds{B}^{\mathcal{P}}$. Montrons, par induction, $P(H) : ``\left\llbracket H^\star \right\rrbracket^\rho = \left\llbracket \lnot H \right\rrbracket^{\bar \rho}"$\/ où $\bar{\rho} : p \mapsto \overline{\rho(p)}$.
+		\begin{itemize}
+			\item On a $\left\llbracket \bot^\star \right\rrbracket^\rho = \left\llbracket \top \right\rrbracket^\rho = \mathbf{V}$, et $\left\llbracket \lnot \bot \right\rrbracket^{\bar\rho} = \left\llbracket \top \right\rrbracket^{\bar\rho} = \mathbf{V}$, d'où $P(\bot)$.
+			\item On a $\left\llbracket \top^\star \right\rrbracket^\rho = \left\llbracket \bot \right\rrbracket^\rho = \mathbf{F}$, et $\left\llbracket \lnot \top \right\rrbracket^{\bar\rho} = \left\llbracket \bot \right\rrbracket^{\bar\rho} = \mathbf{F}$, d'où $P(\top)$.
+			\item Soit $p \in \mathcal{P}$. On a $\left\llbracket p^\star  \right\rrbracket^\rho = \left\llbracket p \right\rrbracket^\rho = \rho(p)$, et $\left\llbracket \lnot p \right\rrbracket^{\bar\rho} = \overline{\left\llbracket p \right\rrbracket^{\bar\rho}} = \overline{\bar\rho(p)} = \overline{\overline{\rho(p)}} = \rho(p)$, d'où~$P(p)$.
+		\end{itemize}
+		Soient $F$\/ et $G$\/ deux formules.
+		\begin{itemize}
+			\item On a
+				\begin{align*}
+					\left\llbracket (F \land G)^\star  \right\rrbracket^\rho &= \left\llbracket F^\star  \lor G^\star \right\rrbracket^\rho\\
+					&= \left\llbracket F^\star \right\rrbracket^\rho + \left\llbracket G^\star \right\rrbracket^\rho \\
+					&= \left\llbracket \lnot F \right\rrbracket^{\bar\rho} + \left\llbracket \lnot G \right\rrbracket^{\bar\rho} \\
+					&= \left\llbracket \lnot F \lor \lnot G \right\rrbracket^{\bar\rho} \\
+					&= \left\llbracket \lnot (F \land G) \right\rrbracket^{\bar\rho} \\
+				\end{align*}
+				d'où $P(F \land G)$.
+			\item On a
+				\begin{align*}
+					\left\llbracket (F \lor G)^\star  \right\rrbracket^\rho &= \left\llbracket F^\star  \land G^\star \right\rrbracket^\rho\\
+					&= \left\llbracket F^\star \right\rrbracket^\rho \cdot \left\llbracket G^\star \right\rrbracket^\rho \\
+					&= \left\llbracket \lnot F \right\rrbracket^{\bar\rho} \cdot \left\llbracket \lnot G \right\rrbracket^{\bar\rho} \\
+					&= \left\llbracket \lnot F \land \lnot G \right\rrbracket^{\bar\rho} \\
+					&= \left\llbracket \lnot (F \lor G) \right\rrbracket^{\bar\rho} \\
+				\end{align*}
+				d'où $P(F \lor G)$.
+			\item On a \[
+					\left\llbracket (\lnot F)^\star  \right\rrbracket^\rho = \left\llbracket \lnot (F^\star) \right\rrbracket^\rho = \overline{\left\llbracket F^\star \right\rrbracket^\rho} = \overline{\left\llbracket \lnot F \right\rrbracket^{\bar\rho}} = \left\llbracket \lnot (\lnot F) \right\rrbracket^{\bar\rho}.
+					\] d'où $P(\lnot F)$.
+		\end{itemize}
+		Par induction, on en conclut que $P(F)$\/ est vraie pour toute formule $F$.
+	\item Soit $G$\/ une formule valide. Alors, par définition, $G \equiv \top$. Or, d'après la question précédente, $G^\star \equiv (\top)^\star = \bot$. Ainsi, $G^\star $\/ n'est pas satisfiable.
+\end{enumerate}
+
+

@@ -1,0 +1,56 @@
+
+\begin{comment}
+\section{Exercice 9}
+
+\slshape
+Soit la matrice $A = \begin{pmatrix}
+	1&1&-1\\
+	2&3&-4\\
+	4&1&-4
+\end{pmatrix}$.
+\begin{enumerate}
+	\item Déterminer le spectre de la matrice $A$\/ et trouver une matrice $P$\/ inversible telle que $P^{-1} A P$\/ est diagonale.
+	\item Soit $B$\/ une matrice de taille $3\times 3$\/ qui commentent avec $A$\/ ($AB = BA$). Montrer que $B$\/ est diagonale.
+\end{enumerate}
+\upshape
+
+\begin{enumerate}
+	\item On sait, tout d'abord, que, pour $x \in \R$,
+		\begin{align*}
+			\chi_A(x) = \det(x\,I_n - A) &=
+			\begin{vmatrix}
+				x - 1 &- 1 & 1\\
+				-2&x-3&4\\
+				-4&-1&x + 4
+			\end{vmatrix}\\
+			&= \\
+		\end{align*}
+\end{enumerate}
+\end{comment}
+
+\section{Exercice 8}
+
+\begin{enumerate}
+	\item Soit un vecteur non nul $\vec{x} \in \Ker(\lambda {\id} - {u \circ v})$. Ainsi, $u(v(\vec{x})) = \lambda \vec{x}$. Et, donc $v(u(v(\vec{x}))) = \lambda v(\vec{x})$. On a donc $v(\vec{x}) \in \Ker(\lambda {\id} - {v  \circ u})$.
+		Or, si $\lambda \neq 0$, on a $v(\vec{x}) \neq \vec{0}$\/ ; en effet, si $v(\vec{x}) = \vec{0}$, alors $u \circ v(\vec{x}) = \vec{0} = \lambda \vec{x}$\/ et donc $\vec{x} = \vec{0}$, ce ne serait donc pas un vecteur propre de $u \circ v$\/ : une contradiction. On en déduit que $v(\vec{x})$\/ est un vecteur propre de $u \circ v$\/ associé à la valeur propre $\lambda$.
+	\item On pose donc $\lambda = 0$, une valeur propre de $u  \circ v$. L'endomorphisme $u \circ v$\/ n'est donc pas injectif, donc bijectif. On sait donc, comme $E$\/ est de dimension finie, que $\det(u \circ v) = 0$. Or $\det (u \circ v) = \det u \times \det v = \det(v  \circ u)$. Et donc $\det(v  \circ u) = 0$, $v  \circ u$\/ n'est donc pas bijectif, donc injectif. Et donc, on a $0 \in \Sp(v  \circ u)$.
+	\item Soit $P \in \R[X]$, et soit $Q$\/ une primitive de $P$.
+		\begin{align*}
+			P \in \Ker (u  \circ v) \iff& \Big(\int_{0}^X P(t)~\mathrm{d}t\Big)' = 0\\
+			\iff& \big(Q(X) - Q(0)\big)' = 0\\
+			\iff& Q'(X) = 0\\
+			\iff& P(X) = 0
+		\end{align*}
+		On en déduit que $\Ker (u \circ v) = \{0\}$.
+
+		Également,
+		\begin{align*}
+			P \in \Ker(v  \circ u) \iff& \int_{0}^{X} P'(t)~\mathrm{d}t = 0\\
+			\iff& P(X) - P(0) = 0\\
+			\iff& P(X) = P(0)\\
+			\iff& \deg P \le 0\\
+			\iff& P \in \R_0[X]
+		\end{align*}
+		On en déduit que $\Ker(v \circ u) = \R_0[X]$.
+\end{enumerate}
+

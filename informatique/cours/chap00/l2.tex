@@ -1,0 +1,358 @@
+\section{Syntaxe}
+
+\begin{defn}
+	On suppose donné un ensemble $\mathcal{P}$\/ de variables propositionnelles.
+\end{defn}
+
+\begin{defn}
+	On définit alors l'ensemble des formules de la logique propositionnelle par induction nommée avec les règles :
+	\begin{multicols}{3}
+		\begin{itemize}
+			\item $\red\lnot\big|^1$\/ ;
+			\item $\red\land\big|^2$\/ ;
+			\item $\red\lor\big|^2$\/ ;
+			\item $\red\to\big|^2$\/ ;
+			\item $\red\leftrightarrow\big|^2$\/ ;
+			\item $\red\top\big|^0$\/ ;
+			\item $\red\bot\big|^0$\/ ;
+			\item $\red V\big|^0_{\mathcal{P}}$.
+		\end{itemize}
+	\end{multicols}
+
+	On nomme l'ensemble des formules $\mathcal{F}$.
+\end{defn}
+
+\begin{exm}
+	\[
+		\red{\lor}(\red{\land}(\red{\to}(\red{V}(P), \red{\top}(~), \red{\lnot}(\red{\bot}(~))), \red{\lor}(\red{\leftrightarrow}(\red{\top}(~),\red{\top}(~)),\red{V}(r))
+	.\]
+
+	\begin{figure}[H]
+		\centering
+		\Tree[.{$\red{\lor}$}
+			[.{$\red{\land}$}
+				[.{$\red{\to}$}
+					[.{$\red{V}$} {P} ]
+					[.{$\red{\top}$} {} ]
+				]
+				[.{$\red{\lnot}$} {$\red{\bot}$} ]
+			]
+			[.{$\red{\lor}$}
+				[.{$\red{\leftrightarrow}$}
+					{$\red{\top}$}
+					{$\red{\top}$}
+				]
+			]
+			[.{$\red{V}$} {$r$} ]
+		]
+		\caption{Arbre syntaxique d'une expression logique}
+	\end{figure}
+
+	Pour simplifier la syntaxe, on écrit plutôt \[
+		\big((p \to \top) \land \lnot \bot\big) \lor \big( (\top \leftrightarrow \top) \lor r)
+	.\]
+\end{exm}
+
+\begin{defn}[taille d'une formule]
+	On définit, par induction, la taille notée ``$\mathrm{taille}$\/'' comme
+	\begin{align*}
+		\mathrm{taille}: \mathcal{F} &\longrightarrow \N \\
+		p \in \mathcal{P} &\longmapsto 1\\
+		\top &\longmapsto 1\\
+		\bot &\longmapsto 1\\
+		\lnot G &\longmapsto 1 + \mathrm{taille}(G)\\
+		 G \to H &\longmapsto 1 + \mathrm{taille}(G) + \mathrm{taille}(H)\\
+		 G \leftrightarrow H &\longmapsto 1 + \mathrm{taille}(G) + \mathrm{taille}(H)\\
+		 G \land H &\longmapsto 1 + \mathrm{taille}(G) + \mathrm{taille}(H)\\
+		 G \lor H &\longmapsto 1 + \mathrm{taille}(G) + \mathrm{taille}(H).
+	\end{align*}
+\end{defn}
+
+\begin{defn}[Ensemble des variables propositionnelles]
+	On définit inductivement
+	\begin{align*}
+		\mathrm{vars}: \mathcal{F} &\longrightarrow \wp(\mathcal{P})\quad\hbox{}\footnotemark\\
+		p \in \mathcal{P} &\longmapsto \{p\}\\
+		\top,\bot &\longmapsto \O\\
+		\lnot G &\longmapsto \mathrm{vars}(G)\\
+		G \odot H&\longmapsto \mathrm{vars}(G) \cup \mathrm{vars}(H)\\
+	\end{align*}
+	où $\odot$\/ correspond à $\cup$, $\cap$, $\to$ ou $\leftrightarrow$.
+\end{defn}
+\footnotetext{Le $\wp(E)$\/ représente ici l'ensemble des parties de $E$.}
+
+\begin{defn}
+	On appelle {\it substitution}\/ une fonction de $\mathcal{P}$\/ dans $\mathcal{F}$\/ qui est l'identité partout sauf sur un ensemble fini de variables.
+	On la note alors \[
+		(p_1 \mapsto H_1,\,p_2\mapsto H_2,\ldots,p_n\mapsto H_n)
+	\] qui est la substitution
+	\begin{align*}
+		\mathcal{P} &\longrightarrow \mathcal{F} \\
+		p &\longmapsto \begin{cases}
+			H_i &\text{ si } p = p_i\\
+			p &\text{ sinon}.
+		\end{cases}
+	\end{align*}
+\end{defn}
+
+\begin{exm}
+	La fonction \[
+		\sigma = (p \mapsto p \lor q,\,r \mapsto p \land \top)
+	\] est une substitution. On a $\sigma(p) = p \lor q$, $\sigma(r) = p \land \top$, $\sigma(q) = q$\/ et, pour toute autre variable logique $a$, $\sigma(a) = a$.
+\end{exm}
+
+\begin{defn}[Application d'une substitution à une formule]
+	Étant donné une formule $G \in \mathcal{F}$\/ et une substitution $\sigma$, on définit inductivement $G[\sigma]$\/ par \[
+		\begin{cases}
+			\top[\sigma] = \top\\
+			\bot[\sigma] = \bot\\
+			p[\sigma] = \sigma(p)\\
+			(\lnot G)[\sigma] = \lnot (G[\sigma])\\
+			(G \odot H)[\sigma] = (G[\sigma])\odot H[\sigma]
+		\end{cases}
+	\]
+	où $\odot$\/ correspond à $\cup$, $\cap$, $\to$ ou $\leftrightarrow$.
+\end{defn}
+
+\begin{exm}
+	Avec $G = p \land (q \lor \top)$\/ et $\sigma = (p \mapsto p,\,q\mapsto r \land \top)$, on a \[
+		G[\sigma] = q \land \big((r \land \top) \lor \bot\big)
+	.\]
+\end{exm}
+
+\begin{defn}
+	On appelle parfois {\it clés}\/ d'une substitution de $\sigma$, l'ensemble des variables propositionnelles sur lequel elle n'est pas l'identité.
+\end{defn}
+
+\begin{defn}
+	On définit la {\it composée}\/ de deux substitutions $\sigma$\/ et $\sigma'$\/ par 
+	\begin{align*}
+		\sigma \cdot  \sigma': \mathcal{P} &\longrightarrow \mathcal{F} \\
+		p &\longmapsto \big(p[\sigma]\big)[\sigma].
+	\end{align*}
+\end{defn}
+
+\begin{exm}
+	Avec $\sigma = (p \mapsto q)$\/ et $\sigma = (q \mapsto r)$, on a \[
+		\sigma' \cdot \sigma = (p \mapsto r,\,q\mapsto r)\\
+	.\] En effet,
+	\begin{align*}
+		\sigma' \cdot \sigma(x) &= \begin{cases}
+			r &\text{ si } x = p\\
+			r &\text{ si } x= q\\
+			x &\text{ sinon}.
+		\end{cases} \\
+	\end{align*}
+\end{exm}
+
+\begin{exm}
+	Avec $\sigma = ( p \mapsto q \land \top )$, $\sigma' = (q \mapsto \bot,\,r \mapsto p)$, on a
+	\begin{align*}
+		\sigma' \cdot \sigma (x) &= \begin{cases}
+			\bot \land \top &\text{ si } x = p\\
+			\bot &\text{ si} x = q\\
+			p &\text{ si } x = r\\
+			x &\text{ sinon}
+		\end{cases}\\
+		&= (p\mapsto \bot \land \top,\,q\mapsto \bot,\, r \mapsto p). \\
+	\end{align*}
+\end{exm}
+
+\begin{rmk}
+	L'opération $\cdot$\/ est associative.
+\end{rmk}
+
+\begin{prop}
+	Soient $\sigma$\/ et $\sigma'$\/ deux substitutions, on a, pour toute formule $H \in \mathcal{F}$, \[
+		\big(H[\sigma]\big)[\sigma'] = H[\sigma' \cdot \sigma]
+	.\]
+\end{prop}
+
+\begin{prv}
+	Notons $P_G$\/ la propriété \hfill ``$(G[\sigma])[\sigma'] = G[\sigma' \cdot \sigma]$\/'' \hfill\hbox{}
+
+	Montrons que, pour toute formule $G \in \mathcal{F}$, $P_G$\/ est vraie par induction : 
+	\begin{itemize}
+		\item $\big(\top[\sigma]\big)[\sigma'] \mathrel{\mathop=^{\text{(def)}}} \top = \top[\sigma' \cdot]$\/
+		\item $\big(p[\sigma]\big)[\sigma'] = p[\sigma' \cdot \sigma]$\/ 
+		\item à faire à la maison : le cas $\lnot $\/ et un cas $\land$.
+	\end{itemize}
+\end{prv}
+
+\begin{defn}
+	On appelle {\it relation sous formule}, la relation définie Samedi.
+
+	\todo{Recopier cette formule (sinon ça va être drôle en Juin)}
+\end{defn}
+
+\section{Sémantique}
+
+\subsection{Algèbre de {\scshape Boole}}
+
+\begin{defn}
+	On note $\mathds{B} = \{{\bfm V},{\bfm F}\}$\/ l'{\it ensemble des booléens}.
+\end{defn}
+
+\begin{defn}
+	Sur $\mathds{B}$, on définit les opérateurs
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|c|c}
+			$a$\/ & $b$\/ &$a\cdot b$\/ \\ \hline
+			${\bfm F}\/$\/&${\bfm F}\/$\/&${\bfm F}\/$\/\\
+			${\bfm F}\/$\/&${\bfm V}\/$\/&${\bfm F}\/$\/\\
+			${\bfm V}\/$\/&${\bfm F}\/$\/&${\bfm F}\/$\/\\
+			${\bfm V}\/$\/&${\bfm V}\/$\/&${\bfm V}\/$\/\\
+		\end{tabular}
+		\caption{Opération $\cdot $\/ sur les booléens}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|c|c}
+			$a$\/ & $b$\/ &$a+b$\/ \\ \hline
+			${\bfm F}\/$\/&${\bfm F}\/$\/&${\bfm F}\/$\/\\
+			${\bfm F}\/$\/&${\bfm V}\/$\/&${\bfm V}\/$\/\\
+			${\bfm V}\/$\/&${\bfm F}\/$\/&${\bfm V}\/$\/\\
+			${\bfm V}\/$\/&${\bfm V}\/$\/&${\bfm V}\/$\/\\
+		\end{tabular}
+		\caption{Opération $+$\/ sur les booléens}
+	\end{table}
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|c}
+			$a$\/ &$\bar{a}$\/ \\ \hline
+			${\bfm F}\/$\/&${\bfm V}\/$\/\\
+			${\bfm V}\/$\/&${\bfm F}\/$\/\\
+		\end{tabular}
+		\caption{Opération $\bar{\cdot}$\/ sur les booléens}
+	\end{table}
+\end{defn}
+
+\begin{rmk}\hbox{}
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|c|c}
+			{\sc Nom}\/&$\cdot$\/&$+$\/\\
+			Commutativité&$a\cdot b = b\cdot a$\/ &$a+b=b+a$\/ \\
+			Neutre&${\bfm V}\/ \cdot a = a$\/ & ${\bfm F}\/ + a = a$\/ \\
+			Absorbant&${\bfm F}\/ \cdot a = {\bfm F}\/$\/&${\bfm V}\/ \cdot a = {\bfm V}\/$ \\
+			Associativité&$(a\cdot b)\cdot c = a\cdot (b\cdot c)$\/ &$a+(b+c)=(a+b)+c$\/ \\
+			Idempotence&$a\cdot a = a$\/ & $a + a = a$\/ \\
+			Distributivité&$a\cdot (b+c) = a\cdot b + a\cdot c$\/ & $a + (b\cdot c) = (a+b)\cdot (a+c)$\/ \\
+			Complémentaire&$a\cdot \bar{a} = {\bfm F}\/$\/&$a+\bar{a} = {\bfm V}\/ $\/ \\
+			{\sc Morgan}\/&$\overline{a\cdot b} = \bar{a}+ \bar{b}$\/&$\overline{a+b} = \bar{a}\cdot \bar{b}$\/
+		\end{tabular}
+		\caption{Règles dans $\mathds{B}$}
+	\end{table}
+\end{rmk}
+
+\subsection{Fonctions booléennes}
+
+\begin{defn}[Environnement propositionnel]
+	On appelle {\it environnement propositionnel}\/ une fonction de $\mathcal{P}$\/ dans $\mathds{B}$.
+\end{defn}
+
+\begin{defn}
+	On appelle {\it fonction booléenne}\/ une fonction de $\mathds{B}^{\mathcal{P}}$\/ dans $\mathds{B}$. On note l'ensemble des fonctions booléennes $\mathds{F}$.
+\end{defn}
+
+\begin{rmk}
+	Si $|\mathcal{P}| = n$, alors $\left| \mathds{B}^{\mathcal{P}} \right| = 2^n$\/ et donc $|\mathds{F}| = 2^{2^n}$.
+\end{rmk}
+
+\begin{exm}
+	La fonction \[
+		f : \begin{pmatrix}
+			(p\mapsto {\bfm F},\,q \mapsto {\bfm F}\/)\mapsto {\bfm F}\/\\
+			(p\mapsto {\bfm F},\,q \mapsto {\bfm V}\/)\mapsto {\bfm V}\/\\
+			(p\mapsto {\bfm V},\,q \mapsto {\bfm F}\/)\mapsto {\bfm V}\/\\
+			(p\mapsto {\bfm V},\,q \mapsto {\bfm V}\/)\mapsto {\bfm V}\/\\
+		\end{pmatrix} \in \mathds{F}
+	\] est une fonction booléenne.
+\end{exm}
+
+\subsection{Interprétation d'une formule comme une fonction booléenne}
+
+\begin{defn}[Interprétation]
+	Étant donné une formule $G \in \mathcal{F}$ et un environnement propositionnel $\rho \in \mathds{B}^{\mathcal{P}}$, on définit l'{\it interprétation}\/ de $G$\/ dans l'environnement $\rho$\/ par
+	\begin{itemize}
+		\item $\left\llbracket \top \right\rrbracket^{\rho} = {\bfm V}\/$\/ ;
+		\item $\left\llbracket \bot \right\rrbracket^{\rho} = {\bfm F}\/$\/ ;
+		\item $\left\llbracket p \right\rrbracket^{\rho} = \rho(p)$\/ où $p \in \mathcal{P}$\/ ;
+		\item $\left\llbracket \lnot G \right\rrbracket ^{\rho} = \overline{\left\llbracket G \right\rrbracket^{\rho}}$\/ ;
+		\item $\left\llbracket G \land H \right\rrbracket ^{\rho} = \left\llbracket G \right\rrbracket ^{\rho} \cdot \left\llbracket H \right\rrbracket ^{\rho}$\/ ;
+		\item $\left\llbracket G \lor H \right\rrbracket^{\rho} = \left\llbracket G \right\rrbracket ^{\rho} + \left\llbracket H \right\rrbracket ^{\rho}$\/ ;
+		\item $\left\llbracket G \to H \right\rrbracket ^{\rho} = \overline{\left\llbracket G \right\rrbracket^{\rho}} + \left\llbracket H \right\rrbracket ^{\rho}$\/ ;
+		\item $\left\llbracket G \leftrightarrow H \right\rrbracket ^{\rho} = \left( \overline{\left\llbracket G \right\rrbracket^\rho} + \left\llbracket H \right\rrbracket ^\rho \right)  \cdot \left( \overline{\left\llbracket H \right\rrbracket^\rho} + \left\llbracket G \right\rrbracket^\rho \right)$.
+	\end{itemize}
+\end{defn}
+
+\begin{exm}
+	Avec $\rho = (p \mapsto {\bfm V}, q \mapsto {\bfm F}\/)$, et $G = (p \land \top) \lor (q \land \bot)$, on a
+	\begin{align*}
+		\left\llbracket G \right\rrbracket^\rho &= \left\llbracket (p \land \top) \lor (q \land\bot) \right\rrbracket^\rho \\
+		&= \left\llbracket p \land \top \right\rrbracket^\rho + \left\llbracket q \land \bot \right\rrbracket^\rho \\
+		&= \left\llbracket p \right\rrbracket^{\rho} \cdot \left\llbracket \top \right\rrbracket^{\rho} + \left\llbracket q \right\rrbracket^\rho \cdot\left\llbracket \bot \right\rrbracket^\rho \\
+		&= \rho(p) \cdot {\bfm V}\/ + \rho(q) \cdot {\bfm F}\/ \\
+		&= {\bfm V}\/ + {\bfm F}\/ \\
+		&= {\bfm V}. \\
+	\end{align*}
+\end{exm}
+
+\begin{defn}[Fonction booléenne associée à une formule]
+	Étant donné une formule $G$, on note
+	\begin{align*}
+		\mathds{F} \ni \left\llbracket G \right\rrbracket : \mathds{B}^{\mathcal{P}} &\longrightarrow \mathds{B}  \\
+		\rho &\longmapsto \left\llbracket G \right\rrbracket^{\rho}.
+	\end{align*}
+\end{defn}
+
+\begin{exm}
+	La fonction booléenne associée à $p \lor q$\/ est \[
+		f : \begin{pmatrix}
+			(p\mapsto {\bfm F},\,q \mapsto {\bfm F}\/)\mapsto {\bfm F}\/\\
+			(p\mapsto {\bfm F},\,q \mapsto {\bfm V}\/)\mapsto {\bfm V}\/\\
+			(p\mapsto {\bfm V},\,q \mapsto {\bfm F}\/)\mapsto {\bfm V}\/\\
+			(p\mapsto {\bfm V},\,q \mapsto {\bfm V}\/)\mapsto {\bfm V}\/\\
+		\end{pmatrix} \in \mathds{F}.
+	\]
+	La fonction booléenne associée à $p \lor (q \land \top)$\/ est aussi $f$ ; tout comme $(p \lor \bot) \lor (q \land \top)$.
+\end{exm}
+
+\subsection{Liens sémantiques}
+
+\begin{defn}
+	On dit que $G$\/ et $H$\/ sont {\it équivalents}\/ si et seulement si $\left\llbracket G \right\rrbracket = \left\llbracket H \right\rrbracket$.
+	On note alors $G \equiv H$.
+\end{defn}
+
+\begin{defn}[Conséquence sémantique]
+	On dit que $H$\/ est {\it conséquence sémantique}\/ de $G$\/ dès lors que \[
+		\forall \rho \in \mathds{B}^{\mathcal{P}},\:\big(\left\llbracket G \right\rrbracket^{\rho} = {\bfm V}\/ \big) \implies \big(\left\llbracket H \right\rrbracket^\rho = {\bfm V}\/ \big)
+	.\]
+
+	On le note $G \models H$.
+\end{defn}
+
+\begin{prop}
+	On a \[
+		G \equiv H \iff \big(G \models H \mathrel{et} H \models G\big)
+	.\]
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\implies$\/''] On suppose $G \equiv H$. Soit $\rho \in \mathds{B}^{\mathcal{P}}$. On suppose $\left\llbracket G \right\rrbracket^\rho = {\bfm V}\/ $\/ alors $\left\llbracket H \right\rrbracket^{\rho} = {\bfm V}\/$\/ car $\left\llbracket G \right\rrbracket = \left\llbracket H \right\rrbracket$.
+			On suppose maintenant $\left\llbracket H \right\rrbracket^{\rho} = {\bfm V}\/$, et alors $\left\llbracket G \right\rrbracket^\rho = {\bfm V}\/$\/ car $\left\llbracket G \right\rrbracket = \left\llbracket H \right\rrbracket$.
+		\item[``$\impliedby$\/'']  On suppose $G \models H$\/ et $H \models G$. Soit $\rho \in \mathds{B}^{\mathcal{P}}$. On suppose $\left\llbracket G \right\rrbracket^{\rho} = {\bfm V}\/$\/ alors $\left\llbracket H \right\rrbracket^\rho = {\bfm V}\/$\/ car $H \models H$\/ et donc $\left\llbracket G \right\rrbracket = \left\llbracket H \right\rrbracket$. On suppose maintenant $\left\llbracket H \right\rrbracket^\rho = {\bfm V}\/$\/ alors $\left\llbracket G \right\rrbracket^\rho = {\bfm V}\/$\/ car $G \models H$. Par contraposée, si $\left\llbracket G \right\rrbracket^\rho = {\bfm F}\/$, alors $\left\llbracket H \right\rrbracket^\rho = {\bfm F}\/$. On en déduit que $\left\llbracket G \right\rrbracket = \left\llbracket H \right\rrbracket$.
+	\end{itemize}
+\end{prv}
+
+\begin{rmk}
+	$\models$\/ n'est pas une relation d'ordre.
+\end{rmk}
+
+

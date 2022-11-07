@@ -1,0 +1,163 @@
+\begin{thm}
+	Une matrice $A$\/ est
+	\begin{enumerate}
+		\item trigonalisable \underline{si et seulement} si elle possède un polynôme annulateur scindé ;
+		\item diagonalisable \underline{si et seulement si} elle possède un polynôme annulateur scindé à racines simples.
+	\end{enumerate}
+\end{thm}
+
+\begin{rap}
+	Une matrice $A$\/ est trigonalisable si et seulement si
+	\begin{itemize}
+		\item $\chi_A$\/ scindé (théorème 3) ;
+		\item elle possède un polynôme annulateur scindé (théorème 33).
+	\end{itemize}
+
+	Une matrice $A$\/ est diagonalisable si et seulement si
+	\begin{itemize}
+		\item $\sum_{\lambda \in \Sp(A)} \dim(\mathrm{SEP}(\lambda))$\/ est la taille de la matrice $A$\/ (théorème 19) ;
+		\item les sous-espaces propres sont supplémentaires ;
+		\item $\chi_A$\/ est scindé et $\forall \lambda \in \Sp(A)$, $\dim(\mathrm{SEP}(\lambda)) = m_\lambda$\/ ;
+		\item elle possède un polynôme annulateur scindé à racines simples (théorème 33).
+	\end{itemize}
+
+	Une matrice $A$\/ est diagonalisable si $\Card(\Sp(A))$\/ est la taille de la matrice $A$.
+\end{rap}
+
+\begin{exo}
+	Soit $n \ge 2$. Montrer que la matrice \[
+		J = \begin{pmatrix}
+			0&1&\ldots&1\\
+			1&\ddots&\ddots&\vdots\\
+			\vdots&\ddots&\ddots&1\\
+			1&\ldots&1&0
+		\end{pmatrix} \in \mathscr{M}_{n,n}(\mathds{K})
+	\] est diagonalisable, déterminer son spectre et ses sous-espaces propres.
+
+	{\color{gray} Secret (pour plus tard) la matrice $J$\/ est symétrique, donc diagonalisable.}
+
+	On remarque que $J \left( \substack{\ds1\\\ds\vdots\\\ds1} \right) = (n-1)\left( \substack{\ds1\\\ds\vdots\\\ds1} \right)$, et $J + I_n = \left( \substack{\ds1\:\ldots\:1\\\ds\vdots\:\ddots\:\vdots\\\ds1\:\ldots\:1} \right)$, d'où $\rg(J + I_n) = 1$, et donc d'après le théorème du rang, $\dim \Ker(J + I_n) = n-1 = \dim \Ker(J - \lambda I_n)$, avec $\lambda = -1$.
+	D'où $\dim \mathrm{SEP}_J(-1) + \dim \mathrm{SEP}_j(n-1) = n$\/ qui est la taille de $J$\/ donc $J$\/ est diagonalisable.
+
+	Autre méthode : on a déjà fait ça au chapitre II.\ : \[
+		(J + I_n)^2 = \begin{pmatrix}
+			1&\ldots&1\\
+			\vdots&\ddots&\vdots\\
+			1&\ldots&1
+		\end{pmatrix}^2 = \begin{pmatrix}
+			n&\ldots&n\\
+			\vdots&\ddots&\vdots\\
+			n&\ldots&n
+		\end{pmatrix}  = n (I_n + J)
+	.\] D'où $I_n + 2J + J^2 = n I_n + nJ$. D'où $J^2 - (n-2)J - (n-1) I_n = 0$.
+	Ainsi le polynôme $P(X) = X^2 - (n-2) X - (n-1)$\/ est annulateur de la matrice $J$.
+	Or, $P(X) = (X + 1)\big(X - (n-1)\big)$\/ est scindé à racines simples. D'où la matrice $J$\/ est diagonalisable.
+
+	D'où $\Sp(J) \subset \{-1, n-1\}$.
+	\[
+		\ldots
+	\]
+\end{exo}
+
+\section{Stabilité}
+
+\begin{rap}
+	Un sous-espace vectoriel $F$\/ de $E$\/ est stable par un endomorphisme $u : E \to E$\/ si et seulement si \[
+		\forall \vec{x} \in E,\;\vec{x} \in F \implies u(\vec{x}) \in F \qquad \text{i.e.}\qquad
+		u(F) \subset F.
+	\] Alors, $u\big|_F$\/ est l'endomorphisme induit par $u$\/ sur $F$, ceci est parfois noté $u\big|_F^F : F \to F$.
+\end{rap}
+
+\begin{prop}
+	Soit $E$ un $\mathds{K}$-espace vectoriel. Soit $\vec{a} \in E$\/ non nul, et $u : E \to E$\/ un endomorphisme.
+
+	Si la droite $\Vect(\vec{a})$\/ est stable par l'endomorphisme $u$\/ alors il existe $\lambda \in \mathds{K}$\/ tel que $u(\vec{a}) = \lambda \vec{a}$, et donc $\vec{a}$\/ est un vecteur propre de $u$.
+
+	Réciproquement, si $\vec{a}$\/ est un vecteur propre de $u$, alors il existe $\lambda \in \mathds{K}$\/ tel que $u(\vec{a}) = \lambda \vec{a}$.
+\end{prop}
+
+\begin{prv}
+	Soit $\vec{x} \in \Vect(\vec{a})$. Ainsi, il existe $\alpha \in \mathds{K}$\/ tel que $\vec{x} = \alpha \vec{a}$. D'où $u(\vec{x}) = u(\alpha\vec{a}) = \alpha u(\vec{a}) = \alpha \lambda \vec{a}$\/ par hypothèse. D'où $u(\vec{x}) \in \Vect(\vec{a})$\/ et donc $\Vect(\vec{a})$\/ est stable par $u$.
+\end{prv}
+
+\begin{exo}[{\color{cyan}Tarte à la crème}\null]
+	{\slshape Soit $E$\/ un $\R$-espace vectoriel de dimension finie, et $u : E \to E$\/ un endomorphisme. Montrons qu'il existe une droite ou un plan stable par $u$.}
+
+	On utilise le théorème de {\sc Cayley}\/ et {\sc Hamilton}\/ (valable en dimension finie).
+	Soit $A = \big[u\big]_\mathscr{B}$, où $\mathscr{B}$\/ est une base de l'espace vectoriel. Alors, $\chi_A(A) = 0$.
+	On le \guillemotleft~casse en petits bouts~\guillemotright\ : \[
+		\chi_A(X) = (X-\lambda_1)^{m_1} \cdots(X - \lambda_r)^{m_r} (X^2 + b_1 X + c_1)^{n_1} \cdots (X^2 + b_\s X + c_\s)^{n_\s}
+	.\]
+	Le produit $\chi_A(A)$\/ est un produit de matrices, ce produit est la matrice nulle, d'où ce produit n'est pas inversible, d'où l'un des facteurs n'est pas inversible.
+	\begin{itemize}
+		\item Ou bien, ce facteur est la forme $(A - \lambda_i I_n)$, et donc il existe $X \in \mathscr{M}_{n,1}(\R)$\/ non nul tel que $(A - \lambda_i I_n)\cdot  X = 0$. Alors $A \cdot X = \lambda_i X$\/ et $X \neq 0$. D'où la droite dirigée par ce vecteur $\Vect(X)$\/ est stable.
+		\item Ou bien, ce facteur est la forme $(A^2 + b_i A + c_i I_n)$, et donc il existe $X \in \mathscr{M}_{n,1}(\R)$\/ non nul tel que $A^2 \cdot X + b_i A\cdot X + c_i X = 0$. Autrement dit, il existe un vecteur $\vec{x} \in E$\/ non nul, tel que $u^2(\vec{x}) + b_i u(\vec{x}) + c_i \vec{x} = \vec{0}$.
+			D'où les vecteurs $\vec{x}$\/ et $u(\vec{x})$\/\footnotemark sont libres, et le plan $\Vect(\vec{x},u(\vec{x}))$\/ est stable par $u$. En effet, $\blue u(\vec{x}) \in \Vect(\vec{x}, u(\vec{x}))$, et $\blue u(u(\vec{x})) = -b_i u(\vec{x}) - c_i \vec{x} \in \Vect(\vec{x}, u(\vec{x}))$.
+	\end{itemize}
+\end{exo}
+\footnotetext{En effet, si $u(\vec{x})$\/ et $\vec{x}$\/ sont liés, alors il existe $k \in \R$\/ tel que $u(\vec{x}) = k\vec{x}$, et donc le facteur dans l'expression de $\chi_A(X)$\/ est donc $(X - k)$.}
+
+\begin{rap}
+	Au chapitre II.\ on a montré que, si deux endomorphismes $u$\/ et $v$\/ commutent, alors $\Ker u$\/ et $\Im u$\/ sont stables par $v$.
+\end{rap}
+
+\begin{prop}
+	Soient $u$\/ et $v$\/ deux endomorphisme d'un $\mathds{K}$-espace vectoriel $E$.
+	Si $u$\/ et $v$\/ commutent ($u  \circ v = v  \circ u$), alors les sous-espaces propres de $u$\/ sont stables par $v$.
+\end{prop}
+
+\begin{prv}
+	Or, $\mathrm{SEP}_u(\lambda) = \Ker(\lambda\id - u)$, et, si $u \circ v = v \circ u$, alors $(\lambda\id - u)  \circ v = v  \circ (\lambda \id - u)$. D'où $\Ker(\lambda \id - u)$\/ est stable par $v$.
+	Donc, si deux endomorphismes $u$\/ et $v$\/ commutent, alors les $\mathrm{SEP}$\/ de l'un sont stables par l'autre.
+\end{prv}
+
+\begin{rap}[proposition 30]
+	Si $\chi_A$\/ est scindé, alors $E = \bigoplus_{\lambda \in \Sp(A)} C_\lambda$\/ où $C_\lambda =\Ker(\lambda I_n - A)^{m_\lambda}$\/ et {\color{yellow} $\forall \lambda \in \Sp(A),\:\dim C_\lambda = m_\lambda$}.
+\end{rap}
+
+\begin{exo}[re-démonstation de la {\color{yellow}partie jaune} (démonstration fausse dans le poly)]
+	On choisit une base de $E$\/ : $\mathscr{B}(\vec{\varepsilon}\,^1_1, \ldots, \vec{\varepsilon}\,^1_{d_1}, \vec{\varepsilon}\,^2_1, \ldots, \vec{\varepsilon}\,^2_{d_2}, \ldots, \vec{\varepsilon}\,^r_1, \ldots, \vec{\varepsilon}\,^r_{d_r})$, telle que $\mathscr{B}_i = (\vec{\varepsilon}\,^i_1,\ldots,\vec{\varepsilon}\,^i_{d_i})$\/ soit une base de $C_{\lambda_i}$, où $d_i = \dim C_{\lambda_i}$.
+	Soit $u$\/ l'endomorphisme représenté par la matrice $A$\/ dans la base $\mathscr{B}$.
+	Ainsi, \[
+		\big[u\big]_\mathscr{B} = \left(
+		\begin{array}{c|c|c|c}
+			B_1&\phantom{\ddots}&&\\ \hline
+			&B_2&\phantom{\ddots}&\\ \hline
+			&&\ddots&\\ \hline
+			&&&B_r\\
+		\end{array}\right)
+	\] car chaque sous-espace caractéristique $C_{\lambda_i}$\/ est stable par $u$. Or, $A$\/ commute avec $(\lambda_i I_n - A)^{m_{\lambda_i}}$. D'où $\Ker(\lambda_i I_n - A)^{m_{\lambda_i}} = C_{\lambda_i}$\/ est stable par $A$.
+	De plus, la taille du bloc $B_i$\/ est égal à la $d_i = \dim C_{\lambda_i}$. On veut montrer que, pour tout $i$, $d_i = m_{\lambda_i}$. On sait que $B_i = \big[u|_{C_{\lambda_i}}\!\!\big]_\mathscr{B}$. Or, $C_{\lambda_i} = \Ker\big((\lambda_i \id - u)^{m_{\lambda_i}}\big)$, d'où $\forall \vec{x} \in C_{\lambda_i}$, $(\lambda_i\id - u|_{C_{\lambda_i}})^{m_{\lambda_i}}(\vec{x}) = \vec{0}$.
+	D'où $\lambda_i \id - u|_{C_{\lambda_i}}$\/ est nilpotent. D'où, le polynôme caractéristique $\chi_{\lambda_i - \id - u|_{C_{\lambda_i}}} = X^{d_i}$.
+	Or, le polynôme caractéristique d'une restriction d'un endomorphisme divise le polynôme caractéristique de cet endomorphisme. D'où $\forall i$, $d_i \le m_{\lambda_i}$. Or, $\sum_{i=1}^r d_i = n$, où $n = \dim E$, et $\sum_{i=1}^r m_{\lambda_i} = n$. D'où, $\forall i$, $d_i = m_{\lambda_i}$.
+	Enfin, $B_i = \big[u\big|_{C_{\lambda_i}}\big]_{\mathscr{B}_i}$. Or, $(u\big|_{C_{\lambda_i}} - \lambda_i \id)^{m_{\lambda_i}} = 0$. D'où $u\big|_{C_{\lambda_i}} = \lambda_i \id + (u\big|_{C_{\lambda_i}} - \lambda_i\id)$, et donc $B_i = \lambda_i I_{d_i} + N_i$\/ où $N_i$\/ est une matrice nilpotente.
+\end{exo}
+
+\begin{prop}
+	Soient $E$\/ un $\mathds{K}$-espace vectoriel de dimension finie, et $u : E \to E$\/ un endomorphisme de $E$. Soit $F$\/ un sous-espace vectoriel de $E$\/ stable par $u$. On définit \begin{align*}
+		v = u\big|_F: F &\longrightarrow F \\
+		\vec{x} &\longmapsto u(\vec{x}).
+	\end{align*}
+	Alors $\chi_v  \mid \chi_u$ (i.e. $\chi_u$\/ est un multiple de $\chi_v$).
+\end{prop}
+
+\begin{prv}
+	Soit $A = \big[u\big]_\mathscr{B}$\/ où $\mathscr{B}$\/ est une base de $E$.
+	Soient $F$\/ et $G$\/ deux supplémentaires de $E$.
+	Soit $(\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_d)$\/ une base de $F$. En complétant cette base de $F$\/ en une base $(\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_d, \vec{\varepsilon}_{d+1}, \ldots, \vec{\varepsilon}_n)$\/ de $E$. Il existe une matrice inversible $P$\/ telle que \[
+		P^{-1}\cdot A\cdot P = 
+		\left(\begin{array}{c|c}
+			C&*\\ \hline
+			0&D
+		\end{array}\right)
+	.\]
+	Le bloc $C$\/ est la matrice de $v$\/ dans la base $(\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_d)$. Or, \[
+		\chi_A(x) = \det(x I_n - A) = \det
+		\left(\begin{array}{c|c}
+				xI - C&-*\\ \hline
+				0&xI - D
+		\end{array}\right) = \underbrace{\det(xI - C)}_{\chi_C} \times \underbrace{\det(xI - D)}_{\chi_D}
+	\] car ce déterminant est triangulaire par blocs.
+	D'où $\chi_A = \chi_C \times \chi_D$, et donc $\chi_C  \mid \chi_A$\/ i.e.\ $\chi_v = \chi_u$.
+\end{prv}
+

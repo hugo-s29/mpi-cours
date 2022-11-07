@@ -1,0 +1,277 @@
+\section{Motivation}
+
+\subsection{1\tsup{ère} motivation}
+
+Il y a une grande différence entre les mathématiques et l'informatique : la gestion de l'infini.
+On n'a pas de mémoire infinie sur un ordinateur.
+Par exemple, pour représenter $\pi$\/ ou $\sqrt{2}$, on ne peut pas stocker un nombre infini de décimales. Ce n'est pas une question de base, ces nombres ont aussi des décimales infinies dans une base 2.
+
+Par exemple, si on ne veut utiliser $\sqrt{2}$\/ seulement pour plus tard le mettre au carré. On peut définir une structure en {\tt C}\/ comme celle qui suit
+\begin{lstlisting}[language=c, caption=$\sqrt{2}$\/ sous forme de structure]
+typedef struct {
+	int carre;
+	bool sign;
+};
+\end{lstlisting}
+On a pu décrire $\sqrt{2}$\/ comme cela car il y a une certaine régularité dans ce nombre.
+
+On définit des relations entre ces objets. Dans ce chapitre, on va commencer par étudier autre chose : les mots.
+Les mots sont utilisés, tout d'abord, pour entrer une liste de lettres mais aussi le programme lui-même. En effet, il y a une liste infinie de code possibles en {\tt C}.
+
+\subsection{2\tsup{nde} motivation}
+
+Les ordinateurs sont complexes ; il peut être dans une multitude d'états.
+On représente une succession de tâches (le symbole {\raisebox{-2pt}{\tikz\node [style=new style 0] at (0, 0) {};}} représente une tâche) : 
+\begin{figure}[H]
+	\centering
+	\scalebox{1.5}{\tikzfig{computer-states}}
+	\caption{États d'un ordinateur}
+\end{figure}
+\noindent Par exemple, pour une boucle infinie, on a un cycle dans le graphe ci-dessus. Ou, s'il atteint un certain nœud, on a un {\it bug}.
+
+Mais, pour résoudre ce problème, on peut forcer le nombre d'état d'un ordinateur ; par exemple, dire qu'un ordinateur a 17 états.
+
+On décide donc de représenter mathématiquement un ordinateur afin de pouvoir faire des preuves avec. Et, c'est l'objet de ce chapitre.
+
+\section{Mots et langages, rappels}
+
+\begin{defn}
+	On appelle {\it alphabet}\/ un ensemble fini, d'éléments qu'on appelle {\it lettres}.
+\end{defn}
+
+\begin{defn}
+	On appelle une {\it mot}\/ sur $\Sigma$ (où $\Sigma$ est un alphabet) une suite finie de lettres de $\Sigma$.
+
+	La {\it longueur}\/ d'un mot est le nombre de lettres, comptées avec leurs multiplicité. On la note $|w|$\/ pour un mot $w$.
+	Si $|w| = n \in \N^*$, on indexe les lettres de $w$\/ pour $(w_i)_{i\in\left\llbracket 1,n \right\rrbracket}$ et on écrit alors \[
+		w = w_1 w_2 w_3 \ldots w_n
+	.\]
+
+	Il existe un unique mot de longueur $0$\/ appelé {\it mot vide}, on le note $\varepsilon$.
+\end{defn}
+
+\begin{defn}
+	Si $\Sigma$ est un alphabet, on note
+	\begin{itemize}
+		\item $\Sigma^n$\/ les mots de longueur $n$\/ ;
+		\item $\Sigma^*$\/ les mots de longueurs positives ou nulle ;
+		\item $\Sigma^+$\/ les mots de longueurs strictement positives.
+	\end{itemize}
+\end{defn}
+
+\begin{rmk}
+	\[
+		\Sigma^* = \bigcup_{n \in \N} \Sigma^n \quad\quad\quad \Sigma^+ = \bigcup_{n \in \N^*} \Sigma^n
+	.\]
+\end{rmk}
+
+\begin{defn}
+	Soit $\Sigma$ un alphabet. Soit $x$\/ et $y$\/ deux mots de $\Sigma^*$. Notons
+	\begin{gather*}
+		x = x_1x_2x_3\ldots x_n\\
+		y = y_1y_2y_3\ldots y_n.\\
+	\end{gather*}
+	On définit alors {\it concaténation}\/ notée $x \cdot y$\/ l'opération définie comme \[
+		x \cdot y = x_1x_2x_3\ldots x_n y_1y_2\ldots y_n
+	.\]
+\end{defn}
+
+\begin{rmk}
+	\begin{itemize}
+		\item $\cdot $\/ est une opération interne ;
+		\item $\varepsilon$\/ est neutre pour $\cdot$\/ : \hfill $\forall n \in \Sigma^*,\,\varepsilon \cdot x = x \cdot \varepsilon = x$. \hfill \hbox{}
+		\item $\cdot$\/ est associatif.
+	\end{itemize}
+
+	(On dit que c'est un monoïde.)
+\end{rmk}
+
+\begin{rmk}
+	L'opération $\cdot $\/ n'est pas commutative.
+\end{rmk}
+
+\begin{defn}
+	Soit $x$\/ et $y$\/ deux mots sur l'alphabet $\Sigma$. On dit que 
+	\begin{itemize}
+		\item $x$\/ est un {\it préfixe}\/ de $y$\/ si \hfill $\exists v \in \Sigma^*,\,y = x \cdot v$\/ ;\hfill\hbox{}
+		\item $x$\/ est un {\it suffixe}\/ de $y$\/ si \hfill $\exists v \in \Sigma^*,\,y = v\cdot x$\/ ; \hfill\hbox{}
+		\item $x$\/ est un {\it facteur}\/ de $y$\/ si \hfill $\exists (v, w) \in \big(\Sigma^*\big)^2,\,y = v\cdot x\cdot w$. \hfill\hbox{}
+	\end{itemize}
+\end{defn}
+
+\begin{exm}
+	\begin{itemize}
+		\item $a$\/ est facteur de $aa$\/ ;
+		\item $\varepsilon$\/ est un facteur de $a$.
+	\end{itemize}
+\end{exm}
+
+\begin{defn}
+	On dit que $x$\/ est un {\it sous-mot}\/ de $y$\/ si $x$\/ est une suite extraite de $y$. Par exemple \[
+		a\:\cancel{b}\:a\:a\:\cancel{b}\:a \qquad \longrightarrow \qquad a\:a\:a\:a
+	.\]
+\end{defn}
+
+\begin{defn}
+	Un {\it langage}\/ est un ensemble de mots. C'est donc un élément de $\wp(\Sigma^*)$.
+\end{defn}
+
+\begin{rmk}[\danger\!\!]
+	$\O \neq \{\varepsilon\}$.
+\end{rmk}
+
+\section{Langage régulier}
+
+\subsection{Opérations sur les langages}
+
+\begin{rmk}
+	Les langages sont des ensembles. On peut donc leurs appliquer des opérations ensemblistes.
+\end{rmk}
+
+\begin{defn}
+	Soient $L_1, L_2 \in \wp(\Sigma^*)$ deux langages. On définit la {\it concaténation}\/ de deux langages, notée $L_1 \cdot L_2$\/ : \[
+		L_1 \cdot L_2 = \{u \cdot v  \mid u \in L_1,\,v \in L_2\}
+	.\]
+\end{defn}
+
+\begin{rmk}
+	\begin{itemize}
+		\item L'opération $\cdot$\/ (langages) a $\{\varepsilon\}$\/ pour neutre.
+		\item L'opération $\cdot$\/ (langages) a $\O$\/ pour élément absorbant : \[
+					\forall L \in \wp(\Sigma^*),\:L\cdot \O = \O\cdot L = \O
+			.\]
+		\item L'opération $\cdot $\/ est distributive : soient $K, L, M$\/ trois langages ; on a 
+			\begin{gather*}
+				K \cdot (L \cup M) = (K \cdot  L) \cup (K \cdot M) ;\\
+				(L \cup M) \cdot K = (L\cdot K) \cup (M\cdot K).
+			\end{gather*}
+	\end{itemize}
+\end{rmk}
+
+\begin{defn}
+	Étant donné un langage $L$, on définit par récurrence : 
+	\begin{itemize}
+		\item $L^0 = \{\varepsilon\}$\/ ;
+		\item $L^{n+1} = L^n \cdot L = L \cdot L^n$.\protect\footnotemark
+	\end{itemize}
+	On note alors \[
+		L^{\red *} = \bigcup_{n \in \N} L^n \qquad \text{ et } \qquad L^+ = \bigcup_{n \in \N} L^n
+	.\]
+\end{defn}
+\footnotetext{La deuxième égalité est assurée par l'associativité de l'opération $\cdot $.}
+
+\begin{rmk}
+	On a $\Sigma^* = \Sigma^{\red *}$. On notera donc $\Sigma^*$\/ dans tous les cas.
+\end{rmk}
+
+\begin{rmk}
+	Si $\varepsilon \in L$, alors $L^* = L^+$. En effet, $L^* = L^+ \cup \{\varepsilon\}$.
+\end{rmk}
+
+\begin{rmk}
+	On nomme l'application $L \mapsto L^*$\/ l'{\it étoile de \sc Kleene}.
+\end{rmk}
+
+\begin{rmk}
+	Avec $L$\/ et $K$\/ deux alphabets, on a \[|L\cdot K| \le |L|\:|K|.\]
+	En effet, avec $K = \{a,aa\}$, on a $K^2 = \{aa, aaa, aaaa\}$.
+\end{rmk}
+
+\begin{exm}
+	Avec $L = \{a, ab\}$, on a
+	\begin{itemize}
+		\item $L^1 = L$\/ ;
+		\item $L^2 = \{aa,\,aab,\,aba\,abab\}$\/ ;
+		\item $L^* \supseteq \{\varepsilon,\,a,\,ab,\,aa,\ldots,aaaaaaa\ldots\}$.
+	\end{itemize}
+\end{exm}
+
+\begin{defn}
+	Soit $\Sigma$\/ un alphabet.
+	On appelle {\it ensemble des langages réguliers}, noté $\mathrm{LR}$.
+	Le plus petit ensemble tel que 
+	\begin{itemize}
+		\item $\O \subset \mathrm{LR}$\/ ;
+		\item Si $a \in \Sigma$, alors $a \in \mathrm{LR}$\/ ;
+		\item Si $L_1 \in \mathrm{LR}$\/ et $L_2 \in \mathrm{LR}$, on a $L_1 \cup L_2 \in \mathrm{LR}$\/ ;
+		\item Si $L_1 \in \mathrm{LR}$\/ et $L_2 \in \mathrm{LR}$, on a $L_1 \cdot L_2 \in \mathrm{LR}$\/ ;
+		\item Si $L \in \mathrm{LR}$, alors $L^* \in \mathrm{LR}$.
+	\end{itemize}
+\end{defn}
+
+\begin{exm}
+	\begin{itemize}
+		\item Soit $\Sigma = \{t,o\}$.
+			Est-ce que $\{toto\} \in \mathrm{LR}$\/ ?
+			On sait déjà que $\{t\}$\/ et $\{o\}$\/ sont déjà des langages réguliers.
+			Or, \[
+				\{toto\} = \{t\} \cdot \{o\} \cdot \{t\} \cdot \{o\} 
+			.\] Et donc $\{toto\} \in \mathrm{LR}$.
+		\item On a $\{\varepsilon\} = \O^* \in \mathrm{LR}$.
+		\item On a \[
+				\begin{array}{rccccl}
+					\{&x_{11}&x_{12}&\ldots&x_{1,n_1}\\
+					&x_{21}&x_{22}&\ldots&x_{2,n_2}\\
+					&\vdots&\vdots&\ddots&\vdots\\
+					&x_{m,1}&x_{m,2}&\ldots&x_{m,n_m}&\} \in \mathrm{LR}
+				\end{array}
+			\] car $\{x_{i,1}, x_{i,2}, \ldots, x_{i,n_i}\} \in \mathrm{LR}$\/ et c'est stable par union finie.
+		\item Avec $\Sigma = \{a,b\}$, on a
+			\[
+				L = \{\varepsilon,\,a,\,aa,\,aaa,\ldots\} = \underbrace{\Big(\overbrace{\{a\}}^{\in \mathrm{LR}}\Big)^*}_{\in \mathrm{LR}}
+			.\]
+		\item $\Sigma^* \in \mathrm{LR}$.
+		\item Contre-exemple : $\{a^n \mid a \text{ premier}\:\} \not\in \mathrm{LR}$.
+	\end{itemize}
+\end{exm}
+
+\subsection{Expressions régulières}
+
+On représente $\O$\/ l'ensemble vide, $\_|\_$\/ l'union de deux expressions régulières, $\_\cdot\_$\/ la concaténation de deux expression régulières, et, $\_^*$\/ l'étoile de {\sc Klein}\/ pour les expressions régulières.
+
+On cherche à représenter informatiquement ces expressions à l'aide d'une règle de construction nommée.
+
+\begin{defn}
+	Étant donné un alphabet $\Sigma$, on définit $\Reg(\Sigma)$\/ défini par induction nommée à partir des règles :
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item $\red \O\Big|^0$\/ ;
+			\item $\red |~\Big|^2$\/ ;
+			\item $\red \cdot~\Big|^2$\/ ;
+			\item $\red *\:\Big|^1$\/ ;
+			\item $\red L\Big|^1_\Sigma$\/ ;
+			\item $\red \varepsilon\Big|^0$.
+		\end{itemize}
+	\end{multicols}
+\end{defn}
+
+Ces règles peuvent être définies en OCamL (douteux) de la façon suivante :
+\begin{lstlisting}[language=caml, caption=Règles des expressions régulières en OCamL]
+type regex =
+	|%*$~\red\O$*)
+	|%*$~\red\mid~$*) of regex * regex
+	|%*$~\red\cdot~$*) of regex * regex
+	|%*$~\red\ast~$*) of regex
+	|%*$~\red L$*) of char
+	|%*$~\red\varepsilon$*)
+\end{lstlisting}
+\noindent On peut donc écrire \[
+	\big((\O^*) \mid (a\cdot b) \big) \quad \longrightarrow\quad \red |(\red *(\red \O()), \red \cdot(\red L(a),\red L(b)))
+.\]
+
+A-t-on $\red |(\red L(a), \red L(b)) \mathrel{\mathop=^?} \red |(\red L(b), \red L(a))$\/ ? Non, sinon on risque d'avoir une boucle infinie au moment de l'évaluation de cette expression.
+
+On peut simplifier la notation : au lieu d'écrire $\red |(\red *(\red \O()), \red \cdot(\red L(a),\red L(b)))$, on note $\O^* \mid (a\cdot b)$.
+
+\begin{defn}
+	On définit \begin{align*}
+		\mathcal{L}: \Reg(\Sigma) &\longrightarrow \wp(\Sigma^*) \\
+		\O &\longmapsto \O\\
+		a &\longmapsto \{a\}\\
+		\varepsilon &\longmapsto \{\varepsilon\}\\
+		e_1\cdot e_2 &\longmapsto \mathcal{L}(e_1) \cdot  \mathcal{L}(e_2)\\
+		e_1 \mid e_2 &\longmapsto \mathcal{L}(e_1) \cup \mathcal{L}(e_2)\\
+		e^* &\longmapsto \mathcal{L}(e)^*\\
+	\end{align*}
+\end{defn}
+

@@ -1,0 +1,52 @@
+\vspace{5mm}
+
+\section{Exercice 9}
+On considère la matrice \[
+	A = \begin{pmatrix}
+		1&1&-1\\
+		2&3&-4\\
+		4&1&-4
+	\end{pmatrix}
+.\]
+Soit $\lambda \in \R$. On sait que \[
+	\lambda \in \Sp(A) \iff \det(\lambda I_3- A) = 0
+.\]
+On calcule $\det(\lambda I_3 - A)$\/ : 
+\begin{align*}
+	\det(\lambda I_3 - A) &=
+	\begin{vmatrix}
+		\lambda-1&-1&1\\
+		-2&\lambda-3&4\\
+		-4&-1&\lambda + 4
+	\end{vmatrix}\\
+	&=
+	\begin{vmatrix}
+		\lambda-1&-1&1\\
+		\lambda-1&\lambda-3&4\\
+		\lambda-1&-1&\lambda + 4
+	\end{vmatrix} \text{ avec le changement } C_1 \leftarrow C_1 + C_2 + C_3\\
+	&= (\lambda - 1)
+	\begin{vmatrix}
+		1&-1&1\\
+		1&\lambda-3&4\\
+		1&-1&\lambda + 4
+	\end{vmatrix}\\
+	&= (\lambda - 1)
+	\begin{vmatrix}
+		1&-1&1\\
+		0&\lambda-2&3\\
+		0&0&\lambda - 3
+	\end{vmatrix}\text{ avec les changements } \begin{cases}
+		L_2 \leftarrow L_2 -  L_1\\
+		L_3 \leftarrow L_3 - L_1 \\
+	\end{cases}\\
+	&= (\lambda - 1)(\lambda - 2)(\lambda + 3). \\
+\end{align*}
+D'où $\Sp(A) = \{1,2,-3\}$, et \[
+	1 \le \dim(\mathrm{SEP}(1)) \le 1\qquad
+	1 \le \dim(\mathrm{SEP}(2)) \le 1\quad\text{et}\quad
+	1 \le \dim(\mathrm{SEP}(-3)) \le 1.\footnote{inutile dans ce cas}
+\]
+La matrice~$A$\/ est de taille 3 et elle possède 3 valeurs propres distinctes deux à deux. D'où, d'après la proposition 18, on sait donc que $A$\/ est diagonalisable. Diagonalisons-la.
+
+

@@ -1,0 +1,64 @@
+\section{\scshape Hors-programme}
+
+\begin{defn}
+	On appelle monoïde un ensemble $M$\/ muni d'une loi ``$\cdot$'' interne associative admettant un élément neutre $1_M$.
+\end{defn}
+
+\begin{defn}
+	Étant donné deux monoïdes $M$\/ et $N$, on appelle morphisme de monoïdes une fonction $\mu : M \to N$\/ telle que
+	\begin{enumerate}
+		\item $\mu(1_M) = 1_N$\/ ;
+		\item $\mu(x \cdot_M y) = \mu(x) \cdot_N \mu(y)$.
+	\end{enumerate}
+\end{defn}
+
+\begin{exm}
+	$|\:\cdot\:|\:: (\Sigma^*, \cdot) \to (\N, +)$\/ est un morphisme de monoïdes.
+\end{exm}
+
+\begin{defn}
+	Un langage $L$\/ est dit reconnu par un monoïde $M$, un morphisme $\mu : \Sigma^* \to M$\/ et un ensemble $P \subseteq M$\/ si $L = \mu^{-1}(P)$.
+\end{defn}
+
+\begin{exm}
+	L'ensemble $\{a^{n^3} \mid n \in \N\}$\/ est reconnu par le morphisme $|\:\cdot\:|$\/ et l'ensemble $P = \{n^3  \mid n \in \N\}$.
+\end{exm}
+
+\begin{thm}
+	Un langage est régulier si et seulement s'il est reconnu par un monoïde fini.
+\end{thm}
+
+\begin{exm}
+	L'ensemble $\{a^{2n}  \mid n \in \N\}$\/ est un langage régulier. En effet, on a $M = \ZdZ$, $P = \{0\}$\/ et \begin{align*}
+		\mu: \Sigma^* &\longrightarrow \ZdZ \\
+		w &\longmapsto |w|\ \mathrm{mod}\ 2.
+	\end{align*}
+
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-monoide-1}
+		\caption{Automate reconnaissant $\mu^{-1}(P) = L$}
+	\end{figure}
+\end{exm}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\implies$''] Soit $L \in \wp(\Sigma^*)$\/ reconnu par un monoïde $M$ fini, un morphisme $\mu$\/ et un ensemble $P$ : $L = \mu^{-1}(P)$. Posons $\mathcal{A} = (\Sigma', \mathcal{Q}, I, F, \delta)$\/ avec
+
+			\vspace{-5mm}
+			\begin{multicols}{4}
+				\[\Sigma' = \Sigma\]
+				\[\mathcal{Q} = M\]
+				\[I = \{1_M\}\]
+				\[F = P\]
+			\end{multicols}
+			\vspace{-7mm}\[
+				\delta = \{(q,\ell, q') \in \mathcal{Q} \times \Sigma \times \mathcal{Q}  \mid q \cdot \mu(\ell) = q'\}.
+			\]
+			Montrons que $\mathcal{L}(\mathcal{A}) = L$.
+			Soit $w \in \mathcal{L}(\mathcal{A})$. Il existe une exécution acceptante \[
+				1_M = q_0 \xrightarrow{w_1} q_1 \to \cdots \xrightarrow{w_n} q_n \in P
+			.\] Or, $\mu(w_1\ldots w_n) = \prod_{i=1}^n \mu(w_i) = q_0 \prod_{i=1}^n \mu(w_i) = q_0 \mu(w_1) \cdot \prod_{i=1}^n \mu(w_i) = q_1 \prod_{i=1}^n \mu(w_i) = q_n \in P$.
+	\end{itemize}
+\end{prv}
+

@@ -1,0 +1,99 @@
+\documentclass[a4paper]{article}
+
+\usepackage{tgschola}
+\input{../../preamble.tex}
+
+\fancyhead{} \fancyfoot{}
+\fancyfoot[C]{--\:\thepage\:--}
+\fancyhead[R]{DM$_2$ Physique}
+
+\pagecolor{truewhite}
+\definecolor{black}{HTML}{000000}
+\color{black}
+
+\begin{document}
+	\begin{center}
+		\LARGE\sc Problème n\textsuperscript o\,2$^\star$ : Motorisation ultra-sonore\\
+		d’un autofocus
+	\end{center}
+
+	\begin{multicols}{2}
+		\noindent {\large\bfseries Questions III.A.1}\quad\hrule
+
+		\begin{enumerate}[label=({\it\alph*\/})]
+			\item Si la barre était infiniment souple, elle vérifierai l'équation d'onde de {\sc d'Alembert} sans pertes : \[
+					\frac{\partial^2z}{\partial x^2} - \frac{1}{c^2} \frac{\partial^2 z}{\partial t^2} = 0
+				.\]
+				Ses solutions générales sont de la forme d'une somme de deux ondes, une progressive et une régressive : \[
+					F(x - ct) + G(x + ct)
+				.\]
+
+			\item La barre ayant une rigidité importante, elle n'est pas négligeable comme dans le cas d'une corde souple. C'est pour cela que l'équation différentielle ne correspond pas à l'équation de {\sc d'Alembert}.
+
+			\item De l'équation différentielle de l'énoncé, on en déduit que \[
+					\left[ \frac{\partial^4 z}{\partial x^4} \right] = \left[ \frac{\partial^2 z}{\partial t^2} \right] \times \big[\gamma^2\big]
+				.\]
+				D'où, \[
+					\big[\gamma^2\big] = \frac{\left[ \frac{\partial^4 z}{\partial x^4} \right]}{\left[ \frac{\partial^2 z}{\partial t^2}  \right]} = \frac{\mathrm{L} \cdot \mathrm{L}^{-4}}{\mathrm{L} \cdot \mathrm{T}^{-2}} = \Big(\frac{\mathrm{T}}{L^2}\Big)^2
+				.\]
+				On en déduit donc que $[\gamma] = \mathrm{T} \cdot \mathrm{L}^{-2}$. Ainsi, l'unité de $\gamma$\/ serait $\mathrm{s}/\mathrm{m}^2$.
+			\item L'onde ayant pour forme \[
+					\ubar{z}(x,t) = \ubar{Z}\exp\big(\mathrm{j}(\omega t - \ubar{k} x)\big)\]
+					est une onde progressive si $\omega$\/ et $\ubar{k}$\/ sont des réels du même signe, et non nuls.
+				\item On utilise l'équation différentielle donnée et la forme de $\ubar{z}$\/ complexe : on a \[
+						\Big((\mathrm{j}\ubar{k})^4 + \gamma^2(\mathrm{j} \omega)^2\Big)\:\ubar{z} = 0
+				\] d'où, $\ubar{k}^4 - \gamma^2 \omega ^2 = 0$, et donc $\ubar{k}^2 = \gamma \omega$, d'où \[\ubar{k} = \sqrt{\gamma \omega}.\]
+				Or, la vitesse de phase $v_\varphi$\/ s'écrit de la forme
+				\[
+					v_\varphi = \frac{\omega}{\ubar{k}} = \frac{\omega}{\sqrt{\omega \gamma}} = \sqrt{\frac{\omega}{\gamma}}
+				\] qui dépend de $\omega$. La barre est donc un milieu dispersif.
+			\item La barre reposant, à tout instant $t$, sur les supports à chaque extrémités de celle-ci, on a donc \[
+				\forall t,\:z(x=0,t) = z(x=L, t) = 0
+			.\]
+			Une onde plane progressive ne respecte pas ces contraintes, mais c'est le cas d'une onde stationnaire.
+		\end{enumerate}
+		\noindent {\large\bfseries Questions III.A.2}\quad\hrule
+		\begin{enumerate}[label=({\it\alph*\/})]
+			\item Afin de respecter les conditions limites, on doit avoir un ventre à chaque extrémité de la barre. Ainsi, on doit donc avoir $L = n \lambda$\/ avec $n \in \N^*$.
+			\item Comme le vecteur d'onde $k = \frac{2\pi}{\lambda}$ est quantifié, on a donc \[k_n = \frac{2\pi n }{L}.\] Et, comme la pulsation $\omega = \frac{k^2}{\gamma}$ est également quantifiée, on en déduit que \[
+				\omega_n = \frac{4\pi^2 n^2}{\gamma L^2}
+			.\]
+		\end{enumerate}
+		\noindent {\large\bfseries Questions III.B.1}\quad\hrule
+		\begin{enumerate}[label=({\it\alph*\/})]
+			\item Les nœuds de vibrations sont situés entre les unités de polarisation. En effet, la polarisation de chaque côtés de ces nœuds est inversée.
+			\item On utilise les modes vibratoires : la figure~7 représente 9 nœuds. De plus, la longueur d'arc entre les nœuds est de $\lambda / 2 = R\times \pi/9$ (l'angle est de $20^\circ = \pi/9$) d'après la figure~7. Or, comme $k = 2\pi / \lambda$, on en déduit que $k = R / 9$. D'où \[\omega = \frac{k^2}{\gamma} = \frac{81}{\gamma R^2}.\]
+		\end{enumerate}
+		\noindent {\large\bfseries Questions III.B.2}\quad\hrule
+		\begin{enumerate}[label=({\it\alph*\/})]
+			\item On calcule $z_1(s,t) + z_2(s,t)$\/ :
+				\begin{align*}
+					&z_1(s,t) + z_2(s,t)\\
+					=&\: Z\big(\cos(k s + \psi_1)\cos(\omega t + \varphi_1)\\
+										&\:\,+ \cos(k s + \psi_2)\cos(\omega t + \varphi_2)\big)
+				\end{align*}
+				Et, d'autre part, on développe $z(s,t)$\/ :
+				\begin{align*}
+					z(s,t) &= Z\cos(ks + \omega t + \varphi_1 - \psi_1)\\
+					&= Z\big(\cos(k s + \psi_1)\cos(\omega t + \varphi_1)\\
+										&\mathrel{\phantom{=}}\:\,+ \sin(k s + \psi_2)\sin(\omega t + \varphi_2)\big)
+				\end{align*}
+				L'égalité $z = z_1 + z_2$\/ n'est possible que si \[\varphi_2 = \frac{\pi}{2} - \varphi_1\quad\text{et}\quad\psi_2 = \frac{\pi}{2} - \psi_1.\]
+			\item Comme il y a un déphasage en temps de $-\frac{\pi}{2}$\/ entre $U_2$\/ et $U_1$, on en déduit qu'il y a un déphasage en longueur de \[
+					\frac{-\pi / 2}{2\pi} = -\frac{\lambda}{4}
+				.\]
+				Ainsi, la longueur de l'arc moyen de l'électrode auxiliaire est de $\lambda / 4$. On en déduit que la longueur de l'arc moyen de l'électrode {\sc gnd}\/ est de $\lambda - (\lambda / 4) = \sfrac{3}{4}\times \lambda$.
+			\item Afin d'inverser le sens du rotor, le déphasage entre $U_2$\/ et $U_1$\/ doit être de $\pm\frac{\pi}{2}$. Or, on a vu précédemment que ce déphasage valait $\frac{\pi}{2}$. Ainsi, on calcule le déphasage lié à la fonction de transfert $\ubar{H} = \ubar{U}_2 / \ubar{U}_1$\/ :
+				\begin{align*}
+					&\mathrel{\phantom=} \Arg(\ubar{H})\\
+					&= \Arg(1+\mathrm{j}R'C\omega) - \Arg(1 - \mathrm{j}R'C\omega)\\
+					&= \Arctan(R'C\omega) - \Arctan(-R'C\omega) \\
+					&= 2\Arctan(R'C\omega)\\
+				\end{align*}
+				D'où, $\Arctan(R'C\omega) = \frac{\pi}{4}$. On en déduit donc que \[
+					R' C \omega = 1
+				.\]
+			\item Si on modifie $R'$\/ ou $C$\/ de telle sorte que $R' C \omega = 1$, alors le signal $U_2$\/ sera donc inversé. La rotation du stator sera donc inversée : en effet, comme vu dans la question III.B.1.\textit b, on a donc $\varphi_2 = \varphi_1 - \frac{\pi}{2}$, ce qui inverse le sens de propagation du signal $z$.
+		\end{enumerate}
+	\end{multicols}
+\end{document}

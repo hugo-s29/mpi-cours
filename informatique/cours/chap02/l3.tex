@@ -1,0 +1,93 @@
+\begin{rmk}[Notations]
+	On fixe un tableau $T$\/ de taille $n$. De plus, on suppose dans toute la suite, que $T \in \mathfrak{S}_n$.\footnote{$T$\/ est une permutation de $n$\/ éléments. Ici, $\mathfrak{S}_n$\/ représente l'ensemble des permutations de $\left\llbracket 1,n \right\rrbracket$.} On note alors $X_g^d[T]$\/ la variable aléatoire indiquant le nombres de comparaisons effectuées par l'algorithme \Call{TriRapide}{$T,g,d$}, dès lors que $T(\left\llbracket g,d \right\rrbracket) \subseteq \left\llbracket g,d \right\rrbracket$.
+
+	\noindent On note de plus, $\mathrm{E}\big[X^d_g[T]\big]$\/ l'espérance de cette variable aléatoire.
+\end{rmk}
+
+\begin{thm}
+	Le nombre moyen de comparaisons effectuées par l'algorithme de tri rapide pour une entrée $T$\/ de taille $n$\/ est équivalent à $2n \ln n$. Autrement dit, \[
+		\mathrm{E}\big[X_0^{n-1}[T]\big] \sim 2n \ln n
+	.\]
+\end{thm}
+
+\begin{prv}
+	\begin{itemize}
+		\item Lorsque $d \le g$, alors $X_g^d[T] = 0$.
+		\item Lorsque $g < d$,
+			\begin{itemize}
+				\item dans l'éventualité d'un choix de pivot d'indice $p \in \left\llbracket g,d \right\rrbracket$, le nombre de comparaisons est alors \[
+						\underbrace{d - g - 1}_{\mathclap{\text{coût de \Call{Partition}{$T,g,d,p$}}}}\quad+\quad \overbrace{X_g^{T[p] - 1}\left[ T^{g,d,p} \right]}^{\text{\clap{coût du 1\tsup{er} appel récursif}}}\quad+\quad \underbrace{X_{T[p] + 1}^d\left[ T^{g,d,p} \right]}_{\text{\clap{coût du 2\tsup{nd} appel récursif}}}
+					\] où $T^{g,d,p}$\/ est le tableau $T$\/ après appel à \Call{Partition}{$T,g,d,p$}. D'où
+					\begin{align*}
+						\mathrm{E}\left[ X^d_g[T] \right] &= \sum_{j=g}^d \mathrm{E}\Big[X^d_g[T]\Big|_{p=j}\Big] \cdot P(p = j)\\
+						&= \frac{1}{d - g + 1} \sum_{j=g}^d \mathrm{E}\Big[X^d_g[T]\Big|_{p=j}\Big] \\
+						&= \frac{1}{d - g + 1} \sum_{j=g}^d \bigg(d-g-1 + \mathrm{E}\Big[X^{T[j] - 1}_g \big[T^{g,d,j}\big]\Big] \\
+						&\phantom{=}\:\qquad\qquad\qquad\qquad\qquad\quad+ \mathrm{E}\Big[X_{T[j] + 1}^d \Big[T^{g,d,j}\big]\Big]\bigg) \\
+						&=  (d-g-1) + \frac{1}{d - g + 1} \sum_{k=g}^d \bigg(\mathrm{E}\Big[X^{k - 1}_g \Big[T^{g,d,T^{-1}[k]}\Big]\Big]\\
+						&\phantom{=}\:\qquad\qquad\qquad\qquad\qquad\!\qquad+\mathrm{E}\Big[X_{k + 1}^d \Big[T^{g,d,T^{-1}[k]}\Big]\Big]\bigg)
+					\end{align*}
+					car $T : \left\llbracket g,d \right\rrbracket \to \left\llbracket g,d \right\rrbracket$\/ est une bijection.
+
+					Soit donc la suite $(c_\ell)_{\ell\in\Z}$\/ définie par \[
+						\begin{cases}
+							\forall \ell \in \Z^-,\:&c_\ell = 0\\
+							\forall \ell \in \N^*,\:&c_\ell = \mathrm{E}\big[X_0^\ell[\id]\big].
+						\end{cases}
+					\] On a alors
+					\begin{align*}
+						\forall \ell \in \N^*,\quad c_\ell &= (\ell-1) + \frac{1}{\ell - 1} \sum_{k=0}^\ell (c_{k-1} - c_{\ell - k - 1}) \\
+						c_\ell&= (\ell - 1) + \frac{2}{\ell+1} \sum_{k=1}^{\ell-1} c_k \\
+						(\ell + 1) c_\ell &= (\ell + 1)(\ell - 1) + 2 \sum_{k=1}^{\ell - 1} c_k \\
+					\end{align*}
+					D'où, $\ell c_\ell = \ell(\ell - 2) + 2 \sum_{k=1}^{\ell - 2} c_k$, et donc \[
+						(\ell + 1) c_\ell - \ell c_{\ell - 1} = \ell^2 - 1 - \ell^2 + 2 \ell + 2 c_{\ell - 1}
+					.\] On en déduit donc que \[
+						(\ell + 1) c_\ell - (\ell + 2) c_{\ell - 1} = 2 \ell - 1
+					\] et donc \[
+						\frac{c_\ell}{\ell + 2} - \frac{c_{\ell - 1}}{\ell + 1} = \frac{2 \ell - 1}{(\ell + 1)(\ell + 2)}
+					.\]
+					Soit alors $(u_\ell)_{\ell\in\N} = \big(c_\ell / (\ell + 2)\big)_{\ell \in \N}$, et $u_0 = 0$. Alors \[
+						u_\ell = \sum_{k=1}^n (u_k - u_{k-1}) = \sum_{k=1}^n \frac{2 k -1}{(k+1)(k+2)}
+					\] or $\frac{2k - 1}{(k+1)(k+2)} \sim \frac{2}{k}$, et $\sum_{k\ge 1} \frac{2}{k}$\/ diverge donc $u_\ell \sim \sum_{k=1}^\ell \frac{2}{k} \sim 2 \ln \ell$. On en déduit donc que $c_\ell \sim 2 \ell \ln \ell$.
+			\end{itemize}
+	\end{itemize}
+\end{prv}
+
+\eject
+
+Dans la preuve précédente, on a utilisé le lemme suivant.
+
+\begin{lem}
+	Soit $(g,d) \in \N^2$\/ et soit $T \in \mathfrak{S}_n$ une permutation telle que $T(\left\llbracket g,d \right\rrbracket) \subseteq \left\llbracket g,d \right\rrbracket$. \[
+		\mathrm{E}\Big[X_g^d[T]\Big] = \mathrm{E}\Big[X_0^{d-g}[\id]\Big]
+	.\]
+\end{lem}
+
+\begin{prv}[par récurrence forte sur $d-g=\ell\in\N$]
+	\begin{itemize}
+		\item Soient $(g,d) \in \N^2$\/ tel que $d-g = 0$. Soit $T \in \mathfrak{S}_n$\/ telle que $T(\left\llbracket g,d \right\rrbracket) \subseteq \left\llbracket g,d \right\rrbracket$.
+			On a bien $X_g^d[T] = 0 = X_0^{d-g}[\id]$.
+		\item On remarque, par hypothèse de récurrence, \[
+				\mathrm{E}\Big[X_g^{k-1}\Big[\overbrace{T^{g,d,T^{-1}[k]}}^{\mathclap{k-1-g < d - g}}\Big]\Big] = \mathrm{E}\Big[X_0^{k-1-g}[\id]\Big]
+			\] et \[
+				\mathrm{E}\Big[X_{k-1}^d\Big[T^{g,d,T^{-1}[k]}\Big]\Big] =
+				\mathrm{E}\Big[X_0^{d-k-1}[\id]\Big]
+			.\]
+			On a alors
+			\begin{align*}
+				&\mathrel{\phantom=}\mathrm{E}\Big[X_g^d[T]\Big]\\
+				&= (d-g-1) + \frac{1}{d-g+1} \sum_{k=g}^d
+				\bigg(\mathrm{E}\Big[X_g^{k-1}\Big[T^{g,d,T^{-1}[k]}\Big]\Big] +
+					\mathrm{E}\Big[X^{d}_{k-1}\Big[T^{g,d,T^{-1}[k]}\Big]\Big]\bigg)\\
+					&= (d-g-1) + \frac{1}{d-g-1} \sum_{k=g} \left( \mathrm{E}\Big[X_0^{k-1-g}[\id]\Big] + \mathrm{E}\Big[X_0^{d-k-1}[\id]\Big] \right).
+			\end{align*}
+			Ceci est vrai pour tout $T \in \mathfrak{S}_n$\/ telle que $T(\left\llbracket g,d \right\rrbracket) \subseteq \left\llbracket g,d \right\rrbracket$, donc
+			\begin{align*}
+				\mathrm{E}\big[X_g^d[\id]\big] &=(d-g-1) + \frac{1}{d-g-1} \sum_{k=g} \left( \mathrm{E}\Big[X_0^{k-1-g}[\id]\Big] + \mathrm{E}\Big[X_0^{d-k-1}[\id]\Big] \right)\\
+				&= \mathrm{E}\big[X_g^d[T]\big] \\
+			\end{align*}
+	\end{itemize}
+\end{prv}
+
+
+

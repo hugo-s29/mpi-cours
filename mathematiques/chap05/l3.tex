@@ -1,0 +1,139 @@
+\begin{cexm}
+	On considère la suite de fonctions $(f_n)_{n\in\N} = (t\mapsto t^n)_{n\in\N}$. \[
+		1 = \lim_{n\to +\infty} \underbrace{\lim_{t\to 1} f_n(t)}_{1} \neq \lim_{x\to 1} \overbrace{\lim_{n\to +\infty} f_n(t)}^{f(t)} \text{ n'existe pas}
+	.\] 
+\end{cexm}
+
+\section{Intégrer}
+
+
+\begin{thm}[interversion de la limite et de l'intégrale sur un segment]
+	Si une suite de fonctions continues $(f_n)_{n\in\N}$\/ sur un segment $[a,b]$\/ converge uniformément vers $f$\/ sur $[a,b]$, alors $f$\/ est continue sur $[a,b]$\/ (théorème 6) et \[
+		\int_{a}^{b} \Big(\underbrace{\lim_{n\to +\infty}f_n(t)}_{f(t)}\Big)~\mathrm{d}t = \lim_{n\to +\infty} \underbrace{\Big(\int_{a}^{b} f_n(t)~\mathrm{d}t\Big)}_{I_n}
+	\] {\color{gray}(d'où, pas d'intégrales impropres)}.
+	Autrement dit, la suite de fonctions $(F_n)_{n\in\N}$\/ définies comme primitives des fonctions continues $f_n$\/ : \begin{align*}
+		F_n: [a,b] &\longrightarrow \R \\
+		x &\longmapsto \int_{a}^{x} f_n(t)~\mathrm{d}t
+	\end{align*}
+	converge uniformément vers \begin{align*}
+		F: [a,b] &\longrightarrow \R \\
+		x &\longmapsto \int_{a}^{x} f(t)~\mathrm{d}t.
+	\end{align*}
+\end{thm}
+
+\begin{prv}
+	On suppose que la suite de fonctions $(f_n)_{n\in\N}$\/ converge uniformément vers $f$\/ sur un segment $[a,b]$. On veut monter que \[\lim_{n\to +\infty} \bigg(\int_{a}^{b} f_n(t)~\mathrm{d}t\bigg) - \int_{a}^{b} f(t)~\mathrm{d}t = 0\] i.e. \[\lim_{n\to +\infty} \bigg(\int_{a}^{b} f_n(t)~\mathrm{d}t - \int_{a}^{b} f(t)~\mathrm{d}t\bigg) = 0.\]
+	Or, \[
+		0 \le \Big| \int_{a}^{b} \big(f_n(t) - f(t)\big)~\mathrm{d}t \Big| \le \int_{a}^{b} \big|f_n(t) - f(t)\big|~\mathrm{d}t
+	\] d'après l'inégalité triangulaire. Or, $\R\owns M_n = \sup_{t \in [a,b]}\:|f_n(t) - f(t)| \tendsto{n\to +\infty} 0$. D'où $M_n$\/ est un majorant donc \[
+		0 \le \Big| \int_{a}^{b} \big(f_n(t) - f(t)\big)~\mathrm{d}t \Big| \le \int_{a}^{b} M_n~\mathrm{d}t = (b-a)\cdot M_n \tendsto{n\to +\infty} 0
+	.\] D'où, d'après le théorème des gendarmes,\footnote{aussi appelé {\slshape théorème d'existence de la limite par encadrement}.} on a bien \[
+		\int_{a}^{b} f(t)~\mathrm{d}t = \lim_{n\to +\infty} \int_{a}^{b} f_n(t)~\mathrm{d}t
+	.\]
+
+	La preuve de la seconde partie du théorème est dans le poly.
+\end{prv}
+
+
+\begin{thm}[convergence dominée]
+	Soit $T$\/ un intervalle et soit $(f_n)_{n\in\N}$\/ une suite de fonctions continues par morceaux sur $T$.
+	Si
+	\begin{enumerate}
+		\item la suite de fonctions $(f_n)_{n\in\N}$\/ converge simplement sur $T$\/ vers une fonction $f$\/ continue par morceaux,
+		\item il existe une fonction $\varphi$\/ continue par morceaux sur $T$\/ et intégrable\footnote{i.e.\ l'intégrale $\int_T|\varphi|$\/ converge} sur $T$\/ telle que \[
+				\forall n \in \N,\:\forall t \in T,\quad\big|f_n(t)\big| \le \varphi(t)
+			\]
+	\end{enumerate}
+	alors les fonctions $f_n$\/ et la fonction $f$\/ sont intégrables et la suite de réels $\int_{T} f_n$\/ converge vers le réel $\int_T f$.
+\end{thm}
+
+\begin{exo}
+	{\slshape Montrer que la suite de réels \smash{$\ds I_n = \int_{0}^{+\infty} \frac{\mathrm{e}^{-t / n}}{1+t^2}~\mathrm{d}t$\/} est bien définie, qu'elle converge et déterminer sa limite.}
+
+	On doit donc montrer que l'intégrale $I_n$\/ converge~(1) puis étudier la limite de la suite des réels~$(I_n)_{n\in\N}$\/~(2). Soit \begin{align*}
+		f_n: {[0,+\infty[} &\longrightarrow \R \\
+		t &\longmapsto \frac{\mathrm{e}^{-t/n}}{1+t^2}
+	\end{align*}
+
+	\begin{enumerate}
+		\item L'intégrale $I_n$\/ est impropre en $+\infty$. On a, $\forall t \in [0,1[,\: \forall n \in \N,\: 0 \le f_n(t) \le \frac{1}{1+t^2}$. Or, l'intégrale $\int_{0}^{+\infty} \frac{1}{1+t^2}~\mathrm{d}t$\/ converge\footnote{car $\int_{0}^{+\infty} \frac{1}{1+t^2}~\mathrm{d}t = [\Arctan t]_0^+\infty = \frac{\pi}{2} - 0$.} donc l'intégrale $I_n$\/ converge.
+		\item La suite de fonctions $(f_n)_{n\in\N}$\/ converge vers  \begin{align*}
+			f: [0,1] &\longrightarrow \R \\
+			t &\longmapsto \frac{1}{1+t^2}
+		\end{align*} car $f_n(t)$\/ converge vers $1$\/ si $t = 0$, et $\frac{\mathrm{e}^{-0}}{1+t^2}$\/ si $t > 0$. De plus, $\forall n,\:\forall t,\:|f_n(t)| \le \varphi(t)$\/ où $\varphi(t) = \sfrac{1}{(1+t^2)}$. Or, l'intégrale $\int_{0}^{+\infty} \frac{1}{1+t^2}~\mathrm{d}t$\/ converge. Donc, d'après le théorème de la convergence dominée, \[
+			\lim_{n\to +\infty} \int_{0}^{+\infty} \frac{\mathrm{e}^{-\frac{t}{n}}}{1+t^2}~\mathrm{d}t = \int_{0}^{+\infty} \lim_{n\to +\infty} \frac{\mathrm{e}^{-\frac{t}{n}}}{1+t^2}~\mathrm{d}t = \int_{0}^{+\infty} \frac{1}{1+t^2}~\mathrm{d}t = \frac{\pi}{2}
+		.\]
+	\end{enumerate}
+\end{exo}
+
+\begin{met}[du discret au continu]
+	\begin{rap}[caractérisation séquencielle de la limite]
+		\[
+			g(x) \tendsto{x\to a \in \bar{\R}} \ell \in \bar{\R}\quad\iff\quad\forall (u_n)_{n\in\N} \in \R^{\N},\ u_n \tendsto{n\to +\infty}a\implies f(u_n) \tendsto{n \to +\infty} \ell
+		.\]
+	\end{rap}
+\end{met}
+
+\begin{exo}
+	{\slshape Étudier $\ds \lim_{x\to +\infty} \int_{0}^{+\infty} \frac{\Arctan(xt)}{1+t^2}~\mathrm{d}t$.}
+
+	\begin{itemize}
+		\item[\sc Méthode 1] sans la caractérisation séquentielle de la limite mais avec le théorème de la limite monotone (croissance de $F$). On remplace le réel $x$\/ par un entier $n$\/\footnote{i.e.\ on discrétise le problème} : on veut étudier \[
+				\lim_{n\to \infty} \int_{0}^{+\infty} \frac{\Arctan(nt)}{1+t^2}~\mathrm{d}t
+			.\] On utilise le théorème de convergence dominée ({\sc tcd}). Soit, pour $n \in \N$, \begin{align*}
+				f_n: [0,+\infty[ &\longrightarrow \R \\
+				t &\longmapsto \frac{\Arctan(nt)}{1+t^2}.
+			\end{align*}
+			Soit $t \in [0,+\infty[$. \[
+				f_n(t) \tendsto{n\to +\infty} f(t) = \begin{cases}
+					0 &\text{ si } t = 0\\
+					\dfrac{\sfrac{\pi}{2}}{1+t^2}&\text{ si } t > 0.
+				\end{cases}
+			\] Ainsi, $(f_n)_{n\in\N}$\/ converge simplement vers $f$. Et, \[
+				\forall n \in \N,\:\forall t \in [0,+\infty[,\quad|f_n(t)| \le \frac{\pi / 2}{1+t^2} = \varphi(t)
+			\] et $\ds\int_{0}^{+\infty} \varphi(t)~\mathrm{d}t$\/ converge. Ainsi, d'après le théorème de convergence dominée, \[
+				\lim_{n\to \infty} \int_{0}^{+\infty} \frac{\Arctan(nt)}{1+t^2}~\mathrm{d}t = \int_{0}^{+\infty} f(t)~\mathrm{d}t = \frac{\pi^2}{4}
+			.\] {\color{red}Attention, $\lim_{n\to \infty} f(n)$\/ n'est pas forcément égal à $\lim_{x\to +\infty} f(x)$\/ ; par exemple, avec $f(x) = \sin(2\pi x)$.}\ Or, la fonction \begin{align*}
+				F: {[0,+\infty[} &\longrightarrow \R \\
+				x &\longmapsto\int_{0}^{+\infty} \frac{\Arctan(xt)}{1+t^2}~\mathrm{d}t
+			\end{align*}
+			est croissante ; en effet,
+			\begin{align*}
+				x_1 \le x_2 &\implies x_1 t \le x_2 t \text{ car } t \ge 0\\
+				&\implies \Arctan (x_1 t) \le \Arctan(x_2 t) \text{ car } \Arctan \text{ est croissante}\\
+				&\implies \frac{\Arctan(x_1 t)}{1+t^2} \le \frac{\Arctan(x_2 t)}{1+t^2}\\
+				&\implies F(x_1) \le F(x_2) \text{ par croissance de l'intégrale}.
+			\end{align*}
+			D'où, d'après le théorème de la limite monotone, $\lim_{x\to +\infty} F(x)$\/ existe. Or, $F(n) \tendsto{n\to \infty} \sfrac{\pi^2}{4}$. Et, par unicité de la limite, \[
+				\boxed{\lim_{x\to +\infty} \int_{0}^{+\infty} \frac{\Arctan(xt)}{1+t^2}~\mathrm{d}t = \frac{\pi^2}{4}.}
+			\] Ou, autre rédaction : \[F(\underbrace{\left\lfloor x \right\rfloor}_{\in \N}) \le F(x) \le F(\underbrace{\left\lfloor x \right\rfloor + 1}_{\in \N})\] par croissance de $F$. D'où par théorème des gendarmes, $F(x) \tendsto{x\to +\infty} \frac{\pi^2}{4}$.
+		\item[\sc Cas 2] Soit $(u_n)_{n\in\N}$\/ une suite réelle qui tend vers $+\infty$. On pose \begin{align*}
+			f_n(t): {[0, +\infty[} &\longrightarrow \R \\
+			t &\longmapsto \frac{\Arctan(u_n\:t)}{1 + t^2}.
+		\end{align*}
+		On remarque que \[
+			f_n(t) \tendsto{n\to +\infty} \begin{cases}
+				0 & \text{ si } t = 0\\
+				\frac{\pi / 2}{1 + t^2} & \text{ si } t > 0,\\
+			\end{cases}
+		\] on pose donc \begin{align*}
+			f: {[0,+\infty[} &\longrightarrow \R \\
+			t &\longmapsto \begin{cases}
+				0&\text{ si } t = 0\\
+				\frac{\pi / 2}{1 + t^2} & \text{ si } t > 0.
+			\end{cases}
+		\end{align*}
+		D'où, la suite de fonctions $(f_n)_{n\in\N}$\/ converge simplement vers la fonction $f$.
+		Or, \[
+			\forall n \in \N,\: \forall t \in \R^+,\quad|f_n(t)| \le \frac{\pi / 2}{1 + t^2}
+		.\] D'où, d'après le théorème de la convergence dominée, \[
+			\lim_{n\to \infty} \int_{0}^{+\infty} f_n(t)~\mathrm{d}t = \int_{0}^{+\infty} \lim_{n\to \infty} f_n(t)~\mathrm{d}t
+		.\] Or, $\int_{0}^{+\infty} \lim_{n\to +\infty}f_n(t)~\mathrm{d}t = \int_{0}^{+\infty} \frac{\pi / 2}{1+t^2}~\mathrm{d}t = \frac{\pi}{2} \times \frac{\pi}{2}$. D'où, on en déduit que \[
+			\lim_{n\to \infty} \underbrace{\int_{0}^{+\infty} f_n(t)~\mathrm{d}t}_{F(u_n)} = \frac{\pi^2}{4}
+		.\]
+		On a montré que $F(u_n) \tendsto{n\to +\infty} \frac{\pi^2}{4}$\/ pour toute suite $(u_n)_{n\in\N}$\/ tendant vers $+\infty$. D'où, d'après la caractérisation séquentielle de la limite, on en déduit que \[
+			F(x) \tendsto{x\to +\infty} \frac{\pi^2}{4}
+		.\]
+	\end{itemize}
+\end{exo}
+

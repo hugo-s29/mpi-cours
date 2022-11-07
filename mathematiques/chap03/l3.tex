@@ -1,0 +1,126 @@
+\begin{exo}
+	Montrons que \[
+		\int_{x}^{1} \frac{1}{\ln(1+t)}~\mathrm{d}t \simi_{x\to 0^+} -\ln x
+	.\]
+	L'intégrale $\int_{x}^{1} \frac{1}{\ln(1+t)}~\mathrm{d}t$\/ est généralisée en 0.
+	{\slshape Quelle est sa nature ?}\/ On cherche un équivalent de la fonction intégrée : \[
+		\frac{1}{\ln(1+t)} \simi_{t\to 0^+} \frac{1}{t} \text{ qui ne change pas de signe}
+	\]
+	car $\ln(1+t) = t + \po_{t\to 0^+}(t)$, d'où $\ln(1+t) \simi_{t\to 0^+} t$.
+	Or, $\int_{0}^{1} \frac{1}{t}~\mathrm{d}t$\/ diverge (par critère de {\sc Riemann}) donc $\int_{0}^{1} \frac{1}{\ln(1+t)}~\mathrm{d}t$\/ diverge aussi.
+	D'où, leurs \guillemotleft~sommes partielles~\guillemotright\ sont équivalentes : \[
+		\int_{x}^{1} \frac{1}{\ln(1+t)}~\mathrm{d}t \simi_{x\to 0^+} \int_{x}^{1} \frac{1}{t}~\mathrm{d}t = \ln 1 - \ln x = -\ln x
+	.\]
+\end{exo}
+
+\section{La convergence absolue}
+
+\begin{thm}
+	Soit $f : [a,b[$\/ une fonction continue par morceaux. Si l'intégrale $\int_{[a,b[} |f|$\/ converge, alors $\int_{[a,b[} f$\/ converge aussi et, \[
+		\Big|\int_{[a,b[} f\Big| \le \int_{[a,b[} |f|
+	\] (inégalité triangulaire).
+\end{thm}
+
+\begin{prv}
+	On a \[
+		\forall t \in [a,b[,\quad f(t) = \frac{f(t) + |f(t)|}{2} + \frac{f(t)-|f(t)|}{2} = \underbrace{\frac{f(t) + |f(t)|}{2}}_{\ge 0} - \underbrace{\frac{|f(t)| - f(t)}{2}}_{\ge 0}
+	.\]
+	L'analogie est, par exemple,
+	\begin{itemize}
+		\item en analyse, $f(t) = \frac{f(t) + f(-t)}{2} + \frac{f(t) - f(-t)}{2}$, une somme d'une fonction paire et d'une fonction impaire.
+		\item en algèbre, $\mathscr{M}_{n,n}(\mathds{K}) \owns M = \frac{M + M^\top}{2} + \frac{M - M^\top}{2}$\/ une somme d'une matrice symétrique $S \in \mathscr{S}_n(\mathds{K})$ et d'une matrice antisymétrique $A \in \mathscr{A}_n(\mathds{K})$.
+	\end{itemize}
+
+	On suppose que l'intégrale $\int_{a}^{b} |f(t)|~\mathrm{d}t$\/ converge.
+	\begin{itemize}
+		\item On montre que $\int_{a}^{b} \frac{f(t) + |f(t)|}{2}~\mathrm{d}t$\/ converge.
+			On sait que \[
+				0 \le \frac{f(t) - |f(t)|}{2} \le |f(t)|.
+			\]
+			Or, $\int_{a}^{b} |f(t)|~\mathrm{d}t$ converge et donc $\int_{a}^{b} \frac{f(t)+|f(t)|}{2}~\mathrm{d}t$ converge aussi.
+		\item De même, on montre que $\int_{a}^{b} \frac{|f(t)|-f(t)}{2}~\mathrm{d}t$\/ converge.
+	\end{itemize}
+	On en déduit que $\int_{a}^{b} f(t)~\mathrm{d}t $\/ converge.
+
+	Montrons à présent l'inégalité triangulaire : on veut montrer que \[
+		-\int_{a}^{b} |f(t)|~\mathrm{d}t \le \int_{a}^{b} f(t)~\mathrm{d}t \le \int_{a}^{b} f(t)~\mathrm{d}t
+	.\]
+	Ce qui est vrai car $\forall t \in [a,b[$, $-|f(t)|\le f(t) \le |f(t)|$, et l'intégrale $\int_{a}^{x} f(t)~\mathrm{d}t$\/ est croissante.
+	D'où, $\forall x \in [a,b[$, \[
+		\int_{a}^{x} |f(t)|~\mathrm{d}t \le \int_{a}^{x} f(t)~\mathrm{d}t \le \int_{a}^{x} |f(t)|~\mathrm{d}t
+	.\]
+	Enfin, les inégalités larges passent à la limite quand $x \to b$.
+\end{prv}
+
+\begin{exo}
+	\begin{enumerate}
+		\item On sait, $\forall t \in [1,+\infty[$, $0 \le \Big| \frac{\sin t}{t^2} \Big| \le \frac{1}{t^2}$.
+			Or, l'intégrale $\int_{1}^{+\infty} \frac{1}{t^2}~\mathrm{d}t$\/ converge d'après le critère de {\sc Riemann}\/ (car $2 > 1$). D'où $\int_{1}^{+\infty} \Big| \frac{\sin t}{t^2} \Big| ~\mathrm{d}t$\/ converge et donc $\int_{1}^{+\infty} \frac{\sin t}{t^2}~\mathrm{d}t$\/ converge aussi.
+		\item L'intégrale $\int_{0}^{1} \sin \frac{1}{t}~\mathrm{d}t$\/ est impropre en 0. Or, \[
+			0 \le \left| \sin \frac{1}{t} \right| \le 1,
+		\] et l'intégrale $\int_{0}^{1} 1~\mathrm{d}t$\/ converge, donc $\int_{0}^{1} \sin \frac{1}{t}~\mathrm{d}t$\/ converge absolument.
+	\end{enumerate}
+\end{exo}
+
+\section{Intégrer par parties et changer de variables}
+
+\begin{prop}
+	L'intégration par parties, pour les intégrales sur un segment, donne, si $f$\/ et $g$\/ sont deux fonctions de classes $\mathscr{C}^1$\/ : \[
+		\int_{[a,b]} fg' = \Big[fg\Big]_a^b-\int_{[a,b]} f'g
+	.\]
+	Si l'intégrale est généralisé, on \guillemotleft~met une barrière~\guillemotright\ et on utilise l'intégration par parties sur un segment, puis on passe à la limite. On étudie tous les cas :
+	\begin{itemize}
+		\item si $\big[fg\big]_a^x \tendsto{x\to b} \ell \in \R$, alors $\int_{[a,b[} fg'$\/ et $\int_{[a,b[} f'g$\/ ont la même nature ;
+		\item si $\big[fg\big]_a^x$\/ diverge quand $x \to b$, alors on ne peut pas conclure.
+	\end{itemize}
+	La \guillemotleft~morale~\guillemotright\ de la proposition 19 est : {\sc ipp}\/ dans une intégrale généralisée, on \guillemotleft~met une barrière.~\guillemotright
+\end{prop}
+
+\begin{exo}[tarte à la crème]
+	L'intégrale $\int_{0}^{+\infty} \frac{\sin t}{t}~\mathrm{d}t$\/ est appelée l'intégrale de {\sc Dirichlet}. On montre qu'elle converge et, on calculera sa valeur dans le {\sc td}\/ n\tsup{o} 3.
+	Elle est impropre en 0 et en $+\infty$. {\color{red} On n'écrit pas \[
+			\int_{0}^{+\infty} \frac{\sin t}{t}~\mathrm{d}t = \int_{1}^{+\infty} \frac{\sin t}{t}~\mathrm{d}t + \int_{0}^{1} \frac{\sin t}{t}~\mathrm{d}t
+	.\]}
+	L'intégrale $\int_{0}^{+\infty} \frac{\sin t}{t}~\mathrm{d}t$\/ converge si et seulement si les deux intégrales \[
+		I = \int_{0}^{1} \frac{\sin t}{t}~\mathrm{d}t \qquad\text{et}\qquad J = \int_{1}^{+\infty} \frac{\sin t}{t}~\mathrm{d}t
+	\] convergent.
+
+	L'intégrale $I$\/ converge car elle est faussement impropre ($\sfrac{\sin(t)}t \tendsto{t\to 0} 1$).
+
+	Qu'en est-il de $J$\/ ? On peut majorer la valeur absolue de la fonction intégrée mais cela ne permet pas de conclure. On fait donc une {\sc ipp}\/ : on pose, pour $t \in [1,+\infty[$, $f(t) = -\cos t$\/ et $g(t) = \frac{1}{t}$. Ces deux fonctions sont de classe $\mathscr{C}^1$, d'où \[
+		\int_{1}^{x} f'(t) \times g(t)~\mathrm{d}t = \Big[fg\Big]_1^x - \int_{1}^{x} f(t)\times g'(t)~\mathrm{d}t = \left[ -\frac{\cos t}{t} \right]_1^x - \int_1^x \frac{\cos t}{t^2}~\mathrm{d}t
+	.\]
+	On vent montrer que $\int_{[1,x]} f'\cdot g$\/ a une limite finie quand $x \to +\infty$.
+	D'une part \[
+		\left[ -\frac{\cos t}{t} \right]_1^x = \frac{\cos 1}{1} - \frac{\cos x}{x} \qquad\text{et}\qquad \frac{\cos x}{x} \tendsto{x\to +\infty} 0
+	\] car $\cos$\/ est bornée et $\frac{1}{x} \tendsto{x\to +\infty} 0$.
+
+	D'autre par, pour $x \in [1,+\infty[$, \[
+		0 \le \left| \frac{\cos t}{t^2} \right| \le \frac{1}{t^2}
+	\] et $\int_{1}^{+\infty} \frac{1}{t^2}~\mathrm{d}t$\/ converge.
+
+	Par différence, on en déduit que $\int_0^{+\infty} \frac{\sin t}{t}$\/ converge.
+\end{exo}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		size(10cm);
+		draw((-10, 0) -- (10, 0), Arrow(TeXHead));
+		draw((0, -3) -- (0, 5), Arrow(TeXHead));
+		real f(real x) {
+			if(x == 0) { return 3; }
+			else {return 3*sin(x) / x;}
+		}
+		real g(real x) {
+			if(x == 0) { return 3.1; }
+			else {return 0.1 + 3*abs(sin(x)) / abs(x);}
+		}
+		draw(graph(f, -10, 10, 1000), magenta);
+		draw(graph(g, -10, 10, 1000), deepcyan);
+		dot("$\pi$", (pi,0), align=S);
+	\end{asy}
+	\caption{Graphe de $\ds \frac{\sin t}{t}$\/ et $\ds \left| \frac{\sin t}{t} \right|$}
+\end{figure}
+

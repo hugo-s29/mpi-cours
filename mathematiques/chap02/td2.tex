@@ -1,0 +1,36 @@
+\section{Exercice 7 (Projecteurs)}
+
+Soit $E$\/ un $\mathds{K}$-espace vectoriel.
+
+\begin{enumerate}
+	\item Soient $p$\/ et $q $\/ deux endomorphismes de $E$\/ tels que $p \circ q = q \circ p$.
+		\begin{enumerate}
+			\item Montrons que $\Ker p + \Ker q \subset \Ker (p \circ q)$. Soit $\vec{x} \in \Ker p + \Ker q$. Soient $\vec{\alpha} \in \Ker p$\/ et $\vec{\beta} \in \Ker q$\/ deux vecteurs tels que $\vec{x} = \vec{\alpha} + \vec{\beta}$. On a donc \[
+					(p \circ q)(\vec{\alpha} + \vec{\beta}) = (p \circ q)(\vec{\alpha}) + (p \circ q)(\vec{\beta}) = q(p(\vec{\alpha})) + p(q(\vec{\beta})) = q(\vec{0}) + p(\vec{0}) = \vec{0}
+				.\]
+			\item On sait que $\Im(p \circ q) \subset \Im(p)$\/ et $\Im(q  \circ p) \subset \Im(q)$. Or, comme $p \circ q = q  \circ p$, on a $\Im(p  \circ q) = \Im(q  \circ p)$\/ et donc $\Im(p  \circ q) \subset \Im p \cap \Im q$.
+		\end{enumerate}
+	\item
+		\begin{enumerate}
+			\item On montre que $(p \circ q)  \circ (p  \circ q) = p  \circ q$.
+				\begin{align*}
+					(p  \circ q)  \circ (p  \circ q) &= (p  \circ q)  \circ (q  \circ p) \\
+					&= p  \circ q  \circ p \\
+					&= q  \circ p  \circ p \\
+					&= q  \circ p \\
+					&= p  \circ q. \\
+				\end{align*}
+			\item On veut montrer que $\Im(p  \circ q) = \Im p \cap \Im q$.
+				Soit $\vec{x} \in \Im p \cap \Im q$.
+				Soient $\vec{a}, \vec{b} \in E$\/ tels que $p(\vec{a}) = \vec{x}$\/ et $q(\vec{b}) = \vec{x}$. On a donc \[
+					\Im p \cap \Im q \ni \vec{x} = p(\vec{x}) = p(p(\vec{a})) = p(q(\vec{b})) = p(\vec{a}) = (p  \circ q)(\vec{b}) \in \Im(p  \circ q)
+				.\] On a donc $\Im p \cap \Im q = \Im (p  \circ q)$.
+				\bigskip
+
+				On veut maintenant montrer $\Ker p + \Ker q \supset \Ker (p \circ q)$.
+				Soit $\vec{x} \in \Ker(q  \circ p)$.
+				On sait que $\vec{x} = p(\vec{x}) - \big(\vec{x} - p(\vec{x})\big)$. Mais, comme $\vec{x} \in \Ker(q \circ p)$, alors $p(\vec{x}) \in \Ker(q)$. Également, comme $p(\vec{x} - p(\vec{x})) = p(\vec{x}) - p \circ p(\vec{x}) = 0_E$, on en déduit que $\vec{x} - p(\vec{x}) \in \Ker(p)$. On a donc $\Ker p + \Ker q = \Ker (p \circ q)$\/ par double inclusion.
+
+				On en déduit que $p \circ q$\/ est un projecteur sur $\Im p \cap \Im q$\/ parallèlement à $\Ker p + \Ker q$.
+		\end{enumerate}
+\end{enumerate}

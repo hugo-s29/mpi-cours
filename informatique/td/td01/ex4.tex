@@ -1,0 +1,16 @@
+\section{Ordre sur \textit{powerset}}
+
+\def\preceqd{\mathrel{\overset{\dot{}}{\smash{\preceq}}}}
+\def\succeqd{\mathrel{\overset{\dot{}}{\smash{\succeq}}}}
+
+\begin{enumerate}
+	\item Soient $A$\/ et $B$\/ deux parties d'un ensemble ordonné $(S, \preceq)$.
+		Si $A = B$, alors $A \preceqd B$\/ et donc $A$\/ et $B$\/ sont comparables.
+		Si $A \neq B$, alors $A \mathbin{\triangle} B \neq \O$, et donc $A \mathbin{\triangle} B$\/ admet un plus petit élément $m$. Par définition de $\triangle$, on a $m \in A$\/ (et donc $A \succeqd B$) ou $m \in B$\/ (et donc $A \preceqd B$). On en déduit que $A$\/ et $B$\/ sont comparables.
+		La relation $\preceqd$\/ est donc totale.
+
+	\item On a \[
+			\O \preceqd \{2\} \preceqd \{1\} \preceqd \{1,2\} \preceqd \{0\} \preceqd \{0,2\} \preceqd \{0,1\} \preceqd \{0,1,2\}
+		.\]
+	\item Non, l'ordre $(\wp(S), \preceqd)$\/ n'est pas forcément bien fondé. Par exemple, on pose $(S,\preceq) = (\N,{\le})$. Toute partie non vide de $\N$\/ admet bien un plus petit élément. Mais, la suite $(u_n)_{n\in\N} = (\{n\})_{n\in\N}$\/ est strictement décroissante : en effet, pour $n \in \N$, on a $u_n \mathbin{\triangle} u_{n+1} = \{n,n+1\}$\/ qui admet pour élément minimal $n \in A$, d'où $u_n \succeqd u_{n+1}$.
+\end{enumerate}

@@ -1,0 +1,27 @@
+\begin{exo}
+	Soit $u : E \to E$\/ un endomorphisme tel que $u^3 = u$.
+	Montrons que $\Ker(u+\id_E) \oplus \Ker(u - \id_E) \oplus \Ker u = E$.
+
+	\begin{enumerate}
+		\item[2.] De $u^3 = u$, il résulte que le polynôme $P = X^3 - X$\/ est annulateur de $u$. Or, $X^3 - X = (X - 1)(X+1)$\/ et ces facteurs sont deux à deux premiers entre-eux. D'où $E = \Ker P(u) = \Ker(u+\id) \oplus \Ker(u - \id) \oplus \Ker u$.
+		\item[1.] On procède, comme demandé dans l'énoncé, à une analyse-synthèse. Soit $x \in E$.
+			\begin{itemize}
+				\item[{\sc Analyse}] On suppose que $x = a + b + c$\/ et que $a \in \Ker(u+\id)$, $b \in \Ker(u-\id)$\/ et $c \in \Ker u$.
+					D'où $u(a) = -a$, $u(b) = b$\/ et $u(c) = 0$.
+					On a $u(x) = u(a) + u(b) + u(c) = b - a$, d'où $b = u(x) - a$ et donc $u(b) =  b = u^2(x) + u(a) = u^2(x) -a$\/ et donc $b = u^2(x) - b + u(x)$. On en déduit que \[
+						b = \frac{1}{2} \left( u^2(x) + u(x) \right)
+						\qquad
+						a = \frac{1}{2}\left( u^2(x) - u(x) \right)
+						\qquad
+						c = x - u^2(x).
+					\]
+				\item Soient $a = \frac{1}{2}u^2(x) - \frac{1}{2}u(x)$, $b = \frac{1}{2} u^2(x) + \frac{1}{2}u(x)$\/ et $c = x - u^2(x)$.
+					On remarque que, {\it a fortiori}, $a + b + c = x$.
+					On a $a \in \Ker(u + \id_E)$\/ ; en effet, \[
+						u(a) = \frac{1}{2}u^3(x) - \frac{1}{2}u^2(x) = \frac{1}{2}u(x) - \frac{1}{2}u^2(x) = -1
+					\] car $u^3 = u$.
+					De même, on a $b \in \Ker(u - \id_E)$\/ et $c \in \Ker u$.
+			\end{itemize}
+			On en conclut qu'il existe une unique solution $(a,b,c)$.
+	\end{enumerate}
+\end{exo}

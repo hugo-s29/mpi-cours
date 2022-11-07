@@ -1,0 +1,12 @@
+\section{Habitants d'expressions régulières}
+
+\begin{enumerate}
+	\item \begin{enumerate}[label=\textit{(\arabic*)}]
+			\item Les mots de taille 1, 2, 3 et 4 de $\big((ab)^*  \mid a\big)^*$\/ sont $a$, $aa$, $ab$, $aaa$, $aaaa$, $abab$, $aba$, $abaa$, $aab$, $aaab$ et $aaba$.
+			\item On sait, tout d'abord, que l'expression régulière $\big(a\cdot \big((b\cdot b)^*  \mid (a\cdot \O)\big) \cdot b\big)\:\big|\: \varepsilon$\/ est équivalente à $\big(a \cdot (bb)^* \cdot b \big)$. Les mots de taille 1, 2, 3 et 4 sont donc $abbb$\/ et $ab$.
+		\end{enumerate}
+	\item \begin{enumerate}[label=\textit{(\arabic*)}]
+			\item Les mots de taille 1, 2 et 3 de $(a \mid b)^* \cdot (a \mid c)^*$\/ sont $a$, $b$, $c$, $aa$, $bb$, $cc$, $ab$, $ac$, $bc$, $ba$, $ca$, $aaa$, $bbb$, $ccc$, $aac$, $aab$, $bbc$, $bba$, $cca$, $aba$, $abc$, $baa$, $aca$, $acc$, $abb$, $bca$, $bcc$, $cac$, $bab$\/ et $caa$.
+			\item Les mots de taille 1, 2 et 3 de $(a\cdot b)^*  \mid (a\cdot c)^*$\/ sont $ab$\/ et $ac$.
+		\end{enumerate}
+\end{enumerate}

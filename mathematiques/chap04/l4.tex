@@ -1,0 +1,27 @@
+\begin{prop}
+	Soit $u : E \to E$\/ un endomorphisme d'un espace vectoriel $E$. Si des valeurs propres sont distinctes deux à deux, alors les vecteurs propres associés sont libres. Autrement dit, les sous-espaces propres sont en somme directe.
+\end{prop}
+
+Attention : les sous-espaces propres {\color{red} ne sont pas supplémentaires}.
+
+\begin{prv}[méthode 1]
+	Soit $\vec{x}_1 \in \mathrm{SEP}(\lambda_1)$, $\vec{x}_2 \in \mathrm{SEP}(\lambda_2),\ldots,$ $\vec{x}_r \in \mathrm{SEP}(\lambda_r)$\/ tels que $\vec{x}_1 \neq \vec{0}$, $\vec{x}_2 \neq \vec{0},\ldots,\vec{x}_{r} \neq \vec{0}$. Ainsi $u(\vec{x}_1) = \lambda_1 \vec{x}_1$, $u(\vec{x}_2) = \lambda_2 \vec{x}_2,\ldots$, et $u(\vec{x}_r) = \lambda_r \vec{x}_r$.
+	Soient $\alpha_1, \ldots, \alpha_r \in \mathds{K}$. On suppose $\alpha_1 \vec{x}_1 + \cdots + \alpha_r \vec{x}_r = \vec{0}$ ($L_1$). Alors, \[
+		u(\alpha_1 \vec{x}_1 + \cdots + \alpha_r \vec{x}_r = \vec{0}) = u(\vec{0}) = \vec{0}
+	\] d'où $\alpha \lambda_1 \vec{x}_1 + \alpha_2 \lambda_2 \vec{x}_2 + \cdots + \alpha_r \lambda_r \vec{x}_r = \vec{0}$ ($L_2$).
+	D'où, en calculant $L_2 - \lambda_r L_1$, on a \[
+		\alpha_1 (\lambda_1 - \lambda_r) \vec{x}_1 + \alpha_2(\lambda_2-\lambda_r) \vec{x}_2 + \cdots + \alpha_{r-1}(\lambda_{r-1} - \lambda_r) \vec{x}_{r-1} = \vec{0}
+	.\]
+	Par récurrence, pour $r=1$, c'est vrai : la famille $(\vec{x}_1)$\/ est libre.
+	On suppose la propriété vraie pour $r-1$\/ vecteurs. On veut le prouver pour $r$\/ vecteurs. En utilisant le calcul ci-dessus, comme les valeurs propres sont distinctes deux à deux, on en déduit que $\alpha_1 = \alpha_2 = \cdots = \alpha_{r-1} = 0$.
+	Or, d'après $L_1$, $\alpha_r = 0$.
+\end{prv}
+
+\begin{prv}[méthode 2]
+	On sait que $\mathrm{SEP}(\lambda_1) = \Ker(\lambda_1\id - u)$, $\mathrm{SEP}(\lambda_2) = \Ker(\lambda_2\id - u),\ldots$\@ Or, $\lambda_2\id - u$\/ est un polynôme $P_1(u)$, et de même pour $P_2(u),P_3(u),\ldots$\@
+	Les $r$\/ polynômes sont premiers entre-eux car $\lambda_1$, $\lambda_2$, \ldots, $\lambda_r$ sont distinct deux à deux. D'où, d'après le lemme des noyaux, \[
+		\Ker\Big(P(u)\Big) = \bigoplus_{k=1}^n \Ker\big(P_k(u)\big)
+	\] où $P = P_1 \times P_2 \times \cdots \times P_r$.
+	La somme des sous-espaces propres est donc directe.
+\end{prv}
+

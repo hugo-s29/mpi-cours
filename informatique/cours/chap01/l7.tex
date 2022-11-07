@@ -1,0 +1,207 @@
+\begin{rmk}[Notation]
+	Si $\Sigma_1$\/ et $\Sigma_2$\/ sont deux alphabets et $\varphi: \Sigma_1 \to \Sigma_2$, alors on note $\tilde\varphi$\/ l'extension de $\varphi$\/ aux mots de $\Sigma_1^*$\/ : \[
+		\tilde\varphi(w_1\ldots w_n) = \varphi(w_1)\ldots\varphi(w_n)
+	\] et, de plus, on note \[
+		\tilde\varphi(L) = \{\tilde\varphi(w)  \mid w \in L\}
+	.\]
+\end{rmk}
+
+\begin{rmk}
+	On a $\tilde\varphi(L \cup M) =\tilde{\varphi}(L \cup M) =\tilde{\varphi}L \cup \tilde\varphi(M)$.
+\end{rmk}
+
+\begin{prop}
+	\[\tilde\varphi(L \cdot M) = \tilde\varphi(L)\cdot \tilde\varphi(M)\]
+\end{prop}
+
+\begin{prv}
+	\begin{align*}
+		w \in \tilde\varphi(L\cdot M) \iff& \exists u \in L \cdot M,\,w = \tilde\varphi(u)\\
+		\iff& \exists (v,t) \in L \times M,\,w = \tilde\varphi(v\cdot t)\\
+		\iff& \exists (v,t) \in L \times M,\,w = \tilde\varphi(v) \cdot\tilde\varphi(t)\\
+		\iff& w \in \tilde\varphi(L) \cdot \tilde\varphi(M).
+	\end{align*}
+\end{prv}
+
+\begin{defn}
+	Soient $e \in \Reg(\Sigma_1)$, $\varphi : \Sigma_1 \to \Sigma_2$. On définit alors inductivement $e_\varphi$\/ comme étant
+	\begin{multicols}{3}
+		\[
+			\O_\varphi = \O
+		\] \[
+			\varepsilon_\varphi = \varepsilon
+		\] \[
+			a_\varphi = \varphi(a) \text{ si } a \in \Sigma_1
+		\] \[
+			(e_1 \cdot e_2)_\varphi = (e_1)_\varphi \cdot (e_2)_\varphi
+		\] \[
+			(e_1  \mid e_2)_\varphi = (e_1)_\varphi  \mid (e_2)_\varphi
+		\] \[
+			(e_1^*)_\varphi = ((e_1)_\varphi)^*.
+		\]
+	\end{multicols}
+\end{defn}
+
+\begin{prop}
+	Si $\varphi : \Sigma_1 \to \Sigma_2$\/ et $e \in \Reg(\Sigma_1)$, alors \[
+		\mathcal{L}(e_\varphi) = \tilde{\varphi}(\mathcal{L}(e))
+	.\]
+\end{prop}
+
+\begin{prv}[par incuction sur $e \in \Reg(\Sigma_1)$]
+	\begin{itemize}
+		\item[cas $\O$] $\mathcal{L}(\O_\varphi) = \mathcal{L}(\O) = \O =\tilde{\varphi}(\O) = \tilde{\varphi}(\mathcal{L}(\O))$\/
+		\item[cas $\varepsilon$] $\mathcal{L}(\varepsilon_\varphi) = \mathcal{L}(\varepsilon) = \{\varepsilon\} = \tilde\varphi($\/
+			\todo{recopier ici}
+		\item[cas $e_1\cdot e_2$] $\mathcal{L}((e_1\cdot e_2)_\varphi) = \mathcal{L}((e_1)_\varphi \cdot (e_2)_\varphi)) = \mathcal{L}((e_1)_\varphi) \cdot \mathcal{L}((e_2)_\varphi) = \tilde{\varphi}(\mathcal{L}(e_1))\cdot\tilde{\varphi}(\mathcal{L}(e_2)) = \tilde{\varphi}(\mathcal{L}(e_1)\cdot \mathcal{L}(e_2)) = \tilde{\varphi}(\mathcal{L}(e_1\cdot e_2))$.
+		\item[De même pour les autres cas]
+	\end{itemize}
+\end{prv}
+
+\begin{prop}
+	Soit $e \in \Reg(\Sigma_1)$. Il existe $f \in \Reg(\Sigma)$\/ et $\varphi: \Sigma \to \Sigma_1$\/ tel que $f$\/ est linéaire et $e = f_\varphi$.
+\end{prop}
+
+\begin{prv}
+	Il suffit de numéroter les lettres (c.f.\ exemple ci-dessous).
+\end{prv}
+
+\begin{exm}
+	Avec $e = c^* ((a\cdot a) \mid \varepsilon)\cdot ((a \mid c \mid \varepsilon)^*))^* \cdot b \cdot a \cdot a^*$, on a \[
+		f = c_1^*((a_1\cdot a_2) \mid \varepsilon)\cdot (b_1((a_3 \mid c_2 \mid \varepsilon)^*))^* \cdot b_2\cdot a_4\cdot a_5
+	\] et \[
+		\varphi :
+		\left(\begin{array}{rcl}
+			a_1&\mapsto &a\\
+			a_2&\mapsto &a\\
+			a_3&\mapsto &a\\
+			a_4&\mapsto &a\\
+			a_5&\mapsto &a\\
+			b_1&\mapsto&b\\
+			b_2&\mapsto&b\\
+			c_1&\mapsto&c\\
+			c_2&\mapsto&c\\
+		\end{array}\right)
+	.\] 
+\end{exm}
+
+\subsection{Automates locaux}
+
+\begin{defn}[automate local, local standard]
+	Un automate $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ est dit local dès lors que pour out $\forall (q_1,q_2,\ell,q_3,q_4) \in \mathcal{Q}\times \mathcal{Q}\times \Sigma\times \mathcal{Q}\times \mathcal{Q}$, \[
+		(q_1,\ell,q_3) \in \delta \quad\text{et}\quad(q_2,\ell,q_4) \in \delta \qquad\implies\qquad q_3 = q_4
+	.\]
+	L'automate $\mathcal{A}$\/ est dit, de plus, standard lorsque $\Card(I) = 1$\/ et qu'il n'existe pas de transitions entrante en l'unique état initial $q_0$.
+\end{defn}
+
+\begin{prop}
+	Un langage est local si et seulement s'il est reconnu par un automate local standard.
+\end{prop}
+
+\begin{exm}~\\
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-local-1}
+		\caption{Automate local reconnaissant le langage $(ab)^*$}
+	\end{figure}
+\end{exm}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\implies$''] Soit $L$\/ un langage local. Soit $(\Lambda,S,P,F,N)$\/ tels que \[
+				L = \Lambda \cup (P\Sigma^*\cap \Sigma^*) \setminus (\Sigma^* N\Sigma^*)
+			.\]
+			Soit alors l'automate $\mathcal{Q} = \Sigma \cupdot \{\varepsilon\}$, $I = \{\varepsilon\}$, $F_\mathcal{A} = S \cup \Lambda$, et
+			\begin{align*}
+				\delta &= \phantom{\cup}\{(q,\ell,q') \in \mathcal{Q} \times \Sigma \times \mathcal{Q}  \mid qq' \in F \text{ et } q' = \ell\}\\
+				&\mathrel{\phantom{=}} \cup \{(\varepsilon,\ell,q) \in \mathcal{Q}\times \Sigma \times \mathcal{Q}  \mid  \ell = q \text{ et } q \in P\}.
+			\end{align*}
+			On pose $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F_\mathcal{A}, \delta)$. Montrons que $\mathcal{L}(\mathcal{A}) = L$.
+			\begin{itemize}
+				\item[``$\subseteq$''] Soit $w \in \mathcal{L}(\mathcal{A})$. Soit donc \[q_1 \xrightarrow{w_1} q_2 \to \cdots \to q_{n-1} \xrightarrow{w_n} q_n\] une exécution acceptante dans $\mathcal{A}$. Montrons que $w_1\ldots w_n \in L$.
+					\begin{itemize}
+						\item[Cas 1] $w = \varepsilon$\/ et $n = 0$. Ainsi $q_0 = q_n = \varepsilon$\/ et $F \cap I = \O$. Or $F_\mathcal{A} = S \cup \Lambda$, et donc $\Lambda = \{\varepsilon\}$, d'où $\varepsilon \in L$.
+						\item[Cas 2] $w \neq \varepsilon$. On sait que $w_1 \in P$\/ ; en effet, $(\varepsilon, w_1, q_1) \in \delta$\/ donc $w_1 = q_1 \in P$.
+							De même, $(q_{n-1}, w_n,q_n) \in \delta$, d'où $S \ni w_n = q_n$.
+							De plus, $\forall i \in \left\llbracket 1,n-1 \right\rrbracket$, $(q_{i-1}, w_i, q_i) \in \delta$\/ et $(q_i, w_{i+1}, q_{i+1}) \in \delta$.
+							Ainsi, $w_i = q_i$\/ et $w_{i+1} = q_{i+1}$\/ avec $q_iq_{i+1} \in F$, d'où $w_iw_{i+1} \in F$. Donc $w \in L$.
+					\end{itemize}
+				\item[``$\supseteq$''] Soit $w = w_1\ldots w_n \in L$.
+					\begin{itemize}
+						\item[Cas 1] $w = \varepsilon$. On a $\Lambda = \{\varepsilon\}$, et donc $\varepsilon$\/ est final (ou initial). On en déduit que $\varepsilon \in \mathcal{L}(\mathcal{A})$.
+						\item[Cas 2] $w \neq \varepsilon$.
+							Montrons, par récurrence finie sur $p \le n$, qu'il existe une exécution \[
+								q_0 \xrightarrow{w_1}q_1\to \cdots \to q_{n-1}\xrightarrow{w_p} q_p
+							\] dans $\mathcal{A}$.
+							\begin{itemize}
+								\item Avec $p = 1$, on a $w_1 \in P$\/ donc $(\varepsilon, w_1, w_1) \in \delta$. Ainsi, $\varepsilon \xrightarrow{w_1}w_1$\/ est une exécution dans $\mathcal{A}$.
+								\item Supposons construit $\varepsilon \xrightarrow{w_1} q_1 \to \cdots \xrightarrow{w_p} q_p = w_p$\/ avec $p < n$.
+									Or, $w_pw_{p+1} \in F$\/ donc $(w_p, w_{p+1}, w_{p+1}) \in \delta$. Ainsi, \[
+										\varepsilon \xrightarrow{w_1} q_1 \to \cdots \xrightarrow{w_p} q_p \xrightarrow{w_{p+1}} w_{p+1}
+									\] est une exécution acceptante de $\mathcal{A}$.
+							\end{itemize}
+							De proche en proche, on a \[
+								\varepsilon \xrightarrow{w_1} q_1 \to \cdots \to q_{n-1} \xrightarrow{w_{n}} w_{n}
+							\] une exécution dans $\mathcal{A}$. Or, $w_n \in S = F_\mathcal{A}$\/ et donc l'exécution est acceptante dans $\mathcal{A}$, et $w \in \mathcal{L}(\mathcal{A})$.
+					\end{itemize}
+			\end{itemize}
+		\item[``$\impliedby$'']
+			Soit $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F_\mathcal{A}, \delta)$\/ un automate localement standard.
+			Montrons que $\mathcal{L}(\mathcal{A})$\/ est local. Il suffit de montrer que $\rho(\mathcal{L}(\mathcal{A})) = \mathcal{L}(\mathcal{A})$. Or $\mathcal{L}(\mathcal{A}) \subseteq \rho(\mathcal{L}(\mathcal{A}))$. On montre donc $\rho(\mathcal{L}(\mathcal{A}))\subseteq \mathcal{L}(\mathcal{A})$.
+
+			Soit $w \in \rho(\mathcal{L}(\mathcal{A}))$. Ainsi, \[
+				w \in \Lambda(\mathcal{L}(\mathcal{A})) \cup \Big(P(\mathcal{L}(\mathcal{A})) \Sigma^* \cap \Sigma^* S(\mathcal{L}(\mathcal{A}))\Big) \setminus \Big(\Sigma^* N(\mathcal{L}(\mathcal{A}))\Sigma^*\Big)
+			.\]
+			Montrons que $w \in \mathcal{L}(\mathcal{A})$.
+			\begin{itemize}
+				\item Si $w \in \Lambda(\mathcal{L}(\mathcal{A}))$, alors $w = \varepsilon$. Or, $\Lambda(\mathcal{L}(\mathcal{A})) = \mathcal{L}(\mathcal{A}) \cap \{\varepsilon\}$. Ainsi $w \in \mathcal{L}(\mathcal{A})$.
+				\item Sinon, $w = w_1\ldots w_n$\/ avec $w_1 \in P(\mathcal{L}(\mathcal{A}))$, donc il existe $u \in \Sigma^*$\/ tel que $w_1\cdot u \in \mathcal{L}(\mathcal{A})$. Il existe donc une exécution acceptante \[ % todo dashed arrow
+						I \ni q_0 \xrightarrow{w_1} q_1 \overset{u}{-\ -\ \to} q_s \in F_\mathcal{A}
+					.\]
+					Il existe donc une exécution $q_0\xrightarrow{w_1}q_1$.
+
+					Supposons construit $q_1 \xrightarrow{w_1} q_1 \to \cdots \xrightarrow{w_p} q_p$\/ avec $p < n$.
+					Or, $w_pw_{p+1} \in F(\mathcal{L}(\mathcal{A}))$, donc il existe $w \in \Sigma^*$\/ et $y \in \Sigma^*$\/ tels que $x \cdot w_p \cdot w_{p+1}\cdot y \in \mathcal{L}(\mathcal{A})$. Il existe donc une exécution acceptante  \[
+						r_0 \overset x{-\ -\ \to} r_{p-1} \xrightarrow{w_p} r_p \xrightarrow{w_{p+1}} r_{p+1} \overset y{-\ -\ \to} r_s.
+					\] Or, par localité de l'automate, $q_p = r_p$. Il existe donc $q_{p+1}$\/ ($= r_{p+1}$) tel que $(q_p, w_{p+1}, q_{p+1}) \in \delta$.
+					On a donc une exécution \[
+						q_0 \xrightarrow{w_1} q_1 \to \cdots \to q_p \xrightarrow{w_{p+1}} q_{p+1}
+					.\]
+			\end{itemize}
+			De proche en proche, il existe une exécution \[
+				q_0 \xrightarrow{w_1} q_1 \to \cdots \to q_n
+			.\] Or, $w_n \in S(\mathcal{L}(\mathcal{A}))$, il existe donc $v \in \Sigma^*$\/ tel que $v \cdot w_n \in \mathcal{L}(\mathcal{A})$, donc il existe un exécution acceptante \[
+				I\ni r_0 \overset v{-\ -\ \to} r_{s-1} \xrightarrow{w_n} r_s  \in F_\mathcal{A}
+			.\]
+			Par localité, $r_s = q_n \in F_\mathcal{A}$.
+
+			Donc $\rho(\mathcal{L}(\mathcal{A})) \subseteq \mathcal{L}(\mathcal{A})$\/ et donc $\rho(\mathcal{L}(\mathcal{A})) = \mathcal{L}(\mathcal{A})$. On en déduit que $\mathcal{L}(\mathcal{A})$\/ est local.
+	\end{itemize}
+\end{prv}
+
+\begin{exm}
+	Dans le langage local $(ab)^*  \mid c^*$, on a $\Lambda = \{\varepsilon\}$, $S = \{c,b\}$, $P = \{a,c\}$\/ et $F = \{ab,ba,cc\}$.
+	L'automate local reconnaissant ce langage est celui ci-dessous.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-local-2}
+		\caption{Automate local reconnaissant $(ab)^*  \mid c^*$}
+	\end{figure}
+\end{exm}
+
+\begin{prop}
+	Soit $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ un automate et $\varphi : \Sigma \to \Sigma_1$. On pose \[
+		\delta' = \{(a,\varphi(\ell),q')  \mid (q, \ell, q') \in \delta\}
+	.\] On pose $\mathcal{A}' = (\Sigma, \mathcal{Q}, I, F, \delta')$. On a $\mathcal{L}(\mathcal{A}') = \tilde\varphi(\mathcal{L}(\mathcal{A}))$.
+\end{prop}
+
+\begin{exo}
+	Montrons que $\mathrm{LR} \subsetneq \wp(\Sigma^*)$\/ i.e.\ il existe des langages non reconnaissables.
+
+	$\R$\/ n'est pas dénombrable. On écrit un nombre réel comme une suite infinie \[0{,}10110010101\ldots1010110\ldots\] On pose $\Sigma = \{a\}$, on crée le langage $L$, associé au nombre ci-dessus comme l'ensemble contenant $a$, $aaa$, $aaaa$,\ldots
+\end{exo}
+
+\begin{rmk}[Notation]
+	On note $A_\varphi$, l'automate $\big(\varphi(E), \mathcal{Q}, I, F, \delta')$\/ où $\delta' = \{(q,\varphi(\ell),q')  \mid (q,\ell,q') \in \delta\}$.
+\end{rmk}
+

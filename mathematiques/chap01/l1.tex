@@ -1,0 +1,192 @@
+\section{La nature d'une suite ou d'une série}
+
+\begin{met}
+	Une suite $(u_n)_{n\in\N}$\/ peut
+	\begin{enumerate}
+		\item avoir une limite $\ell \in \R$\/ ;
+		\item avoir pour limite $\pm \infty$\/ ;
+		\item ne pas avoir de limite.
+	\end{enumerate}
+
+	{\it Converger}\/ concerne le premier point ; {\it avoir une limite}\/ correspond aux deux premiers points et {\it diverger}\/ correspond aux deux derniers.
+\end{met}
+
+Théorème de la limite monotone : toute suite croissante majorée a une limite.
+
+Une série est notée $\sum u_n$. On dit qu'elle {\it converge}\/ si la suite des sommes partielles $S_n$\/ converge \[
+	S_n = \sum_{k=0}^{n} u_n
+.\]
+
+La série ``$\sum u_n$\/'' n'a pas de valeurs mais une nature ; contrairement à la somme partielle ``$\sum_{k=0}^{n} u_n$\/ a une valeur, on peut la calculer (elle existe toujours); et $\sum_{k=0}^{\infty} u_k$\/ qui est la limite de la somme partielle (elle existe si la série converge).
+
+Si la suite $(u_n)$\/ ne tends pas vers $0$, la série $\sum u_n$\/ diverge mais la réciproque est fausse : par exemple, la somme des ``$\frac{1}{n}$\/'' tends vers 0 mais la série diverge.
+
+\begin{rap} %no-number
+	Notation en ``grand $O$\/'' : soient $u$\/ et $v$\/ deux suites réelles (ou complexes).
+	\begin{align*}
+		v_n = O(u_n) &\mathop{\iff}^{\text{def}} v_n = b_n \times u_n\text{, où $b_n$\/ est bornée},\\
+		v_n = \po(u_n) &\mathop{\iff}^{\text{def}} v_n = \varepsilon_n \times u_n\text{, où $\varepsilon_n \tendsto{n \to +\infty} 0$},\\
+		v_n \sim u_n &\mathop{\iff}^{\text{def}} v_n = (\underbrace{1 + \varepsilon_n}_{\mathclap{\tendsto{n\to +\infty} 1}}) \times u_n\text{, où $\varepsilon_n \tendsto{n \to +\infty} 0$}.\\
+	\end{align*}
+
+	Si on peut diviser par $u_n$, on peut vérifier
+	\begin{align*}
+		v_n = O(u_n) &\iff \frac{v_n}{u_n} \in [m, M],\\
+		v_n = \po(u_n) &\iff \frac{v_n}{u_n} \tendsto{n\to +\infty} 0,\\
+		v_n \sim u_n &\iff \frac{v_n}{u_n} \tendsto{n\to +\infty} 1.
+	\end{align*}
+\end{rap}
+
+Si la série $\sum u_n$\/ oscille entre des valeurs positives et négatives, on peut analyser $\sum |u_n|$\/ car si cette série converge, alors $\sum u_n$\/ aussi.
+
+\begin{exo}
+	\begin{enumerate}
+		\item Quelle est la nature de la série $\sum \frac{1}{n^2 + \sqrt{n}}$\/ ?
+			\[
+				0 \le \frac{1}{n^2 + \sqrt{n}} \le \frac{1}{n^2}
+			\]
+
+			On sait déjà que $\sum \frac{1}{n^2}$\/ converge (vers $\frac{\pi^2}{6}$\/) mais ce résultat sera redonné dans la proposition 6 : Critère de {\sc Riemann}.
+			On en déduit que $\sum \frac{1}{n^2 + \sqrt{n}}$\/ converge aussi (par comparaison).
+
+			Autre méthode : on a \[0 \le \frac{1}{n^2 + \sqrt{n}} \sim \frac{1}{n^2}\] (à démontrer) ; et comme $\smash{\sum \frac{1}{n^2}}$\/ converge alors $\smash{\sum \frac{1}{n^2 + \sqrt{n}}}$\/ aussi.
+
+		\item On a, comme dans le 1., \[
+				\frac{1}{n^2 + \sqrt{n}} \sim \frac{1}{n^2}
+			\] et, comme $\sum \frac{1}{n^2}$\/ converge alors $\smash{\sum \frac{1}{n^2 + \sqrt{n}}}$\/ converge aussi.
+
+		\item On a \[
+					\frac{1}{n \cos^2 n} \ge \frac{1}{n},
+			\] or, $\sum \frac{1}{n}$\/ diverge (d'après le critère de {\sc Riemann}\/) et donc $\smash{\sum \frac{1}{n \cos^2 n}}$ aussi.
+
+		\item On a \[
+					\frac{\ln n}{n^2} = \mathop{\boxed{ \frac{\ln n}{n^{0{,}7}}}}_{n\to +\infty} \times \frac{1}{n^{1{,}3}} = \po_{n\to +\infty}\left( \frac{1}{n^{1{,}3}} \right)
+			.\] Or, $\sum \frac{1}{n^{1{,}3}}$\/ converge (d'après le critère de {\sc Riemann}) donc $\sum \frac{\ln n}{n^2}$\/ converge.
+
+		\item Dans cet exemple, on ne peut pas utiliser une minoration $\frac{\sin n}{n^2}$\/ par $\frac{1}{n^2}$\/ car la première suite change de signe.
+
+			On a \[
+				0 \le \left| \frac{\sin n}{n^2} \right| \le \frac{1}{n^2}
+			\] or, $\sum \frac{1}{n^2}$\/ converge d'où $\smash{\sum\left|\frac{\sin n}{n^2}\right|}$\/ converge et donc \(\sum \frac{\sin n}{n^2}\) converge (absolument).
+	\end{enumerate}
+\end{exo}
+
+\section{Comparer série et intégrale}
+
+\begin{met}
+	~
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			import graph;
+
+			size(5cm);
+			draw((0,0) -- (3, 0));
+			draw((3,0) -- (4, 0), dotted);
+			draw((4,0) -- (6, 0), Arrow(TeXHead));
+			draw((0,0) -- (0, 5), Arrow(TeXHead));
+
+			real f(real x) { return 4*exp(-x/4); }
+			draw(graph(f, 0, 3));
+			draw(graph(f, 3, 4), dotted);
+			draw(graph(f, 4, 6));
+
+			draw(box((0, 0), (1, f(0))), red);
+			draw(box((1, 0), (2, f(1))), red);
+			draw(box((2, 0), (3, f(2))), red);
+		\end{asy}
+		\caption{Comparaison série intégrale}
+
+		\todo{Refaire les deux graphiques}
+	\end{figure}
+
+	Des deux dessins ci-dessus, on en déduit les deux inégalités suivantes :
+	\[
+		\int_{1}^{n+1} f(x)~\mathrm{d}x \le \sum_{k=1}^{n} u_k \qquad \text{ et } \qquad \sum_{k=2}^{n} u_k \le \int_{1}^{n} f(x)~\mathrm{d}x
+	.\] Ainsi, \[
+		\int_{1}^{n+1} f(x)~\mathrm{d}x \le \sum_{k=1}^n u_k \le u_1 + \int_{1}^{n} f(x)~\mathrm{d}x
+	.\]
+
+	Cette méthode permet de calculer une série en calculant une intégrale. On dispose, en effet, de bien plus d'outils pour calculer des intégrales que des séries.
+\end{met}
+
+\begin{exo}
+	On utilise le résultat trouvé dans la méthode précédente : on pose \[
+		H_n = \sum_{k=1}^{n} \frac{1}{k} = 1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots + \frac{1}{n}
+	.\]
+
+	On a donc
+	\begin{align*}
+		&\int_{1}^{n+1} \frac{1}{x}~\mathrm{d}x \le \sum_{k=1}^{n} \frac{1}{k} \le 1 + \int_{1}^{n} \frac{1}{x}~\mathrm{d}x\\
+		\iff& \ln(n+1) - \ln1 \le H_n \le 1 + \ln n - \ln 1\\
+		\iff& \boxed{\ln(n+1) \le H_n \le 1 + \ln n.}
+	\end{align*}
+
+	On ne peut pas appliquer le théorème des gendarmes mais comme $\ln(n+1) \tendsto{n\to +\infty} +\infty$, on en déduit que $H_n \tendsto{n\to +\infty} +\infty$\/ et donc la suite $(H_n)$\/ diverge.
+	On en déduit que la série $\sum \frac{1}{k}$\/ diverge.
+
+	Pour montrer que $H_n \sim \ln n$, on ne peut pas le faire {\it à l'intuition}\/ mais il faut procéder comme il suit : \[
+		\frac{\ln(n+1)}{\ln n} \le \frac{H_n}{\ln n} \le \frac{1 + \ln n}{\ln n} = \frac{1}{\ln n} + 1 \tendsto{n\to +\infty} 1
+	\] et
+	\begin{align*}
+		\frac{\ln (n+1)}{\ln n} &= \frac{\ln\left( n \left( 1+\frac{1}{n} \right) \right) }{\ln n} \\
+		&= \frac{\ln n + \ln \left( 1+ \frac{1}{n} \right)}{ \ln n} \\
+		&= 1+ \frac{\ln\left( 1+\frac{1}{n} \right)}{\ln n}. \\
+	\end{align*}
+	Or, d'après le théorème des gendarmes, $\frac{\ds H_n}{\ln n} \tendsto{n\to +\infty} 1$\/ et donc \[
+		\boxed{H_n \sim \ln n.}
+	\]
+
+	Par suite, on a
+	\begin{align*}
+		H_n &= \ln(n) \times (1+\varepsilon_n) \\
+		&= \ln(n) + \varepsilon_n \ln n \\
+		&= \ln n + \po(\ln n). \\
+	\end{align*}
+	On veut montrer que $H_n - \ln n \tendsto{n\to +\infty} \gamma$ i.e.\ $H_n - \ln n = \gamma + \varepsilon_n$\/ i.e.\ on veut montrer que \[
+		H_n = \ln n + \gamma + \varepsilon_n
+	.\]
+	La forme ci-dessus est plus précise que le résultat que l'on a trouvé précédemment. Pourquoi ? On sait que le reste entre $H_n$\/ et $\ln n$\/ est constant et ne tends pas vers $+\infty$ (ce qui n'est pas le case de $\po(\ln n)$).
+
+	On étudie la suite $(H_n - \ln n)$\/ et on montre qu'elle est convergente et que ça limite est $\gamma$. On sait déjà que l'on ne peut pas calculer $\gamma$\/ numériquement, on utilise un théorème qui assure l'existence de la limite sans le calculer ; dans ce cas ci, on utilise le théorème de la limite monotone.
+	
+	Soit $u_n = H_n - \ln n$\/ pour tout $n \in \N^*$. On calcule $u_{n+1}-u_n$\/ et on pressent un télescopage :
+	\begin{align*}
+		u_{n+1} - u_n &= \big[H_{n+1} - \ln(n+1)\big] - \big[H_n - \ln(n) \big] \\
+		&= [H_{n+1} - H_n] - \big[\ln(n+1) - \ln n \big] \\
+		&= \frac{1}{n+1} - \big[\ln(n+1) - \ln n \big] \\
+	\end{align*} car
+	\begin{gather*}
+		H_n = 1 + \frac{1}{2} + \cdots + \frac{1}{n-1} + \frac{1}{n}\\
+		H_{n+1} = 1 + \frac{1}{2} + \cdots + \frac{1}{n-1} + \frac{1}{n}\\
+	\end{gather*}
+
+	Calculer le signe de \[
+		\frac{1}{n+1} - \big[\ln(n+1) - \ln n\big]
+	.\]
+
+	\begin{enumerate}
+		\item[\sc Méthode 1] Graphiquement : \todo{dessin à faire}
+		\item[\sc Méthode 2] Théorème des accroissements finis :
+			\begin{rap}
+			Si $f$\/ est continue sur $[a,b]$\/ et dérivable sur $]a,b[$, alors \[
+				\exists c \in {]a,b[},\, f(b)- f(a) = f'(c)\:(b-a)
+			.\]
+			\end{rap}
+
+			On sait déjà que $\ln$\/ est continue sur $[n, n+1]$, et dérivable sur $]n, n+1[$\/ d'où, il existe $c \in {]n,n+1[}$\/ telle que  \[
+				\ln(n+1) - \ln n = \frac{1}{c} \big((n+1) - n\big)
+			.\]
+	\end{enumerate}
+
+	Dans les deux cas, on a montré que la suite $(u_n)_{n\in\N^*}$\/ est décroissante.
+	Or,
+	\begin{align*}
+		&\ln(n+1) \le H_n \le 1 + \ln n\\
+		\text{d'où}\quad&\ln(n+1) - \ln \le H_n - \ln n
+	\end{align*}
+	et, en passant à la limite, on a $0 \le H_n - \ln n$.
+
+	On en déduit que la suite de $(u_n)_{n\in\N^*}$\/ est décroissante et minorée par $0$\/ donc elle converge et on note $\gamma$\/ sa limite.
+\end{exo}
+

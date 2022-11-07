@@ -1,0 +1,45 @@
+\section{Exercice 14}
+
+\begin{enumerate}
+	\item Grâce aux impédances d'entrée infinies, on a $u_r = r i_D(t)$\/ et $u_1 = K_\text{m}\,r\,i_D(t)\,u_D(t)$. C'est un Wattmètre car le produit $i_D(t) \times u_D(t)$\/ correspond à la puissance reçue par $D$ (car elle est positive). Ce Wattmètre est analogique car $i_D(t)$\/ et $u_D(t)$\/ sont des grandeurs qui varient dans un interval continu.
+
+	\item On a $\omega_\text{c} = \frac{1}{RC}$\/ d'où $f_\text{c} = \frac{1}{2\pi\,R\,C}\circeq \frac{1}{0{,}6}\:\mathrm{Hz} \circeq 2\:\mathrm{Hz}$.
+
+		La fonction de ce circuit est de calculer la moyenne d'un signal (c'est donc un moyenneur) : il filtre les fréquences supérieures à quelques $\:\mathrm{Hz}$. On n'obtient donc que la composante continue comme montré sur la figure ci-dessous.
+
+		\begin{figure}[H]
+			\centering
+			\begin{asy}
+				import graph;
+				size(7cm);
+				real f(real x) { return (-atan((x - 2)*3)/pi + 1/2)*7; }
+				draw((-1, 0) -- (15, 0), Arrow(TeXHead));
+				draw((0, -1) -- (0, 8), Arrow(TeXHead));
+				draw(graph(f, 0, 15), green);
+				draw((5,0)--(5,5), orange);
+				draw((0,0)--(0,5), orange);
+				dot((5,5), orange);
+				dot((0,5), orange);
+			\end{asy}
+			\caption{Moyenneur}
+		\end{figure}
+		
+		{\color{red} On ne passe pas par les complexes} mais on revient aux définitions réelles d'un signal sinusoïdal :
+		\begin{align*}
+			u_1(t) &= K_\text{m} r\,i_D(t)\,u_D(t) \\
+			&= K_\text{m}\,r\,I_D\cos(2\pi f + \varphi_i)\,U_D \cos(2\pi f t + \varphi_u) \\
+			&= K_\text{m}\,r\,I_D\,U_D \times \frac{1}{2}\Big(\cos(2\pi\times 2f t + \varphi_i + \varphi_u) - \cos(\varphi_u - \varphi_i)\Big). \\
+		\end{align*}
+		On en déduit donc que \[
+			u_s(t) \sim K_\text{m}\,r\,\underbrace{\frac{1}{2}\,U_D\,I_D\cos(\varphi_u - \varphi_i)}_{\langle p(t)\rangle}
+		.\]
+	\item
+		\begin{itemize}
+			\item Si $D = R$, on a
+				\[
+					\langle p(t) \rangle = \frac{1}{2}\,U_D\,I_D \cos(\overbrace{\varphi_u - \varphi_i}^{0}) = \frac{1}{2} R I_D^2 = \frac{U_D^2}{2R}
+				.\] 
+			\item Si $D = C$, on a $\ubar{u}_C = \ubar{Z}_C \ubar{i}_C = \frac{1}{\mathrm{j}C\omega} \ubar{i}_C$. Or, $\Arg(\ubar{Z}_C) = \Arg\left( \frac{\ubar{u}}{\ubar{i}} \right) = \Arg(\ubar{u}) - \Arg(\ubar{i}) = \varphi_u - \varphi_i = -\frac{\pi}{2}$. On en conclut donc que $\langle p(t) \rangle = 0$.
+			\item Si $D = L$, on a $\Arg(\ubar{Z}_L) = \varphi_u - \varphi_i = \frac{\pi}{2}$\/ et donc $\langle p(t) \rangle  = 0$.
+		\end{itemize}
+\end{enumerate}

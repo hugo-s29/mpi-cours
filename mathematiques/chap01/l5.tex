@@ -1,0 +1,33 @@
+Le développement limité de $\Arctan$\/ est à connaître : pour le retrouver, on peut utiliser le développement de $1 / (1 + x^2)$\/ et en primitivant : \[
+	\frac{1}{1+x^2} = 1 - x^2 + x^4 - x^6 + \cdots \qquad \xrightarrow{\quad\int\cdot\mathrm{d}x\quad}\qquad \Arctan x = x - \frac{x^3}{3} + \frac{x^5}{5} - \frac{x^7}{7} + \cdots
+.\]
+
+\begin{prop}[Stirling]
+	\[
+		n! \simi_{n\to +\infty} \left( \frac{n}{e} \right)^n \sqrt{2\pi n}
+	.\]
+\end{prop}
+
+\begin{exo}
+	L'expérience aléatoire est ``on lance $2n$\/ fois une pièce'' et l'évènement nommé $A$\/ est ``on obtient autant de ${\bf P}$\/ que de ${\bf F}$.'' Un résultat est une $2n$-liste de ${\bf P}$\/ et de ${\bf F}$. (Ce n'est pas un ensemble : l'ordre dans une liste compte.) Autrement dit, un résultat est un élément de $\{{\bf P}, {\bf F}\}^{2n}$.
+	Par exemple \[
+		(\underbrace{{\bf P},{\bf F}, {\bf F}, \ldots, {\bf P},{\bf F}}_{2n}) \in \{{\bf P},{\bf F}\}^{2n}
+	\] est un résultat possible. L'ensemble des résultats possibles est nommé ``univers $\Omega$.'' Dans cet exemple-ci, tous les résultats sont équiprobables. L'énoncé de l'exercice est alors de déterminer $u_n = P(A)$\/ : \[
+		u_n = P(A) = \frac{\#\:\text{résultats favorables à } A}{\#\:\text{résultats possibles}} = \frac{\Card(A)}{\Card(\Omega)}
+	.\]
+	On cherche la limite de la suite $(u_n)_{n\in\N}$\/ quand $n$\/ tends vers $+\infty$.
+	Construire un résultat de $\Omega$, c'est choisir ${\bf P}$\/ ou ${\bf F}$\/ $2n$\/ fois, il y a $2^{2n}$\/ manières. On en déduit que $\Card(\Omega) = 2^{2n} = 4^n$.
+	Construire un résultat de $A$, c'est : (1) choisir les $n$\/ places prises par les ${\bf P}$\/ dans la $2n$-liste ; (2) y placer les $n$\/ ${\bf P}$\/ puis ailleurs les $n$\/ ${\bf F}$.
+	Pour le (1), il y a ${2n\choose n}$\/ manières ; pour le (2), il y a une seule manière. On conclut que \[
+		\Card(A) = {2n\choose n} \times 1 = \frac{(2n)!}{n!\,(2n-n)!} = \frac{(2n)!}{(n!)^2}
+	.\] Par équiprobabilité, la probabilité $u_n$\/ de l'évènement $A$\/ est \[
+		u_n = \frac{\sfrac{(2n)!}{(n!)^2}}{2^{2n}}
+	.\] D'après la formule de {\sc Stirling}, on a $n! \sim \left( \frac{n}{e} \right)^n \sqrt{2\pi n}$. D'où, \[
+		\begin{cases}
+			(n!)^2 \sim \left( \frac{n}{e} \right)^{2n} 2\pi\,n\\
+			(2n)! \sim \left( \frac{2n}{e} \right)^{2n} \sqrt{2\pi\times 2n}.
+		\end{cases}
+	\] \[
+		u_n \sim \frac{\cancel{2^{2n}} \cancel{\left( \frac{n}{e} \right)^{2n}} \sqrt{4\pi\,n}}{\cancel{2^{2n}}\cancel{\left( \frac{n}{e} \right)^{2n}} 2\pi n} \simi_{n\to +\infty} \frac{1}{\sqrt{\pi n}}
+	.\]
+\end{exo}

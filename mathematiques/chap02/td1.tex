@@ -1,0 +1,42 @@
+\section{Exercice 1}
+
+\begin{enumerate}
+	\item On sait que $f(e_1) = e_1 - 3e_2 - 2e_3$, $f(e_2) = e_1 - 3e_2 - 2e_3$\/ et $f(e_3) = -e_1 + 3e_2 + 2e_3$. On remarque que $f(e_1) = f(e_2) = -f(e_3)$\/ et donc $\Im f = \Vect(e_1-3e_2-2e_3)$. Or, d'après le théorème du rang, on sait donc que $\dim(\Ker f) = 2$. Or, on remarque que $f(e_1 - e_2) = f(e_1) - f(e_2) = 0_{\R^3}$\/ et, $f(e_1 + e_3) = f(e_1) - f(e_3) = 0_{\R^3}$. Comme $e_1-e_2$\/ et $e_1+e_3$\/ ne sont pas colinéaires (car $(e_1,e_2,e_3)$\/ est une base de $\R^3$), ils forment donc une base de $\Ker f$. On en déduit que $\Ker f = \Vect(e_1-e_2,e_1+e_3)$.
+	\item Soit $x \in \R^3$. On pose $(\alpha,\beta,\gamma) \in \R^3$\/ tels que $x = \alpha e_1 + \beta e_2 + \gamma e_3$. On cherche $(a,b,c) \in \R^3$\/ tel que $\alpha e_1 + \beta e_2 + \gamma e_3 = a(e_1 - 3e_2 - 2e_3) + b(e_1 - e_2) + c(e_1+e_3)$. Comme $(e_1,e_2,e_3)$\/ est une base de $\R^3$, on peut identifier et on résout donc
+		\begin{align*}
+			\begin{rcases*}
+				a + b + c = \alpha\\
+				-3a - b = \beta\\
+				-2a + c = \gamma
+			\end{rcases*} \iff& \begin{cases}
+				a = \alpha - b - c\\
+				2b + 3c -2\alpha = \gamma\\
+				-3a - b = \beta
+			\end{cases}\\
+			\iff& \begin{cases}
+				a = \alpha - b - c\\
+				c = \frac{1}{3}(\gamma - 2b - 2\alpha)\\
+				2b + 3c = 3\alpha + \beta\\
+			\end{cases}\\
+			\iff& \begin{cases}
+				a = \alpha - b - c\\
+				c = \frac{1}{3}(\gamma - 2b - 2\alpha)\\
+				2b + \gamma - 2b - 2\alpha = 3\alpha + \beta
+			\end{cases}\\
+			\implies& \gamma = 5\alpha + \beta.
+		\end{align*}
+		On en déduit que $\Im f + \Ker f \neq \R^3$. Ils ne sont donc pas supplémentaires.
+	\item La famille $(\varepsilon_1, \varepsilon_2, \varepsilon_3) = \big((1,0,0), (1, -3, -2), (1,0,1)\big)$\/ est libre, c'est donc une base de $\R^3$. De plus, $f(\varepsilon_1) = \varepsilon_2$, $f(\varepsilon_2) = 0_{\R^3}$\/ et $f(\varepsilon_3) = 0_{\R^3}$\/ d'où \[
+			\Big[f\Big]_{(\varepsilon_1, \varepsilon_2, \varepsilon_3)} = \begin{pmatrix}
+				0&0&0\\
+				1&0&0\\
+				0&0&0
+			\end{pmatrix}
+		.\] On en déduit que $P$\/ est la matrice de passage de la base $(e_1, e_2, e_3)$\/ à $(\varepsilon_1, \varepsilon_2, \varepsilon_3)$, qui est inversible, d'où \[
+			P = \begin{pmatrix}
+				1&1&1\\
+				0&-3&0\\
+				0&-2&1
+			\end{pmatrix}
+		.\]
+\end{enumerate}

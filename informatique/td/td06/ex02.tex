@@ -1,0 +1,45 @@
+\section{Test de primalité probabiliste}
+\subsection{Résultats mathématiques}
+
+\begin{enumerate}
+	\item
+		\begin{itemize}
+			\item Élément neutre : soit $x \in G_n$, d'où $x \cdot 1 = 1 \times x\ \mathrm{mod}\ n = x\ \mathrm{mod}\ n$, et donc $1 \in G_n$\/ est l'élément neutre de $G_n$.
+			\item Associativité : par associativité de $\times$, et par le fait que ``$\mathrm{mod}$'' soit une congruence, on en conclut que $\cdot$\/ est associative.
+			\item Soient $x,y \in G_n$. Ainsi, $x \cdot y = x \times y \ \mathrm{mod}\ n$. Or, $x \times y \wedge n = 1$, et donc $x\cdot y \wedge n = 1$.
+			\item Soit $x \in G_n$, donc $x \wedge n = 1$. D'où, d'après le théorème de {\sc Bézout}, il existe $u$\/ et $v \in \Z$\/ deux entiers tels que $u\times x + v\times n = 1$. D'où $1\ \mathrm{mod}\ n = u \times x + v \times n\ \mathrm{mod}\ n$\/ et donc $1 = u \times x\ \mathrm{mod}\ n$. Ainsi $x^{-1} = u \in G_n$, car $u \neq 0$.
+		\end{itemize}
+
+	\item On sait que $1 \in E_n$. Soit $y \in E_n$, d'où $y^{n-1} \equiv 1\mod n$, i.e.\ $y\times (y^{n-2}) \equiv 1\mod n$, donc $y^{n-2} \in E_n$\/ est l'inverse de $y$. Soient $x$\/ et $y \in E_n$. On a $(x\cdot y^{-1})^{n-1} \equiv x^{n-1} \cdot y^{n-1}\mod n \equiv 1 \mod n$. D'où $x \cdot y^{-1} \in E_n$. Ainsi, $E_n$\/ est un sous-groupe de $(G_n, \cdot)$.
+
+	\item Soit $n$\/ composé. Il existe $a \in \left\llbracket 1,n-1 \right\rrbracket$\/ tel que $a^{n-1} \not\equiv 1 \mod n$, et donc $E_n \subsetneq G_n$.
+		Or, {\slshape le cardinal d'un sous-groupe divise le cardinal du groupe}, et donc $|E_n|  \mid |G_n| \le n-1$, donc $|E_n| \le \frac{n-1}{2}$.
+
+		\subsection{Algorithme}
+	\item~
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\Entree $n \in \N$\/ et $k \in \N$\/ deux entiers.
+				\For{$j \in \left\llbracket 1,k \right\rrbracket$}
+				\State $a \gets \mathcal{U}(\left\llbracket 1,n-1 \right\rrbracket)$
+				\If{$a^{n-1}\ \mathrm{mod}\ n \neq 1$}
+				\State\Return {\tt Non}\/ 
+				\EndIf
+				\EndFor
+				\State\Return {\sc Oui}\/
+			\end{algorithmic}
+			\caption{Algorithme {\sc Monte-Carlo}\/ testant la primalité d'un nombre en $\mathcal{O}(k\:(\ln k)^3$}
+		\end{algorithm}
+
+		En effet, si $|E_n| \le \frac{n-1}{2}$, donc si $a \sim \mathcal{U}(\left\llbracket 1,n-1 \right\rrbracket)$, d'où $P(a \in E_n) \le \frac{1}{2}$.
+		La probabilité que l'algorithme échoue est inférieure à $\frac{1}{2^k}$.
+
+		\subsection{Implémentation}
+
+		\paragraph{Indications}
+		Pour calculer $a^b\ \mathrm{mod}\ c$, on décompose $b$\/ en base 2 : $b = \sum_{i=1}^p b_i 2^i$, et donc
+		\[
+			a^b\ \mathrm{mod}\ c = \Big(\prod_{i=1}^p a^{b_i 2^i}\Big)\ \mathrm{mod}\ c = \prod_{i=0}^p \left( a^{b_i 2^i}\ \mathrm{mod}\ c \right).
+		\] Et, $p \sim \log_2(n)$.
+\end{enumerate}

@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-5, 0) {};
+		\node [style=new style 0] (1) at (-2, 0) {0};
+		\node [style=new style 0] (2) at (1, 2) {1};
+		\node [style=new style 0] (3) at (1, -2) {2};
+		\node [style=none] (4) at (-1.25, -1.75) {$\varepsilon$};
+		\node [style=none] (5) at (-1, 2) {$a\mid b$};
+		\node [style=none] (6) at (2.25, -1.75) {$a^*$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow, bend left] (1) to (2);
+		\draw [style=arrow, bend right] (1) to (3);
+		\draw [style=arrow] (0.center) to (1);
+		\draw [style=arrow, in=-30, out=45, loop] (3) to ();
+	\end{pgfonlayer}
+\end{tikzpicture}

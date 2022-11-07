@@ -1,0 +1,57 @@
+\section{Arbres, Arbres, Arbres !}
+
+\begin{enumerate}
+	\item On pose $R = \Big\{ \red V\big|^0,\:\red N\big|_{\N}^2\Big\}$. Ainsi, par induction nommée, on crée l'ensemble $\mathcal{A}$ des arbres.
+	\item On pose \begin{align*}
+			h: \mathcal{A} &\longrightarrow \N \cup \{-1\} \\
+			\red V &\longmapsto -1\\
+			\red N(x, f_1, f_2) &\longmapsto 1 + \max\big( h(f_1), h(f_2) \big)
+		\end{align*}
+		et \begin{align*}
+			t: \mathcal{A} &\longrightarrow \N \\
+			\red V &\longmapsto 0\\
+			\red N(x, f_1, f_2) &\longmapsto 1 + t(f_1) + t(f_2)\\
+		\end{align*}
+	\item On rappelle les relations taille/hauteur (vues l'année dernière) : \[
+			h(a) + 1 \le t(a) \le 2^{h(a) + 1} - 1
+		.\]
+		Soit, pour tout arbre $a \in \mathcal{A}$, $P_a$ la propriété ci-dessus.
+		Montrons que $P_a$\/ est vraie pour tout arbre $a \in \mathcal{A}$\/ par induction.
+
+		Montrons que $P_{\red V}$\/ vraie : on a $h(\red V) + 1 = 1 - 1 = 0$, $t(\red V) = 0$\/ et $2^{h(\red V) + 1} - 1 = 1 - 1 = 0$\/ d'où $h(\red V) + 1 \le t(\red V) \le  2^{h(\red V) + 1} - 1$.
+
+		Supposons $P_g$\/ vraie et $P_d$\/ vraie pour deux arbres $g,d \in \mathcal{A}$. Soit $x \in \N$. Montrons que $P_{\red N(x, g, d)}$\/ est vraie :
+		\begin{align*}
+			h\big(\red N(x, g, d)\big) - 1 &= 1 + \max\big( h(g), h(d)\big) + 1 \\
+			&\le \max(t(g) - 1, t(d) - 1) + 2\\
+			&\le \max\big(t(g), t(d)\big) + 1\\
+			&\le t(g) + t(d) + 1\\
+			&= t\big(\red N(x, g, d)\big) \\
+		\end{align*}
+		et
+		\begin{align*}
+			t\big(\red N(x, g, d)\big) &= t(g) + t(d) + 1\\
+			&\le 2^{h(g) + 1} + 2^{h(d) + 1} - 1\\
+			&\le 2 \times 2^{\max(h(g), h(d)) + 1} - 1\\
+			&\le 2^{\max(h(g), h(d)) + 2} - 1\\
+			&\le 2^{h(\red N(x, g, d)) + 1} - 1.
+		\end{align*}
+	\item Je pense qu'il y a une erreur d'énoncé : les arbres crées sont de la forme
+		\begin{center}
+			\Tree[.$\square$ [.$\square$ { } [.$\square$ [.$\square$ { } { } ] { } ]] { } ]
+		\end{center}
+		où $\square$ représente un nœud. Il ne sont pas de la forme ``peigne.''
+
+		\begin{comment}
+		On pose $X_0 = \{\red V\}$, et pour $n \in \N$, \[
+			X_{n+1} = X_n \cup \{ \red N(x, M, a) \mid a \in X_n \} \cup \{ \red N(x,a, M) \mid a \in X_n \}
+		\] où $M = \red N(x', \red V, \red V)$. On pose alors $\mathcal{P} = \bigcup_{n \in \N} X_n$.
+		Montrons, pour $a \in \mathcal{P}$, $P_a : ``h(a) = t(a) - 1"$ par induction.
+		\begin{itemize}
+			\item On a bien $h(\red V) = -1$, et $t(\red V) - 1 = 0 - 1 = -1$. D'où $P_{\red V}$.
+			\item Soit $a \in X_n$. Alors, $h(\red N(x, a, \red V)) = h(a) + 1 = t(a) + 1 - 1 = t(\red N(x, a, \red V)) - 1$. De même, on a $h(\red N(x, \red V, a)) = h(a) + 1 = t(a) + 1 - 1 = t(\red N(x, \red V, a)) - 1$. D'où $P_{\red N(x,a,\red V)}$\/ et $P_{\red N(x,\red V,a)}$.
+		\end{itemize}
+		Ainsi, par induction, on a bien crée un ensemble $\mathcal{P}$\/ contenant l'ensemble des arbres ``peignes.'' Montrons à présent que tout arbre ``peigne'' est bien dans $\mathcal{P}$.
+		Soit $a$\/ un arbre ``peigne'' de hauteur $h$\/ et de taille $t$.
+		\end{comment}
+\end{enumerate}

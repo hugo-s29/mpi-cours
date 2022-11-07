@@ -1,0 +1,213 @@
+\section{Introduction}
+
+\begin{defn}
+	Un algorithme {\it déterministe}\/ est un algorithme tel que pour chaque entrée~$I$\/ de l'algorithme, l'exécution de l'algorithme produit toujours exactement la même suite d'états.
+\end{defn}
+
+\begin{rmk}
+	Un algorithme déterministe produit donc toujours les même sorties sur les mêmes entrées.
+\end{rmk}
+
+\begin{defn}
+	Un algorithme {\it probabiliste}\/ est un algorithme opérant sur un ensemble $\mathcal{E}$, tel que la suite d'états obtenus par exécution de l'algorithme sur une entrée $e \in \mathcal{E}$\/ est une variable aléatoire.
+\end{defn}
+
+\begin{rmk}
+	Avec cette définition, un algorithme déterministe est un algorithme probabiliste.
+\end{rmk}
+
+\begin{exm}
+	On considère le problème suivant : \[
+		\text{Problème {\sc Tri }}:\qquad \begin{cases}
+			\text{Entrée } &: \text{ un tableau } T \text{ de taille } n\\
+			\text{Sortie } &:\ T \text{ trié}.
+		\end{cases}
+	\]
+	Une réponse à ce problème est l'algorithme nommé {\sc Bozosort}\/ décrit ci-dessous. On le nomme aussi \guillemotleft~tri aléatoire.~\guillemotright
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\Entree $T$\/ un tableau
+			\While {$T$ non trié}
+				\State $i \gets \mathcal{U}(\left\llbracket 1,n-1 \right\rrbracket)$
+				\State $j \gets \mathcal{U}(\left\llbracket 1,n-1 \right\rrbracket)$
+				\State Échanger $i$\/ et $j$\/ dans le tableau $T$\/
+			\EndWhile
+		\end{algorithmic}
+		\caption{{\sc Bozosort}}
+	\end{algorithm}
+	On étudie l'algorithme ci-dessus : il est trivialement partiellement correct (i.e.\ s'il est correct). En effet, par négation de la condition de boucle, on a $T$\/ trié.
+	%todo histogramme
+
+	Le temps d'exécution de l'algorithme est difficile à estimer. L'algorithme peut ne pas terminer.
+\end{exm}
+
+\begin{exm}
+	On considère à présent le problème ci-dessous : approximer $\pi$.
+	L'algorithme tire des points au hasard dans un carré unité, et regarde si le point est dans le disque unité.
+
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			size(5cm);
+			for(int i = 0; i < 300; ++i) {
+				real x = unitrand() * 2 - 1;
+				real y = unitrand() * 2 - 1;
+				if (x*x + y * y <= 1)
+					dot((x,y), red);
+				else
+					dot((x,y), deepcyan);
+			}
+			draw((-1.2,0)--(1.2,0), Arrow(TeXHead));
+			draw((0,-1.2)--(0,1.2), Arrow(TeXHead));
+			draw(circle((0,0), 1));
+		\end{asy}
+		\caption{Algorithme de {\sc Monte-Carlo}\/ pour approximer $\pi$}
+	\end{figure}
+
+	On compte le nombre de points dans le disque, et ceux en dehors. Avec un grand nombre de points, on approxime le ratio de l'aire du disque et de l'aire du carré. Puis, on calcule \[
+		4 \times \left( \frac{\#\red\bullet}{\#\red\bullet + \#\blue\bullet} \right) \approx \pi
+	.\]
+
+	Le temps d'exécution dépend uniquement des paramètres de précision de l'algorithme, pas des tirages.
+	Par contre, la qualité de la réponse dépend des choix aléatoires.
+\end{exm}
+
+\begin{defn}[Algorithme de type {\sc Las Vegas}]
+	Étant donné un problème $P$, un algorithme probabiliste répondant au problème $P$\/ est dit de type {\sc Las Vegas}\/ dès lors que, s'il se termine, c'est en donnant une réponse correcte.
+\end{defn}
+
+\begin{defn}[Algorithme de type {\sc Monte-Carlo}]
+	Étant donné un problème $P$, un algorithme probabiliste répondant au problème $P$\/ est dit de type {\sc Monte-Carlo}\/ dès lors que son temps d'exécution dépend uniquement de son entrée.
+	L'algorithme peut cependant répondre de manière erronée au problème $P$\/ avec une \guillemotleft~certaine~\guillemotright\ probabilité.
+\end{defn}
+
+\begin{rmk}
+	Dans le cas d'un problème de décision (la réponse de l'algorithme est {\sc oui}\/ ou {\sc non}), un algorithme de type {\sc Monte-Carlo}\/ est dit
+	\begin{itemize}
+		\item \guillemotleft~à erreur unilatérale~\guillemotright\ s'il existe une des réponses ({\sc oui}\/ ou {\sc non}) $r$\/ telle que, si l'algorithme répond $r$, alors il a raison ($r$\/ est la réponse au problème) ;
+		\item \guillemotleft~à erreur bilatérale~\guillemotright\  si pour chaque réponse l'algorithme se trompe avec une probabilité non nulle.
+	\end{itemize}
+\end{rmk}
+
+\begin{exm}
+	On considère le problème : étant donné un tableau $T \in \{0,1\}^n$ tel que $T$\/ contient $p$\/ fois la valeur `0', avec $0 < p < n$, on cherche si, pour $i \in \left\llbracket 1,n-1 \right\rrbracket$, $T[i] = 1$.
+
+	Une réponse à ce problème est un algorithme de type {\sc Monte-Carlo}, comme celui ci-dessous.
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\Entree $k \in \N$\/ et $T$\/ un tableau
+			\State $i \gets 0$
+			\For{$j \in \left\llbracket 1,k \right\rrbracket$}
+				\State $i \gets \mathcal{U}(\left\llbracket 1,n-1 \right\rrbracket)$
+				\If{$T[i] = 1$}
+					\State\Return $i$
+				\EndIf
+			\EndFor
+			\State \Return $i$
+		\end{algorithmic}
+		\caption{Algorithme de {\sc Monte-Carlo} pour répondre au problème}
+	\end{algorithm}
+	Mais, on peut également donner un algorithme de {\sc Las-Vegas}\/ répondant aussi au même problème.
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\Entree $T$\/ un tableau
+			\State $i \gets \mathcal{U}(\left\llbracket 1,n-1 \right\rrbracket)$
+			\While{$T[i] \neq 1$}
+				\State $i \gets \mathcal{U}(\left\llbracket 0,n-1 \right\rrbracket)$
+			\EndWhile
+			\State\Return $i$
+		\end{algorithmic}
+		\caption{Algorithme de {\sc Las-Vegas} pour répondre au problème}
+	\end{algorithm}
+
+	Étudions l'algorithme de {\sc Las-Vegas}\/ : la correction partielle est validée. Étudions la terminaison : fixons $T$\/ un tableau de taille $n$\/ contenant $p$\/ occurrences de `$0$' avec $0 < p < n$.
+	Notons $(X_\ell)_{\ell\in\mathcal{D}}$\/ la suite des variables aléatoires donnant la valeur produite par le $\ell$ième appel à $\mathcal{U}(\left\llbracket 0,1 \right\rrbracket)$. Remarquons que $\mathcal{D}$\/ est une variable aléatoire : en effet c'est $\left\llbracket 0,N \right\rrbracket$\/ pour un certain $N \in \N$\/ si l'algorithme se termine ; sinon, on a $\mathcal{D} = \N$. Notons $A_q$\/ l'événement \guillemotleft~l'algorithme s'arrête après $q$\/ appels au générateur $\mathcal{U}(\left\llbracket 0,n-1 \right\rrbracket)$. On a donc \[
+		A_q = ``T[X_0] = 0 \land T[X_1] = 0 \land \cdots \land T[X_{q-2}] = 0 \land T[X_{q-1}] = 1"
+	.\] D'où en passant aux probabilités, on a \[
+		P(A_q) = P(``T[X_0] = 0 \land T[X_1] = 0 \land \cdots \land T[X_{q-2}] = 0 \land T[X_{q-1}] = 1")
+	\] et, par indépendance, on a donc \[
+		P(A_q) = P(T[X_{q-1} = 1) \times \Big(\prod_{j=0}^{q-2} P(T[X_j] = 0)\Big)
+	.\] Or, $\forall j \in \left\llbracket 0,q-2 \right\rrbracket$, $P(T[X_j] = 0) = \frac{p}{n}$\/ par uniformité, et, de plus, $P(T[X_{q-1}] = 1) = \frac{n-p}{n}$\/ par uniformité. On pose $\rho = \frac{p}{n}$, et donc $P(A_q) = \rho^{q-1}(1-\rho)$. Notons $N$\/ l'événement \guillemotleft~l'algorithme ne se termine pas~\guillemotright\ et calculons
+	\begin{align*}
+		P(N) &= 1 - P(\bar{N}) \\
+		&= 1- P\Big(\bigvee_{q \in \N^*} A_q\Big) \\
+		&= 1 - \sum_{q \in \N^*} P(A_q) \\
+		&= 1 - \sum_{q \in \N^*} \rho^{q-1}(1-\rho) \\
+		&= 1 - \frac{1-\rho}{1-\rho} \\
+		&= 0 \\
+	\end{align*}
+	Soit $\mathcal{T}$\/ la variable aléatoire indiquant le temps d'arrêt de l'algorithme (en nombre d'itérations). On calcule l'espérance de $\mathcal{T}$\/ :
+	\begin{align*}
+		\mathrm{E}(\mathcal{T}) &= \sum_{t = 1}^{+\infty} t \times P(\mathcal{T} = t)\\
+		&= \sum_{t= 1}^{+\infty} t \times \rho^{t-1} (1-\rho) \\
+		&= (1-\rho) \sum_{t=1}^{+\infty} t \times \rho^{t - 1} \\
+		&= (1-\rho) \sum_{t=1}^{+\infty} \sum_{k=0}^{t-1} \rho^{t} \\
+		&= (1-\rho) \sum_{k=0}^{+\infty}\ \sum_{t=k+1}^{+\infty} \rho^{t-1} \\
+		&= \cdots \cdots\footnotemark\relax \\
+		&= \frac{1}{1-\rho} \\
+	\end{align*}
+
+	Étudions maintenant l'algorithme de {\sc Monte-Carlo}. Il se termine trivialement, et la probabilité d'erreur est $\smash{\underbrace{\rho \times \cdots \times \rho}_{k}}$.
+	Par exemple, pour $\rho = \frac{1}{2}$, et $k = 80$, la probabilité d'erreur est de $\smash{\frac{1}{2^{80}}}$.
+\end{exm}
+\footnotetext{à faire}
+
+\section{Algorithme de {\scshape Monte-Carlo}}
+
+On considère le problème : \guillemotleft~étant donné trois matrices $A$, $B$, $C$\/ de $\mathcal{M}_n(\sfrac{\Z}{2\Z})$, a-t-on $A\cdot B = C$\/ ?~\guillemotright
+
+Un algorithme trivial serait de calculer $A\cdot B$\/ et on vérifie, point à point, que $A\cdot B = C$.
+La complexité cet algorithme est en $\Theta(n^3)$\/ à cause du produit matriciel.
+
+Un algorithme de {\sc Monte-Carlo}\/ serait le suivant.
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree $A$, $B$, $C$\/ trois matrices et $k \in \N$
+		\For{$j \in \left\llbracket 1,k \right\rrbracket$}
+			\State $r \gets \mathcal{U}\big((\sfrac{\Z}{2\Z})^n\big)$\/\Comment{$n$}\/
+			\State $r_1 \gets B\cdot r$\/ \Comment{$n^2$}
+			\State $r_2 \gets A\cdot r_1$\/ \Comment{$n^2$}
+			\State $r_3 \gets C\cdot r$\/ \Comment{$n^2$}
+			\If{$r_3 \neq r_2$}
+				\State \Return {\sc Non}\/
+			\EndIf
+		\EndFor
+		\State \Return {\sc Oui}\/
+	\end{algorithmic}
+	\caption{Algorithme de {\sc Monte-Carlo} répondant au problème}
+\end{algorithm}
+
+Dans le pire cas, la complexité est en $k \times n^2$. On cherche la probabilité d'erreur de cet algorithme. Pour cela, on utilise le lemme suivant.
+
+\begin{lem}
+	Si $D \neq 0$, et $r \sim \mathcal{U}\big((\sfrac\Z{2\Z})^n\big)$, alors $P(D\cdot r = 0) \le \frac{1}{2}$.
+\end{lem}
+
+\begin{prv}
+	Si $D \in \mathcal{M}_{n}(\sfrac{\Z}{2\Z}) \setminus \{0\}$, alors il existe $i$\/ et $j$\/ tels que $D_{i,j} \neq 0$. Si $D \cdot r = 0$, on a \[
+		\sum_{k=1}^n D_{i,k} r_k = 0 \quad\text{ et donc }\quad r_k = -\sum_{\substack{k=1\\k\neq j}}^{n} D_{i,k} r_k.
+	\]
+	Donc, si $r_j \neq \sum_{\substack{k=1\\k\neq j}}^n D_{ik} r_k$, alors $P(D\cdot r \neq 0) \ge P\Big(r_j \neq \sum_{\substack{k=1\\k\neq j}}^n D_{i,k}r_k\Big)$.
+	On note~$E_0$\/ l'événement \guillemotleft~$r_j = 0$\/ et $\sum_{\substack{k=1\\j \neq j}}^n D_{i,k}r_k = 1$\/~\guillemotright\ et~$E_1$\/ l'événement \guillemotleft~$r_j = 1$\/ et $\sum_{\substack{k=1\\j \neq j}}^n D_{i,k}r_k = 0$.~\guillemotright\@
+	D'où \[
+		P\Big(r_j \neq \sum_{\substack{k=1\\j \neq j}}^n  D_{i,k} r_k\Big) = P(E_0 \lor E_1)
+	.\]
+	{\color{red} Par incompatibilité}, on a $P(E_0 \lor E_1) = P(E_0) + P(E_1)$, d'où \[
+		\forall a \in \{0,1\},\quad P(E_a) = P\Big(r_j = a \land \sum_{\substack{k=1\\j \neq j}}^n D_{i,k} r_k = 1 - a\Big)
+	\] et, {\color{red} par indépendance}, \[
+		\forall a \in \{0,1\}\quad P(E_a) = P(r_j = a) \cdot P\Big(\sum_{\substack{k=1\\j \neq j}}^n D_{i,k} r_k = 1-a\Big) = \frac{1}{2}P(\ldots)
+	.\]
+	D'où \[
+		P\Big(r_j \neq \sum_{\substack{k=1\\j \neq j}} D_{i,k} r_k\Big) = \frac{1}{2}\Big[P\Big(\sum_{\substack{k=1\\j \neq j}}^n D_{i,k} r_k = 1\Big) + P\Big(\sum_{\substack{k=1\\j \neq j}}^n D_{i,k}r_k = 0\Big)\Big]
+	\] et, {\color{red}par incompatibilité}, \[
+		P\Big(r_j \neq \sum_{\substack{k=1\\j \neq j}} D_{i,k} r_k\Big) = \frac{1}{2} \frac{1}{2} P\Big(\sum_{\substack{k=1\\j \neq j}} D_{i,k} r_k \in \{0,1\}\Big) = \frac{1}{2}
+	.\]
+\end{prv}
+
+D'où, l'algorithme ci-dessous est tel que sa probabilité d'échec est de $\frac{1}{2^k}$. Or, l'algorithme a une complexité de $\mathcal{O}(k\,n^2)$.
+

@@ -1,0 +1,105 @@
+\begin{defn}
+	On dit qu'un polynôme $P$\/ est {\it annulateur}\/ de $A$\/ si $P(A) = 0_{\mathscr{M}_{nn}(\mathds{K})}$.
+
+	\noindent On dit qu'un polynôme $P$\/ est {\it annulateur}\/ de $u$\/ si $P(u) = 0_{\mathscr{L}(E)}$. Et donc $\forall x \in E,\,P(u)(x) = 0_E$\/ (attention, ce n'est pas $P\big(u(x)\big)$.
+\end{defn}
+
+\begin{exm}
+	On sait que $p$\/ un projecteur si et seulement $p \circ p = p$.
+	Autrement dit, si et seulement si $p  \circ p - p = 0_{\mathscr{L}(E)}$, si et seulement si $Q(p) = 0_{\mathscr{L}(E)}$\/ avec $Q(X) = X^2 - X$.
+
+	\noindent
+	On sait que $\s$\/ est un symétrie si et seulement si $\s\circ\s = \id_E$, si et seulement si $\s \circ \s - \id = 0$, si et seulement si $\s^2 - \s = 0$\/ et donc $Q(\s) = 0$\/ où $Q(X) = X^2 - 1$.
+\end{exm}
+
+\begin{exo}
+	On a \[
+		(I_n + J)^2 = \begin{pmatrix}
+			1 & \ldots & 1\\
+			\vdots& \ddots &\vdots\\
+			1&\ldots&1
+		\end{pmatrix}^2 = \begin{pmatrix}
+			n & \ldots & n\\
+			\vdots& \ddots &\vdots\\
+			n&\ldots&n
+		\end{pmatrix} = n (I_n + J)
+	.\]
+
+	On rappelle que $(a+b)^2 = a^2 + 2ab + b^2$\/ mais pour des matrices $A$\/ et $B$, on a $(A+B)^2 = A^2 + AB + BA + B^2$ car la multiplication n'est pas commutative en général. (Mais, c'est le cas dans cet exercice.)
+
+	Or, $(I_n + J)^2 = I_n + 2J + J^2$\/ car $I_n$\/ et $J$\/ commutent.
+	D'où $I_n + 2J + J^2 = nI_n + nJ$. Donc $J^2 - (n-2)J - (n-1)I_n = 0_{\mathscr{M}_{nn}(\mathds{K})}$\/ donc le polynôme \[
+		P(X) = X^2 - (n-2)X - (n-1)
+	\] est annulateur de la matrice $J$.
+\end{exo}
+
+\begin{met}[Inverser une matrice]
+	On applique cette méthode que si le polynôme annulateur n'a pas un terme constant nul. Sinon, on divise par $0$.
+\end{met}
+
+\begin{exo}
+	On a montré que $J^2 - (n-2) J - (n-1) I_n = 0$.
+	D'où $J^2 - (n-2)J  = (n-1)I_n$. Donc $\frac{1}{n-1} J^2 - \frac{n-2}{n-1} J = I_n$\/ car $n-1 \neq 0$.
+	D'où $J \times \left( \frac{1}{n-1} J - \frac{n-2}{n-1} I_n \right) = I_n$. On en déduit que $J$\/ est inversible et \[
+		J^{-1} = \frac{1}{n-1} J - \frac{n-2}{n-1} I_n
+	.\]
+\end{exo}
+
+\begin{met}[Calculer les puissances d'une matrice]
+	On veut calculer $J^k = P(J)$\/ où $P = X^k \in \mathds{K}[X]$. De plus, si on possède un polynôme annulateur de $J$\/ : $Q(J) = 0$\/ (où, dans l'exemple $Q = X^2 - (n-2) X - (n-1)$).
+	On réalise la division euclidienne $X^k\div Q$. On obtient un quotient $\mathcal{Q}_k$\/ et un reste $R_k = \alpha_k + \beta_k X$\/ car $\deg R_k < 2$.
+	Ainsi, on a $J^k = Q(J) \times \mathcal{Q}_k(J) + R_k(J) = R_k(J)$.
+
+	Or, on sait calculer le polynôme $R_k$\/ sans calculer le quotient (voir Annexe A.)\ Comment ? On a $X^k = Q(X) \times \mathcal{Q}(X) + R_k(X)$. Or, $Q(-1) = 0 = Q(n-1)$. D'où $(-1)^k = \alpha_k - \beta_k$\/ et $(n-1)^k = \alpha_k + \beta_k (n-1)$. On résout ce système pour déterminer $\alpha_k$\/ et $\beta_k$\/ ; et donc $R_k(J) = \alpha_k I_n + \beta_k J$.
+\end{met}
+
+\begin{exo}
+	On sait que $J^2 - (n-2) J - (n-1) I_n = 0$. D'où $J^2 = (n-2) J + (n-1) I_n$. Or, en multipliant par $J$, et en utilisant l'expression de $J^2$, on en déduit que $J^3 \in \Vect(I_n, J)$. Et, de ``proche en proche,'' on a $\forall k,\:J^k \in \Vect(I_n, J)$.
+	Mais {\sc bof}\/ car on n'a pas la formule pour $J^k = \alpha I_n + \beta_k J$.
+	Pour avoir ces coefficients, on utilise la {\sc méthode 26}.
+\end{exo}
+
+\begin{prop-defn}
+	Toute matrice $A$\/ possède un polynôme annulateur non nul.
+	L'unique polynôme annulateur de $A$\/ qui est unitaire et de degré minimal est appelé {\bf le} {\it polynôme minimal}\/ de $A$\/ et est noté $\mu_A$ ou $\pi_A$.
+\end{prop-defn}
+
+\begin{prv}
+	On sait que $\dim \mathscr{M}_{nn}(\mathds{K}) = n^2$. Soit $A \in \mathscr{M}_{nn}(\mathds{K})$. On considère la famille ($A^0, A^1, A^2, A^3, \ldots,$\\$A^{n^2}$) qui contient $n^2 + 1$\/ vecteurs. D'où cette famille est liée : il existe $\alpha_0$, $\alpha_1$, $\alpha_2, \ldots,\alpha_{n^2}$ non nuls tels que \[
+		\alpha_0 A^0 + \alpha_1 A^1 + \cdots + \alpha_{n^2} A^{n^2} = 0.
+	\] D'où $P(A) = 0$\/ où $P(X) = \alpha_0 + \alpha_1 X + \alpha_2 X^2 + \cdots  + \alpha_{n^2} X^{n^2}$.
+
+	Ainsi, $\alpha + P(A) + \beta Q(A) = 0$\/ est un polynôme annulateur de $A$. D'où, l'ensemble $\mathcal{I}_A$\/ des polynômes annulateurs de $A$\/ est un sous-espace vectoriel de $\mathds{K}[X]$.
+
+	D'où $(\mathcal{I}_A,+)$\/ est un sous-groupe de $(\mathds{K}[X],+)$. Par ailleurs, si un polynôme $P \in \mathcal{I}_A$\/ et un autre polynôme $Q \in \mathds{K}[X]$, alors le produit $P \times Q \in \mathcal{I}_A$\/ car $(P\times Q)(A) = P(A) \times Q(A) = 0 \times Q(A) = 0$.
+	On en déduit que $\mathcal{I}_A$\/ est un idéal de $\mathds{K}[X]$.
+
+	Or, tout idéal de l'ensemble des polynôme, d'après l'annexe $A$, est de la forme $P\cdot \mathds{K}[X]$\/ i.e.\ l'ensemble des multiples d'un polynôme $P$.
+	Il existe donc un unique polynôme unitaire $P$\/ tel que $\mathcal{I}_A = P\cdot \mathds{K}[X]$.
+\end{prv}
+
+\begin{exo}
+	\slshape
+	\begin{enumerate}
+		\item Déterminer le polynôme minimal de la matrice $J$.
+		\item Montrer que la dérivation  \begin{align*}
+				D: \mathscr{C}^\infty(\R) &\longrightarrow \mathscr{C}^\infty(\R) \\
+				f &\longmapsto f'
+			\end{align*} ne possède pas de polynôme annulateur non nul.
+		\item Montrer que deux matrices semblables ont la même polynômes annulateurs et donc le même polynôme minimal.
+	\end{enumerate}
+	\upshape
+
+	\begin{enumerate}
+		\item Il n'existe pas de polynôme unitaire annulateur de $J$\/
+			\begin{itemize}
+				\item de degré $n$\/ (par l'absurde) : si $Q(J) = 1J + a I_n = 0$\/ alors $J = -aI_n$\/ et c'est absurde.
+				\item de degré $0$\/ (par l'absurde) : si $Q(J) = a I_n = 0$\/ avec $a \neq 0$, ce qui est absurde.
+			\end{itemize}
+			Donc $X^2 - (n-2) X - (n-1)$\/ est déjà \underline{le} polynôme minimal de $J$.
+		\item On sait que $D$\/ est un endomorphisme de l'espace vectoriel $\mathscr{C}^\infty(\R)$ de dimension infinie (en effet, on a $\R[X] \subset \mathscr{C}^\infty(\R)$). On procède par l'absurde. Soit $P = a_0 + a_1 X + \cdots + a_n X^n$\/ (avec $a_n \neq 0$) un polynôme annulateur non nul de $D$. Alors, $\forall f \in \mathscr{C}^\infty,\,\big(a_0\id  + a_1 D + a_2 D^2 + \cdots + a_n D^n\big)(f) = 0$. Or, $\big(a_0\id  + a_1 D + a_2 D^2 + \cdots + a_n D^n\big)(f) = a_0 f + a_1 f' + a_2 f'' + \cdots + a_n f^{(n)}$. Ce qui est absurde car, avec $f : x \mapsto x^{n}$, on a $P(D)(f)(0) = a_n \times n! \neq 0$.
+		\item On démontre que le polynôme minimal est un {\it invariant de similitude}.
+			Si $P(A) = 0$\/ et $A' = Q^{-1} A Q$\/ avec $P \in \mathds{K}[X]$\/ et $Q \in \mathrm{GL}_n(\mathds{K})$, alors $P(A') = P(Q^{-1} A Q) = Q^{-1} P(A) Q = 0$ (c.f.\ {\sc exercice 20}). Donc, l'ensemble des polynômes annulateurs de $A$\/ est aussi celui de $A'$. {\it A fortiori}, $A$\/ et $A'$\/ ont le même polynôme minimal.
+	\end{enumerate}
+\end{exo}
+

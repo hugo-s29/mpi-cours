@@ -1,0 +1,234 @@
+\section{Valeurs \& vecteurs propres}
+
+\begin{defn}
+	Soit $E$\/ un $\mathds{K}$-espace vectoriel et $u: E \to E$\/ un endomorphisme.
+	\begin{enumerate}
+		\item On dit qu'un vecteur $\vec{x} \in E$\/ est {\bf un}\/ {\it vecteur propre}\/ de $u$\/ si $\vec{x}$\/ n'est pas nul et $u(\vec{x})$\/ est colinéaire à $\vec{x}$\/ : $\vec{x} \neq \vec{0}$\/ et $\exists  \lambda \in \mathds{K},\:u(\vec{x}) = \lambda \vec{x}$.
+		\item On dit qu'un scalaire $\lambda \in \mathds{K}$\/ est {\bf une}\/ {\it valeur propre}\/ de $u$\/ s'il existe un vecteur non nul $\vec{x} \in E$\/ tel que $u(\vec{x}) = \lambda \vec{x}$.
+		\item L'ensemble des valeurs propres de $u$\/ est appelé le {\it spectre}\/ de $u$\/ et est noté $\Sp(u)$.
+	\end{enumerate}
+\end{defn}
+
+\begin{defn}
+	Soit $n \in \N^*$\/ et $A$\/ une matrice $n\times n$\/ à coefficients dans $\mathds{K}$.
+	\begin{enumerate}
+		\item On dit qu'un vecteur colonne $X$\/ est {\bf un}\/ {\it vecteur propre}\/ de $A$\/ si $X$\/ n'est pas nul et $A\cdot X$\/ est colinéaire à $X$\/ : $X \neq 0$\/ et $\exists  \lambda \in \mathds{K},\:A\cdot X = \lambda X$.
+		\item On dit qu'un scalaire $\lambda \in \mathds{K}$\/ est {\bf une}\/ {\it valeur propre}\/ de $A$\/ s'il existe un vecteur colonne non nul $X$\/ tel que $A \cdot X = \lambda X$.
+		\item L'ensemble des valeurs propres de $A$\/ est appelé le {\it spectre}\/ de $A$\/ et est noté $\Sp(A)$.
+	\end{enumerate}
+\end{defn}
+
+\begin{defn}
+	Soit $E$\/ un $\mathds{K}$-espace vectoriel de dimension finie et $u:E\to E$\/ un endomorphisme.
+	On dit que $u$\/ est {\it diagonalisable}\/ s'il existe une base $(\vec{\varepsilon}_1,\ldots,\vec{\varepsilon}_n)$\/ de $E$\/ donc chaque vecteur est un vecteur propre de $u$\/ : \[
+		\forall i \in \left\llbracket 1,n \right\rrbracket,\qquad u(\vec{\varepsilon}_i) = \lambda_i\,\vec{\varepsilon}_i
+	.\]
+\end{defn}
+
+\section{Le polynôme caractéristique}
+
+\begin{prop-defn}
+	Soit $A \in \mathscr{M}_{n,n}(\mathds{K})$\/ une matrice carrée. La fonction \begin{align*}
+		\chi_A: \mathds{K} &\longrightarrow \mathds{K} \\
+		x &\longmapsto \det(xI_n - A)
+	\end{align*} est appelé le {\it polynôme caractéristique de $A$}.
+	On a \[
+		\forall x \in \mathds{K},\quad \chi_A(x) = \det(xI_n - A) = x^n - (\tr A) x^{n-1} + \cdots + (-1)^n \det A
+	.\]
+\end{prop-defn}
+
+\begin{prv}
+	On a \[
+		\det(xI_n - A) =
+		\begin{vNiceMatrix}[last-row,last-col]
+			x-a_{11}&a_{12}&\Ldots&-a_{1,n}&\Block{3-1}{\ds\mathop{\vrt{\xrightarrow{\phantom{aaaaaaaaaaa}}}}_n}\\
+			-a_{21}&x-a_{22}&\Ddots&\Vdots&\\
+			\Vdots&\Ddots&\Ddots&-a_{1,n-1}&\\
+			-a_{n,1}&\Ldots&-a_{n,n-1}&x-a_{n,n}&\\
+			\Block{1-3}{\ds~\quad\quad\quad\quad\quad{\xrightarrow{\phantom{aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}}}_n}&&&
+		\end{vNiceMatrix}
+	.\]
+\end{prv}
+
+\begin{propn}
+	Si $E$\/ est un $\mathds{K}$-espace vectoriel de dimension finie, alors on peut définir le polynôme caractéristique d'un endomorphisme par \[
+		\chi_u(x) = \det(x \id_E - u)
+	.\]
+	Si $A = [u]_\mathscr{B}$, alors $x I_n - A = [x\id_E - u]_\mathscr{B}$\/ et donc $\chi_u = \chi_A$.
+\end{propn}
+
+\begin{prv}
+	On pose $A$\/ une matrice $n\times n$\/ et $A'$\/ une matrice semblable à $A$. On pose $A' = P^{-1} \cdot A\cdot P$. On calcule $\det(xI_n - A')$\/ : \[
+		\chi_{A'}(x) = \det(xI_n - A') = \det(xI_n - P^{-1}\cdot A \cdot P) = \det(P^{-1}(xI_n - A)P) = \det(xI_n - A) = \chi_{A}(x)
+	.\]
+	par télescopage.
+\end{prv}
+
+\begin{thm}
+	{\hfill \itshape Le polynôme caractéristique détecte les valeurs propres.\hfill}~\\
+	Soit $A$\/ une matrice carrée de taille $n \times n$. Un scalaire $\lambda \in \mathds{K}$\/ est une valeur propre de $A$\/ si et seulement si $\lambda$\/ est une racine du polynôme caractéristique $\chi_A \in \mathds{K}[X]$. Autrement dit, \[
+		\lambda \in \Sp(A) \iff \det(\lambda I_n - A) = 0
+	.\]
+\end{thm}
+
+\begin{prv}
+	Soit $\lambda \in \mathds{K}$.
+	\begin{align*}
+		\lambda \in \Sp(A) \iff& \exists X \neq 0,\quad A\cdot X = \lambda X\\
+		\iff& \exists X \neq 0,\quad (A-\lambda I_n) \cdot X = 0\\
+		\iff& \exists X \neq 0,\quad -(A-\lambda I_n) \cdot X = 0\\
+		\iff& \Ker(\lambda I_n - A) \neq \{0_n\}\\
+		\iff& \lambda I_n - A \text{ n'est pas inversible}\\
+		\iff& \det(\lambda I_n - A) = 0\\
+		\iff& \chi_A(\lambda) = 0.
+	\end{align*}
+\end{prv}
+
+\begin{rmkn}[Attention]
+	Parfois, les racines d'un polynôme caractéristique peuvent être complexes et non réelles. Dans ce cas, afin d'éviter toute ambigüité, on écrit $\Sp_\R(A)$\/ pour les racines réelles et $\Sp_\C(A)$\/ pour les racines complexes.
+\end{rmkn}
+
+\begin{exo}
+	\begin{enumerate}
+		\item On considère la matrice \[
+				C = \begin{pNiceMatrix}[last-col,last-row]
+					1&0&0&\vec{\imath}\\
+					0&0&-1&\vec{\jmath}\\
+					0&1&0&\vec{k}\\
+					f(\vec{\imath})&f(\vec{\jmath})&f(\vec{k})
+				\end{pNiceMatrix}
+			.\]
+			On remarque que $f(\vec{\imath}) = \vec{\imath}$\/ donc $\vec{\imath}$\/ est un vecteur propre et $1$\/ est une valeur propre.
+			Soit $\lambda \in \R$. \[
+				\lambda \in \Sp(C) \iff \det(\lambda I_3 - C) = 0
+			.\]
+			On calcule $\det(\lambda I_3 - C)$\/ :
+			\begin{align*}
+				\det(\lambda I_3 - C) &= 
+				\begin{vmatrix}
+					\lambda - 1&0&0\\
+					0&\lambda&1\\
+					0&-1&\lambda
+				\end{vmatrix}\\
+				&= (\lambda - 1) 
+				\begin{vmatrix}
+					\lambda & 1\\
+					-1 & \lambda
+				\end{vmatrix}\\
+				&= (\lambda - 1)(\lambda^2 + 1) \\
+			\end{align*}
+			Et donc \[
+				\lambda \in \Sp_\R(C) \iff \lambda = 1
+			.\]
+			Attention : on ne peut pas en conclure que la matrice $C$\/ n'est pas diagonalisable (il y a peut-être la même valeur propre 3 fois). On montre que la matrice $C$\/ n'est pas diagonalisable dans $\R$\/ par l'absurde : si \[
+				P^{-1} \cdot C \cdot P = \begin{pmatrix}
+					1&0&0\\
+					0&1&0\\
+					0&0&1
+				\end{pmatrix} = I_3
+			\] alors, $C = P \cdot I_3 \cdot P^{-1} = I_3$, ce qui est absurde.
+
+			On cherche les valeurs propres dans $\C$. Soit $\lambda \in \C$. \[
+				\lambda \in \Sp_\C(C) \iff (\lambda - 1)(\lambda - i) (\lambda + i)  = 0
+			\] et donc \[
+				\lambda \in \Sp_\C(C) \iff \lambda \in \{1,i,-i\} \qquad\text{i.e.}\qquad \Sp_\C(C) = \{1,i,-i\}
+			.\]
+			On peut utiliser la {\sc proposition}\/ 18 (mais on la verra plus tard\ldots). On utilise une autre méthode (que l'on doit utiliser à chaque fois que l'on doit diagonaliser une matrice).
+			Soit~$X = \left( \substack{x\\y\\z} \right) \in \mathscr{M}_{3,1}(\C)$.
+			\begin{align*}
+				CX = i X \iff& \begin{pmatrix}
+					1&0&0\\
+					0&0&1\\
+					0&-1&0
+				\end{pmatrix} \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix} = i \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix}\\
+				\iff& \begin{cases}
+					x = i x\\
+					-z = iy\\
+					y = iz
+				\end{cases}\\
+				\iff&\begin{cases}
+					x = 0\\
+					z = -iy\\
+					y = iz
+				\end{cases}\\
+				\iff& \begin{cases}
+					x=0\\
+					y = iz
+				\end{cases} \text{ car } L_2 = -iL_3\\
+				\iff& \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix} = \begin{pmatrix}
+					0\\
+					iz\\
+					z\\
+				\end{pmatrix} = z \cdot \begin{pmatrix}
+					0\\i\\1
+				\end{pmatrix}\\
+				\iff& X \in \Vect\begin{pmatrix}
+					0\\i\\1
+				\end{pmatrix}
+			\end{align*}
+			De même, avec $-i$, on a
+			\begin{align*}
+				CX = -i X \iff& \begin{pmatrix}
+					1&0&0\\
+					0&0&1\\
+					0&-1&0
+				\end{pmatrix} \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix} = -i \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix}\\
+				\iff& \begin{cases}
+					x = -i x\\
+					-z = -iy\\
+					y = iz
+				\end{cases}\\
+				\iff&\begin{cases}
+					x = 0\\
+					z = iy\\
+					y = -iz
+				\end{cases}\\
+				\iff& \begin{cases}
+					x=0\\
+					y = -iz
+				\end{cases}\\
+				\iff& \begin{pmatrix}
+					x\\y\\z
+				\end{pmatrix} = \begin{pmatrix}
+					0\\
+					-iz\\
+					z\\
+				\end{pmatrix} = z \cdot \begin{pmatrix}
+					0\\-i\\1
+				\end{pmatrix}\\
+				\iff& X \in \Vect\begin{pmatrix}
+					0\\-i\\1
+				\end{pmatrix}
+			\end{align*}
+			On pose $\varepsilon_1 = \left( \substack{1\\0\\0} \right)$, $\varepsilon_2 = \left( \substack{0\\i\\1} \right)$\/ et $\varepsilon_3 = \left( \substack{0\\-i\\1} \right)$. De plus, $\det(\varepsilon_1, \varepsilon_2,\varepsilon_3) \neq 0$. D'où la matrice $C$\/ est diagonalisable dans $\C$.
+		\item On considère la matrice \[
+			M = \begin{pmatrix}
+				7&&&\sqrt{2}\\
+				&7&&&\\
+				&&\ddots&\\
+				&&&7
+			\end{pmatrix}
+		.\]
+		La matrice $M$\/ a pour polynôme caractéristique $\chi_M(x)$\/ : \[
+			\chi_M(x) =
+			\begin{vmatrix}
+				x-7&&&-\sqrt{2}\\
+				&x-7&&&\\
+				&&\ddots&\\
+				&&&x-7
+			\end{vmatrix} = (x-7)\cdot (x-7)\cdots (x-7) = (x-7)^n
+		.\]
+		Or, $\lambda \in \Sp(M)$\/ si et seulement si $\chi_M(\lambda) = 0$\/ et donc si et seulement si $\lambda = 7$. D'où $\Sp(M) = \{7\}$.
+		On procède par l'absurde : si $M$\/ est diagonalisable, il existe $P \in \mathrm{GL}_n(\mathds{K})$, telle que $M = P^{-1} \cdot 7I_n \cdot P = P^{-1}\cdot P \cdot 7I_n = 7I_n$, ce qui est absurde.
+	\end{enumerate}
+\end{exo}

@@ -1,0 +1,121 @@
+\section{Dériver}
+
+\begin{thm}[interversion limite et dérivée]
+	Soit une suite de fonctions $(f_n)_{n\in\N}$\/ de classe {\color{red}$\mathscr{C}^1$\/} sur un segment $[a,b]$. Si,
+	\begin{enumerate}
+		\item la suite de fonctions $(f_n)_{n\in\N}$\/ converge simplement sur $[a,b]$\/ vers une fonction $f$,
+		\item la suite de dérivées $(f'_n)_{n\in\N}$\/ converge uniformément sur $[a,b]$\/ vers une fonction $g$\/ ;
+	\end{enumerate}
+	alors
+	\begin{enumerate}
+		\item la fonction $f$\/ est de classe $\mathscr{C}^1$\/ sur $[a,b]$, et $\forall x \in [a,b]$, $f'(x) = g(x)$,\footnote{Autrement dit, $\ds\frac{\mathrm{d}}{\mathrm{d}x}\:\lim_{n\to \infty} f_n(x) = \lim_{n\to \infty} \frac{\mathrm{d}}{\mathrm{d}x} f_n(x)$.}
+		\item la suite de fonctions $(f_n)_{n\in\N}$\/ converge uniformément sur $[a,b]$\/ vers $g$.
+	\end{enumerate}
+\end{thm}
+
+\begin{prv}
+	On utilise le théorème 10 : on a \[
+		\begin{array}{c c c c c}
+			\ds f_n(x) &=& \ds f_n(c) &+& \ds\int_{c}^{x} f'_n(t)~\mathrm{d}t\\
+			\downarrow\footnotemark && \downarrow^\thefootnote && \downarrow\\
+			f(x) && f(c) && \ds\lim_{n\to \infty} \int_{c}^{x} f'_n(t)~\mathrm{d}t\\
+					 &&&&\ds= \int_{c}^{x} \lim_{n\to \infty} f'_n(t)~\mathrm{d}t\\
+					 &&&&\ds= \int_{c}^{x} g(t)~\mathrm{d}t
+		\end{array}
+	\] car $(f'_n)_{n\in\N}$\/ converge uniformément vers $g$. L'intégrale de $f'_n$\/ existe car, comme les fonctions $f_n$\/ sont de classe $\mathscr{C}^1$, alors les fonctions $f'_n$\/ sont de classe $\mathscr{C}^0$ donc continues.
+	On veut montrer que $g = f'$. On sait que, $\forall x \in [a,b]$, $f(x) = f(c) + \int_{c}^{x} g(t)~\mathrm{d}t$\/ par unicité de la limite. De plus, la fonction $g$\/ est continue car $(f'_n)_{n\in\N}$\/ converge uniformément vers $g$\/ et $f'_n$\/ est continue (d'après le théorème 6).
+	D'où $f$\/ est dérivable sur $[a,b]$\/ et, $\forall x \in [a,b]$, $f'(x) = g(x)$.
+	Mieux : $f$\/ est de classe $\mathscr{C}^1$.
+	\footnotetext{car $(f_n)$ converge simplement vers $f$}
+\end{prv}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		draw((-1.1, 0) -- (1.1, 0), Arrow(TeXHead));
+		draw((0,-0.1) -- (0, 1.1), Arrow(TeXHead));
+		size(9cm);
+		pen a = orange;
+		pen b = yellow;
+		for(int n = 1; n < 10; ++n) {
+			real f(real x) { return sqrt(x*x + 1/(4*n)); }
+			real t = n / 9;
+			pen p = b * t + a * (1 - t);
+			draw(graph(f, -1, 1), p);
+		}
+		draw(graph(abs, -1, 1), magenta);
+	\end{asy}
+	\caption{Suite de fonctions $\left(\sqrt{x^2 + \frac{1}{n}}\right)_{n \in \N^*}$}
+\end{figure}
+
+\begin{exo}
+	On pose, pout tout $n \in \N^*$, \begin{align*}
+		f_n: [-1,1] &\longrightarrow \R \\
+		x &\longmapsto \sqrt{x^2 + \frac{1}{n}}.
+	\end{align*}
+	
+	{\slshape
+		\begin{enumerate}
+			\item Montrer que la suite de fonctions $(f_n)_{n\in\N^*}$\/ converge simplement. Vers quelle fonction $f$\/ ?
+			\item La convergence est-elle uniforme ?
+			\item Les fonctions $f_n$\/ sont-elles de classe $\mathscr{C}^1$\/ ? Et la fonction $f$\/ ? Que dit le théorème précédent ?
+		\end{enumerate}
+	}
+
+	\begin{enumerate}
+		\item Soit $x \in [-1,1]$. On a $f_n(x) \tendsto{n\to \infty} \sqrt{x^2} = |x|$. Ainsi, la suite de fonctions $(f_n)_{n\in\N^*}$\/ converge simplement vers  \begin{align*}
+				f: [-1,1] &\longrightarrow \R \\
+				x &\longmapsto |x|.
+			\end{align*}
+			On remarque que l'on a perdu la dérivabilité en $0$.
+		\item Soit $n \in \N^*$. Soit $x \in [-1,1]$. On calcule
+			\begin{align*}
+				\big|f_n(x) - f(x)\big| = \left| \sqrt{x^2 + \frac{1}{n}} - |x| \right| &= \sqrt{x^2 + \frac{1}{n}}  - |x|\\
+				&= \frac{\sqrt{x^2 + \frac{1}{n}} - |x|}{\sqrt{x^2 + \frac{1}{n}} + |x|} \times \left( \sqrt{x^2 + \frac{1}{n}}  + |x| \right) \\
+				&= \frac{\cancel{x^2} + \frac{1}{n} - \cancel{x^2}}{\sqrt{x^2 + \frac{1}{n}} + |x|} \\
+				&\ge \frac{1/n}{\sqrt{0 + \frac{1}{n}} + 0} = \frac{1}{\sqrt{n}}
+			\end{align*}
+			qui est un majorant.\footnote{qui ne dépend pas de $x$}
+			D'où, $0 \le \sup_{x \in [-1,1]}\:|f_n(x) - f(x)| = \sfrac{1}{\sqrt{n}}$. Donc, d'après le théorème d'existence de la limite par encadrement, $\sup_{x \in [-1,1]}\:|f_n(x) - f(x)| \tendsto{n\to \infty} 0$. On déduit donc que la suite de fonctions $(f_n)_{n\in\N^*}$\/ converge uniformément vers $f$\/ qui est la valeur absolue.
+		\item La fonction $f_n$\/ est dérivable\footnote{par composée de fonctions dérivables/par les théorèmes généraux} sur $[-1,1]$, et \[
+			\forall x \in [-1,1],\quad f'_n(x) = \frac{2x}{2\sqrt{x^2 + \frac{1}{n}}}
+		.\] Or, les fonctions $f'_n$\/ est continue.\footnote{car c'est un quotient de fonctions continues dont le dénominateur ne s'annule pas/d'après les théorèmes généraux} Néanmoins, la fonction $f : x \mapsto |x|$\/ n'est pas dérivable en $0$, donc n'est pas $\mathscr{C}^1$.
+		D'où, en utilisant le théorème d'interversion de limite et de dérivée, par l'absurde, la suite de fonctions $(f'_n)_{n\in\N^*}$\/ ne converge pas uniformément vers~$f'$.
+	\end{enumerate}
+\end{exo}
+
+\begin{met}
+	$\O$\/
+\end{met}
+
+\begin{crlr}
+	$\O$\/
+\end{crlr}
+
+\section{Approximation uniforme par des polynômes}
+
+\begin{rmk}[Rappel]
+	Soit $f$\/ une fonction d'un intervalle $I$\/ dans $\mathds{K}$\/ (où $\mathds{K} = \R$\/ ou $\C$).
+
+	La fonction $f$\/ est continue sur $I$\/ si et seulement si \[
+		\forall a \in I,\qquad\underbrace{\forall \varepsilon > 0,\:\exists \eta > 0,\:\forall x \in I,\qquad |x - a| \le \eta \implies |f(x) - f(a)| \le \varepsilon}_{f \text{ est continue en } a}
+	.\]
+
+	La fonction $f$\/ est uniformément continue sur $I$\/ si et seulement si \[
+		\forall \varepsilon > 0,\:\exists \eta > 0,\:\forall a \in I,\: \forall x \in I,\:\qquad|x-a| \le \eta \implies |f(x) - f(a)| \le \varepsilon
+	.\]
+
+	L'uniforme continuité implique la continuité. La réciproque est fausse.
+\end{rmk}
+
+\begin{exo}
+	{\slshape Montrer que la fonction $f: x \mapsto x^2$\/ n'est pas uniformément continue sur $\R$.}
+	Soit $\varepsilon > 0$. Par l'absurde, supposons qu'il existe $\eta > 0$\/ tel que \[
+		\forall x \in \R,\:\forall x \in \R,\quad|x-a|\le \eta \implies |f(x) - f(a)| \le \varepsilon
+	.\] Or, $|f(x) - f(a)| = |x^2 - a^2|$. Soit $x = a + h$\/ avec $0 < h \le \eta$, d'où $|x^2 - a^2| = \big|(a+h)^2 - a^2\big| = |2ha + h^2|$. Ce qui est absurde car $|2a h + h^2 \tendsto{a \to +\infty} +\infty$\/ comme $h \neq 0$.
+\end{exo}
+
+\begin{thm}[Heine]
+	Une fonction continue sur un segment est uniformément continue sur ce même segment.
+\end{thm}

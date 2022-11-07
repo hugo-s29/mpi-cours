@@ -1,0 +1,219 @@
+\begin{exo}
+	Soit $(F_i)_{i\in I}$\/ une famille de sous-espaces vectoriels d'un espace vectoriel $E$.
+	\begin{enumerate}
+		\item On veut montrer que $\bigcap_{i \in  I} F_i$\/ est aussi un sous-espace vectoriel.
+			On sait que $\forall i \in I$, $0_E \in F_i$\/ car $F_i$\/ est un sous-espace vectoriel de $E$.
+			Montrons que $\bigcap_{i \in  I} F_i$\/ est stable par combinaisons linéaires (i.e.\ superpositions).
+			Soient $\alpha, \beta \in \mathds{K}$ et $\vec{x}, \vec{y} \in \bigcap_{i \in  I} F_i$. On veut montrer que $\alpha \vec{x} + \beta \vec{y} \in \bigcap_{i \in  I} F_i$. Pour tout $i \in I$, $F_i$\/ est stable par combinaisons linéaires d'où $\alpha \vec{x} + \beta \vec{y} \in F_i$. Donc, comme ceci est vrai pour tout $i$, on en déduit que $\alpha \vec{x} + \beta \vec{y} \in \bigcap_{i \in I} F_i$.
+		\item On donne un contre-exemple. On se place dans le cas $E = \R^2$. On pose $G = \Vect(\vec{\jmath})$\/ et $H = \Vect(\vec{\imath})$. On a $\vec{\imath} + \vec{\jmath} \not\in F \cup G$ car $\vec{\imath} + \vec{\jmath} \not\in F$\/ et $\vec{\imath} + \vec{\jmath} \not\in G$.
+
+			\begin{figure}[H]
+				\centering
+				\begin{asy}
+					size(10cm);
+					draw((-1,0)--(10,0));
+					draw((0,-1)--(0,6));
+					draw((0,0)--(0,2), red, Arrow(TeXHead));
+					draw((0,0)--(2,0), red, Arrow(TeXHead));
+					label("$\vec\imath$", (1, 0), red, align=S);
+					label("$\vec\jmath$", (0, 1), red, align=W);
+					label("$\Vect(\vec\imath)$", (10, 0), align=S);
+					label("$\Vect(\vec\jmath)$", (0, 6), align=W);
+					draw((0,0)--(2,2), magenta, Arrow(TeXHead));
+					label("$\vec\imath + \vec\jmath$", (2,2), magenta, align=NE);
+				\end{asy}
+				\caption{Contre-exemple : union de sous-espaces vectoriels n'en est pas un}
+			\end{figure}
+		\item
+			\begin{enumerate}
+				\item On montre d'abord que si $F \subset G$\/ ou $G \subset F$, alors $F \cup G$\/ est un sous-espace vectoriel de $E$.
+					Si $F \subset G$, alors $F \cup G = G$\/ qui est un sous-espace vectoriel de $E$.
+					Si $G \subset F$, alors $F \cup G = F$\/ qui est un sous-espace vectoriel de $E$.
+				\item On montre que si $F \not\subset G$\/ et $G \not\subset F$, alors $F \cup G$\/ n'est pas un sous-espace vectoriel.
+					On sait donc, par hypothèse, qu'il existe $\vec{g} \in G$\/ tel que $\vec{g} \not\in F$\/ ; et, qu'il existe $\vec{f} \in F$\/ tel que $\vec{f} \not\in G$. Or, $\vec{f} + \vec{g} \not\in F$\/ et $\vec{f} + \vec{g} \not\in G$\/ et donc $\vec{f} + \vec{g} \not\in F \cup G$. On en déduit que $F \cup G$\/ n'est pas stable par combinaisons linéaires.
+			\begin{figure}[H]
+				\centering
+				\begin{asy}
+					size(5cm);
+					draw((-1,0)--(10,0));
+					draw(-(3, 8)/sqrt(3*3+8*8)--(3,8));
+					draw((0,0)--(2/sqrt(3*3+8*8)) * (3, 8), red, Arrow(TeXHead));
+					draw((0,0)--(2,0), red, Arrow(TeXHead));
+					label("$\vec f$", (2, 0), red, align=S);
+					label("$\vec g$", (2/sqrt(3*3+8*8)) * (3, 8), red, align=W);
+					label("$F$", (10, 0), align=S);
+					label("$G$", (3, 8), align=W);
+					draw((0,0)--2*(3, 8)/sqrt(3*3+8*8) + (2,0), magenta, Arrow(TeXHead));
+					label("$\vec f + \vec g$", 2*(3, 8)/sqrt(3*3+8*8) + (2,0), magenta, align=NE);
+				\end{asy}
+				\caption{L'union de deux sous-espaces vectoriels non inclus n'est pas un sous-espace vectoriel}
+			\end{figure}
+			\end{enumerate}
+		\item On le fait dans le cas où $r = 2$. On peut ensuite procéder à une récurrence pour le faire pour tout $r$. Soient $F_1$\/ et $F_2$\/ deux sous-espaces vectoriels de dimensions finies respectivement $d_1$\/ et $d_2$. Soient $\vec{x}_1 \in F_1$\/ et $\vec{x}_2 \in F_2$. On sait que $\alpha (\vec{x}_1, \vec{x}_2) + \beta(\vec{y}_1, \vec{y}_2) = (\alpha \vec{x}_1 + \beta \vec{y}_1, \alpha \vec{x}_2 + \beta \vec{y}_2)$. Montrons que $\dim(F_1 \times F_2) = d_1 + d_2 = \dim F_1 + \dim F_2$.
+			Soit $(\vec{e}_1, \ldots, \vec{e}_{d_1})$\/ une base de $F_1$\/ et $(\vec{f}_1, \ldots, \vec{f}_{d_2})$\/ une base de $F_2$. On décompose $\vec{x}_1$\/ et $\vec{x}_2$\/ dans ces bases :
+			\begin{gather*}
+				F_1 \ni \vec{x}_1 = \alpha_1 \vec{e}_1 + \alpha_2 \vec{e}_2 + \cdots + \alpha_{d_1} \vec{e}_{d_1}\\
+				\text{et}\\
+				F_2 \ni \vec{x}_2 = \beta_1 \vec{f}_1 + \beta_2 \vec{f}_2 + \cdots + \beta_{d_2} \vec{f}_{d_2}.\\
+			\end{gather*}
+			Ainsi,
+			\begin{align*}
+				F_1 \times F_2 \ni (\vec{x}_1, \vec{x}_2) &= (\alpha_1 \vec{e}_1 + \alpha_2 \vec{e}_2 + \cdots, \beta_1 \vec{f}_1 + \beta_2 \vec{f}_2 + \cdots)\\
+				&= \alpha_1 (\vec{e}_1,\vec{0}) + \alpha_2(\vec{e}_2, \vec{0}) + \cdots + \beta_1 (\vec{0}, \vec{f}_1) + \beta_2 (\vec{0}, \vec{f}_2) + \cdots. \\
+			\end{align*}
+	\end{enumerate}
+\end{exo}
+
+\begin{rap}
+	\noindent Comment montrer que $x \in \bigcap_{i \in  I} F_i$\/ ? On montre que, pour tout $i \in I$, on a $x \in F_i$.
+
+	\noindent Comment montrer que $x \in \bigcup_{i \in  I} F_i$\/ ? On montre qu'il existe $i \in I$, tel que $x \in F_i$.
+\end{rap}
+
+\begin{defn}
+	Soit $(F_i)_{i\in I}$\/ une famille de sous-espaces vectoriels de $E$.
+	La {\it somme}\/ des sous-espaces vectoriels $F_i$\/ est $S$\/ si, pour tout $v \in E$, \[
+		v \in S \iff \exists (v_1, \ldots, v_r) \in F_1 \times \cdots \times F_r,\: v = v_1 + \cdots + v_r
+	.\] On note alors $S = \sum_{i \in I} F_i$.
+	La somme est {\it directe}\/ si \[
+		\forall v \in S,\:\exists! (v_1, \ldots, v_r) \in F_1 \times \cdots \times F_r,\: v = v_1 + \cdots + v_r
+	.\] On note alors $S = \bigoplus_{i \in I} F_i$.
+\end{defn}
+
+\begin{exo}
+	On a $E = \R_3[X]$. On veut d'abord montrer $F + G + H$, puis que cette somme est directe et enfin que $F$, $G$\/ et $H$\/ sont supplémentaires.
+	C'est à dire, on veut montrer que tout vecteur de $E$\/ (3) peut s'écrire de manière unique (2) comme la somme d'un vecteur de $F$, d'un vecteur de $G$\/ et d'un vecteur de $H$.
+
+	Soit $P = a + bX + cX^2 + dX^3 \in \R_3[X]$.
+	\begin{align*}
+		&P = \underbrace{\alpha X(X-1)(X-2)}_{\in F} + \underbrace{\beta (X-1)(X-2)(X-3)}_{\in G} + \underbrace{\gamma + \delta X^2}_{\in H}\\
+		\iff& (\heartsuit) : \begin{cases}
+			\hfill-6\beta + \gamma = a\\
+			\hfill2\alpha + 11\beta = b\\
+			\hfill-3\alpha + 6\beta + \delta = c\\
+			\hfill\alpha + \beta = d\\
+		\end{cases}
+	\end{align*}
+	Montrons que le système $(\heartsuit)$\/ a une unique solution.
+
+	1\tsup{ère} méthode : on applique la méthode du pivot de Gau\ss. On a \[
+		(\heartsuit) \iff \begin{cases}
+			\hfill \delta - 6 \beta - 3 \alpha = c\\
+			\hfill \gamma - 3\beta = a\\
+			\hfill \beta + \alpha = d\\
+			\hfill 11\beta + 2\alpha = b
+		\end{cases}
+	.\]
+	Le système est triangulaire, il a donc une unique solution.
+
+	2\tsup{nde} méthode : on calcule le rang du système $(\heartsuit)$. La matrice $A$\/ la matrice des coefficients : \[
+		A = \begin{bmatrix}
+			0&-6&1&0\\
+			2&11&0&0\\
+			-3&-6&0&1\\
+			1&1&0&0
+		\end{bmatrix}
+	.\] On peut montrer que $\rg A = 4$\/ ou montrer que $A$\/ est inversible i.e.\ $\det A \neq 0$.
+\end{exo}
+
+\begin{prop}
+	\begin{enumerate}
+		\item La somme des sous-espaces vectoriels $F_i$\/ est un sous-espace vectoriel de $E$.
+		\item Si la dimension des sous-espaces vectoriels $F_i$\/ est finie, alors $\ds\dim\Big(\sum_{i \in I} F_i\Big) \le \sum_{i \in I} \dim F_i$.
+		\item La somme est directe si et seulement si $\ds\dim\Big(\sum_{i \in I} F_i\Big) = \sum_{i \in I} \dim F_i$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	Soit $\varphi$\/ l'application linéaire définie ci-dessous : 
+	\begin{align*}
+		\varphi: F_1 \times \cdots \times  F_r &\longrightarrow E \\
+		(\vec{x}_1, \ldots, \vec{x}_r) &\longmapsto \vec{x}_1 + \cdots + \vec{x}_r.
+	\end{align*}
+	\begin{enumerate}
+		\item $\Im \varphi$\/ est un sous-espace vectoriel de $E$\/ car $\varphi$\/ est une application linéaire (cf.\ cours de première année). Or, $\Im \varphi = F_1 + \cdots + F_r$ d'après la {\sc définition}\/ 5.
+		\item On applique le théorème du rang à $\varphi$\/ : \[
+				\dim(F_1\times \cdots \times F_r) = \dim(\Ker \varphi) + \dim(\Im \varphi)
+			.\] Or, d'après l'{\sc exercice}\/ 4, $\dim(F_1 \times \cdots F_r) = \dim F_1 + \cdots + \dim F_r$\/ ; et, $\dim(\Im \varphi) = \dim(F_1 + \cdots + F_r)$\/ d'après la question 1.
+			Comme $\dim(\Ker \varphi) \ge 0$, on a donc \[
+				\sum_{i=1}^r \dim F_i \ge \dim\Big(\sum_{i=1}^r F_i\Big)
+			.\]
+		\item La somme $\sum_{i=1}^n F_i = F_1 + \cdots + F_r$\/ est directe si et seulement si $\varphi$\/ est injective si et seulement si $\Ker \varphi = \{0_E\}$\/ si et seulement si $\dim(\Ker \varphi) = 0$. On en déduit donc, en reprenant l'expression de 2., on a \[
+				\sum_{i=1}^r \dim F_i = \dim \Big(\sum_{i=1}^r F_i\Big)
+			.\]
+	\end{enumerate}
+\end{prv}
+
+\begin{exo}[somme de {\bf deux}\/ espaces vectoriels]
+	On pose $E = \R^2$, et $n = 3$. Soient $F_1$, $F_2$\/ et $F_3$\/ trois sous-espaces vectoriels de $\R^2$.
+
+	On a $F_1 \cap F_2 \cap F_3 = \{\vec{0}\}$\/ : $F_1 \cap F_2 = \{\vec{0}\}$, $F_2 \cap F_3 = \{\vec{0}\}$\/ et $F_1 \cap F_3 = \{\vec{0}\}$. Mais, la somme $F_1 + F_2 + F_3$\/ n'est pas directe car $\vec\imath + \vec\jmath = \vec{0} + \vec{0} + (\vec\imath + \vec\jmath) = \vec\imath + \vec\jmath + \vec{0}$.
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			size(10cm);
+			draw((-1,0)--(10,0));
+			draw((0,-1)--(0,6));
+			draw((-1,-1)--(6,6));
+			draw((0,0)--(0,2), red, Arrow(TeXHead));
+			draw((0,0)--(2,0), red, Arrow(TeXHead));
+			label("$\vec\imath$", (1, 0), red, align=S);
+			label("$\vec\jmath$", (0, 1), red, align=W);
+			label("$\Vect(\vec\imath)$", (10, 0), align=S);
+			label("$\Vect(\vec\jmath)$", (0, 6), align=W);
+			draw((0,0)--(2,2), magenta, Arrow(TeXHead));
+			label("$\vec\imath + \vec\jmath$", (2,2), magenta, align=SE);
+			label("$\Vect(\vec\imath + \vec\jmath)$", (6,6), align=N);
+		\end{asy}
+		\caption{Contre-exemple des propriétés de la somme dans de trois sous-espaces vectoriels}
+	\end{figure}
+
+	Néanmoins, pour $r = 2$, on a bien la formule de {\sc Grassmann}\/ : \[
+		\dim(F + G) = \dim F + \dim G - \dim(F \cap G)
+	.\]
+
+	\bigskip
+
+	On pose l'application linéaire $\varphi$\/ comme définie ci-dessous :
+	\begin{align*}
+		\varphi: F\times G &\longrightarrow E \\
+		(\vec{x}_1,\vec{x}_2) &\longmapsto \vec{x}_1 + \vec{x}_2.
+	\end{align*}
+	On a, d'après le théorème du rang, \[
+		\dim(F \times G) = \dim(\Ker \varphi) + \dim(\Im \varphi)
+	.\] Or, $\dim(F \times G) = \dim F + \dim G$\/ d'après l'{\sc exercice 4}\/ ; et, comme $\Im \varphi = F + G$\/ et donc $\dim(\Im \varphi) = \dim(F + G)$.
+	Il reste à montrer que $\dim(\Ker \varphi) = \dim(F \cap G)$.
+
+	On sait que $\Ker \varphi = \{(\vec{x}_1,\vec{x}_2) \in F \times G \mid \vec{x}_1 + \vec{x}_2 = \vec{0}\} = \{(\vec{x},-\vec{x}) \in F \times G\}$. Or, on sait que $\forall \vec{x} \in F,\,-\vec{x} \in F$\/ et on en déduit donc que $\Ker \varphi = \{ (\vec{x},-\vec{x}) \in (F \cap G)^2\}$.
+	D'où, l'application \begin{align*}
+		h: F \cap G &\longrightarrow \Ker \varphi \\
+		\vec{x} &\longmapsto (\vec{x},-\vec{x})
+	\end{align*}
+	est un isomorphisme par construction.
+
+	La somme est directe si et seulement si $\dim(F+G) = \dim F + \dim G$\/ donc si et seulement si $\dim(F \cap G) = 0$\/ et donc si et seulement si $F \cap G = \{\vec{0}\}$.
+\end{exo}
+
+\begin{rmk}
+	Il est important de vérifier que $E = F \oplus G$. On dit que $p$\/ est un projecteur et que $p(\vec{x})$\/ est le projeté de $\vec{x}$\/ sur $F$\/ parallèlement à $G$.
+	Du dessin du polycopié, on en déduit que, pour tout vecteur $\vec{x}$, on a $\vec{x} + {\s}(\vec{x}) = 2p(\vec{x})$\/ ; d'où, $\id_E + {\s} = 2p$.
+	Un projecteur $p$\/ projette sur $\Im p$\/ parallèlement à $\Ker p$.
+	Une symétrie $\s$\/ est une symétrie par rapport à $\Ker(\s - \id_E)$\/ parallèlement à $\Ker(\s + \id_E)$.
+\end{rmk}
+
+\begin{exo}
+	Soit $E$\/ un $\mathds{K}$-espace vectoriel de dimension finie.
+	Soient $F$\/ et $G$\/ deux supplémentaires dans $E$. Soit $p$\/ un projecteur sur $F$\/ parallèlement à $G$.
+	Sans perte de généralité, on peut se placer dans une base particulière, adaptée au problème (à la somme directe $F \oplus G$) car $\tr$\/ et $\rg$\/ sont, ou bien invariants par changement de base, ou bien invariants de similitude.
+	Soit $\mathscr{B} = (\vec{e}_1, \ldots, \vec{e}_r, \vec{e}_{r+1}, \ldots, \vec{e}_n)$\/ une base de $E$\/ telle que $(\vec{e}_1, \ldots, \vec{e}_r)$\/ est une base de $F$\/ et $(\vec{e}_{r+1}, \ldots, \vec{e}_{n})$\/ est une base de $G$.
+	Une telle base $\mathscr{B}$\/ existe car $F$\/ et $G$\/ sont supplémentaires.
+	\[
+		[p]_\mathscr{B} = \begin{bNiceArray}{c|c}[last-row,last-col]
+			I_r&0&\substack{\vec{e}_1\\\vdots\\ \vec{e}_r\\~}\\
+			0&0&\substack{\vec{e}_{r+1}\\\vdots\\ \vec{e}_n}\\
+			p(\vec{e}_1)\ldots p(\vec{e}_r)&p(\vec{e}_{r+1})\ldots p(\vec{e}_n)\\
+		\end{bNiceArray}
+	.\]
+\end{exo}
+
+

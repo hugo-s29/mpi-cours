@@ -1,0 +1,12 @@
+\section{Compléments de cours, en vrac}
+
+\begin{enumerate}
+	\item \textit{Montrer que $\models$\/ est une relation d'ordre sur $\mathcal{F}$.}
+		\begin{itemize}
+			\item Soit $F$\/ une formule. On sait que $F \models F$. En effet, pour tout $\rho \in \mathds{B}^{\mathcal{P}}$, si $\left\llbracket F \right\rrbracket^\rho = \mathbf{V}$, alors $\left\llbracket F \right\rrbracket^\rho = \mathbf{V}$. La relation $\models$\/ est donc reflective.
+			\item Soient $F$\/ et $G$\/ deux formules. On suppose $F \models G$\/ et $G \models H$. Montrons que $F \equiv G$. On reprend la démonstration du cours : soit $\rho \in \mathds{B}^{\mathcal{P}}$. On suppose $\left\llbracket G \right\rrbracket^\rho = \mathbf{V}$, alors $\left\llbracket F \right\rrbracket = \mathbf{V}$\/ car $G \models H$ ; et donc $\left\llbracket G \right\rrbracket^\rho = \left\llbracket F \right\rrbracket^\rho$. On suppose à présent que $\left\llbracket G \right\rrbracket^\rho = \mathbf{F}$, alors, par contraposée, $\left\llbracket F \right\rrbracket^\rho = \mathbf{F}$ ; on a donc $\left\llbracket G \right\rrbracket^\rho = \left\llbracket F \right\rrbracket^\rho$. On en déduit que $\left\llbracket G \right\rrbracket = \left\llbracket F \right\rrbracket$, i.e.~$G \equiv F$. La relation est donc \textit{quasi}--anti-symétrique.
+			\item Soient $F$, $G$\/ et $H$\/ trois formules. On suppose $F \models G$\/ et $G \models H$. Soit $\rho \in \mathds{B}^{\mathcal{P}}$. Si $\left\llbracket F \right\rrbracket^\rho = \mathbf{V}$, alors $\left\llbracket G \right\rrbracket^\rho = \mathbf{V}$. Or, comme $G \models H$, si $\left\llbracket G \right\rrbracket^\rho = \mathbf{V}$, alors $\left\llbracket H \right\rrbracket^\rho = \mathbf{V}$. D'où $\left\llbracket F \right\rrbracket^\rho = \mathbf{V} \implies\left\llbracket H \right\rrbracket^\rho = \mathbf{V}$. On a donc $F \models H$. La relation $\models$\/ est donc transitive.
+		\end{itemize}
+	\item Soit $A \in \mathcal{F}$, soit $\rho \in \mathds{B}^{\mathcal{P}}$, et soit $\sigma \in \mathcal{P}^\mathcal{F}$. On pose, pour $p \in \mathcal{P}$, $\tau(p) = \left\llbracket \sigma(p) \right\rrbracket^\rho$. \textit{Montrons que $\left\llbracket A[\sigma] \right\rrbracket^\rho = \left\llbracket A \right\rrbracket^\tau$}.
+\end{enumerate}
+

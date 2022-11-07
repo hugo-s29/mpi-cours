@@ -1,0 +1,40 @@
+\section{Axiomatisation algèbre de \textsc{Boole}}
+
+\begin{enumerate}
+	\item On pose, pour $t \in \mathds{T}$, $P(t) : ``t \simeq 0 \text{ ou } t \simeq 1{,}"$ et on démontre cette propriété par induction.
+		\begin{itemize}
+			\item On a bien $P(\mathbf{0})$\/ et $P(\mathbf{1})$.
+			\item Soient $t_1,t_2 \in \mathds{T}$.
+				\begin{enumerate}
+					\item Si $t_1 \simeq \mathbf{1}$, alors $\bar{t}_1 \simeq \bar{\mathbf{1}} \simeq \bar{\bar{\mathbf{0}}} \simeq \mathbf{0}$ ; si $t_1 \simeq \mathbf{0}$, alors $\bar{t}_1 \simeq \bar{\mathbf{0}} \simeq \mathbf{1}$.
+					\item Si $t_1 \simeq \mathbf{0}$, alors $t_1 \cdot t_2 \simeq \mathbf{0} \cdot t_2 \simeq \mathbf{0}$\/ ; si $t_1 \simeq \mathbf{1}$, alors $t_1 \cdot t_2 \simeq \mathbf{1} \cdot t_2 \simeq t_2$\/ (qui est équivalent à $\mathbf{0}$\/ ou $\mathbf{1}$).
+					\item Si $t_1 \simeq \mathbf{1}$, alors $t_1 + t_2 \simeq \mathbf{1} + t_2 \simeq \mathbf{1}$ ; si $t_1 \simeq \mathbf{0}$, alors $t_1 + t_2 \simeq \mathbf{0} + t_2 \simeq t_2$\/ (qui est équivalent à $\mathbf{0}$\/ ou $\mathbf{1}$)
+				\end{enumerate}
+		\end{itemize}
+	\item En reprenant les relations trouvées dans la question précédente, on construit les tables ci-dessous.
+		\[
+			\begin{array}{cc|c}
+				t_1&t_2&t_1\cdot t_2\\ \hline
+				\mathbf{0}&\mathbf{0}&\mathbf{0} \\
+				\mathbf{0}&\mathbf{1}&\mathbf{0} \\
+				\mathbf{1}&\mathbf{0}&\mathbf{0} \\
+				\mathbf{1}&\mathbf{1}&\mathbf{1} \\
+			\end{array}
+			\qquad\qquad
+			\begin{array}{cc|c}
+				t_1&t_2&t_1 +t_2\\ \hline
+				\mathbf{0}&\mathbf{0}&\mathbf{0} \\
+				\mathbf{0}&\mathbf{1}&\mathbf{1} \\
+				\mathbf{1}&\mathbf{0}&\mathbf{1} \\
+				\mathbf{1}&\mathbf{1}&\mathbf{1} \\
+			\end{array}
+			\qquad\qquad
+			\begin{array}{c|c}
+				t_1 & \bar{t}_1\\ \hline
+				\mathbf{0}&\mathbf{1}\\
+				\mathbf{1}&\mathbf{0}
+			\end{array}
+		\]
+\end{enumerate}
+
+

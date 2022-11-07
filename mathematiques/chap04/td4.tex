@@ -1,0 +1,71 @@
+\section{Exercice 6}
+
+{\slshape Soient $a$, $b$\/ et $c$\/ trois réels. Soient $A$\/ et $B$\/ deux matrices $3 \times 3$, définies par \[
+	A = \begin{pmatrix}
+		1&a&1\\
+		0&1&0\\
+		0&0&a
+	\end{pmatrix}\qquad\text{et}\qquad\begin{pmatrix}
+		2&b&0\\
+		0&c&0\\
+		0&0&2
+	\end{pmatrix}
+.\]
+Pour quelles valeurs des réels $a$, $b$\/ et $c$\/ les matrices $A$\/ et $B$\/ sont-elles diagonalisables ?}
+
+Soit $\lambda \in \R$. D'où
+\[	\lambda \in \Sp(A) \iff \det(\lambda I_3 - A) = 0\]
+Or,
+\begin{align*}
+	\det(\lambda I_3 - A) = \begin{pmatrix}
+		\lambda - 1&-a&-1\\
+		0&\lambda-1&0\\
+		0&0&\lambda-a
+	\end{pmatrix} = (\lambda-1)^2 \cdot (\lambda - a)
+\end{align*}
+
+\begin{enumerate}
+	\item[\sc 1\tsup{er} cas] $a = 1$\/ : on a donc $\Sp(A) = \{1\}$. Par l'absurde, si $A$\/ est diagonalisable, alors $A \sim I_3$, d'où $A = I_3$, ce qui est absurde. Et donc $A$\/ n'est pas diagonalisable.
+	\item[\sc 2\tsup{nd} cas] $a \neq 1$\/ : on a donc $\Sp(A) = \{1,a\}$. D'où $1 \le \dim(\mathrm{SEP}(a)) \le 1$, et $1 \le \dim(\mathrm{SEP}(1)) \le 2$. Or, la matrice $A$\/ est diagonalisable si et seulement si $\dim(\mathrm{SEP}(a)) + \dim(\mathrm{SEP}(1)) = 3$, donc si et seulement si $\dim(\mathrm{SEP}(1)) = 2$. Soit donc $X = \left( \substack{x\\y\\z} \right) \in \mathscr{M}_{3,1}(\R)$.
+		\begin{align*}
+			X \in \mathrm{SEP}(1) \iff& AX = X\\
+			\iff& \begin{pmatrix}
+				1&a&1\\
+				0&1&0\\
+				0&0&a
+			\end{pmatrix} \begin{pmatrix}
+				x\\y\\z
+			\end{pmatrix} = \begin{pmatrix}
+				x\\y\\z
+			\end{pmatrix}\\
+			\iff& \begin{cases}
+				ay + z = 0\\
+				az = z
+			\end{cases}\\
+			\iff& \begin{cases}
+				ay = 0\\
+				z = 0
+			\end{cases}\quad \text{ car } a \neq 1\\
+		\end{align*}
+		\begin{enumerate}
+			\item[\itshape 1\tsup{er} sous-cas] $a = 0$\/ : \[
+					X \in \mathrm{SEP}(1) \iff z = 0 \iff X = x\begin{pmatrix}
+						1\\0\\0
+					\end{pmatrix} + y \begin{pmatrix}
+						0\\1\\0
+					\end{pmatrix}
+				.\]
+				D'où $\dim(\mathrm{SEP}(1)) = 2$.
+			\item[\itshape 2\tsup{nd} sous-cas] $a \neq 0$\/ : \[
+					X \in \mathrm{SEP}(1) \iff \begin{cases}
+						y = 0\\
+						z = 0
+					\end{cases} \iff X = x\begin{pmatrix}
+						1\\0\\0
+					\end{pmatrix} 
+				.\]
+				D'où $\dim(\mathrm{SEP}(1)) = 1$.
+		\end{enumerate}
+		Ainsi, $A$\/ est diagonalisable si et seulement si $a = 0$.
+\end{enumerate}
+

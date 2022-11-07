@@ -1,0 +1,224 @@
+\section{Motivation}
+
+\begin{lstlisting}[language=caml, caption=Calcul de factorielle]
+let rec fact n =
+	if n = 0 then 1
+	else n * (fact (n-1));;
+\end{lstlisting}
+
+Ce programme calcule la factorielle d'un nombre ? En développant, l'expression de $3!$, on a
+\begin{align*}
+	(\text{\tt fact } 3) &= 3 \times (\text{\tt fact } 2) \\
+	&= 3 \times (2 \times (1 \times 1)) \\
+\end{align*}
+On en déduit que ce programme calcule la factorielle car ce développement s'arrête à un certain point. Comment en être sûr ? En effet, avec $\text{\tt n} = -1$, on obtient une {\tt Stack Overflow Error} ; on n'a plus de mémoire.
+Pour en être sûr, il faut définir un {\it invariant}.
+
+\todo{Ajouter 2\tsup{ème} exemple}
+
+Un autre exemple : 
+
+\begin{lstlisting}[language=caml, caption=Un programme mystère (2)]
+let mystere2 n m =
+	let rec aux c b =
+		if c = 0 and b = m then 0
+		else if c = 0 then aux (b * m) (b + 1)
+		else 1 + aux (c - 1) b
+	in aux n 0;;
+\end{lstlisting}
+
+Ce programme a beaucoup plus de variables : les variables augmentent dans certains cas, puis diminuent\ldots\ On peut représenter l'état des variables {\tt b} et {\tt c} dans une figure :
+
+\begin{figure}[H]
+	\centering
+	\todo{Figure à faire}
+	\caption{État des variables {\tt b} et {\tt c}}
+\end{figure}
+
+On en conclut que ce programme calcule la valeur de \[
+	\tt n + m + 2m + \cdots + m^{\rm 2} = n + \frac{m^2\times (m{\rm -1})}{\rm 2}
+.\]
+Cherchons un variant. On peut penser à $\tt b - m$\/ mais il ne diminue pas à chaque étape. Nous verrons quel est ce variant plus tard dans le chapitre.
+
+Nouvel exemple : retourner une liste. Essayons de distinguer les différents cas possibles : si la liste est vide, on la renvoie ; sinon, on extrait un élément {\tt x} et on note le reste de la liste {\tt xs}, on retourne {\tt xs} puis on concatène à droite {\tt x}. On peut donc écrire
+\begin{lstlisting}[language=caml, caption=Inverser une liste]
+let rec rev l =
+	match l with
+	| [] -> []
+	| x :: xs -> (rev xs) @ [x];;
+\end{lstlisting}
+Cependant, le {\tt @} est une opération lente en OCamL. En effet ce programme a une complexité en $\mathcal{O}(n^2)$, où $n$\/ est la taille de la liste. Cette complexité est douteuse pour une opération aussi simple.
+On peut également se demander si cette opération se termine.
+Cela paraît très simple : la taille de la liste diminue mais nous n'avons pas le coté mathématique d'une liste. En effet, qu'est ce qu'une liste et la taille de cette liste ?
+On doit formaliser l'explication de pourquoi cet algorithme se termine.
+
+Continuons avec un autre exemple :
+\begin{lstlisting}[language=caml, caption=Un programme mystère (3)]
+let rec mystere3 m n =
+	if m = 0 then n + 1
+	else if n = 1 then mystere (n - 1) 1
+	else mystere (m - 1) (mystere m (n-1));;
+\end{lstlisting}
+Il s'agit de la fonction {\sc Ackermann}. Sa complexité est très importante mais ce n'est pas le sujet de cette introduction. En effet, on a
+\begin{gather*}
+	A_{0,m} = n + 1\\
+	A_{m,0} = A_{n-1, 1}\\
+	A_{m,n} = A_{m-1,A_{m,\ldots}}
+\end{gather*}
+Malgré ce que l'on peut penser, cette fonction se termine mais comment le prouver ?
+
+\todo{Exemple arbres binaires}
+
+On en conclut que, avec les outils de l'année passée, il est difficile de prouver que ces algorithmes se terminent rigoureusement.
+
+\section{Ordre}
+
+\begin{defn}[Élements minimaux] Lorsque $(E, \preceq)$\/ est un espace ordonné, et $A \subseteq E$\/ (``inclut ou égal'') est une partie de $E$, on appelle {\it élément minimal}\/ de $A$\/ un élément $x \in A$\/ tel que \[
+	\forall y \in A,\,y \preceq x \implies y = x
+.\]
+\end{defn}
+
+\begin{exm}
+	La figure ci-dessous est un diagramme de {\sc Hasse}\/ : c'est un diagramme où les points représente les éléments de l'ensemble $E$\/ et où les segments représentent une comparaison entre les deux éléments connectés : l'élément inférieur est représenté plus bas. Dans l'exemple ci-dessous, les éléments minimaux de $A$\/ sont les points $b$\/ et $f$.
+
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			size(5cm);
+			pair a = expi(2pi/5);
+			pair b = (0, 0);
+			pair c = expi(2*2pi/5);
+			pair d = expi(3*2pi/5);
+			pair e = expi(4*2pi/5);
+			pair f = expi(5*2pi/5);
+			dot("$a$", a, align=2*a);
+			dot("$b$", b, red, align=1.5*E);
+			dot("$c$", c, align=1.5*c);
+			dot("$d$", d, align=1.5*d);
+			dot("$e$", e, align=1.5*e);
+			dot("$f$", f, red, align=1.5*f);
+			void dr(pair a, pair b) {
+				pair vec = b - a;
+				real eps = 0.1;
+				draw(a + eps * vec -- b - eps * vec);
+			}
+			dr(a,b);
+			dr(a,c);
+			dr(a,f);
+			dr(b,d);
+			dr(b,e);
+			dr(c,d);
+			draw(circle((a+b+f)/3 + a*0.1+f*0.1, length(a - (b+f)/2)*0.8), red);
+			label("\large$A$", 2.3*(a+f+b)/3, red);
+		\end{asy}
+		\caption{Diagramme de {\sc Hasse}}
+	\end{figure}
+\end{exm}
+
+\begin{defn}[Ordre bien fondé]
+	Un ordre est {\it bien fondé\/} s'il n'existe pas de suite infiniment strictement croissante.
+\end{defn}
+
+\begin{exm}
+	\hfill
+	\vbox{
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{c|c}
+				\sc Oui & \sc Non \\ \hline
+				$(\N, \le)$&$(\Z, \le)$ \\
+				&$(\R, \le)$ \\
+				&$(\R^+, \le)$ ($\sfrac{1}{2^n}$\/) \\
+				$(E, \subseteq)$ (si $E$\/ est fini) &$(E, \subseteq)$ (en général) \\
+			\end{tabular}
+			\caption{Exemples et non-exemples d'ordres bien fondés}
+		\end{table}
+	}
+\end{exm}
+
+\begin{prop}
+	Une relation d'ordre $\preceq$\/ sur un ensemble $E$\/ bien fondé si et seulement si toute partie non vide de $E$\/ admet un élément minimal.
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\impliedby$'']
+			Supposons que toute partie non vide de $E$\/ admet un élément minimal.
+			Supposons, de plus, qu'il existe une suite $(x_n)_{n\in\N}$\/ infiniment strictement décroissante.
+			Soit alors $A = \{u_n  \mid n \in \N\}$ qui admet un élément minimal ; soit $n_0$\/ son indice.
+			Or, $x_{n_0+1}\preceq x_{n_0}$\/ ce qui est absurde.
+		\item[``$\implies$'']
+			Supposons que $(E, \preceq)$\/ est un ensemble bien fondé.
+			Supposons également qu'il existe un sous-ensemble $A$\/ de $E$\/ non vide n'admettant pas d'élément minimal.
+			Comme $A$\/ est non vide, on pose alors $x_0 \in A$.
+			Et, comme $A$\/ n'admet pas d'élément minimal, donc il existe $x \in A$\/ tel que $x \preceq x_0$. Notons un tel $x$, $x_1$. En itérant ce procédé, on crée la suite $(x_i)_{i\in\N}$\/ qui est infiniment strictement décroissante ; ce qui est absurde.
+	\end{itemize}
+\end{prv}
+
+\begin{thm}[Induction bien fondée]
+	Soit $(E, \preceq)$\/ un ensemble ordonné et bien fondé. Soit $P$\/ une propriété sur les éléments de $E$.
+	Si $x \in E$, on note $E^{\preceq x} = \{y \in E  \mid  y \preceq x\}$.
+	Si $\forall x \in E,\,\big(\forall y \in E^{\preceq x},\,P(y)\big) \implies P(x)$, alors $\forall x \in E,\,P(x)$.
+\end{thm}
+
+\begin{rmk}
+	Si $(E, \preceq) = (\N, \le)$, alors le théorème précédent se traduit par : \[
+		\hbox{si $\forall n \in \N,\,\big(\forall p < n,\,P(p)\big)\implies P(n)$, alors $\forall n \in \N, P(n)$.}
+	\]
+	Ce résultat correspond à la ``récurrence forte.''
+	Décomposons ce ``$\forall$\/'' : on extrait le cas où $n = 0$\/ \[
+		\hbox{si $P(0)$\/ et $\forall n \in \N^*,\,\big(\forall p < n, P(p)\big) \implies P(n)$, alors $\forall n \in \N, P(n)$}
+	.\] 
+\end{rmk}
+
+On peut donc utiliser le principe de la récurrence pour tout ensemble ordonné bien fondé.
+
+\begin{prv}
+	Soit $A = \{x \in E  \mid P(x) \text{ n'est pas vrai}\}$.
+
+	\begin{itemize}
+		\item[\sc Cas 1] $A = \O$, alors OK.
+		\item[\sc Cas 2] $A \neq \O$. Soit alors $x \in A$\/ un élément minimal de $A$\/ (c.f.\ proposition d'avant). On a que $\forall y \in E,\,y \preceq x,\,P(y) \text{ est vrai}$ donc $P(x)$\/ est vrai par hypothèse. Ce qui est absurde.
+	\end{itemize}
+\end{prv}
+
+\subsection{Ordre produit}
+
+\begin{defn}
+	Soit $(A, \preceq_A)$\/ et $(B, \preceq_B)$\/ deux ensembles ordonnés on définit alors $\preceq_\times$\/ sur $A\times B$\/ par \[
+		\forall (a,b), (a', b') \in A \times B,\,(a,b) \preceq_\times (a',b') \mathop{\iff}^{\text{def.}}(a \preceq_A a' \mathop{\text{et}} b \preceq_B b')
+	.\]
+\end{defn}
+
+\begin{prop}
+	$\preceq_\times$\/ est une relation d'ordre. \qed
+\end{prop}
+
+La proposition précédente est facilement vérifiée comme $\preceq_A$\/ et $\preceq_B$\/ sont, elles aussi, des relations d'ordre.
+
+\begin{rmk}[\danger\!\!]
+	Si $\preceq_A$\/ et $\preceq_B$\/ sont des ordres totaux, $\preceq_\times$\/ ne l'est pas forcément.
+\end{rmk}
+
+\begin{prop}
+	Soient $(A, \preceq_A)$\/ et $(B, \preceq_B)$\/ bien fondés, alors $(A\times B, \preceq_\times)$ l'est aussi.
+\end{prop}
+
+\begin{prv}
+	Supposons alors que $(A \times B, \preceq_\times)$\/ ne soit pas bien fondée.
+	Nous avons donc une suite infiniment strictement décroissante \[
+		(a_0,b_0) \succ_\times (a_1, b_1) \succ_\times (a_2, b_2)\succ_\times \cdots
+	.\]
+	On a donc $a_0 \succeq_A a_1 \succeq_A a_2 \succeq \cdots$. Or, $(A, \preceq_A)$\/ est bien fondée donc il existe $n_0 \in \N$\/ tel que $\forall i \ge n_0, a_i = a_{n_0}$. On a donc $\forall i \ge n_0,\, b_i \prec_B b_{i-1}$.
+	Considérons $(b_i)_{i \ge n_0}$\/ est infiniment strictement décroissante dans $(B, \preceq_B)$, ce qui est absurde.
+\end{prv}
+
+\begin{rmk}
+	On a défini une relation ``produit,'' on peut se demander si ces résultats s'appliquent aussi si la relation est ``somme.'' Ce n'est pas le cas : soit $\preceq_+$\/ définie comme \[
+		(a, b) \preceq_+ (a', b') \iffdef a \preceq_A a' \mathop{\text{ou}} b \preceq_B b'
+	.\] On peut démontrer que ce n'est pas une relation d'ordre.
+\end{rmk}
+
+\begin{rmk}
+	Si $(A, \preceq_A)$\/ est une relation d'ordre alors $(A^n, \preceq_\times)$\/ a les même propriétés.
+\end{rmk}

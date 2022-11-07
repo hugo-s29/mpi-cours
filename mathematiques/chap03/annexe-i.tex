@@ -1,0 +1,15 @@
+\section*{Annexe I : Bilan de la khôlle n\tsup{o}3}
+
+\subsection*{Exercice 3}
+
+L'intégrale $A = \int_{0}^{1} \frac{\ln t}{t - 1}~\mathrm{d}t$\/ est généralisée en 0 {\bf et}\/ en 1. Il est important d'écrire que \guillemotleft~l'intégrale $A$\/ converge si et seulement si les intégrales $\int_{0}^{1/2} \frac{\ln t}{t-1}~\mathrm{d}t$\/ et $\int_{1/2}^{1} \frac{\ln t}{t-1}~\mathrm{d}t$\/ convergent.~\guillemotright\ On tente un développement limité de la fonction dans l'intégrale $\int_{1/2}^{1} \frac{\ln t}{t - 1}~\mathrm{d}t$, mais il faut faire un changement de variables pour pouvoir faire un $\mathrm{DL}$\/ en 0.
+
+On peut faire le changement de variables $t = 1 - u$, qui est strictement monotone. On a $\mathrm{d}t = - \mathrm{d}u$, d'où \[
+	\int_{1 / 2}^{1} \frac{\ln t}{t - 1}~\mathrm{d}t = \int_{1 / 2}^{0} \frac{\ln (1-u)}{-u}~-\mathrm{d}u = - \int_{0}^{1 / 2} \frac{\ln(1-u)}{u}~\mathrm{d}u
+.\]
+Or, $\ln(1-u) = u + \po(u)$, et donc \[
+	\frac{\ln(1-u)}{u} = \frac{-u+ \po(u)}{u} = -1 + \po(1) \tendsto{u \to 0} - 1
+.\]
+D'où, l'intégrale $\int_{0}^{1 / 2} \frac{\ln(1-u)}{u}~\mathrm{d}u$\/ est faussement impropre, donc elle converge.
+
+Mais, au lieu de faire un changement de variables dans l'intégrale, il est préférable de faire le changement de variables dans la fonction et de montrer qu'elle est faussement impropre directement.

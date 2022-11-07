@@ -1,0 +1,214 @@
+\vspace{1cm}
+
+Cadeau du {\it 07/09/2022}\/ : $\ds \lim_{x\to 0} \frac{\tan x - x}{\sin^3 x}~?$
+
+\vspace{2mm}
+
+Comme $\sin x \simi_{x\to 0} x$, $\sin^3 x \simi_{x\to 0} x^3$.
+Le développement limité de $\tan x$\/ n'est pas au programme, il faudra donc normalement le redémontrer au besoin. On a $\tan x = (\sin x) / (\cos x)$. Or, comme $\sin x = x - \frac{x^3}{3!} + \cdots$\/ et $\cos x = 1 - \frac{x^2}{2!} + \cdots$, on a donc
+\begin{align*}
+	\tan x = \frac{\sin x}{\cos x} &= \frac{\ds x - \frac{x^3}{6} + \po(x^3)}{\ds 1 - \frac{x^2}{2} + \po(x^3)} \\
+	&= \left(x - \frac{x^3}{6} + \po(x^3)\right)\left(1 + \frac{x^2}{2} + \po(x^3)\right) \\
+	&= x + \frac{x^3}{3} + \po(x^3) \\
+\end{align*}
+On en déduit que \[
+	\frac{\tan x - x}{\sin^3 x} = \frac{\ds \frac{x^3}{3} + \po(x^3)}{x^3 + \po(x^3)} = \frac{1}{3} + \po(1) \tendsto{x\to 0} \frac{1}{3}
+.\]
+
+\bigskip
+
+On cherche un équivalent pour $n\to \infty$\/ de \[
+	\left( n - \frac{1}{2} \right) \ln\left( 1- \frac{1}{n} \right) + 1
+.\]
+
+On cherche un développement limité de $\ln\left( 1 - \frac{1}{n} \right)$\/ à l'aide de celui de $\ln(1-x)$\/ : $\ln(1-x) = -x - \frac{x^2}{2} - \frac{x^3}{3} + \cdots$\/ et donc \[
+	\ln\left( 1 - \frac{1}{n} \right) = -\frac{1}{n} - \frac{1}{2n^2} - \frac{1}{3n^3} \cdots
+.\] D'où,
+\begin{align*}
+	\left(n-\frac{1}{2}\right) \ln\left( 1 - \frac{1}{n} \right) + 1 &= \left( n - \frac{1}{2} \right)\left( -\frac{1}{n} - \frac{1}{2n^2} - \frac{1}{3n^3} + \cdots \right) + 1\\
+	&= -1 + 0 - \frac{1}{12n^2} + \po\left( \frac{1}{n^2} \right) + 1 \\
+	&= -\frac{1}{12n^2} + \po\left( \frac{1}{n^2} \right) \\
+	&\simi_{n\to \infty} -\frac{1}{12n^2}.
+\end{align*}
+
+\bigskip
+
+\begin{center}
+	\large\sc I.7 \quad Développements asymptotiques
+\end{center}
+
+\bigskip
+
+
+On cherche un développement asymptotique de la série harmonique $(H_n)$. Cette méthode pourra être utilisée dans le {\bf DM$_{\mathbf{1}}$}. Les formules à démontrer sont
+\begin{align}
+	H_n &= \ln n + \po(\ln n) \\
+	&= \ln n + \gamma + \po(1) \\
+	&= \ln n + \gamma + \frac{1}{2n} + \po\left( \frac{1}{n} \right) \\
+	&= \ln n + \gamma + \frac{1}{2n} - \frac{1}{12n^2} + \po\left( \frac{1}{n^2} \right).
+\end{align}
+
+Le développement~$(1)$\/ a déjà été fait de deux méthodes différentes dans les {\sc Exercices}\/~4 et~15. Le développement~(2) a déjà été fait une fois dans l'{\sc Exercice}\/~4, mais nous allons utiliser une autre méthode :
+\begin{align*}
+	(2) \iff& H_n - \ln n = \gamma + \po(1)\\
+	\iff& \text{ la suite } (H_n - \ln n) \text{ converge}.
+\end{align*}
+
+\begin{rmkn}
+	Le ``$\implies$\/'' et ``$\iff$\/'' ne peut pas remplacer les mots français : on ne peut pas écrire \[
+		``\text{d'où } \frac{u_n}{v_n} \longrightarrow 1 \iff u_n \sim v_n"
+	\] mais on doit écrire \[
+		``\text{d'où } \frac{u_n}{v_n} \longrightarrow 1 \text{ donc } u_n \sim v_n"
+	.\]
+\end{rmkn}
+
+On va montrer que $(H_n - \ln n)$\/ converge. On nomme cette suite $(u_n)_{n\in\N}$.
+
+\begin{rmk}[Séries télescopiques]
+	\begin{itemize}
+		\item[$(*)$] On sait que \[
+				(\cancel{u_1} - u_0) + (\cancel{u_2} - \cancel{u_1}) + \cdots + (u_n - \cancel{u_{n-1}}) = u_n - u_0
+			.\] Autrement dit, \[
+				\sum_{k=1}^n (u_k - u_{k-1}) = u_n - u_0
+			.\]
+		\item[$(**)$] On sait que \[
+				\sum_{k=n+1}^N (u_k - u_{k-1}) = (\cancel{u_{n+1}} - u_n) + (\cancel{u_{n+2}} - \cancel{u_{n+1}}) + \cdots + (u_N - \cancel{u_{N-1}}) = u_N - u_n
+			.\] Or, si $u_N$\/ tends vers $0$\/ quand $N\to \infty$, alors, en passant à la limite, \[
+				\sum_{k=n+1}^\infty (u_k - u_{k-1}) = -u_n
+			.\]
+	\end{itemize}
+\end{rmk}
+Fin de la {\sc Remarque}.
+
+On a
+\begin{align*}
+	u_n - u_{n-1} &= (H_n - \ln n) - \big(H_{n-1} - \ln (n-1)\big)\\
+	&= (H_n - H_{n-1}) - \big(\ln n - \ln (n-1)\big) \\
+	&= \frac{1}{n} - \ln \frac{n}{n-1}\\
+	&= \frac{1}{n} + \ln \frac{n-1}{n} \\
+	&= \frac{1}{n} + \ln\left( 1 - \frac{1}{n} \right) \\
+	&= \frac{1}{n} - \frac{1}{n} - \frac{1}{2n^2} + \po\left( \frac{1}{n^2} \right) \\
+	&= -\frac{1}{2n^2} + \po\left( \frac{1}{n^2} \right). \\
+	&\sim -\frac{1}{2n^2}.
+\end{align*}
+Or, $\sum \frac{-1}{2n^2} = -\frac{1}{2}\sum \frac{1}{n^2}$\/ qui est une suite convergente. La série $\sum (u_n - u_{n-1})$\/ converge donc.
+Donc, d'après le {\sc Théorème}\/ 14, les restes des séries $\sum \frac{-1}{2n^2}$\/ et $\sum (u_n - u_{n-1})$\/ sont équivalents.
+\begin{gather*}
+	\sum_{k=n+1}^\infty (u_k - u_{k-1}) = -u_n \qquad \text{ car la suite tend vers 0}\\
+	\sum_{k=n+1}^\infty \frac{-1}{2k^2} = -\frac{1}{2} \sum_{k=n+1}^\infty \frac{1}{k^2}
+\end{gather*}
+et, en comparant la série $\sum \frac{1}{n^2}$\/ et l'intégrale $\int \frac{1}{x^2}~\mathrm{d}x$, on montre que $\sum_{k=n+1}^\infty \frac{1}{k^2} \simi_{n\to \infty} \frac{1}{n}$\/~(c.f. {\sc Exercice}\/ 7). On en déduit que \[
+	\sum_{k=n+1}^\infty -\frac{1}{2k^2} \sim -\frac{1}{2n} \qquad \text{ et donc } u_n \sim \frac{1}{2n}
+.\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\vfill
+Cadeau du {\it 08/09/2022}\/ :
+\begin{center}
+	\begin{tabular}{cc}
+		$\ds \int \cos x \ln(1+\cos x)~\mathrm{d}x \quad \text{(IPP)}$&
+		$\ds \int \Arctan x~\mathrm{d}x\quad\text{(IPP puis CDV)}$\\
+		$\ds \int \Arcsin x~\mathrm{d}x\quad\text{(IPP puis CDV)}$&
+		$\ds \int \frac{1-2x}{1+x^2}~\mathrm{d}x$\\
+	\end{tabular}
+\end{center}
+\eject
+
+

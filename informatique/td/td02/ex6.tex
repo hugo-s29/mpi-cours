@@ -1,0 +1,21 @@
+\section{Exercice 6 : Barre de {\scshape Scheffer}}
+
+\def\nand{\mathrel{{\tt nand}}}
+\def\nor{\mathrel{{\tt nor}}}
+
+\begin{enumerate}
+	\item \begin{itemize}
+			\item $\lnot H_1 \equiv H_1 \nand H_1$\/ ;
+			\item $H_1 \land H_2 \equiv \lnot (H_1 \nand H_2) \equiv (H_1 \nand H_1) \nand (H_2 \nand H_2)$\/ ;
+			\item $H_1 \lor H_2 \equiv \lnot H_1 \nand \lnot H_2 \equiv (H_1 \nand H_1) \nand (H_2 \nand H_2)$\/ ;
+			\item $H_1 \to H_2 \equiv H_1 \lor (\lnot H_2) \equiv (H_1 \nand H_1) \nand H_2$ ;
+			\item $H_1 \leftrightarrow H_2 \equiv (H_1 \to H_2) \land (H_2 \to H_1)$.
+		\end{itemize}
+	\item \begin{itemize}
+		\item $\lnot H_1 \equiv H_1 \nor H_1$\/ ;
+		\item $H_1 \lor H_2 \equiv \lnot (H_1 \nor H_2) \equiv (H_1 \nor H_2) \nor (H_1 \nor H_2)$\/ ;
+		\item $H_1 \land H_2 \equiv (\lnot H_1) \nor (\lnot H_2) \equiv (H_1 \nor H_1) \nor (H_2 \nor H_2)$\/ ;
+		\item $H_1\to H_2 \equiv H_1 \lor (\lnot H_2) \equiv \lnot (H_1 \nor (\lnot H_2)) \equiv (H_1 \nor (H_2 \nor H_2)) \nor (H_1 \nor (H_2 \nor H_2))$\/ ;
+		\item $H_1 \leftrightarrow H_2 \equiv (H_1 \to H_2) \land (H_2 \to H_1)$.
+	\end{itemize}
+\end{enumerate}

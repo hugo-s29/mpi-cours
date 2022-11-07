@@ -1,0 +1,45 @@
+\section{Exercice 15}
+
+\begin{itemize}
+	\item[``$\implies$''] On suppose $A$\/ et $B$\/ diagonalisables. On suppose aussi $AB = BA$. Ainsi, il existe une matrice inversible $P \in \mathrm{GL}_n(\mathds{K})$\/ telle que $P^{-1}\cdot A\cdot P = A'$\/ diagonale.
+		Soit $B' = P^{-1}\cdot P\cdot P$. Également, on sait que les sous-espaces propres de $A$\/ sont stables par $B$. Ainsi, \[
+			A' = \left(\begin{array}{c|c|c}
+				\begin{array}{ccc}
+					\lambda_1\\
+					&\ddots\\
+					&&\lambda_1
+				\end{array}&\\ \hline
+				&\begin{array}{ccc}
+					\ddots\\
+					&\ddots\\
+					&&\ddots
+				\end{array}\\ \hline
+				&&
+				\begin{array}{ccc}
+					\lambda_r\\
+					&\ddots\\
+					&&\lambda_r
+				\end{array}
+			\end{array}\right) \text{ et }
+			B' = \left(\begin{array}{c|c|c}
+				B_1&\\ \hline
+				&\ddots\\ \hline
+				&&B_r
+			\end{array}\right)
+		.\]
+		$B'$\/ est diagonalisable car $B$\/ est diagonalisable. Mieux : chaque bloc de $B'$\/ est diagonalisable d'après le théorème 40. On diagonalise le bloc $B_1$\/ en $B''_1$\/ en passant dans une nouvelle base $(\vec{\varepsilon}_1\,', \ldots, \vec{\varepsilon}_{d_1}\,')$ de $\mathrm{SEP}_A(\lambda_1)$. Alors $B''_1$\/ est diagonal. De même, $B_2'', \ldots, B_r''$\/ sont des blocs diagonaux. Or, la matrice $A'$\/ est restée diagonale car les vecteurs $(\vec{\varepsilon}_1\,', \ldots, \vec{\varepsilon}_{d_1}\,')$\/ sont dans $\mathrm{SEP}_A(\lambda_1)$. Et, de même pour les autres blocs.
+\end{itemize}
+
+\section{Exercice 10}
+\begin{enumerate}
+	\item
+	\item
+		\begin{itemize}
+			\item[\sc Analyse] On suppose qu'il existe $P$\/ une matrice inversible telle que $P^{-1}\cdot A\cdot P = {a\:1\choose 0\:b} = T$.
+				\begin{enumerate}
+					\item[\it 1ère méthode] On a $\tr A = 2 = a + b = \tr T$, et $\det A = 1 = a \times  b = \det T$. D'où $a$\/ et $b$\/ sont solutions de l'équation $X^2 - 2X - 1 = 0$, i.e.\ $(X-1)^2 = 0$. D'où $a = b = 1$.
+					\item[\it 2nde méthode] On a $\chi_A(X) =\left|\substack{X\hfill\ -1\\1\ \hfill X - 2}\right| = (X-1)^2 = (X-a)(X-b) = \chi_T(X)$. D'où $a = b = 1$.
+				\end{enumerate}
+		\end{itemize}
+\end{enumerate}
+

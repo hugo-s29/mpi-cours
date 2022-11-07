@@ -1,0 +1,270 @@
+\begin{rmk}
+	Si $A \in \mathscr{M}_{n,n}(\R)$ ({\color{yellow} par exemple $A = {0\hfill\:-1\choose 1\hfill\:0}$}), alors $\chi_A(X) \in \R_{n}[X]$ ({\color{yellow} $\chi_A(X) = X^2 + 1$, et donc $\Sp_\R(A) = \O$, mais $\Sp_\C(A) = \{-i,i\}$}).
+	 Ainsi, \[
+	 	A \in \mathscr{M}_{n,n}(\R) \implies\forall \lambda \in \Sp_\C(A),\: \bar{\lambda} \in \Sp_\C(A)
+	 .\] Autrement dit, le spectre complexe d'une matrice réelle est stable par conjugaison.
+	 En effet, si $\lambda \in \Sp_\C(A)$, alors il existe $0 \neq X \in \mathscr{M}_{n,1}(\C)$, tel $A\cdot X = \lambda X$. D'où \[
+	 	\begin{pmatrix}
+			a_{1,1}&\ldots&a_{1,n}\\
+			\vdots&\ddots&\vdots\\
+			a_{n,1}&\ldots&a_{n,n}
+	 	\end{pmatrix} \begin{pmatrix}
+	 		z_1\\
+			\vdots\\
+			z_n
+	 	\end{pmatrix} = \lambda \begin{pmatrix}
+	 		z_1\\
+			\vdots\\
+			z_n
+	 	\end{pmatrix} \quad\text{et donc}\quad
+		\begin{pmatrix}
+			\bar{a}_{1,1}&\ldots&\bar{a}_{1,n}\\
+			\vdots&\ddots&\vdots\\
+			\bar{a}_{n,1}&\ldots&\bar{a}_{n,n}
+	 	\end{pmatrix} \begin{pmatrix}
+	 		\bar{z}_1\\
+			\vdots\\
+			\bar{z}_n
+	 	\end{pmatrix} = \bar\lambda \begin{pmatrix}
+	 		\bar{z}_1\\
+			\vdots\\
+			\bar{z}_n
+	 	\end{pmatrix}
+	 .\] Autrement dit, $A \cdot \bar{X} = \bar\lambda \bar{X}$\/ où $\bar{X} = \left( \substack{\bar{z}_1\\ \vdots\\ \bar{z}_n} \right)$. Or, $\bar{X} \neq 0$, et $A\cdot \bar{X} = \bar{\lambda}\bar{X}$. D'où $\bar{X}$\/ est un vecteur propre, et il est associé à $\bar{\lambda}$\/ qui est donc une valeur propre.
+	 Et même, $\dim \mathrm{SEP}(\lambda) = \dim \mathrm{SEP}(\bar\lambda)$.
+\end{rmk}
+
+\begin{prop}
+	Soit $A \in \mathscr{M}_{n,n}(\mathds{K})$\/ une matrice carrée.
+	\begin{enumerate}
+		\item Le spectre de $A$\/ continent au plus $n$\/ valeurs propres distinctes deux à deux.
+		\item Pour chaque valeur propre $\lambda \in  \Sp(A)$, on note $m_\lambda$\/ la multiplicité de la racine $\lambda$\/ dans le polynôme $\chi_A$. Si le polynôme caractéristique est scindé alors \[
+				\tr A = \sum_{\lambda \in \Sp(A)} m_\lambda \cdot \lambda \qquad \text{et}\qquad \det A = \prod_{\lambda \in \Sp(A)} \lambda^{m_\lambda}
+			.\]
+		\item La matrice $A$\/ et sa transposée ont le même polynôme caractéristique : $\chi_{A^\top} = \chi_A$, et donc le même spectre $\Sp(A) = \Sp(A^\top)$.
+	\end{enumerate}
+\end{prop}
+
+\noindent---
+
+Si la matrice $A$\/ est diagonalisable, alors il existe un matrice inversible $P$\/ telle que \[
+	D = \begin{pmatrix}
+		\lambda_1 & 0 & \ldots & 0\\
+		0&\ddots&\ddots&\vdots\\
+		\vdots&\ddots&\ddots&0\\
+		0&\ldots&0&\lambda_n
+	\end{pmatrix} = P^{-1} \cdot A \cdot P
+\]
+et donc $\tr A = \tr D = \sum_{i=1}^n \lambda_i$\/ et $\det A = \det D = \prod_{i=1}^n \lambda_i$. Mais, dans la proposition précédente, on n'a pas l'hypothèse que la matrice est diagonalisable. Ce raisonnement est un cas particulier de la proposition précédente. En effet, si $A$\/ est diagonalisable alors $\chi_A = \chi_D$ : 
+\begin{align*}
+	\chi_A(X) &= \chi_D(X) \\
+	\det(XI_n - A) &= \det(XI_n - D) \\
+	&= \det(XI_n - P^{-1}AP) \\
+	&= \det\Big(P^{-1}\cdot (XI_n - A)\cdot P\Big) \\
+	&= (X-\lambda_1)\cdots(X-\lambda_n) \\
+\end{align*}
+
+\noindent---
+
+\begin{prv}
+	\begin{enumerate}
+		\item[3.] On calcule
+			\begin{align*}
+				\chi_{A^\top}(x) &= \det(xI_n - A^\top) \\
+				&= \det\Big((xI_n - A)^\top\Big) \\
+				&= \det(xI_n-A) \\
+			\end{align*}
+			car le déterminant est invariant par passage à la transposée.
+			Or, comme $\chi_{A^\top} = \chi_A$, alors $\Sp(A) = \Sp(A^\top)$.
+		\item[2.] On sait d'après la proposition 6, \[
+				\chi_A(x) = x^n - \tr(A)\:x^{n-1} + \cdots + (-1)^{n}\:\det(A).
+			\] Or, par hypothèse, $\chi_A$\/ est scindé d'où \[
+				\chi_A(x) = (x - \lambda_1)(x-\lambda_n) \cdots (x-\lambda_n)
+			.\] Les scalaires $\lambda_1,\ldots,\lambda_n$\/ sont donc les valeurs propres de $A$.
+			Ainsi, le coefficient devant le $x^{n-1}$\/ est donc $-(\lambda_1 + \lambda_2 + \cdots + \lambda_n)$\/ et, le coefficient devant le $x^0$\/ est donc $(-\lambda_1)(-\lambda_2)\cdots(-\lambda_n)$. D'où, par identification \[
+				\det(A) = \lambda_1\cdot \lambda_2\cdots \lambda_n\qquad\text{et}\qquad\tr(A) = \lambda_1 + \cdots + \lambda_n
+			.\]
+	\end{enumerate}
+\end{prv}
+
+\section{Les sous-espaces propres}
+
+\begin{defn}
+	Soient $E$\/ un sous-espace vectoriel et $u : E \to E$\/ un endomorphisme et $\lambda$\/ une valeur propre de $u$. Le sous-espace vectoriel $\Ker(\lambda \id_E - u) = \Ker(u - \lambda\id_E)$\/ est appelé le {\it sous-espace propre}\/ de $u$\/ associé à la valeur propre $\lambda$. Il est parfois noté $E_\lambda$, ou $\mathrm{SEP}(\lambda)$.
+\end{defn}
+
+Soit $X \in \mathscr{M}_{n,1}(\mathds{K})$.
+\begin{align*}
+	AX = \lambda X \iff& AX - \lambda X = 0\\
+	\iff& (A-\lambda I_n) X = 0\\
+	\iff& X \in \Ker(A - \lambda I_n)
+\end{align*}
+
+Attention, on ne dit pas que {\color{red}$\mathrm{SEP}(\lambda)$\/ est l'ensemble des vecteurs propres associés à la valeur propre $\lambda$}. En effet, $0 \in \mathrm{SEP}(\lambda)$\/ mais $0$ n'est pas un vecteur propre (par définition).
+
+\begin{rmkn}
+	$\mathrm{SEP}(\lambda)$\/ est un sous-espace vectoriel de $E$.
+	En effet, c'est un noyau. Autre méthode : $0\in \mathrm{SEP}(\lambda)$\/ car $A\cdot 0 = \lambda 0$\/ et $\mathrm{SEP}(\lambda)$ est stable par combinaisons linéaires (superposition), car si $X_1$\/ et $X_2$\/ sont deux éléments de $\mathrm{SEP}(\lambda)$, alors \[
+		A(\alpha X_1 + \beta X_2) = \alpha\:A\:X_1 + \beta\:A\:X_2 = \alpha \lambda X_1 + \beta \lambda X_2 = \lambda(\alpha X_1 + \beta X_2)
+	.\]
+\end{rmkn}
+
+
+\begin{exo}
+	On considère la matrice \[
+		B = \begin{pmatrix}
+			7&1\\
+			0&7
+		\end{pmatrix}
+	.\]
+	Cherchons les valeurs propres de $B$\/ :
+	\begin{align*}
+		\lambda \in \Sp(B) \iff& \det(\lambda I_2 - B) = 0\\
+		\iff&
+		\begin{vmatrix}
+			\lambda - 7 & -1\\
+			0&\lambda-7
+		\end{vmatrix} = 0\\
+		\iff& (\lambda - 7)^2 = 0.
+	\end{align*}
+	On en déduit que $\Sp(B) = \{7\}$.
+	Soit $X = {x\choose y} \in \mathscr{M}_{2,1}(\mathds{K})$.
+	\begin{align*}
+		X \in \mathrm{SEP}(7) \iff& B\cdot X = 7X\\
+		\iff& \begin{pmatrix}
+			7&1\\
+			0&7
+		\end{pmatrix} \begin{pmatrix}
+			x\\y
+		\end{pmatrix} = 7 \begin{pmatrix}
+			x\\y
+		\end{pmatrix}\\
+		\iff& \begin{cases}
+			7x + y = 7x\\
+			7y = 7y
+		\end{cases}\\
+		\iff& y = 0\\
+		\iff& X = \begin{pmatrix}
+			x\\ 0
+		\end{pmatrix} = x \begin{pmatrix}
+			1\\0
+		\end{pmatrix}
+	\end{align*}
+	On en déduit que $\mathrm{SEP}(7) = \Vect{1\choose 0}$.
+
+	On considère à présent la matrice $D$\/ : \[
+		D = \begin{pNiceMatrix}[last-row,last-col]
+			1&0&0&\vec{\imath}\\
+			0&0&1&\vec{\jmath}\\
+			0&1&0&\vec{k}\\
+			f(\vec{\imath})&f(\vec{\jmath})&f(\vec{k})
+		\end{pNiceMatrix}
+	.\]
+	Soit $\lambda \in \mathds{K}$.
+	\begin{align*}
+		\lambda \in \Sp(D) \iff
+		\begin{vmatrix}
+			\lambda - 1 & 0 & 0\\
+			0&\lambda&-1\\
+			0&-1&\lambda
+		\end{vmatrix} &= 0 \\
+		(\lambda-1)(\lambda^2-1) &= \\
+		(\lambda-1)(\lambda-1)(\lambda + 1)&=  \\
+		(\lambda-1)^2 (\lambda+1) &= \\
+	\end{align*}
+	D'où $\Sp(D) = \{1,-1\}$.
+	Soit $X = \left( \substack{x\\y\\z} \right)  \in \mathscr{M}_{3,1}(\mathds{K})$.
+	\begin{align*}
+		X \in \mathrm{SEP}(1) \iff& D\cdot X = 1X\\
+		\iff& \begin{pmatrix}
+			1&0&0\\
+			0&0&1\\
+			0&1&0
+		\end{pmatrix} \begin{pmatrix}
+			x\\y\\z
+		\end{pmatrix} = \begin{pmatrix}
+			x\\y\\z
+		\end{pmatrix}\\
+		\iff& \begin{cases}
+			x = x\\
+			z = y\\
+			y = z
+		\end{cases}\\
+		\iff& y = z\\
+		\iff& X = \begin{pmatrix}
+			x\\y\\y
+		\end{pmatrix}\\
+		\iff& X = x \underbrace{\begin{pmatrix}
+			1\\0\\0
+		\end{pmatrix}}_{\varepsilon_1} + y \underbrace{\begin{pmatrix}
+			0\\1\\1
+		\end{pmatrix}}_{\varepsilon_2}.
+	\end{align*}
+	Donc $\mathrm{SEP}(1) = \Vect(\varepsilon_1, \varepsilon_2)$. C'est un plan car $(\varepsilon_1, \varepsilon_2)$\/ est une famille libre.
+	De même pour $\mathrm{SEP}(-1)$.
+\end{exo}
+
+\begin{rmk}
+	Soit $u : E \to E$\/ un endomorphisme d'un espace vectoriel $E$.
+	\begin{enumerate}
+		\item Si $0 \in \Sp(u)$, alors il existe un vecteur $\vec{x}$\/ non nul tel que $\vec{x} \in \Ker(u)$\/ et donc l'endomorphisme $u$\/ n'est pas injectif.
+		\item Si $0 \not\in \Sp(u)$, alors $\Ker(u) = \mathrm{SEP}(0) = \{0\}$ (car $\mathrm{SEP}(0) = \Ker(0\:\id_E - u) = \Ker u$) et donc l'endomorphisme $u$\/ est injectif.
+	\end{enumerate}
+	On en conclut que \[
+		u \text{ injectif } \iff 0 \not\in \Sp(u)
+	.\]
+	En particulier, en dimension finie, une matrice $A$\/ est inversible si et seulement si $0 \not\in \Sp(A)$.
+\end{rmk}
+
+\begin{exo}
+	Dans cet exercice, $E$\/ n'est pas forcément de dimension finie ; on ne passe donc pas par des matrices.
+
+	\noindent Remarque : l'application $u$\/ est un {\it automorphisme}.
+
+	On compare les spectre de $u$\/ et de $u^{-1}$. Soit $\lambda \in \mathds{K}$.
+	\begin{align*}
+		\lambda \in \Sp(u) \iff& \exists \vec{x} \in E,\:\vec{x} \neq \vec{0} \text{ et } u(\vec{x}) = \lambda \vec{x}\\
+		\iff& \exists \vec{x} \neq \vec{0},\:u^{-1}(u(\vec{x})) = \vec{x} = \lambda u^{-1}(\vec{x}) \text{ en appliquant } u^{-1}\\
+		\iff& \exists \vec{x} \neq \vec{0},\:\frac{1}{\lambda}\vec{x} = u^{-1}(\vec{x})\\
+		\iff& \frac{1}{\lambda} \in \Sp(u^{-1})
+	\end{align*}
+	On peut diviser car $\lambda \neq 0$\/ car $0 \not\in \Sp(u)$\/ car $u$\/ est injectif.
+
+	De plus, \[
+		\Ker(\lambda \id - u) = \Ker\left( \frac{1}{\lambda} \id - u^{-1} \right)
+	\] car le vecteur $\vec{x}$\/ ne change pas dans les équivalents précédents.
+\end{exo}
+
+\begin{prop}
+	Soit $u : E \to E$\/ un endomorphisme d'un espace vectoriel $E$.
+	On a \[
+		\forall \lambda \in \Sp(u),\qquad 1 \le \dim\:\operatorname{SEP}(\lambda) \le m_\lambda
+	\] où $m_\lambda$\/ est la multiplicité de la racine $\lambda$\/ dans le polynôme caractéristique.
+\end{prop}
+
+
+\begin{prv}
+	Tout d'abord, on sait que $\dim(\mathrm{SEP}(\lambda)) \ge 1$\/ car il existe un vecteur propre, donc un vecteur non nul dans $\mathrm{SEP}(\lambda)$.
+
+	De plus, si $\dim(\mathrm{SEP}(\lambda)) = d$, alors il existe $(\vec{\varepsilon}_1,\ldots,\vec{\varepsilon}_d)$\/ soit une base de $\mathrm{SEP}(\lambda)$.
+	On peut compléter cette base de $\mathrm{SEP}(\lambda)$\/ en une base de $E$\/ : $(\vec{\varepsilon}_1,\ldots,\vec{\varepsilon}_d, \vec{e}_{d+1},\ldots,\vec{e}_{n})$. Ainsi, \[
+		A \leadsto A' = 
+		\begin{pNiceMatrix}[last-row,last-col]
+			\lambda&0&\ldots&0&\Block{4-4}{*}&&&&\vec{\varepsilon}_1\\
+			0&\ddots&\ddots&\vdots&&&&&\vec{\varepsilon}_2\\
+			\vdots&\ddots&\ddots&0&&&&&\vdots\\
+			0&\ldots&0&\lambda&&&&&\vec{\varepsilon}_d\\
+			\Block{4-4}{0}&&&&\Block{4-4}{*}&&&&\vec{e}_{d+1}\\
+			&&&&&&&&\vec{e}_{d+2}\\
+			&&&&&&&&\vdots\\
+			&&&&&&&&\vec{e}_{n}\\
+		\end{pNiceMatrix}
+	\] et donc
+	\begin{align*}
+		\chi_{A'}(x) &= \chi_A(x)\\
+		&= (x-\lambda)^{d} \times P(x) \\
+		&= (x-\lambda)^{m_\lambda} \times R(x) \text{ où } R(x) \text{ n'a pas de facteurs en } (x-\lambda) \\
+	\end{align*}
+\end{prv}
+
+

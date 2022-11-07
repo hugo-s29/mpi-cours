@@ -1,0 +1,191 @@
+\subsection{Par des formules sous formes normales ?}
+
+\begin{defn}
+	On dit d'une formule de la forme
+	\begin{itemize}
+		\item $p$\/ ou $\lnot p$\/ avec $p \in \mathcal{P}$, que c'est un {\it littéral}\/ ;
+		\item $\bigwedge_{i=1}^n \ell_i$\/ où les $\ell_i$\/ sont des littéraux que c'est une {\it clause conjonctive}\/ ;
+		\item $\bigvee_{i=1}^n \ell_i$\/ où les $\ell_i$\/ sont des littéraux que c'est une {\it clause disjonctive}\/ ;
+		\item $\bigwedge_{i=1}^n D_i$\/ où les $D_i$\/ qui sont des clauses disjonctives est appelée une {\it forme normale conjonctive}\/ ;
+		\item $\bigvee_{i=1}^n C_i$\/ où les $C_i$\/ qui sont des clauses conjonctives est appelée une {\it forme normale disjonctive}.
+	\end{itemize}
+\end{defn}
+
+\begin{rmk}
+	On prend, comme convention, que $\bigwedge_{i=1}^0 G_i = \top$\/ et $\bigvee_{i=1}^0 G_i = \bot$.
+\end{rmk}
+
+\begin{exm}
+	La formule $\overbrace{(p \land \lnot q)}^{\text{clause conjonctive}} \lor \overbrace{(r \land p)}^{\text{clause conjonctive}}$\/ est donc une clause normale disjonctive.
+\end{exm}
+
+\begin{rmk}
+	On écrit {\sc fmd}\/ pour une forme normale disjonctive et {\sc fnc}\/ pour une forme normale conjonctive.
+\end{rmk}
+
+\begin{exm}
+	La formule $p \land q \land\lnot r$\/ est une clause conjonctive donc une {\sc fnc}\/ mais c'est aussi une {\sc fnd}.
+\end{exm}
+
+\begin{exm}
+	La formule $\top $\/ est une clause conjonctive de taille 0, donc c'est une {\sc fnd}. Mais, c'est aussi une clause conjonctive de taille 0, donc c'est une {\sc fnc}. De même, la formule $\bot$\/ est une {\sc fnc}\/ et une {\sc fnd}.
+\end{exm}
+
+\begin{thm}
+	Toute formule est équivalente à une formule sous {\sc fnd} et à une formule sous {\sc fnc}.
+\end{thm}
+
+\begin{prv}
+	Soit $G \in \mathcal{F}$\/ une formule. Soit $\left\llbracket G \right\rrbracket$\/ la fonction booléenne associée à $G$. Alors, par le théorème précédent, il existe une formule $H$\/ telle que $\left\llbracket H \right\rrbracket = \left\llbracket G \right\rrbracket$\/ (i.e.\ $H \equiv G$) avec $H$\/ construit dans la preuve précédente sous forme normale disjonctive.
+\end{prv}
+
+\begin{exm}
+	La formule $G = p \land (\lnot q \lor p)$\/ a pour table de vérité la table suivante.
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|c|c}
+			$p$&$q$&$\left\llbracket G \right\rrbracket$\\ \hline
+			$\bfm F$&$\bfm F$&$\bfm F$\\
+			$\bfm F$&$\bfm V$&$\bfm F$\\
+			$\bfm V$&$\bfm F$&$\bfm V$\\
+			$\bfm V$&$\bfm V$&$\bfm V$\\
+		\end{tabular}
+		\caption{Table de vérité de $p \land (\lnot q \lor p)$}
+	\end{table}
+	La forme normale disjonctive équivalente à $G$\/ est $(p \land \lnot q) \lor (p \land q)$.
+\end{exm}
+
+Nous n'avons pas encore prouvé la deuxième partie du théorème mais, on essaie de trouver une formule sous {\sc fnc}\/ :
+\begin{exm}
+	On reprend l'exemple de la table de vérité d'une fonction inconnue.
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|c|c|c|c}
+			$p$&$q$&$r$&$f$&$\bar f$\\[2mm]\hline
+			$\bfm F$&$\bfm F$&$\bfm F$&$\bfm V$&$\bfm F$\\
+			$\bfm F$&$\bfm F$&$\bfm V$&$\bfm F$&$\bfm V$\\
+			$\bfm F$&$\bfm V$&$\bfm F$&$\bfm F$&$\bfm V$\\
+			$\bfm F$&$\bfm V$&$\bfm V$&$\bfm V$&$\bfm F$\\
+			$\bfm V$&$\bfm F$&$\bfm F$&$\bfm V$&$\bfm F$\\
+			$\bfm V$&$\bfm F$&$\bfm V$&$\bfm F$&$\bfm V$\\
+			$\bfm V$&$\bfm V$&$\bfm F$&$\bfm V$&$\bfm F$\\
+			$\bfm V$&$\bfm V$&$\bfm V$&$\bfm F$&$\bfm V$
+		\end{tabular}
+		\caption{Table de vérité d'une formule inconnue (2)}
+	\end{table}
+
+	On analyse la formule $\bar{f}$\/ au lieu de $f$. Grâce à la première partie du théorème (et de la méthode pour générer cette {\sc fnd}), on a \[
+		\bar{f}= (\lnot p \land \lnot q \land r)
+		\lor
+		(\lnot p \land q \land \lnot r)
+		\lor
+		(p \land \lnot q \land r)
+		\lor
+		(p \land q \land r)
+	.\]
+	Et, à l'aide des lois de {\sc De Morgan}, on a \[
+		\bar{f}= (p \lor q \lor\lnot r)
+		\land
+		( p \lor\lnot q \lor r)
+		\land
+		(\lnot p \lor q \lor \lnot r)
+		\land
+		(\lnot p \lor \lnot q \lor \lnot r),
+	\] ce qui est une {\sc fnc}.
+
+	À l'aide de cet algorithme, on prouve facilement la 2\tsup{nde} partie du théorème.
+\end{exm}
+
+\begin{rmk}
+	Il est en fait possible de transformer une formule en {\sc fnd}\/ en appliquant les règles suivantes à toutes les sous-formules jusqu'à obtention d'un point fixe.
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item $\lnot \lnot H \leadsto H$\/ ;
+			\item $\lnot(G \land H) \leadsto G \lor H$\/ ;
+			\item $\lnot (G \lor H) \leadsto G \land H$\/ ;
+			\item $(G \lor H) \land I \leadsto (G \land I) \lor (H \land I)$\/ ;
+			\item $I \land (G \lor H) \leadsto (I \land G) \lor (I \land H)$\/ ;
+		\end{itemize}
+	\end{multicols}
+	\begin{multicols}{3}
+		\begin{itemize}
+			\item $H \land \top \leadsto H$\/ ;
+			\item $\top \land H \leadsto H$\/ ;
+			\item $H \lor \bot \leadsto H$\/ ;
+			\item $\bot \lor H \leadsto H$\/ ;
+			\item $\lnot \top \leadsto \bot$\/ ;
+			\item $\bot \land H \leadsto \bot$\/ ;
+			\item $H \land \bot \leadsto \bot$\/ ;
+			\item $\lnot \bot \leadsto \top$\/ ;
+			\item $\top \lor H \leadsto \top$\/ ;
+			\item $H \lor \top \leadsto \top$.
+		\end{itemize}
+	\end{multicols}
+\end{rmk}
+
+\begin{prop}
+	Soit $n \ge 2$\/ et $H_n$\/ la formule $H_n = (a_1 \lor b_1) \land (a_2 \lor b_2) \land \cdots \land (a_n \lor b_n)$\/ avec $\mathcal{P}_n = \{a_1,b_1,a_2,b_2,\ldots,a_n,b_n\}$. Alors, par application de l'algorithme précédent on obtient \[
+		\bigvee_{P \in \wp(\left\llbracket 1,n \right\rrbracket)}\bigg(\bigwedge_{j = 1}^n \Big\{{\scriptstyle a_j \text{ si } j \in P \atop\scriptstyle b_j \text{ sinon }}\bigg)
+	.\]
+\end{prop}
+
+\todo{}
+\begin{prv}[par récurrence]
+\end{prv}
+
+\begin{rmk}
+	Qu'en est-il du problème {\sc Sat} ? Le problème est-il simplifié pour les {\sc fnd}\/ ou les {\sc fnc}\/ ?
+	
+	Oui, pour les {\sc fnd}, le problème se simplifie. On considère, par exemple, la formule \[
+		\begin{array}{cc}
+			&(\ell_{11} \land \ell_{12}\land \cdots \land \ell_{1,n_1})\\
+			\lor&(\ell_{21} \land \ell_{22}\land \cdots \land \ell_{2,n_2})\\
+			\vdots&\vdots\\
+			\lor&(\ell_{m,1} \land \ell_{m,2} \cdots \ell_{m,n_m}).
+		\end{array}
+	\]
+	On procède en suivant l'algorithme suivant :
+	(\todo{Mettre l'algorithme à part})
+	Pour $i$\/ fixé, je lis la ligne $i$, puis je fabrique un environnement $\rho$.
+
+	Par exemple, pour $(p \land \lnot q \land r \land \lnot p) \lor (q \land r \land \lnot q) \lor (p \land r)$, on a $\rho = (p \mapsto {\bfm V}, r \mapsto {\bfm V})$.
+
+	On en conclut que {\sc Sat}\/ peut être résolu en temps linéaire dans le cas d'une forme normale disjonctive. Le problème est de construire cette {\sc fnd}.
+\end{rmk}
+
+\begin{rmk}
+	Après s'être intéressé au problème {\sc Sat}, on s'intéresse au problème Valide.
+
+	Par exemple, on considère la formule $(p \lor q \lor\lnot r \lor \lnot p) \land (p \lor \lnot r \lor p \lor r) \land (q \lor r)$.
+	On peut construire $\rho = (q\mapsto {\bfm F}, r \mapsto {\bfm F})$\/ est tel que $\left\llbracket H \right\rrbracket^\rho = {\bfm F}$.
+
+	Si on ne peut pas construire un tel environnement propositionnel, la formule vérifie le problème Valide.
+
+	On en conclut que Valide peut être résolu en temps linéaire dans le cas d'une forme normale conjonctive. Le problème est de construire cette {\sc fnc}.
+\end{rmk}
+
+\section{Algorithme de {\scshape Quine}}
+
+\begin{rmk}
+	Une forme normale peut être vue comme un ensemble d'ensembles de littéraux (c'est la représentation que nous allons utiliser en OCamL).
+\end{rmk}
+
+\begin{exm}\hfill
+	\begin{multicols}{1}
+		L'ensemble $\big\{\{p,q\},\{p,r\}, \O\big\}$, a pour formule sous {\sc fnc}\/ associée $(p\lor \lnot q) \land (q \lor r) \land \bot$.
+
+		L'ensemble $\big\{\{p,\lnot q\}, \{q,r\}, \O\big\}$\/ a pour formule sous {\sc fnd}\/ associée $(p \land \lnot q) \lor (q \land r) \lor \top$.
+
+		L'ensemble $\O$\/ a pour formule sous {\sc fnc}\/ associée $\top$.
+
+		L'ensemble $\O$\/ a pour formule sous {\sc fnd}\/ associée $\bot$.
+	\end{multicols}
+\end{exm}
+
+\begin{lem}
+	Pour toute formule $G$, pour tout variable propositionnelle et pour tout environnement propositionnel $\rho$, tel que $\rho(p) = {\bfm V}$, alors \[
+		\Big\llbracket G[p \mapsto \top] \Big\rrbracket^\rho = \left\llbracket G \right\rrbracket^\rho
+	.\]
+\end{lem}
+

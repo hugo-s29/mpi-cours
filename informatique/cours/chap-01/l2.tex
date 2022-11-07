@@ -1,0 +1,533 @@
+\begin{rmk}
+	Sur $A^\N$, on définit $(u_n)_{n\in\N} \preceq_{\times} (v_n)_{n\in\N}$\/ si et seulement si \[
+		\forall i,\, u_i \preceq_A v_i
+	.\]
+	L'ensemble ordonné $(A^\N, \preceq_\times)$\/ est il bien fondé ? La réponse est non.
+
+	Voici un contre-exemple : on pose $A = \{0, 1\}$.
+
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			size(10cm);
+
+			real eps = 0.1;
+
+			draw((-1, 0) -- (10, 0), Arrow(TeXHead));
+			draw((0, -0.5) -- (0, 5), Arrow(TeXHead));
+
+			draw((-eps, 1) -- (eps, 1));
+			draw((-eps, 4) -- (eps, 4));
+
+			label("0", (0, 1), align=SW);
+			label("1", (0, 4), align=SW);
+
+			for(int i = 0; i < 10; ++i) {
+				label(string(i), (i + 0.2, 0), align=SE);
+				draw((i + .2, -eps) -- (i + .2, eps));
+			}
+
+			dot((0.2, 0.8), red);
+			for(int i = 1; i < 10;++i) dot((i + .2, 3.8), red);
+			label("$U_0$", (9.2, 3.8), red, align=SE);
+
+			dot((0.2, 1), magenta);
+			dot((1.2, 1), magenta);
+			for(int i = 2; i < 10;++i) dot((i + .2, 4), magenta);
+			label("$U_1$", (9.2, 4), magenta, align=E);
+
+			dot((0.2, 1.2), deepcyan);
+			dot((1.2, 1.2), deepcyan);
+			dot((2.2, 1.2), deepcyan);
+			for(int i = 3; i < 10;++i) dot((i + .2, 4.2), deepcyan);
+			label("$U_2$", (9.2, 4.2), deepcyan, align=NE);
+		\end{asy}
+		\caption{Contre exemple : $(A^\N, \preceq_\times)$\/ est il bien fondé ?}
+	\end{figure}
+	On considère la suite $U_0$\/ qui a pour tout $n \in \N$\/ la valeur de 1.
+	Puis, on considère la suite $U_1$\/ qui a, pour $n = 0$, la valeur de 0 puis pour les autres valeurs de $n$, la valeur de $1$.
+	Ensuite, on considère la suite $U_2$\/ qui, pour $n = 0,1$, la valeur de 0 puis, pour les autres valeurs de $n$, la valeur de $1$.
+	En itérant ce procédé, on crée une suite de suite $(U_n)_{n \in \N}$\/ infiniment strictement décroissante : \[
+		U_0 \succeq_\times  U_1 \succeq_\times  U_2 \succeq_\times \cdots
+	.\]
+\end{rmk}
+
+On considère le programme suivant :
+\begin{lstlisting}[language=caml, caption=Calcul du PGCD]
+let rec pgcd a b =
+	if a = b then a
+	else if a > b then pgcd (a-b) b
+	else pgcd a (b-a);;
+\end{lstlisting}
+Étudions ce programme.
+Ce programme se termine si et seulement si ${\tt a} = 0$\/ et ${\tt b} = 0$\/ où si ${\tt a} > 0$\/ et ${\tt b} > 0$.
+Prouvons-le rigoureusement. On choisit comme variant $(a,b)$\/ vivant dans l'ensemble ordonné $(\N^*\times \N^*, \preceq_\times)$\/ où $\preceq_{\times}$\/ est la relation d'ordre produit.
+\todo{Recopier une partie du cours ici.}
+On a donc bien une décroissance stricte de la valeur de l'expression $(a,b)$\/ ) valeurs dans un espace bien fondé. D'où terminaison.
+
+Démontrons maintenant la correction, c'est-à-dire, démontrons que \[
+	\forall (a,b) \in \N^*\times\N^*,\,({\tt pgcd}\ a\ b) = a \wedge b
+.\]
+Pour cela, on procède par induction sur $\big((\N^*)^2, {\preceq_\times}\big)$ pour démontrer la proposition \[
+	P(a,b) = ({\tt pgcd}\ a\ b) = a \wedge b
+.\] 
+\begin{itemize}
+	\item Soit $(a,b) = (1, 1)$. On a \[
+				({\tt pgcd}\ a\ b) \underset{\text{(code)}}= a = a \wedge b
+			.\]
+		\item Soit $(a,b) \neq (1,1) \in (\N^*)^2$\/ tel que pour tout $(c,d) \in (\N^*)^2$\/ tel que $(c,d) \prec_\times (a,b) $\/ on ait $P(c,d)$.
+			Montrons donc $P(a,b)$.
+			\begin{itemize}
+				\item Si $a = b$\/ : \[
+						({\tt pgcd}\ a\ b) \underset{\text{(code)}}= a = a \wedge b
+					.\]
+				\item Si $a > b$\/ :
+					\begin{align*}
+						({\tt pgcd}\ a\ b) \mathop{}_{\text{(code)}}&= ({\tt pgcd}\ (a-b)\ b)\\
+						\mathop{}_{\text{(hypothèse)}}\!\!&= (a-b) \wedge b\\
+						\mathop{}_{\text{(maths)}}\!\!&= a \wedge b.
+					\end{align*}
+			\end{itemize}
+\end{itemize}
+
+\subsection{Ordre lexicographique}
+
+\begin{defn}
+	Soit $(A, \preceq_A)$\/ et $(B, \preceq_B)$\/ deux ensembles ordonnés, on définit alors sur $A\times B$\/ l'ordre \[
+		(a,b) \preceq_{\ell} (a',b') \iffdef (a \prec_A a') \mathrel{\text{ou}} (a = a' \mathrel{\text{et}} b \preceq_B b')
+	.\]
+\end{defn}
+
+\begin{exm}
+	Dans $(\N^2, \preceq_\times)$, on cherche les éléments $(x,y) \in \N^2$\/ tels que $(x,y) \preceq_\ell (3, 4)$\/ :
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			import patterns;
+			add("hatch",hatch(red));
+			texpreamble("\usepackage[outline]{contour}");
+
+			size(5cm);
+			draw((-1, 0) -- (8.2, 0), Arrow(TeXHead));
+			draw((0, -1) -- (0, 8.2), Arrow(TeXHead));
+
+			fill((0,0)--(3,0)--(3,4)--(2.5,4)--(2.5,8)--(0,8)--cycle, pattern("hatch"));
+			draw((0,0)--(3,0)--(3,4), red);
+			draw((0,0)--(0,8), red);
+			dot("$(3,4)$", (3,4));
+			label("\large\contour{red}{${\uparrow}$}", (1.25, 8), red);
+		\end{asy}
+		\caption{Ordre lexicographique sur $\N^2$\/}
+	\end{figure}
+\end{exm}
+
+\begin{prop}
+	$\preceq_\ell$\/ est une relation d'équivalence.
+\end{prop}
+
+\begin{prv}
+	À faire
+\end{prv}
+
+\begin{prop}
+	Si $\preceq_A$\/ est totale et $\preceq_b$\/ est totale alors $\preceq_\ell$\/ est totale.
+\end{prop}
+
+\begin{prv}
+	Soit $(a,b)$\/ et $(c,d) \in (A \times B)$.
+
+	\begin{itemize}
+		\item Si $a \prec_A c$, alors $(a,b) \prec_\ell (c,d)$.
+		\item Si $a = c$,
+			\begin{itemize}
+				\item si $b \preceq_B d$\/ alors $(a,b) \preceq_\ell (c,d)$.
+				\item sinon ($b \succeq_B d$) alors $(a,b) \succ_\ell (c,d)$.
+			\end{itemize}
+		\item si $a \succ_A c$\/ alors $(c,d) \prec_\ell (a,b)$.
+	\end{itemize}
+\end{prv}
+
+\begin{prop}
+	Si $(A, \preceq_A)$\/ et $(B, \preceq_B)$\/ sont bien fondés, alors $(A \times B, \preceq_\ell)$\/ l'est aussi.
+\end{prop}
+
+\begin{prv}
+	À rédiger.
+\end{prv}
+
+\begin{rmk}
+	On peut généraliser à un ensemble $(A^n, \preceq_\ell)$.
+
+	Par exemple, avec $n = 3$, on a \[
+		(a,b,c) \preceq_\ell (a', b', c') \iffdef a \prec_A a' \mathrel{\text{ou}} (a = a' \mathrel{\text{et}} b \prec_B b') \mathrel{\text{ou}} (a = a' \mathrel{\text{et}} b = b' \mathrel{\text{et}} c \prec_C c')
+	.\]
+\end{rmk}
+
+Même question qu'avec l'ordre produit, l'ensemble $(A^\N, \preceq_\ell)$\/ est-il bien fondé ? De même, la réponse est non, la même suite de suite est un contre-exemple.
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+
+		real eps = 0.1;
+
+		draw((-1, 0) -- (10, 0), Arrow(TeXHead));
+		draw((0, -0.5) -- (0, 5), Arrow(TeXHead));
+
+		draw((-eps, 1) -- (eps, 1));
+		draw((-eps, 4) -- (eps, 4));
+
+		label("0", (0, 1), align=SW);
+		label("1", (0, 4), align=SW);
+
+		for(int i = 0; i < 10; ++i) {
+			label(string(i), (i + 0.2, 0), align=SE);
+			draw((i + .2, -eps) -- (i + .2, eps));
+		}
+
+		dot((0.2, 0.8), red);
+		for(int i = 1; i < 10;++i) dot((i + .2, 3.8), red);
+		label("$U_0$", (9.2, 3.8), red, align=SE);
+
+		dot((0.2, 1), magenta);
+		dot((1.2, 1), magenta);
+		for(int i = 2; i < 10;++i) dot((i + .2, 4), magenta);
+		label("$U_1$", (9.2, 4), magenta, align=E);
+
+		dot((0.2, 1.2), deepcyan);
+		dot((1.2, 1.2), deepcyan);
+		dot((2.2, 1.2), deepcyan);
+		for(int i = 3; i < 10;++i) dot((i + .2, 4.2), deepcyan);
+		label("$U_2$", (9.2, 4.2), deepcyan, align=NE);
+	\end{asy}
+	\caption{Contre exemple : $(A^\N, \preceq_\ell)$\/ est il bien fondé ?}
+\end{figure}
+
+L'ordre lexicographique est, comme son nom l'indique, l'ordre utilisé dans le dictionnaire. La seule différence est que l'on peut comparer des mots de longueurs différentes.
+
+\begin{rap}
+	Si $A$\/ est un ensemble, alors $A^* = \bigcup_{n \in \N} A^n$. L'ensemble $A^*$\/ contient toutes les suites finies d'éléments de $A$.
+
+	Par exemple, avec $A = \{0,1\}$, on a \[
+		A^* \supseteq \big\{(\ ), (1), (0), (0,1), (1,0), (1,1), (0,0), (1,1,0), (0,0,0), \ldots \big\}
+	.\]
+\end{rap}
+
+\begin{defn}
+	Si $(A, \preceq_A)$\/ est un ensemble ordonné, on définit sur $A^*$\/ : \[
+		(u_p)_{p\in\left\llbracket 1,n \right\rrbracket} \prec_\ell (v_p)_{p\in\left\llbracket 1,m \right\rrbracket} \iffdef
+			\begin{array}{l}
+				\exists i \in \left\llbracket 1, \min(n,m) + 1 \right\rrbracket,\\
+				\big(\forall j \in \left\llbracket 1, i - 1 \right\rrbracket,\,u_j = v_j\big)\\
+				\mathrel{\text{et}} (i = n + 1 \mathrel{\text{ou}} u_i \prec_A v_i).
+			\end{array}
+	\]
+\end{defn}
+
+\begin{prop}
+	C'est une relation d'ordre. Elle est totale si $\preceq_A$\/ est totale.
+	\qed
+\end{prop}
+
+
+Même question avec cette nouvelle définition de l'ordre lexicographique, l'ensemble $\big((A^*)^\N, {\preceq_\ell}\big)$\/ est-il bien fondé ? De même, la réponse est non. Voici un contre-exemple : on considère la suite de suite $U_0 = (1)$, $U_1 = (0,1)$, $U_2 = (0,0,1)$. On crée une suite infiniment strictement décroissante.
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(6cm);
+
+		real eps = 0.1;
+
+		draw((-1, 0) -- (5, 0), Arrow(TeXHead));
+		draw((0, -0.5) -- (0, 5), Arrow(TeXHead));
+
+		draw((-eps, 1) -- (eps, 1));
+		draw((-eps, 4) -- (eps, 4));
+
+		label("0", (0, 1), align=SW);
+		label("1", (0, 4), align=SW);
+
+		for(int i = 0; i < 4; ++i) {
+			label(string(i), (i + 0.2, 0), align=SE);
+			draw((i + .2, -eps) -- (i + .2, eps));
+		}
+
+		dot((0.2, 0.8), red);
+		dot((1.2, 3.8), red);
+		label("$U_0$", (1.2, 3.8), red, align=SE);
+
+		dot((0.2, 1), magenta);
+		dot((1.2, 1), magenta);
+		dot((2.2, 4), magenta);
+		label("$U_1$", (2.2, 4), magenta, align=E);
+
+		dot((0.2, 1.2), deepcyan);
+		dot((1.2, 1.2), deepcyan);
+		dot((2.2, 1.2), deepcyan);
+		dot((3.2, 4.2), deepcyan);
+		label("$U_2$", (3.2, 4.2), deepcyan, align=NE);
+	\end{asy}
+	\caption{Contre exemple : $\big((A^*)^\N, \preceq_\ell\big)$\/ est il bien fondé ? (2)}
+\end{figure}
+
+\begin{lstlisting}[language=caml, caption=La fonction {\sc Ackermann}]
+let rec mystere3 m n =
+	if m = 0 then n + 1
+	else if n = 1 then mystere (n - 1) 1
+	else mystere (m - 1) (mystere m (n-1));;
+\end{lstlisting}
+
+La fonction {\sc Ackermann}\/ utilise l'ordre lexicographique ; dans ce cas ci, l'ensemble ordonné est bien fondé. C'est comme cela que l'on a la terminaison de cette fonction.
+
+Prenons un autre exemple :
+\begin{lstlisting}[language=caml, caption=Une fonction mystère (5)]
+let rec mystere n m p =
+	if m > 0 then 1 + mystere n (m - 1) p
+	else if m = 0 && n > 0 then 1 + mystere (n-1) p (p+1)
+	else 0
+\end{lstlisting}
+À faire :
+\begin{itemize}
+	\item s'assurer de la terminaison (comme celle du PGCD)
+	\item démontrer (par induction) que \[
+			\forall (m,n,p) \in \N^3,\,(\text{{\tt mystere}}\ n\ m\ p) = \frac{n(n+1)}{2} + pn + m
+		.\]
+\end{itemize}
+
+Les preuves de correction et de terminaison sont basées sur la supposition qu'un entier en OCamL est identique à un entier mathématique.
+
+\section{Induction nommée}
+
+\begin{defn}[Règle de Construction nommée]
+	On appelle {\it Règle de Construction nommée}\/ la donnée de
+	\begin{itemize}
+		\item un symbole $S$,
+		\item un entier $r \in \N$,
+		\item un ensemble non vide $C$.
+	\end{itemize}
+	On écrira alors cette règle \[
+		``\:S \Big|_C^r\,\/"\qquad \text{ou encore} \qquad ``S(y, \underbrace{\square,\square,\ldots,\square}_{r}) \text{ pour } y \in C."
+	\]
+\end{defn}
+
+\begin{rmk}
+	On a parfois besoin d'un ensemble $C$\/ trivial (de taille $1$\/ et contenant un objet inutile), on note alors la règle $S\Big|^r$.
+\end{rmk}
+
+\begin{exm}
+	Les symboles sont écrits en {\color{red} rouge} afin de les différencier.
+
+	\begin{align*}
+		{\color{red} 0}\Big|^0 &\qquad& {\color{red} S}\Big|^1\\
+		{\color{red} [~]}\Big|^0 &\qquad& {\color{red} {::}}\Big|^1_\N\\
+		{\color{red} V}\Big|^0 &\qquad& {\color{red} N}\Big|^2_\N
+	\end{align*}
+\end{exm}
+
+\begin{defn}
+	\begin{itemize}
+		\item On appelle {\it règle de base}\/ une règle de la forme $S\big|_C^0$.
+		\item On appelle {\it règle d'induction}\/ une règle de la forme $S\big|_C^n$.
+	\end{itemize}
+\end{defn}
+
+\begin{defn}
+	Étant donné un ensemble \underline{fini} de règles $R = \underbrace{B}_{\mathclap{\text{règle de base}}} \cupdot \overbrace{I}^{\mathclap{\text{règle d'induction}}}$\/ avec $B \neq \O$, on définit alors 
+	\[
+		X_0 = \Bigl\{(S,a) \:\Big|\: S\big|_C^r \mathrel{\text{et}} a \in C\Bigr\}
+	\] puis, pour tout $n \in \N$, \[
+		X_{n+1} = X_n \cup \Big\{(S, a, t_1, t_2, \ldots, t_r)\:\Big|\: S\big|_C^r \in \underbrace{R}_C,\,a \in C,\,t_1 \in X_n,\,t_2 \in X_n,\ldots,t_r \in X_n \Big\}
+	.\]
+	On appelle alors $\bigcup_{n \in \N} X_n$\/ l'ensemble défini par induction nommée à partir des règles de $R$.
+\end{defn}
+
+\begin{rmk}[Notation]
+	On note un $n$-uplet ayant pour premier élément un symbole ${\color{red}S}$\/ puis $n-1$\/ éléments $(a_1, \ldots, a_{n-1})$. Au lieu de $({\color{red}S}, a_1, \ldots, a_{n-1})$, on note ${\color{red}S}(a_1, \ldots, a_{n-1})$.
+\end{rmk}
+
+\begin{exm}
+	On pose \[
+		R = \Big\{\red A\big|_\N^0,\red B\big|^1, \red C^2_{\{0,1\}}\Big\}
+	.\]
+	\todo{À finir}
+\end{exm}
+
+\begin{rmk}
+	Pour l'ensemble $A$\/ défini par induction à partir de $R = \Big\{\red 0\big|^0, \red S\big|^1\Big\}$, on dira plutôt \[
+		\text{``Soit $A$\/ l'ensemble défini par induction tel que $\red 0 \in A$\/ et $\forall a \in A,\,\red S(a) \in A$.''}
+	\]
+\end{rmk}
+
+\begin{defn}
+	Soit $R$\/ un ensemble fini de règles et $A$\/ l'ensemble défini par induction à partir de ces règles. Sur $A$, on définit la relation binaire $\diamond$\/ par \[
+		x \mathrel{\diamond} y \iffdef y = \red S(\ldots, x, \ldots) \text{ avec } \red S\big|_C^r \in R
+	.\]
+	On définit alors \[
+		x \preceq y \iffdef \exists p \in \N,\,\exists (a_1, \ldots, a_p) \in A^p,\,x \mathrel{\diamond} a_1 \mathrel{\text{et}} a_1 \mathrel{\diamond} a_2 \mathrel{\text{et}} \ldots \mathrel{\text{et}} a_p \mathrel{\diamond} y \mathrel{\text{ou}} x = y
+	.\]
+\end{defn}
+
+\begin{defn}[hauteur]
+	Soit $R$\/ un ensemble fini de règles d'induction nommée définissant un ensemble $A = \bigcup_{n \in \N} X_n$. On définit alors \begin{align*}
+		h: A &\longrightarrow \N \\
+		x &\longmapsto \min \{n \in \N \mid x \in X_n\}.
+	\end{align*}
+\end{defn}
+
+\begin{rmk}
+	Si $x \in a$, il existe alors $n_0 \in \N$\/ tel que $x \in X_{n_0}$\/ donc $\{n \in \N \mid x \in X_n\} \neq \O$\/ donc le minimum existe.
+\end{rmk}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+		
+		pair O = (0, 0);
+		real r0 = 1/sqrt(2);
+		real r1 = 1;
+
+		draw(circle(O, r0));
+		draw(circle(O, r0 + r1));
+		draw(circle(O, r0 + 2r1));
+		draw(circle(O, r0 + 3r1));
+		draw(circle(O, r0 + 5r1));
+		draw(circle(O, r0 + 6r1));
+		draw(circle(O, r0 + 7r1));
+
+		for(int i = 0; i <= 20; ++i) {
+			real theta = (i / 20) * 360;
+			label(rotate(theta) * "$\cdots$", dir(theta) * (r0 + 4r1));
+		}
+
+		label("$X_0$", (r0/2)*dir(45));
+		label("$X_1$", (r0 + r1/2)*dir(45));
+		label("$X_2$", (r0 + r1 + r1/2)* dir(45));
+		label("$X_3$", (r0 + 2r1 + r1/2) * dir(45));
+		label("$X_{n_0-1}$", (r0 + 5r1 + r1/2) * dir(45));
+		label("$X_{n_0}$", (r0 + 6r1 + r1/2) * dir(45));
+
+		dot("$x$", (r0 + 6.5r1, 0));
+	\end{asy}
+	\caption{Structure des ensembles $X_1, \ldots, X_n$}
+\end{figure}
+
+\begin{prop}
+	Si $x \mathrel{\diamond} y$, alors $h(x) < h(y)$.
+\end{prop}
+
+\begin{prv}
+	Soit $x\mathrel{\diamond}y$. Alors, $y \in A$. Soit $n_0 = h(y) \neq 0$, on a donc $y \in X_{n_0}$.
+	\begin{itemize}
+		\item Si $y \in X_{n_0 - 1}$\/ ce qui est absurde par définition de $h$.
+		\item Si $y \in \Big\{S(a, t_1,\ldots,t_r)\:\Big|\:S\big|_C^r \in R \mathrel{\text{et}}a \in C \mathrel{\text{et}} t_1 \in X_{n_0-1} \mathrel{\text{et}} \ldots \mathrel{\text{et}} t_r \in X_{n_0-1}\Big\}$.
+			Or, soit $i_0$\/ tel que $x = t_{i_0}$\/ donc $x \in X_{n_0-1}$\/ et donc $h(x) \le n_0-1$.
+	\end{itemize}
+\end{prv}
+
+\begin{crlr}
+	Si $n \le y$, alors $h(x) = h(y) \iff x = y$\/ et $h(x) < h(y) \iff x \prec y$.
+\end{crlr}
+
+\begin{crlr}
+	La relation $\preceq $\/ est antisymétrique.
+\end{crlr}
+
+\begin{rmk}
+	La relation $\preceq$\/ est trivialement transitive et reflective. Elle est donc d'ordre.
+\end{rmk}
+
+\begin{exm}
+	On prend $R = \Big\{ A\big|^0,\, B\big|^0 \Big\} $\/ et $X_0 = \{A, B\} $, $X_1 = X_0$, \ldots\ L'ensemble $S$\/ défini par induction sur $R$\/ est $\{A, B\}$.
+	On en déduit que $\preceq $\/ n'est pas totale.
+\end{exm}
+
+\begin{exm}
+	On prend $R = \Big\{\red 0\big|^0,\,\red S \big|^1\Big\}$, $X_0 = \{\red 0\}$, $X_1 = \{\red 0,\,\red S (\red 0)\}$\/ (on a $\red 0 \prec \red S(\red 0)$), $X_2 = \{\red 0,\,\red S(\red 0),\,\red S(\red S(\red 0))\}$\/ (on a $\red 0 \prec \red S(\red 0) \prec \red S(\red S(\red 0))$).
+	L'ensemble obtenu est
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\Tree[.{$0$}
+		[.{$S(0)$}
+			[.{$S(S(0))$}
+				[.{$S(S(S(0)))$} {$\vdots$} ]
+			]
+		]
+	]
+	\caption{Ensemble obtenu avec les règles $S$\/ et $0$\/}
+\end{figure}
+
+\begin{exm}
+	On pose $R = \Big\{\,{::}\big|_\N^1,\,[~]\big|^0\Big\}$\/ et $X_0 = \{[~]\}$, $X_1 = \{{::}(0, [~]), [~], {::}(1, [~], {::}(2, [~])\}$, et $X_2 = \{[~],\,{::}(0, [~]),\,{::}(1, {::}(0, [~]))\}$.
+	L'ensemble obtenu est
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\Tree[.{\scriptsize$[~]$}
+		[.{\scriptsize${::}(0, [~])$}
+			[.{\scriptsize${::}(0, {::}(0, [~]))$} {\scriptsize$\vdots$} ]
+			[.{\scriptsize${::}(0, {::}(1, [~]))$} {\scriptsize$\vdots$} ]
+			{\scriptsize$\ddots$}
+		]
+		[.{\scriptsize${::}(1, [~])$}
+			[.{\scriptsize${::}(1, {::}(0, [~]))$} {\scriptsize$\vdots$} ]
+			[.{\scriptsize${::}(1, {::}(1, [~]))$} {\scriptsize$\vdots$} ]
+			{\scriptsize$\ddots$}
+		]
+		{\scriptsize$\ddots$}
+	]
+	\caption{Ensemble obtenu avec les règles ${::}$\/ et $[~]$\/}
+\end{figure}
+
+\begin{prop}
+	La relation $\preceq $\/ est bien fondée.
+\end{prop}
+
+\begin{prv}
+	Soit $(x_n)_{n\in\N}$\/ une suite telle que $x_0 \succ x_1\succ x_2\succ \cdots \succ x_n \succ  \cdots $\/ alors \[\underbrace{h(x_0) > h(x_1) > \cdots > h(x_n) > \cdots}_{\in (\N, \le )}.\] Or, $(\N, \le)$\/ est bien fondé, c'est donc absurde.
+\end{prv}
+
+\begin{rmk}
+	On peut faire des preuves par induction bien fondée.
+\end{rmk}
+
+\begin{exm}
+	\begin{itemize}
+		\item Soit l'ensemble trivial défini par $\Big\{A\big|^0, B\big|^0\Big\}$, le théorème est trivial.
+		\item Soit $\mathcal{N}$\/ défini par $\mathcal{N} = \Big\{\red 0\big|^0,\,\red S\big|^1\Big\}$. Le théorème donne : \[
+				\text{si } P(\red 0) \text{ vrai et } \forall n \in \N,\,(\forall p \in \N,\,p < n - 1,\,P(\underbrace{S(S(\cdots(S}_{p}(0)\cdots)))) \implies P(\underbrace{S(S(\cdots(S}_{n}(0)\cdots))))
+			\] alors \[
+				\forall n \in \N,\,P(\underbrace{S(S(\cdots(S}_{n}(0)\cdots))))
+			.\] 
+		\item Soit $\mathcal{L}$\/ défini par $\mathcal{L} = \Big\{[~]\big|^0,\,{::}\big|^1_{\N}\Big\} $. Si $P([~])$, et $\forall \ell \in \mathcal{L},\forall n \in \N, P(\ell) \implies P({::}(n, \ell))$\/ alors $\forall \ell \in \mathcal{L},\,P(\ell)$.
+	\end{itemize}
+\end{exm}
+
+\begin{prop}
+	Étant donné,
+	\begin{itemize}
+		\item un ensemble $A$\/ défini par induction à partir d'un ensemble de règles nommé $R$,
+		\item un ensemble $\mathds{I}$,
+		\item une fonction $f_T : C \times \mathds{I}^r  \to  \mathds{I}$\/ pour chaque règle $T = S\big|^r_C \in R$,
+	\end{itemize}
+	on défini de manière unique une fonction $f : A \to \mathds{I}$\/ telle que, pour tout $x = S(a, t_1, \ldots, t_r) \in A$, soit $T = S\big|_C^r \in R$\/ alors $f(x) = f_T\big(a, f(t_1), \ldots, f(t_r)\big)$.
+\end{prop}
+
+\begin{exm}
+	Sur $\mathcal{L}$\/ défini par $\Big\{\underbrace{[~]\big|^0}_{R_1},\,\underbrace{{::}\big|_{\N}^1}_{R_2}\Big\}$, on choisit $\mathds{I} = \N$\/ et
+	\begin{gather*}
+		f_{R_1} : \overbrace{(\_,\_)}^{\in \text{Inutile} \times  \N^0} \mapsto 0\\
+		f_{R_2} : (\underbrace{t}_{\N}, i) \mapsto t + i.
+	\end{gather*}
+	On définit alors la fonction \begin{align*}
+		f: \mathcal{L} &\longrightarrow \N \\
+		{::}(a_1,\,{::}(a_2, {::}\cdots{::}(a_n, [~])\cdots)&\longmapsto \sum_{i=1}^n a_i.
+	\end{align*}
+\end{exm}
+
+

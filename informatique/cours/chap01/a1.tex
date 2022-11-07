@@ -1,0 +1,53 @@
+\section{Comment prouver la correction d'un programme ?}
+
+Avec $\Sigma = \{a,b\}$. Comment montrer qu'un mot a au moins un $a$\/ et un nombre pair de $b$.
+
+\begin{figure}[H]
+	\centering
+	\tikzfig{annexe-a-automate-1}
+	\caption{Automate reconnaissant les mots valides}
+\end{figure}
+
+On veut montrer que \[
+	P_w : \text{\guillemotleft~}\forall w \in \Sigma^*,\, \forall q \in \mathcal{Q},\:(\text{il existe une exécution par $w$\/ menant à $q$}) \iff w \text{ satisfait } I_q\text{~\guillemotright}
+\]
+où \[
+	I_{\substack{(v,\\\vrt\in\\\mathds{B}}\substack{r)\\\vrt\in\\\{0,1\}}} : \quad
+		(|w|_a \ge 1 \iff v)\:\text{et}\:(r = |w|_b\:\text{mod}\:2)
+.\]
+On le montre par récurrence sur la longueur de $w$\/ : 
+
+\begin{itemize}
+	\item[``$\implies$'']
+		\begin{itemize}
+			\item Pour $w = \varepsilon$, alors  montrons que $\forall q \in \mathcal{Q}$, il existe un exécution menant à $q$\/ étiquetée par $w$\/ (noté $\xrightarrow[\mathcal{A}]{w}q$) si et seulement si $w$\/ satisfait $I_q$.
+				\begin{itemize}
+					\item $\xrightarrow[\mathcal{A}]{\varepsilon}({\bfm F}, 0)$\/ est vrai, de plus $\varepsilon$\/ satisfait $I_{({\bfm F}, 0)}$\/ ;
+					\item sinon si $q \neq ({\bfm F}, 0)$, alors $\xrightarrow[\mathcal{A}]{\varepsilon}q$\/ est fausse, de plus $\varepsilon$\/ ne satisfait pas $I_q$.
+				\end{itemize}
+			\item Supposons maintenant $P_w$\/ vrai pour tout mot $w$\/ de taille $n$. Soit $w = w_1\ldots w_nw_{n+1}$\/ un mot de taille $n+1$. Notons $\ubar{w} = w_1\ldots w_n$.
+				Montrons que $P_w$\/ est vrai. Soit $q \in \mathcal{Q}$. Supposons $\xrightarrow[\mathcal{A}]{w} q$.
+				\begin{itemize}
+					\item Si $q = ({\bfm F}, 0)$\/ et $w_{n+1} = b$. On a donc $\xrightarrow[\mathcal{A}]{\ubar{w}}({\bfm F},1)$, et, par hypothèse de récurrence, $\ubar{w}$\/ satisfait. Donc $|\ubar{w}|_a = 0$\/ et $|\ubar{w}|_b \equiv 1 \mod 2$\/ donc $|w|_a = 0$\/ et $|w|_b \equiv 0 \mod 2$\/ donc $w$\/ satisfait $I_{({\bfm F}, 0)}$.
+					\item De même pour les autres cas.
+				\end{itemize}
+		\end{itemize}
+	\item[``$\impliedby$''] Réciproquement, supposons que $w$\/ satisfait $I_q$.
+		\begin{itemize}
+			\item Si $w = ({\bfm V},0)$\/ et $w_{n+1} = a$. Alors,
+				\begin{itemize}
+					\item si $|\ubar{w}|_a = 0$, alors $\ubar{w} $\/ satisfait $I_{({\bfm F},0)}$. Par hypothèse de récurrence, on a donc $\xrightarrow[\mathcal{A}]{\ubar{w}}({\bfm F},0)$\/ et donc $\xrightarrow[\mathcal{A}]{w}({\bfm V},0)$.
+					\item si $|\ubar{w}|_b \ge 1$, alors $\ubar{w}$\/ satisfait $I_{({\bfm V},0)}$\/ donc $\xrightarrow[\mathcal{A}]{\ubar{w}}({\bfm V},0)$\/ et donc $\xrightarrow[\mathcal{A}]{\ubar{w}}({\bfm V},0)$.
+				\end{itemize}
+			\item De même pour les autres cas.
+		\end{itemize}
+\end{itemize}
+On a donc bien \[
+	\forall w \in \Sigma^*,\forall q \in \mathcal{Q},\:\xrightarrow[\mathcal{A}]w q \iff w \text{ satisfait } I_q
+.\] Finalement,
+\begin{align*}
+	\mathcal{L}(\mathcal{A}) &= \{w \in \Sigma^* \mid \exists f \in F,\:\xrightarrow[\mathcal{A}]{w} f\} \\
+	&= \{w \in \Sigma^*  \mid \xrightarrow[\mathcal{A}]w ({\bfm V},0)\}  \\
+	&= \{w \in \Sigma^*  \mid w \text{ satisfait } I_{({\bfm V},0)}\} \\
+	&= \{w \in \Sigma^*  \mid |w|_a \ge 1 \text{ et } |w|_b \equiv 0 \mod 2\} \\
+\end{align*}

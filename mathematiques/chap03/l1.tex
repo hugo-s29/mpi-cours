@@ -1,0 +1,201 @@
+\section{Intégrer une fonction continue par morceaux sur un segment}
+
+Toute fonction $f: \R \to \R$\/ continue sur un \ul{segment} $[a,b]$\/ possède une intégrale $\int_{a}^{b} f(t)~\mathrm{d}t$.
+
+Toute fonction $f : \R \to \R$\/ continue par morceaux sur un \ul{segment} $[a,b]$\/ s'il existe une subdivision $\sigma = (x_0, \ldots, x_n) \in \mathfrak{S}_{[a,b]}$\/ de $[a,b]$\/ (donc $a = x_0 < \cdots < x_n = b$) et que \smash{$f\big|_{]x_{i-1},x_i[}$\/} est continue, pour tout $i$\/ et que les limites de $f$\/ en $x_i$\/ et $x_{i-1}$. On dit que $\sigma$\/ est {\sl adaptée} à $f$. Alors, l'intégrale de $f$\/ est \[
+	\int_{[a,b]} f = \sum_{i=1}^n \int_{[x_{i-1}, x_i]} f_i
+\] où $f_i = f\big|_{[x_{i-1},x_i]}$.
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		import patterns;
+
+		add("p1", hatch(2mm, deepcyan+0.05));
+		add("p2", hatch(2mm, NW, deepcyan+0.05));
+
+		add("q1", hatch(2mm, NW, green+0.05));
+		add("q2", hatch(2mm, green+0.05));
+
+		size(5cm);
+		draw((-2, 0) -- (17, 0), Arrow(TeXHead));
+		draw((0, -3/2) -- (0, 9.5), Arrow(TeXHead));
+
+		real[] coeffs1 = {-0.028394180582212297,0.27523209017393424,0.24929746599526315,-6.4461353755869855};
+		real[] coeffs2 = {-0.17899213658476887,2.952039286479213,-16.844010647737377};
+		real[] coeffs3 = {0.0685361785931054,-3.4573141100655738,57.5265826584141,-318.3334743273578};
+		real f(real x) {
+			if(x < 8) {
+				real y = 0;
+				for(int i = 0; i < coeffs1.length; ++i) {
+					y -= x^i * coeffs1[coeffs1.length-i-1];
+				}
+				return y;
+			} else if(x < 13) {
+				real y = 0;
+				for(int i = 0; i < coeffs2.length; ++i) {
+					y -= x^i * coeffs2[coeffs2.length-i-1];
+				}
+				return y;
+			} else {
+				real y = 0;
+				for(int i = 0; i < coeffs3.length; ++i) {
+					y -= x^i * coeffs3[coeffs3.length-i-1];
+				}
+				return y;
+			}
+		}
+
+		real u = 10;
+		real v = 0;
+
+		void drawBox(real a, real b, int type, string p, pen pe) {
+			real y;
+			if(type == 1) {
+				y = min(graph(f, a, b)).y;
+				u = min(u, y);
+			} else {
+				y = max(graph(f, a, b)).y;
+				v = max(v, y);
+			}
+
+			// filldraw((a,0)--(b,0)--(b,y)--(a,y)--cycle, pattern(p), pe);
+		}
+
+		drawBox(-1, 7.99, 0, "q1", green+0.02);
+		drawBox(8, 12.99, 0, "q2", green+0.02);
+		drawBox(13, 16, 0, "q1", green+0.02);
+
+		drawBox(-1, 7.99, 1, "p1", deepcyan+0.02);
+		drawBox(8, 12.99, 1, "p2", deepcyan+0.02);
+		drawBox(13, 16, 1, "p1", deepcyan+0.02);
+
+		draw(graph(f, -1, 7.99), red);
+		draw(graph(f, 8, 12.99), red);
+		draw(graph(f, 13, 16), red);
+
+		real a = -1;
+		real b = 16;
+
+		path p = graph(f, a, b);
+	\end{asy}
+	\caption{Une fonction continue par morceaux}
+\end{figure}
+
+\begin{rmk}[intégrale et primitive]
+	On dit que $F : I \to \R$\/ est une primitive de $f : I \to \R$\/ si $F$\/ est dérivable et $F' = f$. \[
+		\begin{array}{ccc}
+			&\ds\frac{\mathrm{d}}{\mathrm{d}x}(\square)&\\
+			&\xrightarrow{\phantom{mmmmmmmmmm}}&\\
+			F&&f\\
+			&\xleftarrow{\phantom{mmmmmmmmmm}}&\\
+			&\ds\int\square~\mathrm{d}x&
+		\end{array}
+	.\]
+\end{rmk}
+
+\section{Qu'est ce qu'une intégrale généralisée ?}
+
+\begin{defn}
+	Une fonction est {\it continue par morceaux}\/ sur un intervalle $I$\/ si elle est continue par morceaux sur chacun des segments inclus dans $I$.
+\end{defn}
+
+Pour la 1\tsup{ère} intégrale, la fonction intégrée n'est pas définie en $t = 1$. On intègre donc jusqu'à $x$\/ pour $x < 1$\/ et on prend la limite pour $x \to 1$.
+
+Pour la 2\tsup{nde} intégrale, la borne supérieur est $+\infty$. On intègre donc jusqu'à $x$\/ et on étudie la limite pour $x \to +\infty$ (comme pour les séries). \[
+	F(x) := \int_{a}^{x} f(t)~\mathrm{d}t \tendsto{n\to +\infty} \begin{cases}
+		\ell \in \R &\implies \text{ l'intégrale } \int_{a}^{+\infty} f \text{ converge}\\
+		\text{sinon } &\implies \text{ l'intégrale } \int_{a}^{+\infty} f \text{ diverge}.\\
+	\end{cases}
+\]
+
+\begin{defn}
+	Soit $f$\/ une fonction continue par morceaux sur un intervalle $[a,b[$, où $-\infty < a < b \le +\infty$. Soit, pour $x \in [a,b[$, $F(x) = \int_{[a,x]}f$. On dit que l'intégrale $I = \int_{[a,b[} f$\/ converge en $b$\/ si la limite $\lim_{x\to b^-} F(x)$\/ existe et est finie. Sinon, on dit qu'elle diverge.
+\end{defn}
+
+\begin{exm}
+	Le programme nous permet d'utiliser sans re-démontrer les points 2.\ et 3.
+	\begin{enumerate}
+		\item Montrons que $I = \int_{0}^{1} \frac{1}{\sqrt{1-t^2}}~\mathrm{d}t$\/ converge.
+
+			L'intégrale $I$\/ est impropre en 1 (ou est généralisée en 1).
+			On remarque que, pour tout $x \in [0, 1[$, \[
+				\int_{0}^{x}\frac{1}{\sqrt{1-t^2}}~\mathrm{d}t = \Arcsin x \tendsto{x \to 1^-} \Arcsin 1
+			\] car $\Arcsin$\/ est continue. Or, $\Arcsin 1 = \frac{\pi}{2}$. Donc, l'intégrale $I$\/ converge et que $I = \frac{\pi}{2}$.
+		\item {\sl L'intégrale $J = \int_{0}^{1} \ln t~\mathrm{d}t$\/ est convergente en 0}.
+
+			L'intégrale $J$\/ est impropre en 0. On remarque que, pour $x \in {]0, 1]}$, \[
+				\int_{x}^{1} \ln t~\mathrm{d}t = \big[t \ln t - t\big]_x^1 = -1 - x \ln x + x \tendsto{x \to 0^+} -1
+			\] par croissances comparées. On en déduit que l'intégrale $J$\/ converge et que elle est égale à $-1$. Même si la borne supérieure est différente, on peut retrouver cette formule avec les relations de {\sc Chasles}\/ sur les intégrales.
+		\item {\sl L'intégrale $B = \int_{0}^{+\infty} \mathrm{e}^{Kt}~\mathrm{d}t$\/ (où $K$\/ est une constante) converge en $+\infty$\/ si et seulement si $K < 0$}.
+
+			L'intégrale $B$\/ est impropre en $+\infty$. On remarque que, pour $x \in \R^+_*$, \[
+				\int_{0}^{x} \mathrm{e}^{Kt}~\mathrm{d}t = \begin{cases}
+					\left[ \frac{\mathrm{e}^{Kt}}{K} \right]_0^x &\text{ si } K \neq 0\\
+					x&\text{ si } K = 0.
+				\end{cases}
+			\]
+			Or, $x \tendsto{x\to +\infty} +\infty$\/ donc $B$\/ diverge si $K = 0$\/ ; de plus, \[
+				\frac{\mathrm{e}^{Kx}- 1}{K} \tendsto{x\to +\infty} \begin{cases}
+					-\frac{1}{K} &\text{ si } K < 0\\
+					+\infty & \text{ si } K > 0.
+				\end{cases}
+			\] On en déduit que l'intégrale $B$\/ converge si et seulement si $K < 0$\/ et, si $K < 0$, on a $B = -\frac{1}{K} > 0$.
+	\end{enumerate}
+\end{exm}
+
+\begin{rmk}
+	Si $f$\/ est continue par morceaux sur $]a,b[$\/ (où $-\infty \le a < b \le +\infty$), et l'intégrale $\int_{]a,b[} f$\/ est impropre en $a$\/ \ul{et} en $b$, alors on utilise la relation de {\sc Chasles}\/ en découpant cette intégrale avec $c \in ]a,b[$\/ : l'intégrale $\int_{]a,b[} f$\/ converge si et seulement si $\int_{]a,c]}$\/ converge {\bf et}\/ $\int_{[c,b[}$\/ converge. Si ces deux intégrales convergent, alors \[
+		\int_{]a,b[} f = \int_{]a,c]} f + \int_{[c,b[} f
+	.\]
+\end{rmk}
+
+\begin{exo}
+	Cet exercice, comme indiqué dans le programme, peut être utilisé sans avoir à le re-démontrer.
+	\slshape
+	Soit $\alpha$\/ un réel. Montrons que
+	\begin{itemize}
+		\item l'intégrale $\int_{1}^{+\infty} \frac{1}{t^\alpha}~\mathrm{d}t$\/ converge si et seulement si $\alpha > 1$\/ (comme pour les séries) ;\\\null\hfill \hbox{[critère de {\sc Riemann}\/ en $+\infty$]}
+		\item l'intégrale $\int_{0}^{1} \frac{1}{t^\alpha}~\mathrm{d}t$\/ converge si et seulement si $\alpha < 1$\/ ; \hfill\hbox{[critère de {\sc Riemann}\/ en 0]}
+		\item l'intégrale $\int_{0}^{+\infty} \frac{1}{t^\alpha}~\mathrm{d}t$\/ diverge pour tout $\alpha \in \R$.
+	\end{itemize}
+	\upshape
+
+	\begin{enumerate}
+		\item L'intégrale $\int_{1}^{+\infty} \frac{1}{t^\alpha}~\mathrm{d}t$\/ est impropre en $+\infty$. Soit $x \in [1, +\infty[$.
+			\begin{align*}
+				\int_{1}^{x} f(t)~\mathrm{d}t &= \begin{cases}
+				\big[\ln t\big]_1^x& \text{ si } \alpha  = 1\\
+				\left[ \frac{t^{-\alpha+1}}{-\alpha + 1} \right] &\text{ si } \alpha \neq 1
+				\end{cases}\\
+				&= \begin{cases}
+					\frac{x^{-\alpha + 1} - 1}{-\alpha + 1} &\text{ si } \alpha \neq 1\\
+					\ln x \tendsto{x\to+\infty} +\infty &\text{ si } \alpha = 1
+				\end{cases} \\
+			\end{align*}
+			Si $-\alpha + 1 < 0$, alors $\int_{1}^{x} \frac{1}{t^\alpha}~\mathrm{d}t \tendsto{x\to +\infty} \frac{1}{\alpha - 1}$.
+			Si $-\alpha + 1 > 0$, alors $\int_{1}^{x} \frac{1}{t^\alpha}~\mathrm{d}t \tendsto{x\to +\infty} +\infty$.
+			L'intégrale $\int_{1}^{+\infty} \frac{1}{t^\alpha}~\mathrm{d}t$\/ converge si et seulement si $\alpha > 1$.
+	\end{enumerate}
+\end{exo}
+
+\begin{rmk}
+	Si $f : {[a, +\infty[}\to \R^+$, l'intégrale $\int_{a}^{+\infty} f(t)~\mathrm{d}t$\/ peut converger même si $f(t) \centernot{\tendsto{t\to +\infty}} 0$. En effet, la fonction décrite sur le poly est un bon exemple : son intégrale converge mais la fonction ne tend pas vers 0.
+\end{rmk}
+
+\begin{prop}[intégrales faussement impropres]
+	Si une fonction $f : {]a,b]} \to \R$\/ est continue sur $]a,b]$\/ et possède une limite finie $\ell$\/ en $a$, alors son intégrale $\int_{a}^{b} f(t)~\mathrm{d}t$\/est impropre en $a$\/ mais elle converge en $a$.
+	On dit donc qu'elle est {\it faussement}\/ impropre.
+\end{prop}
+
+\begin{prv}
+	Soit $x \in {]a,b]}$. On considère l'intégrale $\int_{x}^{b} f(t)~\mathrm{d}t = F(b) - F(x)$\/ où $F$\/ est \ul{une} primitive de $f$ sur $]a,b]$.
+	On cherche donc la limite de $F$\/ quand $x \to a^+$.
+	On prolonge par continuité $f$\/ en $a$, en posant $f(a) = \ell$.
+	La fonction $f$\/ est donc continue sur $[a,b]$.
+	Cette fonction $f$\/ prolongée possède une primitive $F$\/ sur $[a,b]$.
+	Donc $f$\/ est dérivable sur $[a,b]$\/ et donc continue sur $[a,b]$.
+	On en déduit que $F(x)$\/ admet une limite finie en $a$, et donc $\int_{a}^{b} f(t)~\mathrm{d}t$\/ existe.
+\end{prv}
+

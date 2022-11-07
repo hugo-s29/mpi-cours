@@ -1,0 +1,31 @@
+\section{Motivation}
+
+Considérons la grilles de Sudoku $2\times 2$\/ suivant
+\begin{figure}[H]
+	\centering
+	\begin{TAB}(e,4mm,4mm){|c|c|c|c|}{|c|c|c|c|}
+		3&&&2\\
+		&4&1&\\
+		&3&2&\\
+		4&&&1\\
+	\end{TAB}
+	\caption{Grille de Sudoku $2\times 2$}
+\end{figure}
+On modélise ce problème : on considère $P_{i,j,k}$\/ une variable booléenne, c'est à dire un élément de $\{{\bfm V},\,{\bfm F}\}$, définie telle que \[
+	P_{i,j,k} : ``m(i,j) \overset{?}= k" \text{ avec } (i,j,k) \in \left\llbracket 1,4 \right\rrbracket^3.
+.\]
+
+On peut définir des contraintes logiques (des expressions logiques) pour résoudre le Sudoku. Les opérateurs ci-dessous seront définis plus tard.
+\begin{align*}
+	&P_{113}\\
+	\land\:&P_{1,4,2}\\
+	\land\:&P_{2,2,4}\\
+	\land\:&P_{2,3,1}\\
+	\vdots\:\,\\
+	\land\:&P_{1,2,1} \to (\lnot P_{1,2,2} \land \lnot P_{1,2,3}\land \lnot P_{1,2,4})\\
+	\vdots\:\,
+\end{align*}
+Pour résoudre le Sudoku, on peut essayer chaque cas possible. Mais, ces possibilités sont très nombreuses.
+
+En mathématiques, on utilise une certaine logique. Il en existe d'autre, certaines où tout est vrai, certaines où il est plus facile de montrer des théorèmes, etc.\ On va définir une logique ayant le moins d'opérateurs possibles.
+

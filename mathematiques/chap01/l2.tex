@@ -1,0 +1,190 @@
+\begin{exo}
+	\begin{align*}
+		\ln(n!) &= \ln\big(1 \times 2 \times 3 \times \cdots \times (n-1)\times n\big) \\
+		&= \cancel{\ln(1)} + \ln(2) + \ln(3) + \cdots + \ln(n-1) + \ln n \\
+	\end{align*}
+	Pour calculer cette somme, on utilise la méthode des rectangles. Avec des rectangles à droite on obtient l'inégalité \[
+		\ln(n!) \le \int_{2}^{n+1} \ln(x)~\mathrm{d}x
+	.\]
+	Avec les rectangles à gauche, on obtient \[
+		\int_{1}^{n} \ln x~\mathrm{d}x \le \ln(n!)
+	.\]
+
+	D'où
+	\begin{align*}
+		&\big[x \ln x - x\big]_1^n \le \ln(n!) \le \big[x \ln x - x\big]_2^{n+1}\\
+		\iff& \frac{\ln n - n + 1}{n \ln n} \le \frac{\ln(n!)}{n\ln n} \le \frac{(n+1) \ln(n+1) - (n+1) - 2\ln 2 + 2}{n \ln n}\\
+	\end{align*}
+	Or, les deux ``gendarmes'' tendent vers 1, par le théorème des gendarmes, on en déduit que \[
+		\frac{\ln (n!)}{n\ln n} \tendsto{n\to +\infty} 1 \quad\text{i.e.}\quad \ln(n!) \sim n \ln n
+	.\]
+\end{exo}
+
+\begin{prop}
+	La série $\sum \frac{1}{n^{\alpha}}$\/ converge si et seulement si $\alpha > 1$.
+\end{prop}
+
+\bigskip
+
+\begin{center}
+	\large\sc I.3 \quad Le reste d'une série convergente
+\end{center}
+
+\bigskip
+\[
+	\underbrace{u_0 + u_1 + u_2 + \cdots + u_n}_{{\ds\sum_{k = 0}^n u_k = S_n \to \text{ somme partielle}}} + \underbrace{u_{n+1} + u_{n+2} + \cdots}_{\ds\sum_{k=n+1}^{\infty} u_k = R_n \to \text{ reste}}
+.\]
+
+Le reste est défini si et seulement si la série $\sum u_n$\/ converge. La somme $S_n + R_n = \sum_{k=0}^{\infty} u_k$\/ est définie si et seulement si la série $\sum u_n$\/ converge. On pose $\R \ni \ell = S_n + R_n$. Ainsi, on a
+\begin{gather*}
+	S_n \tendsto{n\to +\infty} \ell\\
+	\ell - S_n = R_n \tendsto{n\to +\infty} \ell - \ell = 0
+\end{gather*}
+
+\begin{exo}
+	La série $\sum \frac{1}{n^2}$\/ converge d'après le critère de {\sc Riemann}.
+	D'où le reste $R_n = \sum_{k=n+1}^{\infty} \frac{1}{k^2}$\/ est bien défini.
+	
+	On utilise, encore une fois, la méthode des rectangles : en effet, on a
+	\begin{align*}
+		&\int_{n+1}^{N+1} \frac{1}{x^2}~\mathrm{d}x \le \sum_{k=n+1}^{N} \frac{1}{k^2} \le \int_{n}^{N} \frac{1}{x^2}~\mathrm{d}x\\
+		\iff& \left[ -\frac{1}{x} \right]^{N+1}_{n+1} \le \sum_{k=n+1}^N \frac{1}{k^2} \le \left[ -\frac{1}{x} \right]_n^N\\
+		\iff& \frac{1}{n+1} - \frac{1}{N+1} \le \sum_{k=n+1}^N \frac{1}{k^2} \le \frac{1}{n} - \frac{1}{N}.
+	\end{align*}
+	On n'a pas besoin du théorème des gendarmes ; on utilise le fait que les inégalités larges ``passent à la limite.''
+	\[
+		\begin{array}{ccccc}
+			\ds\frac{1}{n+1} - \frac{1}{N+1} & \le & \ds\sum_{k=n+1}^N & \le & \ds\frac{1}{n} - \frac{1}{N}\\[2mm]
+			{\ds \downarrow}\mathrlap{\scriptscriptstyle N\to +\infty} && {\ds \downarrow}\mathrlap{\scriptscriptstyle N\to +\infty} && {\ds \downarrow}\mathrlap{\scriptscriptstyle N\to +\infty}\\[2mm]
+			\frac{1}{n+1} & \le & R_n &\le& \frac{1}{n}.
+		\end{array}
+	\]
+\end{exo}
+
+\bigskip
+
+\begin{center}
+	\large\sc I.4 \quad Les séries alternées
+\end{center}
+
+\bigskip
+
+\begin{thm}[Séries alternées]
+	La série $\sum (-1)^k u_k$\/ (où $u_k$\/ tends vers $0$\/ {\color{red}en décroissant}, d'où $u_k \ge 0$) converge. Et, $\ell$\/ a le même signe que le premier terme.
+
+	\begin{align*}
+		S_0&= u_0\\
+		S_1&= u_0 - u_1 \\
+		S_2&= u_0 - u_1 + u_2 \\
+		\vdots\:\:&\:\:\quad\vdots\\
+		S_n&= u_0 - u_1 + \cdots + (-1)^nu_n \\
+	\end{align*}
+
+	\begin{figure}[H]
+		\centering
+		\todo{Faire figure (fig. 4)}
+		\caption{Série alternée}
+	\end{figure}
+	Le reste $R_n = \ell - S_n$ change de signe une fois sur deux i.e.\ il est alterné. De plus, on a \[
+		|R_n| \le u_{n+1}
+	.\]
+\end{thm}
+
+\begin{exo}[Mines-Ponts]
+	On pose, pour tout $n \in \N^*$, \[
+		S_n = \sum_{k=0}^{n} \frac{(-1)^{k-1}}{k} = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots + \frac{(-1)^{n-1}}{n}
+	.\]
+
+	(Ça ne sert à rien mais\ldots) comme $\frac{1}{k}$\/ tends vers 0 en décroissant, d'où, d'après le théorème des séries alternées, la suite $(S_n)$\/ converge.
+
+	Montrons que \[
+		(1)\qquad\ln 2 - S_n = \int_{0}^{1} \frac{(-t)^n}{1+t}~\mathrm{d}t
+	\] et $(2)$ en déduire que $S_n$\/ tends vers $\ln 2$.
+
+	\begin{enumerate}
+		\item
+			On remarque que \[
+				\int_{0}^{1} \frac{1}{1+t}~\mathrm{d}t = \big[\ln |1+t|\big]_0^1 = \ln 2
+				\quad
+				\text{ et }
+				\quad
+				\frac{1}{k} = \int_{0}^{1} t^{k-1}~\mathrm{d}t = \left[ \frac{t^k}{k} \right]^1_0.
+			\]
+			D'où, \[
+				\sum_{k=1}^n (-1)^{k-1} \int_{0}^{1} t^{k-1}~\mathrm{d}t
+			.\]
+			Or, par linéarité de l'intégrale, on a \[
+				S_n = \int_{0}^{1} \bigg(\sum_{k=1}^{n} (-1)^{k-1} t^{k-1}\bigg)~\mathrm{d}t
+			.\]
+		\item
+			\begin{align*}
+				|\ln 2 - S_n| &= \bigg| \int_{0}^{1} \frac{(-1)^n}{1+t}~\mathrm{d}t \bigg| \\
+				&\le \int_{0}^{1} \left| \frac{(-t)^n}{1+t} \right| ~\mathrm{d}t\\
+				&\le \int_{0}^{1} t^n~\mathrm{d}t\\
+				&= \left[ \frac{t^{n+1}}{n + 1} \right]_0^1 = \frac{1}{n+1} \\
+			\end{align*}
+			par croissance de l'intégrale. D'où, $|\ln 2 - S_n| \tendsto{n\to +\infty} 0$\/ d'après le théorème des gendarmes.
+			On en conclut que \[
+				\boxed{S_n \tendsto{n\to +\infty} \ln 2.}
+			\]
+			Or,
+			\begin{align*}
+				\sum_{k=1}^n (-t)^{k-1} &= (-t)^0 + (-t)^1 + \cdots + (-t)^{n-1} \\
+				&= \frac{1 - (-t)^n}{1 - (-t)} \\
+			\end{align*}
+			car \[
+				\sum_{k=0}^{N} q^k = q^0 + q^1 + \cdots + q^N = \frac{1 - q^{N+1}}{1-q} \quad \text{ si} q \neq 1
+			.\]
+			D'où
+			\begin{align*}
+				S_n &= \int_{0}^{1} \frac{1 - (-t)^n}{1 + t}~\mathrm{d}t\\
+				&= \int_{0}^{1} \frac{1}{1+t}~\mathrm{d}t  - \int_{0}^{1} \frac{(-t)^n}{1+t}~\mathrm{d}t \\
+				&= \boxed{\ln 2 - \int_{0}^{1} \frac{(-t)^n}{1+t}~\mathrm{d}t.} \\
+			\end{align*}
+			On sait que $R_n$\/ est existe car la suite $S_n$\/ converge.
+
+			La série $\sum R_n$\/ converge-t-elle ou diverge-t-elle ?
+			On sait que $R_n = (-1)^n\:|R_n|$\/ au signe près.
+			On veut montrer que $|R_n|$\/ tend vers 0 en décroissant.
+			\begin{align*}
+				|R_n| = \int_{0}^{1} \frac{t^n}{1+t}~\mathrm{d}t &\le \int_{0}^{1} t^n~\mathrm{d}t \text{ car } \frac{t^n}{1 + t} \le t^n \forall t \in [0,1]\\
+				&\le \left[ \frac{t^{n+1}}{n+1} \right]_0^1 = \frac{1}{n+1}.
+			\end{align*}
+			D'où $|R_n|$\/ tend vers 0 d'après le théorème des gendarmes.
+
+			\begin{align*}
+				|R_{n+1}| - |R_n| &= \int_{0}^{1} \frac{t^{n+1}}{n+1}~\mathrm{d}t - \int_{0}^{1} \frac{t^n}{1 + t}~\mathrm{d}t\\
+				&= \int_{0}^{1} \frac{t^{n+1} - t^n}{1+t}~\mathrm{d}t \\
+				&= \int_{0}^{1} \frac{(t-1)t^n}{1 + t}~\mathrm{d}t \\
+				&\le 0 \\
+			\end{align*}
+
+			On aurait aussi très bien pu utiliser le théorème des séries alternées : $|R_n| \le u_{n+1}$.
+	\end{enumerate}
+\end{exo}
+
+Cadeau du {\it 06/09/2022}\/ : 
+calculer les trois limites suivantes (avec un développement limité)
+\begin{enumerate}
+	\item $\ds \lim_{x\to 0} \frac{\sqrt[3]{8+x} - 2\sqrt{1+x}}{x}$\/ (corrigé) ;
+	\item $\ds \lim_{x\to 0} \frac{\tan x - x}{\sin^3 x}$\/ (non corrigé);
+	\item $\ds \lim_{x\to 0} \frac{\ln (\cos x)}{x^2}$\/ (corrigé).
+\end{enumerate}
+
+\bigskip
+
+\begin{comment}
+\begin{enumerate}
+	\item[3.]
+		\[
+			\frac{\ln(\cos x)}{x^2} = \frac{\ln\left( 1 - \frac{x^2}{2} + \po(x^2)\right)}{x^2} = \frac{-\frac{x^2}{2} + \po(x^2)}{x^2} = -\frac{1}{2} + \po(1) \tendsto{n\to +\infty} -\frac{1}{2}
+		.\] 
+	\item[1.]
+		\[
+			\frac{\sqrt[3]{8+x} - 2\sqrt{1+x}}{x} = \frac{\sqrt[3]{8} \sqrt[3]{1+\frac{x}{8}} - 2\sqrt{1+x}}{x} = \frac{2\left( 1+ \frac{1}{3}\frac{x}{8} \right) - 2\left( 1+ \frac{1}{2}x \right)}{x}
+		.\] 
+\end{enumerate}
+\end{comment}
+
+
+

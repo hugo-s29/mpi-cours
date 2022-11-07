@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-3.25, 0) {};
+		\node [style=new style 0] (1) at (-2, 0) {0};
+		\node [style=none] (2) at (-2, 2.25) {$000,101,011$};
+		\node [style=new style 0] (3) at (1, 0) {1};
+		\node [style=none] (4) at (-2, -1.25) {};
+		\node [style=none] (5) at (-0.5, 1) {$110$};
+		\node [style=none] (6) at (-0.5, -1) {$001$};
+		\node [style=none] (7) at (5, 0) {$100,010,111$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (0.center) to (1);
+		\draw [style=arrow, in=60, out=120, loop] (1) to ();
+		\draw [style=arrow] (1) to (4.center);
+		\draw [style=arrow, bend left] (1) to (3);
+		\draw [style=arrow, bend left] (3) to (1);
+		\draw [style=arrow, in=-30, out=30, loop] (3) to ();
+	\end{pgfonlayer}
+\end{tikzpicture}

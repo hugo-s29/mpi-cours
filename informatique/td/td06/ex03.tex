@@ -1,0 +1,54 @@
+\section{Exercice 3 : Échantillonnage}
+
+\paragraph{Q.\ 1}~
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree $T$\/ un tableau à $n$\/ éléments, et $k \in \N$\/ avec $k \le n$\/
+		\State $T \gets \text{Mélanger}(T)$\/
+		\State $R \gets T[0..k]$
+		\State\Return $R$\/
+	\end{algorithmic}
+	\caption{Échantillonnage naïf}
+\end{algorithm}
+
+\paragraph{Q.\ 2}
+Un invariant de boucle est \guillemotleft~$\forall p \in \left\llbracket 0,I-1 \right\rrbracket,\:P(T[p] \in \textsf{Res}) = \frac{k}{I}$\/ et $\forall p \in \left\llbracket I,n \right\rrbracket,\:T[p] \not\in \textsf{Res}$~\guillemotright
+
+\paragraph{Q.\ 3}
+Notons $\ubar{I}$\/ et $\underline{\textsf{Res}}$\/ l'état des variables avant un tour de boucle ; et, $\bar{I}$\/ et $\overline{\textsf{Res}}$\/ l'état des variables après un tour de boucle.
+\begin{itemize}
+	\item Pour $k = I$, on a
+		\begin{enumerate}
+			\item $\forall p \in \left\llbracket 0,k-1 \right\rrbracket$, $P(T[p] \in \textsf{Res}) = 1$,
+			\item $\forall p \in \left\llbracket k, n-1 \right\rrbracket$, $T[p] \not\in \textsf{Res}$,
+			\item $I \le n$.
+		\end{enumerate}
+	\item Supposons $\ubar{I}$, et $\underline{\textsf{Res}}$\/ vérifiant l'invariant et la condition de boucle. Alors, on a
+		\begin{enumerate}
+			\item $\forall p \in \left\llbracket 0, \ubar{I} - 1 \right\rrbracket$, $P(T[p] \in \underline{\textsf{Res}}) = \frac{k}{\ubar{I}}$,
+			\item $\forall p \in \left\llbracket \ubar{I}, n-1 \right\rrbracket$, $T[p] \not\in \underline{\textsf{Res}}$,
+			\item $\ubar{I} < n$, la condition de boucle.
+		\end{enumerate}
+		Soit $j \in \left\llbracket 0, \ubar{I} \right\rrbracket$.
+		On a $\bar{I} = \ubar{I} + 1$.
+		\begin{itemize}
+			\item[\sc Cas 1] $j < k$, et donc $\overline{\textsf{Res}}(j) = T[\ubar{I}]$, et $\forall \ell \neq j$, $\overline{\textsf{Res}}[\ell] = \underline{\textsf{Res}}[\ell]$.
+			\item[\sc Cas 2] $j \ge  k$, et donc $\forall \ell,\:\overline{\textsf{Res}}[\ell] = \underline{\textsf{Res}}[\ell]$.
+		\end{itemize}
+
+		\begin{enumerate}
+			\item Soit $p \in \left\llbracket 0, \ubar{I} \right\rrbracket $. Montrons $P(T[p] \not\in \overline{\textsf{Res}}) = \frac{k}{\bar{I}}$. Si $p < \ubar{I}$, alors
+				\begin{align*}
+					P(T[p] \in \overline{\textsf{Res}}) &= P\big(T[p] \in \underline{\textsf{Res}} \cap j \neq p\big) \\
+					&= \frac{k}{\ubar{I}} \times \frac{\ubar{I}}{\ubar{I} + 1} \\
+					&= \frac{k}{\bar{I}}.
+				\end{align*}
+				Si $P = \ubar{I}$, alors d'après 2.\ $T[p] \not\in \underline{\textsf{Res}}$, donc $P(T[p] \in \overline{\textsf{Res}}) = P(j < k) = \frac{k}{\bar{I} + 1}$.
+		\end{enumerate}
+\end{itemize}
+
+
+
+

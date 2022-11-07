@@ -1,0 +1,65 @@
+\begin{prv}[par récurrence sur $n$, la largeur de la matrice]
+	\begin{itemize}
+		\item Si $n = 1$, alors la matrice $A = (a_{11})$\/ est déjà triangulaire.
+		\item On suppose le polynôme caractéristique $\chi_A$\/ de la matrice scindé dans $\mathds{K}[X]$, d'où il a au moins une racine dans $\mathds{K}$. D'où, la matrice $A$\/ a au moins une valeur propre $\lambda_1 \in \mathds{K}$. Il existe donc un vecteur non nul $\vec{\varepsilon}_1$\/ tel que $A \cdot \vec{\varepsilon}_1 = \lambda_1\,\vec{\varepsilon}_1$. On complète $(\vec{\varepsilon}_1)$\/ en une base de $\mathds{K}^n$\/ : $(\vec{\varepsilon}_1, \vec{e}_2, \ldots, \vec{e}_n)$. En changent de base, il existe une matrice inversible $P$\/ telle que \[
+			A' = P^{-1}\cdot A\cdot P = 
+			\begin{pNiceArray}[last-row,last-col]{c|ccc}
+				\lambda_1 & *&\Ldots&*&\varepsilon_1\\ \hline
+				0 & \Block{3-3}{B}&&&e_1\\
+				\Vdots&&&&\Vdots\\
+				0&&&&e_n\\
+				f(\vec{\varepsilon}_1)&f(\vec{e}_1)&\ldots&f(\vec{e}_n)
+			\end{pNiceArray}
+		.\]
+		Comme le polynôme caractéristique est invariant par changement de base, on en déduit que \[
+			\chi_A(x) = \chi_{A'}(x) = \left|
+			\begin{array}{c|c}
+				x-\lambda_1 &*\\ \hline
+				0&xI_{n-1} - B\\
+			\end{array} \right| = (x-\lambda_1) \cdot \Pi(x)
+		.\]
+		Or, comme $\chi_A$\/ est scindé, $\Pi(x)$\/ est aussi scindé.
+		Or, $\Pi(x) = \det(xI_{n-1} - B)$ d'où $B$\/ est trigonalisable.
+	\end{itemize}
+\end{prv}
+
+\begin{crlr}
+	Toute matrice de $\mathscr{M}_{n,n}(\C)$\/ est trigonalisable.
+\end{crlr}
+
+\begin{exo}\relax
+	{\slshape Soit une matrice carrée $A \in \mathscr{M}_{n,n}(\mathds{K})$ (où $\mathds{K}$\/ est $\R$\/ ou $\C$). Montrer que
+		\begin{align*}
+			(1)\quad\text{la matrice } A \text{ est nilpotente}
+			\iff& \text{ le polynôme caractéristique de } A \text{ est } \chi_A(X) = X^n\quad(2)\\
+			\iff& \text{ la matrice } A \text{ est trigonalisable avec des zéros}\\
+			&\text{ sur sa diagonale} \quad(3)
+		\end{align*}
+	}
+
+	On montre $``\,(1) \implies (2),"$ $``\,(2) \implies (3)\,"$\/ puis $``\,(3) \implies (1)."$
+
+	\begin{itemize}
+		\item[$``\,(3) \implies(1)\,"$] Il existe donc une matrice inversible $P$\/ telle que $T = P^{-1}\cdot A\cdot P$\/ et $T$\/ est une matrice trigonalisable. Or, à chaque produit $A^n \cdot A$, une \guillemotleft~sur-diagonalse~\guillemotright\  de zéros supplémentaires. D'où, à partir d'un certain rang $p$, on a $A^p = 0$. La matrice $A$\/ est donc nilpotente.
+		\item[$``\,(2) \implies(3)\,"$] On sait que $\chi_A = X^n = (X-0)^n$\/ est scindé, d'où $A$\/ est trigonalisable.
+			Il existe donc une matrice inversible $P$\/ telle que \[
+				P^{-1}\cdot A\cdot P = A' = \begin{pmatrix}
+					\lambda_1 & * & \ldots & *\\
+					0 & \ddots&\ddots&\vdots\\
+					\vdots&\ddots&\ddots&*\\
+					0&\ldots&0&\lambda_n
+				\end{pmatrix}
+			.\]
+			Et donc $\chi_{A'}(x) = (x-\lambda_1)(x-\lambda_2) \cdots (x-\lambda_n)$.
+			Or, le polynôme caractéristique est invariant par changement de base, d'où $\lambda_1 = \lambda_2 = \cdots = \lambda_n$.
+		\item[$``\,(1)\implies(2)\,"$] On passe dans $\C$\/ alors $\chi_A$\/ est scindé dans $\C$. D'où, il existe $(\lambda_1, \lambda_2, \ldots, \lambda_n) \in \C^n$\/ tels que \[
+			\chi_A(X) = (X - \lambda_1) (X - \lambda_2) \cdots (X-\lambda_n)
+		.\]
+		D'où, chaque $\lambda_i$\/ est une valeur propre \ul{complexe} de la matrice $A$. Or $A$\/ est nilpotente, d'où, par définition, il existe $p \in \N$\/ tel que $A^p = 0$. Les scalaires $\lambda_i$\/ sont dans le spectre de $A$\/ : en effet, il existe un vecteur colonne $X$\/ non nul tel que $A\cdot X = \lambda_i\,X$, d'où $A^2 \cdot X = A\cdot AX = A\cdot \lambda_iX = \lambda_i^2 X$. De même, $A^3 \cdot X = A \cdot A^2 \cdot X = A \cdot \lambda_i^2 X = \lambda_i^2 (A\cdot X) = \lambda_i^3 X$.
+		Et, de \guillemotleft~proche en proche~\guillemotright, on a donc \[
+			\forall k \in \N,\:A^k\cdot X = \lambda_i^k X
+		.\]
+		En particulier, si $k=p$, on a $0 = 0\cdot X = A^p\cdot X = \lambda_i^pX$. D'où $\lambda_i^p X = 0$. Or, $X \neq 0$, d'où $\lambda_i^p = 0$\/ et donc $\lambda_i = 0$.
+		Finalement, $\chi_A(X) = (X-\lambda_1) \cdots (X-\lambda_n) = (X-0)\cdots(X-0) = X^n  \in \C[X]$. On a donc $\chi_A(X) \in \R[X]$.
+	\end{itemize}
+\end{exo}

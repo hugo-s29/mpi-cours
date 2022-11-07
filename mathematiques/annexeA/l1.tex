@@ -1,0 +1,116 @@
+\begin{thm}[divison euclidienne dans $\N$]
+	Soient deux entiers $a,b \in \N$. Si $b$\/ est non-nul, alors \[
+		\exists!(q,r) \in \N^2,\qquad a = bq + r\quad\text{et}\quad0\le r < b
+	.\]
+	\[
+		\begin{array}{c|c}
+			\N&\N^*\\[-2mm]
+			\vrt\in&\vrt\in\\[1mm]
+			a&b\\ \cline{2-2}
+			r&q\\
+			\uparrow&\uparrow\\
+			\text{reste}&\text{quotient}\\
+		\end{array}
+	\]
+\end{thm}
+
+\begin{exo}
+	\begin{enumerate}
+		\item On a \[
+				\begin{array}{cccc|l}
+					4&9&{\color{red}0}&&133\\\cline{5-5}
+					3&9&9&&0{,}368421\ldots\\ \cline{1-3}
+					 &9&1&0&\\
+					 &\vdots\\
+				\end{array}
+			.\]
+		\item On veut montrer que le réel $x$\/ possède un développement limité implique qu'il est rationnel.
+			On prend pour exemple $0{,}\overline{147} = 0{,}147147147\ldots$
+			On a
+			\begin{align*}
+				0{,}\overline{147} &= 147 \times \left( 10^{-3} + 10^{-6} + 10^{-9} + \cdots \right) \\
+				&= 147 \times 10^{-3}(1 + 10^{-3} + 10^{-6} + \cdots) \\
+				&= \frac{147}{100} \times \sum_{k=0}^\infty (10^{-3})^k = \frac{147}{100} \times \frac{1}{1- 10^{-3}} \\
+			\end{align*}
+			D'où $0{,}\overline{147} = \frac{147}{999} = \frac{49}{333} \in \Q$.
+
+			On démontre maintenant montrer le ``sens inverse.'' On prend pour exemple $49 \div 333$\/ : \[
+				\begin{array}{ccccccc|c}
+					4&9&0&&&&&333\\[1mm] \cline{8-8}
+					1&5&7&0&&&&0{,}\overline{147}\\
+					1&3&3&2&&&\\
+					&2&3&8&0&&\\
+					&2&3&3&1&&\\
+					&&&4&9&0&&\\
+				\end{array}
+			\]
+			Il n'y a pas, par contre, unicité du développement décimal : $1 = 1{,}\overline0 = 0{,}\overline9$.
+	\end{enumerate}
+\end{exo}
+
+\begin{thm}
+	Soient deux polynômes $A$\/ et $B \in \mathds{K}[X]$. Si $B$\/ est non-nul, \[
+		\exists! (Q,R) \in \mathds{K}[X]^2,\qquad A = BQ + R\quad\text{et}\quad\deg R < \deg B
+	.\]
+	\[
+		\begin{array}{c|c}
+			\mathllap{\mathds{K}[X] \ni}A&B\mathrlap{\in \mathds{K}[X]\setminus \{0\}}\\ \cline{2-2}
+			R&Q\\
+		\end{array}
+	\]
+\end{thm}
+
+\begin{exo}
+	Soit $n \in \N$. On va calculer $R_n(X)$\/ sans calculer $Q_n(X)$.
+	\[
+		\begin{array}{c|c}
+			X^n&X^2 - (n-2)X - (n-1)\\ \cline{2-2}
+			R_n = ?&Q_n\\
+		\end{array}
+	\]
+	On sait, d'après le théorème de la division euclidienne, que $\deg R_n < 2$\/ d'où $R_n = \alpha_n X + \beta_n$. De plus, $X^n = \left( X^2 - (n-2)X - (n-1) \right) Q_n(X) + R_n(X)$. On sait que, pour un polynôme de la forme $X^2 - sX + p$, $s$\/ est la somme des racines de ce polynôme et $p$\/ est le produit des racines. On en déduit que les racines de $X^2 - (n-2)X - (n-1)$\/ sont $n-1$\/ et $-1$.
+	D'où, $X^n = \big(X - (n-1)\big)\big(X+1\big) Q_n(X) + \alpha_n X + \beta_n$. On choisit des valeurs de $X$\/ qui permettent de calculer $\alpha_n$\/ et $\beta_n$.
+	Par exemple, avec $X = n-1$, on a $(n-1)^n = \alpha_n (n-1) + \beta_n$\/ ; et, avec $X =-1$, on a $(-1)^n = -\alpha_n + \beta_n$. On résout ce système d'équations :
+	\begin{align*}
+		\begin{rcases*}
+			(n-1)^n = \alpha_n (n-1) + \beta_n\\
+			(-1)^n = \beta_n - \alpha_n 
+		\end{rcases*} &\mathop{\iff}_{\substack{L_1 \leftarrow L_1 + (n-1) L_2\\L_2 \leftarrow L_2 - L_1}} \begin{cases}
+		(n-1)^n + (n-1)(-1)^n = \beta_n + (n-1)^n \beta_n\\
+		\ldots
+		\end{cases}\\
+		&\iff \begin{cases}
+			\alpha_n = \ldots\\
+			\beta_n = \ldots
+		\end{cases}
+	\end{align*}
+\end{exo}
+
+\begin{rmkn}
+	\begin{itemize}
+		\item Exemples de groupes : $(\Z, +)$, $(\Q, +)$, $(\Q^*,\times)$, $(S_n,  \circ)$, $\big(\mathscr{M}_{n,m}(\mathds{K}), +\big)$, $\big(\mathrm{GL}_n(\mathds{K}),\times \big)$.
+		\item $(A,+,\times)$\/ est un {\it anneau}\/ si
+			\begin{itemize}
+				\item $(A,+)$\/ est un groupe commutatif
+				\item $\times $\/ est associative
+				\item le neutre de $\times $\/ est $1_A$\/ 
+				\item $x$\/ est distributive par rapport à $+$\/ (dans les deux sens) : \[
+							(a+b)\times c = a \times c + b \times c
+							\qquad\text{et}\qquad c \times (a+b) = c \times a + c \times b
+					.\]
+			\end{itemize}
+			Exemple d'anneau : $\big(\mathds{K}[X], +, \times\big)$ est un anneau {\it commutatif}\/ (car $\times $\/ est commutative) ;  $\big(\mathscr{M}_{n}(\mathds{K}), + , \times \big)$\/ est un anneau non-commutatif.
+		\item $(K, +, \times)$\/ est un corps si $(A, +, \times)$\/ est un anneau commutatif et tout élément différent de $0_K$\/ est inversible.
+
+			Exemple de corps : $(\Q, +, \times)$, $(\R, +, \times)$, $(\C, +, \times)$ {\color{red}\sc mais} $\big(\mathrm{GL}_n(\mathds{K}), +, \times\big)$\/ n'est pas un corps (et ce n'est pas un anneau non plus).
+		\item La définition d'un espace vectoriel n'est pas {\it vraiment}\/ à connaître\ldots\ On utilisera, en général, plus la définition d'un sous-espace vectoriel.
+		\item $(M, +, \times, \cdot)$\/ est une $K$-algèbre si
+			\begin{itemize}
+				\item $(M, +, \times)$\/ est un anneau ;
+				\item $(M, +, \cdot)$\/ est un $K$-espace vectoriel ;
+				\item prop3
+			\end{itemize}
+			Par exemple, $(\R^2, +, \cdot)$\/ est un espace vectoriel. $+$\/ est une opération interne ($\mathrm{vecteur}+\mathrm{vecteur}=\mathrm{vecteur}$) mais $\cdot$\/ est une opération externe $(\mathscr{M}_n(\mathds{K}, +, \cdot)$\/ est un espace vectoriel. $+$\/ est interne ($\mathrm{matrice} + \mathrm{matrice} = \mathrm{matrice}$), $\cdot$\/ est externe ($\mathrm{réel} \cdot \mathrm{matrice} = \mathrm{matrice}$), et $\times $\/ est interne ($\mathrm{matrice} \times \mathrm{matrice} = \mathrm{matrice}$). On dit alors que $(\mathscr{M}_{n}(\mathds{K}), +, \times ,\cdot)$\/ est une $K$-algèbre.
+	\end{itemize}
+\end{rmkn}
+

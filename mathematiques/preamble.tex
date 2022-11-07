@@ -1,0 +1,389 @@
+\usepackage[utf8]{inputenc}
+\usepackage[OT2,OT1,T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[bookmarks]{hyperref}
+\usepackage[french]{babel}
+\usepackage[fontsize=8pt]{fontsize}
+\usepackage{amsmath, amssymb}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{tkz-tab}
+\usepackage[inline]{asymptote}
+\usepackage{frcursive}
+\usepackage{verbatim}
+\usepackage{moresize}
+\usepackage{pifont}
+\usepackage{xfrac}
+\usepackage{thmtools}
+\usepackage{diagbox}
+\usepackage{centernot}
+\usepackage{multicol}
+\usepackage{nicematrix}
+\usepackage{stmaryrd}
+\usepackage{setspace}
+\usepackage{cancel}
+\usepackage[f]{esvect}
+\usepackage{wrapfig}
+\usepackage{floatflt}
+\usepackage{dsfont}
+\usepackage{subcaption}
+\usepackage{pdflscape}
+\usepackage{soulutf8}
+\usepackage[Rejne]{fncychap}
+\usepackage{listings}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage[thinlines]{easytable}
+\usepackage{yhmath}
+
+\frenchspacing
+\reversemarginpar
+
+% better underline
+\setuldepth{a}
+
+\usetikzlibrary{babel}
+
+\usepackage{graphicx}
+\newcommand\longvdots[1]{\raisebox{1em}{\rotatebox{-90}{\hbox to #1 {\dotfill}}}}
+
+\theoremstyle{definition}
+
+\definecolor{green}{HTML}{60A917}
+\def\asydir{asy}
+\newcommand{\cwd}{.}
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+	\def\svgwidth{\columnwidth}
+	\import{\cwd/figures/}{#1.pdf_tex}
+}
+
+\usepackage{mathrsfs}
+\usepackage{float}
+\usepackage{tikz-cd}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage{etoolbox}
+\usepackage{footnote}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\let\ge\geqslant
+\let\le\leqslant
+\let\preceq\preccurlyeq
+\let\succeq\succcurlyeq
+
+\renewcommand{\C}{\mathds{C}}
+\newcommand{\R}{\mathds{R}}
+\newcommand{\Z}{\mathds{Z}}
+\newcommand{\N}{\mathds{N}}
+\newcommand{\Q}{\mathds{Q}}
+\renewcommand{\O}{\emptyset}
+
+
+\renewcommand{\thepart}{\Roman{part}}
+\newcommand{\centered}[1]{\begin{center}#1\end{center}}
+
+\let\th\relax
+\let\det\relax
+\let\Im\relax
+\DeclareMathOperator{\Arccos}{Arccos}
+\DeclareMathOperator{\Arcsin}{Arcsin}
+\DeclareMathOperator{\Arctan}{Arctan}
+\DeclareMathOperator{\Argsh}{Argsh}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\sh}{sh}
+\DeclareMathOperator{\th}{th}
+\DeclareMathOperator{\Card}{Card}
+\DeclareMathOperator{\com}{com}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\rg}{rg}
+\DeclareMathOperator{\PPCM}{PPCM}
+\DeclareMathOperator{\PGCD}{PGCD}
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\Vect}{Vect}
+\DeclareMathOperator{\cotan}{cotan}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\det}{det}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Supp}{Supp}
+\DeclareMathOperator{\Cl}{\mathcal{C}\!\ell}
+\DeclareMathOperator*{\po}{\text{\cursive o}}
+\DeclareMathOperator*{\gO}{O}
+\DeclareMathOperator*{\dom}{dom}
+\DeclareMathOperator*{\sgn}{sgn}
+\DeclareMathOperator*{\codim}{codim}
+\DeclareMathOperator*{\simi}{\sim}
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\Sp}{Sp}
+\renewcommand\Re{\mathop{\expandafter\mathfrak{Re}}}
+\newcommand\Ima{\mathop{\expandafter\mathfrak{Im}}}
+
+\pdfsuppresswarningpagegroup=1
+
+\newcommand{\emptyenv}[2][{}] {
+	\newenvironment{#2}[1][{}] {
+		\vspace{-16pt}
+		#1
+		\vspace{16pt}
+		\expandafter\noindent\comment
+	}{
+		\expandafter\noindent\endcomment
+	}
+}
+
+\mdfsetup{skipabove=1em,skipbelow=1em, innertopmargin=6pt, innerbottommargin=6pt,}
+
+\newmdenv[frametitlerule=true,roundcorner=5pt,subtitlebelowline=true,subtitleaboveline=true]{recap-box}
+
+\declaretheoremstyle[
+	mdframed={ },
+	headpunct={:},
+	headfont=\normalfont\bfseries,
+	bodyfont=\normalfont,
+	postheadspace=1em]{defnstyle}
+
+\declaretheoremstyle[
+	mdframed={
+		rightline=false, topline=false, bottomline=false,
+		innerlinewidth=0.4pt,outerlinewidth=0.4pt,
+		middlelinewidth=2pt,
+		linecolor=black,middlelinecolor=white,
+	},
+	headpunct={:},
+	headfont=\normalfont\bfseries,
+	bodyfont=\normalfont,
+	postheadspace=1em]{thmstyle}
+
+\declaretheoremstyle[
+	headpunct={:},
+	postheadspace=\newline,
+	headfont=\normalfont\scshape]{rmkstyle}
+
+\declaretheoremstyle[
+	headpunct={:},
+	postheadspace=\newline,
+	numbered={no},
+	headfont=\normalfont\scshape]{rmknstyle}
+
+\declaretheorem[style=rmkstyle, name=Théorème]{thm}
+\declaretheorem[style=rmkstyle, name=Définition, sibling=thm]{defn}
+\declaretheorem[style=rmknstyle, name=Définition, sibling=thm]{defnn}
+\declaretheorem[style=rmkstyle, name=Algorithme, sibling=thm]{algo}
+\declaretheorem[style=rmkstyle, name=Proposition -- Définition, sibling=thm]{prop-defn}
+
+% \declaretheorem[style=plain, thmbox={style=M, bodystyle=\normalfont}, name=Théorème]{thm}
+% \declaretheorem[style=plain, thmbox={style=M, bodystyle=\normalfont}, name=Proposition]{prop}
+% \declaretheorem[style=plain, thmbox={style=M, bodystyle=\normalfont}, name=Corollaire]{crlr}
+% \declaretheorem[style=plain, thmbox={style=M, bodystyle=\normalfont}, name=Lemme]{lem}
+
+\declaretheorem[style=rmkstyle, name=Axiome, sibling=thm]{axm}
+\declaretheorem[style=rmkstyle, name=Proposition, sibling=thm]{prop}
+\declaretheorem[style=rmknstyle, name=Proposition, sibling=thm]{propn}
+\declaretheorem[style=rmkstyle, name=Corollaire, sibling=thm]{crlr}
+\declaretheorem[style=rmkstyle, name=Lemme, sibling=thm]{lem}
+\declaretheorem[style=rmkstyle, name=Méthode, sibling=thm]{met}
+
+\declaretheorem[style=rmkstyle, name=Remarque, sibling=thm]{rmk}
+\declaretheorem[style=rmknstyle, name=Remarque, sibling=thm]{rmkn}
+\declaretheorem[style=rmknstyle, name=Rappel, sibling=thm]{rap}
+
+\declaretheorem[style=rmkstyle, name=Exemple, sibling=thm]{exm}
+\declaretheorem[style=rmknstyle, name=Exemple, sibling=thm]{exmn}
+\declaretheorem[style=rmknstyle, name=Contre-exemple, sibling=thm]{cexm}
+\declaretheorem[style=rmkstyle, name=Exercice, sibling=thm]{exo}
+\declaretheorem[style=rmknstyle, name=Exercice, sibling=thm]{exon}
+\declaretheorem[style=rmknstyle, name=Preuve]{prv}
+
+\makeatother
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead[R]{}
+\fancyhead[L]{\thepart}
+\fancyhead[C]{\parttitle}
+
+\fancyfoot[C]{\thepage}
+\fancyfoot[L]{}
+\fancyfoot[R]{}
+
+\newcommand*\parttitle{}
+\let\origpart\part
+\renewcommand*{\part}[2][]{%
+   \ifx\\#1\\% optional argument not present?
+      \origpart{#2}%
+      \renewcommand*\parttitle{#2}%
+   \else
+      \origpart[#1]{#2}%
+      \renewcommand*\parttitle{#1}%
+   \fi
+}
+
+\makeatletter
+
+\newcommand{\tendsto}[1]{\xrightarrow[#1]{}}
+\newcommand{\danger}{{\large\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}\;}
+\newcommand{\ex}{\fbox{ex}\;}
+\renewcommand{\mod}[1]{~\left[ #1 \right]}
+\newcommand{\todo}[1]{{\color{blue} À faire : #1}}
+\newcommand*{\raisesign}[2][.7\normalbaselineskip]{\smash{\llap{\raisebox{#1}{$#2$\hspace{2\arraycolsep}}}}}
+\newcommand{\vrt}[1]{\rotatebox{-90}{$#1$}}
+
+\DeclareMathOperator{\ou}{\text{ ou }}
+\DeclareMathOperator{\et}{\text{ et }}
+\DeclareMathOperator{\si}{\text{ si }}
+\DeclareMathOperator{\non}{\text{ non }}
+
+\renewcommand{\title}[2]{
+	\AtBeginDocument{
+		\begin{titlepage}
+			\begin{center}
+				\vspace{10cm}
+				{\Large \sc Chapitre #1}\\
+				\vspace{1cm}
+				{\HUGE \cursive #2}\\
+				\vfill
+				Hugo {\sc Salou} MPI${}^{\star}$\\
+				{\ssmall Dernière mise à jour le \@date }
+			\end{center}
+		\end{titlepage}
+	}
+}
+
+\let\bx\boxed
+\newcommand{\s}{\text{\cursive s}}
+\renewcommand{\t}{{}^t\!}
+\newcommand{\T}{{\!\!\,\top}}
+\newcommand{\eme}{\ensuremath{{}^{\text{ème}}}~}
+\newcommand{\red}[1]{{\color{red}#1}}
+%\let\oldfract\fract
+%\renewcommand{\fract}[2]{\oldfract{\displaystyle #1}{\displaystyle #2}}
+% \let\textstyle\displaystyle
+% \let\scriptstyle\displaystyle
+% \let\scriptscriptstyle\displaystyle
+%\everymath{\displaystyle}
+
+
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+\newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\cdot}}
+\newcommand{\bigcupdot}{\charfusion[\mathop]{\bigcup}{\cdot}}
+\newcommand{\plusbar}{\charfusion[\mathbin]{+}{\color{blue}/}}
+\let\olddiamond\diamond
+\renewcommand{\diamond}{\mathbin{\olddiamond}}
+\newcommand{\missingpart}{\centered{\color{red} \Large Il manque une partie du cours ici}}
+%\renewcommand{\Sigma}{\ensuremath{\textstyle \sum}}
+
+\newcommand{\cbox}[2]{{\color{#1}{\fbox{\color{black} #2}}}}
+\newcommand{\clrhl}[2]{{\large\sc\color{#1} #2}}
+\newcommand{\mat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\mathunderline}[1]{\text{\underline{$#1$}}}
+\let\oldboxtimes\boxtimes
+\renewcommand{\boxtimes}{\raisebox{-0.2mm}{$\;\oldboxtimes\;$}}
+\newcommand{\indep}{\perp\!\!\!\!\!\:\perp}
+\newcommand{\startrecap}{
+	\part{Bilan}
+	\setlength{\abovedisplayskip}{0pt}
+	\setlength{\belowdisplayskip}{0pt}
+	\setlength{\abovedisplayshortskip}{0pt}
+	\setlength{\belowdisplayshortskip}{0pt}
+}
+
+
+\definecolor{white}{HTML}{faf4ed}
+\definecolor{black}{HTML}{575279}
+\definecolor{mauve}{HTML}{907aa9}
+\definecolor{blue}{HTML}{286983}
+\definecolor{red}{HTML}{d7827e}
+\definecolor{yellow}{HTML}{ea9d34}
+\definecolor{gray}{HTML}{9893a5}
+\definecolor{grey}{HTML}{9893a5}
+
+\pagecolor{white}
+\color{black}
+
+% code syntax highlighting
+\lstset{ %
+  backgroundcolor=\color{white},    % choose the background color
+  commentstyle=\color{blue},        % comment style
+  keywordstyle=\color{mauve},       % keyword style
+  stringstyle=\color{pink},         % string literal style
+}
+
+
+\begin{asydef}
+	settings.prc = false;
+	settings.render=0;
+
+	white = rgb("faf4ed");
+	black = rgb("575279");
+	blue = rgb("286983");
+	red = rgb("d7827e");
+	yellow = rgb("f6c177");
+	orange = rgb("ea9d34");
+	gray = rgb("9893a5");
+	grey = rgb("9893a5");
+	deepcyan = rgb("56949f");
+	pink = rgb("b4637a");
+	magenta = rgb("eb6f92");
+	green = rgb("a0d971");
+	purple = rgb("907aa9");
+
+	defaultpen(black + fontsize(8pt));
+
+	import three;
+	currentlight = nolight;
+\end{asydef}
+
+\newcommand{\cyr}{
+	\renewcommand\rmdefault{wncyr}
+	\renewcommand\sfdefault{wncyss}
+	\renewcommand\encodingdefault{OT2}
+	\normalfont
+	\selectfont
+}
+
+\DeclareTextFontCommand{\textcyr}{\cyr}
+\newcommand{\cprime}{\char"7E }
+\newcommand{\cdprime}{\char"7F }
+\newcommand{\eoborotnoye}{\char’013}
+\newcommand{\Eoborotnoye}{\char’003}
+
+\newcommand{\Tchebychev}{\hspace{-4.3mm}\mbox{\textcyr{chebysh\"ev}}}
+\newcommand{\Markov}{\hspace{-4mm}\textcyr{Markov}}
+\newcommand{\Gauss}{Gau\ss}
+
+\let\ds\displaystyle
+\let\ts\textstyle
+\newcommand{\tsup}[1]{\textsuperscript{\underline{#1}}}
+\setlength{\parskip}{2mm}
+\newcommand\blue[1]{{\color{blue}#1}}
+\newcommand{\iffdef}{\mathop{\iff}^{\text{def.}}}
+
+\newcommand{\snput}[1]{
+	\begin{center}
+		\Large \texttt{#1}
+	\end{center}
+	\input{#1}
+}

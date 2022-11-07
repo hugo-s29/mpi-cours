@@ -1,0 +1,46 @@
+\section{Exercice 2}
+
+\begin{figure}[H]
+	\centering
+		\begin{circuitikz}
+			\draw (0,0) -- (0,3) to[R=$R$] (3,3) to[american,cute inductors,L=$L$] (6,3) to[C=$C$] (6,0) -- (0,0);
+			\draw[->] (3.5,2.7)--(5.5,2.7);
+			\draw[->] (0.5,2.7)--(2.5,2.7);
+			\draw[<-] (5.4,0.75)--(5.4,2.25);
+			\node at (4.5,2.5) {$u_L$};
+			\node at (1.5,2.5) {$u_R$};
+			\node at (5,1.5) {$u_C$};
+		\end{circuitikz}
+	\caption{Circuit électrique de l'exercice 2}
+\end{figure}
+
+\begin{multicols}{2}
+	\begin{enumerate}
+		\item
+			\begin{align*}
+				u_C &= -u_L - u_R \\
+				&= -L\frac{\mathrm{d}i}{\mathrm{d}t} - Ri \\
+				&= -LC\frac{\mathrm{d}^2u_C}{\mathrm{d}t^2} - RC \frac{\mathrm{d}u_C}{\mathrm{d}t} \\
+				\hbox{i.e.}&\quad \ddot{u}_C + \frac{R}{L} \dot{u}_C + \frac{1}{LC} u_C = 0.
+			\end{align*}
+		\item On a \[
+				\ddot{u}_C + \frac{\omega_0}{Q}\dot{u}_C + \omega_0^2 \dot{u}_C = 0
+			\] d'où \[
+				\omega_0 = \frac{1}{\sqrt{LC}} \qquad\text{et}\qquad Q = \frac{1}{R}\sqrt{\frac{L}{C}}
+			.\]
+			On sait que la solution est de la forme \[
+				u(t) = \mathrm{e}^{rt}\big(A\cos(\Omega t) + B\sin(\Omega t)\big)
+			\] où $r > 0$\/ et $\Omega = \omega_0 \sqrt{1+\frac{1}{4Q^2}}$.
+		\item On a, pour 10 périodes, $10T_\text{p} = 300\cdot 10^{-6}\:\mathrm{s}$. Or, d'après l'approximation des grands facteurs de qualité, on a \[
+			T_0 \cong T_\text{p} = 30\:\mathrm{\mu s}
+		.\] Comme $\omega_0 = \frac{2\pi}{T_0}$, on a $\omega = 2{,}1\times 10^{-5}\:\mathrm{rad}/\mathrm{s}$.
+
+		À l'aide de la méthode de la tangente à l'origine, on obtient $\tau \cong 60\:\mathrm{\mu s}$ et, avec l'approximation des grands facteurs de qualité, on obtient également $Q \cong 8$.
+
+		De ces deux résultats, on en déduit que \[
+			L = \frac{1}{\omega_0^2\,C} \circeq 2{,}3\times 10^{-3}\:\mathrm{H}
+		\] et \[
+			R = \frac{\omega_0\,L}{Q} \circeq 60\:\mathrm{\Omega}
+		.\] 
+	\end{enumerate}
+\end{multicols}

@@ -1,0 +1,213 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+\usepackage{tgschola}
+
+\usepackage{subcaption}
+
+\pagecolor{truewhite}
+\definecolor{black}{HTML}{000000}
+\color{black}
+
+\begin{asydef}
+	settings.prc = false;
+	settings.render=0;
+
+	white = rgb("ffffff");
+	black = rgb("000000");
+	blue = rgb("286983");
+	red = rgb("d7827e");
+	yellow = rgb("f6c177");
+	orange = rgb("ea9d34");
+	gray = rgb("9893a5");
+	grey = rgb("9893a5");
+	deepcyan = rgb("56949f");
+	pink = rgb("b4637a");
+	magenta = rgb("eb6f92");
+	green = rgb("a0d971");
+	purple = rgb("907aa9");
+
+	defaultpen(black + fontsize(8pt));
+
+	import three;
+	currentlight = nolight;
+\end{asydef}
+
+\fancyhead{} \fancyfoot{}
+\fancyfoot[C]{--\:\thepage\:--}
+\fancyhead[L]{Hugo {\sc Salou}, Alan {\sc Le Brech}, Nicolas {\sc Vincent}, {\it MPI}\/$^\star$}
+\fancyhead[R]{DM$_1$ Physique}
+
+\def\thefigure{\Roman{figure}}
+
+\begin{document}
+	\begin{center}
+		\Large\sc Problème n\textsuperscript o\,2 : Étude de circuits
+	\end{center}
+
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\begin{circuitikz}
+				\draw (0,0) to[american, isource, l=$e(t)$] (0,2) to[R=$R_\text{g}$] (0,4) to[short, i=$i$] (1,4) to[american,cute inductors,L=$L$] (3, 4) to[R=$R$,v=$u_R$] (5, 4) to[C=$C$,v=$u_C$] (5, 0) -- (0, 0);
+				\draw[-latex] (1.3,3.65)--(2.7,3.65);
+				\node at (2, 3.5) {$u_L$};
+			\end{circuitikz}
+			\caption{Circuit A}
+		\end{subfigure}%
+		\begin{subfigure}{0.5\textwidth}
+			\centering
+			\begin{circuitikz}
+				\draw (0,0) to[american, isource, l=$e(t)$] (0,2) to[R=$R_\text{g}$] (0,4) to[short, i=$i$] (1,4) to[american,cute inductors,L=$L$] (3, 4) to[C=$C$] (5, 4) -- (5, 3.5) -- (4.5, 3.5) to[R=$R$] (4.5, 0.5) -- (5, 0.5) -- (5, 0) -- (0,0);
+				\draw (5,3.5)--(5.5,3.5) to[R=$R$] (5.5, 0.5) -- (5, 0.5);
+			\end{circuitikz}
+			\caption{Circuit B}
+		\end{subfigure}
+		\caption{Les circuits A et B comme décrit dans l'énoncé}
+	\end{figure}
+
+	\begin{multicols}{2}
+		\noindent {\large\bf Question 1}\quad\hrule
+
+		Comme le signal, dans les deux circuits, est sinusoïdal, on détermine la fonction de transfert de chacun des circuit.
+		Dans le circuit~A, on réalise un pont diviseur de tension pour~$u_R$, et on a donc
+		\begin{align*}
+			\ubar{H}_{\text{A},R}(\mathrm{j}\omega) &= \frac{R}{R + R_\text{g} + \frac{1}{\mathrm{j}C\omega} + \mathrm{j}L\omega}\\
+			&= \frac{\mathrm{j}RC\omega}{1 + \mathrm{j}C\omega(R + R_\text{g}) - LC\omega^2}.
+		\end{align*}
+		On peut donc déterminer une expression du facteur de qualité~$Q_{\text{A},R}$\/ et de la pulsation propre~$\omega_{0,\text{A},R}$\/ : \[
+			\omega_{0,\text{A}} = \frac{1}{\sqrt{LC}}
+		\] et \[
+			Q_{\text{A}} = \frac{1}{R + R_\text{g}} \sqrt{\frac{L}{C}}
+		.\]
+
+		On s'intéresse à présent au circuit~B.
+		La resistance équivalente aux deux résistances en parallèle est~$\sfrac{R}{2}$.
+		De même, à l'aide d'un pont diviseur de tension, on a
+		\begin{align*}
+			\ubar{H}_{\text{B},R_\text{éq}}(\mathrm{j}\omega) &= \frac{\frac{R}{2}}{\frac{R}{2} + R_\text{g} + \frac{1}{\mathrm{j}C\omega} + \mathrm{j}L\omega}\\
+			&= \frac{\frac{1}{2}\mathrm{j}RC\omega}{1 + \mathrm{j}C\omega\left( \frac{R}{2} + R_\text{g} \right) - LC\omega^2} \\
+		\end{align*}
+		D'où \[
+			\omega_{0,\text{B}} = \frac{1}{\sqrt{LC}}\quad\text{et}\quad
+			Q_{\text{B}} = \frac{1}{\frac{R}{2}+R_\text{g}} \sqrt{\frac{L}{C}}
+		.\]
+
+		Comme l'expression de $\omega_{0,\text{A}}$\/ et celle de $\omega_{0,\text{B}}$\/ est identique, pour la suite de l'exercice, on note~$\omega_0$\/ cette pulsation propre.
+
+		Des deux fonctions de transfert précédentes, on en déduit les gains $G_{\text{A},R}$\/ et $G_{\text{B},R}$\/ : pour les circuits~A et~B,\[
+			G_{R} = \frac{1}{\sqrt{1 + Q^2\left( \dfrac{\omega}{\omega_0} - \dfrac{\omega_0}{\omega} \right)^2}}
+		.\] Comme $Q_\text{B} > Q_\text{A}$, on en déduit $G_{\text{B},R} < G_{\text{A},R}$. La courbe bleue correspond donc à une mesure de la tension aux bornes de la résistance du circuit~A, et la verte à la résistance du circuit~B.
+		\bigskip
+
+		En basse fréquence, la tension aux bornes d'une bobine est nulle. Comme ce n'est pas le cas des courbes de la figure~2, on en déduit qu'il s'agit de condensateurs.
+
+		À présent, on détermine les fonctions de transfert aux bornes du condensateur à l'aide d'un pont diviseur de tension :
+		\begin{align*}
+			\ubar{H}_{\text{A},C}(\mathrm{j}\omega) &= \frac{\frac{1}{\mathrm{j}C\omega}}{R + R_\text{g} + \frac{1}{\mathrm{j}C\omega} + \mathrm{j}L\omega}\\
+			&= \frac{1}{1 + \mathrm{j}C\omega(R + R_\text{g}) - LC\omega^2} \\
+		\end{align*}
+		et, de même \[
+			\ubar{H}_{\text{B},C} = \frac{1}{1+\mathrm{j}C\omega\left( \frac{R}{2} + R_\text{g} \right) - LC\omega^2}
+		.\]
+		On en déduit l'expression du gain $G_{\text{A},C}$\/ et $G_{\text{B},C}$\/ : \[
+			G_C = \frac{1}{\sqrt{\left( 1 - \left( \frac{\omega}{\omega_0} \right)^2 \right)^2 + \left( \frac{\omega}{Q\omega_0} \right)^2}}
+		.\]
+		On remarque que, comme $Q_\text{B} > Q_\text{A}$, $G_{\text{A},C} > G_{\text{B},C}$. Dans la figure~2, la courbe bleue correspond donc au circuit~B et la verte au circuit~A.
+
+		\bigskip
+		\noindent {\large\bf Question 2}\hrule
+
+		En basse fréquence, dans le circuit~A, on a~$E = u_L + u_R + u_C$, or,~$u_L$\/ et~$u_R$\/ sont nulles. On en déduit~$E = u_L$\/ en basse fréquence. D'où $E = 15\:\mathrm{V}$.
+
+		À l'aide d'une mesure sur le graphique, on détermine la bande passante des circuits~A ($\mathrm{\Delta}\omega_\text{A}$) et~B ($\mathrm{\Delta}\omega_\text{B}$) sur la figure~1. On a $\smash{\sfrac{u_{\text{A},R,\max}}{\sqrt{2}}} = \smash{5\sqrt{2}\:\mathrm{V}} \cong 7{,}1\:\mathrm{V}$. D'où $\mathrm{\Delta}\omega_{\text{A}} \cong 250\:\mathrm{Hz}$.
+		De même, avec le graphe du circuit~B : \[
+			\frac{u_{\text{B},R,\max}}{\sqrt{2}} \cong 5{,}3\:\mathrm{V}\quad\text{d'où}\quad \mathrm{\Delta}\omega_\text{B} = 150\:\mathrm{Hz}
+		.\] Les mesures de bande passante sont représentées sur la figure II.
+	\end{multicols}
+	\begin{figure}[H]
+		\centering
+		\scalebox{0.7}{\incfig{diag1}}
+		\caption{Mesure de $\mathrm{\Delta}\omega_\text{A}$, $\mathrm{\Delta}\omega_\text{B}$\/ et $\omega_0$}
+	\end{figure}
+	\begin{multicols}{2}
+		Or, on sait que~$\mathrm{\Delta}\omega_\text{A} = \sfrac{\omega_0}{Q_\text{A}}$\/ et~$\mathrm{\Delta}\omega_\text{B} = \sfrac{\omega_0}{Q_\text{B}}$.
+		Après lecture graphique, comme montré sur la figure~II, on a~$\omega_0 \cong 160\:\mathrm{Hz}$.
+		On en déduit donc la valeur de $Q_\text{A}$\/ et $Q_\text{B}$\/ : \[
+			Q_\text{A} = \frac{\omega_0}{\mathrm{\Delta}\omega_\text{A}} \cong 0{,}64\qquad\text{et}\qquad Q_\text{B} \cong 1{,}07
+		.\]
+
+		Nous pouvons désormais déterminer $R_\text{g}$, $R$, $C$, et $L$.
+		On sait que $C = \sfrac{1}{L\omega_0^2}$, d'où \[
+			Q_\text{A} = \frac{1}{R + R_\text{g}} \sqrt{\frac{L}{C}} = \frac{L\omega_0}{R + R_\text{g}},
+		\] d'où $L = \frac{1}{\omega_0}Q_\text{A}(R+R_\text{g})$, et, de même, $L = \frac{1}{\omega_0}\*Q_\text{B}\*\left( \frac{R}{2} + R_\text{g} \right)$.
+		Donc $Q_\text{A}\*(R + R_\text{g}) = Q_\text{B}\*\left( \frac{R}{2} + R_\text{g} \right)$. D'où  \[
+			R = \frac{Q_\text{B} - Q_\text{A}}{Q_\text{A} - \frac{1}{2}Q_\text{B}} \cdot R_\text{g}
+		.\]
+		On déduit également que $C = \sfrac{1}{\omega_0Q_\text{A} (R + R_\text{g})}$.
+		On utilise la valeur mesurée sur le graphe. On sait que le gain $G_{\text{A},C}$\/ s'écrit de la forme \[
+			G_{\text{A},C} = \dfrac{1}{\sqrt{\left( 1 - \left( \dfrac{\omega}{\omega_0} \right)^2 \right)^2 + \left( \dfrac{\omega}{Q_\text{A}\omega_0} \right)^2}}.
+		\]
+
+		\smallskip
+
+		Nous n'avons pas réussi à déterminer les valeurs numériques de $R$, $R_\text{g}$, $C$\/ et $L$. Nous avons trouvés 3 équations pour 4 inconnues.
+		Les expressions de $R$, $L$\/ et $C$\/ sont toutes en fonction de $R_\text{g}$\/ et des constantes $\omega_0$, $Q_\text{A}$, $Q_\text{B}$\/ : 
+		\begin{gather*}
+			\boxed{R = \frac{Q_\text{B} - Q_\text{A}}{Q_\text{A} - \frac{1}{2}Q_\text{B}} \cdot R_\text{g}}\ ;\\
+			\boxed{C = \frac{1}{\omega_0 Q_\text{A} (R + R_\text{g})}}\ ;\\
+			\boxed{L = \frac{1}{\omega_0}Q_\text{A} (R + R_\text{g}).}
+		\end{gather*}
+
+		\bigskip
+		\noindent {\large\bf Question 3}\hrule
+
+		Afin de réaliser un filtre passe-haut, on utilise la tension aux bornes de la bobine comme tension de sortie. En effet, la fonction de transfert s'écrit de la façon suivante : 
+		\begin{align*}
+			\ubar{H}_{\text{A},L}(\mathrm{j}\omega) &= \frac{\mathrm{j}L\omega}{R + R_\text{g} + \frac{1}{\mathrm{j}C\omega} + \mathrm{j}L\omega}\\
+			&= \frac{-LC\omega^2}{1 + \mathrm{j}C\omega(R + R_\text{g}) - LC\omega^2} \\
+		\end{align*}
+		et on recoonnaît la forme d'un filtre passe-haut d'ordre 2. On représente son diagramme de {\sc Bode}\/ sur la figure~III.
+	\end{multicols}
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			import graph;
+			size(10cm);
+			draw((-1,0)--(10,0), Arrow(TeXHead));
+			draw((0,-5)--(0,1), Arrow(TeXHead));
+			label("$\omega$", (10,0), align=E);
+			real w0 = 5;
+			real G(real x) {
+				if(x < 5) {
+					return (x-5)*0.8;
+				} else {
+					return 0;
+				}
+			}
+			bool3 gcheck(real x) { return G(x) > -5; }
+			draw(graph(G,0,10,500,gcheck), magenta);
+			label("$\omega_0$", (5,0), align=2*N);
+			draw((5,-0.1)--(5,0.1));
+			label("$G_\text{dB}$", (0,1), magenta, align=NE);
+		\end{asy}
+
+		\bigskip
+
+		\begin{asy}
+			import graph;
+			size(10cm);
+			draw((-1,0)--(10,0), Arrow(TeXHead));
+			draw((0,-1)--(0,5), Arrow(TeXHead));
+			label("$\omega$", (10,0), align=E);
+			draw((0,4)--(5,4)--(5,0)--(10,0), deepcyan);
+			label("$\omega_0$", (5,0), align=2*S);
+			draw((5,-0.1)--(5,0.1));
+			draw((-0.1,4)--(0.1,4));
+			label("$\varphi$", (0,5), deepcyan, align=NE);
+			label("$\ds\frac\pi2$", (0,4), align=W);
+		\end{asy}
+		\caption{Forme du diagramme de {\sc Bode}\/ du filtre passe-haut décrit dans la question 3, en gain $G_\text{dB}$\/ et en phase $\varphi$}
+	\end{figure}
+\end{document}

@@ -1,0 +1,19 @@
+\section{Exercice supplémentaire 1}
+
+\slshape
+\begin{enumerate}
+	\item Montrer que l'ensemble des langages reconnaissables est stable par complémentaire.
+	\item Montrer que l'ensemble des langages reconnaissables est stable par intersection.
+\end{enumerate}
+\upshape
+
+\begin{enumerate}
+	\item Soient $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ et $\mathcal{A}' = (\Sigma, \mathcal{Q}', I', F', \delta')$\/ deux automates déterministes complets, tels que $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{A}')$. Alors \[
+		\mathcal{L}\big(\Sigma, \mathcal{Q}', I', \mathcal{Q}'\setminus F', \delta')\big) = \Sigma^* \setminus \mathcal{L}(\mathcal{A})
+	.\]
+	\item On utilise les lois de {\sc De Morgan}\/ en passant au complémentaire les deux automates, puis l'union (que l'on a vu en cours), et on repasse au complémentaire.
+\end{enumerate}
+
+
+
+

@@ -1,0 +1,79 @@
+\section{Ensembles définis inductivement}
+
+La correction est disponible sur \textit{cahier-de-prepa}.
+
+\begin{comment}
+	\begin{exm}
+		Avec $S = \N$, $\mathcal{B} = \{0, 2\} $, $A_1 = \{0\}$\/ et \begin{align*}
+			f_1: A_1 \times \N &\longrightarrow \N \\
+			(0, x) &\longmapsto x + 4.
+		\end{align*}
+
+		On a \[
+			X \supseteq \{0, 2, 4, 6, 8, 10, \ldots, 20, \ldots\} = 2\N
+		.\]
+	\end{exm}
+	\begin{exm}
+		Avec $S$\/ l'ensemble des langages sur $\Sigma$, $\mathcal{B} = \{\O\} \cup \bigl\{\{a\}\:\big|\: a \in \Sigma \bigr\}$, et
+		\begin{multicols}{3}
+			\begin{align*}
+				f_1: S \times S &\longrightarrow S \\
+				(L_1, L_2) &\longmapsto L_1 \cup L_2,
+			\end{align*}
+			\begin{align*}
+				f_2: S \times S &\longrightarrow S \\
+				(L_1, L_2) &\longmapsto L_1 \cdot L_2,
+			\end{align*}
+			\begin{align*}
+				f_3: S &\longrightarrow S \\
+				L &\longmapsto L^*.
+			\end{align*}
+		\end{multicols}
+	\end{exm}
+
+\begin{enumerate}
+	\item Soit $\mathcal{A} = \{X \subseteq S  \mid X \supseteq \mathcal{B} \mathrel{\text{et}} X \text{ est stable par } f_i\}$. On a $S \in \mathcal{A}$\/ et donc $\mathcal{A} \neq \O$. De plus, soit \[
+			Y = \{x \in S  \mid \forall X \in \mathcal{A},\,x \in X\} = \bigcap_{X \in \mathcal{A}} X
+		.\]
+		Soit $b \in \mathcal{B}$, on a $\forall X \in A,\, b \in X$. D'où $b \in Y$\/ par intersection. On en déduit que $\mathcal{B} \subseteq Y$.
+
+		Soit $i \in \left\llbracket 1,m \right\rrbracket$. Soit $(x_1, \ldots, x_{n_i}) \in Y^{n_i}$\/ et soit $a \in A_i$. Montrons que $f_i(a, x_1, \ldots, x_{n_i}) \in Y$.
+		Or, soit $X \in \mathcal{A}$, on a $(x_1, \ldots, x_{n_i}) \in X^{n_i}$\/ donc $f_i(a, x_1, \ldots, x_{n_i}) \in X$. Ceci étant vrai pour tout $X \in \mathcal{A}$, on a $f_i(a, x_1, \ldots, x_{n_i}) \in Y$\/ donc $Y$\/ est stable par $f_i$\/ par tout $i \in \left\llbracket 1,m \right\rrbracket$\/ et donc $Y \in \mathcal{A}$.
+		On a également $Y \subseteq X$\/ pour tout $X \in \mathcal{A}$. On en déduit que $Y$\/ est le plus petit élément (pour l'inclusion) de $\mathcal{A}$.
+	\item On pose $X_0  = \mathcal{B}$\/ et \[
+			X_{n+1} = X_n \cup \big\{ f_i(a, x_1, \ldots, x_{n_i})  \mid a \in A_i,\,(x_1, \ldots, x_{n_i}) \in (X_n)^{n_i},\,i \in \left\llbracket 1,m \right\rrbracket\big\}
+		.\]
+		Soit $X = \bigcup_{n \in \N} X_n$. Soit $Y$\/ l'ensemble défini par induction à partir de $\mathcal{B}$\/ et des $(f_i)_{i\in\left\llbracket 1,n \right\rrbracket}$. Montrons que $X = Y$.
+		On montre que $X$\/ est le plus petit élément (pour l'inclusion) de $\mathcal{A}$\/ et on conclut par unicité du minimum (avec la question précédente).
+		Par définition de la suite $(X_n)_{n\in\N}$, elle est croissante (au sens de l'inclusion).
+		Montrons à présent, par récurrence, la propriété ci-dessous : $P_n : ``X_n \subseteq Y."$
+		\begin{itemize}
+			\item Par définition de $Y$, on a $X_0 = \mathcal{B} \subseteq Y$.
+			\item Soit 
+		\end{itemize}
+\end{enumerate}
+
+\subsection{Un théorème d'induction}
+
+\begin{enumerate}
+	\item[3.] Soit $Z = \{x \in S  \mid P(x) \text{ vraie}\:\}$.
+		Montrons que $\mathcal{X}\subseteq Z$.
+		On remarque que $\mathcal{X} \supseteq \mathcal{B}$\/ ; $\mathcal{X}$\/ est stable par $f_i$. On en conclut que $Z \supseteq \mathcal{X}$ et donc $\forall x \in \mathcal{X},\,P(x)$\/ est vraie.
+\end{enumerate}
+
+\begin{exm}
+	Soit $\mathcal{X}$\/ défini par induction par $\mathcal{B} = \{0, 2\}$\/ et \begin{align*}
+		f: \N &\longrightarrow \N \\
+		n &\longmapsto n + 2.
+	\end{align*}
+	Montrons que $\forall n \in \mathcal{X}$, $x$\/ est pair.
+
+	On sait que $0$\/ est pair, $2$\/ est pair ; et, \[
+		\forall x,y \in \mathcal{X},\, (x \text{ pair} \land y \text{ pair}) \implies f(x, y) \text{ pair}
+	.\]
+
+	On en déduit que \[
+		\forall n \in \mathcal{X},\,x \text{ est pair}.
+	.\]
+\end{exm}
+\end{comment}

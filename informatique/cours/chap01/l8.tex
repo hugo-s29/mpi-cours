@@ -1,0 +1,183 @@
+\subsection{Algorithme de {\scshape Berry-Sethi}\/ : les langages réguliers sont reconnaissables}
+
+\begin{exm}
+	On considère l'expression régulière $aab(a \mid b)^*$. On numérote les lettres : $a_1a_2b_1(a_3 \mid b_2)^*$, avec  \[
+		\varphi : \left(
+			\begin{array}{ccc}
+				a_1&\mapsto&a\\
+				a_2&\mapsto&a\\
+				a_3&\mapsto&a\\
+				b_1&\mapsto&b\\
+				b_2&\mapsto&b\\
+			\end{array}
+		\right)
+	.\]
+
+	\begin{table}[H]
+		\centering
+		\[
+			\begin{array}{c|c|c|c|c}
+				&\Lambda&S&P&F\\\hline
+				a_1&\O&a_1&a_1&\O\\
+				a_2&\O&a_2&a_2&\O\\
+				a_1\cdot a_2&\O&a_2&a_1&a_1a_2\\
+				b_1&\O&b_1&b_1&\O\\
+				a_1a_2b_1&\O&b_1&a_1&a_1a_2,a_2b_1\\
+				a_3&\O&a_3&a_3&\O\\
+				b_2&\O&b_2&b_2&\O\\
+				a_3 \mid b_2&\O&a_3,b_2&a_3,b_2&\O\\
+				(a_3 \mid b_2)^*&\varepsilon&a_3,b_2&a_3,b_2&a_3b_2,b_2a_3,a_3a_3,b_2b_2\\
+				a_1a_2b_1(a_3 \mid b_2)^*&\O&a_3,b_2ab_1&a_1&a_3b_2,b_2a_3,a_3a_3,b_2b_2,a_1a_2,a_2b_1,b_1a_3,b_1b_2
+			\end{array}
+		\]
+		\caption{$\Lambda$, $S$, $P$\/ et $F$\/ pour les différents mots reconnus}
+		\label{tab:l,s,p,f}
+	\end{table}
+	On crée donc l'automate ci-dessous.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-numerote}
+		\caption{Automate déduit de la table \ref{tab:l,s,p,f}}
+		\label{aut:num}
+	\end{figure}
+	On applique la fonction $\varphi$\/ a tous les états et transitions pour obtenir l'automate ci-dessous. Cet algorithme reconnaît le langage $aab(a \mid b)^*$.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-non-numerote}
+		\caption{Application de $\varphi$\/ à l'automate de la figure \ref{aut:num}}
+	\end{figure}
+\end{exm}
+
+\begin{thm}
+	Tout langage régulier est reconnaissable.
+	De plus, on a un algorithme qui calcule un automate le reconnaissant, à partir de sa représentation sous forme d'expression régulière.
+\end{thm}
+
+\begin{algo}[\scshape Berry-Sethi]
+	Entrée : Une expression régulière $e$\/ \\
+	Sortie : Un automate reconnaissant $\mathcal{L}(e)$\/ \\
+	\begin{enumerate}
+		\item On linéarise $e$\/ en $f$\/ avec une fonction $\varphi$\/ telle que $f_\varphi = e$.
+		\item On calcule inductivement $\Lambda(f)$, $S(f)$, $P(f)$, et $F(f)$.
+		\item On fabrique $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ un automate reconnaissant $\mathcal{L}(f)$.
+		\item On retourne $\mathcal{A}_\varphi$.
+	\end{enumerate}
+	\todo{refaire la mise en page pour les algorithmes}
+\end{algo}
+
+\subsection{Les langages reconnaissables sont réguliers}
+
+On fait le \guillemotleft~sens inverse~\guillemotright\ : à partir d'un automate, comment en déduire le langage reconnu par cet automate ?
+
+L'idée est de supprimer les états un à un.
+Premièrement, on rassemble les états initiaux en les reliant à un état {\raisebox{-5pt}{\tikz\node [style=new style 0] at (0, 0) {\clap{$i$}};}}, et de même, on relie les états finaux à {\raisebox{-5pt}{\tikz\node [style=new style 0] at (0, 0) {\clap{$f$}};}}.
+Pour une suite d'états, on concatène les lettres reconnus sur chaque transition :
+\begin{figure}[H]
+	\centering
+	\tikzfig{automate-succession}
+	\caption{Succession d'états}
+\end{figure}
+De même, lors de \guillemotleft~branches~\guillemotright\ en parallèles, on les concatène avec un $ \mid $.
+En appliquant cet algorithme à l'automate précédent, on a \[
+	(aab)  \cdot \Big((\varepsilon \mid aa^*)  \mid (b \mid aa^*b)\cdot (b \mid aa^*b)^* (aa^* \mid \varepsilon)\Big)
+.\]
+
+\begin{defn}
+	Un automate généralisé est un quintuplet $(\Sigma, \mathcal{Q}, I, F, \delta)$\/ où
+	\begin{itemize}
+		\item $\Sigma$\/ est un alphabet ;
+		\item $\mathcal{Q}$\/ est un ensemble fini ;
+		\item $I \subseteq  \mathcal{Q}$\/ ;
+		\item $F \subseteq \mathcal{Q}$\/ ;
+		\item $\delta \subseteq \mathcal{Q} \times \Reg(\Sigma) \times \mathcal{Q}$, avec \[
+			\forall r \in \Reg(\Sigma),\:\forall (q,q') \in \mathcal{Q}^2,\:\Card(\{(q,r,q') \in \delta\}) \le 1
+		.\]
+	\end{itemize}
+\end{defn}
+
+\begin{defn}[Langage reconnu par un automate généralisé]
+	Soit $(\Sigma, \mathcal{Q}, I, F, \delta)$\/ un automate généralisé.
+	On dit qu'un mot $w$\/ est reconnu par l'automate s'il existe une suite \[
+		q_0 \xrightarrow{r_1} q_1 \xrightarrow{r_2} q_2 \to \cdots \to q_{n-1}\xrightarrow{r_n} q_n
+	\] et $(u_i)_{i \in \left\llbracket 1,n \right\rrbracket}$\/ tels que $\forall i \in \left\llbracket 1,n \right\rrbracket$, $u_i \in \mathcal{L}(r_i)$\/ et $w = u_1 \cdot u_2 \cdot \ldots \cdot u_n$.
+\end{defn}
+
+\begin{defn}
+	Un automate généralisé $(\Sigma, \mathcal{Q}, I, F, \delta)$\/ est dit \guillemotleft~bien détouré\footnotemark~\guillemotright\ si $I = \{i\}$ et $F = \{f\}$, avec $i \neq f$, tels que $i$\/ n'a pas de transitions entrantes et $f$\/ n'a pas de transitions sortantes.
+\end{defn}
+\footnotetext{Cette notation n'est pas officielle.}
+
+\begin{lem}
+	Tout automate généralisé est équivalent à un automate généralisé \guillemotleft~bien détouré.~\guillemotright\@ En effet, soit $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ un automate généralisé.
+	Soit $i \not\in \mathcal{Q}$\/ et $f \not\in \mathcal{Q}$.
+	On pose $\Sigma' = \Sigma$, $I' = \{i\}$, $F' = \{f\}$, $\mathcal{Q}' = \mathcal{Q} \cupdot \{i,f\}$\/ et \[
+		\delta' = \delta \cupdot \{(i,\varepsilon,q)  \mid q \in I\} \cupdot \{(q,\varepsilon,f)  \mid q \in F\}
+	.\] Alors, l'automate $\mathcal{A}' = (\Sigma', \mathcal{Q}', I', F', \delta')$\/ est équivalent à $\mathcal{A}$\/ et \guillemotleft~bien détouré.~\guillemotright
+\end{lem}
+
+\begin{lem}
+	Soit $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ un automate généralisé \guillemotleft~bien détouré~\guillemotright\ tel que $|\mathcal{Q}| \ge 3$. Alors il existe un automate généralisé \guillemotleft~bien détouré~\guillemotright\ $\mathcal{A}'  =(\Sigma, \mathcal{Q}', I, F, \delta')$\/ avec $\mathcal{Q}' \subsetneq \mathcal{Q}$\/ et $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{A}')$.
+\end{lem}
+
+\begin{prv}
+	Étant donné qu'il existe au plus une transition entre chaque pair d'état $(q, q') \in \mathcal{Q}^2$, il est possible de le représenter au moyen d'une fonction de transition \[
+		T : \mathcal{Q} \times \mathcal{Q} \longrightarrow \Reg(\Sigma)
+	.\]
+	\todo{Recopier la def de $T$}
+	Soit $q \in \mathcal{Q} \setminus \{i,f\}$. Soit alors $T'$\/ défini, pour $(q_a, q_b) \in \mathcal{Q} \setminus \{q\}$, par \[
+		T'(q_a, q_b) = T(q_a, q_b)  \mid T(q_a, q) \cdot T(q,q)^* \cdot T(q,q_b)
+	.\] On considère l'automate $\mathcal{Q}' = \mathcal{Q} \setminus \{q\}$\/ et $\delta'$\/ construit à partir de $T'$.
+\end{prv}
+
+\begin{exm}
+	On considère l'automate ci-dessous.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-11}
+		\caption{Automate exemple}
+		\label{aut:a11}
+	\end{figure}
+	La fonction $T$\/ peut être représentée dans la table ci-dessous.
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c|ccc}
+			&0&1&2\\\hline
+			0&$\O$&$a \mid b$&$\varepsilon$ \\
+			1&$\O$\/ &$\O$\/ &$\O$\/ \\
+			2&$\O$\/ &$\O$\/ &$a^*$\/\\
+		\end{tabular}
+		\caption{Fonction $T$\/ équivalente à l'automate de la figure \ref{aut:a11}}
+	\end{table}
+\end{exm}
+
+\begin{exm}
+	On applique l'algorithme à l'automate suivant.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-12}
+		\tikzfig{automate-12b}
+		\tikzfig{automate-12c}
+		\tikzfig{automate-12d}
+		\tikzfig{automate-12e}
+		\tikzfig{automate-12f}
+		\caption{Application de l'algorithme à un exemple}
+	\end{figure}
+	On a donc que le langage de l'automate initial est \[
+		\mathcal{L}(d^* (aa) \mid (ac \mid b)(cc)^*(b \mid ca)(d \mid e)^*)
+	.\]
+\end{exm}
+
+\begin{thm}
+	Un langage reconnaissable est régulier.
+\end{thm}
+
+\begin{prv}
+	On itère le lemme précédent depuis un automate généralisé $\mathcal{A}$\/ jusqu'à obtention d'un automate comme celui ci-dessous.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{automate-13}
+		\caption{Automate résultat de l'application du lemme}
+	\end{figure}
+	On a alors $\mathcal{L}(\mathcal{A}) = \mathcal{L}(r)$.
+\end{prv}
+

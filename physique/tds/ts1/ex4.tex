@@ -1,0 +1,53 @@
+\section{Exercice 4}
+
+\begin{multicols}{2}
+	On a \[
+		\ubar{Z}_1 = r + \mathrm{j} L \omega \quad\text{et}\quad \ubar{Z}_2 = \frac{1}{\frac{1}{R} + \mathrm{j}C\omega}
+	.\]
+	\begin{enumerate}
+		\item On a
+			\begin{gather*}
+				\ubar{U}_{\text{\it AB}} = \ubar{U}_{\ubar{Z}_1} + \ubar{U}_{R_1}\\
+				\ubar{U}_{\ubar{Z}_1} = \frac{\ubar{Z}_1}{R_2 + \ubar{Z}_1} \ubar{e}\\
+				\ubar{U}_{R_1} = \frac{R_1}{R_1 + \ubar{Z}_2}.
+			\end{gather*}
+			D'où, \[
+				\ubar{U}_{\text{\it AB}} = \left( \frac{\ubar{Z}_1}{R_2 + \ubar{Z}_1} - \frac{R_1}{R_1 + \ubar{Z}_2} \right) \ubar{e}
+			.\]
+		\item Comme la résistance du voltmètre est infinie, on a $\ubar{U}_{\text{\it AB}} = 0$\/ et donc,
+			\begin{align*}
+				\frac{\ubar{Z}_1}{R_2 + \ubar{Z}_1} = \frac{R_1}{R_1 + \ubar{Z}_2} \implies& \ubar{Z}_1 (1 + \ubar{Z}_2) = R_1(R_2 + \ubar{Z}_1)\\
+				\implies& \color{red}\boxed{\color{black}\ubar{Z}_1\,\ubar{Z}_2 = R_1\,R_2}\\
+				&\color{red}\text{Équilibre du Pont de Mesure}\\
+				\implies& \ubar{Z}_1 = \frac{R_1\,R_2}{\ubar{Z}_2}.
+			\end{align*}
+
+			On en déduit que \[
+				r + \mathrm{j}L\omega = \frac{R_1\,R_2}{R}(1+\mathrm{j}RC\omega)
+			\] et donc \[
+				\begin{cases}
+					r = \frac{R_1\,R_2}{R}\\
+					L = R_1\,R_2\,C.
+				\end{cases}
+			\] 
+	\end{enumerate}
+\end{multicols}
+
+\begin{figure}[H]
+	\centering
+	\begin{circuitikz}
+		\draw (0,-1) -- (2,-1) to[R=$R_2$,-*] (2, 2) to[R=$r$] (2, 4.5) to[american,cute inductors,L=$L$] (2,5.5) -- (2,6) -- (4, 6) to[R=$R_1$,-*] (4,2) to[rmeter, t={\bf V}] (2,2);
+		\draw (0,-1) to[american, isource, l=$e(t)$] (0,6) -- (2, 6);
+		\draw (4,2) -- (4, 1.3) -- (3.2, 1.3) to[vR=$\!\!\!\!\!R$] (3.2, -0.5) -- (4, -0.5) -- (4, -1) -- (2, -1);
+		\draw (4, 1.3) -- (4.8, 1.3) to[vC=$\!\!C$] (4.8, -0.5) -- (4, -0.5);
+		\draw[pink, thick] (2.5, 1.5) rectangle (5.5, -0.75);
+		\draw[cyan, thick] (1, 5.7) rectangle (3, 2.5);
+		\node[pink] at (5.8, 1.5) {$\ubar{Z}_2$};
+		\node[cyan] at (0.8, 5.7) {$\ubar{Z}_1$};
+		\node at (4.3,2) {$A$};
+		\node at (1.7,2) {$B$};
+	\end{circuitikz}
+	\caption{Circuit électrique de l'exercice 4}
+\end{figure}
+
+

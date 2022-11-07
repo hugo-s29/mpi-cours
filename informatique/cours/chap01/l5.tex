@@ -1,0 +1,145 @@
+\begin{prop}
+	Soit $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ un automate avec $\varepsilon$-transitions. Soit $q_r \in \mathcal{Q}$\/ un état de l'automate.
+	Alors, l'automate $\mathcal{A}' = (\Sigma',\mathcal{Q}',I',F',\delta')$\/ défini par $\Sigma' = \Sigma$, $\mathcal{Q}' = \mathcal{Q}$, $I' = I$, \[
+		F' = F \cup \begin{cases}
+			\big\{q \in \mathcal{Q}\:\big|\:(q,\varepsilon,q_r) \in \delta\big\}\quad &\text{si } q_r \in F\\
+			\O\quad&\text{sinon},
+		\end{cases}
+	\]
+	\begin{align*}
+		\delta' &= (\delta \setminus \{(q,\varepsilon, q_r) \in \delta  \mid q \in \mathcal{Q}\})\\
+		&\mathrel{\phantom=} \cup\:\{(q,a,q')  \mid  (q, \varepsilon, q_r) \in \delta \mathop{\text{et}} (q_r, a, q') \in \delta \mathop{\text{et}} a \in \Sigma\} \\
+		&\mathrel{\phantom=} \cup\:\{(q,\varepsilon,q')  \mid (q,\varepsilon,q_r) \in \delta\mathrel{\text{et}} (q_r, \varepsilon, q') \in \delta \mathrel{\text{et}} q_r \neq q' \in \mathcal{Q}\}, \\
+	\end{align*}
+	est tel que
+	\begin{itemize}
+		\item il n'y a pas d'$\varepsilon$-transitions entrant en $q_r$\/ ;
+		\item $\mathcal{L}(\mathcal{A}') = \mathcal{L}(\mathcal{A})$\/ ;
+		\item si $q \in \mathcal{Q}$\/ n'a pas d'$\varepsilon$-transition entrante dans $\mathcal{A}$, il n'en a pas dans $\mathcal{A}'$.
+	\end{itemize}
+\end{prop}
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree un automate $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ 
+		\Sortie un automate équivalent à $\mathcal{A}$\/ sans $\varepsilon$-transitions
+		\State $\delta' \gets \delta$\/
+		\State $F' \gets F$\/
+		\State $\mathcal{Q}' \gets \mathcal{Q}$\/
+		\While{il existe $q \in \mathcal{Q}'$\/ avec une $\varepsilon$-transition entrante dans $\delta'$}
+		\State $(\Sigma', \mathcal{Q}', I', F', \delta') \gets \text{résultat de la proposition précédente avec } q_R = q$\/ 
+		\EndWhile
+		\State\Return $(\Sigma', \mathcal{Q}', I', F', \delta')$\/
+	\end{algorithmic}
+	\caption{Suppression des $\varepsilon$-transitions}
+\end{algorithm}
+
+On a donc démontré que tout langage régulier peut être reconnu par un automate.
+
+\begin{exm}
+	On veut, par exemple, reconnaître le langage $(a\cdot b)^* \cdot (a \mid b)$.
+	\todo{Faire les automates}
+\end{exm}
+
+\section{Théorème de {\scshape Kleene}}
+On s'intéresse à un autre ensemble de langages, les {\it langages locaux}.
+\subsection{Langages locaux}
+\subsubsection{Définitions, propriétés}
+
+\begin{defn}[lettre préfixe, lettre suffixe, facteur de taille 2, non facteur]
+	Soit $L$\/ un langage. On note l'ensemble $P(L)$\/ des lettres préfixes défini comme
+	\begin{align*}
+		P(L) &= \{\ell \in \Sigma  \mid  \exists w \in \ell,\,\exists v \in \Sigma^* , w = \ell\cdot v\}\\
+		&= \{\ell \in \Sigma,\: \{\ell\} \cdot \Sigma^* \cap L = \O\}. \\
+	\end{align*}
+	On note l'ensemble $S(L)$\/ des lettres suffixes défini comme \[
+		S(L) = \{w_{|w|} \mid w \in L\} = \{\ell \in \Sigma  \mid  \Sigma^* \cdot \{\ell\}\cap L \neq \O\}
+	.\]
+	On note l'ensemble $F(L)$\/ des facteurs de taille 2 défini comme \[
+		F(L) = \{\ell_1\cdot \ell_2 \in \Sigma^2 \mid \Sigma^* \cdot \{\ell_1,\ell_2\} \cdot \Sigma^* \cap L \neq \O\}
+	.\]
+	On note l'ensemble $N(L)$\/ des non-facteurs défini comme \[
+		N(L) = \Sigma^2 \setminus F(L)
+	.\]
+	On défini également l'ensemble \[
+		\Lambda(L) = L \cap \{\varepsilon\}
+	.\]
+\end{defn}
+
+\begin{defn}
+	Soit $L$\/ un langage. On définit le langage local engendré par $L$\/ comme étant \[
+		\rho(L) =\Lambda(L) \cup \Big(P(L) \cdot \Sigma^* \cap \Sigma^* \cdot S(L)\Big)\setminus \Sigma^* N(L) \Sigma^*
+	.\]
+\end{defn}
+
+\begin{exm}
+	Avec $L = \{aab, \varepsilon\}$, on a $P(L) = \{a\}$, $S(L) = \{b\}$, $F(L) = \{aa,ab\}$, $N(L) = \{ba,bb\}$, $\Lambda(L) = \{\varepsilon\}$. Et donc, on en déduit que \[
+		\rho(L) = \{\varepsilon\} \cup \{ab\} \cup \{aab\} \cup \cdots \{\varepsilon\} \cup \{a^n\cdot b  \mid n \in \N^*\}
+	.\] 
+\end{exm}
+
+\begin{defn}
+	Un langage est dit local s'il est son propre langage engendré i.e.\ $\rho(L) = L$.
+\end{defn}
+
+\begin{prop}
+	Soit $L$\/ un langage. Alors, $\rho(L) \supseteq L$.
+\end{prop}
+
+\begin{prv}
+	Soit $w \in L$. Montrons que $w \in \rho(L)$.
+	\begin{itemize}
+		\item Si $w = \varepsilon$, alors $\Lambda(L) = L \cap \{\varepsilon\} = \{\varepsilon\}$\/ donc $w \in \rho(L)$.
+		\item Sinon, notons $w = w_1w_2\ldots w_n$. On doit montrer que $w_1 \in P(L)$, $w_n \in S(L)$, et $\forall i \in \left\llbracket 1,n-1 \right\rrbracket,\:w_i w_{i+1} \in F(L)$. Par définition de ces ensembles, c'est vrai.
+	\end{itemize}
+\end{prv}
+
+\begin{prop}
+	Soit $L$\/ de la forme \[
+		\Lambda \cup (P\Sigma^* \cap \Sigma^* S) \setminus (\Sigma^* N\Sigma^*)
+	\] avec $\Lambda \subseteq \{\varepsilon\}$, $P \subseteq \Sigma$, $S \subseteq \Sigma$, et $N \subseteq \Sigma^2$.
+	Alors $\rho(L) = L$.
+\end{prop}
+
+\begin{prv}
+	On a $L \subseteq \rho(L)$. Montrons donc $\rho(L)\subseteq L$.
+
+	\begin{itemize}
+		\item Montrons que $\Lambda(L) \subseteq L$.
+			\begin{itemize}
+				\item Si $\Lambda(L) = \O$, alors {\sc ok}.
+				\item Sinon, $\Lambda (L) = \{\varepsilon\} = L \cap \{\varepsilon\}$\/ donc $\varepsilon \in L$\/ et donc $\varepsilon \in \Lambda$\/ parce que ce n'est possible.
+			\end{itemize}
+		\item Montrons que $P(L) \subseteq P$. Soit $\ell \in P(L)$. Soient $v \in \Sigma^*$, et $w \in L$\/ tels que $w = \ell v$. On a donc $w \not\in  \Lambda$, donc $w \in (P\Sigma^* \cap \Sigma^* S)$\/ et donc $\ell v = w \in P\Sigma^*$\/ et donc $\ell \in P$.
+		\item De même, $S(L) \subseteq L$\/
+		\item À faire à la maison : $N \subseteq N(L)$\/ (ou $F(L) \subseteq F$)
+	\end{itemize}
+\end{prv}
+
+\begin{crlr}
+	On a $\rho^2 = \rho$.
+\end{crlr}
+
+\todo{Figure ensembles langages locaux, réguliers, \ldots}
+
+\begin{prv}
+	$\rho(\O) = \O$\/ et $\rho(\Sigma^*) = \Sigma^*$.
+\end{prv}
+
+\begin{rmk}
+	Un langage $L$\/ est local si et seulement s'il existe $S \subseteq \Sigma$, $P \subseteq \Sigma$, $N \subseteq \Sigma^2$\/ tel que \[
+		L \setminus \{\varepsilon\} = (P \Sigma^* \cap \Sigma^* S) \setminus \Sigma^* N \Sigma^*
+	.\]
+\end{rmk}
+
+\begin{exm}
+	Le langage $L = \{a\}$\/ est local avec $S = \{a\}$, $P = \{a\}$, $F = \O$\/ et $\Lambda = \O$.
+
+	\noindent Le langage $L = \{a,ab\}$\/ est local avec $S = \{b,a\}$, $P = \{a\}$, $F = \{ab\}$\/ et $\Lambda = \O$.
+
+	\noindent Le langage $L = (ab)^*$\/ est local avec $S = \{b\}$, $P = \{a\}$, $F = \{ab,ba\}$. Soit $w \in \rho(L)$. Si $w = \varepsilon$, alors {\sc ok}. Sinon, $w = ab w_1$\/ et $w_1 \in \rho(L)$. Par récurrence, on montre que le langage est local.
+
+	\noindent Le langage $L = a \cdot (ab)^*$\/ n'est pas local.
+\end{exm}
+

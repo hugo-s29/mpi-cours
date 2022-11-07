@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (0, -2) {};
+		\node [style=none] (1) at (0, 7.5) {};
+		\node [style=none] (2) at (-1.25, 7.5) {$\avrt\subseteq$};
+		\node [style=new style 0] (3) at (0, 6.5) {};
+		\node [style=new style 0] (4) at (0, 1.5) {};
+		\node [style=new style 0] (5) at (0, 0) {};
+		\node [style=none] (6) at (4.25, 6.5) {Ensemble de tous les langages};
+		\node [style=none] (7) at (3, 1.5) {Langages réguliers};
+		\node [style=none] (8) at (2.75, 0) {Langages locaux};
+		\node [style=none] (9) at (0.5, 4) {\vdots};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (0.center) to (1.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

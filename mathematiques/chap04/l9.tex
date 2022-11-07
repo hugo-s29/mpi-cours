@@ -1,0 +1,54 @@
+\begin{prop}
+	Soit $E$\/ un $\mathds{K}$-espace vectoriel de dimension finie, et soit $u : E \to E$\/ un endomorphisme. Si $u$\/ est diagonalisable, et $F$\/ est un sous-espace vectoriel stable par $u$, alors $u\big|_F$\/ est aussi diagonalisable.
+\end{prop}
+
+\begin{prv}
+	On suppose $u$\/ diagonalisable.
+	D'où $u$\/ possède un polynôme annulateur $P$\/ scindé à racine simple.
+	Alors $P(u) = 0_{\mathscr{L}(E)}$, d'où $\forall \vec{x} \in E$, $P(u)(\vec{x}) = \vec{0}_E$, et donc $\forall \vec{x} \in F$, $P\big(u\big|_F\big)(\vec{x}) = \vec{0}_E = \vec{0}_F$.
+	Et donc, le polynôme $P$\/ est annulateur de $u\big|_F$\/ et il est scindé à racines simples. D'où $u\big|_F$\/ est diagonalisable.
+\end{prv}
+
+\begin{exo}
+	{\slshape Soit $A$\/ une matrice diagonale par blocs. Montrer que $A$\/ est diagonalisable si et seulement si chaque bloc est diagonalisable.} \[
+		\begin{bNiceArray}{c|c|c|c}[last-col]
+			B_1&0&0&0&\begin{array}{l}\varepsilon_1\\\vdots\\\varepsilon_{d_1}\\\end{array}\\ \hline
+			0&B_2&0&0&\begin{array}{l}\varepsilon_{d_1+1}\\\vdots\\\varepsilon_{d_1+d_2}\\\end{array}\\ \hline
+			0&0&\ddots&0&\quad\vdots\\ \hline
+			0&0&0&B_r&\begin{array}{l}\varepsilon_{d_1+\cdots + d_{r-1} + 1}\\\vdots\\\varepsilon_{d_1 + \cdots + d_r}.\\\end{array}\\
+		\end{bNiceArray}
+	\]
+	\begin{itemize}
+		\item[``$\impliedby$'']
+			Soit $u$\/ l'endomorphisme tel que $\big[u\big]_\mathscr{B} = A$, où $\mathscr{B} = (\varepsilon_1, \ldots, \varepsilon_d,\ldots, \varepsilon_{d_1+\cdots + d_{r-1} + 1}, \ldots, \varepsilon_{d_1 + \cdots + d_r})$.
+			Chaque sous-espace vectoriel $F_i$\/ est stable par $u$\/ car la matrice est diagonale par blocs.
+			Or, chaque bloc est diagonalisable, d'où chaque $u\big|_{F_i}$\/ est diagonalisable.
+			Il existe donc une base de $F_i$\/ formée de vecteurs propres de $u$. En concaténant ces bases, on obtient une base de $F$\/ formée de vecteurs propres de $u$.
+
+			Autre méthode :
+			Chaque bloc $B_i$\/ est diagonalisable, d'où $\forall i$, $\exists P_i \in \mathrm{GL}_{d_i}(\mathds{K})$, $P_i^{-1}\cdot B_i \cdot P_i = D_i$\/ diagonale.
+			On pose \[
+				P =
+				\left(\begin{array}{c|c|c|c}
+						P_1&0&\ldots&0\\ \hline
+						0&P_2&\ddots&\vdots\\ \hline
+						\vdots&\ddots&\ddots&0\\ \hline
+						0&\ldots&0&P_r
+				\end{array}\right)
+			.\]
+			Et donc \[
+				P^{-1}\cdot A \cdot P = \left( 
+				\begin{array}{c|c|c|c}
+					D_1&0&\ldots&0\\ \hline
+					0&D_2&\ddots&\vdots\\ \hline
+					\vdots&\ddots&\ddots&0\\ \hline
+					0&\ldots&0&D_r
+				\end{array}\right)
+			.\]
+		\item[``$\implies$'']
+			Réciproquement, pour tout $i$, on a $B_i = \Big[u\big|_{F_i}\Big]_{(\varepsilon_{d_1 + \cdots + d_{i-1} + 1},\ldots,\varepsilon_{d_1 + \cdots + d_i})}$.\\
+			Or $u$\/ est diagonalisable, donc tout endomorphisme induit par $u$\/ sur un sous-espace vectoriel stable est diagonalisable. Et donc, chaque bloc est diagonalisable.
+	\end{itemize}
+\end{exo}
+
+

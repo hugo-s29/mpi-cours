@@ -1,0 +1,15 @@
+\section{Définition inductive des mots et ordre préfixe}
+
+\begin{enumerate}
+	\item On pose $X_0 = \{\varepsilon\}$, et pour $n \in \N$, \[
+			X_{n+1} = X_n \cup \Big( \bigcup_{a \in \Sigma} \{ a\cdot w  \mid w \in X_n \}\Big)
+		.\]
+		Ainsi, on définit par induction l'ensemble des mots $\Sigma^*$.
+	\item Soient $u$\/ et $v$\/ deux mots. Montrons $u \preceq_1 v \iff u \preceq_2 v$.
+		\begin{itemize}
+			\item[``$\implies$''] Supposons $u \preceq_1 v$. Soit $w \in \Sigma^*$\/ tel que $v = u w$. Par définition de $\preceq_2$, on a bien $\varepsilon \preceq_2 w$. On décompose $u$\/ en $u = u_1 \cdot u_2 \cdot \ldots \cdot u_n \cdot \varepsilon$\/ (avec la définition de mot de la question précédente). D'où, toujours par définition de $\preceq_2$, on a $u_n \cdot \varepsilon \preceq_2 u_n \cdot w$, puis $u_{n-1}\cdot u_n \cdot \varepsilon \preceq_2 u_{n-1}\cdot u_n \cdot w$. En itérant ce procédé, on obtient \[\underbrace{u_1 \cdot u_2 \cdot \ldots \cdot u_n \cdot \varepsilon}_{u} \preceq_2 \overbrace{{\underbrace{u_1 \cdot u_2 \cdot \ldots \cdot u_n}_u} \cdot w}^{v}.\]
+				Et donc $u \preceq_2 v$.
+			\item[``$\impliedby$''] Supposons à présent que $u \preceq_2 v$. On pose $u = u_1 u_2 \ldots u_n$, et $v = v_1v_2\ldots v_{m}$. Par définition de $\preceq_2$, on a $u_1 \cdot (u_2\ldots u_n) \preceq_2 u_1 \cdot (v_2 \ldots v_m)$. Puis, toujours par définition de $\preceq_2$, on a $u_1 \cdot u_2 \cdot (u_3\ldots u_n) \preceq u_1 \cdot u_2 \cdot (v_3\ldots v_n)$. En itérant ce procédé, on a $u \cdot \varepsilon \preceq u \cdot (v_n \ldots v_m)$. On pose $w = v_n \ldots v_m$, et on a bien $v = uw$. D'où $v \succeq_1 u$.
+		\end{itemize}
+\end{enumerate}
+

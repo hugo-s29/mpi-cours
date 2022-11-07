@@ -1,0 +1,154 @@
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		path blob(pair c, real r, int n = 5) {
+			real dtheta = 2pi/n;
+			real k = 24;
+
+			pair p0 = (r, 0) + expi(unitrand() * 2pi) * r / k;
+			path p = p0;
+
+			for(int i = 1; i < n; ++i) {
+				real theta = i * dtheta;
+				pair pt = r * expi(theta);
+				pair offset = expi(unitrand() * 2pi) * r / k;
+				p = p..pt + offset;
+			}
+
+			return shift(c) * (p..cycle);
+		}
+
+		srand(103843893); // random seed here
+		size(5cm);
+		draw(blob((0,0), 4), deepcyan);
+		draw(rotate(90) * blob((0,0), 2, 3), red);
+		dot("$y$", (0, 0));
+		dot("$x$", (0, -2));
+		label("$x-y$", (-1, -1));
+	\end{asy}
+	\caption{Structure d'un sous-groupe $H \subset G$}
+\end{figure}
+
+\begin{defnn}[Sous-groupe]
+	Soit $H$\/ une partie de $G$\/ ($H \subset G$) et $H$\/ est \underline{stable} par $+$\/ ($\forall x,y \in H,\,x + y \in H$) et avec la loi $+$\/ \underline{induite} sur $H$, $(H,+)$\/ est un groupe.
+	Dans ce cas, $H$\/ est un sous-groupe de $(G,+)$.
+\end{defnn}
+
+Dans la pratique, on montre \[
+	(H,+)\text{ est un sous-groupe} \iff \begin{cases}
+		H \subset G\\
+		H \text{ stable par } +\\
+		0_G \in H\\
+		\forall x \in H,\,-x \in H
+	\end{cases} \iff \begin{cases}
+		\O \neq H \subset G\\
+		\forall x,y \in H,\,x-y \in H.
+	\end{cases}
+\]
+
+\begin{exo}
+	On va montrer que $H$\/ est un sous-groupe de $(\Z, +)$\/ si et seulement s'il existe un entier $n \in \Z$, tel que $H = n \Z = \{n\times k  \mid k \in \Z\}$.
+	\begin{enumerate}
+		\item Soit $H = n\Z$. On veut montrer que $H$\/ est un sous-groupe de $(\Z, +)$. On a bien $H \subset G$\/ et, pour tout $x,y \in \Z$, on a \[
+				\underbrace{nx}_{\in H} + \underbrace{ny}_{\in H} = \underbrace{n(x+y)}_{\in H}
+			.\]
+			On a aussi $0 \in H$\/ car $0 = 0 \times n$. Enfin, pour tout entier $x \in \Z$, on a $-(nx) = n \times (-x) \in H$.
+
+			On en conclut que $(H, +)$\/ est un sous groupe de $(\Z, +)$.
+		\item Soit $H$\/ un sous-groupe de $(\Z, +)$.
+			Si $H = \{0\}$\/ alors $H = 0\Z$.
+			Si $H \neq \{0\}$, alors il existe $n \in \Z$, $n \in H$.
+			D'où $-n \in H$, et d'où, il existe un élément positif dans $H$. On considère sans perte de généralité qu'il s'agit de $n$. On en déduit que $n\Z \subset H$.
+			
+			On choisit, à présent, le plus petit $n$. On procède par l'absurde : on suppose qu'il existe $x \in H$\/ tel que $x \not\in n\Z$. On fait la division euclidienne de $x$\/ par $n$\/ : $x = nq + r$\/ et $r < n$. D'où, $x - nq = r < n$. Or, $x$\/ et $nq$\/ sont deux éléments de $H$. On en conclut que $r \in H$. C'est absurde car $r < n$\/ et $n$\/ est le plus petit.
+	\end{enumerate}
+\end{exo}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import patterns;
+		size(5cm);
+		draw((-10, 0) -- (10, 0), Arrow(TeXHead));
+		real eps = 0.5;
+		real n = 4;
+		draw((n, -eps)--(n, eps));
+		draw((-n, -eps)--(-n, eps));
+		draw((0, -eps)--(0, eps));
+		label("$-n$", (-n, 0), align=SW);
+		label("$n$", (n,0), align=SW);
+		label("$0$", (0,0), align=SW);
+	\end{asy}
+	\caption{Sous-groupe de $(\Z, +)$}
+\end{figure}
+
+\begin{defn}
+	Soit $(A, +, \times )$\/ un anneau commutatif. On appelle {\it idéal}\/ de $A$\/ tout sous-groupe $I$\/ de $(A, +)$\/ tel que $\forall (i,a) \in I \times A,\,i\times a \in I$.
+\end{defn}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		path blob(pair c, real r, int n = 5) {
+			real dtheta = 2pi/n;
+			real k = 24;
+
+			pair p0 = (r, 0) + expi(unitrand() * 2pi) * r / k;
+			path p = p0;
+
+			for(int i = 1; i < n; ++i) {
+				real theta = i * dtheta;
+				pair pt = r * expi(theta);
+				pair offset = expi(unitrand() * 2pi) * r / k;
+				p = p..pt + offset;
+			}
+
+			return shift(c) * (p..cycle);
+		}
+
+		srand(103843893); // random seed here
+		size(5cm);
+		draw(blob((0,0), 4), deepcyan);
+		draw(rotate(90) * blob((0,0), 2, 3), red);
+		dot("$i$", (0, 0));
+		dot("$a$", (3, -1));
+		dot("$i\times a$", (-1, -1));
+	\end{asy}
+	\caption{Structure d'un idéal $I \subset A$}
+\end{figure}
+
+\begin{rmkn}[\hbox{\danger\!\!\!}] Un idéal n'est pas forcément un sous-anneau car on n'a pas forcément $1_A \in I$.
+\end{rmkn}
+
+\begin{exm}
+	\begin{enumerate}
+		\item Soit $a \in \mathds{K}$. On pose $I = \{P \in \mathds{K}[X] \mid P(a) = 0\}$. On vérifie aisément que $(I, +)$\/ est bien un sous-groupe de $(\mathds{K}[X],+)$ : \[
+				0_{\mathds{K}[X]}\text{ s'annule en } a\text{ et si }P(a) = 0\text{ et }Q(a) = 0\text{ alors},\:(P+Q)(a) = 0\text{ et }(P-Q)(a) = 0
+			.\]
+			Pour tout polynôme $Q \in \mathds{K}[X]$, on a, si $P(a) = 0$, alors $(P\times Q)(a) = 0$.
+			On en conclut que $I$\/ est un idéal de $(A, +, \times )$.
+		\item On considère l'ensemble des suites qui tendent vers 0, $I$. Ce n'est pas un idéal de l'ensemble des suites, $\R^\N$ : on a bien que $I$\/ est un sous-groupe de  $(\R^\N, +)$\/ mais, par exemple la suite $\smash{\left( \frac{1}{n} \right) \in I}$\/ multipliée par la suite $(n) \in \R^\N$ ne donne pas une suite tendant vers 0. En effet, $\smash{\frac{1}{n} \times n = 1 \centernot\longrightarrow 0}$. Mais, c'est bien un idéal de l'ensemble des suites bornées.
+	\end{enumerate}
+\end{exm}
+
+\begin{prop}[les idéaux de $\Z$\/ et $\mathds{K}{[X]}$]
+	\begin{enumerate}
+		\item À regarder.
+		\item $I$\/ est un idéal de $\Z$\/ si et seulement s'il existe $n \in Z$\/ tel que $I = n\Z$.
+		\item $I$\/ est un idéal de $\mathds{K}[X]$\/ si et seulement s'il existe un polynôme $P(X) \in \mathds{K}[X]$\/ tel que $I = P(X) \cdot \mathds{K}[X]$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}[2.]
+	\begin{itemize}
+		\item[``$\implies$''] Soit $I$\/ un idéal de $\Z$. En particulier, $(I,+)$\/ est un sous-groupe de $(\Z, +)$ et donc, d'après l'{\sc exercice 5}, il existe un entier $n$\/ tel que $I = n\Z$.
+		\item[``$\impliedby$\/''] Réciproquement, si $I = n\Z$, alors c'est un idéal car :
+			\begin{itemize}
+				\item $(n\Z, +)$\/ est un sous-groupe de $(\Z, +)$\/ d'après l'{\sc exercice}\/ 5.
+				\item $\underbrace{(nx)}_{\in I} \times \overbrace{y}^{\in \Z} = \underbrace{n(x \times y)}_{\in I}$.
+			\end{itemize}
+	\end{itemize}
+\end{prv}
+
+
+

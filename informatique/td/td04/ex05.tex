@@ -1,0 +1,24 @@
+\section{Automates pour le calcul de l'addition en binaire}
+\subsection{Nombres de même tailles}
+
+\paragraph{Q.\ 1}~
+\begin{figure}[H]
+	\centering
+	\tikzfig{ex5-q1}
+\end{figure}
+
+\paragraph{Q.\ 2}
+
+Pour $r \in \{0,1\}$, il existe une exécution dans $\mathcal{A}$\/ étiquetée par \[
+	(u_0,v_0, w_0)(u_1,v_1,w_1)\ldots(u_{n-1},v_{n-1},w_{n-1})
+\] menant à $r$\/ si et seulement si \[
+	\overline{u_0\ldots u_{n-1}}^2 + \overline{v_0\ldots v_{n-1}}^2 = \overline{w_0\ldots w_{n-1}}^2 + r\:2^{n},
+\] ce qui est équivalent à si et seulement si \[
+	\overline{u_0\ldots u_{n-1}0}^2 + \overline{v_0\ldots v_{n-1}0}^2 = \overline{w_0\ldots w_{n-1}r}^2
+.\]
+
+\paragraph{Q.\ 3}
+Prouvons-le par récurrence.
+\begin{itemize}
+	\item Pour $n = 0$, il existe une exécution dans $\mathcal{A}$\/ étiquetée par $\varepsilon$\/ menant à $r=0$ si et seulement si $\overline{\varepsilon}^2 + \overline{\varepsilon}^2 = 0 = \overline{\varepsilon}^2 + 0 \times 2^0$. De même, il existe une exécution dans $\mathcal{A}$\/ étiquetée par $\varepsilon$\/ menant à $r=1$ si et seulement si $\overline{\varepsilon}^2 + \overline{\varepsilon}^2 = 0 = 1 = \overline{\varepsilon}^2 + 1 \times 2^0$.
+\end{itemize}

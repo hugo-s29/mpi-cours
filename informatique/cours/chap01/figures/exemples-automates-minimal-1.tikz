@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-1, 0) {};
+		\node [style=new style 0] (1) at (0.5, 0) {};
+		\node [style=none] (2) at (2, 0) {};
+		\node [style=none] (3) at (0.5, 1.25) {$a$};
+		\node [style=none] (4) at (0.5, -1.25) {$b$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (0.center) to (1);
+		\draw [style=arrow] (1) to (2.center);
+		\draw [style=arrow, in=120, out=45, loop] (1) to ();
+		\draw [style=arrow, in=-120, out=-45, loop] (1) to ();
+	\end{pgfonlayer}
+\end{tikzpicture}
