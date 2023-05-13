@@ -1,0 +1,155 @@
+\section{Endomorphismes adjoints}
+
+\begin{defn}
+	On dit qu'un endomorphisme $f : E \to E$\/ est \textit{autoadjoint} si \[
+		\forall (\vec{u}, \vec{v}) \in E^2,\quad \big<f(\vec{u})\:\big|\:\vec{v}\big> = \big<\vec{u}\:\big|\:f(\vec{v})\big>
+	.\] 
+\end{defn}
+
+Un endomorphisme autoadjoint est aussi appelé endomorphisme \textit{symétrique} (\textit{c.f.}\ proposition suivante). L'ensemble des endomorphismes autoadjoints est noté $\mathcal{S}(E)$.
+
+\begin{prop}
+	Un endomorphism est autoadjoint si, et seulement si la matrice de $F$\/ dans une base \ul{orthonormée} $\mathcal{B}$\/ est orthogonale.
+	Autrement dit : \[
+		f \in \mathcal{S}(E) \iff \big[\:f\:\big]_\mathcal{B} \in \mathcal{S}_n(\R)
+	.\]
+\end{prop}
+
+\begin{prv}
+	\begin{description}
+		\item[$\implies$] Soit $\mathcal{B} = (\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_n)$\/ une base orthonormée de $E$. Ainsi, \[
+				\forall i,\:\forall j,\quad \big<f(\vec{\varepsilon}_i)\:\big|\: \vec{\varepsilon}_j\big> = \big<\vec{\varepsilon}_i\:\big|\:f(\vec{\varepsilon}_j)\big>
+			.\] On pose $\big[\:f\:\big]_{\mathcal{B}} = (a_{i,j})$\/ : \[
+				\begin{pNiceMatrix}[last-col,last-row]
+					\quad&\quad&a_{1,j}&\quad&\quad&\vec{\varepsilon}_i\\
+					&&&&&\\
+					\quad&\quad&a_{i,j}&\quad&\quad&\vec{\varepsilon}_i\\
+					&&&&&\\
+					\quad&\quad&a_{n,j}&\quad&\quad&\vec{\varepsilon}_n\\
+					f(\vec{\varepsilon}_i)&&f(\vec{\varepsilon}_j)&&f(\vec{\varepsilon}_n)\\
+				\end{pNiceMatrix}
+			.\] Ainsi, $f(\vec{\varepsilon}_j) = a_{1,j} \vec{\varepsilon}_1 + \cdots + a_{i,j} \vec{\varepsilon}_i + \cdots + a_{n,j} \vec{\varepsilon}_n$. D'où, $\left<\vec{\varepsilon}_i  \mid f(\vec{\varepsilon}_j) \right> = a_{i,j}$\/ car la base $\mathcal{B}$\/ est orthonormée.
+			De même avec l'autre produit scalaire, $\left< f(\vec{\varepsilon}_i)  \mid \vec{\varepsilon}_j \right>$, d'où $a_{i,j} = a_{j,i}$\/ par symétrie du produit scalaire. On en déduit que $\big[\:f\:\big]_\mathcal{B} \in \mathcal{S}_n(\R)$.
+		\item[$\impliedby$]
+			Si $\big[\: f\:\big]_\mathcal{B} \in \mathcal{S}_n(\R)$, alors $\left<f(\vec{\varepsilon}_i)  \mid \vec{\varepsilon}_j \right> = \left<\vec{\varepsilon}_i  \mid f(\vec{\varepsilon}_j)\right>$.
+			Or, on pose $\vec{u} = x_1 \vec{\varepsilon}_1+ \cdots + x_n \vec{\varepsilon}_n$, et $\vec{v} = y_1 \vec{\varepsilon}_1 + \cdots + y_n \vec{\varepsilon}_n$.
+			\begin{align*}
+				\left<f(\vec{u})  \mid \vec{v} \right> &= \left<x_1 f(\vec{\varepsilon}_1) + \cdots + x_n f(\vec{\varepsilon}_n)  \mid y_1 f(\vec{\varepsilon}_1) + \cdots + y_n f(\vec{\varepsilon}_n) \right> \\
+				&= \Big<\sum_{i=1}^n x_i f(\vec{\varepsilon}_i)\:\Big|\: \sum_{j=1}^n y_j \vec{\varepsilon}_j\Big> \\
+				&= \sum_{i,j \in \llbracket 1,n \rrbracket}  x_i y_j \left<f(\vec{\varepsilon}_i) \mid \vec{\varepsilon}_j \right>\\
+			\end{align*}
+			De même en inversant $\vec{u}$\/ et $\vec{v}$.
+			On en déduit donc $\left<f(\vec{u} \mid \vec{v} \right> = \left<\vec{u}  \mid f(\vec{v}) \right>$.
+	\end{description}
+\end{prv}
+
+\begin{exo}
+	\begin{enumerate}
+		\item Si $f$\/ est autoadjoint, montrons que $\Ker f \perp \Im f$, et $\Ker f \oplus \Im f$.
+			On suppose $\forall \vec{u}$, $\forall \vec{v}$, $\left<f(\vec{u}) \mid \vec{v} \right> = \left<\vec{u}  \mid f(\vec{v}) \right>$.
+			Soit $\vec{u} \in \Ker f$, et soit $\vec{v} \in \Im f$.
+			On sait que $f(\vec{u}) = \vec{0}$, et qu'il existe $\vec{x} \in E$\/ tel que $\vec{v} = f(\vec{x})$.
+			Ainsi, \[
+				\left<\vec{u}  \mid \vec{v} \right>
+				= \left<\vec{u}  \mid f(\vec{x}) \right>
+				= \left<f(\vec{u})  \mid \vec{x} \right>
+				= 0
+			.\] 
+			D'où $\vec{u} \perp \vec{v}$. Ainsi, $\Ker f \perp \Im f$.
+
+
+			De plus, $E$\/ est de dimension finie, d'où, d'après le théorème du rang, \[
+				\dim \Ker f + \dim \Im f = \dim E
+			.\] Aussi, $\Ker f \oplus (\Ker f)^\perp = E$, donc $\dim(\Ker f) + \dim(\Ker f)^\perp = \dim E$.
+			On en déduit donc que $\dim(\Im f)= \dim(\Ker f)^\perp$.
+			Or, $\Im f \subset (\Ker f)^\perp$\/ car $\Im f \perp \Ker f$.
+			Ainsi $\Im f = (\Ker f)^\perp$, on en déduit que \[
+				\Im f \oplus \Ker f = E
+			.\]
+			\begin{description}
+				\item[$\impliedby$] 
+					Soit $p$\/ la projection sur $F$\/ parallèlement à $G$.
+					Supposons l'endomorphisme $P$\/ autoadjoint.
+					D'après la question 1., le $\Ker p \perp \Im p$.
+					Ainsi, $F = \Im p$\/ et $G = \Ker p$.
+					D'où, $F \perp G$, $p$\/ est donc une projection orthogonale.
+				\item[$\implies$]
+					Réciproquement, supposons $p$\/ une projection orthogonale.
+					Soit $\mathcal{B} = (\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_q)$\/ une base orthonormée de $F$.
+					Ainsi, pour tout $\vec{x} \in E$, \[
+						p(\vec{x}) = \sum_{i = 1}^q \left<\vec{x}  \mid \vec{\varepsilon}_i \right>\,\vec{\varepsilon}_i
+					.\] 
+					On veut montrer que l'endomorphisme $p$\/ est autoadjoint.
+					Soient $\vec{u}$\/ et $\vec{v}$\/ deux vecteurs de $E$.
+					\begin{align*}
+						\left<p(\vec{u})  \mid \vec{v} \right>
+						= \Big<\sum_{i=1}^q \left< \vec{u}\mid \vec{\varepsilon}_i \right>\vec{\varepsilon}_i\:\Big|\; \vec{v}\;\Big>
+						&= \sum_{i=1}^q \left<u  \mid \vec{\varepsilon}_{i} \right>\: \left< \vec{\varepsilon}_i  \mid v\right>\\
+						&= \sum_{i=1}^q \left<v  \mid \vec{\varepsilon}_i \right>\:\left<\vec{\varepsilon}_i   \mid u\right> \\
+						&= \left< \vec{u}  \mid p(\vec{v}) \right> \\
+					\end{align*}
+
+					Autre méthode, pour tous vecteurs $\vec{u}$\/ et $\vec{v}$\/ de $E$,
+					\begin{align*}
+						\left<p(\vec{u})  \mid \vec{v} \right>
+						&= \left<p(\vec{u})  \mid p(\vec{v}) + \vec{v} - p(\vec{v}) \right> \\
+						&= \left< p(\vec{u})  \mid p(\vec{v}) \right> + \left<p(\vec{u})  \mid  \vec{v} - p(\vec{v}) \right> \\
+						&= \left<p(\vec{u}) \mid p(\vec{v}) \right> + \left<u - p(\vec{u})  \mid p(\vec{v}) \right> \\
+						&= \left<\vec{u}  \mid p(\vec{v}) \right> \\
+					\end{align*}
+					car $p$\/ est orthogonale.
+			\end{description}
+	\end{enumerate}
+\end{exo}
+
+
+\begin{prop-defn}
+	Si $f$\/ est un endomorphisme d'un espace euclidien $E$, alors il existe un unique endomorphisme de $E$, noté $f^\star$\/ et appelé l'\textit{adjoint} de $f$, tel que \[
+		\forall (\vec{u},\vec{v}) \in E^2,\quad\quad \left<f^\star(\vec{u})  \mid \vec{v} \right> =  \left<\vec{u}  \mid f(\vec{v}) \right>
+	.\] 
+	Si $A$\/ est la matrice $f$\/ dans une base orthonormée $\mathcal{B}$\/ de $E$, alors $A^\top$\/ est la matrice de $f^\star$\/ dans~$\mathcal{B}$\/ : \[
+		\big[\:f\:\big]_\mathcal{B} = \big[\:f\:\big]_\mathcal{B}^\top
+	.\]
+\end{prop-defn}
+
+\begin{prv}
+	Soit $\vec{u} \in E$. L'application \begin{align*}
+		\varphi: E &\longrightarrow \R \\
+		\vec{v} &\longmapsto \left<\vec{u}  \mid f(\vec{v}) \right>.
+	\end{align*}
+	La forme $\varphi$\/ est linéaire car $\varphi(\alpha_1 \vec{v}_1 + \alpha_2 \vec{v}_2) = \left<\vec{u} \mid f(\alpha_1 \vec{v}_1 + \alpha_2 \vec{v}_2) \right> = \left<\vec{u}  \mid \alpha_1 f(\vec{v}_1) + \alpha_2 f(\vec{v}_2) \right> = \alpha_1\left<\vec{u}  \mid  f(\vec{v}) \right> + \alpha_2 \left<\vec{u}  \mid f(\vec{v}_2) \right> = \alpha_1 \varphi(\vec{v}_1) + \alpha_2 \varphi(\vec{v}_2)$.
+	D'où, d'après le théorème de \textsc{Riesz}, il existe un \ul{unique} vecteur $\vec{a} \in E$\/ tel que $\varphi(\vec{v}) = \left<\vec{a}  \mid \vec{v} \right>$\/ pour tout $\vec{v} \in E$.
+	Ainsi, pour tout vecteur $\vec{v} \in E$, $\left<\vec{u}  \mid f(\vec{v}) \right> = \left<\vec{a}  \mid \vec{v} \right>$.
+	On note $\vec{a} = f^\star(\vec{u})$.
+	Soit l'application \begin{align*}
+		f^\star : E &\longrightarrow E \\
+		\vec{u} &\longmapsto f^\star(\vec{u}).
+	\end{align*}
+	La démonstration telle que $f^\star $\/ est linéaire est dans le poly.
+	L'application $f^\star$\/ vérifie : $\left< \vec{u} \mid f(\vec{v}) \right> = \left<f^\star (\vec{u})  \mid \vec{v} \right>$, pour tous vecteurs $\vec{u}$\/ et $\vec{v}$.
+	\textsl{Quelle est la matrice de $f^\star$, dans une base orthonormée ?}\@
+	Soit $\mathcal{B}$\/ une base orthonormée de $E$, et soient $A = \big[\:f\:\big]_\mathcal{B}$, $B = \big[\:f^\star \:\big]_\mathcal{B}$, $U = \big[\:\vec{u}\:\big]_\mathcal{B}$, et $V = \big[\:\vec{v}\:\big]_\mathcal{B}$.
+	Les matrices $U$\/ et $V$\/ sont des vecteurs colonnes, et $A$\/ et $B$\/ sont des matrices carrées.
+	Ainsi, \[
+		U^\top \cdot A \cdot V = \left< \vec{u}  \mid f(\vec{v}) \right> 
+		= \left<f^\star (\vec{u})  \mid \vec{v} \right> = (B\cdot U)^\top \cdot V,
+	\] ce qui est vrai quelque soit les vecteurs colonnes $U$\/ et $V$.
+	D'où, $\forall U$, $\forall V$, $U^\top \cdot \big(A \cdot V\big) = U^\top \cdot \big(B^\top \cdot V\big)$.
+	Ainsi, pour tous vecteurs $U$\/ et $V$, \[
+		U^\top \cdot \Big[ (AV) - (B^\top V)\Big] = 0
+	.\] En particulier, si $U = (AV) - (B^\top V)$, le produit scalaire $\left<\vec{u}  \mid \vec{u} \right>$\/ est nul, donc $U = 0$.
+	Ainsi, \[
+		\forall V,\quad A\cdot V = B^\top\cdot  V
+	.\] De même, on conclut que $A = B^\top$. On en déduit donc que \[
+	\big[\:f^\star\:\big]_\mathcal{B} = \big[\:f\:\big]_\mathcal{B}^\top
+	.\]
+\end{prv}
+
+Les propriétés suivantes sont vrais :
+\begin{itemize}
+	\item $(f  \circ g)^\star  = g^\star \circ f^\star$, \quad $(f^\star)^\star = f$, \quad et \quad $(\alpha f + \beta g)^\star  = \alpha f^\star + \beta g^\star $\/ ;
+	\item $(A\cdot B)^\top  = B^\top \cdot A^\top$, \quad $(A^\top)^\top = A$, \quad et \quad $(\alpha A + \beta B)^\top = \alpha A^\top+ \beta B^\top $.
+\end{itemize}
+Des deuxièmes et troisièmes points,  il en résulte que les applications $f \mapsto f^\star$, et $A \mapsto A^\top$\/ sont des applications involutives.
+
+

@@ -83,7 +83,7 @@ En appliquant cet algorithme à l'automate précédent, on a \[
 .\]
 
 \begin{defn}
-	Un automate généralisé est un quintuplet $(\Sigma, \mathcal{Q}, I, F, \delta)$\/ où
+	Un \textit{automate généralisé} est un quintuplet $(\Sigma, \mathcal{Q}, I, F, \delta)$\/ où
 	\begin{itemize}
 		\item $\Sigma$\/ est un alphabet ;
 		\item $\mathcal{Q}$\/ est un ensemble fini ;
@@ -93,6 +93,7 @@ En appliquant cet algorithme à l'automate précédent, on a \[
 			\forall r \in \Reg(\Sigma),\:\forall (q,q') \in \mathcal{Q}^2,\:\Card(\{(q,r,q') \in \delta\}) \le 1
 		.\]
 	\end{itemize}
+	\index{automate!généralisé}
 \end{defn}
 
 \begin{defn}[Langage reconnu par un automate généralisé]
@@ -100,10 +101,12 @@ En appliquant cet algorithme à l'automate précédent, on a \[
 	On dit qu'un mot $w$\/ est reconnu par l'automate s'il existe une suite \[
 		q_0 \xrightarrow{r_1} q_1 \xrightarrow{r_2} q_2 \to \cdots \to q_{n-1}\xrightarrow{r_n} q_n
 	\] et $(u_i)_{i \in \left\llbracket 1,n \right\rrbracket}$\/ tels que $\forall i \in \left\llbracket 1,n \right\rrbracket$, $u_i \in \mathcal{L}(r_i)$\/ et $w = u_1 \cdot u_2 \cdot \ldots \cdot u_n$.
+	\index{automate!généralisé!langage reconnu}
 \end{defn}
 
 \begin{defn}
 	Un automate généralisé $(\Sigma, \mathcal{Q}, I, F, \delta)$\/ est dit \guillemotleft~bien détouré\footnotemark~\guillemotright\ si $I = \{i\}$ et $F = \{f\}$, avec $i \neq f$, tels que $i$\/ n'a pas de transitions entrantes et $f$\/ n'a pas de transitions sortantes.
+	\index{automate!généralisé!\guillemotleft~bien détouré~\guillemotright}
 \end{defn}
 \footnotetext{Cette notation n'est pas officielle.}
 

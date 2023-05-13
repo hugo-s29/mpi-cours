@@ -17,6 +17,7 @@
 \usepackage{xfrac}
 \usepackage{thmtools}
 \usepackage{diagbox}
+\usepackage{adjustbox}
 \usepackage{centernot}
 \usepackage{multicol}
 \usepackage{nicematrix}
@@ -34,18 +35,24 @@
 \usepackage{listings}
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage[thinlines]{easytable}
-\usepackage{yhmath}
+%\usepackage{yhmath}
+\usepackage{enumitem}
+\usepackage{BOONDOX-calo}
 
 \frenchspacing
 \reversemarginpar
 
 % better underline
 \setuldepth{a}
+\let\underline\ul
 
 \usetikzlibrary{babel}
 
 \usepackage{graphicx}
 \newcommand\longvdots[1]{\raisebox{1em}{\rotatebox{-90}{\hbox to #1 {\dotfill}}}}
+
+%\let\slantedpartial\partial
+%\DeclareRobustCommand{\partial}{\text{\rotatebox[origin=t]{15}{\scalebox{0.95}[1]{$\slantedpartial$}}}}
 
 \theoremstyle{definition}
 
@@ -119,14 +126,16 @@
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\Supp}{Supp}
 \DeclareMathOperator{\Cl}{\mathcal{C}\!\ell}
-\DeclareMathOperator*{\po}{\text{\cursive o}}
-\DeclareMathOperator*{\gO}{O}
+\DeclareMathOperator*{\po}{\textup{\cursive o}}
+\DeclareMathOperator*{\gO}{\mathcal{O}}
 \DeclareMathOperator*{\dom}{dom}
 \DeclareMathOperator*{\sgn}{sgn}
 \DeclareMathOperator*{\codim}{codim}
 \DeclareMathOperator*{\simi}{\sim}
 \DeclareMathOperator{\Im}{Im}
 \DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\Cte}{C^\text{\ul{$\mathrm{te}$}}}
 \renewcommand\Re{\mathop{\expandafter\mathfrak{Re}}}
 \newcommand\Ima{\mathop{\expandafter\mathfrak{Im}}}
 
@@ -148,51 +157,77 @@
 \newmdenv[frametitlerule=true,roundcorner=5pt,subtitlebelowline=true,subtitleaboveline=true]{recap-box}
 
 \declaretheoremstyle[
-	mdframed={ },
-	headpunct={:},
-	headfont=\normalfont\bfseries,
+	headpunct={\::},
+	mdframed={
+		rightline=false, topline=false, bottomline=false,
+		linewidth=1.2pt, linecolor=black,
+	},
+	postheadspace=\newline,
 	bodyfont=\normalfont,
-	postheadspace=1em]{defnstyle}
+	headfont=\normalfont\scshape]{defnstyle}
+
+\declaretheoremstyle[
+	headpunct={\::},
+	numbered={no},
+	mdframed={
+		rightline=false, topline=false, bottomline=false,
+		linewidth=1.2pt, linecolor=black,
+	},
+	postheadspace=\newline,
+	bodyfont=\normalfont,
+	headfont=\normalfont\scshape]{defnnstyle}
 
 \declaretheoremstyle[
 	mdframed={
-		rightline=false, topline=false, bottomline=false,
-		innerlinewidth=0.4pt,outerlinewidth=0.4pt,
-		middlelinewidth=2pt,
-		linecolor=black,middlelinecolor=white,
+		bottomline=false, topline=false, rightline=false,
+		linewidth=0.8pt, linecolor=black,
 	},
-	headpunct={:},
-	headfont=\normalfont\bfseries,
-	bodyfont=\normalfont,
-	postheadspace=1em]{thmstyle}
+	headpunct={\::},
+	postheadspace=\newline,
+	headfont=\normalfont\scshape,
+	bodyfont=\normalfont]{thmstyle}
 
 \declaretheoremstyle[
-	headpunct={:},
+	mdframed={
+		bottomline=false, topline=false, rightline=false,
+		linewidth=0.8pt, linecolor=black,
+	},
+	headpunct={\::},
+	postheadspace=\newline,
+	headfont=\normalfont\scshape,
+	numbered={no},
+	bodyfont=\normalfont]{thmnstyle}
+
+\declaretheoremstyle[
+	headpunct={\::},
 	postheadspace=\newline,
 	headfont=\normalfont\scshape]{rmkstyle}
 
 \declaretheoremstyle[
-	headpunct={:},
+	headpunct={\::},
 	postheadspace=\newline,
 	numbered={no},
 	headfont=\normalfont\scshape]{rmknstyle}
 
-\declaretheorem[style=rmkstyle, name=Théorème]{thm}
-\declaretheorem[style=rmkstyle, name=Définition, sibling=thm]{defn}
-\declaretheorem[style=rmknstyle, name=Définition, sibling=thm]{defnn}
+\declaretheoremstyle[
+	headpunct={\::},
+	postheadspace=\newline,
+	bodyfont=\normalfont\footnotesize\color{gray},
+	numbered={no},
+	headfont=\normalfont\scshape]{rmknsstyle}
+
+\declaretheorem[style=thmstyle, name=Théorème]{thm}
+\declaretheorem[style=thmnstyle, name=Théorème]{thmn}
+\declaretheorem[style=defnstyle, name=Définition, sibling=thm]{defn}
+\declaretheorem[style=defnnstyle, name=Définition, sibling=thm]{defnn}
 \declaretheorem[style=rmkstyle, name=Algorithme, sibling=thm]{algo}
-\declaretheorem[style=rmkstyle, name=Proposition -- Définition, sibling=thm]{prop-defn}
+\declaretheorem[style=defnstyle, name=Proposition -- Définition, sibling=thm]{prop-defn}
 
-% \declaretheorem[style=plain, thmbox={style=M, bodystyle=\normalfont}, name=Théorème]{thm}
-% \declaretheorem[style=plain, thmbox={style=M, bodystyle=\normalfont}, name=Proposition]{prop}
-% \declaretheorem[style=plain, thmbox={style=M, bodystyle=\normalfont}, name=Corollaire]{crlr}
-% \declaretheorem[style=plain, thmbox={style=M, bodystyle=\normalfont}, name=Lemme]{lem}
-
-\declaretheorem[style=rmkstyle, name=Axiome, sibling=thm]{axm}
-\declaretheorem[style=rmkstyle, name=Proposition, sibling=thm]{prop}
+\declaretheorem[style=thmstyle, name=Axiome, sibling=thm]{axm}
+\declaretheorem[style=thmstyle, name=Proposition, sibling=thm]{prop}
 \declaretheorem[style=rmknstyle, name=Proposition, sibling=thm]{propn}
-\declaretheorem[style=rmkstyle, name=Corollaire, sibling=thm]{crlr}
-\declaretheorem[style=rmkstyle, name=Lemme, sibling=thm]{lem}
+\declaretheorem[style=thmstyle, name=Corollaire, sibling=thm]{crlr}
+\declaretheorem[style=thmstyle, name=Lemme, sibling=thm]{lem}
 \declaretheorem[style=rmkstyle, name=Méthode, sibling=thm]{met}
 
 \declaretheorem[style=rmkstyle, name=Remarque, sibling=thm]{rmk}
@@ -204,7 +239,7 @@
 \declaretheorem[style=rmknstyle, name=Contre-exemple, sibling=thm]{cexm}
 \declaretheorem[style=rmkstyle, name=Exercice, sibling=thm]{exo}
 \declaretheorem[style=rmknstyle, name=Exercice, sibling=thm]{exon}
-\declaretheorem[style=rmknstyle, name=Preuve]{prv}
+\declaretheorem[style=rmknsstyle, name=Démonstration]{prv}
 
 \makeatother
 \usepackage{fancyhdr}
@@ -233,7 +268,8 @@
 \makeatletter
 
 \newcommand{\tendsto}[1]{\xrightarrow[#1]{}}
-\newcommand{\danger}{{\large\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}\;}
+\def\danger{{\large\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}\;}
+\def\largedanger{{\LARGE\fontencoding{U}\fontfamily{futs}\selectfont\char 66\relax}\;}
 \newcommand{\ex}{\fbox{ex}\;}
 \renewcommand{\mod}[1]{~\left[ #1 \right]}
 \newcommand{\todo}[1]{{\color{blue} À faire : #1}}
@@ -261,19 +297,28 @@
 	}
 }
 
+\newcommand{\titleanx}[2]{
+	\AtBeginDocument{
+		\begin{titlepage}
+			\begin{center}
+				\vspace{10cm}
+				{\Large \sc #1}\\
+				\vspace{1cm}
+				{\HUGE \cursive #2}\\
+				\vfill
+				Hugo {\sc Salou} MPI${}^{\star}$\\
+				{\ssmall Dernière mise à jour le \@date }
+			\end{center}
+		\end{titlepage}
+	}
+}
+
 \let\bx\boxed
-\newcommand{\s}{\text{\cursive s}}
+\newcommand{\s}{\textit{\cursive s}\:\!\,\!}
 \renewcommand{\t}{{}^t\!}
 \newcommand{\T}{{\!\!\,\top}}
 \newcommand{\eme}{\ensuremath{{}^{\text{ème}}}~}
 \newcommand{\red}[1]{{\color{red}#1}}
-%\let\oldfract\fract
-%\renewcommand{\fract}[2]{\oldfract{\displaystyle #1}{\displaystyle #2}}
-% \let\textstyle\displaystyle
-% \let\scriptstyle\displaystyle
-% \let\scriptscriptstyle\displaystyle
-%\everymath{\displaystyle}
-
 
 \makeatletter
 \def\moverlay{\mathpalette\mov@rlay}
@@ -313,6 +358,7 @@
 
 \definecolor{white}{HTML}{faf4ed}
 \definecolor{black}{HTML}{575279}
+%\definecolor{fadedblack}{HTML}{7972a9}
 \definecolor{mauve}{HTML}{907aa9}
 \definecolor{blue}{HTML}{286983}
 \definecolor{red}{HTML}{d7827e}
@@ -387,3 +433,11 @@
 	\end{center}
 	\input{#1}
 }
+
+\let\mathscr\mathcal
+
+\def\sub#1{\ensuremath{{|\!\:\!|\!\:\!|}#1{|\!\:\!|\!\:\!|}}}
+\newcommand{\incirc}[1]{\charfusion[\mathbin]{\bigcirc}{#1}}
+\def\guillemotleft{{\font\larm=larm1000\larm\char190}}
+\def\guillemotright{{\font\larm=larm1000\larm\char191}}
+\DeclareMathSymbol{*}{\mathord}{letters}{"3F}

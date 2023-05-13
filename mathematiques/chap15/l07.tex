@@ -1,0 +1,86 @@
+\begin{defn}
+	\begin{enumerate}
+		\item On dit d'une partie $D$ d'un espace vectoriel qu'elle est \textit{convexe} si, pour tous vecteurs $\vec{a}$ et $\vec{b}$ de $D$, pour tout $t \in [0,1]$, alors $\vec{a} + t(\vec{b}-\vec{a}) = (1-t)\vec{a} - t \vec{b}$.
+			\begin{center}
+				\guillemotleft~$D$ est convexe si tout segment $[\vec{a},\vec{b}]$ est inclus dans $D$.~\guillemotright
+			\end{center}
+		\item On dit d'une partie $D$ d'un espace vectoriel \ul{normé} quelle est \textit{connexe par arcs} si, pour tous vecteurs $\vec{a}$ et $\vec{b}$ de $D$, il existe une application continue $M : [0,1] \to E$ telle que $M(0) = a$, $M(1) = b$ et $\forall t \in [0,1]$, $M(t) \in D$.
+			\begin{center}
+				\guillemotleft~$D$ est connexe par arcs s'il existe un chemin de $\vec{a}$ vers $\vec{b}$ pour tous vecteurs $\vec{a}$ et $\vec{b}$.~\guillemotright
+			\end{center}
+	\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item Le segment $[\vec{a},\vec{b}]$ est l'ensemble des vecteurs $M(t) = \vec{a} + t (\vec{b} - \vec{a}) = (1-t) \vec{a} + t \vec{b}$, où $t \in [0,1]$.
+		\item
+			\[
+				\begin{tikzcd}
+					\text{$D$ est convexe} \ar[r, Rightarrow, bend left] \ar[r, Leftarrow, bend right, "\text{\huge$\times$}"{anchor=center, sloped}] & \text{$D$ est connexe par arcs}
+				\end{tikzcd}
+			.\]
+			Mais, \textbf{dans $\R$}, on a bien $\text{$D$ connexe} \iff \text{$D$ connexe par arcs} \iff \text{$D$ est un intervalle}$.
+		\item L'image directe $f(D)$ d'une partie $D$ connexe par arcs de $E$ par une application continue $f : E \to F$ est une partie connexe par arcs de $F$.
+
+			\begin{prv}
+				En effet, soient $\vec{a}'$ et $\vec{b}'$ deux vecteurs de $f(D)$.
+				Il existe $\vec{a}$ et $\vec{b}$ deux vecteurs de $D$ tels que $f(\vec{a}) = \vec{a}'$ et $f(\vec{b}) = \vec{b}'$.
+				Par hypothèse, il existe une application $M : [0,1] \to E$ continue telle que $M([0,1]) \subset D$, $M(\vec{0}) = \vec{a}$ et $M(1) = \vec{b}$.
+				\[
+					\begin{tikzcd}
+						t \ar[rr, mapsto, "f \circ M"] && f \circ M(t)\\
+						[0,1] \ar[rr] && F\\
+						t \ar[r, mapsto, "M"] & M(t) \ar[r, mapsto, "f"] & f(M(t))
+					\end{tikzcd}
+				.\]
+				Or, $f  \circ M(0) = f(M(0)) = f(\vec{a}) = \vec{a}'$, $f  \circ M(1) = f(M(1)) = f(\vec{b}) = \vec{b}'$.
+				De plus $f  \circ M$ est continue car c'est la composée de deux fonctions continues $f$ et $M$ (par hypothèse).
+				Ainsi, $f \circ M([a,b]) \subset f(D)$. On en déduit que $f(D)$ est connexe par arcs.
+			\end{prv}
+		\item D'après les deux points précédents, toute fonction continue sur partie connexe par arcs vérifie le théorème des valeurs intermédiaires.
+	\end{enumerate}
+\end{rmk}
+
+\begin{rap}[Théorème des valeurs intermédiaires]
+	Soit $f : \R\supset [a,b]\to \R$ une fonction continue sur $[a,b]$. Pour tout $y \in [f(a),f(b)] \cup [f(b),f(a)]$, il existe $x \in [a,b]$ tel que $y = f(x)$.
+\end{rap}
+
+\begin{thmn}
+	Le théorème des valeurs intermédiaires devient donc, si $f : D \to \R$ est continue, où $\vec{a}, \vec{b} \in D$ est une partie connexe par arcs de $E$, alors, pour tout $y \in [f(\vec{a}),f(\vec{b})] \cup [f(\vec{b}),f(\vec{a})]$, il existe $\vec{c} \in D$ tel que $y = f(\vec{c})$.
+\end{thmn}
+
+\begin{prv}
+	De $\vec{a}$ à $\vec{b}$, il existe un chemin : il existe une fonction $M : [0,1] \to D$ continue telle que $M(0) = \vec{a}$, $M(1) = \vec{b}$, et $\forall t \in [0,1]$, $M(t) \in D$.
+	La fonction $f \circ M : t \mapsto f(M(t))$ est continue par composition.
+	On conclut par le théorème des valeurs intermédiaires appliqué à $f \circ M$.
+\end{prv}
+
+\begin{exo}
+	\begin{slshape}
+		\begin{enumerate}
+			\item Montrer que toute boule de tout espace vectoriel normé est convexe.
+			\item Montrer que l'hyperbole $\mathcal{H}$ d'équation $y^2 - x^2 = 1$ n'est pas connexe par arcs.
+			\item Montrer que le produit cartésien $D_1 \times D_2$ de deux parties connexes par arcs $D_1 \subset E_1$ et $D_2 \subset E_2$ est une partie connexe par arcs de $E_1 \times E_2$. En déduire que la sphère $\{\vec{x} \in \R^3  \mid \|\vec{x}\|_2 = 1\}$ est une partie connexe par arcs de $\R^3$, et que, pour aller d'un pôle à l'autre, il faut traverser l'équateur.
+		\end{enumerate}
+	\end{slshape}
+
+	\begin{enumerate}
+		\item On considère la boule $B(\vec{\Omega}, R)$, où $\vec{\Omega}$ est un vecteur d'un espace vectoriel normé $(E, \|\cdot\|)$, et~$R > 0$.
+			Soient $\vec{a}, \vec{b} \in B(\vec{\Omega}, R)$ ; ainsi, $\|\vec{a} - \vec{\Omega}\| < R$ et $\|\vec{a} - \vec{\Omega}\| < R$.
+			Montrons que, pour tout $t \in [0,1]$, $(1-t)\vec{a} + t \vec{b} \in B(\vec{\Omega}, R)$.
+			\begin{align*}
+				\|(1-t) \vec{a} + t \vec{b} - \vec{\Omega}\| &= \|(1-t) \vec{a} + t \vec{b} - \vec{\Omega} (1-t) - t \vec{\Omega}\|\\
+				&= \|(1-t)(\vec{a} - \vec{\Omega}) + t (\vec{b} - \vec{\Omega})\| \\
+				&\le (1-t) \|\vec{a} - \vec{\Omega}\| + t \|\vec{b} - \vec{\Omega}\|\\
+				&\le (1-t) \cdot R + t \cdot R\\
+				&= R \\
+			\end{align*}
+			D'où, $\big((1-t) \vec{a} + t \vec{b}\big) \in B(\vec{\Omega}, R)$.
+		\item Par l'absurde, on suppose $\mathcal{H}$ connexe.
+			Soit la fonction $f : (x,y) \mapsto y$ continue.
+			L'image d'un connexe par une fonction continue est connexe, d'où $f(\mathcal{H}$) est connexe.
+			Or, $f(\mathcal{H}) = \R \setminus {]{-1},1[} = {]{-\infty},-1[} \cup {]{-1}, \infty[}$, qui n'est pas connexe.
+	\end{enumerate}
+\end{exo}
+

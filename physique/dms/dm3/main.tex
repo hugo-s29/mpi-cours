@@ -1,0 +1,208 @@
+\documentclass[a4paper, 11pt]{article}
+
+\input{../../preamble.tex}
+\usepackage{comment}
+\usepackage{slantsc}
+%\usepackage{concmath}
+
+\fancyhead{} \fancyfoot{}
+\fancyfoot[C]{--\:\thepage\:--}
+\fancyhead[R]{DM\textsubscript3 Physique}
+\fancyhead[L]{Hugo \textsc{Salou} \& Noémie \textsc{Combey}, \textit{MPI}$^\star$}
+
+\def\thefigure{\alph{figure}}
+
+\begin{comment}
+\usepackage{tgschola}
+\renewcommand{\sfdefault}{cmr}
+\let\gguillemotleft\guillemotleft
+\let\gguillemotright\guillemotright
+\def\guillemotleft{\textsf{\gguillemotleft}}
+\def\guillemotright{\textsf{\gguillemotright}}
+\end{comment}
+
+
+\pagecolor{truewhite}
+\definecolor{black}{HTML}{000000}
+\color{black}
+
+\begin{asydef}
+	white = rgb("ffffff");
+	black = rgb("000000");
+	defaultpen(black + fontsize(8pt));
+\end{asydef}
+
+\begin{document}
+	\begin{center}
+		\LARGE\scshape ---\quad Problème n\textsuperscript o\,2\quad--- \\
+		\itshape Mesure dans une lame de savon
+	\end{center}
+
+	\begin{multicols}{2}
+		\noindent {\large\bfseries Questions I.A}\quad\hrule
+		\begin{enumerate}[label=(\arabic*)]
+			\item Le schéma se situe sur la figure \textsc{a}, en fin de document. Pour montrer la configuration en \guillemotleft~lame d'air,~\guillemotright\ on crée le miroir virtuel $M_2'$, image de $M_2$\/ par la lame séparatrice.
+			\item On calcule
+				\begin{align*}
+					\delta_{2 / 1}(M) &\triangleq (SM)_\text{voie 2} - (SM)_\text{voie 1}\\
+					&= \cancel{(SJ)} + \cancel{(JU)} + \cancel{(UM)}- \cancel{(SJ)}\\
+					&\mathrel{\phantom=}{} - \cancel{(JU)} - (UV) - \cancel{(VM)} \\
+					&= -(UV)\\
+					&= -n_\text{air} \times \mathit{UV} \\
+					&= -n_\text{air}\:e \cos\theta. \\
+				\end{align*}
+			\item La figure d'interférences est localisée à l'infini. Ainsi, pour l'observer, il faut placer une lentille convergence.
+				On place cette lentille parallèlement au miroir $M_1$, comme montré sur la figure \textsc{a} en fin de document.
+				Plus la distance focale de cette lentille est grande, plus la figure d'interférences sera grande ; il vaut donc mieux choisir une lentille ayant une distance focale la plus grande possible.
+			\item Un point source différent ne fait varier que l'angle d'incidence $\theta$. Or, d'après la formule de \textsc{Fresnel} dans le cas de deux sources de même intensité, on a \[
+					I(M) = 2I_0\left( 1 + \cos\left( \frac{2\pi}{\lambda_0} \delta_{2 / 1}(M) \right)  \right),
+				\] et $\delta_{2 / 1}(M)$\/ ne dépend que de l'angle $\theta$\/ d'incidence. Le système est donc invariant par rotation autour de l'axe $\Delta$, d'où les anneaux. L'angle $\theta$\/ représente l'angle d'incidence, \textit{i.e.}\ l'angle entre la source $S$, le point $J$\/ de la lame séparatrice, et l'axe $\Delta$. Les anneaux sont donc d'égale inclinaison.
+			\item Pour se placer au \textit{contact optique}, il faut approcher $M_2$\/ de la lame séparatrice, ou bien éloigner $M_1$. Ainsi, l'épaisseur de la lame d'air $e$\/ diminue. Au contact optique, on a $e = 0$, donc, pour tout point $M$, $\delta_{2 / 1}(M) = 0$ ; on obtient donc une teinte uniforme.
+				Au cours de la transformation, comme $e$\/ diminue, le rayon des anneaux diminue aussi.
+			\item On se trouve dans la configuration de l'interféromètre de \textsc{Michelson} en \guillemotleft~coin d'air.~\guillemotright\@ Ainsi, on sait que les interférences sont situées au voisinage du coin d'air, donc près des miroirs. Pour les observer, on peut placer une lentille afin de d'observer l'image du coin d'air sur un écran.
+			\item D'après la formule de \textsc{Fresnel} dans le cas de deux sources d'intensité $I_0$\/ identique, on a \[
+					I(M) = 2I_0\left( 1 + \cos\left( \pm\frac{2\pi}{\lambda_0} 2n \alpha x \right) \right)
+				.\] On en déduit que l'interfrange $i$\/ vaut \[
+					i = \frac{\lambda_0}{2\alpha n}
+				.\]
+				Quand $\alpha$\/ diminue, les franges se séparent et inversement quand $\alpha$\/ augmente.
+		\end{enumerate}
+		\bigskip
+		\noindent {\large\bfseries Questions I.B}\quad\hrule
+		\begin{enumerate}[label=(\arabic*),start=8]
+			\item On suppose être en incidence quasi-normale. On est donc, localement, dans une condition en \guillemotleft~lame d'air.~\guillemotright\ Ainsi, on sait que $\delta_{2 / 1}(M) = 2 n e$. Calculons le déphasage $\mathrm{\Delta}\varphi$\/. Comme il y a une reflection sur un milieu plus réfringent, on ajoute $\pi$\/ au déphasage. On en déduit que
+				\begin{align*}
+					\mathrm{\Delta}\varphi &= \frac{2\pi}{\lambda_0} \delta_{2 / 1}(M) + \pi\\
+					&= \frac{2\pi}{\lambda_0} \left( \delta_{2/1}(M) + \frac{\lambda_0}{2} \right)\\
+					&= 2 \frac{\pi}{\lambda_0}\left( 2ne + \frac{\lambda_0}{2} \right).
+				\end{align*}
+			\item Avec une configuration de l'interféromètre en \guillemotleft~coin d'air,~\guillemotright\ les interférences observées seraient rectilignes et régulièrement espacées. D'après la figure~6 du sujet, ce n'est pas le cas. L'angle $\alpha$\/ change localement sur la surface de la bulle, et la lame de savon est plus épaisse à la base de la bulle que en hauteur avec le drainage gravitaire.
+			\item Avec cette expression, l'épaisseur est maximale pour $z = 0$ et est minimale pour $z = H$, ce qui est en accord avec les remarques de la question précédente. Au cours du temps, l'épaisseur diminue, ce qui est aussi en accord avec le système physique observé.
+				Cette expression de $e$\/ semble donc être une modélisation valide de l'épaisseur de la lame de savon.
+			\item Pour chaque frange, on calcule l'épaisseur $e$ à l'aide de $\mathrm{\Delta}\varphi$\/ avec la formule de la question 8 ($\mathrm{\Delta}\varphi = 2k\pi$\/ où $k$\/ est le numéro de la frange brillante). Ensuite, on trace la courbe de $\ln\!\big(e(z,t)\big) = \ln K + \beta\ln(H-z)$ en fonction de $\ln(H-z)$\/ sur le graphique de la figure \textsc{b}. On obtient une droite de coefficient directeur $\beta$. Par regression linéaire, on en déduit une approximation de $\beta$. \[
+					e = (\mathrm{\Delta}\varphi - \pi) \times \frac{\lambda_0}{4\pi n}
+			.\] Cette loi semi-empirique est conforme aux observations, on obtient bien une droite. Le coefficient directeur de cette droite est \[
+			\beta = 1{,}706
+			.\]
+		\end{enumerate}
+	\end{multicols}
+
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			size(10cm);
+			void ray(pair start, pair end, pen p = red) {
+				pair mid = (start+end)/2;
+				draw(start--mid, p, Arrow(TeXHead));
+				draw(mid--end, p);
+			}
+
+			pair intersect(pair p1, pair p2, pair p3, pair p4) {
+				real a = (p1.x * p2.y - p1.y * p2.x) * (p3.x - p4.x);
+				real b = (p3.x * p4.y - p3.y * p4.x) * (p1.x - p2.x);
+				real c = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
+				real x = (a-b)/c;
+				real d = (p1.x * p2.y - p1.y * p2.x) * (p3.y - p4.y);
+				real e = (p3.x * p4.y - p3.y * p4.x) * (p1.y - p2.y);
+				real y = (d-e)/c;
+				return (x,y);
+			}
+
+			pair s = 10*dir(190);
+			pair j = (0, 0);
+			pair s2 = 10*dir(80);
+			pair s3 = s2 + 17*dir(-80);
+			pair s4 = 1.2s/Cos(190);
+			pair s5_ = (0, 2*s4.y);
+			pair s5 = intersect(s4, s5_, j, (6, 6));
+			pair n = dir(-45);
+			//(s5 - s4) - 2dot(s5 - s4, n)*n;
+			pair s23 = intersect(s2, s3, j, (6, 6));
+			pair s6_ = (s5-s23) + s3;
+			pair s6 = intersect(s5, s6_, (0, s3.y), (1, s3.y));
+			pair s7 = intersect(j, s2, (-5, 12), (5, 12));
+
+			draw((-6,-6)--(6,6), black+1.5pt);
+			draw((-10, 0)--(15, 0), Arrow(TeXHead));
+			draw((0, -12)--(0, 15), Arrow(TeXHead));
+			draw((12,-5)--(12,5), black+1.5pt);
+			label("$M_2$", (12, -5), align=SE);
+			draw((-5,s2.y)--(5,s2.y), black+1.5pt);
+			label("$M_1$", (-5,s2.y), align=W);
+			draw((-5, 12)--(5, 12), black+1.5pt);
+			label("$M_2'$", (5,12), align=E);
+
+			ray(s, j);
+			ray(j, s2);
+			ray(s2, s7);
+			ray(s2, s3);
+			ray(j, s4);
+			ray(s4, s5);
+			ray(s5, s6);
+			ray(s7, s5);
+
+			pair f = (s7.x, -10);
+
+			draw(f-(0,0.9)--s7, dashed);
+
+			pair or = (s7.x, s6.y);
+			pair s8 = or - 3.5unit(s6-s5);
+			pair m = intersect(or, s8, f, f + (1,0));
+
+			draw((-7+s7.x, s6.y)--(7+s7.x, s6.y), Arrows(TeXHead));
+			draw((-7+s7.x, f.y)--(7+s7.x, f.y), Arrows(TeXHead));
+			for(int i = 1; i < 30; ++i) {
+				real t = i / 30;
+				real a = -7+s7.x;
+				real b = 7+s7.x;
+				real x = t * a + (1-t) * b;
+				real y = f.y;
+				pair del = (-0.5, -0.5);
+				draw((x,y)--(x,y)+del);
+			}
+
+			dot("$J$", j, align=NW);
+			dot("$V$", s7, align=N);
+			dot("$U$", s2, align=SW);
+			label("$L$", -(6,6), align=SW);
+
+			ray(s8, m, red+dashdotted);
+
+			ray(s6, m);
+			ray(s3, m);
+
+			dot("$M$", m, align=2.5S);
+			label("$\mathrm{\Delta}$", (-10, 0), align=S);
+		\end{asy}
+		\caption{Interféromètre de \textsc{Michelson} en \guillemotleft~lame d'air~\guillemotright}
+	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			import graph;
+			real[] zs = {4.5, 4.1, 3.7, 3.4, 3.2, 3.0, 2.8, 2.6 };
+			real[] xs;
+			real[] ys;
+			real l0 = 600 * 0.000000001;
+			real H = 5;
+			real n = 1.4;
+			for(int i = 0; i < zs.length; ++i) {
+				real df = (i+1) * 2pi;
+				real e = (df - pi) * l0 / (4pi * n);
+				real z = zs[i];
+				real x = xs.push(log(H - z));
+				real y = ys.push(log(e));
+				dot((x,y), red);
+			}
+			size(10cm, 5cm, IgnoreAspect);
+			draw((-1, -15)--(1,-15), Arrow(TeXHead));
+			draw((0, -17)--(0,-12), Arrow(TeXHead));
+			real f(real x) {return x * 1.70567946 -14.84761454; }
+			draw(graph(f, -1, 1), magenta);
+		\end{asy}
+		\caption{Graphe de $\ln e(z,t)$\/ en fonction de $\ln(H-z)$.}
+	\end{figure}
+
+	\sign
+\end{document}

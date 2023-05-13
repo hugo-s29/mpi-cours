@@ -1,0 +1,307 @@
+\documentclass[a4paper, 10pt]{article}
+
+\input{../../preamble.tex}
+\renewcommand{\baselinestretch}{1.12}
+\usepackage{comment}
+\usepackage{slantsc}
+\usepackage{montserrat}
+%\usepackage{concmath}
+
+\fancyhead{} \fancyfoot{}
+\fancyfoot[C]{{\sffamily\itshape--\:\thepage\:--}}
+\fancyhead[R]{DM\textsubscript5 Physique}
+\fancyhead[L]{Hugo \textsc{Salou} \& Noémie \textsc{Combey}, \textit{MPI}$^\star$}
+
+\def\thefigure{\alph{figure}}
+
+\makeatletter
+\let\@ref\ref
+\def\ref#1{\textsc{\@ref{#1}}}
+\makeatother
+
+%\usepackage{bera}
+%\usepackage{tgpagella}
+%\usepackage{quattrocento}
+%\usepackage[t,lf]{spectral}
+%\usepackage{tgschola}
+%\usepackage{bookman}
+%\usepackage[l,nf]{coelacanth}
+%\renewcommand{\sfdefault}{cmr}
+\begin{comment}
+\let\gguillemotleft\guillemotleft
+\let\gguillemotright\guillemotright
+\def\guillemotleft{\textsf{\gguillemotleft}}
+\def\guillemotright{\textsf{\gguillemotright}}
+\end{comment}
+
+%\begin{comment}
+\pagecolor{truewhite}
+\definecolor{black}{HTML}{000000}
+\definecolor{white}{HTML}{ffffff}
+\color{black}
+%\end{comment}
+
+\def\thesection{\Roman{section}.}
+\def\thesubsection{\Alph{subsection}.}
+
+\begin{asydef}
+	white = rgb("ffffff");
+	black = rgb("000000");
+	defaultpen(black + fontsize(8pt));
+\end{asydef}
+
+\begin{comment}
+\makeatletter
+\let\@vec\vec
+\let\@vv\vv
+\renewcommand{\vec}[1]{\ensuremath{\@vec{\mathbf{#1}}}}
+\renewcommand{\vv}[1]{\ensuremath{\@vv{\mathbf{#1}}}}
+\makeatother
+\end{comment}
+
+\def\res#1{{\color{cyan}#1}}
+
+\begin{document}
+	\begin{center}
+		\LARGE\scshape ---\quad Problème n\textsuperscript o\,1\quad--- \\
+		\itshape Traitement des poussières par électrofiltre
+	\end{center}
+
+	\begin{multicols}{2}
+		\section{Champ électrique dans un électrofiltre}
+		\subsection{Champ électrique à vide et tension de seuil}
+		\begin{enumerate}
+			\item D'après l'équation de \textsc{Poisson}, pour tout point $\mathrm{M}$, \[
+					\mathrm{\Delta}V(\mathrm{M}) = - \frac{\rho(\mathrm{M})}{\varepsilon_0}
+				.\]Mais, comme l'espace inter-électrode est supposé vide de charge, $\rho(\mathrm{M}) = 0$\/ et l'équation devient donc \[
+					\boxed{\mathrm{\Delta}V(\mathrm{M}) = 0.}
+				\]
+			\item
+				\begin{enumerate}
+					\item On se place dans le repère cylindrique $(\mathrm{O}, \vec{e}_r, \vec{e}_\theta, \vec{e}_z)$.
+						Le système est invariant par révolution (angle $\theta$) autour de l'axe $(\mathrm{O},\vec{e}_z)$, et par translation d'axe $(\mathrm{O},\vec{e}_z)$.
+						\begin{figure}[H]
+							\centering
+							\begin{asy}
+								import solids;
+								size(3cm);
+
+								revolution r=cylinder(O,1,4,Z);
+								draw(r,0,longitudinalpen=nullpen);
+								draw(r.silhouette());
+								triple M = (0, 1, 1.5);
+								triple R = (0, 1, 0);
+								triple T = (-1, 0, 0);
+								draw(M--M+R, red, Arrow3(TeXHead2));
+								draw(M--M+T, red, Arrow3(TeXHead2));
+								draw(M--M+Z, red, Arrow3(TeXHead2));
+								dot("$\mathrm{M}$", M, align=SW);
+								label("$\vec e_r$", M+1.2R, red);
+								label("$\vec e_\theta$", M+1.4T, red);
+								label("$\vec e_z$", M+1.2Z, red);
+								draw(O--4Z, dotted);
+								draw(1.5Z--M);
+
+								dot("$\mathrm{O}$", 3Z);
+							\end{asy}
+							\caption{Invariances du système}
+							\label{fig:invariances-elhum}
+						\end{figure}
+						On en déduit que \[
+							\boxed{V(\mathrm{M}) = V(r).}
+						\]
+						De plus, d'après le calcul du \guillemotleft~laplacien~\guillemotright\ en coordonnées cylindriques, on a \[
+							\mathrm{\Delta}(V) = \frac{1}{r} \frac{\partial}{\partial r} \left( r \frac{\partial V}{\partial r} \right) 
+						,\] qui est nul car la zone inter-électrode est vide de charge.
+						Ainsi, comme la dérivée $\frac{\partial}{\partial r} \left( r \frac{\partial V}{\partial r} \right)$\/ est nulle, \[
+							r \frac{\partial V}{\partial r} = A
+						,\] où $A$\/ est une constante. On a donc $\frac{\partial V}{\partial r} = \frac{A}{r}$, que l'on peut intégrer en \[
+							V(r) = A \ln r + B
+						,\] où $B$\/ est aussi une constante. Déterminons les valeurs de ces constantes à l'aide des conditions limites : on a $V(r_\mathrm{c}) = 0$\/ et $V(r_\mathrm{e}) = -U$\/ par hypothèse. Ainsi, d'après la première condition, on trouve \[
+							B = - A \ln r_\mathrm{c}
+						\] d'où, d'après la seconde condition, \[
+							A = \frac{U}{\ln(r_\mathrm{c} / r_\mathrm{e})}
+						.\] On en déduit donc l'expression du potentiel \[
+							\boxed{V(r) = U\frac{\ln(r/r_\mathrm{c})}{\ln(r_\mathrm{c} / r_\mathrm{e})}.}
+						\]
+					\item On sait que $\vec{E}(\mathrm{M}) = -\grad V(\mathrm{M})$. D'où, avec l'expression trouvée à la question précédente, on trouve, au contact avec l'émettrice \[
+							\boxed{\vec{E}(r_\mathrm{e}) = \frac{U}{\ln(r_\mathrm{c} / r_\mathrm{e})} \cdot \frac{1}{r_\mathrm{e}}\: \vec{e}_r.}
+						\]
+						Après résolution, en $U$, de l'équation $E(r_\mathrm{e}) = E_0$, on trouve \[
+							\boxed{U_0 = E_0\: r_\mathrm{e}\:\ln(r_\mathrm{c} / r_\mathrm{e}).}
+						\]
+					\item On réalise l'application numérique, et on trouve \res{$U_0 = 2{,}63 \times 10^4\:\mathrm{V}$}.
+				\end{enumerate}
+			\item
+				\begin{enumerate}
+					\item On remarque que l'expression de $V(\mathrm{M})$\/ est invariante par symétrie en $y$\/ : $V(x, y, z) = V(x, -y, z)$. Et, d'après la géométrie de l'électrofiltre sec, le potentiel sur les collectrices est nul, ce qui est vrai avec l'expression de $V(\mathrm{M})$\/ :
+						\begin{align*}
+							V(x, s, z) &= \frac{U}{\Lambda} \sum_{m \in \Z} \ln\!\!\left( \frac{\ch\left( \frac{\pi(x-2md)}{2s} \right)}{\ch\left( \frac{\pi(x-2md)}{2s} \right)} \right)\\
+							&= \frac{U}{\Lambda} \sum_{m \in \Z} \ln 1 \\
+							&= 0 \\
+						\end{align*}
+						De plus, l'expression du potentiel $V(\mathrm{M})$\/ est invariante par translation d'axe $(\mathrm{O}z)$, ce qui est compatible avec les hypothèses de l'énoncé : les effets de bords sont négligés, les cylindres sont \textit{infiniment} longs.
+
+						Pour déterminer la valeur de $\Lambda$, on utilise la condition limite $V(r_\mathrm{e}, 0, z) = -U$\/ au niveau de l'émettrice. On pose $\xi = \frac{\pi}{2s}(r_\mathrm{e} - 2md)$, et ainsi, \[
+							-U = V(r_\mathrm{e}, 0, z) = \frac{U}{\Lambda} \sum_{m \in \Z} \ln\left( \frac{\ch \xi - 1}{\ch \xi + 1} \right).
+						\] On en déduit donc que \[
+							\boxed{\Lambda = - \sum_{m \in \Z} \ln\left( \frac{\ch \xi - 1}{\ch \xi + 1} \right).}
+						\]
+				\end{enumerate}
+		\end{enumerate}
+	\end{multicols}
+	\begin{figure}[H]
+		\centering
+		\incfig{lignes-de-champ}
+		\caption{Lignes de champ de $\vec{E}(\mathrm{M})$\/ pour l'électrofiltre sec}
+		\label{fig:lignes-champ}
+	\end{figure}
+	\begin{multicols}{2}
+		\begin{enumerate}[start=4]
+			\item[]
+				\begin{enumerate}[start=2]
+					\item
+						On représente les lignes de champ de $\vec{E}(\mathrm{M})$\/ en violet sur la figure \ref{fig:lignes-champ}.
+						Les zones de fort champ $E(\mathrm{M})$\/ sont lorsque les lignes de champ se resserrent. Le champ est donc plus fort au niveau des émettrices (représentées en bleu sur la figure).
+						Le champ $\vec{E}(\mathrm{M})$\/ s'annule à équidistance de deux émettrices, car les champs individuels de chaque émettrice se compensent. Ces points sont représentés en rouge sur la figure.
+					\item Près de l'électrode émettrice, on mesure $|E_y| = 23{,}5\cdot (U/s)$\/ d'après la figure 2 du sujet. Or, la ligne de champ passant par le point $\mathrm{M}(0, r_\mathrm{e}, 0)$\/ est parallèle à l'axe $(\mathrm{O}y)$, d'où $|E_y| = E_0$.
+						Ainsi, on a \[
+							\boxed{U_0 = \frac{E_0}{23{,}5} s.}
+						\]
+						Après application numérique, on trouve $\res{U_0 = 2{,}81 \times 10^4\:\mathrm{V}}$. Les valeurs de $U_0$\/ trouvées pour l'électrofiltre sec et humide ont le même ordre de grandeur : $U_0 \sim 10^4\:\mathrm{V}$.
+				\end{enumerate}
+		\end{enumerate}
+		\subsection{Influence des charges d'espace}
+		\begin{enumerate}
+			\item On sait que, dans les conducteurs ohmiques, $\vec{\jmath}(\mathrm{M}) = \rho(\mathrm{M}) \cdot \vec{v}(\mathrm{M})$. Or, d'après l'énoncé, $\vec{v}(\mathrm{M}) = - b\:\vec{E}(\mathrm{M})$. Et, comme l'espace inter-électrode est \guillemotleft~peuplé~\guillemotright\ d'anions, de charge négative, $\rho(\mathrm{M}) < 0$. Ainsi, $\vec{\jmath}(\mathrm{M})$\/ est colinéaire et va dans le même sens que $\vec{E}(\mathrm{M})$. D'après la figure \textsc{a}, le courant $i$\/ va donc des collectrices aux émettrices. Comme $\vec{\jmath}(\mathrm{M})$\/ et $\vec{E}(\mathrm{M})$\/ sont colinéaires, on en déduit que \[
+					\boxed{j(\mathrm{M}) = - b\:\rho(\mathrm{M})\:E(\mathrm{M}).}
+				\]
+			\item On intègre l'expression trouvée à la question précédente sur une surface $\mathcal{S}$\/ cylindrique de rayon $r$\/ et de hauteur $h$\/ :
+				\begin{align*}
+					i &= \iint\limits_\mathcal{S} \vec{\jmath}\cdot \mathrm{d}\vec{S}_\text{sortant}\\
+					&= \iint\limits_\mathcal{S} j(\mathrm{M})\: \vec{e}_r \cdot \mathrm{d}S\: (-\vec{e}_r) \\
+					&= \iint\limits_\mathcal{S} -j(\mathrm{M})~\mathrm{d}S \\
+					&= \iint\limits_\mathcal{S} b\:\rho(\mathrm{M})\:E(\mathrm{M})~\mathrm{d}S \\
+					&= b\:\rho\:E \iint\limits_\mathcal{S}~\mathrm{d}S\\
+					&= b\,\rho\,E \cdot 2\pi\,r\,h. \\
+				\end{align*}
+				Ainsi, on en déduit que \[
+					\boxed{\rho = \frac{i}{2\pi rh b E}.}
+				\]
+			\item D'après l'équation de \textsc{Maxwell-Gauss}, on a \[
+					\boxed{\div \vec{E}(\mathrm{M}) = \frac{\rho(\mathrm{M})}{\varepsilon_0},}
+				\] qui exprime localement la modification du champ électrique $\vec{E}(\mathrm{M})$\/ par les charges (\textit{i.e.} les ions).
+				On utilise l'expression de $\rho$\/ trouvée à la question précédente, et on a donc \[
+					\div \vec{E}(\mathrm{M}) = \frac{i}{2\pi\varepsilon_0 r h b E}
+				.\] Mais, en coordonnées cylindriques, la divergence du champ $\vec{E}$\/ est donnée par \[
+					\div \vec{E}(r, \theta, z) = \frac{1}{r} \frac{\partial\: (r\,E_r)}{\partial r} + \frac{1}{r} \frac{\partial E_\theta}{\partial \theta} + \frac{\partial E_z}{\partial z}
+				.\]
+				Par identification avec les deux formules, et comme $\vec{E}$\/ est radial, on trouve \[
+					\frac{1}{r} \frac{\partial\, (rE)}{\partial r} = \frac{i}{2\pi\varepsilon_0 h b E}
+				,\] d'où l'équation demandée : \[
+				\boxed{rE\cdot \frac{\mathrm{d}(rE)}{\mathrm{d}r} = \frac{ri}{2\pi \varepsilon_0 hb}.}
+				\]
+			\item Avec le changement de variable $u = r E$, on intègre entre $r$\/ et $r_0$\/ pour trouver \[
+					\int_{r}^{r_0} u \frac{\mathrm{d}u}{\mathrm{d}r}~\mathrm{d}r = \int_{r}^{r_0} \frac{ri}{2\pi\varepsilon_0 hb}~\mathrm{d}r
+				\] d'où \[
+				\left[ \frac{u^2}{2} \right]_r^{r_0} = \frac{i}{2\pi\varepsilon_0 hb} \times \left[ \frac{r^2}{2} \right]_r^{r_0},
+				\] et donc \[
+				\big(r_0{}^2 E_0{}^2 - r^2\:E^2(r)\big) = \frac{i}{2\pi\,\varepsilon_0\, h\, b}\big(r_0{}^2 - r^2)
+				.\]
+				Après simplification, on trouve \[
+					E^2(r) = \frac{1}{r^2} \left( r_0{}^2 - E_0{}^2 - \frac{i(r_0{}^2 - r^2)}{2\pi\, \varepsilon_0\, h\,b} \right)
+				.\] On en déduit donc que \[
+					\boxed{E(r) = \sqrt{\left(\frac{r_0}{r}\: E_0\right)^2 - \frac{i}{2\pi\,\varepsilon_0\, h\,b} \left( \frac{r_0{}^2}{r^2} - 1 \right) }.}
+				\] 
+			\item Si $E$\/ devient grossièrement uniforme, alors \[
+					rE\frac{\mathrm{d}(rE)}{\mathrm{d}r} = rE \times E \frac{\mathrm{d}r}{\mathrm{d}r} = r\:E^2
+				,\] et donc, avec l'expression de la question 3, on trouve alors \[
+					r\:E^2 = \frac{r\:i}{2\pi\, \varepsilon_0\, h\, b}
+				.\] On conclut donc que, avec cette approximation, \[
+					\boxed{E = \sqrt{\frac{i}{2\pi\,\varepsilon_0\, h\,b}}.}
+				\] Après application numérique, on trouve \res{$E = 0{,}20\:\mathrm{MJ}$}.
+			\item On a $v = \|\vec{v}\| = b\, E = \res{62\:\mathrm{m}/\mathrm{s}}$.
+				Et, d'après la question 2, on a \[
+					\rho(r_\mathrm{e}) = -\frac{i}{2\pi\, r_\mathrm{e} \,h\,b\,E} = \res{-1{,}4 \times10^{-5}\:\mathrm{C}/\mathrm{m}^3}
+				.\] Le nombre d'ions par centimètre cube est
+				\begin{align*}
+					\frac{\rho(r_\mathrm{e})}{-e} &= \res{89 \times 10^{12}\:\mathrm{ions}/\mathrm{m}^3}\\
+					&= \res{89 \times 10^6\:\mathrm{ions}/\mathrm{cm}^3}. \\
+				\end{align*}
+		\end{enumerate}
+		\section{Comportment des poussières dans l'électrofiltre}
+		\subsection{Charge d'une particule sphérique : modèle de \textsc{Pauthenier}}
+		\begin{enumerate}
+			\item
+				\begin{enumerate}
+					\item~
+						\begin{figure}[H]
+							\centering
+							\def\svgwidth{0.5\textwidth}
+							\incfig{particules}
+							\caption{Lignes de champ autour d’un grain de poussière pour $Q = 0$ (en haut) et pour $Q < 0$ (en bas). Les anions sont représentés en rouge, le champ $\vec{E}$\/ est représenté en bleu.}
+							\label{fig:particule}
+						\end{figure}
+					\item Le champ $\vec{E}_1(\mathrm{M})$\/ correspond à celui créé par une boule chargée de rayon $a$\/ et de charge uniforme $Q$.
+						Analysons les symétries et invariances : les plans $\Pi_1(\mathrm{M}, \vec{u}_r, \vec{u}_\theta)$\/ et $\Pi_2(\mathrm{M}, \vec{u}_r, \vec{u}_z)$\/ sont de symétrie des charges, donc du champ $\vec{E}_1$. De plus, le système est invariant par révolution autour de l'axe $(\mathrm{O}, \vec{u}_r)$\/ et l'axe $(\mathrm{O}, \vec{u}_z)$. On en déduit \[
+							\vec{E}_1(\mathrm{M}) = E_1(r)\:\vec{u}_r
+						.\]
+						On applique le théorème de \textsc{Gauss} sur une sphère $\mathcal{S}$ de rayon $r \ge a$ : \[
+							\oiint\limits_\mathcal{S} \vec{E}_1(\mathrm{M}) \cdot \mathrm{d}\vec{S}_\mathrm{sortant} = \frac{Q_\mathrm{int}}{\varepsilon_0} = \frac{Q}{\varepsilon_0}
+						.\]
+						Or, on a
+						\begin{align*}
+							\oiint\limits_\mathcal{S} \vec{E}_1(\mathrm{M})\cdot \mathrm{d}\vec{S}_\mathrm{sortant}
+							&= \oiint\limits_\mathcal{S} E_1(r)\vec{u}_r \cdot \mathrm{d}S\:\vec{u}_r \\
+							&= \oiint\limits_\mathcal{S} E_1(r)~\mathrm{d}S \\
+							&= E_1(r) \cdot \oiint\limits_\mathcal{S} \mathrm{d}S \\
+							&= E_1(r) \cdot 4\pi r^2. \\
+						\end{align*}
+						Ainsi, après simplification, on en déduit que \[
+							\boxed{\vec{E}_1(r) = \frac{Q}{4\pi r^2 \: \varepsilon_0} \vec{u}_r.}
+						\]
+						Sur la figure \ref{fig:particule}, on représente en orange la portion de la sphère d'où partent, vers des valeurs croissantes de $r$, les lignes de champ de $\vec{E}(\mathrm{M})$.
+						Ainsi, cette portion est plus importante pour $|Q| > 0$ (haut) que pour $Q = 0$ (bas).
+						L'accroissement de $|Q|$ a donc tendance à élargir cette portion de sphère.
+						Cet accroissement s'oppose ainsi à l'arrivée de nouveaux anions, de charge négative, sur la sphère.
+					\item Les lignes de champ de $\vec{E}(\mathrm{M})$\/ sont si distordues qu'aucun anion n'arrive au grain de poussière lorsque \smash{$\vec{E}_\mathrm{t}$} n'a plus de composante radiale, ou elle est strictement négative. Autrement dit, on cherche la valeur maximale de la charge $Q$\/ telle que \smash{$\vec{E}_\mathrm{t}(\mathrm{M}) \cdot \vec{u}_r > 0$}, reste vrai pour certains points $\mathrm{M}$.
+						Au vu de la figure \ref{fig:particule}, le dernier point $\mathrm{M}$\/ vérifiant cette condition se situe à $\theta = \pi$\/ et à $r = a$.
+						Avec cette condition, on a $\vec{E}(\mathrm{M}) = E \vec{u}_z = -E \vec{u}_r$, et donc {\footnotesize\[
+							\vec{E}_\mathrm{t} \cdot \vec{u}_r = -E + 2E \cos \theta \frac{\varepsilon_\mathrm{r} - 1}{\varepsilon_\mathrm{r} + 2}\: \cancel{\frac{a^3}{a^3}} + \frac{Q_\mathrm{lim}}{4\pi \varepsilon_0 a^2}
+						\]} qui est nul. D'où, \[
+							\boxed{Q_\mathrm{lim} = 4\pi \varepsilon_0 a^2 E \cdot \left( 1 + 2\frac{\varepsilon_\mathrm{r} - 1}{\varepsilon_\mathrm{r} + 2} \right) .}
+						\]
+					\item On réalise l'application numérique, et on trouve {\footnotesize\[
+							\res{Q_\mathrm{lim} = -1{,}39 \times 10^{-16}\:\mathrm{C} = 869 \times (-e)}
+						.\]}
+				\end{enumerate}
+			\item
+				\begin{enumerate}
+					\item La dimension de $v = bE$\/ est $[v] = [b]\cdot [E] = \textsf{L}\cdot \textsf{T}^{-1}$.
+						Et, d'après le théorème de \textsc{Gauss}, on a $\oiint \vec{E} \cdot \mathrm{d}\vec{S} = Q / \varepsilon_0$, d'où {\small\[
+							[\varepsilon_0] = \frac{[Q]}{[E] \cdot \textsf{L}^2} = \frac{[Q]\cdot [b]}{[v] \cdot \textsf{L}^2} = \frac{\textsf{T}\cdot [Q] \cdot [b]}{\textsf{L}^3}.
+						\]}Également, $[\rho] = [Q] \cdot \textsf{L}^{-3}$.
+						Par identification, on trouve $[\varepsilon_0] = [\rho] \cdot [b] \cdot \textsf{T}$.
+						Comme la dimension de $\tau_Q$\/ est $[\tau_Q] = \textsf{T}$, on en déduit que \[
+							\boxed{\tau_Q = 4\frac{\varepsilon_0}{|\rho| \cdot b}.}
+						\]
+					\item On cherche une valeur de $t$\/ telle que $t/(t + \tau_Q) = 90\:\%$.
+						D'où, \[
+							t_{90}(0{,}90 - 1) = -0{,}90\: \tau_Q
+						.\] On en déduit \[
+							t_{90} = \frac{0{,}90\: \tau_Q}{1 - 0{,}90}
+						.\] On trouve, par application numérique, $\tau_Q = 2{,}3\:\mathrm{ms}$, d'où $\res{t_{90} = 21\:\mathrm{ms}}$.
+					\item Le temps nécessaire théorique pour qu'un grain de poussière traverse l'électrofiltre serait de $t = 10\:\mathrm{s}$. Or, d'après la question précédente, le temps nécessaire pour que ce grain de poussière soit chargé à 90\:\% de sa charge maximale est de $21\:\mathrm{ms} \ll 10\,\:\mathrm{s}$. Ainsi, les grains de poussières sont, presque instantanément chargés.
+				\end{enumerate}
+		\end{enumerate}
+	\end{multicols}
+	\vfill
+	\begin{center}
+		{
+			\fontfamily{ccr}\selectfont
+			\textit{\textbf{\.{\"i}}}
+		}
+	\end{center}
+	\vfill
+	\null
+\end{document}

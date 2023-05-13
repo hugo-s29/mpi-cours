@@ -1,0 +1,25 @@
+\section{Sérialisation de types énumérés}
+
+\begin{enumerate}
+	\item Pour sérialiser une liste, on utilise la fonction \texttt{serialise\_couple} définie dans le cours.
+		\begin{lstlisting}[language=caml,caption=Sérialisation de listes]
+let rec serialise_liste (t: 'a list) (serialise: 'a -> string): string =
+	match s with
+	| [] -> ""
+	| x :: q -> serialise_couple (serialise x) (serialise_liste t serialise)
+		\end{lstlisting}
+	\item Soit $(\varphi_{i,j})_{\substack{i \in \left\llbracket 1,m \right\rrbracket\\ j \in \left\llbracket 1,n_i \right\rrbracket}}$ sérialisant le type $\texttt{t}_{i,j}$. Soit \[
+		\varphi_i: (x_1, \ldots, x_{n_i}) \longmapsto \text{``}\texttt{(}\text{''} \mathop{\texttt{\^{}}} \varphi_{i,1}(x_1) \mathop{\texttt{\^{}}} \text{``}\texttt{),(}\text{''} \mathop{\texttt{\^{}}} \ldots \mathop{\texttt{\^{}}} \varphi_{i,n_i}(x_{n_i}) \mathop{\texttt{\^{}}} \text{``}\texttt{)}\text{''}
+	.\]
+		\begin{lstlisting}[language=caml,caption=Serialisation de types énumérés]
+let rec serialise_enum (e : enumeration) : string =
+	let rec aux (i: int) (j: int) 
+	match e with
+	| C%*$_1$*)(e%*$_{1,1}$*),...,e%*$_{1,n_1}$*)) ->
+		serialise_couple (%*$1$*), %*$\varphi_1$*)(e%*$_1$*),...,e%*$_{n_1}$*)))
+	| ...
+	| C%*$_m$*)(e%*$_{m,1}$*),...,e%*$_{m,n_m}$*)) ->
+		serialise_couple (%*$m$*), %*$\varphi_m$*)(e%*$_1$*),...,e%*$_{n_m}$*)))
+		\end{lstlisting}
+\end{enumerate}
+

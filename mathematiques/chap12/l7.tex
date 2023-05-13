@@ -1,0 +1,24 @@
+Une isométrie $f$\/ est, ou bien une rotation d'un angle $\theta$ autour de l'axe $\Vect(\vec{w})$, ou bien la composée d'une rotation d'angle $\theta$\/ autour de l'axe $\Vect(\vec{w})$\/ et d'une symétrie par rapport au plan $\Vect(\vec{u}, \vec{v})$.
+
+\begin{prv}[{\color{cyan}tarte à la crème}\null]
+	Comme $f$\/ est une isométrie, on a, pour tout vecteur $\vec{x} \in E$, $\|f(\vec{x})\| = \|\vec{x}\|$.
+	Or, il existe un vecteur $\vec{x}$\/ non nul tel qu'il existe $\lambda \in \R$\/ tel que $f(\vec{x}) = \lambda \vec{x}$, d'où $\|\lambda \vec{x}\| = \|\vec{x}\|$, donc $|\lambda|\cdot \|\vec{x}\| = 1 \cdot \|\vec{x}\|$. On en déduit que $\lambda \in \{-1,1\}$\/ car $\|\vec{x}\| \neq 0$.
+	La suite de la démonstration est dans le poly.
+\end{prv}
+
+\begin{thm}
+	Soit $E$\/ un espace euclidien, et soit $f$\/ une isométrie : $E$\/ est la somme directe et orthogonale de $\Ker(\id_E - f)$, de $\Ker(-\id_E - f)$, et/ou de plans $P_i$\/ stables par $f$\/ sur lesquels $f$\/ induit une rotation.
+\end{thm}
+
+\begin{crlr}
+	Si $f$\/ est une isométrie d'un espace euclidien $E$, alors il existe $(p, q) \in \N^2$, des réels $\theta_1, \ldots, \theta_k$, et une base $\mathcal{B}$\/ orthonormée de $E$\/ tels que \[
+		[\:f\:]_\mathcal{B} = \begin{pNiceMatrix}
+			R_{\theta_1} & \Block{3-4}{(0)} & & & \\
+			\Block{4-3}{(0)}& \ddots & & &\\
+			& & R_{\theta_k} & & \\
+			&&& I_p &\\
+			&&&& -I_q
+		\end{pNiceMatrix} 
+	.\] 
+\end{crlr}
+

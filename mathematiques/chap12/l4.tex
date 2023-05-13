@@ -1,0 +1,169 @@
+On rappelle que $\left<\vec{u} \mid f(\vec{v}) \right> = \left<f^\star(\vec{u}) \mid \vec{v} \right>$, pour tous vecteurs $\vec{u}$\/ et $\vec{v}$.
+
+\begin{prop}
+	Soit $f : E \to E$, un endomorphisme d'un espace euclidien $E$.
+	\begin{enumerate}
+		\item $f$\/ est autoadjoint si, et seulement si, $f^\star = f$\/ ;
+		\item $f$\/ est une isométrie si, et seulement si, $f^\star = f^{-1}$.
+	\end{enumerate}
+\end{prop}
+
+Ainsi, on a
+\begin{align*}
+	f \text{ est autoadjoint} \iffdef& \left<\vec{u}  \mid f(\vec{v}) \right> = \left<f(\vec{u})  \mid  \vec{v} \right> \text{ pour tous vecteurs } \vec{u} \text{ et } \vec{v} \\
+	\iff& f^\star = f \\
+	\iff& \big[\:f\:\big]_\mathcal{B}^\top = \big[\:f\:\big]_\mathcal{B} \text{ dans une base orthonormée } \mathcal{B}. \\
+\end{align*}
+Et,
+\begin{align*}
+	f \text{ est une isométrie} \iffdef& \left< f(\vec{u}) \mid f(\vec{v}) \right> = \left<\vec{u}  \mid \vec{v}  \right> \text{ pour tous vecteurs } \vec{u} \text{ et } \vec{v}\\
+	\iff& \big[\:f\:\big]_\mathcal{B}^\top = \big[\:f\:\big]_\mathcal{B}^{-1} \text{ dans une base orthonormée } \mathcal{B} \\
+	\iff&  f^\star  = f^{-1}. \\
+\end{align*}
+Ce qui prove la proposition précédente.
+
+\begin{exo}
+	Soit $E$ un espace euclidien, et soit $F$ un sous-espace vectoriel de $E$. On a $F \oplus F^\perp = E$. Soit $\s \in \mathcal{L}(E, E)$.
+	Montrons que $\s$ est une symétrie orthogonale si, et seulement si $\s$ est une symétrie autoadjointe.
+	\begin{itemize}
+		\item [``$\impliedby$''] L'application $\s$ est une isométrie donc $\s^\star = \s^{-1}$. L'application $\s$ est un endomorphisme autoadjoint donc $\s^\star = \s$.
+			D'où $\s = \s^{-1}$, donc $\s$ est une symétrie.
+			Ainsi $\Ker(\s - \id) \perp \Ker(\s + \id)$.
+		\item[``$\implies$''] L'application $\s$ est une symétrie orthogonale, d'où $E = F + F^\perp$ en appelant $F = \Ker(\s - \id)$.
+			Ainsi, pour tout vecteur $\vec{x} \in E$, il existe un unique couple $(\vec{a}, \vec{b}) \in F \times F^\perp$ tel que $\vec{x} = \vec{a} + \vec{b}$.
+			D'où, $\s(\vec{x}) = \s(\vec{a}) + \s(\vec{b}) = \vec{a} - \vec{b}$.
+			D'où $\|\vec{x}\|^2 = \|\vec{a}\|^2 + \|\vec{b}\|^2$ et $\|\s(\vec{x})\|^2 = \|\vec{a}\| + \|\vec{b}\|$. Ainsi, $\s$ conserve la norme, c'est donc une isométrie, donc $\s^\star  = \s^{-1}$
+			De plus, $\s$ est une symétrie donc $\s = \s^{-1}$. D'où, $\s = \s^\star$, donc $\s$ est autoadjoint.
+	\end{itemize}
+\end{exo}
+
+\section{Stabilité de l'orthogonal}
+
+\begin{prop}
+	Soit $f$\/ un endomorphisme autoadjoint de $E$, et soit $f$\/ un sous-espace vectoriel de $E$. Si $F$\/ est stable par $f$, alors $F^\perp$\/ est aussi stable par $f$.
+\end{prop}
+
+\begin{prv}
+	On suppose, pour tous vecteurs $\vec{u}$\/ et $\vec{v}$, $\left<f(\vec{u}) \mid \vec{v} \right> = \left<\vec{u}  \mid f(\vec{v}) \right>$, et pour tout vecteur $\vec{x} \in F$, $f(\vec{x}) \in F$.
+	Soit $\vec{x} \in F^\perp$.
+	Soit $\vec{y} \in F$.
+	On calcule : $\left< f(\vec{x})  \mid \vec{y} \right> = \left<\vec{x}  \mid f(\vec{y}) \right>$.
+	Or, $\vec{y} \in F$, et donc $f(\vec{y}) \in F$\/ par hypothèse.
+	Comme $\vec{x} \in F^\perp$. Ainsi, $\left<\vec{x}  \mid f(\vec{y}) \right> = 0$, et donc $\left<f(\vec{x})  \mid \vec{y} \right> = 0$.
+	D'où, $f(\vec{x}) \perp \vec{y}$.
+	Ainsi, $f(\vec{x}) \in F^\perp$, d'où $F^\perp$\/ est stable par $f$.
+\end{prv}
+
+\begin{prop}
+	Soit $f$\/ une isométrie vectorielle de $E$, et soit $f$\/ un sous-espace vectoriel de $E$. Si $F$\/ est stable par $f$, alors $F^\perp$\/ est aussi stable par $f$.
+\end{prop}
+
+\begin{prv}
+	On suppose, pour tous vecteurs $\vec{u}$\/ et $\vec{v}$, $\left<f(\vec{u}) \mid f(\vec{v}- \right> = \left<\vec{u}  \mid \vec{v} \right>$, et pour tout vecteur $\vec{x} \in F$, $f(\vec{x}) \in F$.
+	Soit $\vec{x} \in F^\perp$.
+	Soit $\vec{y}_0 \in F$.
+	Comme $f$\/ est bijective, il existe $\vec{y} \in F$\/ tel que $f(\vec{y}_0) = \vec{y}$.
+	Ainsi $\left<f(\vec{x})  \mid \vec{y}_0 \right> = \left<f(\vec{x})  \mid f(\vec{y}) \right> = \left<\vec{x} | \vec{y}\right> = 0$.
+	D'où, $f(\vec{x}) \perp \vec{y}_0$.
+	Ainsi, $f(\vec{x}) \in F^\perp$, d'où $F^\perp$\/ est stable par $f$.
+\end{prv}
+
+\begin{prop}
+	 Un sous-espace vectoriel $F$\/ de $E$\/ est stable par $f$\/ si, et seulement si, $F^\perp$\/ est stable par $f^\star$.
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item[$\implies$] On suppose, pour tout $\vec{x} \in F$, $f(\vec{x}) \in F$. Soit $\vec{y} \in F^\perp$, et soit $\vec{x} \in F$.
+			Par définition de l'adjoint, $\left<f^\star (\vec{y})  \mid \vec{x} \right> = \left<\vec{y}  \mid f(\vec{x}) \right>$.
+			Or, $f(\vec{x}) \in F$\/ par hypothèse, et $\vec{y} \in F^\perp$.
+			D'où $f^\star (\vec{y}) \perp \vec{x}$, et donc $f^\star (\vec{y}) \in F^\perp$.
+		\item[$\impliedby$] On applique le cas précédent avec $G = F^\perp$, et $g = f^\star$. En effet, $G^\perp = F^{\perp\perp} = F$, car $E$\/ de dimension fini, et $g^\star = f^{\star\star} = f$.
+	\end{itemize}
+\end{prv}
+
+\section{Le théorème spectral}
+
+\begin{lem}
+	Soit $f : E \to E$\/ un endomorphisme autoadjoint.
+	\begin{enumerate}
+		\item Les sous-espaces propres de $f$\/ sont deux à deux orthogonaux. Autrement dit, si deux vecteurs propres sont associés à des valeurs propres distinctes, alors ils sont orthogonaux.
+		\item Les valeurs propres de $f$\/ sont toutes réelles $\Sp_\C(f) \subset \R$.
+	\end{enumerate}
+	Ce lemme reste valide en replaçant l'endomorphisme autoadjoint $f$\/ par la matrice réelle symétrique $A$.
+\end{lem}
+
+\noindent{\color{red} \largedanger\ Attention, $E$\/ doit être un $\R$-espace vectoriel ; la matrice $A$\/ doit être à coefficients réels. Sinon, les résultats du cours ne s'appliquent pas.}
+
+\bigskip
+
+\begin{prv}
+	On suppose $f$\/ autoadjoint (H) : pour tous vecteurs $\vec{u}$\/ et $\vec{v}$, $\left<f(\vec{u})  \mid \vec{v} \right> = \left<\vec{u}  \mid f(\vec{v}) \right>$.
+	Soient deux vecteurs $\vec{u}$\/ et $\vec{v}$\/ tels que $f(\vec{u}) = \lambda \vec{u}$\/ et $f(\vec{v}) = \mu \vec{v}$\/ avec $\lambda \neq \mu$.
+	Montrons $u \perp v$.
+	\begin{align*}
+		&\left<f(\vec{u})  \mid \vec{v} \right> = \left<\lambda \vec{u}  \mid \vec{v} \right> = \lambda \left<\vec{u}  \mid \vec{v} \right>\\
+		{}_{\text{(H)}}=& \left<\vec{u}  \mid f(\vec{v}) \right> = \left<\vec{u}  \mid \mu \vec{v} \right> = \mu \left<\vec{u}  \mid \vec{v} \right>.\\
+	\end{align*}
+	D'où, par différence $(\lambda - \mu) \left<\vec{u} \mid \vec{v} \right> = 0$. Comme $\lambda \neq \mu$, on en conclut que $\left<\vec{u} \mid \vec{v} \right> = 0$\/ d'où $\vec{u} \perp \vec{v}$.
+
+
+	Pour montrer 2., on utilise les matrices : dans une base $\mathcal{B}$\/ orthonormée de $E$, soit $A \in \mathcal{S}_n(\R)$\/ la matrice de $f$\/ dans $\mathcal{B}$.
+	Soit $X \in \mathcal{M}_{n,1}(\C)$\/ un vecteur propre associé de $A$, et soit $\lambda \in \C$\/ sa valeur propre (complexe) associée.
+	Ainsi, $X\neq  0_{\mathcal{M}_{n,1}(\C)}$, et $A\cdot X = \lambda X$. Montrons $\lambda = \bar\lambda$.
+	On calcule $\bar{X}^\top \cdot (A \cdot X) = \bar{X}^\top \cdot \lambda X = \lambda \bar{X}^\top \cdot X$\/ 
+	Or, \[
+		\bar{X}^\top \cdot X = \begin{pmatrix}
+			\bar{z}_1 & \bar{z}_2 & \ldots & \bar{z}_n
+		\end{pmatrix} \cdot \begin{pmatrix}
+			z_1\\ z_2\\ \vdots\\ z_n
+		\end{pmatrix} = |z_1|^2 + |z_2|^2 + \cdots + |z_n|^2
+	.\]
+	C'est un réel strictement positif (en effet, s'il était nul, $X$\/ serait nul).
+	Autre calcul,
+	\begin{align*}
+		\bar{X}^\top \cdot A \cdot X = \big(\bar{X}^\top \cdot A \cdot X\big)^\top\\
+		&= X^\top \cdot A^\top \cdot (\bar{X}^\top)^\top\\
+		&= X^\top \cdot A \cdot \bar{X} \text{ car } A \in \text{\ul{$\mathcal{S}_n$}}(\R)\\
+		&= \overline{\bar{X}^\top \cdot \bar{A} \cdot X}\\
+		&= \overline{\bar{X}^\top \cdot A \cdot X}  \text{ car } A \in \mathcal{S}_n(\text{\ul{$\R$}})\\
+	\end{align*}
+	D'où, $\bar{X}^\top \cdot A\cdot X \in \R$.
+	Mais, $\bar{X}^\top \cdot A\cdot X = \lambda\:\big(|z_1|^2 + \cdots + |z_n|^2\big)$.
+	Comme $\big(|z_1|^2 + \cdots + |z_n|^2\big) \neq 0$, d'où $\lambda \in \R$.
+\end{prv}
+
+\begin{thm}[Théorème spéctral -- endomorphismes]
+	Un endomorphisme $f$\/ d'un espace euclidien $E$\/ est autoadjoint si, et seulement s'il est diagonalisable dans une base orthonormée.
+	Autrement dit, si, et seulement s'il existe une base orthonormée de $E$\/ formée de vecteurs propres de $f$.
+	Ou encore, si, et seulement si $E$\/ est la somme orthogonale des sous-espaces propres de $f$.
+\end{thm}
+
+\begin{prv}[Par récurrence sur $n = \dim E$]~\\[-\baselineskip]
+	\begin{description}
+		\item[Initialisation] Pour $n = 1$, soit $\vec{v} \in E$\/ un vecteur non nul, alors la base $\big(\frac{\vec{v}}{\|\vec{v}\|}\big)$\/ convient.
+		\item[Hérédité]
+			Soit $n \ge 1$. On suppose le théorème vrai en dimension $n$.
+			Soit $f : E \to E$\/ un endomorphisme autoadjoint d'un espace euclidien $E$\/ de dimension $n+1$.
+			Soit $\chi_f(X)$\/ le polynôme caractéristique de $f$. Il est de degré $n + 1$, il a donc au moins une racine complexe $\lambda$.
+			D'où, l'endomorphisme $f$\/ a au moins une valeur propre $\lambda \in \C$.
+			D'après le lemme précédent, on sait maintenant que $\lambda \in \R$.
+			Il existe $\vec{u} \in E$\/ un vecteur non nul tel que $f(\vec{u}) = \lambda \vec{u}$.
+			La droite $\Vect(\vec{u})$\/ est stable par $f$.
+			Par stabilité de l'orthogonal, $\Vect(\vec{u})^\perp$\/ est aussi stable par $f$.
+			Or, on a \smash{$\dim[\Vect \vec{u}]^\perp = n$}.
+			On s'intéresse alors à l'endomorphisme induit à $\Vect(\vec{u})^\perp$ : \smash{$f\big|_{\Vect(\vec{u})^\perp} = g$}.
+			Or, pour tous vecteurs $\vec{x}$\/ et $\vec{y}$ de $\Vect(\vec{u})^\perp$\/, $\left<g(\vec{x})  \mid \vec{y} \right> = \left<f(\vec{x})  \mid \vec{y} \right> = \left<\vec{x}  \mid f(\vec{y}) \right> = \left<\vec{x} \mid  g(\vec{y}) \right>$.
+			D'où, l'endomorphisme $g$\/ est autoadjoint, on applique l'hypothèse de récurrence (\textit{i.e.}\ le théorème spectral) à $g$.
+			Ainsi, $\smash{\big( \frac{\vec{u}}{\|\vec{u}\|}, \vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_n\big)}$\/ est une base orthonormée de $E$\/ formée de vecteurs propres de $f$, où $(\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_n)$\/ est une base orthonormée de $\Vect(\vec{u})^\perp$\/ formée de vecteurs propres de $f$.
+	\end{description}
+	Le théorème spectral est donc vrai pour tout espace vectoriel de dimension finie $n$.
+\end{prv}
+
+\begin{crlr}[Théorème spéctral -- matrices]
+	Si une matrice $A \in \mathcal{S}_n(\R)$\/ est symétrique réelle, alors il existe une matrice orthogonale $P \in \mathrm{O}_n(\R)$\/ telle que $P^{-1}\cdot A\cdot P = P^\top \cdot A\cdot P$\/ est diagonale.
+	Autrement dit, toute matrice symétrique réelle est orthogonalement diagonalisable : \[
+		A \in \mathcal{S}_n(\R) \quad\quad \implies \quad\quad
+		\exists P \in \mathrm{O}_n(\R),\: P^{-1}\cdot A\cdot P \text{ diagonale}
+	.\]
+\end{crlr}

@@ -1,0 +1,121 @@
+L'objectif de ce chapitre, sera de ``critiquer'' le travail en logique fait précédement, puis d'apporter une solution à ce problème ; on finira par un peu de \textsc{Hors-Programme}.
+
+\setcounter{section}{-1}
+
+\section{Motivation}
+
+\subsection{Tables de vérité}
+
+Pour l'instant, pour montrer $\Gamma \models G$\/ ou $G \equiv H$, nous devons encore utiliser une table de vérité.
+Par exemple, montrons \[
+	\underbrace{(p \to q) \land (q \to r)}_G \models \overbrace{p\to r}^H
+.\]
+On réalise la table de vérité ci-dessous.
+
+\begin{table}[H]
+	\centering
+	\[
+		\begin{array}{c|c|c|c|c|c|cl}
+			p&q&r&p\to q&q\to r&G&H\\ \hline
+			\mathbf{F}&\mathbf{F}&\mathbf{F}&\mathbf{V}&\mathbf{V}&\mathbf{V}&\mathbf{V}&\gtk\\
+			\mathbf{F}&\mathbf{F}&\mathbf{V}&\mathbf{V}&\mathbf{V}&\mathbf{V}&\mathbf{V}&\gtk\\
+			\mathbf{F}&\mathbf{V}&\mathbf{F}&\mathbf{V}&\mathbf{F}&\mathbf{F}&\mathbf{V}&\gtk\\
+			%\mathbf{F}&\mathbf{V}&\mathbf{V}&\mathbf{V}&\mathbf{V}&
+			%\mathbf{V}&\mathbf{F}&\mathbf{F}&\mathbf{F}&\mathbf{F}&\mathbf{V}&\mathbf{F}&\mathbf{F}
+		\end{array}
+	\] \todo{Finir table de vérité}
+	\caption{Table de vérité pour montrer $(p \to q) \land (q \to r) \models p\to r$\/}
+\end{table}
+
+\subsection{Équations}
+Supposons $\llbracket G \rrbracket^\rho = \mathbf{V}$. Montrons que $\llbracket H \rrbracket^\rho = \mathbf{V}$.
+On a
+\begin{align*}
+	\mathbf{V} &= \llbracket G \rrbracket^\rho\\
+	&= \llbracket (p\to q) \land(q \to r) \rrbracket^\rho \\
+	&\vdots \\
+	&= \overline{\llbracket p \rrbracket^\rho} \cdot \overline{\llbracket q \rrbracket^\rho} + \overline{\llbracket p \rrbracket^\rho} \cdot \overline{\llbracket q \rrbracket^\rho} \cdot \llbracket r \rrbracket^\rho + \llbracket q \rrbracket^\rho \cdot \llbracket r \rrbracket^\rho \\
+\end{align*}
+et
+\begin{align*}
+	\llbracket H \rrbracket^\rho &= \llbracket p\to r \rrbracket^\rho \\
+	&\vdots \\
+	&= \overline{\llbracket p \rrbracket^\rho} \cdot \overline{\llbracket q \rrbracket^\rho}
+	+ \overline{\llbracket p \rrbracket^\rho} \cdot \overline{\llbracket q \rrbracket^\rho}\\
+	&\quad+ \llbracket r \rrbracket^\rho \cdot \overline{\llbracket q \rrbracket^\rho} \cdot \left( \llbracket p \rrbracket^\rho + \overline{\llbracket p \rrbracket^\rho} \right) \\
+	&\quad + \llbracket r \rrbracket^\rho + ?
+\end{align*}
+\todo{finir le calcul}
+
+\subsection{Raisonnement mathématiques}
+
+Supposons $(p \to q) \land (q \to r)$. Montrons que $p \to r$.\\
+\begin{itemize}
+	\item[$\hookrightarrow$] Supposons donc $p$. Montrons $r$\/
+		\begin{itemize}
+			\item[$\hookrightarrow$] Montrons $q$.
+				\begin{itemize}
+					\item[$\hookrightarrow$] Montrons $p$, qui est une hypothèse.
+					\item[$\hookrightarrow$] Montrons $p\to q$, qui est aussi une hypothèse.
+				\end{itemize}
+			\item Montrons $q \to r$, ce qui est vrai par hypothèse.
+		\end{itemize}
+\end{itemize}
+
+On reconnaît un arbre.
+
+\section{La déduction naturelle en logique propositionnelle}
+\subsection{Séquents}
+
+\paragraph{Objectifs de preuves.}
+
+\begin{exm}
+	Montrons $P \land Q$\/ est vrai.\\
+	$\hookrightarrow$ Montrons $P$. \\
+	$\hookrightarrow$ Montrons $Q$. \\
+\end{exm}
+
+\paragraph{Hypothèses courantes.}
+
+\begin{exm}
+	Montrons que $(n \in 4\N \to n \in 2\N) \land (n \in 4\N + 3 \to n \in 2\N + 1)$.\\
+	\begin{itemize}
+		\item[$\hookrightarrow$] Montrons $n \in 4\N \to 2\N$.
+			\begin{itemize}
+				\item[$\hookrightarrow$] $\underset{\text{\color{red} local}}{\text{\color{red}\underline{\color{black}Supposons $n \in 4 \N$}}}$. Montrons $n \in 2\N$.
+			\end{itemize}
+		\item[$\hookrightarrow$] Montrons $n \in 4\N + 3 \to  n \in 2\N + 1$.
+		\begin{itemize}
+			\item[$\hookrightarrow$] Supposons $n \in 4\N + 3$. Montrons $n \in 2\N+1$.
+		\end{itemize}
+	\end{itemize}
+\end{exm}
+
+\begin{defn}[Séquent]
+	Un \textit{séquent} est la donnée 
+	\begin{itemize}
+		\item d'un ensemble d'hypothèses $\Gamma$\/ ;
+		\item d'un objectif $G$.
+	\end{itemize}
+	On le typographie $\Gamma \vdash G$.
+
+	\index{séquent}
+\end{defn}
+
+\begin{exm}
+	Montrons $\O \vdash (n \in 4\N \to n \in 2\N) \land (n \in 4\N + 3 \to n \in 2\N +1)$\/
+	\begin{itemize}
+		\item[$\hookrightarrow$] $\O \vdash (n \in 4\N \to n \in 2\N)$\/
+			\begin{itemize}
+				\item[$\hookrightarrow$] $\{n \in 4\N\} \vdash n \in 2\N$\/
+			\end{itemize}
+		\item[$\hookrightarrow$] $\O \vdash (n \in 4\N + 3 \to n \in 2\N +1)$\/
+			\begin{itemize}
+				\item[$\hookrightarrow$] $\{n \in 4\N + 3\} \to n \in 2\N +1$\/
+			\end{itemize}
+	\end{itemize}
+
+	On typographie cette preuve sous forme d'un arbre. \todo{Arbre à faire}
+\end{exm}
+
+

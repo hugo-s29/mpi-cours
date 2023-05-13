@@ -1,0 +1,123 @@
+\setcounter{section}{-1}
+\section{Dénombrabilité}
+
+\begin{rmk}
+	Un ensemble $E$\/ est dit \textit{dénombrable} s'il existe une bijection de $E$\/ dans $\N$. L'ensemble $\Z$\/ des entiers relatifs,\footnote{on compte sur chaque côtés simultanément : l'application \[
+		k \longmapsto \begin{cases}
+			2k - 1 &\quad \text{ si } k > 0\\
+			-2k &\quad \text{ si } k \le 0
+		\end{cases}
+	\] est bijective.}  et l'ensemble $\N^2$\/ des couples d'entiers\footnote{On place les entiers sur les diagonales : l'application $(x,y) \mapsto \sum_{k=1}^{x+y} k + y$\/ de $\N \times \N$\/ dans $\N$\/ est bijective.} sont dénombrables.
+
+	Par suite, le produit cartésien $E \times F$\/ de deux ensembles dénombrables $E$\/ et $F$\/ est aussi dénombrable. Mieux : une union dénombrable d'ensembles dénombrable est aussi dénombrable.
+
+	Ainsi, on peut en conclure que $\Q = \cup_{\substack{p \in \Z\\ q \in \N^*}} \frac{p}{q}$\/ est dénombrable car cet union est dénombrable.
+
+	\textbf{Mais}, $\R$\/ n'est pas dénombrable.
+\end{rmk}
+
+\begin{prv}[\textbf{une} preuve de \textsc{Cantor} pour la non-dénombrabilité de $\R$\/]
+	Par l'absurde, on suppose $\R$\/ dénombrable. On pose donc $\R = \{u_0,u_1, u_2,\ldots\}$. On construit par récurrence une suite $(a_n)_{n\in\N}$\/ croissante majorée par 1 et et une suite $(b_n)_{n\in\N}$\/ décroissante minorée par~0, telles que $u_n \not\in [a_{n+1}, b_{n+1}]$. Donc, $(a_n)_{n\in\N}$\/ converge vers un réel $A$, et de même $(b_n)_{n\in\N}$ converge vers un réel $B$. Or, par construction, $\nexists n, A = u_n$.
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			size(5cm);
+			real k = 0.3;
+			draw((-5, -k)--(-5, k));
+			draw((5, -k)--(5, k));
+			draw((-5,0)--(5,0));
+			draw((-2, -k)--(-2, k), red);
+			draw((1, -k)--(1, k), red);
+			draw((-2, 0)--(1, 0), red);
+			draw((2, -k)--(2, k), deepcyan);
+			label("$u_n$", (2, -k), deepcyan, align=S);
+			label("$a_n$", (-5, -k), align=S);
+			label("$b_n$", (5, -k), align=S);
+			label("$a_{n+1}$", (-2, -k), align=S, red);
+			label("$b_{n+1}$", (1, -k), align=S, red);
+		\end{asy}
+		\caption{Démonstration de la non-dénombrabilité de $\R$}
+	\end{figure}
+\end{prv}
+
+\section{Résultats et événements}
+
+\begin{exm}
+	\guillemotleft~On lance un dé~\guillemotright\ est une expérience aléatoire. Son univers (des résultats possibles) est $\Omega = \left\llbracket 1,6 \right\rrbracket$.
+
+	\guillemotleft~Le dé est tombé sur un numéro pair~\guillemotright\ est l'événement $E = \{2,4,6\} \subset \wp(\Omega)$. Un événement, c'est l'ensemble des résultats favorables à cet événement.
+	\guillemotleft~Le dé est tombé sur 3~\guillemotright\ est aussi un événement (c'est l'événement $\{3\}$), et non un résultat 3.
+\end{exm}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{r|c|l}
+		Vocabulaire des probabilités & Notation & Vocabulaire des ensembles \\ \hline
+		Événement certain & $\Omega$\/ & Univers \\
+		Événement impossible & $\O$\/ & Ensemble vide\\
+		Événement contraire & $\Omega \setminus A = \bar{A}$\/ & Complémentaire \\
+		Événement élémentaire & $\{\omega\}$\/ & Singleton\\
+		$A$\/ implique $B$\/ & $A \subset B$\/ & $A$\/ est une partie de $B$\/ \\
+		Le résultat $\omega$\/ réalise l'événement $A$\/ & $\omega \in A$\/ & $\omega$\/ appartient à $A$\/ \\
+		\textsc{et} & $\cap$\/ & Intersection\\
+		\textsc{ou} & $\cup $\/ & Réunion (ou union)\\
+		Événements incompatibles & $A \cap B = \O$\/ & Parties disjointes
+	\end{tabular}
+	\caption{Traduction vocabulaire ensembles-probabilités}
+\end{table}
+
+\begin{rmk}[unions et intersections]
+	Par définition, \[
+		\omega \in \bigcap_{i \in I} A_i \iff \forall i \in I, \omega \in A_i
+	\] et \[
+		\omega \in \bigcup_{i \in  I} A_i \iff \exists i \in I,\omega \in A_i
+	.\]
+
+	On dit que l'union $\bigcup_{i \in  I} A_i$\/ est \textit{disjointe} si les ensembles événements $A_i$\/ sont disjoints deux à deux : $\forall i \neq j$, $A_i \cap A_j = \O$ \textsl{i.e.} les événements $A_i$\/ et $A_j$\/ sont incompatibles ($\neq$ indépendants). On note alors cette union $\bigcupdot_{i \in  I} A_i$.
+
+	L'opération $\cup$\/ est distributive par rapport à l'opération $\cap$, et l'opération $\cap$\/ est distributive par rapport à l'opération$\cup$.
+\end{rmk}
+
+\begin{exo}
+	\textsl{Voici une expérience aléatoire. On lance une pièce indéfiniment. À chaque lancer, la pièce tombe sur \textsc{Pile} ou \textsc{Face}. Quel est l’univers $\Omega$\/ de cette expérience ?}
+
+	L'ensemble $\Omega$\/ est l'ensemble des résultats, et un résultat est une suite de \textsc{Pile} ou \textsc{Face}. D'où, $\Omega = \{\text{\textsc{Pile}}, \text{\textsc{Face}}\}^\N$.
+
+	\textsl{On pose, pour tout $n \in \N^*$, les événements $A_n$\/ : \guillemotleft~le premier \textsc{Face} est au $n$-ième lancer~\guillemotright\ et $B_n$\/ : \guillemotleft~les $n$\/ premiers lancers donnent \textsc{Pile}.~\guillemotright}
+
+	\begin{enumerate}
+		\item \textsl{Quel est l'événement $\bigcup_{n \in \N^*} A_n$\/ ?}\@ Cet événement correspond à \guillemotleft~la pièce est tombée au moins une fois sur \textsc{Face}.~\guillemotright\@ Cette union est disjointe.
+		\item \textsl{Quel est l'événement $\bigcap_{n \in \N^*} B_n$\/ ?}\@ Cet événement correspond à \guillemotleft~on n'obtient que des \textsc{pile}s.~\guillemotright
+		\item \textsl{Exprimer $\bar{B}_n$\/ en fonction des événements $A_k$.} On a $\bar{B}_n = \bigcup_{k=1}^n A_k$.
+		\item \textsl{Quel est l'événement $B_n \cap \bar{B}_{n+1}$\/ ?} On a $B_n \cap \bar{B}_{n+1} = A_{n+1}$.
+	\end{enumerate}
+\end{exo}
+
+\begin{defn}
+	Soit un ensemble $\Omega$. On dit qu'une partie $\mathcal{A}$ de $\wp(\Omega)$ est une \textit{tribu} sur $\Omega$ si :
+	\begin{enumerate}
+		\item $\Omega \in \mathcal{A}$\/ ;
+		\item si $A \in \mathcal{A}$, alors $\bar{A} \in \mathcal{A}$\/ ; \hfill (stabilité par passage au complémentaire)
+		\item si $\forall n \in \N$, $A_n \in \mathcal{A}$, alors $\bigcup_{n \in \N} A_n \in \mathcal{A}$. \hfill (stabilité par union dénombrable)
+	\end{enumerate}
+
+	On appelle \textit{événement} tout élément de la tribu.
+\end{defn}
+
+\begin{prop}
+	Il en résulte que
+	\begin{enumerate}
+		\item $\O \in \mathcal{A}$\/ ;
+		\item si $\forall n \in \N$, $A_n \in \mathcal{A}$, alors $\bigcap_{n \in \N} A_n \in \mathcal{A}$\/ ;
+		\item si $A \in \mathcal{A}$\/ et $B \in \mathcal{A}$, alors $A \setminus B \in \mathcal{A}$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item On a $\bar\Omega = \O$.
+		\item On a $\overline{\bigcap_{n \in \N} B_n} = \bigcup_{n \in \N} \bar{B}_n$, et $\forall n \in \N$, $\bar{B}_n \in \mathcal{A}$.
+		\item L'ensemble $A \setminus B$, c'est l'ensemble des éléments qui sont dans $A$\/ sans être dans $B$. On a donc $A \setminus B = A \cap \bar{B}$.
+	\end{enumerate}
+\end{prv}
+

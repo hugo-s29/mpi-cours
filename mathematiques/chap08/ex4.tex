@@ -1,0 +1,36 @@
+\section{Exercice 4}
+
+\begin{enumerate}
+	\item On a, pour $t \in \R^*$, $0 \le |h(t)| = \frac{|{\sin t|}}{|t|}$. Soit $t \in \R^*$. Si $|t| \le 1$, alors $|{\sin t}| = \sin {|t|} \le |t|$\/ et donc $|h(t)| \le 1$. Si $|t| \ge 1$, alors $|{\sin t}| \le 1$, et donc $|h(t)| \le \frac{1}{|t|} \le 1$. On en déduit que la fonction $|h|$\/ est majorée par $1$\/ sur $\R^*$.
+	\item Soit $x > 0$. L'intégrale $I = \int_{0}^{+\infty} \left| \frac{\sin t}{t}\:\mathrm{e}^{-xt} \right| ~\mathrm{d}t$\/ est impropre en 0 \textbf{et} en $+\infty$. L'intégrale $I$\/ converge si, et seulement si les intégrales $A = \int_{0}^{1} \left| \frac{\sin t}{t}\: \mathrm{e}^{-xt} \right| ~\mathrm{d}t$\/ et $B = \int_{1}^{+\infty}  \left| \frac{\sin t}{t}\: \mathrm{e}^{-xt} \right| ~\mathrm{d}t$\/ convergent.
+		\begin{itemize}
+			\item D'après la question précédente, $0 \le \left| \frac{\sin t}{t} \mathrm{e}^{-xk} \right| \le \left| \mathrm{e}^{-xt} \right| = \mathrm{e}^{-xt}$. Et l'intégrale $\int_{0}^{1} \mathrm{e}^{-xt}~\mathrm{d}t$\/ converge car $x > 0$. On en déduit que $A$\/ converge.
+			\item De même, $0 \le \left| \frac{\sin t}{t} \mathrm{e}^{-xk} \right| \le \left| \mathrm{e}^{-xt} \right| = \mathrm{e}^{-xt}$. Et l'intégrale $\int_{1}^{+\infty} \mathrm{e}^{-xt}~\mathrm{d}t$\/ converge car $x > 0$.On en déduit que $B$\/ converge.
+		\end{itemize}
+		Ainsi, l'intégrale $I$\/ converge.
+		On a montré que \[
+			I = \int_{0}^{+\infty} \left| \frac{\sin t}{t} \: \mathrm{e}^{-xt} \right|~\mathrm{d}t \le \int_{0}^{+\infty} \mathrm{e}^{-xt}~\mathrm{d}t = \frac{1}{x}
+		.\] On a donc bien $I \le \frac{1}{x}$.
+	\item L'intégrale de \textsc{Dirichlet} converge si et seulement si les intégrales $U = \int_{1}^{+\infty} \frac{\sin t}{t} ~\mathrm{d}t$\/ et $V = \int_{0}^{1} \frac{\sin t}{t}~\mathrm{d}t$\/ convergent.
+		\begin{itemize}
+			\item On a $\forall t \in [0,1]$, $0\le \frac{\sin t}{t} \le 1$, et l'intégrale $\int_{0}^{1}\mathrm{d}t$\/ converge. Ainsi, $V$\/ converge.
+			\item On fait une intégration par parties :
+				\begin{align*}
+					0 \le U &= \int_{1}^{+\infty} \frac{\sin t}{t}~\mathrm{d}t = \left[ \frac{-\cos t}{t^2} \right]_1^{+\infty} - \int_{1}^{+\infty}\frac{-\cos t}{t^2} ~\mathrm{d}t\\
+					&= -\cos 1 - \int_{1}^{+\infty} \frac{-\cos t}{t^2}~\mathrm{d}t,
+				\end{align*}
+				et l'intégrale $\int_{1}^{+\infty} \frac{-\cos t}{t^2}~\mathrm{d}t$\/ converge absolument. On en déduit que l'intégrale $V$\/ converge.
+		\end{itemize}
+		On en déduit que l'intégrale de \textsc{Dirichlet} converge.
+	\item On pose $X = {]0,+\infty[}$, $T = {]0,+\infty[}$\/ et \begin{align*}
+			f: X \times T &\longrightarrow \R \\
+			(x,t) &\longmapsto \frac{\sin t}{t} \mathrm{e}^{-xt}.
+		\end{align*}
+		\begin{itemize}
+			\item Soit $t \in T$. La fonction $x \mapsto f(x,t)$\/ est de classe $\mathcal{C}^1$\/ car la fonction exponentielle est de classe $\mathcal{C}^1$.
+			\item Soit $x \in X$. La fonction $t \mapsto f(x,t)$\/ est continue par morceaux, et elle est intégrable sur $T$\/ d'après la question 2 (l'intégrale $\int_{T} \frac{\sin t}{t}\mathrm{e}^{-kt}~\mathrm{d}t$\/ converge absolument). De plus, on calcule \[
+					t \mapsto \frac{\partial f}{\partial x}(x,t) = -{\sin t}\:\mathrm{e}^{-xt},
+				\] qui est continue sur $T$.
+		\end{itemize}
+\end{enumerate}
+

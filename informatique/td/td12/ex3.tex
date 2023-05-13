@@ -1,0 +1,37 @@
+\section{Le problème \textsc{VoyageurCommerce}}
+
+\begin{enumerate}
+	\item Soit $\mathcal{C} = \{a_1,a_2\}-\cdots-\{a_n,a_{n+1}\}$ et $a_{n+1} = a_1$, un tour où $\bigcup_{i \in \llbracket 1,n \rrbracket} \{a_i\}  = S$.
+		Soit $\{a,b\}$\/ une arrête.
+		Posons $\mathcal{C}' = \mathcal{C} \setminus \big\{ \{a,b\}\big\}$, et $H = (S', \mathcal{C}')$, où $S' = S$.
+		Montrons que $H$\/ est un arbre couvrant.
+		\begin{itemize}
+			\item Montrons que $H$\/ est connexe. Soit un couple sommets $(x,y) \in S^2$\/ tel que $x \neq y$. $\mathcal{C}$\/ est un tour, donc en re-numérotant \[
+					x - b_1 - b_2 - \cdots - b_{n-1} - x
+				.\] Soit $i \in \llbracket 1,n-1 \rrbracket$\/ tel que $b_i = y$.
+				Soit $j \in \llbracket 1,n \rrbracket$\/ tel que $\{b_j, b_{j+1}\} = \{a,b\}$.
+				\begin{description}
+					\item[Cas 1] Si $j < i$, alors $y - b_{i+1} - \cdots - b_{n-1} - x$\/ est un chemin.
+					\item[Cas 2] Si $j > i$, alors $x - b_1 - \cdots  - b_{i-1} - y$\/ est un chemin.
+				\end{description}
+				Donc $H$\/ est connexe.
+			\item On a $\#\mathcal{C}' = n - 1$\/ et $H$\/ est connexe, donc acyclique.
+			\item Enfin $S' = S$, donc $H$\/ est couvrant.
+		\end{itemize}
+	\item Soit $T^\star$\/ le tour de coût minimal. On note $c(T)$\/ le coût d'un tour $T$. On a $c(T^\star) \ge c(H)$\/ où $H$\/ est l'arbre défini dans la question précédente (par suppression d'arête), d'où $c(T^\star) = c(H^\star)$\/ où $H^\star$\/ est un arbre couvrant de poids minimal (par définition de poids minimal).
+	\item Non, avec le graphe ci-dessous est un contre-exemple.
+		\begin{figure}[H]
+			\centering
+			\tikzfig{ex3-contre-exemple}
+			\caption{Contre exemple}
+		\end{figure}
+	\item On obtient l'arbre couvrant de poids minimal suivant.
+		\begin{figure}[H]
+			\centering
+			\Tree[.$a$ [.$e$ [.$c$ [.$d$ $h$ ] [.$g$ [.$b$ [.$f$ ]]]]]]
+			\caption{Arbre couvrant de poids minimal}
+		\end{figure}
+		Un parcours en profondeur est \[
+			a \to e \to c \to d \to h \leadsto g \to b \to f
+		.\]
+\end{enumerate}

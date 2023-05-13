@@ -7,22 +7,28 @@
 \usepackage{minitoc}
 \usepackage{titlesec}
 \usepackage[open=true]{bookmark}
+\usepackage[titles]{tocloft}
 
 \input{../styles.tikzstyles}
 
 \let\prefix\relax
-
-\let\oldsection\section
-\let\oldsubsection\subsection
-\def\section#1{\setbox0=\hbox{\prefix}\oldsection[\kern\wd0#1]{#1}}
-\def\subsection#1{\setbox0=\hbox{\prefix}\oldsubsection[\kern\wd0#1]{#1}}
 \newbox\spacebox
+\newcommand{\withspacing}{%
+	% add `prefix` spacing
+	\setbox\spacebox=\hbox{\prefix}\kern\wd\spacebox%
+	% add `-` spacing when necessary
+	\ifnum\value{chapter}<0%
+		\setbox\spacebox=\hbox{$-$}\kern\wd\spacebox%
+	\fi%
+}
+\newcommand{\thesectionnum}{\arabic{section}}
 
 \renewcommand{\listalgorithmname}{Liste des algorithmes}
 \renewcommand{\lstlistlistingname}{Liste des codes}
 \AtBeginDocument{
-	\addtocontents{loa}{\linespread{2}\selectfont}
+	%\addtocontents{loa}{\linespread{2}\selectfont}
 	\def\thechapter{
+		\llap{\prefix\ }
 		\setbox\spacebox=\hbox{\relax$-$\ }\kern-\wd\spacebox
 		\ifnum\value{chapter}<0%
 			$-\text{\number-\value{chapter}}$%
@@ -30,13 +36,66 @@
 			$\mathop{\phantom{-}}\text{\arabic{chapter}}$%
 		\fi
 	}
-	\def\thefigure{\prefix\thechapter.\arabic{figure}}
-	\def\thetable{\prefix\thechapter.\arabic{table}}
-	\def\thealgorithm{\prefix\thechapter.\arabic{algorithm}}
-	\def\thelstlisting{\prefix\thechapter.\arabic{lstlisting}}
-	\def\thesection{\prefix\thechapter.\arabic{section}}
-	\def\thesubsection{\prefix\thechapter.\arabic{section}.\arabic{subsection}}
+	\def\thechapternum{%
+		\ifnum\value{chapter}<0%
+			$-\text{\number-\value{chapter}}$%
+		\else%
+			\arabic{chapter}%
+		\fi%
+	}
+	\def\thefigure{\thechapter.\arabic{figure}}
+	\def\thetable{\thechapter.\arabic{table}}
+	\def\thealgorithm{\thechapter.\arabic{algorithm}}
+	\def\thelstlisting{\thechapter.\arabic{lstlisting}}
+	\def\thesection{\thechapter.\arabic{section}}
+	\def\thesubsection{\thechapter.\arabic{section}.\arabic{subsection}}
 }
+
+\newcommand{\useroman}{
+	%\addtocontents{loa}{\linespread{2}\selectfont}
+	\def\thechapter{\llap{\prefix\ }\Alph{chapter}}
+	\def\thechapternum{\Alph{chapter}}
+}
+
+\makeatletter
+% Code borrowed from `fncychap` package
+\ChNameUpperCase
+\ChTitleUpperCase  
+\ChNameVar{\centering\Large\rm}
+\ChNumVar{\Huge}
+\ChTitleVar{\centering\Huge\rm}
+\ChRuleWidth{1pt}
+\renewcommand{\DOCH}{%
+	\settoheight{\py}{\CNoV\thechapternum}
+	\parskip=0pt plus 1pt % Set parskip to default, just in case v1.31
+	\addtolength{\py}{-1pt}
+	\CNV\FmN{\@chapapp}\par\nobreak
+	\vskip 20\p@
+	\setlength{\myhi}{2\baselineskip}
+	\setlength{\px}{\myhi}
+	\addtolength{\px}{-1\RW}
+	\rule[-1\px]{\RW}{\myhi}\mghrulefill{\RW}\hskip
+	10pt\raisebox{-0.5\py}{\CNoV\thechapternum}\hskip 10pt\mghrulefill{\RW}\rule[-1\px]{\RW}{\myhi}\par\nobreak
+	 \vskip -3\p@% Added -2pt vskip to correct for streched text v1.31
+	}
+\renewcommand{\DOTI}[1]{%
+	\setlength{\mylen}{\textwidth}
+	\parskip=0pt plus 1pt % Set parskip to default, just in case v1.31
+	\addtolength{\mylen}{-2\RW}
+	{\vrule width\RW}\parbox{\mylen}{\CTV\FmTi{#1}}{\vrule width\RW}\par\nobreak%
+	\vskip -3pt\rule{\RW}{2\baselineskip}\mghrulefill{\RW}\rule{\RW}{2\baselineskip}%
+	\vskip 60\p@% Added -2pt in vskip to correct for streched text v1.31
+	}
+\renewcommand{\DOTIS}[1]{%
+	\setlength{\py}{\fboxrule}
+	\setlength{\fboxrule}{\RW}
+	\setlength{\mylen}{\textwidth}
+	\addtolength{\mylen}{-2\RW}
+	\fbox{\parbox{\mylen}{\vskip 2\baselineskip\CTV\FmTi{#1}\par\nobreak\vskip \baselineskip}} 
+	\setlength{\fboxrule}{\py}
+	\vskip 60\p@
+	}
+\makeatother
 
 \pagestyle{fancy}
 
@@ -64,6 +123,10 @@
 }
 
 \makeatletter
+%\renewcommand\@pnumwidth{8em}
+\let\@lstinputlisting\lstinputlisting
+\renewcommand{\lstinputlisting}[2][]{\@lstinputlisting[#1]{\cwd#2}}
+
 \let\@tikzfig\tikzfig
 \renewcommand{\tikzfig}[1]{\@tikzfig{{\cwd}figures/#1}}
 \makeatother
@@ -79,7 +142,14 @@
 	\renewcommand*\parttitle{#2}
 }
 
+
 \newcommand{\td}[2][1]{
+	\setcounter{chapter}{#1 - 1}
+	\chapter{#2}
+	\renewcommand*\parttitle{#2}
+}
+
+\newcommand{\tp}[2][1]{
 	\setcounter{chapter}{#1 - 1}
 	\chapter{#2}
 	\renewcommand*\parttitle{#2}
@@ -109,6 +179,14 @@
 
 \mtcselectlanguage{french}
 
+\makeindex[options=-s style]
+
+\captionsetup[figure]{name={Figure\withspacing}}
+\captionsetup[table]{name={Table\withspacing}}
+\renewcommand{\lstlistingname}{{\sc Code}\withspacing}
+\floatname{algorithm}{\color{mainorange}Algorithme\withspacing}
+\counterwithin{algorithm}{chapter}
+
 \begin{document}
 	\begin{titlepage}
 		\blankpage
@@ -135,152 +213,31 @@
 
 	\frontmatter
 	\dominitoc
-	\tableofcontents
-	\listoffigures
-	\listoftables
-	\listofalgorithms
+	\addcontentsline{toc}{section}{Table des matières}
+	\tableofcontents\clearpage
+	\addcontentsline{toc}{section}{Table des figures}
+	\listoffigures\clearpage
+	\addcontentsline{toc}{section}{Liste des tables}
+	\listoftables\clearpage
+	\addcontentsline{toc}{section}{Liste des algorithmes}
+	\listofalgorithms\clearpage
+	\addcontentsline{toc}{section}{Liste des codes}
 	\lstlistoflistings
 
 	\mainmatter
 	\renewcommand{\headrulewidth}{0.4pt}
 	\fancyhead[R]{{\it MPI}\/$^\star$}
-	\fancyhead[L]{\thesection}
+	\fancyhead[L]{\prefix\ \thechapternum.\thesectionnum}
 	\fancyhead[C]{\parttitle}
 
-	\part{Cours}
+	\input{generated.tex}
 
-	{
-		\chap[-1]{Ordres et induction}
-		\minitoc
-		\renewcommand{\cwd}{../cours/chap-01/}
-		\input{../cours/chap-01/l1.tex}
-		\input{../cours/chap-01/l2.tex}
-	}
+	\backmatter
 
-	{
-		\chap[0]{Logique}
-		\minitoc
-		\renewcommand{\cwd}{../cours/chap00/}
-		\input{../cours/chap00/l1.tex}
-		\input{../cours/chap00/l2.tex}
-		\input{../cours/chap00/l3.tex}
-		\input{../cours/chap00/l4.tex}
-	}
-
-	{
-		\chap[1]{Langages réguliers et Automates}
-		\minitoc
-		\renewcommand{\cwd}{../cours/chap01/}
-		\input{../cours/chap01/l1.tex}
-		\input{../cours/chap01/l2.tex}
-		\input{../cours/chap01/l3.tex}
-		\input{../cours/chap01/l4.tex}
-		\input{../cours/chap01/l5.tex}
-		\input{../cours/chap01/l6.tex}
-		\input{../cours/chap01/l7.tex}
-		\input{../cours/chap01/l8.tex}
-		\input{../cours/chap01/l9.tex}
-		\clearpage
-		\setcounter{section}{0}
-		\renewcommand{\thesection}{\llap{Annexe }\thechapter.\Alph{section}}
-		\input{../cours/chap01/a1.tex}
-		\input{../cours/chap01/a2.tex}
-	}
-
-	{
-		\chap[2]{Algorithmes probabilistes}
-		\minitoc
-		\renewcommand{\cwd}{../cours/chap02/}
-		\input{../cours/chap02/l1.tex}
-		\input{../cours/chap02/l2.tex}
-		\input{../cours/chap02/l3.tex}
-		\clearpage
-		\setcounter{section}{0}
-		\renewcommand{\thesection}{\llap{Annexe }\thechapter.\Alph{section}}
-		\input{../cours/chap02/a1.tex}
-	}
-
-	{
-		\chap[3]{Apprentissage}
-		\minitoc
-		\renewcommand{\cwd}{../cours/chap03/}
-		\input{../cours/chap03/l1.tex}
-		\input{../cours/chap03/l2.tex}
-	}
-
-	\part{Travaux Dirigés}
-	\def\prefix{\textsc{td}}
-	
-	\renewcommand{\chaptername}{Travaux Dirigés}
-
-	{
-		\td[1]{Ordre \& Induction}
-		\renewcommand{\cwd}{../td/td01/}
-		\input{../td/td01/ex1.tex}
-		\input{../td/td01/ex2.tex}
-		\input{../td/td01/ex3.tex}
-		\input{../td/td01/ex4.tex}
-		\input{../td/td01/ex5.tex}
-		\input{../td/td01/ex6.tex}
-		\input{../td/td01/ex7.tex}
-		\input{../td/td01/ex8.tex}
-	}
-
-	{
-		\td[2]{Logique propositionnelle}
-		\renewcommand{\cwd}{../td/td02/}
-		\input{../td/td02/ex1.tex}
-		\input{../td/td02/ex2.tex}
-		\input{../td/td02/ex3.tex}
-		\input{../td/td02/ex4.tex}
-		\input{../td/td02/ex5.tex}
-		\input{../td/td02/ex6.tex}
-		\input{../td/td02/ex7.tex}
-		\input{../td/td02/ex8.tex}
-	}
-
-	{
-		\td[3]{Langages et expressions régulières}
-		\renewcommand{\cwd}{../td/td03/}
-		\input{../td/td03/ex1.tex}
-		\input{../td/td03/ex2.tex}
-		\input{../td/td03/ex3.tex}
-		\input{../td/td03/ex4.tex}
-		\input{../td/td03/ex5.tex}
-		\input{../td/td03/ex6.tex}
-		\input{../td/td03/ex7.tex}
-		\input{../td/td03/ex8.tex}
-		\input{../td/td03/ex9.tex}
-		\input{../td/td03/ex10.tex}
-		\input{../td/td03/ex11.tex}
-		\input{../td/td03/ex12.tex}
-		\input{../td/td03/exsup1.tex}
-	}
-
-	{
-		\td[4]{Langages et expressions régulières (2)}
-		\renewcommand{\cwd}{../td/td04/}
-		\input{../td/td04/ex01.tex}
-		\input{../td/td04/ex02.tex}
-		\input{../td/td04/ex03.tex}
-		\input{../td/td04/ex04.tex}
-		\input{../td/td04/ex05.tex}
-	}
-
-	{
-		\td[5]{Langages et expressions régulières (3)}
-		\renewcommand{\cwd}{../td/td05/}
-		\input{../td/td05/ex05.tex}
-		\input{../td/td05/ex01.tex}
-		\input{../td/td05/ex04.tex}
-		\input{../td/td05/ex06.tex}
-	}
-
-	{
-		\td[6]{Algorithmes probabilistes}
-		\renewcommand{\cwd}{../td/td06/}
-		\input{../td/td06/ex01.tex}
-		\input{../td/td06/ex02.tex}
-		\input{../td/td06/ex03.tex}
-	}
+	\clearpage
+	\fancyhead[C]{Index}
+	\fancyhead[L]{}
+	\addcontentsline{toc}{chapter}{Index}
+	\printindex
 \end{document}
+

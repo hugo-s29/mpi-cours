@@ -1,0 +1,106 @@
+\begin{defn}
+	Soit $E$\/ un espace vectoriel normé.
+	\begin{enumerate}
+		\item Une partie $A \subset E$\/ est \textit{bornée} s'il existe $M \in \R$\/ tel que, pour tout vecteur $\vec{x} \in A$, \[\|\vec{x}\| \le M\;; \]
+		\item une suite $u : \begin{array}{rcl} \N &\longrightarrow& E \\ n &\longmapsto& u_n \end{array}$ de vecteurs est \textit{bornée} s'il existe $M \in \R$\/ tel que, pour tout $n \in \N$, \[ \|u_n\|\le M \;; \]
+		\item  une fonction $f : \begin{array}{rcl} D &\longrightarrow& E \\ x &\longmapsto& f(x) \end{array}$ est \textit{bornée} s'il existe $M$, tel que, pour tout $t \in D$, \[ \|f(t)\| \le M .\]
+	\end{enumerate}
+	Autrement dit, il existe $M$\/ tel que
+	\[
+		1.\quad A \subset \bar{B}(\vec{0}, M),\quad\quad 2.\quad \forall n \in \N,\: u_n \in \bar{B}(\vec{0}, M),\quad\quad 3.\quad f(D) \subset \bar{B}(\vec{0}, M)
+	.\]
+\end{defn}
+
+\section{Limite d'une suite}
+
+Dans $\R$, pour dire qu'un nombre $x$\/ tend vers un nombre $a$, on utilise la valeur absolue : \[
+	x \to a \iff x - a \to 0 \iff |x-a| \to 0
+.\] De même, dans un espace vectoriel $E$, pour dire qu'un vecteur $\vec{x}$\/ tend vers un vecteur $\vec{a}$, on utilisera une norme : \[
+	\vec{x} \to \vec{a} \iff \vec{x} - \vec{a} \iff \|\vec{x} - \vec{a}\| \to 0 \iff \mathrm{d}(\vec{x}, \vec{a}) \to 0
+.\]
+
+\begin{defn}
+	Soit $E$\/ un espace vectoriel normé par $\|\cdot\|$. 
+	Soit $(\vec{u}_n)_{n\in\N}$\/ une suite d'éléments de $E$. Soit un vecteur $\vec{\ell} \in E$. On dit que $\vec{u}_n$\/ \textit{tend vers} $\vec{\ell}$\/ si $\|\vec{u}_n - \vec{\ell}\|$\/ tend vers $0_\R$. Autrement dit, si \[
+		\forall \varepsilon > 0,\: \exists N \in \N,\: \forall n \ge N, \quad\|\vec{u}_n - \vec{\ell}\| \le \varepsilon
+	.\]
+\end{defn}
+
+\begin{prop}
+	Soit $(u_n)_{n\in\N}$\/ une suite d'éléments de $E$.
+	\begin{enumerate}
+		\item (unicité de la limite) Il n'existe pas toujours de limite $\vec{\ell}$, mais, quand elle existe, elle est unique. On peut donc parler de \textit{la} limite de $\vec{u}_n$, et écrire $\vec{\ell} = \lim_{n\to \infty} \vec{u}_n$.
+		\item (convergence $\implies$ bornée) Si la suite de vecteurs $(\vec{u}_n)$\/ converge, alors elle est bornée. {\color{red}La réciproque est fausse.}
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item On suppose que $\vec{u}_n \to \vec{\ell}_1$, et $\vec{u}_n \to \vec{\ell}_2$\/ avec $\vec{\ell}_1 \neq \vec{\ell}_2$. Ainsi,
+			\begin{gather*}
+				\forall \varepsilon > 0,\: \exists N \in \N,\: \forall n \ge N,\quad \|\vec{u}_n - \vec{\ell}_1\|\le \varepsilon\\
+				\forall \varepsilon > 0,\: \exists N \in \N,\: \forall n \ge N,\quad \|\vec{u}_n - \vec{\ell}_2\|\le \varepsilon\\
+			\end{gather*}
+			On pose $\varepsilon = \frac{1}{3}\|\vec{\ell}_1 - \vec{\ell}_2\|$.
+			D'où, pour tout $n \ge N$, $\|\vec{u}_n - \vec{\ell}_1\| \le \varepsilon$\/ et $\|\vec{u}_n - \vec{\ell}_2\| \le \varepsilon$, et donc $\|\vec{u}_n - \vec{\ell}_1\| + \|\vec{u}_n - \ell_2\| \le 2 \varepsilon = \frac{2}{3} \|\vec{\ell}_1 - \vec{\ell}_2\|$.
+			Or, d'après l'inégalité triangulaire, \[
+				\|\vec{\ell}_1 - \vec{\ell}_2\| \le \|\vec{u}_n - \vec{\ell}_1\| + \|\vec{u}_n - \vec{\ell}_2\| \le \frac{2}{3} \|\vec{\ell}_1 - \vec{\ell}_2\|
+			.\] C'est absurde car $\|\vec{\ell}_1 - \vec{\ell}_2\| > 0$.
+		\item On suppose qu'il existe $\vec{\ell} \in E$\/ tel que $\vec{u}_n \to \vec{\ell}$, d'où, \[
+				\forall \varepsilon > 0,\: \exists N \in \N,\: \forall n \ge N,\quad \|\vec{u}_n - \vec{\ell}\| \le \varepsilon
+			.\] On choisit $\varepsilon = 7$. Comme $\vec{u}_n = \vec{u}_n - \vec{\ell} + \vec{\ell}$, d'après l'inégalité triangulaire, on a \[
+				\forall n \ge N, \quad \|\vec{u}_n\| \le \|\vec{u}_n - \vec{\ell}\| + \|\vec{\ell}\| \le 7 + \|\vec{\ell}\|
+			.\] Soit $m = \max_{n \in \llbracket 0,N \rrbracket} \|\vec{u}_n\|$. Alors, \[
+				\forall n \in \N,\quad\quad \|\vec{u}_n\| \le m + 7 + \|\vec{\ell}\|
+			.\]
+	\end{enumerate}
+\end{prv}
+
+\begin{exo}
+	\textsl{La suite de fonctions $f_n : [0,1] \to \R$\/ représentée dans la figure 3 du poly est-elle bornée ? convergente ? (Utiliser la norme $\infty$\/ puis la norme $1$\/ pour répondre.)}
+
+	Avec la norme $\infty$, pour tout $n \in \N$, \[
+		\|f_n\|_\infty = \max_{t \in [0, 1]} \:|f(t)| = 2n + 2 \tendsto{n\to +\infty} +\infty
+	.\]D'où, la suite $(f_n)_{n\in\N}$\/ n'est pas bornée.
+	Et, cette suite n'est pas convergente car elle n'est pas bornée.
+
+	Avec la norme $1$, pour tout $n \in \N$, \[
+		\|f_n\|_1 = \int_{0}^{1} |f_n(t)|~\mathrm{d}t = \frac{1}{2n + 2} \times 2n + 2 = 1
+	\] car il s'agit de l'aire d'un triangle. La suite $(f_n)_{n\in\N}$\/ est donc bornée.
+	Pour cette norme, la suite $(f_n)$\/ est-elle convergente ? Autrement dit : existe-t-il une fonction $\ell \in \mathcal{C}([0,1], \R)$\/ telle que $f_n \tendsto{n\to \infty} \ell$\/ ? \textit{i.e.} telle que $\|f_n - \ell\|_1 \tendsto{n\to \infty} 0$.
+	Non, la suite de fonctions $(f_n)$\/ ne converge pas pour la norme 1. En effet, montrons le par l'absurde.
+	\begin{itemize}
+		\item Ou bien $\ell = 0$, alors $\|f_n - \ell\|_1 = \|f_n - 0\|_1 = \|f_n\|_1 = 1 \centernot{\tendsto{n\to \infty}} 0$.
+		\item Ou bien $\ell \neq 0$\/, alors il existe $x \in [0,1]$, $f(x) \neq 0$. Il existe donc $x \in {]0,1[}$\/ tel que $f(x) \neq 0$. Soit alors $y = f(x)$.
+			Il existe donc $h$\/ tel que, pour tout $t \in [x - h, x + h]$, $\ell(t) \ge y / 2$.
+			Alors,  \[
+				\|f_n - \ell\|\ge \frac{y}{2} \times 2h
+			,\] à partir d'un certain rang. D'où, $\|f_n - \ell\|\centernot{\tendsto{n\to \infty}} 0$.
+	\end{itemize}
+\end{exo}
+
+\begin{rmk}[La norme infinie est la norme de la convergence uniforme]
+	Si $I$\/ est une partie de $\R$, alors l'ensemble $E$\/ des fonctions bornées de $I$\/ vers $\R$\/ ou $\C$\/ est un espace vectoriel, qu'on peut munir d'une norme \[
+		\forall f \in E,\quad \|f\|_\infty = \sup_{t \in I} |f(t)|
+	.\]
+	Dans cet espace vectoriel normé $E$,
+	\begin{align*}
+		f_n \tendsto{n\to \infty} f \iff& \|f_n - f\|_\infty \tendsto{t \to \infty} 0 \\
+		\iff& \sup_{t \in I} \:|f_n(t) - f(t)| \tendsto{n\to \infty} 0 \\
+		\iff& \text{ la suite de fonctions $(f_n)_{n\in\N}$\/ converge uniformément vers $f$\/ sur $I$.} \\
+	\end{align*}
+\end{rmk}
+
+\begin{defn}
+	Soit $(u_n)_{n\in\N}$\/ une suite de vecteurs de $E$. On dit qu'une suite $(v_n)$\/ est \textit{extraite} de $(u_n)$\/ s'il existe une application $\varphi : \N \to \N$\/ strictement croissante telle que \[
+		\forall n \in \N,\quad\quad v_n = u_{\varphi(n)}
+	.\]
+\end{defn}
+
+La stricte croissance de $\varphi$\/ implique que \[
+	\forall n \in \N, \quad\quad \varphi(n) \ge n
+.\]
+
+\begin{prop}
+	Si une suite converge, alors toute suite extraite converge vers la même limite.
+\end{prop}

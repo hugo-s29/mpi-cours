@@ -1,0 +1,64 @@
+\section{Arbres de dérivations}
+
+\begin{multicols}{2}
+	\begin{enumerate}
+		\item ~
+			\begin{figure}[H]
+				\centering
+				\Tree[.$\mathrm{E}$ [.$\mathrm{S}$ [.$\mathrm{S}$ [.$\mathrm{P}$ [.$\mathrm{P}$ [.$\mathrm{F}$ [.$\mathrm{T}$ $a$ ]]] [.$\mathrm{F}$ [.$\mathrm{T}$ $b$ ]]]] $+$ [.$\mathrm{S}$ [.$\mathrm{P}$ [.$\mathrm{P}$ [.$\mathrm{F}$ [.$\mathrm{T}$ $b$ ]]] [.$\mathrm{F}$ [.$\mathrm{T}$ $c$ ]]]]]]
+				\caption{Arbre de dérivation de $ab+bc$ dans la grammaire $\mathcal{G}$}
+			\end{figure}
+		\item~
+			\begin{figure}[H]
+				\centering
+				{\small
+					\Tree[.$\mathrm{E}$
+						[.$\mathrm{S}$
+							[.$\mathrm{P}$
+								[.$\mathrm{F}$
+									[.$\mathrm{T}$ $b$ ]
+								]
+							]
+							$+$
+							[.$\mathrm{S}$
+								[.$\mathrm{P}$
+									[.$\mathrm{P}$
+										[.$\mathrm{F}$
+											$($
+											[.$\mathrm{S}$
+												[.$\mathrm{S}$
+													[.$\mathrm{P}$
+														[.$\mathrm{F}$
+															[.$\mathrm{T}$ $a$ ]
+														]
+													]
+												]
+												[.$\mathrm{P}$
+													[.$\mathrm{F}$
+														[.$\mathrm{T}$ $b$ ]
+													]
+												]
+											]
+											$)$
+										]
+									]
+									[.$\mathrm{F}$
+										[.$\mathrm{T}$ $c$ ]
+									]
+								]
+								$+$
+								[.$\mathrm{S}$
+									[.$\mathrm{P}$
+										[.$\mathrm{P}$
+											[.$\mathrm{F}$ {Non fini} ]
+										]
+									]
+								]
+							]
+						]
+					]
+				}
+				\caption{}
+			\end{figure}
+	\end{enumerate}
+\end{multicols}

@@ -1,0 +1,95 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+\usepackage{cmbright}
+
+\def\khollenum{16}
+
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+\fancyhead[R]{\scshape Khôlle n\tsup{o} \khollenum}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} \khollenum
+	\end{center}
+
+	\paragraph{Exercice 1.}
+	\begin{enumerate}
+		\item Si $\vec{u} = \vec{0}$, alors $r(\vec{u}) = \vec{0} = \cos \theta \cdot \vec{0} + \sin \theta \cdot \vec{a} \land \vec{0}$.
+			On suppose maintenant $\vec{u} \neq \vec{0}$. On pose $\vec{x} = \vec{u} / \|\vec{u}\|$.
+			La famille $\mathcal{B} = (\vec{a}, \vec{x}, \vec{a} \land \vec{x})$\/ est une base orthonormée directe de $\R^3$. Ainsi, dans cette base, la matrice de $r$ est \[
+				\big[\:r\:\big]_\mathcal{B} = \begin{pNiceMatrix}[last-row,last-col]
+					1 & 0 & 0 & \vec{a}\\
+					0 & \cos \theta & \sin \theta & \vec{x}\\
+					0 & -\sin \theta & \cos \theta & \vec{a} \land \vec{x}\\
+					r(\vec{a}) & r(\vec{x}) & r(\vec{a} \land \vec{x})
+				\end{pNiceMatrix} 
+			.\] Or, $\vec{u} = \vec{x} \cdot \|\vec{x}\|$, et donc \[
+				\big[\:r(\vec{u})\:\big]_\mathcal{B} = \begin{pNiceMatrix}[last-col]
+					0 & \vec{a}\\
+					\|\vec{u}\| \cdot \cos \theta & \vec{x}\\
+					-\|\vec{u}\| \cdot \sin \theta & \vec{a} \land \vec{x}
+				\end{pNiceMatrix} 
+			.\]D'où, \[
+				r(\vec{u}) = \|\vec{u}\| \cdot \cos \theta \cdot \vec{x} - \|\vec{u}\| \cdot \sin \theta \cdot \vec{a} \land \vec{x} = \cos \theta \cdot \vec{u} - \sin \theta \cdot \vec{a} \land \vec{u}.
+			\]
+		\item On pose $f$\/ l'application $f : \vec{v} \mapsto \vec{v} - \left<\vec{v}   \mid \vec{a} \right> \vec{a}$. Soit $\mathcal{B} = (\vec{a}, \vec{x}, \vec{y})$\/ une base orthonormée directe de $\R^3$. Montrons que $\Im f = \Vect(\vec{x}, \vec{y})$. On a
+			\begin{gather*}
+				f(\vec{a}) = \vec{a} - \left<\vec{a} \mid \vec{a} \right>\vec{a} = \vec{a} - \vec{a} = \vec{0},\\
+				f(\vec{x}) = \vec{x} - \left<\vec{x} \mid \vec{a} \right>\vec{a} = \vec{x},\\
+				f(\vec{y}) = \vec{y} - \left<\vec{y} \mid \vec{a} \right>\vec{a} = \vec{y},
+			\end{gather*}
+			car $\vec{x} \perp \vec{a}$ et $\vec{y} \perp \vec{a}$. L'application $f$ est la projection orthogonale sur $\Vect(\vec{x}, \vec{y})$.
+			Soit $\vec{v} \in \R^3$. On pose $\vec{u} = f(\vec{v}) \in \Vect(\vec{x},\vec{y})$, et $\vec{w} = \vec{v} - \vec{u} \in \Vect(\vec{a})$.
+			Ainsi,
+			\begin{align*}
+				r(\vec{v}) &= r(\vec{u} + \vec{w})\\
+				&= r(\vec{u}) + r(\vec{w})\\
+				&= \cos(\theta)\vec{u} + \sin(\theta)\vec{a} \land \vec{u} + \vec{w} \\
+			\end{align*}
+	\end{enumerate}
+
+	\paragraph{Exercice 2.}
+	\begin{enumerate}
+		\item On calcule \[
+				\left<\vec{u} \mid \vec{v} \right> = \frac{1}{\sqrt{6}} - \frac{1}{\sqrt{6}} = 0
+				\quad
+				\left<\vec{v} \mid \vec{w} \right> = -\frac{1}{\sqrt{12}} + \frac{1}{\sqrt{12}} = 0
+				\quad
+				\left<\vec{w}  \mid \vec{u} \right> = \frac{1}{\sqrt{3}} (-1 -1 + 2) = 0
+			.\] La famille $\mathcal{B} = (u, v, w)$ est donc une famille orthogonale.
+			Comme cette famille orthogonale est composée de trois vecteurs non nuls, $\mathcal{B}$ est une base de $\R^3$.
+			De plus, $\|\vec{u}\|^2 = \frac{1}{3} \times 3 = 1$, $\|\vec{v}\|^2 = \frac{1}{2} + \frac{1}{2} = 1$ et $\|\vec{w}\|^2 = \frac{1}{6} + \frac{1}{6} + \frac{4}{6} = 1$. On en déduit que la base $\mathcal{B}$ est orthonormée.
+			Et, \[
+				\vec{u} \land \vec{v} = \frac{1}{\sqrt{3}} \cdot \frac{1}{\sqrt{2}} (-\vec{\imath} + \vec{\jmath} + 2\vec{k}) = +\vec{w}
+			.\] La base orthonormée $\mathcal{B}$ est donc directe.
+
+			Dans cette base $\mathcal{B}$, la matrice de $f$ est \[
+				\big[\:f\:\big]_\mathcal{B} = \begin{pNiceMatrix}[last-row,last-col]
+					1 & 0 & 0 & \vec{u}\\
+					0 & \cos \theta & \sin\theta & \vec{v}\\
+					0 & -\sin \theta & \cos \theta & \vec{w}\\
+					f(\vec{u}) & f(\vec{v}) & f(\vec{w})
+				\end{pNiceMatrix} 
+			.\]
+		\item La matrice de passage de $\mathcal{B}_0$ vers $\mathcal{B}$ est \[
+			P = P_{\mathcal{B}_0 \to \mathcal{B}} =
+			\begin{pNiceMatrix}[last-row,last-col]
+				\frac{1}{\sqrt{3}} & \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{6}} & \vec{\imath}\\
+				-\frac{1}{\sqrt{3}} & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{6}} & \vec{\jmath}\\
+				\frac{1}{\sqrt{3}} & 0 & \frac{2}{\sqrt{6}} & \vec{k}\\
+				\vec{u} & \vec{v} & \vec{w}
+			\end{pNiceMatrix}
+		.\] La matrice $P$ transforme une base orthonormée directe en une base orthonormée directe, d'où $P \in \mathrm{SO}_3(\R)$. Ainsi, la matrice de passage de $\mathcal{B}$ à $\mathcal{B}_0$ est $P^{-1} = P^\top$ : \[
+				P^\top = \begin{pNiceMatrix}[last-row,last-col]
+					\frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{3}} & \frac{1}{\sqrt{3}} & \vec{u}\\
+					\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} & 0 & \vec{v}\\
+					-\frac{1}{\sqrt{6}} & \frac{1}{\sqrt{6}} & \frac{2}{\sqrt{6}} & \vec{w}\\
+					\vec{\imath} & \vec{\jmath} & \vec{k}
+				\end{pNiceMatrix}
+			.\]
+		\item On procède par \textsc{Analyse-Synthèse}.
+	\end{enumerate}
+\end{document}
+
+

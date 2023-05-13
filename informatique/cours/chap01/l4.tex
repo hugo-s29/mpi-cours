@@ -3,7 +3,8 @@ Parfois, on veut pouvoir ``sauter'' d'un état à un autre dans un automate. On 
 \section{Automates finis avec $\varepsilon$-transitions}
 
 \begin{defn}
-	On dit d'un automate sur l'alphabet $\Sigma \cupdot \{\blue \varepsilon\}$\/ que c'est un automate avec $\varepsilon$-transition.
+	On dit d'un automate sur l'alphabet $\Sigma \cupdot \{\blue \varepsilon\}$\/ que c'est un \textit{automate avec $\varepsilon$-transition}.
+	\index{automate!avec $\varepsilon$-transitions}
 \end{defn}
 
 \begin{exm}
@@ -17,6 +18,7 @@ Parfois, on veut pouvoir ``sauter'' d'un état à un autre dans un automate. On 
 
 \begin{defn}
 	Soit $w \in \big(\Sigma \cupdot \{\blue\varepsilon\}\big)^*$. On définit alors $\tilde w$\/ le mot obtenu en supprimant les occurrences de $\blue \varepsilon$\/ dans $w$.
+	\index{mot!sans $\blue\varepsilon$ ($\tilde w$)}
 \end{defn}
 
 \begin{exm}
@@ -27,7 +29,8 @@ Parfois, on veut pouvoir ``sauter'' d'un état à un autre dans un automate. On 
 
 \begin{defn}
 	Soit $\mathcal{A}$\/ un automate avec $\varepsilon$-transition. On pose $\tilde{\mathcal{L}}(\mathcal{A})$\/ est le langage de l'automate sur l'alphabet $\Sigma \cupdot \{\blue \varepsilon\}$.
-	On appelle {\it langage}\/ de $A$, l'ensemble  \todo{retrouver la formule}.
+	On appelle {\it langage}\/ de $\mathcal{A}$, l'ensemble  \todo{retrouver la formule}.
+	\index{automate!langage sans $\blue\varepsilon$}
 \end{defn}
 
 \begin{exm}

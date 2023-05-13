@@ -1,0 +1,52 @@
+\section{Qu'est ce qu'une matrice orthogonale ?}
+
+\begin{defn}
+  On dit qu'une matrice carrée $A \in \mathcal{M}_n(\R)$\/ est \textit{orthogonale} si $A^\top \cdot A = I_n$.
+  L'ensemble des matrices orthogonales de $\mathcal{M}_n(\R)$\/ est noté $\mathrm{O}_n(\R)$\/ ou $\mathrm{O}(n)$, et est appelé le \textit{groupe orthogonal} d'ordre $n$.
+\end{defn}
+
+\begin{rmk}
+  Le déterminant d'une matrice orthogonale vaut $\pm 1$. En effet, $1 = \det I_n = \det(A^\top \cdot A) = \det A^\top \cdot \det A = \big[\!\det A\big]^2$.
+  Ainsi, toute matrice orthogonale est inversible : \[
+    A \in \mathrm{O}_n(\R) \implies \det A = \pm 1 \implies\det A \neq 0 \implies A \in \mathrm{GL}_n(\R)
+  .\]
+  On en déduit que \[
+    A \in \mathrm{O}_n(\R) \iff A^\top \cdot A = I_n \iff A^\top \cdot A^{-1} \iff A \cdot A^\top = I_n
+  .\] En effet, $A^\top \cdot A = I_n$\/ et donc $A^\top \cdot A\cdot A^{-1} = A^{-1}$. D'où, $A^\top = A^{-1}$.
+
+  Le sous-ensemble des matrices orthogonales dont le déterminant vaut $+1$\/ est noté $\mathrm{SO}_n(\R)$, ou $\mathrm{SO}(n)$, et est appelé \textit{groupe spécial orthogonal} d'ordre $n$. Ainsi, \[
+    \mathrm{SO}_n(\R) \subset \mathrm{O}_n(\R) \subset \mathrm{GL}_n(\R)
+  .\]
+\end{rmk}
+
+\begin{exo}
+  \textsl{Montrer que $\mathrm{SO}_n(\R)$\/ est un sous-groupe de $\mathrm{O}_n(\R)$, qui est un sous-groupe de $\mathrm{GL}_n(\R)$. Vérifier, par ailleurs, que ces ensembles sont stables par transposition.}
+
+  L'ensemble $\mathrm{O}_n(\R)$\/ est non vide.
+  En effet, $I_n \in \mathrm{SO}_n(\R)$\/ car $\det I_n = 1$\/ et $I_n^\top \cdot I_n = I_n \cdot I_n = I_n$.
+  De plus, si $A \in \mathrm{O}_n(\R)$\/ et $B \in \mathrm{O}_n(\R)$, alors $(A\cdot B^{-1})^{-1} = B \cdot A^{-1} = (B^\top)^\top \cdot A^\top = (A \cdot B)^\top$, d'où $A\cdot B \in \mathrm{O}_n(\R)$.
+  On en déduit que $\mathrm{O}_n(\R)$\/ est un sous-groupe de $\mathrm{GL}_n(\R)$.
+
+  L'ensemble $\mathrm{SO}_n(\R)$\/ est non vide. En effet, $I_n \in \mathrm{SO}_n(\R)$\/ car $\det I_n = 1$\/ et $I_n^\top \cdot I_n = I_n \cdot I_n = I_n$.
+  De plus, si $A \in \mathrm{SO}_n(\R)$\/ et $B \in \mathrm{SO}_n(\R)$, alors $\det(A \cdot B^{-1}) = \det A \cdot \det (B^{-1}) = 1 \times \frac{1}{1} = 1$, et $(A\cdot B^{-1})^{-1} = B \cdot A^{-1} = (B^\top)^\top \cdot A^\top = (A \cdot B)^\top$, d'où $A\cdot B \in \mathrm{SO}_n(\R)$.
+  On en déduit que $\mathrm{SO}_n(\R)$\/ est un sous-groupe de $\mathrm{O}_n(\R)$.
+
+  Pour toute matrice $A \in \mathrm{O}_n(\R)$, on a $A^{-1} = A^\top$, et $A^{-1} \in \mathrm{O}_n(\R)$, d'où $A^\top \in \mathrm{O}_n(\R)$. On en déduit que $\mathrm{O}_n(\R)$\/ est stable par transposition.
+  Ce raisonnement reste valide en remplaçant $\mathrm{O}_n(\R)$\/ par $\mathrm{SO}_n(\R)$.
+\end{exo}
+
+\begin{prop}
+  Une matrice est orthogonale si, et seulement si, ses colonnes (ou ses lignes) forment une base orthonormée de $\R^n$\/ (muni du produit scalaire canonique).
+  Autrement dit: une matrice est orthogonale si, et seulement si c'est la matrice de passage d'une base orthonormée de $E$\/ vers une autre base orthonormée de $E$.
+\end{prop}
+
+\begin{prv}
+  On note $C_n$, $C_2$, \ldots, $C_n$\/ les colonnes de $A \in \mathrm{O}_n(\R)$.
+  \begin{align*}
+    A^\top \cdot A = I_n &\iff \forall (i,j) \in \llbracket 1,n \rrbracket^2,\: \left<C_i  \mid C_j \right> = \delta_{i,j}\\
+    &\iff (C_1, \ldots, C_n) \text{ est une base orthonormée}.
+  \end{align*}
+  Et, si $A$\/ est orthogonale, $A^\top$\/ l'est aussi. Or, la transposition change les colonnes en lignes.
+\end{prv}
+
+

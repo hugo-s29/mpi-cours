@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (0, 0) {};
+		\node [style=new style 0] (1) at (2, 0) {};
+		\node [style=new style 0] (2) at (0, 2) {};
+		\node [style=new style 0] (3) at (-2, 0) {};
+		\node [style=new style 0] (4) at (0, -2) {};
+		\node [style=none] (5) at (1, 0.25) {0};
+		\node [style=none] (6) at (-0.25, 1) {0};
+		\node [style=none] (7) at (-1, -0.25) {0};
+		\node [style=none] (8) at (0.25, -1) {0};
+		\node [style=none] (9) at (2, 2) {$10^{1000}$};
+		\node [style=none] (10) at (2, -2) {$10^{1000}$};
+		\node [style=none] (11) at (-2, -2) {$10^{1000}$};
+		\node [style=none] (12) at (-2, 2) {$10^{1000}$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (4) to (1);
+		\draw (1) to (2);
+		\draw (2) to (0);
+		\draw (0) to (1);
+		\draw (0) to (4);
+		\draw (4) to (3);
+		\draw (3) to (0);
+		\draw (3) to (2);
+	\end{pgfonlayer}
+\end{tikzpicture}

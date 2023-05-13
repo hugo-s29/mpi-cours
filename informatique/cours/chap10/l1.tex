@@ -1,0 +1,132 @@
+\section{Motivation}
+
+\lettrine On place au centre de la classe 40 bonbons. On en distribue un chacun. Si, par exemple, chacun choisit un bonbon et, au \textit{top} départ, prennent celui choisi.
+Il est probable que plusieurs choisissent le même. Comme gérer lorsque plusieurs essaient d'accéder à la mémoire ?
+
+Deuxièmement, sur l'ordinateur, plusieurs applications tournent en même temps. Pour le moment, on considérait qu'un seul programme était exécuté, mais, le \textsc{pc} ne s'arrête pas pendant l'exécution du programme.
+
+On s'intéresse à la notion de \guillemotleft~processus~\guillemotright\ qui représente une tâche à réaliser.
+On ne peut pas assigner un processus à une unité de calcul, mais on peut \guillemotleft~allumer~\guillemotright\ et \guillemotleft~éteindre~\guillemotright\ un processus.
+Le programme allumant et éteignant les processus est \guillemotleft~l'ordonnanceur.~\guillemotright\@ Il doit aussi s'occuper de la mémoire du processus (chaque processus à sa mémoire séparée).
+
+On s'intéresse, dans ce chapitre, à des programmes qui \guillemotleft~partent du même~\guillemotright\ : un programme peut créer un \guillemotleft~fil d'exécution~\guillemotright\ (en anglais, \textit{thread}). Le programme peut gérer les fils d'exécution qu'il a créé, et éventuellement les arrêter.
+Les fils d'exécutions partagent la mémoire du programme qui les a créé.
+
+En C, une tâche est représenté par une fonction de type \lstinline[language=c]!void* tache(void* arg)!. Le type \lstinline[language=c]!void*!\ est l'équivalent du type \lstinline[language=caml]!'a! : on peut le \textit{cast} à un autre type (comme \lstinline[language=c]-char*-).
+
+\begin{lstlisting}[language=c,caption=Création de \textit{thread}s en C]
+void* tache(void* arg) {
+	printf("%s\n", (char*) arg);
+	return NULL;
+}
+
+int main() {
+	pthread_t p1, p2;
+
+	printf("main: begin\n");
+
+	pthread_create(&p1, NULL, tache, "A");
+	pthread_create(&p2, NULL, tache, "B");
+
+	pthread_join(p1, NULL);
+	pthread_join(p2, NULL);
+
+	printf("main: end\n");
+
+	return 0;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=c,caption=Mémoire dans les \textit{thread}s en C]
+int max = 10;
+volatile int counter = 0;
+
+void* tache(void* arg) {
+	char* letter = arg;
+	int i;
+
+	printf("%s begin [addr of i: %p] \n", letter, &i);
+
+	for(i = 0; i < max; i++) {
+		counter = counter + 1;
+	}
+
+	printf("%s : done\n", letter);
+	return NULL;
+}
+
+int main() {
+	pthread_t p1, p2;
+
+	printf("main: begin\n");
+
+	pthread_create(&p1, NULL, tache, "A");
+	pthread_create(&p2, NULL, tache, "B");
+
+	pthread_join(p1, NULL);
+	pthread_join(p2, NULL);
+
+	printf("main: end\n");
+
+	return 0;
+}
+\end{lstlisting}
+
+Dans les \textit{thread}s, les variables locales (comme \texttt{i}) sont séparées en mémoire. Mais, la variable \texttt{counter} est modifiée, mais elle ne correspond pas forcément à $2 \times \texttt{max}$. En effet, si \texttt{p1} et \texttt{p2} essaient d'exécuter au même moment de réaliser l'opération \lstinline[language=c]-counter = counter + 1-, ils peuvent récupérer deux valeurs identiques de \texttt{counter}, ajouter 1, puis réassigner \texttt{counter}.
+Ils \guillemotleft~se marchent sur les pieds.~\guillemotright\ 
+
+Parmi les opérations, on distingue certaines dénommées \guillemotleft~atomiques~\guillemotright\ qui ne peuvent pas être séparées. L'opération \lstinline[language=c]-i++- n'est pas atomique, mais la lecture et l'écriture mémoire le sont.
+
+\begin{defn}
+	On dit d'une variable qu'elle est \textit{atomique} lorsque l'ordonnanceur ne l'interrompt pas.
+\end{defn}
+
+\begin{exm}
+	L'opération \lstinline[language=c]-counter = counter + 1- exécutée en série peut être représentée comme ci-dessous. Avec \texttt{counter} valant 40, cette exécution donne 42.
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{l|l}
+			Exécution du fil A & Exécution du fil B\\ \hline
+			(1)~$\mathrm{reg}_1 \gets \texttt{counter}$ & (4)~$\mathrm{reg}_2 \gets \texttt{counter}$ \\
+			(2)~$\mathrm{reg}_1{++}$ & (5)~$\mathrm{reg}_2{++}$ \\
+			(3)~$\texttt{counter} \gets \mathrm{reg}_1$ & (6)~$\texttt{counter} \gets \mathrm{reg}_2$
+		\end{tabular}
+	\end{table}
+	\noindent Mais, avec l'exécution en simultanée, la valeur de \texttt{counter} sera 41.
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{l|l}
+			Exécution du fil A & Exécution du fil B\\ \hline
+			(1)~$\mathrm{reg}_1 \gets \texttt{counter}$ & (2)~$\mathrm{reg}_2 \gets \texttt{counter}$ \\
+			(3)~$\mathrm{reg}_1{++}$ & (5)~$\mathrm{reg}_2{++}$ \\
+			(4)~$\texttt{counter} \gets \mathrm{reg}_1$ & (6)~$\texttt{counter} \gets \mathrm{reg}_2$
+		\end{tabular}
+	\end{table}
+	\noindent Il y a \textit{entrelacement} des deux fils d'exécution.
+\end{exm}
+
+\begin{rmk}[Problèmes de la programmation concurrentielle]
+	\begin{itemize}
+		\item Problème d'accès en mémoire,
+		\item Problème du rendez-vous,\footnote{Lorsque deux programmes terminent, ils doivent s'attendre pour donner leurs valeurs.}
+		\item Problème du producteur-consommateur,\footnote{Certains programmes doivent ralentir ou accélérer.}
+		\item Problème de l'entreblocage,\footnote{\textit{c.f.} exemple ci-après.}
+		\item Problème famine, du dîner des philosophes.\footnote{Les philosophes mangent autour d'une table, et mangent du riz avec des baguettes. Ils décident de n'acheter qu'une seule baguette par personne. Un philosophe peut, ou penser, ou manger. Mais, pour manger, ils ont besoin de deux baguettes. S'ils ne mangent pas, ils meurent.}
+	\end{itemize}
+\end{rmk}
+
+\begin{exm}[Problème de l'entreblocage]~
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{l|l|l}
+			Fil A & Fil B & Fil C\\ \hline
+			RDV(C) & RDV(A) & RDV(B)\\
+			RDV(B) & RDV(C) & RDV(A)\\
+		\end{tabular}
+		\caption{Problème de l'entreblocage}
+	\end{table}
+\end{exm}
+
+Comment résoudre le problème des deux incrementations ? Il suffit de \guillemotleft~mettre un verrou.~\guillemotright\ Le premier fil d'exécution \guillemotleft~s'enferme~\guillemotright\ avec l'expression \lstinline[language=c]!count++!, le second fil d'exécution attend que l'autre sorte pour pouvoir entrer et s'enfermer à son tour.
+

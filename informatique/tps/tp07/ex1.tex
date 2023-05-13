@@ -1,0 +1,49 @@
+\section{Gestion du graphe et du graphe transposé}
+\begin{enumerate}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Type \texttt{graphe}]
+type graphe = int list array
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Transposée d'un graphe]
+let transpose (g: graphe): graphe =
+let n = Array.length g in
+let g' = Array.make n [] in
+for i = 0 to n - 1 do
+	List.iter (fun j -> g'.(j) <- i :: g'.(j)) g.(i)
+done;
+g'
+		\end{lstlisting}
+\end{enumerate}
+\section{Gestion des points de régénération d’un parcours}
+\begin{enumerate}[start=3]
+	\item Avec comme ordre de priorité $(a, b, c, d, e, f, g)$, on a le parcours
+		\[
+			a \to b \to c \to d \to e \to f \to g
+		.\]
+		Avec l'ordre de priorité $(f, e, g, c, d, b, a)$, on a le parcours \[
+			f \to e \leadsto g \to c \to d \to b \leadsto a
+		.\]
+	\item~
+		\begin{lstlisting}[language=caml,caption={Générateur du tableau $\llbracket 0,\texttt{n} \rrbracket$}]
+exception Plus_d_entiers
+
+let cree_entiers (n: int): (int ref) * (unit -> unit) =
+let elem = ref 0 in
+let next () =
+	if !elem < n then elem := !elem + 1
+	else raise Plus_d_entiers
+in (elem, next)
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption={Générateur d'un tableau \texttt{tab}}]
+let cree_enumerateur_tab (tab: int array): (int ref) * (unit -> unit) =
+let i = ref 0 in
+let elem = ref tab.(0) in
+let next () =
+	i := !i + 1;
+	elem := tab.(!i)
+in
+(elem, next)
+		\end{lstlisting}
+\end{enumerate}

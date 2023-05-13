@@ -1,0 +1,111 @@
+\section{Qu'est-ce qu'un produit scalaire ?}
+
+\begin{defn}
+	Soient $E$\/ un $\R$-espace vectoriel et $\varphi : E \times E \to \R$\/ une application. On dit que $\varphi$\/ est une forme
+	\begin{itemize}
+		\item \textit{bilinéaire} si $\forall (\vec{x},\vec{y},\vec{z}) \in E^3$, $\forall (\alpha, \beta) \in \R^2$,  $\begin{cases}
+				\varphi(\alpha \vec{x} + \beta \vec{y}, \vec{z}) = \alpha \varphi(\vec{x},\vec{z}) + \beta \varphi(\vec{y}, \vec{z})\\
+				\varphi(\vec{x}, \alpha \vec{y} + \beta \vec{z}) = \alpha \varphi(\vec{x}, \vec{y}) + \beta \varphi(\vec{x},\vec{z}),
+			\end{cases}$ 
+		\item \textit{symétrique} si $\forall (\vec{x},\vec{y}) \in E^2$, $\varphi(\vec{x},\vec{y}) = \varphi(\vec{y},\vec{x})$,
+		\item \textit{définie} si $\forall \vec{x} \in E$, \quad $\varphi(\vec{x},\vec{x}) = 0 \implies \vec{x} = \vec{0}$,
+		\item \textit{positive} si $\forall \vec{x} \in E$, $\varphi(x,x) \ge 0$.
+	\end{itemize}
+\end{defn}
+
+\begin{defn}
+	Soit $E$\/ un $\R$-espace vectoriel. Si $\varphi : E^2 \to \R$\/ une forme bilinéaire symétrique définie positive, alors
+	\begin{itemize}
+		\item on dit que $\varphi$\/ est un \textit{produit scalaire}. Le produit scalaire $\varphi(\vec{x}, \vec{y})$\/ de deux vecteurs $\vec{x}$\/ et $\vec{y} \in E$\/ est aussi noté $\left<\vec{x} \mid \vec{y} \right>$, $\left<\vec{x},\vec{y} \right>$, $(\vec{x}  \mid \vec{y})$\/ ou $\vec{x}\cdot \vec{y}$.
+		\item le carré scalaire $\varphi(\vec{x},\vec{x}) = \left<\vec{x} \mid \vec{x} \right>$\/ étant positif, on appelle le réel \[
+			\|\vec{x}\|_2 = \|\vec{x}\| = \sqrt{\left<\vec{x}  \mid \vec{x} \right>}
+		\] \textit{norme} (associée à ce produit scalaire) du vecteur $\vec{x}$.
+	\end{itemize}
+\end{defn}
+
+En \textsc{td}, il est, en général, plus efficace de le montrer dans l'ordre suivant : \[
+	\text{symétrie} \longrightarrow \text{bilinéaire} \longrightarrow \text{positive} \longrightarrow \text{définie}
+.\]
+
+\begin{exm}
+	\begin{enumerate}
+		\item L'espace vectoriel $\R^n$\/ est un espace euclidien\footnote{\textit{i.e.}\ un $\R$-espace vectoriel de dimension finie muni d'un produit scalaire.} avec le produit scalaire : si $\vec{x} = (x_1, x_2, \ldots, x_n)$\/ et $\vec{y} = (y_1, y_2, \ldots, y_n)$, alors \[
+				\left<\vec{x}  \mid \vec{y} \right> = x_1y_1 + x_2y_2 + \cdots + x_n y_n = \sum_{i=1}^n x_i y_i
+			.\]
+		\item L'espace vectoriel $\mathcal{M}_n(\R)$\/ est un espace euclidien avec le produit scalaire : pour $A = (a_{i,j})_{(i,j) \in \left\llbracket 1,n \right\rrbracket^2}$\/ et $B = (b_{i,j})_{(i,j) \in \left\llbracket 1,n \right\rrbracket^2}$, \[
+				\left<A  \mid B \right> = \sum_{\substack{i \in \left\llbracket 1,n \right\rrbracket\\ j \in \left\llbracket 1,n \right\rrbracket}} a_{i,j} b_{i,j} = \tr(A^\top \cdot B)
+			.\]
+			En effet, soit $C = A^\top \cdot B$, alors
+			\begin{align*}
+				(C)_{i,j} &= \sum_{k=1}^n (A^\top)_{i,k} \times (B)_{k,j}\\
+				&= \sum_{k=1}^n (A)_{k,i} \times (B)_{k,j} \\
+			\end{align*}
+			et donc \[
+				\left<A  \mid B \right> = \tr(C) = \sum_{i=1}^n (C)_{i,i} = \sum_{i=1}^n \sum_{k=1}^n (A)_{k,i} \times (B)_{k,i}
+			.\]
+			\textsl{Montrons qu'il s'agit bien d'un produit scalaire.}
+			\begin{description}
+				\item[1\tsup{ère} méthode] Il s'agit de la même formule que pour l'espace vectoriel $\R^n$.
+				\item[2\tsup{nde} méthode]
+					\begin{description}
+						\item[symétrique] $\left<A  \mid B \right> = \tr(A^T \cdot B) = \tr\big((A^\top \cdot B)^\top\big) = \tr(B^\top \cdot A) = \left< B  \mid A\right>$.
+						\item[bilinéaire] Le produit matriciel est linéaire, et la trace est linéaire, d'où $\left<\:\cdot  \mid \cdot \:\right>$\/ est bilinéaire.
+						\item[positive] $\left< A \mid A\right> = \sum_{p,q} \big((A)_{p,q}\big)^2 \ge 0$.
+						\item[définie] On suppose $\left<A  \mid A \right> = 0$, alors $\forall p,q$, $\big((A)_{p,q}\big)^2 = 0$, et donc $\forall p,q$, $(A)_{p,q} = 0$, d'où $A = 0_{\mathcal{M}_n(\R)}$.
+					\end{description}
+			\end{description}
+		\item L'espace vectoriel $\mathcal{C}([a,b])$\/ des fonctions continue sur un segment $[a,b]$\/ est un espace préhilbertien\footnote{\textit{i.e.}\ un $\R$-espace vectoriel de dimension potentiellement infinie muni d'un produit scalaire.} avec le produit scalaire \[
+				\left<f  \mid g \right> = \int_{a}^{b} f(t)\:g(t)~\mathrm{d}t
+			.\]
+			En effet,
+			\begin{description}
+				\item[symétrique] $\forall f,g \in \mathcal{C}([a,b])$, $\left<f \mid g \right> = \int_{a}^{b} f(t)\:g(t)~\mathrm{d}t = \int_{a}^{b} g(t)\:f(t)~\mathrm{d}t = \left< f  \mid g\right>$.
+				\item[bilinéaire] $\forall (\alpha, \beta) \in \R^2$, $\forall (f_1,f_2,g) \in \mathcal{C}([a,b])^3$,
+					\begin{align*}
+						\left<\alpha_1 f_1 + \alpha_2 f_2  \mid g \right> &= \int_{a}^{b} \big(\alpha_1 f_1(t) + \alpha_2f_2(t)\big) g(t)~\mathrm{d}t\\
+						&= \alpha_1 \int_{a}^{b} f_1(t)\:g(t)~\mathrm{d}t + \alpha_2 \int_{a}^{b} f_2(t)\:g(t)~\mathrm{d}t\\
+						&= \alpha_1 \left<f_1 \mid g \right> + \alpha_2 \left<f_2  \mid g \right>
+					\end{align*}
+					Ainsi $\left<\:\cdot \mid \cdot \: \right>$ est linéaire à gauche, donc par symétrie, ce produit scalaire est bilinéaire.
+				\item[positive] $\forall f \in \mathcal{C}([a,b])$, $\int_{a}^{b} f^2(t)~\mathrm{d}t \ge 0$.
+				\item[définie] On suppose que $\left< f \mid f\right> = \int_{a}^{b} f^2(t)~\mathrm{d}t = 0$, avec $f \in \mathcal{C}([a,b])$. Or, la fonction~$f^2 : t \mapsto f^2(t)$\/ ne change pas de signe et elle est continue. On en déduit que~$f = 0_{\mathcal{C}([a,b])}$.
+			\end{description}
+	\end{enumerate}
+\end{exm}
+
+\begin{exo}
+	\textsl{Soit $L_2(I)$\/ l'ensemble des fonctions $f$\/ continues par morceaux et de \textit{carré intégrable} sur $I$, où $I$\/ est un intervalle, c'est à dire : l'intégrale $\int_{I} f^2(t)~\mathrm{d}t$\/ converge. Montrer que
+	\begin{enumerate}
+		\item le produit de deux fonctions de carré intégrable est intégrable ;
+		\item l'ensemble $L_2(I)$\/ est un espace vectoriel ;
+		\item l'ensemble $L_2(I) \cap \mathcal{C}(I)$\/ des fonctions continues de carré intégrable sur $I$\/ est aussi un espace vectoriel ;
+		\item l'application $\left<f \mid g \right> = \int_{I} f(t)\:g(t)~\mathrm{d}t$\/ est défini pour tout couple $(f,g) \in L_2(I)^2$, et que c'est un produit scalaire sur $L_2(I) \cap \mathcal{C}(I)$\/ mais pas sur $L_2(I)$.
+	\end{enumerate}}
+
+	\begin{enumerate}
+		\item Soient $f \in L_2(I)$\/ et $g \in L_2(I)$, alors les intégrales $\int_{I} f^2(t)~\mathrm{d}t$\/ et $\int_{I} g^2(t)~\mathrm{d}t$\/ convergent. Or,
+			\[
+				\forall t \in I,\quad \Big(\big|f(t)\big| - \big|g(t)\big|\Big)^2  = f^2(t) + g^2(t) - 2 \big|f(t)\times g(t)\big| \ge 0
+			.\] D'où, $f^2(t) + g^2(t) \ge 2 \big|f(t)\times g(t)\big|\ge 0$. Or, les intégrales $\int_{I} f^2(t)~\mathrm{d}t$\/ et $\int_{I} g^2(t)~\mathrm{d}t$\/ convergent. D'où l'intégrale $\int_{I} \big(f^2(t) + g^2(t)\big)~\mathrm{d}t$. On en déduit donc que l'intégrale $\int_{I} f(t) \times g(t)~\mathrm{d}t$\/ converge, \textit{i.e.}\ $f \times g \in L_2(I)$.
+		\item Il ``suffit'' de montrer que $L_2(I)$\/ est un sous-espace vectoriel $\mathrm{Cpm}(I)$\/ des fonctions continues par morceaux sur $I$, \textit{i.e.}\ la fonction nulle $\smash{0_{\mathrm{Cpm}(I)}} \in L_2(I)$\/ et que $L_2(I)$\/ est stable par combinaison linéaire.
+			L'intégrale $\int_{I} 0^2 ~\mathrm{d}t$\/ converge, donc la fonction nulle est bien de carré intégrable. Et, pour $t \in I$, $\big(\alpha f(t) + \beta g(t)\big) = \alpha^2 f^2(t) + \beta^2 g(t) + 2 \alpha \beta\:f(t)\:g(t)$ ; or, $f \in L_2(I)$, donc l'intégrale $\int_{I} f^2(t)~\mathrm{d}t$\/ converge, et de même, l'intégrale~$\int_{I} g^2(t)~\mathrm{d}t$\/ converge. De plus, d'après la question précédente, l'intégrale $\int_{I} f(t) \times g(t)~\mathrm{d}t$\/ converge. On en déduit que l'intégrale $\int_{I}(\alpha f + \beta g)^2 ~\mathrm{d}t$ converge, \textit{i.e.}\ $\alpha f + \beta g \in L_2(I)$.
+		\item L'intersection de deux sous-espaces vectoriels est un sous-espace vectoriel. Or, $L_2(I)$\/ est un \textit{sev} de $\mathrm{Cpm}(I)$, et $\mathcal{C}(I)$\/ est un \textit{sev} de $\mathrm{Cpm}(I)$. D'où $L_2(I) \cap \mathcal{C}(I)$\/ est un \textit{sev} de $\mathrm{Cpm}(I)$. On en déduit que $L_2(I) \cap \mathcal{C}(I)$\/ est un espace vectoriel.
+		\item
+			\begin{itemize}
+				\item Soit $a \in I$. On pose la fonction continue par morceaux \begin{align*}
+						\varphi: I &\longrightarrow \R \\
+						x &\longmapsto \begin{cases}
+							0 &\quad \text{ si } x \neq a\\
+							1 &\quad \text{ si } x = a.
+						\end{cases}
+					\end{align*}
+					On a bien $\varphi \in L_2(I)$, et $\int_{I} \varphi^2(t)~\mathrm{d}t = 0$\/ alors que $\varphi \neq 0$\/ car $\varphi(a) \neq 0$. Ainsi, l'application $\left<\:\cdot  \mid \cdot \: \right>$\/ n'est pas définie, ce n'est donc pas un produit scalaire.
+				\item Par linéarité de l'intégrale, l'application $\left<\:\cdot  \mid \cdot \: \right>$\/ est bilinéaire. Par commutativité de la multiplication de réels, elle est symétrique. Par croissance de l'intégrale, elle est aussi positive. Finalement, si $f \in L_2(I) \cap \mathcal{C}(I)$, et que $\int_{I} f^2(t)~\mathrm{d}t  = 0$\/ alors $f = 0$\/ car $f^2$\/ est continue et ne change pas de signe.
+			\end{itemize}
+	\end{enumerate}
+\end{exo}
+
+\begin{rmkn}[``Secret'']
+	On dit que $f \in L_1(I)$\/ si, et seulement si l'intégrale $\int_{I} \big|f(t)\big|~\mathrm{d}t$\/ converge.
+\end{rmkn}
+

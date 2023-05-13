@@ -1,0 +1,39 @@
+\documentclass[a4paper,landscape]{article}
+
+\input{../../preamble.tex}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tgschola}
+
+\titletp*{ts\:7}{Montages électroniques à portes logiques astable, monostable et bistable}{\begin{tabular}{c}Hugo \textsc{Salou}\\Noémie \textsc{Combey}\end{tabular}}{Hugo \textsc{Salou} \& Noémie \textsc{Combey}}
+\pagecolor{truewhite}
+\color{trueblack}
+
+\def\figsize{0.4\textwidth}
+
+\begin{document}
+	\begin{multicols}{2}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\figsize]{figures/scope_0.png}
+			\caption{Oscillateur en anneau à 3 portes~\textsc{non}}
+		\end{figure}
+		\hfill
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\figsize]{figures/scope_1.png}
+			\caption{Oscillateur astable \textit{RC}}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\figsize]{figures/scope_4.png}
+			\caption{Signal $s(t)$, quand $R = 100\:\mathrm{k\Omega}$}
+		\end{figure}
+		\hfill
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\figsize]{figures/scope_5.png}
+			\caption{Signal $s(t)$, quand $R = 1{,}0\:\mathrm{M\Omega}$}
+		\end{figure}
+	\end{multicols}
+\end{document}

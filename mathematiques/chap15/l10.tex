@@ -1,0 +1,195 @@
+\begin{defn}
+	Soit $f$ une fonction admettant des dérivées partielles secondes en $\vec{a}$. La \textit{hessienne} de $f$ en $\vec{a}$ est la matrice \[
+		\mathrm{H}_f(\vec{a}) = \big(\partial_i \partial_j f\big)_{i,j} = \begin{pmatrix}
+			\ds\frac{\partial^2 f}{\partial x_1{}^2}(\vec{a}) & \ds \frac{\partial^2 f}{\partial x_1\:\partial x_2}(\vec{a}) & \ds\ldots & \ds\frac{\partial^2 f}{\partial x_1\: \partial x_p} (\vec{a})\\
+			\ds \frac{\partial^2 f}{\partial x_2 \partial x_1}(\vec{a}) & \ds \frac{\partial^2 f}{\partial x_2{}^2}(\vec{a}) & \ds\ldots & \ds\frac{\partial^2 f}{\partial x_2\:\partial x_p}(\vec{a})\\
+			\vdots & \vdots & \ddots & \vdots\\
+			\ds\frac{\partial^2 f}{\partial x_p\:\partial x_1}(\vec{a}) & \ds\frac{\partial^2 f}{\partial x_p\:\partial x_2}(\vec{a}) & \ds \ldots & \ds \frac{\partial^2 f}{\partial x_p{}^2}(\vec{a})
+		\end{pmatrix} \in \mathcal{M}_{pp}(\R)
+	.\]
+\end{defn}
+
+Si la fonction $f$ est de classe $\mathcal{C}^2$, alors, par le théorème de Schwarz, la hessienne de $f$ est une matrice symétrique.
+
+\section{Optimisation}
+
+\begin{defn}
+	Soit $\vec{a}$ un vecteur d'une partie $D \subset \R^p$, où $p \in \N^*$. Soit $f : D \to \R$ une fonction scalaire. On dit que
+	\begin{enumerate}
+		\item la fonction $f$ possède un \textit{minimum global} sur $D$ en $\vec{a}$ si \hfill $\forall \vec{x} \in D,\quad f(\vec{x}) \ge f(\vec{a})$,\hfill\null
+		\item la fonction $f$ possède un \textit{minimum global} en $\vec{a}$ s'il existe $\varepsilon > 0$ tel que pour tout $\vec{x} \in D \cap \bar{B}(\vec{a}, \varepsilon)$, $f(\vec{x}) \ge f(\vec{a})$.
+	\end{enumerate}
+\end{defn}
+
+On définit de même un \textit{maximum local} en $\vec{a}$ et un \textit{maximum global} sur $D$ en $\vec{a}$. On dit que $f$ possède un \textit{extremum} (\textit{local} en $\vec{a}$, \textit{global} sur $D$) si $f$ possède un maximum ou un minimum (local en $\vec{a}$, global en $D$).
+Un extremum global est \textit{a fortiori} local.
+
+\begin{thm}
+	Soit $f : E \to \R$. Si $D$ est une partie fermée et bornée de $E$ et si $f$ est une fonction continue sur $D$, alors $f$ possède un maximum et un minimum globaux. Autrement dit, toute fonction réelle continue sur un fermé borné est bornée et atteint ses bornes.
+\end{thm}
+
+La preuve sera faite dans l'annexe B.
+
+\begin{prop-defn}
+	Soient $D \subset \R^p$ et $\vec{a}$ un point intérieur de $D$. Soit $f : D \to \R$ une fonction scalaire différentiable en $\vec{a}$.
+	\begin{enumerate}
+		\item On dit que $\vec{a}$ est un \textit{point critique} de $f$ si $\nabla f(\vec{a}) = \vec{0}$ (\textit{i.e.}\ si $\mathrm{d}f(\vec{a})$ est l'application nulle).
+		\item
+			\[
+				\begin{tikzcd}
+					\text{$f$ possède un extremum local} \ar[r, Leftarrow, bend left, "\text{\huge$\times$}"{anchor=center, sloped}] & \text{$\vec{a}$ est un point critique de $f$}\\[-7mm]
+					\text{en un \ul{point intérieur} $\vec{a}$} \ar[r, Rightarrow, bend right] & \nabla f(\vec{a}) = \vec{0}
+				\end{tikzcd}
+			.\]
+	\end{enumerate}
+\end{prop-defn}
+
+\begin{prv}
+	Généralisation d'un théorème vu précédemment, la preuve est dans la section 14.4 du cours de \textit{MP2I}.
+\end{prv}
+
+\begin{prop}
+	Soit $\vec{a} \in D$ un point d'un ouvert de $\R^p$, et soit $f : D \to \R^2$ une fonction scalaire de classe $\mathcal{C}^2$. Soient $(\lambda_1, \ldots, \lambda_p)$ les valeurs propres de la hessienne de $f$ en $\vec{a}$.
+	\begin{enumerate}
+		\item \textbf{Condition \ul{nécessaire} de minimum local en un point \ul{intérieur}.} Si $f$ possède un minimum local en $\vec{a}$, alors
+			\[
+				\nabla f(\vec{a}) = \vec{0} \quad \text{ et }\quad \forall i \in \llbracket 1,p \rrbracket,\: \lambda_i \ge 0
+			.\]
+			Autrement dit, $\nabla f(\vec{a}) = \vec{0}$ et $\mathrm{H}_f(\vec{a}) \in \mathcal{S}_p^+$.
+		\item \textbf{Condition \ul{suffisante} de minimum local en un point \ul{intérieur}.}
+			Si $\nabla f(\vec{a}) = \vec{0}$, et $\forall i \in \llbracket 1,p \rrbracket$, $\lambda_i > 0$, autrement dit si $\nabla f(\vec{a}) = \vec{0}$ et $\mathrm{H}_f(\vec{a}) \in \mathcal{S}_p^{++}$, alors $f$ possède un minimum local en $\vec{a}$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item Si $f$ possède un minimum local, alors $\vec{a}$ est un point critique, donc $\nabla f(\vec{a}) = \vec{0}$.
+			D'où, $f(\vec{a} + \vec{h}) = f(\vec{a}) + \frac{1}{2}q_{\vec{a}}(\vec{h}) + \|h\|^2 \:\varepsilon(\vec{h})$.
+			Comme $\vec{a}$ est un minimum local, alors $\frac{1}{2}q_{\vec{a}}(\vec{h}) + \|\vec{h}\|^2 \:\varepsilon(\vec{h}) \ge 0$, pour tout $\vec{h}$ suffisamment petit (le minimum est local).
+			Or, $\frac{1}{2}q_{\vec{a}}(\vec{h}) + \|\vec{h}\|^2 \:\varepsilon(\vec{h}) = \frac{1}{2}\:\big[\:\vec{h}\:\big]^\T \cdot \mathrm{H}_f(\vec{a}) \cdot \big[\:\vec{h}\:\big] + \|\vec{h}\|^2\:\varepsilon(\vec{h})$.
+			Et, la matrice $\mathrm{H}_f(\vec{a})$ est symétrique et à coefficients réels d'où, d'après le théorème spectral, elle est diagonalisable dans une base $\mathcal{B}$ orthonormée formée de vecteurs propres.
+			D'où, $\frac{1}{2}q_{\vec{a}}(\vec{h}) + \|\vec{h}\|^2 \:\varepsilon(\vec{h}) = \frac{1}{2} \big[\:\vec{h}\:\big]_\mathcal{B}^\T \cdot \mathrm{diag}(\lambda_1, \ldots, \lambda_n) \cdot  \big[\:\vec{h}\:\big]_\mathcal{B} + \|\vec{h}\|^2\:\varepsilon(\vec{h}) = \frac{1}{2} (\lambda_1 h_1^2 + \cdots + \lambda_p h_p^2) + (h_1^2 +\cdots + h_p^2) \:\varepsilon(\vec{h}) \ge 0$, pour tout vecteur $\vec{h}$ suffisamment petit.
+			Montrons que $\forall i$, $\lambda_i \ge 0$.
+			Par l'absurde, supposons qu'il existe $i \in \llbracket 1,p \rrbracket$ tel que $\lambda_i \le 0$.
+			On considère le vecteur $\vec{h} = (0, \ldots, 0, h, 0, \ldots, 0)$ qui est non nul à la $i$-ème coordonnée.
+			Alors, \[
+				\frac{1}{2} \lambda_i\:h^2 + h^2 \varepsilon(\vec{h}) = h^2 \big(\frac{1}{2} \lambda_i + \varepsilon(\vec{h})\big) \ge 0
+			.\] Or, $\varepsilon(\vec{h}) \to 0$ lorsque $\vec{h} \to 0$.
+			D'où, $\frac{1}{2}\lambda_i + \varepsilon(\vec{h}) < 0$ pour $\vec{h}$ assez petit.
+			Absurde.
+	\end{itemize}
+\end{prv}
+
+Ceci reste vrai pour un maximum en replaçant $f$ par $-f$.
+
+\begin{met}[Démontrer les extrema locaux \ul{en dimension 2}]
+	\begin{enumerate}
+		\item On détermine les points critique de la fonction $f$.
+		\item Pour chaque point critique $\vec{a}$, on calcule le déterminant et la trace de la hessienne $\mathrm{H}_f(\vec{a})$.
+			\begin{enumerate}
+				\item Si le déterminant est strictement positif, alors il y a un extremum local en $\vec{a}$ :
+					\begin{itemize}
+						\item si la trace est strictement positive, alors $f$ admet un minimum local en $\vec{a}$,
+						\item si la trace est strictement négative, alors $f$ admet un maximum local en $\vec{a}$.
+					\end{itemize}
+				\item Si le déterminant est strictement négatif, alors $f$ n'admet pas d'extremum local en $\vec{a}$.
+				\item Si le déterminant est nul, alors la proposition ne permet pas de conclure.
+			\end{enumerate}
+	\end{enumerate}
+\end{met}
+
+\begin{exo}
+	\begin{slshape}
+		Étudier les extrema de la fonction \begin{align*}
+			f: \bar{B}(\vec{0}, 1) &\longrightarrow \R \\
+			(x,y) &\longmapsto x^2-y^2
+		\end{align*}
+		définie sur la boule $\bar{B}(\vec{0}, 1) = \{(x,y)\in \R^2  \mid x^2 + y^2 \le 1\}$ fermée de centre $\vec{0}$ et de rayon $1$.
+	\end{slshape}
+
+	La fonction $f$ est continue sur le fermé borné $\bar{B}(\vec{0}, 1)$, donc elle possède un maximum et un minimum globaux.
+	\begin{itemize}
+		\item À l'intérieur de la boule $\bar{B}(\vec{0}, 1)$, on procède par analyse--synthèse.
+			\begin{itemize}
+				\item \textbf{Analyse.} S'il existe un extremum en un point $(a,b) \in \mathring B(\vec{0}, 1)$, alors $\nabla f(a,b) = (2a, -2b) = (0,0)$ d'où $(a,b) = \vec{0}$.
+				\item \textbf{Synthèse.} En $(a,b) = \vec{0}$, alors $f(a,b) = f(0,0) = 0$.
+					Or, $f(0, k) = -k^2 < 0$, pour tout $k > 0$.
+					Et, $f(h, 0) = h^2 > 0$, pour tout $h > 0$.
+					Le point $\vec{0}$ n'est, ni un minimum local, ni un maximum local,pour la fonction $f$.
+				\item \textbf{Suite de l'analyse.} (deuxième méthode)
+					On calcule la hessienne de $f$ en $\vec{0}$. On trouve \[
+						\mathrm{H}_f(\vec{0}) = \begin{pmatrix}
+							2 & 0\\
+							0 & -2
+						\end{pmatrix}
+					.\]
+					Les deux valeurs propres ont des signes différents, il n'y a donc ni maximum, ni minium en $\vec{0}$.
+			\end{itemize}
+		\item Et au bord, il y a un minimum global et un maximum global par continuité de $f$.
+			Sur le bord, $x^2 + y^2 = 1$, donc $f(x,y) = x^2 - y^2 = x^2 - (1 - y^2) = 2x^2 - 1$, pour tout $x \in [-1,1]$.
+			Soit $g : x \mapsto x^2 - 1$ définie sur $[-1,1]$.
+			\begin{itemize}
+				\item Sur l'ouvert $]-1,1[$, s'il y a un extremum local en $x$, alors $g'(x) = 4x = 0$ et donc $x = 0$.
+					Et alors, $f(x,y) = g(x) = -1$, et c'est un minimum global (au vu de la fonction $f$) atteint aux points $(0, 1)$ et $(0, -1)$.
+				\item Et, au bord de $[-1,1]$, alors : si $x = 1$ ou si $x = -1$, alors $y = 0$ et donc $f(x,y) = 1$, et c'est un maximum global.
+			\end{itemize}
+	\end{itemize}
+\end{exo}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import solids;
+		import graph;
+		size(4cm);
+
+		settings.render = 0;
+		settings.prc = false;
+		currentprojection = obliqueZ;
+
+		draw(graph(
+			new real(real x) { return x; },
+			new real(real x) { return -x^2 / 3; },
+			new real(real x) { return 3; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return x; },
+			new real(real x) { return -x^2 / 3; },
+			new real(real x) { return -3; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return x; },
+			new real(real x) { return -x^2 / 3 - 1; },
+			new real(real x) { return 0; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return 0; },
+			new real(real x) { return x^2 / 9 - 1; },
+			new real(real x) { return x; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return -3; },
+			new real(real x) { return x^2 / 9 - 4; },
+			new real(real x) { return x; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return 3; },
+			new real(real x) { return x^2 / 9 - 4; },
+			new real(real x) { return x; },
+			-3, 3
+		));
+		
+		dot("~~~Point col", (0,-1,0), red, align=NE);
+	\end{asy}
+	\caption{Représentation graphique de la fonction $f$}
+\end{figure}

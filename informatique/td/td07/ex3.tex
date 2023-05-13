@@ -1,0 +1,31 @@
+\section{Stabilité de la classe des langages décidables}
+
+\begin{enumerate}
+	\item Soit $L$\/ un langage fini. On pose donc $L = \{w_1, \ldots, w_n\}$. On code donc la fonction ci-dessous.
+		\begin{lstlisting}[language=caml,caption=Fonction décidant d'un langage fini]
+let decide%*$_L$*) (w: string): bool =
+	match w with
+	| %*$w_1$*) -> true
+	| ...
+	| %*$w_n$*) -> true
+	| _ -> false
+		\end{lstlisting}
+		Autre preuve : tout langage fini est régulier, et tout langage régulier est reconnaissable, et est donc décidable.
+	\item Soient $L_1$\/ et $L_2$\/ deux langages décidables. Soit $\texttt{decide}_{L_1}$\/ et $\texttt{decide}_{L_2}$\/ décidant respectivement $L_1$\/ et $L_2$. On code la fonction $\texttt{decide}_{L_1\cdot L_2}$\/ :
+		\begin{lstlisting}[language=caml,caption=Fonction décidant d'une concaténation de langages décidables]
+let decide%*$_{L_1\cdot L_2}$*) (w: string) : bool =
+	let m = String.length w in
+	let rep = ref false in
+	for i = 0 to n - 1 do
+		if decide%*$_{L_1}$*) w%*$_{\big|\llbracket 0, \texttt{i}\rrbracket}$*) && decide%*$_{L_2}$*) w%*$_{\big|\llbracket \texttt{i} + 1, \texttt{n} - 1\rrbracket}$*) then
+			rep := true
+	done;
+	!rep
+		\end{lstlisting}
+	\item 
+	\item Tout langage singleton est décidable. Soit $L_{\text{\textsc{Arrêt}}}$\/ l'ensemble \[
+			L_{\text{\textsc{Arrêt}}} = \{\texttt{serialise\_couple}\ M\ w  \mid M \text{ s'arrête sur } w\}
+		.\]
+		Le langage $L_{\textsc{Arrêt}}$\/ est indécidable. Mais, $L_{\textsc{Arrêt}} = \bigcup_{x \in L_{\textsc{Arrêt}}} \{x\}$, est une union dénombrable.
+\end{enumerate}
+

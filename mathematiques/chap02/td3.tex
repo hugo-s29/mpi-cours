@@ -1,0 +1,25 @@
+\section{Exercices 6}
+La suite de l'exercice est l'exercice 7 du \textsc{td} n\textsuperscript o7.
+
+Si une matrice $A$\/ est de rang 1, alors elle est semblable à une matrice \[
+	B = \begin{pNiceMatrix}[last-row,last-col]
+		b_1 & \ldots & b_n&e_1\\
+		0 & \ldots & 0&e_2\\
+		\vdots & \ddots & \vdots&\vdots\\
+		0 & \ldots & 0&e_n\\
+		f(e_1)&\ldots&f(e_{n-1})&f(e_n)
+	\end{pNiceMatrix}
+	\text{ ou }
+	C = \begin{pNiceMatrix}[last-row,last-col]
+		0 & \ldots & 0 & c_1&\varepsilon_1\\
+		\vdots & \ddots & \vdots & \vdots&\vdots\\
+		0 & \ldots & 0 & c_n&\varepsilon_n\\
+		f(\varepsilon_1) & \ldots & f(\varepsilon_{n-1}) & f(\varepsilon_n).
+	\end{pNiceMatrix}
+\]
+
+Soit $f$\/ l'endomorphisme d'un espace vectoriel $E$\/ de dimension $n$, où, dans une base $\mathcal{B}$\/ de $E$, $[f]_\mathcal{B} = A$.
+
+On se place dans une base adaptée. Soit $(\varepsilon_1, \ldots, \varepsilon_{n-1})$\/ une base de $\Ker f$, car $\dim (\Ker f) = n - 1$\/ car $\rg A = 1$\/ (théorème du rang). On complète cette base de $\Ker f$\/ en une base $(\varepsilon_1, \ldots, \varepsilon_{n-1}, \varepsilon_n)$.
+
+Sinon, soit $(e_1)$\/ une base adaptée à $\Im f$, car $\dim(\Im f) = 1$\/ (car $\rg A = 1$). On complète cette base de $\Im f$\/ en une base $(e_1, \ldots, e_n)$\/ de $E$.

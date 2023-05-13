@@ -1,0 +1,86 @@
+\subsection{À $N$ fils d'exécutions}
+
+On propose de l'algorithme de la boulangerie.
+On se donne un \guillemotleft~ticket~\guillemotright\ qui donne l'ordre de passage.
+En voulant accéder à la boulangerie, on prend un ticket (1 plus la valeur maximale des tickets), et on attend son tour
+Pour attendre son tour, on attend que chacune des personnes n'ai un ticket inférieur au sien.
+Ceci donne l'algorithme suivant.
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\State $\mathrm{Ticket}$ est un tableau de $n$ entiers initialisés à $0$.
+		\Procedure{Lock}{$\mathrm{Ticket},i$}
+		\State $\mathrm{Ticket}[i] \gets 1 + \max \{\mathrm{Ticket}[j]  \mid j \in \llbracket 0,n-1 \rrbracket\} $
+		\For{$j \in \llbracket 0,n-1 \rrbracket$}
+		\While {$\mathrm{Ticket}[i] \neq 0$ et $\mathrm{Ticket}[j] < \mathrm{Ticket}[i]$}
+		\State rien
+		\EndWhile
+		\EndFor
+		\EndProcedure
+		\Procedure{Unlock}{$\mathrm{Ticket},i$}
+		\State $\mathrm{Ticket}[i] \gets 0$\/
+		\EndProcedure
+	\end{algorithmic}
+	\caption{Tentative 1 d'implémentation du type \textsf{verrou} à $N$ fils}
+\end{algorithm}
+
+Mais, cet algorithme peuvent prendre un ticket pendant le calcul du $\max$. On utilise une variable $\mathrm{EnCalcul}$ qui dit lorsque le calcul du $\max$ est en cours.
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\State $\mathrm{Ticket}$ est un tableau de $n$ entiers initialisés à $0$.
+		\State $\mathrm{EnCalcul}$ est un tableau de $n$ booléens initialisés à $\mathbf{F}$.
+		\Procedure{Lock}{$\mathrm{Ticket},i$}
+		\State $\mathrm{EnCalcul}[i] \gets \mathbf{V}$
+		\State $\mathrm{Ticket}[i] \gets 1 + \max \{\mathrm{Ticket}[j]  \mid j \in \llbracket 0,n-1 \rrbracket\} $
+		\State $\mathrm{EnCalcul}[i] \gets \mathbf{F}$
+		\For{$j \in \llbracket 0,n-1 \rrbracket$}
+		\While{$\mathrm{EnCalcul}[j]$}
+		\State rien
+		\EndWhile
+		\While {$\mathrm{Ticket}[i] \neq 0$ et $\mathrm{Ticket}[j] < \mathrm{Ticket}[i]$}
+		\State rien
+		\EndWhile
+		\EndFor
+		\EndProcedure
+		\Procedure{Unlock}{$\mathrm{Ticket},i$}
+		\State $\mathrm{Ticket}[i] \gets 0$\/
+		\EndProcedure
+	\end{algorithmic}
+	\caption{Tentative 2 d'implémentation du type \textsf{verrou} à $N$ fils}
+\end{algorithm}
+
+Mais, cet algorithme laisse avoir deux personnes ayant un ticket de même valeur.
+On peut départager les deux personnes avec les identifiants.
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\State $\mathrm{Ticket}$ est un tableau de $n$ entiers initialisés à $0$.
+		\State $\mathrm{EnCalcul}$ est un tableau de $n$ booléens initialisés à $\mathbf{F}$.
+		\Procedure{Lock}{$\mathrm{Ticket},i$}
+		\State $\mathrm{EnCalcul}[i] \gets \mathbf{V}$
+		\State $\mathrm{Ticket}[i] \gets 1 + \max \{\mathrm{Ticket}[j]  \mid j \in \llbracket 0,n-1 \rrbracket\} $
+		\State $\mathrm{EnCalcul}[i] \gets \mathbf{F}$
+		\For{$j \in \llbracket 0,n-1 \rrbracket$}
+		\While{$\mathrm{EnCalcul}[j]$}
+		\State rien
+		\EndWhile
+		\While {{\footnotesize $\mathrm{Ticket}[j] \neq 0$ et \smash{$\underbrace{\text{[$\mathrm{Ticket}[j] < \mathrm{Ticket}[i]$ ou ($\mathrm{Ticket}[j] = \mathrm{Ticket}[i]$ et $j < i$)]}}_{\text{ordre lexicographique}}$}}}
+		\State rien
+		\EndWhile
+		\EndFor
+		\EndProcedure
+		\Procedure{Unlock}{$\mathrm{Ticket},i$}
+		\State $\mathrm{Ticket}[i] \gets 0$\/
+		\EndProcedure
+	\end{algorithmic}
+	\caption{Tentative 3 d'implémentation du type \textsf{verrou} à $N$ fils -- algorithme de la boulangerie}
+\end{algorithm}
+
+Cet algorithme assure l'exclusion mutuelle.
+On peut penser que ce problème peut créer le problème de famine.
+Mais, non, la comparaison entre identifiants n'a lieu qu'en cas d'égalité de ticket, donc lorsque deux personnes arrivent en même temps à la boulangerie.
+

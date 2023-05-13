@@ -1,0 +1,27 @@
+\section{Exercice 1}
+
+\begin{enumerate}
+	\item On se place dans $\R^3$\/ muni du produit scalaire $\left<\:\cdot  \mid \cdot \: \right>$\/ défini comme $\left<(x,y,z) \mid (a,b,c) \right> = xa + yb + zc$. On pose le vecteur $\vec{u} = \left( \sqrt{x},\sqrt{y}, \sqrt{z} \right)$\/ et $\vec{v} = \left( \frac{1}{\sqrt{x}},\frac{1}{\sqrt{y}},\frac{1}{\sqrt{z}} \right)$. De l'inégalité de \textsc{Cauchy-Schwarz}, on a \[
+			|\left<\vec{u} \mid \vec{v} \right>| \le \|\vec{u}\|\: \|\vec{v}\|
+		.\] Or, $\left<\vec{u} \mid \vec{v} \right> = 3$, $\|\vec{u}\| = \sqrt{x+y+z}$\/ et $\|\vec{v}\| = \sqrt{\frac{1}{x} + \frac{1}{y} + \frac{1}{z}}$. D'où, comme la fonction $x \mapsto x^2$\/ est croissante, \[
+			9 = 3^2 \le (x+y+z)\left( \frac{1}{x} + \frac{1}{y} + \frac{1}{z} \right)
+		.\]
+		Il n'y a égalité que si $u$\/ et $v$\/ sont colinéaires, \textit{i.e.}\ $u = \lambda v$\/ : \[
+			u = \lambda v \iff \begin{cases}
+				\sqrt{x} = \lambda \frac{1}{\sqrt{x}}\\
+				\sqrt{y} = \lambda \frac{1}{\sqrt{y}}\\
+				\sqrt{z} = \lambda \frac{1}{\sqrt{z}}\\
+			\end{cases} \iff \begin{cases}
+				x = \lambda\\
+				y = \lambda\\
+				z = \lambda
+			\end{cases} \iff x = y = z
+		.\]
+	\item On se place dans $\mathcal{C}^0([a,b])$\/ muni de son produit scalaire canonique. On pose $u : x\mapsto \sqrt{f(x)}$\/ et $v : x \mapsto \frac{1}{\sqrt{f(x)}}$.
+		D'après l'inégalité de \textsc{Cauchy-Schwarz}, \[
+			|\left<u \mid v \right>| \le \|u\|\: \|v\|
+		.\] Et, $\left<u \mid v \right> = \int_{a}^{b}~\mathrm{d}t = b-a$, $\|u\|^2 = \int_{a}^{b} f(t)~\mathrm{d}t$\/ et $\|v\|^2 = \int_{a}^{b} \frac{1}{f(t)} ~\mathrm{d}t$. D'où, par croissance de la fonction $x \mapsto x^2$, \[
+		(b-a)^2 \le \Big(\int_{a}^{b} f(t)~\mathrm{d}t \Big) \times \Big(\int_{a}^{b} \frac{1}{f(t)}~\mathrm{d}t\Big)
+		.\]
+		Il y a égalité si $u$\/ et $v$\/ sont colinéaires, \textit{i.e.}\ $u = \lambda v$, \textit{i.e.}\ $\forall t\in [a,b]$, $\sqrt{f(t)} = \frac{1}{\sqrt{f(t)}}$, \textit{i.e.}\ $f(t) = \lambda$, \textit{i.e.}\ $f$\/ est constante.
+\end{enumerate}

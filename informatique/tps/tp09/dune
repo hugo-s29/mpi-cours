@@ -1,0 +1,3 @@
+(executable
+ (name p4)
+ (libraries graphics))

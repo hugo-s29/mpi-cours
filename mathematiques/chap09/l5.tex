@@ -1,0 +1,83 @@
+\section{Hyperplans}
+
+\begin{rap}
+	Un \textit{hyperplan} $H$\/ de $E$\/ est le noyau d'une forme linéaire non nulle : \[
+		H = \Ker \varphi \quad\quad \text{ où }\quad\quad \tilde0 \neq \varphi : \begin{array}{rcl}
+			E &\xrightarrow{\text{linéaire}}& \R \\
+			\vec{x} &\longmapsto& \varphi(\vec{x})
+		\end{array}
+	.\]
+	Si $E$\/ est de dimension finie $n$, alors \[
+		H \text{ est un hyperplan} \iff \dim F = n - 1
+	.\]
+	Toute forme linéaire est, ou bien nulle, ou bien surjective.
+	Si deux formes linéaires ont le même noyau, alors elles sont proportionnelles.
+\end{rap}
+
+\begin{prop}
+	Soit $E$\/ un espace préhilbertien.
+	\begin{enumerate}
+		\item L'orthogonal d'une droite vectorielle $D$\/ est un hyperplan $H$\/ : $D^\perp = H$.
+		\item Si $E$\/ est de dimension finie, l'orthogonal d'un hyperplan $H$\/ est une droite vectorielle $D$\/ : $H^\perp = D$.
+			Autrement dit, toutes les équations d'un hyperplan sont proportionnelles~(\textit{i.e.}\ les mêmes à un facteur près).
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item Il existe un vecteur $\vec{a} \in E \setminus \{\vec{0}\}$\/ tel que $D = \Vect(\vec{a})$. Soit $\vec{x} \in E$.
+			\begin{align*}
+				\vec{x} \in D^\perp \iff& \vec{x} \perp D\\
+				\iff& \forall \vec{y} \in D,\:\vec{x} \perp \vec{y}\\
+				\iff& \vec{x} \perp \vec{a}\\
+				\iff& \left<\vec{x}  \mid \vec{a} \right> = 0
+			\end{align*}
+			Soit $\varphi(\vec{x}) = \left<\vec{x}  \mid \vec{a} \right>$. L'application $\varphi$\/ est une forme linéaire par bilinéarité du produit scalaire. Ainsi, on a bien $\vec{x} \in D^\perp \iff \vec{x} \in \Ker\varphi$. Or, la forme linéaire n'est pas nulle car $\varphi(\vec{a}) \neq 0$, par le caractère défini du produit scalaire.
+		\item D'après le corolaire 24, comme $E$\/ est de dimension finie $n$, $H \oplus H^\perp = E$. Or, $\dim H = n - 1$\/ et donc $\dim (H^\perp) = n - (n-1) = 1$. L'espace vectoriel $H^\perp$\/ est bien une droite vectorielle.
+	\end{enumerate}
+\end{prv}
+
+\begin{thm}[représentation de \textsc{Riesz}]
+	Soit $E$\/ un espace \textbf{euclidien}. Pour toute forme linéaire $\varphi : E \to \R$, alors il existe un unique vecteur $\vec{a} \in E$\/ tel que $\varphi = \left<\vec{a}  \mid \cdot \: \right>$, \textit{i.e.}\ \[
+		\forall \vec{x} \in E,\quad \varphi(\vec{x}) = \left<\vec{a}  \mid \vec{x} \right>
+	.\]
+\end{thm}
+
+\begin{prv}
+	Soit $\mathcal{B} = (\vec{\varepsilon}_1,\ldots,\vec{\varepsilon}_n)$\/ une base orthonormée de $E$\/ (que l'on peut trouver à l'aide de l'algorithme de \textsc{Gram}-\textsc{Schmidt}).
+	Soit $\vec{x} \in E$. On pose $\vec{x} = x_1 \vec{\varepsilon}_1 + x_2 \vec{\varepsilon}_2 + \cdots + x_n \vec{\varepsilon}_n$.
+	L'application $\varphi$\/ est linéaire, donc $\varphi(\vec{x}) = x_1 \varphi(\vec{\varepsilon}_1) + \cdots + x_n \varphi(\vec{\varepsilon}_n)$. On pose, pour $i \in \llbracket 1,n \rrbracket$, $a_i = \varphi(\vec{\varepsilon}_i)$. Ainsi, \[
+		\varphi(\vec{x}) = x_1 a_1 + \cdots + x_n a_n
+	.\]
+	On pose $\vec{a} = a_1 \vec{\varepsilon}_1 + \cdots + a_n \vec{\varepsilon}_n$. Ainsi, $\left<\vec{a} \mid \vec{x} \right> = \varphi(\vec{x})$. Montrons que ce vecteur $\vec{a}$\/ est unique. Par l'absurde, on suppose que $\vec{a} \neq \vec{b}$\/ et $\left<\vec{a}  \mid \vec{x} \right> = \left<\vec{b}  \mid \vec{x} \right>$. Alors, $\forall \vec{x} \in E$, $\left<\vec{x}  \mid \vec{a} - \vec{b} \right> = 0$\/ par bilinéarité. En particulier, $\vec{a} - \vec{b} \in E$, et donc $\left<\vec{a} - \vec{b}  \mid \vec{a} - \vec{b} \right> = 0$, ce qui est absurde car $\vec{a} - \vec{b} \neq \vec{0}$.
+\end{prv}
+
+\begin{exo}
+	\begin{enumerate}
+		\item On sait que $d(\vec{x}, H) = \|\vec{x} - p(\vec{x})\|$\/ où $p$\/ est la projection orthogonale sur~$H$, qui existe car $H$\/ est de dimension finie, car $E$\/ est euclidien. On veut montrer que \[
+				d(\vec{x}, H) = \frac{\left| \left<\vec{x}  \mid \vec{a} \right> \right|}{\|\vec{a}\|}
+			\] où $\vec{a} \neq \vec{0}$\/ et est orthogonal à $H$. On sait déjà que $\Vect(\vec{a}) \perp H$, d'où $\Vect(\vec{a}) \subset H^\perp$. Par un argument de dimensions, on a $H^\perp = \Vect(\vec{a})$ car $H \oplus H^\perp = E$. On sait déjà que $\vec{x} - p(\vec{x}) \in H^\perp$, il existe donc $\lambda \in \R$\/ tel que $\vec{x} - p(\vec{x}) = \lambda \vec{a}$. D'où,
+			\begin{align*}
+				\left<\vec{x} - p(\vec{x}) \right> &= \lambda \left<\vec{a}  \mid  \vec{a} \right> = \lambda \|a\|^2 \\
+				&= \left<\vec{x}  \mid \vec{a} \right> \\
+			\end{align*}
+			car $p(\vec{x}) \perp \vec{a}$. D'où, $\lambda = \left<\vec{x} \mid \vec{a} \right> / \|\vec{a}\|^2$. Ainsi, 
+			\begin{align*}
+				\|\vec{x} - p(\vec{x})\|^2 &= \left\| \frac{\left<\vec{x} \mid \vec{a} \right>}{\|\vec{a}\|^2} \cdot \vec{a}\right\| \\
+				&= \frac{\left<\vec{x} \mid \vec{a} \right>^2}{\|\vec{a}\|^4} \|\vec{a}\|^2\\
+				&= \left( \frac{\left<\vec{x}  \mid \vec{a} \right>}{\|a\|} \right)^2 \\
+			\end{align*}
+			D'où \[
+				d(\vec{x}, H) = \left| \frac{\left<\vec{x} \mid \vec{a} \right>}{\|\vec{a}\|} \right| = \frac{\left| \left<\vec{x}  \mid \vec{a} \right> \right|}{\|\vec{a}\|}
+			.\]
+		\item D'après le théorème de \textsc{Pythagore}, \[
+				d^2(\vec{x}, D) + d^2(\vec{x}, H) = \|\vec{x}\|^2
+			\] d'où 
+			\begin{align*}
+				d(\vec{x}, D) &= \sqrt{\|\vec{x}\|^2 - d^2(\vec{x}, H)} \\
+				&= \sqrt{\|\vec{x}\|^2 - \frac{\left<\vec{x} \mid \vec{a} \right>^2}{\|a\|^2}} \\
+				&= \frac{\sqrt{\|\vec{a}\|^2 \cdot \|\vec{x}\|^2 - \left<\vec{x}  \mid \vec{a} \right>}}{\|\vec{a}\|}  \\
+			\end{align*}
+	\end{enumerate}
+\end{exo}
+

@@ -1,0 +1,67 @@
+\begin{multicols}{2}
+	\vfill
+	\recapsep{Ordre}
+	\vfill
+	\begin{recap-box}[frametitle={Ordre bien fondé}]
+		Un ordre est \textit{bien fondé} s'il n'existe pas de suite infiniment strictement décroissante, \textit{i.e.}\ toute partie non vide de $E$\/ admet un élément minimal.
+	\end{recap-box}
+	\vfill
+	\begin{recap-box}[frametitle={Ordre produit}]
+		On définit l'\textit{ordre produit} $\preceq_\times$\/ de $(A, \preceq_A)$\/ et $(B, \preceq_B)$\/ comme \[
+			(a, b) \preceq_\times (a', b')\!\!\iffdef\!\!a \preceq_A a' \text{ et } b \preceq_B b'
+		.\] 
+		Cet ordre préserve le caractère bien fondé de $\preceq_A$\/ et $\preceq_B$, mais pas le caractère total de la relation.
+		On étend cet ordre à l'ensemble $(A^n, \preceq_\times)$, en itérant l'ordre produit.
+	\end{recap-box}
+	\vfill
+	\begin{recap-box}[frametitle={Ordre lexicographique}]
+		On définit l'\textit{ordre lexicographique} $\preceq_\ell$\/ de $(A, \preceq_A)$\/ et $(B, \preceq_B)$\/ comme \[
+			(a, b) \preceq_\ell (a', b') \iffdef
+			\begin{array}{|l}
+				\!\!(a \prec_A a')\\
+				\!\!\text{ou }\\
+				\!\!(a = a' \text{ et } b \preceq_B b').
+			\end{array}
+		\]
+		Cet ordre conserve le caractère bien fondé de $\preceq_A$\/ et $\preceq_B$, ainsi que le caractère total. On peut également étendre cet ordre à un ensemble $(A^n, \preceq_\ell)$.
+		On étend également cet ordre à l'ensemble $(A^*, \preceq_\ell)$\/ comme \[
+			\underset{\mathclap{\substack{\vrt\in\\A^n}}} u
+			\prec_\ell
+			\underset{\mathclap{\substack{\vrt\in\\A^{n+m}}}} v
+			\iffdef 
+			\begin{array}{|l}
+				\!\! \exists i \in \llbracket 1, n + 1 \rrbracket,\\
+				\!\! (\forall j < i,\: u_j = u_i) \text{ et}\\
+				\!\! (i = n + 1 \text{ ou } u_i \prec_A v_i).
+			\end{array}
+		\]
+	\end{recap-box}
+	\vfill
+	\begin{recap-box}
+		Le théorème de l'induction bien fondée nous autorise à faire une récurrence forte sur un ensemble ayant un ordre bien fondé.
+	\end{recap-box}
+	\vfill
+	\recapsep{Induction nommée}
+	\vfill
+	\begin{recap-box}
+		Une \textit{règle de construction nommée} est de la forme \[
+			\mathbf{S}\Big|_C^r \quad\text{ ou }\quad \mathbf{S}(y, \underbrace{\square, \ldots, \square}_r)
+		\] où $\mathbf{S}$\/ est un symbole, $r \in \N$\/ est l'arité de $\mathbf{S}$, et $C$\/ est un ensemble non vide.
+		On omettra parfois l'ensemble $C$\/ s'il est trivial (\textit{i.e.} de taille 1).
+		Une \textit{règle de base} est de la forme $\mathbf{S}\big|^0_C$\/ ; une \textit{règle d'induction} est de la forme $\mathbf{S}\big|^n_C$.
+	\end{recap-box}
+	\vfill
+	\begin{recap-box}
+		On définit la \textit{hauteur} $h$\/ comme \begin{align*}
+			h: \bigcup_{n \in \N} X_n &\longrightarrow \N \\
+			x &\longmapsto \min \{n \in \N  \mid  x \in X_n\}.
+		\end{align*}
+		On définit la relation $\preceq$\/ bien fondée telle que $x \preceq y$\/ si $x$\/ est défini à partir de $y$. Si $x \preceq y$, alors $h(x) \le h(y)$.
+	\end{recap-box}
+	\vfill
+\end{multicols}
+\begin{recap-box}
+	Un ensemble $\bigcup_{n \in \N} X_n$\/ est dit \textit{défini par induction nommée} à partir des règles $R$, si $X_0 = \{\mathbf{S}(a) \mid  \mathbf{S}^0_C \in R,\:a \in C\}$, et \[
+		X_{n+1} = X_n \cup \{\mathbf{S}(a, t_1, \ldots, t_r) \mid \mathbf{S}^r_C \in R,\:a \in C, (t_1, \ldots, t_r) \in (X_n)^r\} 
+	.\]
+\end{recap-box}

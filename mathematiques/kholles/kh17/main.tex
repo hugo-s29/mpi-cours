@@ -1,0 +1,144 @@
+\documentclass[a4paper]{article}
+
+\usepackage[margin=1.5in]{geometry}
+\input{../../preamble.tex}
+
+\setlist[description]{font=\normalfont\scshape}
+
+\def\khollenum{17}
+
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+\fancyhead[R]{\scshape Khôlle n\tsup{o} \khollenum}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} \khollenum
+	\end{center}
+
+	\paragraph{Exercice 1.}
+	\begin{enumerate}
+		\item
+			\begin{itemize}
+				\item Soient $u$ et $v$ deux suites de $\ell^1$, et soient $\alpha$ et $\beta$ deux réels.
+					Pour $n \in \N$, $0 \le |\alpha u_n + \beta v_n| \le |\alpha| \cdot |u_n| + |\beta| \cdot |v_n|$.
+					Or, les séries $\sum |u_n|$ et $\sum|v_n|$ convergent. D'où, $\sum |\alpha u_n + \beta v_n|$ converge.
+					Ainsi, $(\alpha u + \beta v) \in \ell^1$.
+					De plus, $(0)_{n\in\N} \in \ell^1$, donc~$\ell^1 \neq \O$.
+					L'ensemble $\ell^1$ est donc un sous-espace vectoriel de $\R^\N$.
+				\item Soient $u$ et $v$ deux suites de $\ell^2$, et soient $\alpha$ et $\beta$ deux réels.
+					Pour $n \in \N$, $0 \le (\alpha u_n + \beta v_n)^2 \le \alpha^2 \cdot u_n{}^2 + \beta^2 \cdot v_n{}^2$.
+					Or, les séries $\sum u_n{}^2$ et $\sum v_n{}^2$ convergent. D'où, $\sum(\alpha u_n + \beta v_n)^2$ converge.
+					Ainsi, $(\alpha u + \beta v) \in \ell^2$.
+					De plus, $(0)_{n\in\N} \in \ell^2$, donc $\ell^2 \neq \O$.
+					L'ensemble $\ell^2$ est donc un sous-espace vectoriel de $\R^\N$.
+				\item Soient $u$ et $v$ deux suites de $\ell^\infty$, et soient $\alpha$ et $\beta$ deux réels.
+					Soient $m$ et $m'$ deux réels tels que, pour tout $n \in \N$, $|u_n| \le m$ et $|v_n| \le m'$.
+					Or, pour $n \in \N$, d'après l'inégalité triangulaire : \[
+						|\alpha u_n + \beta v_n| \le |\alpha| \cdot |u_n| + |\beta| \cdot |v_n| \le |\alpha| \cdot m + |\beta| \cdot m'
+					,\] qui est un majorant.
+					D'où, $(\alpha u + \beta v) \in \ell^\infty$.
+					De plus, $(0)_{n\in\N} \in \ell^\infty$, donc $\ell^\infty \neq \O$.
+					L'ensemble $\ell^\infty$ est donc un sous-espace vectoriel de $\R^\N$.
+				\item Soit $u$ une suite de $\ell^1$. La série $\sum |u_n|$ converge donc la suite $(|u_n|)_{n \in \N}$ tend vers 0. Il existe donc un certain rang $N$ tel que, pour tout $n \ge N$, $|u_n| \le 1$.
+					Ainsi, pour tout $n \ge N$, $|u_n| \ge |u_n|^2 \ge 0$.
+					Or, la série $\sum |u_n|$ converge. On en déduit que la série $\sum |u_n|^2 = \sum u_n{}^2$ converge.
+					D'où $u \in \ell^2$.
+					On en déduit $\ell^1 \subset \ell^2$.
+				\item Soit $u$ une suite de $\ell^2$. La série $\sum u_n{}^2$ converge, donc la suite $(u_n{}^2)_{n \in \N}$ tend vers 0, elle est donc majorée. On pose $M > 0$ un majorant et $m = \sqrt{M}$. Ainsi, pour tout $n \in \N$, $|u_n{}^2| \le M$, donc $|u_n|^2 \le m^2$ et donc $0 \le |u_n| \le m$.
+					La suite $u$ est donc majorée par $m$, d'où $u \in \ell^\infty$.
+					On en déduit $\ell^2 \subset \ell^\infty$.
+			\end{itemize}
+		\item 
+			\begin{enumerate}
+				\item Soit $u \in \ell^1$. Montrons que $\|u\|_\infty \le \|u\|_1$.
+					La suite $(|u_n|)_{n\in\N}$ tend vers 0.
+					Ainsi $\sup_{n \in \N}\: |u_n| = \max_{n \in \N}\: |u_n|$.
+					On pose $i \in \N$ tel que $|u_i| = \max_{n \in \N}\: |u_n|$.
+					\[
+						\|u\|_\infty = |u_i| \le \sum_{k=0}^\infty |u_k| = \|u\|_1
+					\] car les termes de la somme de la série $\sum |u_n|$ sont positifs.
+					On a donc montré que $\alpha \le 1$.
+					Cette valeur de $\alpha$ est la plus petite. En effet, on considère la suite $u \in \ell^1$ définie par $u_0 = 1$, et pour tout $n \in \N^*$, $u_n = 0$. On a $\|u\|_\infty = 1$ et $\|u\|_1 = 1$. D'où, $1 \le \alpha \cdot  1$.
+					On en déduit que $\alpha = 1$.
+				\item Non, il n'existe pas un réel $\beta$ tel que, pour toute suite $u \in \ell^1$, $\|u\|_\infty \beta\ge \|u\|_1$.
+					En effet, par l'absurde, supposons que ce réel $\beta$ existe.
+					On considère la suite $u(m)$ définie par, pour tout $i \in \llbracket 1,m \rrbracket$, $u(m)_i = 0$, et pour tout $i > m$, $u(m)_i = 0$.
+					Pour tout entier $m$, on a $\|u(m)\|_\infty = 1$, et $\|u(m)\|_1 = m$.
+					D'où, pour tout entier $m$, $\beta \ge m$, ce qui est absurde.
+				\item Non. En effet, il n'existe pas de réel $\beta$ tel que, pour toute suite $u \in \ell^1$, $\|u\|_1 \le \beta \|u\|_2$.
+					On considère la suite $u(m)$ définie à la question précédente.
+					On a $\|u(m)\|_1 = m$, et $\|u(m)\|_2 = \sqrt{n}$. D'où, pour tout entier $m$, $m \le \beta \sqrt{m}$, et donc $\beta \ge \sqrt{m}$, pour tout entier $m$, ce qui est absurde.
+			\end{enumerate}
+	\end{enumerate}
+
+	\paragraph{Exercice 2.}
+	Montrons que l'application $f$ est linéaire et continue en 0.
+	\begin{itemize}
+		\item Soient $P$ et $Q$ deux polynômes, et soient $\alpha$ et $\beta$ deux réels.
+			On pose $n = \max(\deg P, \deg Q)$, $P = \sum_{k=0}^n a_k X^k$ et $Q = \sum_{k=0}^n b_k X^k$.
+			Ainsi,
+			\[
+				f(\alpha P + \beta Q) = \sum_{k=0}^n \frac{\alpha a_k + \beta b_k}{k + 1} = \alpha\sum_{k=0}^n \frac{a_k}{k+1} + \beta \sum_{k=0}^n \frac{b_k}{k+1} = \alpha f(P) + \beta f(Q),
+			\]l'application $f$ est donc linéaire.
+		\item Soit $(P_n)_{n\in\N}$ une suite de polynômes convergent vers $0$.
+			Montrons que $|f(P_n)| \to 0$ quand $n \to \infty$.
+			On pose, pour tout $n \in \N$, $P_n = \sum_{k=0}^{\deg P_n} a_{k,n} X^k$ ; de plus, pour $k \ge \deg P_n$, on pose $a_{k,n} = 0$.
+			Ainsi, $\|P_n\| = \sum_{k=0}^\infty a_{k,n}^2$. Cette somme converge car elle est finie : les termes sont tous nuls à partir d'un certain rang.
+			Or, $\|P_n\| \to 0$ quand $n\to \infty$, et la somme n'est composée que de termes positifs ou nuls. On en déduit que, pour tout $k \in \N$, $a_{k,n}^2 \to 0$, et donc $a_{k,n}\to 0$ quand $n\to \infty$.
+			Et, pour tout $k \in \N$, $0 \le \big| a_{k,n} / (k + 1) \big| \le |a_{k,n}| \to 0$.
+			Par le théorème des gendarmes, chaque terme de la somme \[
+				f(P_n) = \sum_{k=0}^{\deg P_n} \frac{a_{k,n}}{k+1}
+			\] tend vers 0, donc la somme tend vers 0.
+			Ainsi, on a bien $|f(P_n)| \to 0$ quand $n\to \infty$.
+			La fonction $f$ est donc continue en $0$.
+	\end{itemize}
+	On en déduit que la fonction $f$ est continue sur $\R[X]$.
+
+	\paragraph{Exercice 3.}
+	\begin{itemize}
+		\item Soit $\vec{u} = (x,y) \in \R^2$. Si $N(\vec{u}) = 0$, alors $\sup_{t \in [0,1]}\: |x+ty| = 0$. Or, $|x+ty| \ge 0$. On en déduit que, pour tout $t\in [0,1]$, $x + ty = 0$.
+			En particulier, pour $t = 0$, on a $x = 0$ ; puis, pour $t = 1$, on a $x + y = y = 0$.
+			Ainsi, $\vec{u} = \vec{0}$.
+		\item Soit $\vec{u} = (x,y) \in \R^2$ et soit $\alpha$ un réel. Pour $t \in [0,1]$, $|\alpha x + t \alpha y| = |\alpha| \cdot |x + ty| \le |\alpha| \cdot N(\vec{u})$, qui est un majorant. D'où, $N(\alpha \vec{u}) = \sup_{t \in [0,1]}\: |\alpha| \cdot |x+ty| = |\alpha| \cdot N(\vec{u})$.
+		\item Soient $\vec{u} = (a,b) \in \R^2$ et $\vec{v} = (c,d) \in \R^2$. Pour $t \in [0,1]$, on a $|(a+c) + t(b+d)| = |(a + tb) + (c+ td)| \le |a + tb| + |c + td| \le N(\vec{u}) + N(\vec{v})$, qui est un majorant. D'où, $N(\vec{u} + \vec{v}) \le N(\vec{u}) + N(\vec{v})$.
+	\end{itemize}
+	On en déduit que $N$ est une norme sur $\R^2$.
+	Pour dessiner la boule $\bar{B}(\vec{0}, 1)$, on procède par analyse--synthèse.
+	\begin{description}
+		\item[Analyse] Soit $\vec{u} = (x,y) \in \bar{B}(\vec{0}, 1)$. Ainsi, $N(\vec{u}) = \sup_{t \in [0,1]}\:|x+ty| \le 1$, d'où, pour tout $t \in [0,1]$, $|x+ty| \le 1$.
+			En particulier, pour $t = 0$, on a $|x| \le 1$, donc $-1 \le x \le 1$ ; de plus, en $t = 1$, on a $|x+y| \le 1$, d'où $-1 \le x + y \le 1$.
+		\item[Synthèse]
+			Soit $x \in [-1,1]$, et soit $y \in [-1-x, 1-x]$.
+			On pose $\vec{u} = (x,y) \in \R^2$.
+			Montrons que $N(\vec{u}) \le 1$.
+			La fonction $f: t \mapsto |x+ty|$ est continue sur $[0,1]$, donc $N(\vec{u}) = \max_{t \in [0,1]}\:|x+ty|$.
+			Montrons que ce maximum est atteint en $t = 0$ ou $t = 1$.
+			Ce résultat est clairement vrai si la fonction $f$ est monotone.
+			On suppose maintenant que cette fonction n'est pas monotone.
+			Ainsi, la fonction $t \mapsto x + ty$ change de signe sur $[0,1]$.
+			Cette fonction s'annule une fois en un point d'abscisse $\alpha \in {]0,1[}$
+			Sur $[0,\alpha]$, $f$ est monotone et le maximum est atteint en $0$ ou en $\alpha$ ;
+			or, $f$ est positive, et $f(\alpha) = 0$ ; le maximum est donc atteint en $0$, sur cet intervalle.
+			Sur $[\alpha,1]$, $f$ est monotone, et le maximum est atteint en $1$ ou en $\alpha$.
+			Comme $f$ est positive, on en déduit que le maximum est atteint en $1$ sur cet intervalle.
+			Ainsi, le maximum est atteint en $0$ ou en $1$ sur l'intervalle $[0,1]$.
+	\end{description}
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			\draw[fill,red,fill opacity=0.2,thick] (-1,2)--(1,0)--(1,-2)--(-1,0)--cycle;
+			\draw[->] (-3,0)--(3,0);
+			\draw[->] (0,-3)--(0,3);
+			\foreach \x in {-2,...,2}{
+				\draw (\x,-0.1)--(\x,0.1);
+				\draw (-0.1,\x)--(0.1,\x);
+				\node at (-0.2, \x-0.2){\small$\x$};
+				\node at (\x-0.2, -0.2){\small$\x$};
+			}
+			\node[red] at (1.2,-2.2) {$\bar{B}(\vec{0},1)$};
+		\end{tikzpicture}
+		\caption{Boule fermée centrée en $\vec{0}$ de rayon 1, pour la norme $N$}
+	\end{figure}
+\end{document}
+
+

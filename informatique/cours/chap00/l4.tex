@@ -9,6 +9,9 @@
 		\item $\bigwedge_{i=1}^n D_i$\/ où les $D_i$\/ qui sont des clauses disjonctives est appelée une {\it forme normale conjonctive}\/ ;
 		\item $\bigvee_{i=1}^n C_i$\/ où les $C_i$\/ qui sont des clauses conjonctives est appelée une {\it forme normale disjonctive}.
 	\end{itemize}
+	\index{littéral}
+	\index{clause!conjonctive} \index{clause!disjonctive}
+	\index{forme!normale conjonctive} \index{forme!normale disjonctive}
 \end{defn}
 
 \begin{rmk}
@@ -167,6 +170,8 @@ Nous n'avons pas encore prouvé la deuxième partie du théorème mais, on essai
 
 \section{Algorithme de {\scshape Quine}}
 
+L'objectif de cet algorithme est de résoudre le problème \textsc{Sat}. On commence par poser quelques lemmes, puis on donne l'algorithme.
+
 \begin{rmk}
 	Une forme normale peut être vue comme un ensemble d'ensembles de littéraux (c'est la représentation que nous allons utiliser en OCamL).
 \end{rmk}
@@ -184,8 +189,7 @@ Nous n'avons pas encore prouvé la deuxième partie du théorème mais, on essai
 \end{exm}
 
 \begin{lem}
-	Pour toute formule $G$, pour tout variable propositionnelle et pour tout environnement propositionnel $\rho$, tel que $\rho(p) = {\bfm V}$, alors \[
-		\Big\llbracket G[p \mapsto \top] \Big\rrbracket^\rho = \left\llbracket G \right\rrbracket^\rho
+	Pour toute formule $H$, pour tout variable propositionnelle $p$ et pour tout environnement propositionnel $\rho$, tel que $\rho(p) = {\bfm V}$, alors \[
+		\Big\llbracket H[p \mapsto \top] \Big\rrbracket^\rho = \left\llbracket H \right\rrbracket^\rho
 	.\]
 \end{lem}
-

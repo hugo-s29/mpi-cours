@@ -1,0 +1,39 @@
+\section{Quelques arbres de preuves}
+
+\begin{enumerate}
+	\item \textit{c.f.}\ exemple chapitre 6.
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\exists t,\: \forall x,\: \varphi(t, x) \vdash \exists t,\: \forall x,\: \varphi(t,x)}
+				\infer 0[Ax]{\exists t,\: \forall x,\: \varphi(t, x);\forall x,\: \varphi(t,x) \vdash \forall x,\: \varphi(t,x)}
+				\infer 1[$\forall$e]{\exists t,\: \forall x,\: \varphi(t, x) ; \forall x,\: \varphi(t,x) \vdash \varphi(t,x)}
+				\infer 1[$\exists$i]{\exists t,\: \forall x,\: \varphi(t, x);\forall x,\: \varphi(t,x) \vdash \forall y,\: \exists x,\: \varphi(x,y)}
+				\infer 2[$\exists$e]{\exists t,\: \forall x,\: \varphi(t, x) \vdash \forall y,\: \exists x,\: \varphi(x,y)}
+			\end{prooftree}
+		.\] 
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\forall x,\: \varphi ; \exists x,\: \lnot \varphi \vdash \exists x,\: \lnot \varphi}
+				\infer 0[Ax]{\forall x,\: \varphi ; \exists x,\: \lnot \varphi;\lnot \varphi \vdash \forall x,\: \varphi}
+				\infer 1[$\forall$e]{\forall x,\: \varphi ; \exists x,\: \lnot \varphi;\lnot \varphi \vdash \varphi}
+				\infer 0[Ax]{\forall x,\: \varphi ; \exists x,\: \lnot \varphi;\lnot \varphi \vdash \lnot \varphi}
+				\infer 2[$\lnot$e]{\forall x,\: \varphi ; \exists x,\: \lnot \varphi;\lnot \varphi \vdash \bot }
+				\infer 2[$\exists$e]{\forall x,\: \varphi ; \exists x,\: \lnot \varphi \vdash \bot}
+				\infer 1[$\lnot$i]{\forall x,\: \varphi \vdash \lnot (\exists x,\: \lnot \varphi)}
+			\end{prooftree}
+		.\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\exists x,\:\lnot \varphi ;\forall x,\:\varphi\vdash \exists x,\: \lnot \varphi}
+				\infer 0[Ax]{\exists x,\:\lnot \varphi ;\forall x,\:\varphi;\lnot \varphi \vdash \lnot \varphi}
+				\infer 0[Ax]{\exists x,\:\lnot \varphi ;\forall x,\:\varphi;\lnot \varphi \vdash \forall x,\: \varphi}
+				\infer 1[$\forall$e]{\exists x,\:\lnot \varphi ;\forall x,\:\varphi;\lnot \varphi \vdash \varphi}
+				\infer 2[$\lnot$e]{\exists x,\:\lnot \varphi ;\forall x,\:\varphi;\lnot \varphi \vdash \bot}
+				\infer 2[$\exists$e]{\exists x,\:\lnot \varphi ;\forall x,\:\varphi\vdash\bot}
+				\infer 1[$\lnot$i]{\exists x,\:\lnot \varphi \vdash \lnot (\forall x,\:\varphi)}
+			\end{prooftree}
+		.\] 
+\end{enumerate}

@@ -1,0 +1,138 @@
+\section{Projection orthogonale (sur un \textit{sev} de dimension finie)}
+
+\begin{prop-defn}
+	Soit $E$\/ un espace préhilbertien\footnotemark, et soit $F$\/ un sous-espace vectoriel de dimension \textbf{finie} $n$\/ de $E$.
+	Il existe une unique application linéaire $p \in \mathcal{L}(E)$\/ telle que \[
+		\forall \vec{x} \in E,\qquad (*)\ p(\vec{x}) \in F\quad \text{ et }\quad (**)\ \vec{x} - p(\vec{x}) \perp F
+	.\]
+	On dit que $p$\/ est la \textit{projection orthogonale}, et $p(\vec{x})$\/ le \textit{projeté orthogonal} de $\vec{x}$\/ sur $F$. Dans une base orthonormée $\mathcal{B} = (\vec{\varepsilon}_1,\ldots,\vec{\varepsilon}_n)$, on a \[
+		\forall \vec{x} \in E,\quad p(\vec{x}) = \left<\vec{x} \mid \vec{\varepsilon}_1 \right> \vec{\varepsilon}_1 + \cdots + \left<\vec{x}  \mid \vec{\varepsilon}_n \right> \vec{\varepsilon}_n = \sum_{i=1}^n \left<\vec{x}  \mid \vec{\varepsilon}_i \right> \vec{\varepsilon}_i
+	.\] 
+\end{prop-defn}
+\footnotetext{il peut être de dimension infinie.}
+
+\begin{prv}
+	On choisit une base $(\vec{e}_1, \ldots, \vec{e}_n)$\/ de $F$. On l'orthonormalise en une base $(\vec{\varepsilon}_1,\ldots,\vec{\varepsilon}_n)$. Soit $\vec{x} \in E$. On a 
+	\begin{align*}
+		(*) &\iff \exists (\lambda_1,\ldots,\lambda_n) \in \R^n,\:p(\vec{x}) = \lambda_1 \vec{\varepsilon}_1 +\cdots + \lambda_n \vec{\varepsilon}_n\\
+	\end{align*}
+	et
+	\begin{align*}
+		(**) &\iff \forall i \in \llbracket 1,n \rrbracket,\: \vec{x} - p(\vec{x}) \perp \vec{\varepsilon}_i\\
+		&\iff \forall i \in \llbracket 1,n \rrbracket, \left<\vec{x} - p(\vec{x})  \mid \vec{\varepsilon}_i \right> = 0\\
+		&\iff \forall i \in \llbracket 1,n \rrbracket,\: \left<\vec{x} - (\lambda_1\vec{\varepsilon}_1 + \cdots + \lambda_n \vec{\varepsilon}_n)  \mid \vec{\varepsilon}_i \right> = 0\\
+		&\iff \forall i \in \llbracket 1,n \rrbracket,\: \left<\vec{x} \mid \vec{\varepsilon}_i \right> - \lambda_i = 0
+	\end{align*}
+	Ainsi, on a bien \[
+		p(\vec{x}) = \sum_{i=1}^n \left<\vec{x} \mid \vec{\varepsilon}_i \right> \vec{\varepsilon}_i
+	.\]
+\end{prv}
+
+\begin{exo}
+	\begin{enumerate}
+		\item On pose $E = \R^3$, $F$\/ le plan d'équation $x + y = 0$, et le produit scalaire $\left<\vec{x} \mid \vec{y} \right> = x_1y_1 + \cdots + x_n y_n$. Le sous-espace vectoriel $F$\/ est de dimension finie, d'où \[
+				\forall \vec{x} = (x,y,z) \in E,\:p(\vec{x}) = \left<\vec{x}  \mid \vec{\varepsilon}_1 \right> \vec{\varepsilon}_1 + \left<\vec{x}  \mid \vec{\varepsilon}_2 \right> \vec{\varepsilon}_2
+			\] où $(\vec{\varepsilon}_1, \vec{\varepsilon}_2)$\/ est une base orthonormée de $F$.
+
+			\begin{align*}
+				\vec{x} = (x,y,z) \in F \iff& x + y = 0\\
+				\iff& z = 0 \text{ et } y = -x\\
+				\iff& (x,y,z) = (x, -x, z) = x\underbrace{(1,-1,0)}_{\vec{e}_1} + z\underbrace{(0, 0, 1)}_{\vec{e}_2}
+			\end{align*}
+			On orthonormalise la base $(\vec{e}_1, \vec{e}_2)$\/ en $(\vec{\varepsilon}_1, \vec{\varepsilon}_2)$\/ en posant \[
+				\vec{\varepsilon}_1 = \frac{1}{\sqrt{2}} (1, -1, 0) \quad\text{ et }\quad \vec{\varepsilon}_2 = (0, 0, 1)
+			.\] Ainsi,
+			\begin{align*}
+				p(\vec{x}) &= \left<\vec{x}  \mid \vec{\varepsilon}_1 \right>\vec{\varepsilon}_1 + \left<\vec{x}  \mid \vec{\varepsilon}_2 \right> \vec{\varepsilon}_2\\
+				&= \frac{x - y}{\sqrt{2}}\vec{\varepsilon}_1 + z \vec{\varepsilon}_2 .
+			\end{align*}
+			D'où, \[
+				\big[p\big]_{(\vec{\imath},\vec{\jmath},\vec{k})} = 
+				\begin{pNiceMatrix}[last-row,last-col]
+					\dfrac{1}{2} & -\dfrac{1}{2} & 0 & \vec{\imath}\\
+					-\dfrac{1}{2} & \dfrac{1}{2} & 0 & \vec{\jmath}\\
+					0 & 0 & 1 & \vec{k}\\
+					p(\vec{\imath}) & p(\vec{\jmath}) & p(\vec{k})
+				\end{pNiceMatrix}
+			.\]
+		\item On pose $E = \R[X]$, $F = \R_2[X]$, et le produit scalaire $\left<P \mid Q \right> = \int_{-1}^{1} P(t)\:Q(t)~\mathrm{d}t$. Le \textit{sev} $F$\/ est de dimension finie, égale à $3$. On construit une base $(\varepsilon_1, \varepsilon_2, \varepsilon_3)$ orthonormée de $F$\/ en posant \[
+				\varepsilon_1 = \frac{1}{\sqrt{2}}, \qquad \varepsilon_2 = \sqrt{\frac{3}{2}} X, \qquad \text{ et }\qquad \varepsilon_3 = \frac{3\sqrt{5}}{2\sqrt{2}}\left( X^2 - \frac{1}{3} \right) 
+			.\] D'où, \[
+				p(X^3) = \left<X^3  \mid \varepsilon_1 \right>\varepsilon_1 + \left<X^3  \mid \varepsilon_2 \right> \varepsilon_2 + \left<X^3  \mid \varepsilon_3 \right>\varepsilon_3
+			.\] D'une part, $\left<X^3  \mid \varepsilon_1 \right> = \int_{-1}^{1} \frac{t^3}{\sqrt{2}}~\mathrm{d}x = 0$. De même pour les autres produits scalaires. On en déduit que \[
+				\frac{3}{5} X
+			.\]
+	\end{enumerate}
+\end{exo}
+
+\begin{crlr}
+	Soit $F$\/ un sous-espace vectoriel de dimension \textbf{finie} d'un espace préhilbertien $(E, \left<\:\cdot  \mid \cdot \: \right>)$.
+	\begin{enumerate}
+		\item $F$\/ et son orthogonal sont supplémentaires : $F \oplus F^\perp = E$\/ ;
+		\item Par suite,
+			\begin{enumerate}
+				\item la projection orthogonale sur $F$\/ est le projecteur sur $F$\/ parallèlement à $F^\perp$\/ ;
+				\item $F = (F^\perp)^\perp$.
+			\end{enumerate}
+	\end{enumerate}
+\end{crlr}
+
+\begin{prv}
+	D'après la proposition 18, $F \cap F^\perp = \{\vec{0}\}$, leur somme est donc directe. Montrons que $F + F^\bot = E$ : soit $\vec{x} \in E$, alors $p(\vec{x}) \in F$\/ et $\vec{x} - p(\vec{x}) \in F^\bot$ ; en sommant ces deux vecteurs, on a bien~$\vec{x} \in F + F^\perp = E$.
+\end{prv}
+
+\begin{thm}[moindres carrés]
+	Soit $F$\/ un sous-espace de dimension \textbf{finie} d'un espace préhilbertien $E$. Soit $\vec{x} \in E$. Le projeté orthogonal $p(\vec{x})$\/ de $\vec{x}$\/ sur $F$\/ est l'unique vecteur tel que \[
+		\forall \vec{y} \in F,\quad \|\vec{x} - p(\vec{x})\| \le \|\vec{x} - \vec{y}\|
+	.\]
+\end{thm}
+
+\begin{prv}
+	Soient $\vec{x} \in E$\/ et $\vec{y} \in F$.
+	On a $\vec{x} - p(\vec{x}) \perp F$\/ et $p(\vec{x})  - \vec{y} \in F$, d'où $\vec{x} - p(\vec{x}) \perp p(\vec{x}) - \vec{y}$. Ainsi, d'après le théorème de \textsc{Pythagore}, \[
+		\|\vec{x} - \vec{y}\|^2 = \|\vec{x} + p(\vec{x})\|^2 + \|\vec{y} - p(\vec{x})\|^2
+	.\] On a donc bien $\|\vec{x} - \vec{y}\| \ge \|\vec{x} - p(\vec{x})\|$. Également,
+	\begin{align*}
+		\|\vec{x} - \vec{y}\| = \|\vec{x} - p(\vec{x})\| \iff& \|\vec{y} - p(\vec{x})\| = 0\\
+		\iff& \vec{y} = p(\vec{x}).
+	\end{align*}
+\end{prv}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item D'après le théorème précédent, la fonction \begin{align*}
+				F &\longrightarrow \R \\
+				\vec{y} &\longmapsto \|\vec{x} - \vec{y}\|
+			\end{align*}
+			admet un minimum en $p(\vec{x})$.
+		\item Le réel $\|\vec{x} - p(\vec{x})\|$\/ est la \textit{distance} entre le vecteur $\vec{x}$\/ et le \textit{sev} $F$. On le note $d(\vec{x},F)$.
+		\item On a l'inégalité de \textsc{Bessel} : pour tout vecteur $\vec{x} \in E$, $\|p(\vec{x})\| \le \|\vec{x}\|$.
+	\end{enumerate}
+\end{rmk}
+
+\begin{exo}
+	On pose $E = \R_3[X]$\/ muni du produit scalaire \[
+		\left<P \mid Q \right> = \int_{-1}^{1} P(t)\:Q(t)~\mathrm{d}t
+	.\] Puis, on pose $F = \R_2[X]$. Alors,
+	\begin{align*}
+		f(a,b,c) &= \int_{-1}^{1} \big(t^3 - (at^2 + bt + c)\big)^2~\mathrm{d}t\\
+		&= \left< X^3 - (aX^2 + bX + c)  \mid X^3 - (aX^2 + bX + c) \right>\\
+		&= \|X^3 - (aX^2 + bX + c)\|^2. \\
+	\end{align*}
+	Or, d'après le théorème des moindres carrés, $f(a,b,c)$\/ est minimal pour $aX^2 + bX + c = p(X^3)$, où $p$\/ est la projection de $E$\/ sur $F$, et ce minimum est atteint une seule fois : \[
+		\min_{(a,b,c)\in \R^3} f(a,b,c) = \|X^3 - p(X^3)\|^2
+	.\]
+	Calculons $p(X^3)$ :
+	\begin{itemize}
+		\item On orthonormalise la base $(1, X, X^2)$\ en $\mathcal{B} = (\varepsilon_1, \varepsilon_2, \varepsilon_3)$ avec l'algorithme de \textsc{Gram}-\textsc{Schmidt}. On a déjà fait ce calcul à l'exercice 21 : $\varepsilon_1 = 1 / \sqrt{2}$, $\varepsilon_2 = \sqrt{\frac{3}{2}} X$\/ et $\frac{3\sqrt{5}}{2\sqrt{2}}\left( X^2 - \frac{1}{3} \right)$.
+		\item On utilise la formule de la projection orthogonale, qu'on a déjà fait à l'exercice 23 : $p(X^3) = \frac{3}{5}X$.
+		\item On en conclut que $a = 0$, $b = \frac{3}{5}$\/ et $c = 0$.
+	\end{itemize}
+	Pour calculer la valeur de $f(0, \frac{3}{5}, 0)$, on pourrait calculer l'intégrale (ou de manière équivalente utiliser la norme). Mais, on utilise le théorème de \textsc{Pythagore} : \[
+		\|X^3 - p(X^3)\|^2 = \|X^3\|^2 - \|p(X^3)\|^2
+	.\]
+	Et, $\|X^3\|^2 = \int_{-1}^{1} t^6~\mathrm{d}^2 = \frac{2}{7}$, et $\|p(X^3\|^2 = \int_{-1}^{1} \left( -\frac{3}{5} t \right)^2~\mathrm{d}t = \frac{9}{25} \cdot \frac{2}{3}$. Ainsi \[
+		f\left(0, \frac{3}{5}, 0\right) = \frac{2}{7} - \frac{6}{25}
+	.\]
+\end{exo}
+

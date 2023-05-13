@@ -1,0 +1,166 @@
+\vspace{-6.5mm}
+
+\section{Espérance}
+
+\vspace{-3mm}
+
+\begin{defn}
+  Soient $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé, et $X$\/ une variable aléatoire réelle discrète (\textit{vard}) telle que $X(\Omega) = \{ a_i  \mid i \in I\} \subset \R$. Si la série $\sum a_i\:P(X = a_i)$\/ converge \ul{absolument}\footnotemark, alors
+  \begin{enumerate}
+    \item on dit que $X$\/ est \textit{d'espérance finie} ou que $X$\/ \textit{possède une espérance}, ou que $X \in L^1$\/ ;
+    \item cette \textit{espérance}, notée $\mathrm{E}(X)$\/ est le nombre réel \[
+      \mathrm{E}(X) = \sum_{i \in I} a_i\: P(X = a_i)
+    .\]
+  \end{enumerate}
+\end{defn}
+\footnotetext{Ainsi, la série devient une famille sommable, et la somme devient commutative, même si elle est infinie.}
+
+\begin{rmk}
+  \begin{enumerate}
+    \item La valeur de l'espérance ne dépend pas de l'ordre des valeurs $a_i$, c'est pour cela que l'on demande la convergence absolue.
+    \item Une \textit{vard} peut ne pas avoir une espérance finie, par exemple $p_n = \frac{6}{\pi^2\: n^2}$. On a bien $\sum_{n=1}^\infty p_n = 1$\/ mais la série $\sum n\,p_n$\/ diverge.
+    \item Si $X(\Omega)$\/ est fini, alors $X$\/ est nécessairement d'espérance finie, car $\mathrm{E}(X)$\/ est une somme finie.
+    \item Si $X$\/ est bornée\footnotemark (vue comme une fonction), alors $X$\/ est d'espérance finie.
+      \begin{prv}
+        En effet,
+        $\forall a \in X(\Omega)$, $0 \le |a\,P(X= a)| \le M\, P(X=a)$\/
+        d'où la série $\sum |a\, P(X = a)|$\/ converge, car $\sum M\,P(X=a) = M\: \sum P(X=a)$\/ et $\sum P(X = a)$\/ converge.
+      \end{prv}
+    \item L'espérance est linéaire : si $X$\/ est un \textit{vard} d'espérance finie, alors $\alpha X + \beta$\/ aussi, et \[
+        \mathrm{E}(\alpha X + \beta) = \alpha\: \mathrm{E}(X) + \beta
+      .\] De plus, l'application \begin{align*}
+        \mathrm{E}: \text{ensemble des \textit{vard}} &\longrightarrow \R \\
+        X &\longmapsto \mathrm{E}(X)
+      \end{align*} est une forme linéaire.
+    \item Si $X$\/ est d'espérance finie, alors $|X|$\/ aussi, et $\big|\mathrm{E}(X)\big| \le \mathrm{E}\big(|X|\big)$\/ (par inégalité triangulaire). En particulier, si $X$\/ est positive, alors son espérance est positive.
+  \end{enumerate}
+\end{rmk}
+\footnotetext{\textit{i.e.}\ $\exists M \in \R^+$, $\forall \omega \in \Omega$\/ $|X(\omega)| \le M$.}
+
+\begin{exo}
+  \textsl{Montrer que
+  \begin{enumerate}
+    \item si $X \sim \mathcal{B}(n,p)$, alors $X$\/ est d'espérance finie, et $\mathrm{E}(X) = n \cdot p$.
+      Indication, utiliser la formule \[
+        \forall k \in \N^*,\: \forall n \ge k,\: k{n\choose k} = n {n-1\choose k - 1}
+      .\]
+    \item si $T \sim \mathcal{G}(p)$, alors $T$\/ est d'espérance finie, et $\mathrm{E}(T) = \frac{1}{p}$.
+    \item si $X \sim \mathcal{P}(\lambda)$, alors $X$\/ est d'espérance finie, et $\mathrm{E}(X) = \lambda$.
+  \end{enumerate}}
+
+  \begin{enumerate}
+    \item La variable aléatoire $X$\/ représente le nombre de succès, de $n$\/ épreuves de Bernoulli indépendantes, et la probabilité d'un succès est $p$. De plus, on a $X(\Omega) = \llbracket 0,n \rrbracket$, qui est un ensemble fini, il possède une espérance.
+      On calcule
+      \begin{multicols}{2}
+        \begin{align*}
+          \mathrm{E}(X) &= \sum_{k=0}^n k\: P(X = k)\\
+          &= \sum_{k=0}^n k\, {n\choose k}\, p^k\, q^{n-k} \\
+          &= \sum_{k=1}^n k\, {n\choose k}\, p^k\, q^{n-k} \\
+          &= \sum_{k=1}^n n\, {n-1\choose k-1}\, p^k\, q^{n-k} \\
+        \end{align*}
+
+        \begin{align*}
+          &= n\sum_{k=1}^n {n-1\choose k-1}\, p^k\, q^{n-k} \\
+          &= n\sum_{k=0}^{n-1} {n-1\choose k}\, p^{k+1}\, q^{n-k-1} \\
+          &= n\,p\sum_{k=0}^{n-1} {n-1\choose k}\, p^k\, q^{(n-1)-k} \\
+          &= n\,p\,(n+p)^{n-1} \\
+          &= n\,p. \\
+        \end{align*}
+      \end{multicols}
+    \item La variable $T$\/ correspond au temps d'attente du 1\tsup{er} succès, sachant que la probabilité d'un succès est $p$.
+      Ainsi, $T(\Omega) = \N^*$, et $\forall x \in T(\Omega)$, $P(T = k) = p \cdot q^{k-1}$.
+      La variable aléatoire est d'espérance finie car la série $\sum k\, P(T = k)$\/ converge absolument :
+      \[
+        \big|k \: P(T = k)\big| = k \: P(T = k) = k\:p\:q^{k-1}
+      .\] D'où $\sum |k\,P(T=k)| = \sum k\,p\,q^{k-1} = p \sum k\,q^{k-1}$. Or, la série entière $\sum x^k$\/ a pour rayon de converge 1. Et, on peut dériver terme à terme une série entière sans changer son rayon de convergence. D'où, le rayon de convergence de $\sum k\,x^{k-1}$\/ est aussi égal à~1. Or, $q \in {]-1,1[}$, d'où la série $\sum k\, q^{k-1}$\/ converge.
+      
+      De plus, \[
+        \forall x \in {]-1,1[},\quad \sum_{k=0}^\infty x^k = \frac{1}{1-x}
+      .\] Et, on peut dériver terme à terme une série entière sans changer son rayon de convergence. D'où, \[
+        \forall x \in {]-1,1[},\quad
+        \sum_{k=1}^\infty k x^{k-1} = \frac{\mathrm{d}}{\mathrm{d}x} \frac{1}{1-x} = \frac{1}{(1-x)^2}
+      .\]
+      D'où, \[
+        \mathrm{E}(T) = \sum_{k=1}^\infty k\,P(T = k) = p \times \frac{1}{(1-q)^2} = \frac{1}{1-q} = \frac{1}{p}
+      .\]
+    \item On a $X(\Omega) = \N$, et $\forall k \in X(\Omega)$, $P(X = k) = \mathrm{e}^{-k} \: \frac{\lambda^k}{k!}$.
+      La \textit{vard} $X$\/ possède une espérance car la série $\sum k\, P(X=k)$\/ converge absolument. En effet, $\sum \big|k\,\mathrm{e}^{-\lambda} \frac{\lambda^k}{k!}\big| = \lambda \mathrm{e}^{-\lambda} \sum k \frac{\lambda^{k-1}}{k!}$.
+      Or, la série entière $\sum x^\frac{k}{k!}$\/ a pour rayon de converge $+\infty$\/. Et, on peut dériver terme à terme une série entière sans changer son rayon de convergence. D'où, le rayon de convergence de $\sum k\,\frac{x^{k-1}}{k!}$\/ est aussi égal à~$+\infty$\/.
+      De plus,
+      \begin{multicols}{2}
+        \begin{align*}
+          \mathrm{E}(X) &= \sum_{k \in X(\Omega)} k\: P(X = k)\\
+          &= \sum_{k=0}^\infty k\, \mathrm{e}^{-\lambda}\, \frac{\lambda^k}{k!} \\
+          &= \sum_{k=1}^\infty k\, \mathrm{e}^{-\lambda}\, \frac{\lambda^k}{k!} \\
+        \end{align*}
+
+        \begin{align*}
+          &= \mathrm{e}^{-\lambda}\, \lambda \sum_{k=1}^\infty k\, \frac{\lambda^{k-1}}{k!} \\
+          &= \lambda\,\mathrm{e}^{-\lambda} \sum_{k=0}^\infty \frac{\lambda^k}{k!} \\
+          &= \lambda\, \mathrm{e}^{-\lambda}\, \mathrm{e}^{\lambda} = \lambda \\
+        \end{align*}
+      \end{multicols}
+  \end{enumerate}
+\end{exo}
+
+\begin{prop}[version non rigoureuse]
+  \begin{align*}
+    \mathrm{E}(X) &= \sum_{k=0}^\infty k\, P(X = k)\\
+    &= 0 \times P(X = 0) + 1 \times P(X = 1) + 2 \times P(X = 2) + 3 \times P(X = 3) + \cdots \\
+    &=\quad P(X = 1)\\
+    &\quad + P(X = 2) + P(X = 2)\\
+    &\quad + P(X = 3) + P(X = 3) + P(X = 3)\\[-2mm]
+    &\quad+\quad\quad \vdots\quad\quad +\quad\quad \vdots \quad\quad+\quad\quad \vdots \quad\quad+\quad\ddots\\
+    &= \quad P(X \ge 1) + P(X \ge 2) + P(X \ge 3) +\quad\cdots \\
+  \end{align*}
+  Les hypothèse de ce théorème sont
+  \begin{itemize}
+    \item la variable $X$\/ est d'espérance finie.
+    \item la série $\sum P(X \ge n)$\/ converge (c'est donc une famille sommable, car $P(X \ge n) \ge 0$).
+  \end{itemize}
+  Ainsi, on peut sommer par paquets.
+\end{prop}
+
+\begin{rmk}
+  Si $X$\/ est une \textit{vard} est $\varphi : X(\Omega) \to \R$, alors
+  \begin{enumerate}
+    \item $\varphi \circ X$\/ est aussi une \textit{vard} notée $\varphi(X)$\/ ;
+    \item on pose $(\varphi  \circ X)(\Omega) = \{b_j \mid j \in J\}$. Si $\varphi(X)$\/ possède une espérance $\mathrm{E}\big(\varphi(X)\big)$, alors cette espérance est égale à \[
+      \sum_{j \in J} b_j\:P\big(\varphi(X) = b_j\big)
+    \] par définition de l'espérance, mais aussi à \[
+      \sum_{i \in I} \varphi(a_i)\: P(X = a_i)
+    ,\] d'après le théorème suivant, que nous admettrons.
+  \end{enumerate}
+\end{rmk}
+
+\begin{thm}
+  Soient $\Omega, \mathcal{A}, P$\/ un espace probabilisé, $X$\/ une \textit{vard}, et $\varphi : X(\Omega) \to \R$. On pose $X(\Omega) = \{a_i  \mid i \in I\}$.
+  Alors, $\varphi(X)$\/ est d'espérance finie si, et seulement si la série $\sum \varphi(a_i)\, P(X = a_i)$\/ converge absolument. Et, alors, $\mathrm{E}(\varphi(X))$\/ vaut la somme $\sum_{i \in I} \varphi(a_i)\, P(X = a_i)$\/ de cette série.
+\end{thm}
+
+\section{Variance et écart-type}
+
+Plus tard (définition 25), on définira respectivement la \textit{variance} et l'\textit{écart-type} comme \[
+  \mathrm{V}(X) = \mathrm{E}\Big(\big[X - E(X)\big]^2\Big)
+  \quad\quad\quad
+  \sigma(X) = \sqrt{\mathrm{V}(X)} 
+.\]
+
+
+\begin{defn}
+  On définit le \textit{moment d'ordre $k \in \N$} comme \[
+    \sum_{a \in X(\Omega)} a^k\, P(X = a)
+  .\] On dit qu'une variable aléatoire \textit{possède un moment d'ordre $k$} si la série $\sum {a_n}^k P(X = a_n)$\/ converge absolument.
+
+  Ainsi, le moment d'ordre 1 est  $\mathrm{E}(X)$, le moment d'ordre 2 est $\mathrm{E}(X^2)$, le moment d'ordre 3 est $\mathrm{E}(X^3)$, etc.
+\end{defn}
+
+\begin{lem}
+  Si une \textit{vard} possède un moment d'ordre $k+1$, alors elle possède aussi un moment d'ordre $k$.
+\end{lem}
+
+\begin{prv}
+  Pour tout réel, $x \ge 0$, alors $0 \le x^k \le x^{k+1} + 1$\/ (distinguer le cas $x \ge 1$\/ et $x < 1$). Ainsi, en multipliant par $P(X = a)$, on a \[
+    x^k\:P(X = a) \le x^{k+1}\:P(X=a) + P(X = a)
+  .\] La série $\sum P(X = a)$\/ converge absolument, et la série $\sum a^{k+1}\,P(X = a)$\/ converge absolument aussi. Alors, la série $\sum a^k\,P(X=a)$\/ converge absolument.
+\end{prv}

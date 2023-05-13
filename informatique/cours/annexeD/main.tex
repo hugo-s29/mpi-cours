@@ -1,0 +1,83 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+\usepackage{tikzit}
+\input{../../styles.tikzstyles}
+
+\titleanx{D}{Lemme d'\textsc{Arden} et retour sur le théorème de \textsc{Kleene}}
+
+\begin{document} %% EXACT
+	\begin{exm}[Lemme d'\textsc{Arden}]
+		Soient $K$ et $L$ deux langages. Résoudre $X = K\cdot X \cup L$ pour $X$ un langage.
+		(On trouve~$X = K^* \cdot L$.) On suppose que $\varepsilon \not\in K$.
+		On procède par double-inclusion.
+		\begin{itemize}
+			\item[``$\supseteq$''] Soit $X$ un langage tel que $X = K\cdot X \cup L$.
+				Montrons par récurrence \guillemotleft~si $w$ est un mot de $X$ de taille $n$, alors $w \in K^* \cdot L$.
+				\begin{itemize}
+					\item Si $n= 0$, alors $w \in L$ car $\varepsilon \not\in  K$.
+						Ainsi, $w = \varepsilon \cdot w$ et $\varepsilon \in K^*$. On en déduit que $w \in K^* \cdot L$.
+					\item Si $|w| = n$, alors
+						\begin{itemize}
+							\item si $w \in L$, alors $w = \varepsilon \cdot w$ et donc $w \in K^* L$.
+							\item si $w = v \cdot w'$ où $v \in K$ et $w' \in X$, alors $|w'| < |w|$. Ainsi, par hypothèse de récurrence, $w' \in K^* \cdot L$. Ainsi, $v \cdot w' \in K^* \cdot L$.
+						\end{itemize}
+				\end{itemize}
+				Ainsi, $X \subseteq K^* \cdot L$.
+			\item[``$\subseteq$'']
+				Soit $w \in K^* \cdot L$. Il existe donc $n \in \N$, $(v_1, \ldots, v_n) \in K^n$ et $w' \in L$ tels que $w = v_1 \cdot \ldots \cdot v_n \cdot  w'$.
+				Alors, $w' \in X$ donc $v_n \cdot w' \in X$ donc \ldots donc $v_1 v_2 \ldots v_n w' \in X$.
+				Ainsi, $w \in X$.
+		\end{itemize}
+	\end{exm}
+
+	\begin{exm}
+		On considère l'automate ci-dessous.
+		\begin{figure}[H]
+			\centering
+			\tikzfig{auto-ex}
+			\caption{Automate exemple ($\mathcal{A}$)}
+		\end{figure}
+		On pose $X_i = \mathcal{L}\big((\Sigma, \mathcal{Q}, \{i\}, F, \delta)\big)$, où $x_i$ est l'unique point de départ.
+		Ainsi, $\mathcal{L}(\mathcal{A}) = \bigcup_{i \in  I} X_i$.
+		Déterminons les valeurs de $X_1$, $X_2$ et $X_3$.
+		On applique un algorithme similaire au \guillemotleft~pivot de Gau\ss.~\guillemotright\ 
+
+		\begin{align*}
+			\left.\begin{array}{rl}
+				X_1 &= \{a\} \cdot X_2 \cup \{a\} X_1\\
+				X_2 &= \{b\} \cdot X_1 \cup \{a\} \cdot X_3 \cup \{\varepsilon\}\\
+				X_3 &= \{b\} X_3 \cup \{\varepsilon\}
+			\end{array}\right\}
+			\iff& 
+			\begin{cases}
+				X_1&= \{a\}^* \cdot \{a\} \cdot X_2\\
+				X_2&= \mathcal{L}(ba^* \cdot a) X_2 \cup \{a\} X_3 \cup \{\varepsilon\}\\
+				X_3&= \{b\} \cdot X_3 \cup \{\varepsilon\}
+			\end{cases}\\
+			\iff& 
+			\begin{cases}
+				X_1&= \mathcal{L}(a^* \cdot a) X_2\\
+				X_2&= \mathcal{L}\big((b\cdot a^* \cdot a)^*\big) \cdot \big(\{a\} X_3 \cup \{\varepsilon\}\big)\\
+				X_3&= \{b\} X_3 \cup \{\varepsilon\}
+			\end{cases}\\
+			\iff& \begin{cases}
+				X_1&= \mathcal{L}(a^* \cdot a) X_2\\
+				X_2&= \mathcal{L}\big((b\cdot a^* \cdot a)^*\big) \cdot \big(\{a\} X_3 \cup \{\varepsilon\}\big)\\
+				X_3&= \mathcal{L}(b^*)
+			\end{cases} \\
+			\iff& \begin{cases}
+				X_1&= \mathcal{L}(a^* \cdot a) X_2\\
+				X_2&= \mathcal{L}\big((ba^*a)^* \cdot (ab^*  \mid \varepsilon)\big)\\
+				X_3&= \mathcal{L}(b^*)
+			\end{cases} \\
+			\iff& \begin{cases}
+				X_1&= \mathcal{L}\big(a^* \cdot a \cdot (ba^*a)^* \cdot (ab^*  \mid \varepsilon)\big)\\
+				X_2&= \mathcal{L}\big((ba^*a)^* \cdot (ab^*  \mid \varepsilon)\big)\\
+				X_3&= \mathcal{L}(b^*)
+			\end{cases}
+		\end{align*}
+	\end{exm}
+
+	On peut généraliser la méthode employée dans l'exemple précédent pour montrer que tout langage reconnaissable est régulier.
+\end{document}

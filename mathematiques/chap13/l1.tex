@@ -1,0 +1,214 @@
+\section{Normes et distances}
+
+\begin{defn}
+	Soit $E$\/ un $\R$ ou $\red\C$-espace vectoriel. Une application $N : E \to \R^+$\/ est appelée une \textit{norme} si, pour tous vecteurs $\vec{x}$\/ et $\vec{y}$\/ de $E$, et pour tout scalaire $\alpha \in \mathds{K}$,\footnotemark
+	\begin{enumerate}
+		\item $N(\vec{x}) = 0 \implies \vec{x} = \vec{0}$, \hfill (axiome de séparation)
+		\item $N(\alpha\,\vec{x}) = |\alpha|\:N(\vec{x})$, \hfill (homogénéité, au sens physicien)
+		\item $N(\vec{x} + \vec{y}) \le N(\vec{x}) + N(\vec{y})$. \hfill (inégalité triangulaire)
+	\end{enumerate}
+	Un espace vectoriel muni d'une norme est appelé un \textit{espace vectoriel normé} (\textit{evn}).
+\end{defn}
+\footnotetext{$\mathds{K}$ correspond à $\R$\/ ou $\C$, le corps associé à l'espace vectoriel.}
+
+Une norme peut-être définie sur un $\red \C$-espace vectoriel, même si un produit scalaire ne peut être défini que sur un $\R$-espace vectoriel.
+On note en général l'application $N$\/ comme $\|\,\cdot\,\|$.
+
+\begin{exo}
+	\textsl{
+		\begin{enumerate}
+			\item La valeur absolue est une norme sur le $\R$-espace vectoriel $\R$\/ : y en a-t-il d'autres ? Le module est une norme sur le $\C$-espace vectoriel $\C$\/ : y en a-t-il d'autres ?
+			\item Par définition, toute norme $N$\/ vérifie la propriété 3., appelée \textit{inégalité triangulaire}. En déduire que \[
+				\forall (\vec{x}, \vec{y}) \in E^2,\quad\quad |N(\vec{x}) - N(\vec{y})| \le N(\vec{x} - \vec{y})
+			.\]
+		\end{enumerate}
+	}
+
+	\begin{enumerate}
+		\item Ici, $n = 1$, l'espace vectoriel normé est $\mathds{K}^1 = \R$ ou $\C$.
+			On vérifie bien les hypothèses pour que la valeur absolue (resp.\ module) :
+			\begin{gather*}
+				\forall x \in \mathds{K},\quad\quad |x| = 0 \implies x = 0\\
+				\forall \alpha \in \mathds{K},\: \forall x \in \mathds{K}, \quad\quad |\alpha x| = |\alpha|\:|x|\\
+				\forall (x,y) \in \mathds{K}^2, \quad\quad |x + y| \le |x| + |y|
+			\end{gather*}
+			Ce n'est pas la seule norme, on peut multiplier par un nombre $k$ strictement positif, et la norme $x \mapsto k |x|$\/ obtenue est toujours une norme.
+			Il n'y en a pas d'autres ; montrons le.
+			Soit $N$\/ une norme sur l'espace vectoriel $\mathds{K}$.
+			Pour tout $z \in \C$, $z = z \times 1$, d'où $N(z) = |z| \cdot N(1)$, et $N(1) > 0$.
+		\item ({\color{cyan}Tarte à la crème}) Soit $N$\/ une norme sur un espace vectoriel $\mathds{K}$. Soient $\vec{x}$\/ et $\vec{y}$\/ deux vecteurs de $E$.
+			\begin{align*}
+				&\big|N(\vec{x}) - N(\vec{y})\big| \le N(\vec{x} - \vec{y})\\
+				\iff& -N(\vec{x}-\vec{y}) \le N(\vec{x}) - N(\vec{y}) \le N(\vec{x} - \vec{y}) \\
+				\iff& \begin{cases}
+					N(\vec{x}) \le N(\vec{y}) + N(\vec{x} - \vec{y}) \quad(1)\\
+					N(\vec{y}) \le N(\vec{x}) + N(\vec{x} - \vec{y}) \quad (2)
+				\end{cases} \\
+			\end{align*}
+			La propriété $(1)$\/ est vraie car $\vec{x} = \vec{y} + (\vec{x} - \vec{y})$, et application de l'inégalité triangulaire.
+			De même pour $(2)$\/ en échangeant $\vec{x}$\/ et $\vec{y}$.
+	\end{enumerate}
+\end{exo}
+
+Sur le même espace vectoriel, on peut définir plusieurs normes.
+
+\begin{exm}
+	\begin{enumerate}
+		\item Sur l'espace vectoriel $\mathds{K}^n$\/ ($\R^n$\/ ou $\C^n$), avec $n \in \N^*$, on définit trois normes classiques : soit $\vec{x} = (x_1, \ldots, x_n) \in \mathds{K}^n$, \[
+				\|\vec{x}\|_1 = |x_1| + \cdots + |x_n|
+				\quad\quad
+				\|\vec{x}\|_2 = |x_1|^2 + \cdots + |x_n|^2
+				\quad\quad
+				\|\vec{x}\|_\infty = \max\big(|x_1|, \ldots, |x_n|\big)
+			.\]
+		\item Sur l'espace vectoriel $\mathcal{C}([a,b],\mathds{K})$ des fonctions $f$\/ continues sur un segment $[a,b]$\/ vers~$\mathds{K}$, \[
+			\|f\|_1 = \int_{a}^{b} |f(t)|~\mathrm{d}t
+			\quad\quad
+			\|f\|_2 = \int_{a}^{b} |f(t)|^2~\mathrm{d}t
+			\quad\quad
+			\|f\|_\infty = \max_{t \in [a,b]} |f(t)|
+		.\]
+	\end{enumerate}
+\end{exm}
+
+{
+\color{gray}
+On définit la norme $p$-ième comme \[
+	\|\vec{x}\|_p = \sqrt[p]{\ts\sum_{i=1}^n |x_i|^p} \tendsto{p \to +\infty} \|\vec{x}\|_\infty
+.\]}On a déjà montré que $\|\,\cdot\,\|_2$\/ est une norme au chapitre produit scalaire : par le caractère défini du produit scalaire canonique de $\R^n$, par la bilinéarité de ce produit scalaire, et par inégalité de \textsc{Cauchy}-\textsc{Schwarz}, on vérifie chacune des hypothèses de la norme.
+Pour les autres normes, on vérifie aisément les hypothèses, ce sont donc bien des normes.
+
+\begin{defn}
+	La \textit{distance} associée à une norme $N$\/ est l'application \begin{align*}
+		d: E^2 &\longrightarrow \R^+ \\
+		(\vec{x},\vec{y}) &\longmapsto N(\vec{y} - \vec{x}).
+	\end{align*}
+	(C'est une distance entre deux vecteurs.)
+\end{defn}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(4cm);
+		pair O = (0, 0);
+		pair x = (2, 3)/1.5;
+		pair y = (3, 2);
+		draw(O -- x, red, Arrow(TeXHead));
+		draw(O -- y, magenta, Arrow(TeXHead));
+		label("$\vec{x}$", x/2, red, align=S);
+		label("$\vec{y}$", y/2, magenta, align=S);
+		draw(y -- x, deepcyan);
+		label("$N(\vec{x}-\vec{y}) = d(\vec{x}, \vec{y})$", (x + y)/2, deepcyan, align=N);
+		label("$\vec{0}$", O, align=SW);
+	\end{asy}
+	\caption{Distance entre deux vecteurs $\vec{x}$\/ et $\vec{y}$}
+\end{figure}
+
+De la définition de \textit{norme}, il en résulte les deux propriétés
+\begin{enumerate}
+	\item $\forall (\vec{x}, \vec{y}) \in E^2, \quad d(\vec{x}, \vec{y}) = 0 \iff \vec{x} = \vec{y}$ ;
+	\item $\forall (\vec{x}, \vec{y}, \vec{z}) \in E^3,\quad d(\vec{x}, \vec{z}) \le d(\vec{x}, \vec{y}) + d(\vec{y}, \vec{z})$.
+\end{enumerate}
+
+La distance entre deux fonctions est
+\begin{itemize}
+	\item pour la norme infinie, il s'agit de la longueur de la flèche, c'est la différence maximale entre les deux fonctions ;
+	\item pour la norme 1, il s'agit de l'aire entre les deux courbes.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		size(5cm);
+
+		real f(real x) { return cos(x/5) + sin(x/2) + 2; }
+		real g(real x) { return cos(2*sqrt(x)) + sin(2*exp(-x)); }
+
+		guide gr_f = graph(f, 0, 8);
+		guide gr_g = graph(g, 0, 8);
+
+		fill(gr_f -- reverse(gr_g) -- cycle, red+white);
+		draw(gr_f, black+1);
+		draw(gr_g, black+1);
+		draw((-1, -1)--(8, -1), Arrow(TeXHead));
+		draw((0, -2)--(0, 4), Arrow(TeXHead));
+		real xmax = 2.7;
+		draw((xmax, f(xmax))--(xmax,g(xmax)), Arrows(TeXHead));
+	\end{asy}
+	\caption{Distance entre deux fonctions}
+\end{figure}
+
+\begin{rmk}
+	Si une norme provient d'un produit scalaire, alors on dit que cette norme est \textit{euclidienne}. Ce produit scalaire est alors unique (car on peut le calculer grâce aux égalités de polarisations) et cette norme vérifie l'égalité du parallélogramme.
+\end{rmk}
+
+Mais, certaines normes ne proviennent pas d'un produit scalaire, par exemple la norme infinie  : $\|(x,y)\|_\infty = \max(|x|,|y|)$ sur l'espace $\R^2$.
+En effet, avec $\vec{u} = (2, 1)$\/ et $(1, 2)$, alors $\|\vec{u} + \vec{v}\|_\infty = 3$, $\|\vec{u} - \vec{v}\| = 1$, $\|\vec{u}\|_\infty = 2$\/ et $\|\vec{v}\|_\infty = 2$ ; mais, \[
+	\|\vec{u} + \vec{v}\|^2_\infty + \|\vec{u} - \vec{v}\|_\infty^2 \neq 2\|\vec{u}\|_\infty^2 + 2\|\vec{v}\|_\infty^2
+.\]
+L'égalité du parallélogramme n'est pas vérifiée.
+
+\section{Boules}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+		draw(circle((0, 0), 1), red);
+		draw((-1.5,0)--(1.5, 0), Arrow(TeXHead));
+		draw((0,-1.5)--(0,1.5), Arrow(TeXHead));
+		label("1", (1, 0), align=SE);
+		draw((-2.5,0)--(-3.5,1)--(-4.5,0)--(-3.5,-1)--cycle,red);
+		draw((-5,0)--(-2, 0), Arrow(TeXHead));
+		draw((-3.5,-1.5)--(-3.5,1.5), Arrow(TeXHead));
+		label("1", (-2.5, 0), align=SE);
+		draw((2.5, 1)--(2.5,-1)--(4.5,-1)--(4.5,1)--cycle,red);
+		draw((2,0)--(5, 0), Arrow(TeXHead));
+		draw((3.5,-1.5)--(3.5,1.5), Arrow(TeXHead));
+		label("1", (4.5, 0), align=SE);
+	\end{asy}
+	\caption{Sphère de centre $\vec{0}$\/ et de rayon $1$\/ pour les normes 1, 2 et $\infty$\/ de $\R^2$}
+\end{figure}
+
+\begin{defn}
+	Soit $E$\/ un espace vectoriel normé par $N$. Soient $\vec{a}$\/ un vecteur de $E$, et $r > 0$. On appelle
+	\begin{enumerate}
+		\item \textit{sphère} de centre $\vec{a}$\/ et de raton $r$\/ la partie de $E$\/ définie par \[
+				\{\vec{x} \in E  \mid N(\vec{x} - \vec{a}) = r\} \;
+			;\]
+		\item \textit{boule fermée} de centre $\vec{a}$\/ et de rayon $r$\/ la partie de $E$\/ définie par \[
+				\{\vec{x} \in E  \mid N(\vec{x} - \vec{a}) \le r\} \;
+			;\]
+		\item \textit{boule ouverte} de centre $\vec{a}$\/ et de rayon $r$\/ la partie de $E$\/ définie par \[
+				\{\vec{x} \in E  \mid N(\vec{x} - \vec{a}) < r\} 
+			.\]
+	\end{enumerate}
+\end{defn}
+
+On note $B(\vec{a}, r)$\/ la boule ouverte de centre $\vec{a}$\/ et de rayon $r$, la boule fermée est notée $\bar{B}(\vec{a}, r)$. La sphère est $\bar{B}(\vec{a}, r) \setminus B(\vec{a}, r)$.
+
+\begin{exo}
+	\textsl{Montrer que, pour tout vecteur $\vec{x}$\/ de $\R^2$, \[
+		\|\vec{x}\|_\infty \le \|\vec{x}\|_2 \le \|\vec{x}\|_1 \le \sqrt{n} \cdot \|\vec{x}\|_2 \le n \cdot \|\vec{x}\|_\infty
+	.\]}
+
+	Soit $\vec{x} \in \R^n$.
+
+	\begin{itemize}
+		\item On a $\|\vec{x}\|_\infty \le \|\vec{x}\|_2$\/ car, pour $i \in \llbracket 1,n \rrbracket$, $\sqrt{x_1^2 + \cdots + x_n^2} \ge \sqrt{x_i^2} = |x_i|$, d'où $\sqrt{x_1^2 + \cdots + x_n^2} \ge \max_{i \in \llbracket 1,n \rrbracket}(|x_i|)$.
+		\item On a $\|\vec{x}\|_2 \le \|\vec{x}\|_1$\/ car $\sqrt{x_1^2 + \cdots + x_n^2} \le |x_1| + \cdots + |x_n|$, car $x_1^2 + \cdots + x_n^2 \le |x_1|^2 + \cdots + |x_n|^2 + \text{tous les doubles produits, qui sont positifs}$.
+		\item On a $\|\vec{x}\|_1 \ge \sqrt{n}\cdot \|\vec{x}\|_2$, car
+			\begin{align*}
+				|x_1| + \cdots + |x_n| &= \Bigg< \begin{pmatrix}
+					1\\ \vdots\\ 1
+				\end{pmatrix} \Bigg| \begin{pmatrix}
+					|x_1|\\ \vdots\\ |x_n|
+				\end{pmatrix} \Bigg> \\ &\le \sqrt{1^2 + 1^2 + \cdot + 1^2} \cdot \sqrt{|x_1|^2 + \cdots + |x_n|^2}\\
+				&= \sqrt{n} \cdot \sqrt{|x_1|^2 + \cdots + |x_n|^2} 
+			\end{align*}
+			par inégalité de \textsc{Cauchy-Schwarz}.
+		\item On a $\|\vec{x}\|_2 \le \sqrt{n} \cdot \|\vec{x}\|_\infty$\/ car $\sqrt{x_1^2 + \cdots + x_n^2} \le \sqrt{n} \cdot \max_{i \in \llbracket 1,n \rrbracket} |x_i|$.
+	\end{itemize}
+\end{exo}
+

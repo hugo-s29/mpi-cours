@@ -1,0 +1,118 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\def\khollenum{15}
+
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+\fancyhead[R]{\scshape Khôlle n\tsup{o} \khollenum}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} \khollenum
+	\end{center}
+
+	\paragraph{Exercice 1.}
+	\begin{enumerate}
+		\item On pose, pour $i \in \llbracket 1,n \rrbracket$, les événements $F_i$\/ : \guillemotleft~la $i$-ème pièce tombe sur \textsc{Face},~\guillemotright\ $G_i$\/~:~\guillemotleft~le joueur $i$ gagne,~\guillemotright\ et $G$ : \guillemotleft~un joueur gagne la partie.~\guillemotright\@ D'après les règles du jeu, on sait que, pour tout $i \in \llbracket 1,n \rrbracket$, \[
+				G_i = \Big( F_i \cap \bigcap_{\substack{j \in \llbracket 1,n \rrbracket\\ j \neq i}} \bar{F}_i \Big) \cup \Big( \bar{F}_i \cap \bigcap_{\substack{j \in \llbracket 1,n \rrbracket\\ j \neq i}} F_i\Big)
+			,\] et cette union est disjointe. Ainsi, pour $i \in \llbracket 1,n \rrbracket$,
+			\begin{align*}
+				P(G_i) &= P\Big(F_i \cap \bigcap_{j \neq i} \bar{F}_i\Big) + P\Big(\bar{F}_i \cap \bigcap_{j \neq i} F_i\Big)\\
+				&= P(F_i) \times \prod_{j \neq i} P(\bar{F}_i) + P(\bar{F}_i) \times \prod_{j \neq i} P(F_i) \text{ par indépendance des lancers } \\
+				&= \frac{1}{2} \times \prod_{j \neq i} \frac{1}{2} + \frac{1}{2} \times \prod_{j \neq i} \frac{1}{2} \\
+				&= \prod_{j \neq i} \frac{1}{2} \\
+				&= \left(\frac{1}{2}\right)^{n-1} \\
+			\end{align*}
+			Et, $G = \bigcup_{i = 1}^n G_i$\/ et cette union est disjointe.
+			On en déduit donc que \[
+				p = P(G) = \sum_{i=1}^n P(G_i) = \sum_{i=1}^n \left(\frac{1}{2}\right)^{n-1} = \frac{n}{2^{n-1}}
+			.\]
+		\item Chaque partie jouée représente une épreuve de Bernoulli de probabilité de succès $p$.
+			Ces épreuves sont indépendantes.
+			Et, la variable $X$\/ représente le temps d'attente d'un premier succès.
+			On a donc $X \sim \mathcal{G}(p)$.
+			Ainsi, pour tout $k \in \N^*$, $P(X = k) = p\:q^{k-1}$\/ où $q = 1 - p$.
+			On en déduit \[
+				P(X = k) = \frac{n}{2^{n-1}} \cdot \left( 1 - \frac{n}{2^{n-1}} \right)^{k-1}
+			.\]
+		\item Comme $X \sim \mathcal{G}(p)$, on a \[
+				\mathrm{E}(X) = \frac{1}{p} \quad\quad \text{ et } \quad\quad \mathrm{V}(X) = \frac{q}{p^2}
+			.\]
+	\end{enumerate}
+
+	\paragraph{Exercice 2.}
+	\begin{enumerate}
+		\item Soit $a \in \R$, et soit $h \ge 0$. On a $(X \le a) \subset (X \le a + h)$, d'où, par croissance de $P$, $P(X \le a) \le P(X \le a + h)$. Ainsi, $F_X(a) \le F_X(a+h)$.
+			On en déduit que $F_X$\/ est croissante.
+		\item Soient $a$\/ et $b$\/ deux réels, tels que $a \le b$. On sait que $\overline{(a < X \le b)} = (X \le a) \cup (X > b)$, et cette union est disjointe.
+			Ainsi,
+			\begin{align*}
+				P(a < X \le b) &= 1 - P\big(\overline{a < X \le B}\big)\\
+				&= 1 - \big[P(X \le a) + P(X > b)\big] \\
+				&= 1 - \big[F_X(a) + [1 - P(X \le b)]\big] \\
+				&= 1 - F_X(a) - 1 + F_X(b) \\
+				&= F_X(b) - F_X(a) \\
+			\end{align*}
+		\item On a, pour tout $n \in \N$, $A_{n+1} = (X \le a_{n+1}) \subset (X \le a_n) = A_n$\/ car $a_{n+1} \le a_n$. Ainsi, par continuité décroissante, \[
+				P\Big(\bigcap_{n \in \N} A_n \Big) = \lim_{n\to \infty} P(A_n)
+			.\] Or, $\bigcap_{n \in \N} A_n = \O$. En effet, par l'absurde, soit $u \in \bigcap_{n \in \N} A_n$, alors $\forall n \in \N$, $u \le a_n$, ce qui est absurde car $a_n$\/ tend vers $-\infty$. On a donc \[
+				0 = P\Big(\bigcap_{n\in \N}  A_n\Big) = \lim_{n \to \infty}P(A_n) = \lim_{n\to \infty} F_X(a_n)
+			.\] Par la caractérisation séquentielle de la limite, on en déduit que $F_X(x) \tendsto{x\to -\infty} 0$.
+		\item Soit $(b_n)_{n\in\N}$\/ une suite tendant vers $+\infty$\/ en croissant.
+			On pose, pour tout $n \in \N$, $B_n = (X > b_n) = \overline{(X \le b_n)}$.
+			Ainsi, on a $B_{n+1} \supset B_n$. Et donc, par continuité croissante, \[
+				0 = P\Big(\bigcup_{n \in \N} B_n\Big) = \lim_{n\to \infty} P(B_n) = 1 - \lim_{n\to \infty} F_X(b_n)
+			,\] car l'événement $\bigcup_{n \in \N} B_n$\/ est impossible.
+			On en déduit donc que $\lim_{n\to \infty} F_X(b_n) = 1$. Par la caractérisation séquentielle de la limite, on a bien \[
+				F_X(x) \tendsto{x\to +\infty} 1
+			.\]
+	\end{enumerate}
+
+	\paragraph{Exercice 3.}
+	\begin{enumerate}
+		\item Oui. En effet, soient $\vec{x}$\/ et $\vec{y}$\/ deux vecteurs orthogonaux, alors \[
+				\left<\lambda g(\vec{x})  \mid \lambda g(\vec{y}) \right> = \lambda^2 \left<g(\vec{x})  \mid g(\vec{y}) \right> = \lambda^2 \left<\vec{x}  \mid \vec{y} \right> = 0
+			.\] L'endomorphisme $\lambda g$\/ conserve donc l'orthogonalité.
+		\item
+			\begin{enumerate}
+				\item La base $\mathcal{B} = (\vec{e}_1, \ldots, \vec{e}_n)$\/ étant orthonormée, on a
+					\begin{align*}
+					\left<\vec{e}_i + \vec{e}_j  \mid \vec{e}_i - \vec{e}_j \right> = \left<\vec{e}_i  \mid \vec{e}_i \right> + \left< \vec{e}_j  \mid \vec{e}_i \right> - \left<\vec{e}_i  \mid \vec{e}_j \right> - \left<\vec{e}_j  \mid \vec{e}_j \right> = \|\vec{e}_i\|^2 - \|\vec{e}_j\|^2 = 0
+					\end{align*}
+					Comme $f$\/ conserve l'orthogonalité, on a $\left<f(\vec{e}_i + \vec{e}_j)  \mid f(\vec{e}_i - \vec{e}_j) \right> = 0$.
+					Mais,
+					\begin{align*}
+						&\quad\:\left<f(\vec{e}_i + \vec{e}_j)  \mid f(\vec{e}_i - \vec{e}_j) \right>\\
+						&= \left<f(\vec{e}_i) + f(\vec{e}_j)  \mid f(\vec{e}_i - f(\vec{e}_j) \right> \\
+						&= \left<f(\vec{e}_i)  \mid f(\vec{e}_i) \right> + \left< f(\vec{e}_i) \mid f(\vec{e}_j) \right> - \left<f(\vec{e}_j)  \mid f(\vec{e}_i) \right> - \left<f(\vec{e}_j)  \mid f(\vec{e}_j) \right> \\
+						&= \|f(\vec{e}_i)\|^2  - \|f(\vec{e}_j)\|^2\\
+					\end{align*}
+					car $\left<\vec{e}_i  \mid \vec{e}_j \right> = 0$\/ et $f$\/ conserve l'orthogonalité. Ainsi, $\|f(\vec{e}_i)\| = \|f(\vec{e}_j)\|$\/ car la norme d'un vecteur est positive.
+				\item Soient $\vec{x}$\/ et $\vec{y}$\/ deux vecteurs de $E$.
+					On pose $\vec{x} = x_1 \vec{e}_1 + \cdots + x_n \vec{e}_n$, et $\vec{y} = y_1 \vec{e}_1 + \cdots + y_n \vec{e}_n$.
+					On a
+					\begin{align*}
+						\left<f(\vec{x}) \mid f(\vec{y}) \right>
+						&= \sum_{i=1}^n x_i \left<f(\vec{e}_i)  \mid f(\vec{y}) \right> \\
+						&= \sum_{i=1}^n \sum_{j=1}^n x_i y_j \left<f(\vec{e}_i)  \mid f(\vec{e}_j) \right> \\
+						&= \sum_{i=1}^n \sum_{j=1}^n x_i y_j \delta_{i,j} \|f(\vec{e}_i)\| \\
+						&= \sum_{i=1}^n x_i y_i \|f(\vec{e}_i)\|^2 \\
+						&= \|f(\vec{e}_1)\|^2 \sum_{i=1}^n x_i y_i \\
+						&= \|f(\vec{e}_i)\|^2 \left<\vec{x} \mid \vec{y} \right> \\
+					\end{align*}
+					D'où, $\lambda = \|f(\vec{e}_1)\|$.
+			\end{enumerate}
+		\item On a montré que, si $f$\/ conserve l'orthogonalité, alors il existe $\lambda \in \R$\/ tel que $\left<f(\vec{x})  \mid f(\vec{y}) \right> = \lambda^2 \left<\vec{x}  \mid \vec{y} \right>$, pour tous vecteurs $\vec{x}$\/ et $\vec{y}$.
+			On suppose $\lambda$\/ non nul (le cas $\lambda = 0$\/ est traité après).
+			Ainsi, l'endomorphisme $g = f / \lambda$\/ conserve l'orthogonalité par bilinéarité du produit scalaire, et donc \[
+				\left<g(\vec{x})  \mid g(\vec{y}) \right> = \left<\vec{x}  \mid \vec{y} \right> \text{ pour tous vecteurs } \vec{x} \text{ et } \vec{y}
+			.\]
+			On a donc $g \in \mathrm{O}(E)$. Ainsi, on a bien montré qu'il existe une isométrie vectorielle $g$\/ telle que $f = \lambda g$.
+			Si $\lambda = 0$, alors $\forall \vec{x},\vec{y} \in E$, $\left<f(\vec{x})  \mid f(\vec{y}) \right> = 0$, en particulier $\|f(\vec{x})\|^2 = 0$, d'où $f : \vec{x} \mapsto \vec{0}$. Ainsi, on pose $g = \id_E$, et on a $f = \lambda g$.
+			
+			Réciproquement, soient $\lambda \in \R$\/ et $g \in \mathrm{O}(E)$, tels que $f = \lambda g$, alors $f$\/ conserve l'orthogonalité d'après la question 1.
+	\end{enumerate}
+\end{document}
+
+

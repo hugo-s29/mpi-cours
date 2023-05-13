@@ -1,0 +1,209 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\titleanx{A}{Complexité amortie}
+
+\begin{document} %% EXACT
+	Avec une fonction $\mathrm{PA}(n)$\/ ayant une complexité en $\mathcal{O}(f(n))$, on considère le problème ci-dessous.
+	\begin{lstlisting}[language=caml]
+		for i = 0 to n - 1 do
+			%*$\mathrm{PA}$*)(i)
+		done
+	\end{lstlisting}
+	Cet algorithme a une complexité en $\mathcal{O}(n f(n))$. Mais, parfois, cette complexité est trop approximative : parfois, des sommes mathématiques se compensent : \[
+		\sum_{i=0}^{n-1} 2^i = 2^n \neq \cancel{\Theta}(n 2^n)
+	.\]
+
+	On considère le problème ci-dessous.
+	\begin{lstlisting}[language=c]
+		for (int i = 0; i < n; i = i + 1) (
+			// calcul qui ne coute pas cher
+		}
+	\end{lstlisting}
+	Le calcul \texttt{i = i + 1} est parfois plus coûteux que le calcul dans la boucle.
+	Par exemple, un algorithme permettant de faire ce calcul est celui ci-dessous.
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\Entree un entier $n$, représenté sous la forme d'un tableau de \textit{bit} $T$\/ (où les \textit{bit}s de poids forts sont à droite
+			\State $I \gets \mathrm{len}(T) - 1$\/ 
+			\While{$T[I] = 1$}
+			\State $T[I] \gets 0$
+			\State $I \gets I - 1$
+			\EndWhile
+			\State $T[I] \gets 1$
+		\end{algorithmic}
+		\caption{Calcul de $n + 1$\/ avec un tableau de \textit{bit}s}
+	\end{algorithm}
+	Avec un tel algorithme, on a une complexité, dans le pire des cas, en $\Theta(\log_2 n)$.
+	Ainsi, en modifiant le code, on peut avoir une complexité importante.
+	\begin{lstlisting}[language=c]
+		// n est une valeur donnee par l'utilisateur
+		for (int i = 0; i < 2%*$^\texttt{n}$*); i = i + 1) (
+			// calcul qui ne coute pas cher
+		}
+	\end{lstlisting}
+	La complexité de cet algorithme, que l'on nommera $\mathcal{A}$\/ dans la suite,  est en $\mathcal{O}(\texttt{n}\:2^\texttt{n})$, car le \texttt{i = i + 1} coûte, au pire des cas, $\texttt{n}$.
+	En réalisant des mesures, et en graphant le temps de cet algorithme divisé par $2^\texttt{n}$, on remarque que ce le ratio n'est pas une droite de coefficient directeur $\texttt{n}$, mais une constante (à partir d'un certain rang).
+	On doit donc faire une étude plus précise de la complexité, et faire le calcul de la somme plus proprement.
+	Une étude plus fine nous montre que l'algorithme est beaucoup plus long pour les entiers en plaisances de deux, mais les autres nombres, on n'a pas besoin d'autant de calcul.
+	Faisons cette étude plus fine.
+
+	On nomme $\mathcal{T}$\/ l'ensemble des tableaux de taille $n$\/ contenant des valeurs dans $\{0,1\}$. On a, \[
+		\mathrm{Co\hat ut}_\mathcal{A}(n) = \sum_{t \in \mathcal{T}} \mathrm{Co\hat ut}_\text{Incr}(t)
+	.\]Partitionnons $\mathcal{T}$\/ : \[
+		\mathcal{T}_i = \Bigg\{
+			\begin{array}{|c|c|c|c|c|c|}
+				\hline
+				\ldots & i + 1 & i & i - 1 & \ldots & 0\\ \hline
+				\ldots & \mathbf{0} & \mathbf{1} & \mathbf{1} & \ldots & \mathbf{1}\\ \hline
+			\end{array} \in \mathcal{T}
+		\Bigg\}
+	.\]  Si $t \in \mathcal{T}_i$, on sait que $\mathrm{Co\hat ut}_\text{Incr}(t) = i + 1$.
+	Ainsi,
+	\begin{align*}
+		\sum_{t \in \mathcal{T}} \mathrm{Co\hat ut}_\text{Incr}(t)
+		&= \sum_{i=0}^{n-1} \sum_{t \in \mathcal{T}_i} \mathrm{Co\hat ut}_\text{Incr}(t) \\
+		&= \sum_{i=0}^{n-1} |\mathcal{T}_i| \cdot (i + 1) \\
+		&= \sum_{i=0}^{n-1} 2^{n - 1 - i}\:(i+1) \\
+		&= 2^n \sum_{i=1}^n \frac{i}{2^i}\\
+		&= 2^n \times \mathcal{O}(1) \\
+		&= \mathcal{O}(2^n) \\
+	\end{align*}
+	ce qui explique les résultats trouvés précédemment.
+	L'incrementation \texttt{i = i + 1} est donc en $\mathcal{O}(1)$, et non en $\mathcal{O}(\log_2 \texttt{i})$.
+
+	\begin{defn}
+		Étant donnée une structure (des éléments d'un type de données abstrait,~\textsc{tda}), $\mathds{F}$, munie d'opérations $\mathds{O}$ opérant sur $\mathds{F}$\/ munis de fonctions de coût \[
+			\forall o \in \mathds{O}, \quad C_o : \mathds{F} \to \R^+
+		.\]
+		Étant donné un élément initial $f_0 \in \mathds{F}$\/ et une suite d'opérations $(o_1, \ldots, o_n) \in \mathds{O}^n$, cela conduit donc à une suite d'éléments \[
+			f_0 \overset{o_1}\leadsto f_1 \overset{o_2}\leadsto f_2 \leadsto \cdots \leadsto f_n.
+		\] On appelle \textit{complexité} de cette séquence, notée $\tilde c$, \[
+			\tilde C\big((o_1, \ldots, o_n), f_0\big)  = \sum_{i=0}^n C_{o_i}(f_{i-1})
+		.\]
+		On appelle alors \textit{complexité amortie} depuis $f_0 \in \mathds{F}$\/ la suite \[
+			C_\mathrm{A}(f_0, n) = \frac{1}{n} \sup_{(o_1, \ldots, o_n) \in \mathds{O}^n} \tilde C\big((o_1, \ldots, o_n), f_0\big)
+		.\]
+	\end{defn}
+
+	\begin{exm}[Tableaux dynamiques]
+		On s'intéresse aux tableaux à longueur variable : on alloue un tableau de petite taille, et on alloue plus de mémoire au besoin.
+		On a une structure de tableau dynamique :
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\State Soit $\mathrm{taille}' = f\big(\mathrm{len}(T)\big)$ \Comment{$f$ reste à déterminer}
+				\State On alloue $T'$\/ de taille $\mathrm{taille}'$
+				\State On recopie $T$\/ dans $T'$\/
+				\State $T \gets T'$\/
+			\end{algorithmic}
+			\caption{$\textsc{Agrandit}(T)$, fonction agrandissant le tableau $t$\/}
+		\end{algorithm}
+		Cet algorithme a une complexité $\mathrm{Co\hat ut}_\textsc{Agrandit}(n) = n + f(n)$.
+		On suppose que le tableau $T$\/ est rempli jusqu'à la $r$-ième case.
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\If{$\mathrm{len}(T) = r$}
+				\State $\textsc{Agrandit}(T)$
+				\EndIf
+				\State $T[r] \gets x$
+				\State $r \gets r + 1$
+			\end{algorithmic}
+			\caption{$\textsc{Ajout}(T,x)$, ajout d'un élément dans le tableau}
+		\end{algorithm}
+		On choisit la fonction $f$.
+		\begin{description}
+			\item[Cas 1] On choisit $f(n) = n + 1$. Soit une suite de $n$\/ opérations \textsc{Ajout} depuis un tableau de taille 1, où $r = 0$. Ainsi, \[
+					f_0\overset{\textsc{Ajout}}\leadsto f_1 \overset{\textsc{Ajout}}\leadsto \cdots \leadsto f_i \leadsto \cdots \leadsto f_{n-1} \overset{\textsc{Ajout}}\leadsto f_n
+				.\] La complexité de cette suite d'opérations est \[
+					\tilde C\big((o_1, \ldots, o_n), f_0) = n + 2 \cdot \frac{n(n+1)}{2},
+				\] d'où la complexité amortie est de $C_\mathrm{A}(f_0, n) = \Theta(n)$.
+			\item[Cas 2] On choisit $f(n) = 2n$. On somme les complexités : $2n$\/ (clairement par dessin). Ainsi, $C_\mathrm{A}(f_0, n) = \Theta(1)$.
+		\end{description}
+	\end{exm}
+
+	\begin{met}[du potentiel]
+		Considérons une fonction $h : \mathds{F} \to \R^+$\/ dite \textit{de potentiel} telle que $h(f_0) = 0$.
+		Intéressons nous alors à $\ubar{C}_o(f) = C_o(f) + h(\bar{f}) - h(f)$, où $f \overset o\leadsto \bar{f}$.
+		Soit alors \[
+			f_0 \overset{o_1}\leadsto f_1 \overset{o_1}\leadsto f_2 \leadsto \cdots \leadsto f_n
+		\]une suite d'opérations. Alors,
+		\begin{align*}
+			\sum_{i=1}^n \ubar{C}_{o_i}(f_{i-1}) &= \sum_{i=1}^n \Big(C_{o_i}(f_{i-1}) + h(f_i) - h(f_{i-1})\Big)\\
+			&= \bigg(\sum_{i=1}^n C_{o_i}(f_{i-1})\bigg) + \underbrace{h(f_n) - h(f_0)}_{\ge  0} \\
+		\end{align*}
+		par télescopage. Ainsi, \[
+			\sum_{i=1}^n C_{o_i}(f_{i-1}) \le \sum_{i=1}^n \ubar{C}_{o_i}(f_{i-1})
+		.\]
+	\end{met}
+
+	\begin{exm}
+		On applique la méthode du potentiel au cas 2 de l'exemple ci-avant.
+		On rappelle que $\mathds{F}$\/ est l'ensemble des tableaux. On pose la fonction \begin{align*}
+			h: \mathds{F} &\longrightarrow \R^+ \\
+			(T, r) &\longmapsto 6\left(r - \frac{\mathrm{len}(T)}{2}\right)
+		\end{align*}
+		Inspectons alors \[
+			\ubar{C}_\textsc{Ajout}(T, r) = C_\textsc{Ajout}(\ubar{T}, \ubar{r}) + 6\bar{r} - 3\:\mathrm{len}(\bar{T}) - 3\ubar{r} + 3\:\mathrm{len}(\ubar{T})
+		.\]
+		Si $\mathrm{len}(\ubar{T}) = \ubar{r}$, alors $C_\textsc{Ajout}(\ubar{T}, \ubar{r}) = 3\:\mathrm{len}(\ubar{T})$\/ et $\mathrm{len}(\bar{T}) = 2\: \mathrm{len}(\ubar{T})$\/ et $\bar{r} = \ubar{r} + 1$.
+		D'où, \[
+			\ubar{C}_\textsc{Ajout}(\ubar{T}, \ubar{r}) = 3\:\mathrm{len}(\ubar{T}) + 6\ubar{r} + 6 - 6\:\mathrm{len}(\ubar{T}) - 6\ubar{r} + 3\:\mathrm{len}(\ubar{T}) = 6
+		.\] 
+		Sinon, $\mathrm{len}(\ubar{T}) > \ubar{r}$, alors $\mathrm{len}(\bar{T}) = \mathrm{len}(\ubar{T})$\/ et $\bar{r} = \ubar{r} + 1$.
+		Ainsi,
+		\begin{align*}
+			\ubar{C}_\textsc{Ajout}(\ubar{T}, \ubar{r}) = 1 + 6 (\ubar{r} + 1) - 6\:\mathrm{len}(\bar{T}) - 6 \ubar{r} + 6\:\mathrm{len}(\ubar{T}) = 7
+		\end{align*}
+		D'où \[
+			\sum_{i=1}^n C_{o_i}(f_{i-1}) \le \sum_{i=1}^n \ubar{C}_{o_i}(f_{i-1}) \le 7n
+		.\] Le coût amorti est en $\mathcal{O}(1)$.
+	\end{exm}
+	\begin{exm}[Méthode du Banquier]
+		On encode une file avec deux piles.
+		Au moment de défiler, on doit potentiellement transvaser une pile dans une autre.
+		Avec la méthode du Banquier, on a l'\textit{intuition} que le coût amorti est constant.
+
+		On pose $\mathds{F}$\/ l'ensemble des couples de piles $(p_1, p_2)$.
+		On a \[
+			C_\text{défiler}\big((p_1, p_2)\big) = \begin{cases}
+				\mathrm{taille}\ p_1 + 1 \quad& \text{si $p_2$ est vide}\\
+				1 \quad& \text{ sinon}
+			\end{cases}, \text{ et } C_\text{enfiler}\big((p_1, p_2)\big) = 1
+		.\] Soit $h$\/ la fonction de potentiel définie comme \begin{align*}
+			h: \mathds{F} &\longrightarrow \R^+ \\
+			(p_1, p_2) &\longmapsto \mathrm{taille}\ p_1
+		\end{align*}
+		Étudions alors $\ubar{C}_\text{défiler}\big((p_1, p_2)\big)$.
+		\begin{itemize}
+			\item Si $p_2$\/ est vide, alors
+				\begin{align*}
+					\ubar{C}_\text{défiler}\big((p_1, p_2)\big) &= C_\text{défiler}\big((p_1,p_2)\big) + h\big((\bar{p}_1, \bar{p}_2)\big) - h\big((p_1, p_2)\big)\\
+					&= \mathrm{taille} \ p_1 + 1 + \overbrace{\mathrm{taille}\ \bar{p}_1}^{=0} - \mathrm{taille}\ p_1 \\
+					&= 1.
+				\end{align*}
+			\item Si $p_2$\/ n'est pas vide, alors \[
+					\ubar{C}_\text{défiler}\big((p_1, p_2)\big) = 1 + \underbrace{\mathrm{taille}\  \bar{p}_1}_{\substack{\ds=\\ \ds \mathrm{taille}\ p_1}} - \mathrm{taille}\ p_1
+				.\]
+		\end{itemize}
+		D'où, pour $(p_1, p_2) \in \mathds{F}$, $\ubar{C}_ \text{défiler}\big((p_1, p_2)\big) \le 1$.
+		De plus,
+		\begin{align*}
+			\ubar{C}_ \text{ enfiler}\big((p_1, p_2)\big)
+			&= C_ \text{enfiler}\big((p_1, p_2)\big) + h\big((\bar{p}_1, \bar{p}_2)\big) - h\big((p_1, p_2)\big) \\
+			&= 1 + \mathrm{taille}\ \bar{p}_1 - \mathrm{taille}\ p_1 \\
+			&= 2 \\
+		\end{align*}
+		Finalement, pour toute séquence d'opérations $o_1, \ldots, o_n$\/ initialisée à la file vide $f_0$, on a
+		\begin{align*}
+			\frac{1}{n} \tilde C\big((o_1,\ldots,o_n), f_0\big)
+			&= \frac{1}{n} \sum_{i=0}^n C_{o_i}(f_{i-1}) \\
+			&\le \frac{1}{n} \sum_{i=1}^n \ubar{C}_{o_i}(f_{i-1}) \\
+			&\le 2
+		\end{align*}
+		D'où, un coût amorti constant.
+	\end{exm}
+\end{document}

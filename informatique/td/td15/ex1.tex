@@ -1,0 +1,46 @@
+\section{Forme normale conjonctive}
+
+\begin{enumerate}
+	\item On pose la grammaire $\mathcal{G}$ de symbole initial $\mathrm{U}$ et ayant pour règles de production 
+		\begin{gather*}
+			\mathrm{U} \to \mathrm{S}  \mid \varepsilon,\\
+			\mathrm{S} \to \mathrm{S}\texttt{\red\&}\mathrm{X}  \mid \mathrm{X},\\
+			\mathrm{X} \to \texttt{\red-}\mathrm{V}  \mid \mathrm{V}  \mid \mathrm{V}\texttt{\red|}\mathrm{X} \mid \texttt{-}\mathrm{V}\texttt{\red|}\mathrm{X},\\
+			\mathrm{V} \to \texttt{p}  \mid \texttt{q}  \mid \cdots.
+		\end{gather*}
+	\item~\\
+		\begin{lstlisting}[language=caml,caption=Expressions \textsc{OCaml}, xleftmargin=.05\textwidth, xrightmargin=.05\textwidth,
+]
+'p' %*$\leadsto$ la variable $p$*)
+('p', true) %*$\leadsto$ le littéral $p$*)
+('p', false) %*$\leadsto$ le littéral $\lnot p$*)
+[ ('p', true); ('q', true) ] %*$\leadsto$ la clause $p \lor q $*)
+[[ ('p', true); ('q', true) ]] %*$\leadsto$ la formule $p \lor q $*)
+[[('p', true)]; [('q', true)]]] %*$\leadsto$ la formule $p \land q $*)
+[[('p', true)]; [('q', true); ('p', false)]]] %*$\leadsto$ la formule $p \land (q \lor \lnot p)$*)
+		\end{lstlisting}
+	\item~\\
+		\begin{lstlisting}[language=caml,caption=Parsing des fonctions \textsc{OCaml}]
+let rec parse_f (s: string) (start: int) (len: int): fnc =
+  if String.length s = 0 then []
+  else parse_d s start len
+and parse_d (s: string) (start: int) (len: int): fnc =
+  let i = ref start in
+  while s.[!i] != '&' && !i < len do incr i; done;
+  if !i = len then [parse_c s start len]
+  else (parse_c s start (!i - 1)) :: (parse_d s (!i+1) len)
+and parse_c (s: string) (start: int) (len: int): cls =
+  let i = ref start in
+  while s.[!i] != '|' && !i < len do incr i; done;
+  if !i = len then [parse_l s start len]
+  else (parse_l s start (!i - 1)) :: (parse_c s (!i+1) len)
+and parse_l (s: string) (start: int) (len: int): lit =
+  if s.[start] = '-' then (parse_v s (start + 1) len, false)
+  else (parse_v s start len, true)
+and parse_v (s: string) (start: int) (len: int): char =
+  let x = s.[start] in
+  assert(Char.code x >= 97 && Char.code x <= 122);
+  assert(len - start = 1);
+  x
+		\end{lstlisting}
+\end{enumerate}

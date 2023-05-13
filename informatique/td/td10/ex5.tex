@@ -1,0 +1,70 @@
+\begin{multicols}{2}
+	\section{Implications}
+	\begin{enumerate}
+		\item
+			\[
+				\begin{prooftree}
+					\infer 0[Ax]{p,q \vdash q}
+					\infer 1[$\to$i]{q \vdash p \to q}
+				\end{prooftree}
+			\]
+		\item
+			\[
+				\begin{prooftree}
+					\infer 0[Ax]{p, p\land q\vdash p\land q}
+					\infer 1[$\land$e,d]{p, p \land q \vdash q}
+					\infer 1[$\to$i]{p \land q \vdash p \to q}
+				\end{prooftree}
+			\]
+		\item 
+			\[
+				\begin{prooftree}
+					\infer 0[Ax]{p, p\to q \vdash p}
+					\infer 0[Ax]{p, p\to q \vdash p \to q}
+					\infer 0[Ax]{p, p\to q \vdash p}
+					\infer 2[$\to$e]{p, p \to q \vdash q}
+					\infer 2[$\land$i]{p, p \to q \vdash p \land q}
+					\infer 1[$\to$i]{p \to q \vdash p\to (p \land q)}
+				\end{prooftree}
+			\]
+		\item
+			\[
+				\begin{prooftree}
+					\infer 0[Ax]{\lnot q, p\to q, p \vdash p \to q}
+					\infer 0[Ax]{\lnot q, p\to q, p \vdash p}
+					\infer 2[$\to$e]{\lnot q, p\to q, p \vdash q}
+					\infer 0[Ax]{\lnot q, p\to q, p \vdash \lnot q}
+					\infer 2[$\lnot$e]{\lnot q, p\to q, p \vdash \bot}
+					\infer 1[$\lnot$i]{\lnot q, p\to q \vdash\lnot p}
+					\infer 1[$\to$i]{p \to q \vdash \lnot q \to \lnot p}
+				\end{prooftree}
+			\]
+		\item 
+			\[
+				\begin{prooftree}
+					\infer 0[Ax]{p \land q, p\to r \vdash p \land q}
+					\infer 1[$\land$e,g]{p \land q, p\to r \vdash p}
+					\infer 0[Ax]{p \land q, p\to r \vdash p \to r}
+					\infer 2[$\to$e]{p \land q, p \to r \vdash r}
+					\infer 1[$\to$i]{p \to r \vdash (p \land q) \to r}
+				\end{prooftree}
+			\] 
+		\item
+			\[
+				\begin{prooftree}
+					\infer 0[Ax]{p,q\vdash p}
+					\infer 1[$\to$i]{p \vdash q \to p}
+					\infer 1[$\to$i]{\vdash p \to (q \to p)}
+				\end{prooftree}
+			\]
+		\item
+			\[
+				\begin{prooftree}
+					\infer 0[Ax]{p \to q, p \vdash p\to q}
+					\infer 0[Ax]{p\to q,p \vdash p}
+					\infer 2[$\to$e]{p, p\to q \vdash q}
+					\infer 1[$\to$i]{p \vdash (p \to q) \to q}
+				\end{prooftree}
+			\] 
+	\end{enumerate}
+\end{multicols}

@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (-2, 3) {$a$};
+		\node [style=new style 0] (1) at (-2, -2) {$b$};
+		\node [style=new style 0] (2) at (3, 3) {$c$};
+		\node [style=new style 0] (3) at (3, -2) {$d$};
+		\node [style=new style 0] (4) at (8, -2) {$e$};
+		\node [style=new style 0] (5) at (6, 6) {$f$};
+		\node [style=new style 0] (6) at (9, 3) {$g$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow, bend left=15] (1) to (0);
+		\draw [style=arrow, bend left=15] (0) to (1);
+		\draw [style=arrow, bend left=15] (0) to (2);
+		\draw [style=arrow, bend left=15] (2) to (5);
+		\draw [style=arrow, bend right=15] (5) to (6);
+		\draw [style=arrow, bend right=15] (6) to (5);
+		\draw [style=arrow, bend left=15] (6) to (4);
+		\draw [style=arrow, bend left=345] (4) to (3);
+		\draw [style=arrow, bend right=15] (3) to (4);
+		\draw [style=arrow, bend right=15] (2) to (3);
+		\draw [style=arrow, bend left=15] (2) to (1);
+	\end{pgfonlayer}
+\end{tikzpicture}

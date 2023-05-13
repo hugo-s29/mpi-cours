@@ -1,0 +1,103 @@
+\paragraph{Interlude : langages algébriques.}
+Les langages reconnus par des grammaires non-contextuelles sont des solutions d'équations polynômiales, où la multiplication correspond à la concaténation et l'addition correspond à l'union.
+D'où le terme langage \textit{algébrique}.
+
+\begin{defn}
+	Deux grammaires $\mathcal{G}_1$ et $\mathcal{G}_2$ sont dites \textit{faiblement équivalentes} dès lors que $\mathcal{L}(\mathcal{G}_1) = \mathcal{L}(\mathcal{G}_2)$.
+\end{defn}
+
+\begin{exm}
+	On considère la grammaire $\mathcal{G}_1$ de règle de production $\mathrm{S} \to a \mathrm{S}  \mid \varepsilon$, et la grammaire $\mathcal{G}_2$ de règle de production $\mathrm{S} \to \mathrm{SS}  \mid a  \mid \varepsilon$.
+	Les deux grammaires $\mathcal{G}_1$ et $\mathcal{G}_2$ sont faiblement équivalentes.
+	En effet, $\mathcal{L}(\mathcal{G}_1) = \mathcal{L}(a^*) = \mathcal{L}(\mathcal{G}_2)$.
+	Mais, elles ne sont pas fortement équivalentes.\footnotemark
+\end{exm}
+\footnotetext{Deux grammaires sont fortement équivalentes si elles produisent les mêmes arbres de dérivation.}
+
+\section{La hiérarchie de \textsc{Chomsky}}
+
+Le terme \guillemotleft~\textit{hiérarchie de \textsc{Chomsky}}~\guillemotright\ n'est pas au programme.
+Dans cette partie, on traite des inclusions avec les autres familles des langages au programme.
+
+\subsection{Avec les langages réguliers}
+
+\begin{prop}
+	Soient $\mathcal{G}_1$ et $\mathcal{G}_2$ des grammaires non contextuelles.
+	Alors,
+	\begin{enumerate}
+		\item $\mathcal{L}(\mathcal{G}_1) \cup \mathcal{L}(\mathcal{G}_2)$ est reconnu par une grammaire non-contextuelle ;
+		\item $\mathcal{L}(\mathcal{G}_1) \cdot \mathcal{L}(\mathcal{G}_2)$ est reconnu par une grammaire non-contextuelle ;
+		\item $\big(\mathcal{L}(\mathcal{G}_1)\big)^*$ est reconnu par une grammaire non-contextuelle.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	Soient $\mathcal{G}_1 = (\mathcal{V}_1, \Sigma, P_1, S_1)$ et $\mathcal{G}_2 = (\mathcal{V}_2, \Sigma, P_2, S_2)$.
+	On peut supposer, quitte à renommer les non-terminaux, que $\mathcal{V}_1 \cap \mathcal{V}_2 = \O$.
+	\begin{enumerate}
+		\item Soit alors $S \not\in \mathcal{V}_1 \cup \mathcal{V}_2$. On pose $\mathcal{G} = (\mathcal{V}_1 \cup \mathcal{V}_2 \cup \{S\}, \Sigma, P_1 \cup P_2 \cup \{S \to S_1  \mid S_2\}, S)$.
+			Soit $w \in \Sigma^*$.
+			\begin{align*}
+				w \in \mathcal{L}(\mathcal{G}) \iff& S \Rst_\mathcal{G} w \\
+				\iff& \big(S \Rightarrow_\mathcal{G} S_1 \Rst_\mathcal{G} w\big) \text{ ou } \big(S \Rightarrow_\mathcal{G} S_2 \Rst_\mathcal{G} w\big) \\
+				\iff& (S_1 \Rst_\mathcal{G} w) \text{ ou } (S_2 \Rst_\mathcal{G} w) \\
+				\iff& (S_1 \Rst_{\mathcal{G}_1} w) \text{ ou } (S_2 \Rst_{\mathcal{G}_2} w) \\
+				\iff& w \in \mathcal{L}(\mathcal{G}_1) \cup \mathcal{L}(\mathcal{G}_2) \\
+			\end{align*}
+		\item Soit alors $S \not\in \mathcal{V}_1 \cup \mathcal{V}_2$. On pose $\mathcal{G} = (\mathcal{V}_1 \cup \mathcal{V}_2 \cup \{S\}, \Sigma, P_1 \cup P_2 \cup \{S \to S_1 \cdot S_2\}, S)$. Soit $w \in \Sigma^*$.
+			\begin{align*}
+				w \in \mathcal{L}(\mathcal{G}) \iff& S \Rst_\mathcal{G} w \\
+				\iff& S \Rightarrow S_1 \cdot S_2 \Rst_\mathcal{G} w \\
+				\iff& \exists (u,v) \in (\Sigma^*)^2,\: S_1 \Rst_{\mathcal{G}} u \text{ et } S_2 \Rst_\mathcal{G} v \text{ et } w = u \cdot v \\
+				\iff& \exists (u,v) \in (\Sigma^*)^2,\: S_1 \Rst_{\mathcal{G}_1} u \text{ et } S_2 \Rst_{\mathcal{G}_2} v \text{ et } w = u \cdot v \\
+				\iff& \exists (u,v) \in (\Sigma^*)^2,\: u \in \mathcal{L}(\mathcal{G}_1) \text{ et } v \in \mathcal{L}(\mathcal{G}_2) \text{ et } w = u \cdot v \\
+				\iff& w \in \mathcal{L}(\mathcal{G}_1) \cdot \mathcal{L}(\mathcal{G}_2) \\
+			\end{align*}
+		\item Soit alors $S \not\in \mathcal{V}_1 \cup \mathcal{V}_2$. On pose $\mathcal{G} = (\mathcal{V}_1 \cup \{S\}, \Sigma, P_1 \cup \{S \to S\cdot S_1 \mid \varepsilon\}, S)$. Soit $w \in \Sigma^*$.
+			\begin{align*}
+				w \in \mathcal{L}(\mathcal{G}) \iff& S \Rst_\mathcal{G} w \\
+				\iff& S \Rst_{\mathcal{G},\mathrm{g} w} \\
+				\iff& S \Rightarrow \overbrace{S \cdot S_1 \Rightarrow SS_1S_1 \Rightarrow \cdots \Rightarrow \underbrace{S_1S_1\cdots S_1}_n}^n \Rst_\mathcal{G} w^*\\
+				\iff& \exists n \in \N,\: \exists(\tilde{w}_1, \ldots, \tilde{w}_n),\: (\forall i \in \llbracket 1,n \rrbracket,\: S_1 \Rst_\mathcal{G} \tilde{w}_i) \text{ et } w = \tilde{w}_1 \cdots \tilde{w}_n\\
+				\iff& \exists n \in \N,\: \exists(\tilde{w}_1, \ldots, \tilde{w}_n),\: (\forall i \in \llbracket 1,n \rrbracket,\: S_1 \Rst_{\mathcal{G}_1} \tilde{w}_i) \text{ et } w = \tilde{w}_1 \cdots \tilde{w}_n\\
+				\iff& \exists n \in \N,\: \exists(\tilde{w}_1, \ldots, \tilde{w}_n),\: \big(\forall i \in \llbracket 1,n \rrbracket,\: \tilde{w}_i \in \mathcal{L}(\mathcal{G}_1)\big) \text{ et } w = \tilde{w}_1 \cdots \tilde{w}_n\\
+				\iff& w \in \big(\mathcal{L}(\mathcal{G}_1)\big)^* \\
+			\end{align*}
+	\end{enumerate}
+\end{prv}
+
+\begin{thm}
+	Tout langage régulier est reconnu par une grammaire non contextuelle.
+\end{thm}
+
+\begin{prv}
+	On a déjà montré que les grammaires non-contextuelles sont stables par union, concaténation et passage à l'étoile. Il ne reste qu'à montrer le résultat sur les cas de base.
+	On a
+	\begin{itemize}
+		\item $\{\varepsilon\} = \mathcal{L}\big((\{S\}, \Sigma, \{S \to \varepsilon\}, S)\big)$,
+		\item $\O = \mathcal{L}\big((\{S\}, \Sigma, \O, S)\big)$, ($\triangleright$ voir \textsc{td} 14.)
+		\item $\{\ell\} = \mathcal{L}\big((\{S\} , \Sigma, \{S \to \ell\}, S)\big)$.
+	\end{itemize}
+	Il suffit alors de conclure par induction.
+\end{prv}
+
+\begin{rmk}
+	L'inclusion précédente est stricte. En effet le langage $\{a^n \cdot  b^n  \mid n \in \N\}$  est reconnu par une grammaire non contextuelle mais n'est pas un langage régulier.
+\end{rmk}
+
+\begin{rmk}[Digression]~\\[-5mm]
+	\begin{center}
+		\itshape \guillemotleft~Tout langage est-il le langage d'une grammaire non contextuelle ?~\guillemotright
+	\end{center}
+	On procède par un argument de taille d'ensembles.
+	Soit $\mathcal{G} = (\mathcal{V}, \Sigma, P, I)$ une grammaire. On considère $\Sigma = \{0,1\}$.
+	On pose $|\mathcal{G}| = |\Sigma| + |\mathcal{V}| + \sum_{(V \to w_1 \ldots w_n) \in P} (n + 1) + 1$.
+	On considère $\mathds{G}_n = \{\mathcal{G}  \mid |\mathcal{G}| = n\}$.
+	L'ensemble $\mathds{G} = \bigcup_{n \in \N} \mathds{G}_n$ est dénombrable comme union dénombrable d'ensembles finis.
+	Montrons qu'il existe une bijection entre $\wp(\{0,1\}^*)$ et $[0,1[$.
+	À tout $x \in [0,1[$, on peut poser $x = 0,x_1x_2\ldots x_n\ldots$.
+	D'où, \[
+		{[0,1[}\xleftrightarrow[\text{encodage binaire}]{\text{bijection}} (\N \to \{0,1\}) \xleftrightarrow[\mathds{1}]{\text{bijection}} \wp(\N) \xleftrightarrow[\text{encodage binaire}]{\text{bijection}} \wp(\{0,1\}^*)
+	.\]
+\end{rmk}
+

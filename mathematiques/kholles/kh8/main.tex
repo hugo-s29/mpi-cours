@@ -1,0 +1,74 @@
+\documentclass[a4paper,9pt]{article}
+
+\input{../../preamble.tex}
+\usepackage{tgschola}
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} 8
+	\end{center}
+
+	\paragraph{Exercice 2}
+	\begin{enumerate}
+		\item Posons $U_k$\/ l'événement \guillemotleft~on choisit l'urne $k$.~\guillemotright\@ Les événements $U_1, U_2, \ldots, U_k$\/ forment une partition de l'univers $\Omega$. Ainsi, pour tout $n \in \N^*$,
+			\begin{align*}
+				u_{K,n}&=P(B_1 \cap B_2 \cap \cdots \cap B_n)\\
+				&= \sum_{k=1}^K P(B_1 \cap B_2 \cap \cdots \cap B_n  \mid U_k) \times P(U_k)\text{ d'après les probabilité totales}\\
+				&= \sum_{k=1}^K P(B_1  \mid U_k) \cdot P(B_1  \mid B_2 \cap U_k) \cdot \ldots \cdot P(B_n  \mid B_1 \cap \cdots \cap B_{n-1} \cap U_k) \\
+				&= \sum_{k=1}^K P(U_k) \prod_{i=1}^n P(B_i  \mid U_k) \text{ par indépendance} \\
+				&= \sum_{k=1}^K P(U_k) \prod_{i=1}^n P(B_1  \mid U_k) \text{ par équiprobabilité} \\
+				&= \sum_{k=1}^K P(U_k) P(B_1  \mid U_k)^n \\
+				&= \sum_{k=1}^K \frac{1}{K} \times \left( \frac{k}{K} \right)^n \\
+				&= \frac{1}{K^{n+1}} \times \sum_{k=1}^K k^n. \\
+			\end{align*}
+		\item On a, pour $n \in \N^*$, \[
+				u_{K,n} = \sum_{k=1}^K \frac{k^n}{K^n} \times \frac{1}{K} = \sum_{k=1}^{K-1} \Big( \underset{\substack{\vrt\in\\ [0,1]}}{\frac{k}{K}}\Big)^n \cdot \frac{1}{K} + \frac{1}{K}
+			.\]
+			Ainsi, pour tout $k \in \llbracket 1,K-1 \rrbracket$, $\left( \frac{k}{K} \right)^n \tendsto{n\to \infty} 0$, et donc, comme la somme est finie, on a \[
+				u_{K,n} = \sum_{k=1}^{K-1} \Big( \frac{k}{K} \Big)^n \cdot \frac{1}{K} + \frac{1}{K} \tendsto{n\to \infty} \frac{1}{K}
+			.\]
+			Cet événement correspond à \guillemotleft~on tire toujours une boule blanche.~\guillemotright\@ Cet événement est certain uniquement si l'urne tirée est celle contenant $K$\/ boules blanches et $0$\/ boules noires, et la probabilité de choisir cette urne est $P(U_K) = \frac{1}{K}$.
+		\item On a, pour $n \in \N^*$, \[
+				u_{K,n} = \frac{1}{K} \times \sum_{k=1}^K \left( \frac{k}{K} \right)^n = \frac{1}{K} \sum_{k=1}^K f\left( \frac{k}{K} \right)
+			\] avec $f : x \mapsto x^n$, qui est continue par morceaux sur $[0,1]$\/.. Par somme de \textsc{Riemann}, on en déduit que \[
+			u_{K,n} \tendsto{K\to \infty} \int_{0}^{1} f(x)~\mathrm{d}x = \left[ \frac{x^{n+1}}{n+1} \right]_0^1 = \frac{1}{n+1}
+			.\]
+	\end{enumerate}
+	\paragraph{Exercice 1}
+	\begin{enumerate}
+		\item Soit $x > -1$, et soit $k \in \N^*$. On a
+			\begin{align*}
+				|f_k(x)| = f_k(x) &= \frac{1}{k} - \frac{1}{k+x} \\
+				&= \frac{1}{k}\left( 1 - \frac{1}{1+\frac{x}{k}} \right) \\
+				&= \frac{1}{k}\left( 1 - 1 + \frac{x}{k} + \po\left( \frac{x}{k} \right) \right) \\
+				&= \frac{x}{k^2} + \po_{k\to \infty}\left(\frac{1}{k^2}\right).
+			\end{align*}
+		\item Soit $x > -1$. La série $\sum \frac{x}{n^2}$\/ converge absolument. Ainsi, d'après la question précédente, on en déduit que la série $\sum f_n(x)$\/ converge, la somme $\sum_{k=1}^{+\infty} \left( \frac{1}{k} - \frac{1}{k+x} \right)$\/ existe donc. On en déduit que $S$\/ est défini pour tout réel $x > -1$.
+		\item Soit $\varepsilon > 0$, et soient $k \in \N^*$\/ et $x > -1$. On calcule \[
+				f_k(x + \varepsilon) - f_k(x) = \frac{1}{k} - \frac{1}{k} - \frac{1}{k + x + \varepsilon} + \frac{1}{k + x} = \frac{1}{k+x} - \frac{1}{k+x+\varepsilon} \ge 0
+			\] car $k + x \le k + x + \varepsilon$. Ainsi, par croissance de la somme et comme les inégalités larges passent à la limite, on en déduit que $S(x+ \varepsilon) \ge S(x)$. On conclut que la fonction $S$\/ est croissante.
+		\item Soit $a \ge 0$. D'après la question précédente, pour tout $k \in \N^*$, pour tout $x \in {]-1,a]}$, $f_k(x) \le f_k(a)$, par croissance de $f_k$. De plus, $f_k(x) \ge 0$, car $\frac{1}{k} \ge \frac{1}{k+x}$. On en déduit que \[
+				\forall k \in \N^*,\forall x \in {]-1,a]},\quad \big|f_k(x)\big| \le f_k(a)
+			.\] Or, comme la suite numérique $\sum f_n(a)$\/ converge (d'après la question 1 car $a > -1$), on en déduit que la série de fonctions $\sum f_k$\/ converge normalement sur $]-1,a]$\/ pour $a \ge  0$. Si $a < 0$, alors la série de fonctions converge toujours normalement car $]-1,a] \subset {]-1,0]}$.
+		\item Soit $a > -1$. Les fonctions $f_k$\/ sont continues sur $]-1,a]$. La série de fonctions $\sum f_k$\/ converge normalement donc uniformément sur $]-1,a]$. On sait donc que la fonction $S$\/ est continue sur $]-1,a]$. Ceci étant vrai pour tout $a > -1$. On en déduit que $S$\/ est continue sur $]-1+\infty]$.
+		\item Soit $n \in \N^*$, et soit $x > -1$. On calcule
+			\begin{align*}
+				\sum_{k=1}^n f_k(x + 1) - \sum_{k=1}^n f_k(x)
+				&= \sum_{k=1}^n \left( f_k(x + 1) - f_k(x) \right) \\
+				&= \sum_{k=1}^n \left( \frac{1}{k+x} - \frac{1}{k+x+1} \right) \\
+				&= \sum_{k=1}^n \frac{1}{k+x} - \sum_{k=2}^{n+1} \frac{1}{k+x} \\
+				&= \frac{1}{1+x} - \frac{1}{n+1+x}\tendsto{n\to \infty} \frac{1}{1+x} \\
+			\end{align*}
+			Par unicité de la limite, on a donc bien \[
+				S(x+1) - S(x) = \frac{1}{1+x}
+			.\]
+		\item Soit $x > -1$. D'après la question 6, $S(x) = S(x+1) - \frac{1}{1+x}$. Par continuité de $S$, on a $S(x) = S(0) + \po_{x\to 0}(x)$. Or, $S(0) = \sum_{k=1}^\infty f_k(0) = 0$. Ainsi, on a donc \[
+				S(x) = S(x+1) - \frac{1}{1+x} = -\frac{1}{1+x} + \po_{x\to -1}(1+x)
+			.\]
+		\item En itérant la formule de la question 6, on a \[
+				\forall n \in \N^*,\:S(n) = S(n-1) + \frac{1}{1+n} = \cdots = S(0) + \sum_{k=1}^n \frac{1}{1+k} = \sum_{k=2}^{n+1} \frac{1}{k} = \ln n + \po(\ln n)
+			\] car il s'agit d'un équivalent de la série harmonique.
+		\item On a montré que la fonction $S$\/ est croissante. Mais, comme la suite $\big(S(n)\big)_{n \in \N}$\/ tend vers $+\infty$. On en déduit que la fonction $S$\/ tend vers $+\infty$\/ quand $x \to +\infty$.
+	\end{enumerate}
+\end{document}

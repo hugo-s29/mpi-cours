@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (-4, 2) {$x$};
+		\node [style=new style 0] (1) at (0, 2) {$y$};
+		\node [style=new style 0] (2) at (4, 2) {$z$};
+		\node [style=new style 0] (3) at (-4, -2) {$\lnot x$};
+		\node [style=new style 0] (4) at (0, -2) {$\lnot y$};
+		\node [style=new style 0] (5) at (4, -2) {$\lnot z$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (1) to (0);
+		\draw [style=arrow, bend left=15] (1) to (2);
+		\draw [style=arrow, bend left=15] (2) to (1);
+		\draw [style=arrow, bend left=15] (4) to (5);
+		\draw [style=arrow, bend left=15] (5) to (4);
+		\draw [style=arrow] (4) to (2);
+		\draw [style=arrow] (5) to (1);
+		\draw [style=arrow] (3) to (4);
+	\end{pgfonlayer}
+\end{tikzpicture}

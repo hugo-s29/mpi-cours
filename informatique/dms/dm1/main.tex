@@ -1,0 +1,31 @@
+\documentclass[a4paper]{article}
+\input{../../preamble.tex}
+
+\let\thesection\relax
+\def\thesubsection{\arabic{subsection}}
+
+\begin{document}
+	\begin{center}
+		\Huge \bfseries DM$_1$ Informatique
+	\end{center}
+
+	\paragraph{Q.\ 1}
+	Initialement, on a un arbre de hauteur $0$\/ contenant $1$\/ nœud.
+	Puis, on a un arbre de hauteur $1$\/ contenant $2$\/ nœud.
+	Et, si l'on a deux arbres {\sc Avl} $a$\/ et $b$, on peut les connecter et la hauteur de l'arbre {\sc Avl}\/ obtenu est donc $h(t) = h(a) + h(b) + 1$\/ qui est minimale si $h(a) = h(b) - 1$.
+	Ainsi, on en déduit que \[
+		\forall p \in \N,\,n_p = F_p
+	.\]
+
+	\paragraph{Q.\ 2}
+	On calcule
+	\begin{align*}
+		\log_2 n(t) &= \log_2 F_{n(t)} \\
+		&= \log_2 F_p \quad\text{en posant } p = n(t) \\
+		&= \log_2 \left( \frac{\varphi^p-\alpha^p}{\sqrt{5}} \right) \\
+		&= \log_2 (\varphi^p - \alpha^p) - \log_2 \sqrt{5} \\
+		&= p \log_2 \varphi \times \log_2 \left( 1 - \left(\frac{\varphi}{\alpha}\right)^p \right) - \frac{1}{2} \log_2 5 \\
+		&= p \log_2 \varphi \times \left(\left(\frac{1 + \sqrt{5}}{1 - \sqrt{5}}\right)^p + \gO\left( \left(\frac{1 + \sqrt{5}}{1 - \sqrt{5}}\right)^{2p} \right) \right) - \frac{1}{2} \log_2 5 \\
+		&= ? \\
+	\end{align*}
+\end{document}

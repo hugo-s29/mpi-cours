@@ -1,0 +1,183 @@
+\subsection{Preuves}
+
+\begin{defn}
+	On appelle \textit{règle de construction de preuves} une règle de la forme : \[
+		\begin{prooftree}
+			\hypo{\Gamma_1 \vdash \varphi_1}
+			\hypo{\Gamma_2 \vdash \varphi_2}
+			\hypo{\Gamma_3 \vdash \varphi_3} % NOCHECK
+			\hypo{\cdots}
+			\hypo{\Gamma_n \vdash \varphi_n}
+			\infer5[nom]{\Gamma \vdash \varphi}
+		\end{prooftree}
+	.\]
+	On appelle $\Gamma_1 \vdash \varphi_1$, $\Gamma_2 \vdash \varphi_2$, $\Gamma_3 \vdash \varphi_3$, \ldots, $\Gamma_n \vdash \varphi_n$\/ les \textit{prémisses}, et $\Gamma \vdash \varphi$\/ la \textit{conclusion}.
+
+	Si $n = 0$, on dit que c'est une \textit{règle de base}.
+	
+	\index{prémisses}
+	\index{conclusion}
+	\index{règle de construction de preuves}
+	\index{règle de base}
+\end{defn}
+
+\begin{rmk}[Notation]
+	$\Gamma$\/ est un ensemble. Alors, l'ensemble $\Gamma \cup \{\psi\}$\/ est noté $\Gamma,\psi$.
+\end{rmk}
+
+\begin{exm}
+	Un \textit{axiome} est de la forme \[
+		\begin{prooftree}
+			\infer 0[Ax]{\Gamma, \varphi \vdash \varphi} % NOCHECK
+		\end{prooftree}
+	.\]
+	\index{axiome}
+
+	Une preuve de la forme, appelée \textit{introduction du \textsc{et}}, \[
+		\begin{prooftree}
+			\hypo{\Gamma \vdash\varphi} % NOCHECK
+			\hypo{\Gamma \vdash \psi}
+			\infer 2[$\land$i]{\Gamma \vdash \varphi \land \psi}
+		\end{prooftree}
+	\] permet de prouver un \textsc{et}. Il correspond au raisonnement mathématique suivant : supposons $\Gamma$ ; montrons $\varphi \land \psi$\/ ;
+	\begin{itemize}
+		\item[$\hookrightarrow$] montrons $\varphi$\/ ;
+		\item[$\hookrightarrow$] montrons $\psi$.
+	\end{itemize}
+\end{exm}
+
+\begin{defn}[Arbre de preuve]
+	On appelle \textit{arbre de preuve} un arbre étiqueté par des séquents, et dont les liens père--fils sont des liens autorisés par les règles du système de preuves. Un \textit{système de preuves} étant un ensemble de règles.
+	\index{arbre de preuve}
+	\index{système de preuves}
+\end{defn}
+
+\begin{exm}[Système Jouet]
+	\[
+		\begin{prooftree}
+			\infer 0[Ax]{\Gamma, \varphi \vdash \varphi} % NOCHECK
+		\end{prooftree}
+		\begin{prooftree}
+			\hypo{\Gamma \vdash \varphi}
+			\hypo{\Gamma \vdash \psi} % NOCHECK
+			\infer 2[$\land$i]{\Gamma \vdash \varphi \land \psi}
+		\end{prooftree}
+		\begin{prooftree}
+			\hypo{\Gamma \vdash \varphi} % NOCHECK
+			\infer 1[$\lor$i,g]{\Gamma \vdash \varphi \lor\psi}
+		\end{prooftree}
+		\begin{prooftree}
+			\hypo{\Gamma \vdash \psi} % NOCHECK
+			\infer 1[$\lor$i,d]{\Gamma \vdash \varphi \lor\psi}
+		\end{prooftree}
+	.\] 
+\end{exm}
+
+\begin{exm}
+	Avec le système précédent, \[
+		\begin{prooftree}
+			\infer0[Ax]{\{P,Q,R\} \vdash P}
+			\infer1[$\lor$i,g]{\{P,Q,R\} \vdash P \lor Q}
+			\infer0[Ax]{\{P,Q,R\} \vdash Q}
+			\infer1[$\lor$i,g]{\{P,Q,R\} \vdash Q \lor\lnot R}
+			\infer2[$\land$i]{\{P,Q,R\} \vdash (P \lor Q) \land(Q \lor\lnot R)}
+			\infer1[$\lor$i,d]{\{P,Q,R\} \vdash(P \land X) \lor\big((P\lor Q) \land (Q \lor\lnot R)\big)}
+		\end{prooftree}
+	.\]
+\end{exm}
+
+\begin{defn}[Être prouvable]
+	On dit d'un séquent $\Gamma \vdash G$\/ qu'il est \textit{prouvable} dans un système de preuve dès lors qu'il existe une preuve dont la racine est étiquetée par $\Gamma \vdash G$.
+	\index{être prouvable}
+\end{defn}
+
+\begin{rap}[objectifs]
+	On veut trouver d'autres moyens de montrer $F \models G$.
+	On veut que, si $F \vdash G$, alors $F \models G$ (correction).
+	Mais, on veut aussi que, si $F \models G$, alors $G \vdash F$ (complétude).
+	On veut aussi qu'il existe un algorithme qui vérifie $F \models G$ (décidabilité).
+\end{rap}
+
+\begin{defn}[Correction]
+	On dit d'un système de preuve qu'il est \textit{correct} dès lors que : 
+	pour tout $\Gamma$, pour tout $G$, si $\Gamma \vdash G$\/ admet une preuve, alors $\Gamma \models G$.
+	\index{système de preuves!correction}
+\end{defn}
+
+\begin{exm}
+	\begin{enumerate}
+		\item On pose la règle ``Menteur'' définie comme \[
+				\begin{prooftree}
+					\infer0[Menteur]{\Gamma\vdash \bot} % NOCHECK
+				\end{prooftree}
+			.\] Ce système de preuve n'est pas correct car $\{\top\} \not\models \bot$. Or, \[
+				\begin{prooftree}
+					\infer0[Menteur]{\{\top\} \vdash\bot} % NOCHECK
+				\end{prooftree}
+			.\]
+		\item Le système jouet est correct. Montrons cela par induction sur la preuve de $\Gamma \vdash G$.
+			\begin{itemize}
+				\item Si la preuve de $\Gamma \vdash G$\/ est de la forme \[
+						\begin{prooftree}
+							\infer0[Ax]{\Gamma',G \vdash G} % NOCHECK
+						\end{prooftree}
+					.\] Montrons que $\Gamma' \cup \{G\} \models \{G\}$.
+					Soit donc $\rho$\/ un modèle de $\Gamma \cup \{G\}$. Alors $\forall \varphi \in \Gamma \cup \{G\}$, $\llbracket \varphi \rrbracket^\rho = \mathbf{V}$. Montrons que $\rho$\/ est un modèle de $G$.
+					On pose $\varphi = G$\/ ; on a donc $\llbracket G \rrbracket^\rho = \mathbf{V}$.
+				\item Si la preuve de $\Gamma \vdash G$\/ est de la forme \[
+						\begin{prooftree}
+							\hypo{\Gamma \vdash \varphi} % NOCHECK
+							\hypo{\Gamma \vdash \psi}
+							\infer2[$\land$i]{\Gamma \vdash \varphi \land \psi}
+						\end{prooftree}
+					.\] On appelle $\pi_1$\/ la branche gauche de l'arbre, et $\pi_2$\/ la branche de droite.
+					Par hypothèse d'induction sur $\pi_1$\/, $\Gamma \vdash \varphi$\/ admet une preuve (qui est une sous-preuve), donc $\Gamma\models \varphi$. De même, $\Gamma \models \psi$ avec la branche $\pi_2$.
+					On en déduit que $\Gamma \models \varphi \land \psi$\/ d'après les résultats du chapitre 0.
+				\item De même pour les autres cas.
+			\end{itemize}
+	\end{enumerate}
+\end{exm}
+
+
+\begin{defn}[Complétude]
+	Un système de preuves est \textit{complet} dès lors que, si $\Gamma \models G$, alors il existe un preuve de $\Gamma \vdash G$.
+	\index{système de preuves!complétude}
+\end{defn}
+
+\begin{exm}
+	Le système de preuve ayant pour règle, pour tout $\Gamma$, et tout $G$, \[
+		\begin{prooftree}
+			\infer0[OP]{\Gamma \vdash G} % NOCHECK
+		\end{prooftree}
+	\] est complet mais pas correct.
+\end{exm}
+
+\begin{exm}
+	Le système de preuve ayant pour règle, pour tout $\Gamma$, et tout $G$ tel que $\Gamma \models G$, \[
+		\begin{prooftree}
+			\infer0{\Gamma \vdash G} % NOCHECK
+		\end{prooftree}
+	\] est complet et correct.
+\end{exm}
+
+\subsection{Déduction naturelle}
+
+On définit les différentes règles d'introduction et d'élimination suivantes.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{Sc|Sc|Sc}
+		\hline
+		\textsc{Symbole} & \textsc{Règle d'introduction} & \textsc{Règle d'élimination}\\ \hline \hline 
+		$\top$\/&$\ptree{\infer0[$\top$i]{\Gamma \vdash \top}}$&\\ \hline
+		$\bot$\/ &&$\ptree{\hypo{\Gamma\vdash\bot}\infer1[$\bot$e]{\Gamma \vdash G}}$\\ \hline
+		$\lnot$\/ &$\ptree{\hypo{\Gamma,G\vdash \bot}\infer1[$\lnot$i]{\Gamma\vdash\lnot G}}$&$\ptree{\hypo{\Gamma\vdash G}\hypo{\Gamma\vdash \lnot G}\infer2[$\lnot$e]{\Gamma\vdash \bot}}$ \\ \hline
+		$\to$ & $\ptree{\hypo{\Gamma,G \vdash H}\infer1[$\to$i]{\Gamma \vdash G \to H}}$ & $\ptree{\hypo{\Gamma \vdash H \to G}\hypo{\Gamma \vdash H}\infer2[$\to$e]{\Gamma \vdash G}}$\\ \hline
+		$\land$\/ & $\ptree{\hypo{\Gamma \vdash G}\hypo{\Gamma \vdash H}\infer2[$\land$i]{\Gamma \vdash G \land H}}$\/ & $\ptree{\hypo{\Gamma \vdash G \land H}\infer1[$\land$e,g]{\Gamma \vdash G}}$ \quad\quad $\ptree{\hypo{\Gamma \vdash G \land H}\infer1[$\land$e,d]{\Gamma \vdash H}}$ \\ \hline
+		$\lor$&$\ptree{\hypo{\Gamma\vdash G}\infer1[$\lor$i,g]{\Gamma\vdash G \lor H}}$\quad\quad$\ptree{\hypo{\Gamma\vdash H}\infer1[$\lor$i,d]{\Gamma\vdash G \lor H}}$&$\ptree{\hypo{\Gamma \vdash A \lor B}\hypo{\Gamma,A\vdash G}\hypo{\Gamma,B\vdash G}\infer3[$\lor$e]{\Gamma \vdash G}}$\\ \hline
+		\multicolumn{3}{c}{}\\
+		\multicolumn{3}{c}{$\ptree{\infer 0[Ax]{\Gamma, \varphi\vdash \varphi}}$}\\
+		\multicolumn{3}{c}{}\\ \hline
+	\end{tabular}
+	\caption{Règles d'introduction et d'élimination}
+\end{table}

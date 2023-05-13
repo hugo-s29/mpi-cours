@@ -1,0 +1,223 @@
+\begin{prv}
+	\begin{enumerate}
+		\item La série $\sum P(A_n) = \sum 0$\/ converge, et donc $0 \le P\big(\bigcup_{n \in \N} A_n\big) \le \sum_{n=0}^\infty 0 = 0$. On en déduit que $P\big(\bigcup_{n\in \N} A_n\big) = 0$.
+		\item On passe aux événements contraires : le contraire d'un événement presque certain est un événement négligeable et le contraire de l'union est l'intersection des contraires.
+	\end{enumerate}
+\end{prv}
+
+\section{L'indépendance}
+
+\begin{defn}
+	Soit $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé.
+
+	On dit que deux événements $A,B \in \mathcal{A}$\/ sont \textit{indépendants} si $P(A \cap B) = P(A) \times P(B)$.
+
+	On dit qu'une famille d'événements $(A_i)_{i \in I}$\/ est 
+	\begin{itemize}
+		\item \textit{deux-à-deux indépendants} si \hfill $\forall i \neq j,\: P(A_i \cap A_j) = P(A_i) \times P(A_j)$\/ ;\hfill\null
+		\item \textit{indépendants} si, pour toute partie $J \subset I$ \textbf{finie}, \[
+				P\Big(\bigcap_{j \in J} A_j\Big) = \prod_{j \in J} P(A_j)
+			.\]
+	\end{itemize}
+\end{defn}
+
+\begin{exo}
+	\begin{enumerate}
+		\item \textsl{Si $A$\/ et $B$\/ indépendants, alors $A$\/ et $\bar{B}$\/ aussi.} On a $P(A \cap B) = P(A) \times P(B)$. Or, $P(A \cap B) + P(A \cap \bar{B}) = P(A)$\/ car $(A \cap B) \cupdot (A \cap \bar{B}) = A$. D'où,
+			\begin{align*}
+				P(A \cap \bar{B}) &= P(A) - P(A \cap B) \\
+				&= P(A) - P(A) \times P(B) \text{ par hypothèse}\\
+				&= P(A) \times \big(1 - P(B)\big) \\
+				&= P(A) \times P(\bar{B}) \\
+			\end{align*}
+			Donc $A$\/ et $\bar{B}$\/ sont indépendants.
+		\item \textsl{Si A est presque impossible, alors A et B sont indépendants.}\@ On suppose $P(A) = 0$. On veut montrer que $\forall B \in \mathcal{A}$, $P(A \cap B) = P(A) \times P(B) = 0$. Or, $A \cap B \subset A$, d'où, par croissance de la probabilité, $0 \le P(A \cap B) \le P(A) = 0$. On en déduit que $P(A \cap B) = 0 = P(A) \times P(B)$.
+	\end{enumerate}
+\end{exo}
+
+\begin{exo}
+	\textsl{On considère deux lancers d'une pièce. On note les événements
+	\begin{itemize}
+		\item $A$\/ : \guillemotleft~La pièce tombe la première fois sur \textsc{Pile},~\guillemotright
+		\item $B$\/ : \guillemotleft~La pièce tombe la deuxième fois sur \textsc{Face},~\guillemotright
+		\item $C$\/ : \guillemotleft~La pièce tombe au moins une fois sur \textsc{Face},~\guillemotright
+		\item $D$\/ : \guillemotleft~La pièce tombe deux fois du même côté.~\guillemotright
+	\end{itemize}
+	Montrer que les événements $A$, $B$ et $D$ sont deux-à-deux indépendants et ne sont pas indépendants. Montrer que les événements $A$ et $C$ ne sont pas indépendants.}
+
+	L'univers $\Omega$\/ de cette expérience est $\Omega = \{\mathbf{P},\mathbf{F}\}^2$\/ \textit{i.e.} un résultat est un couple $(u_1, u_2)$\/ où~$u_1$\/ et $u_2$\/ appartiennent à $\{\mathbf{P},\mathbf{F}\}$. Et, il y a équiprobabilité.
+
+	On a $A = \{(\mathbf{P},\mathbf{P}), (\mathbf{P},\mathbf{F})\}$, d'où $\ds P(A) = \frac{\Card A}{\Card \Omega} = \frac{2}{4} = \frac{1}{2}$.
+	De même, $\ds P(B) = \frac{1}{2}$.
+
+	On a $C = \{ (\mathbf{P},\mathbf{F}), (\mathbf{F},\mathbf{P}), (\mathbf{F},\mathbf{F})\}$, d'où $\ds P(C) = \frac{3}{4}$.
+
+	On a $D = \{(\mathbf{P},\mathbf{P}), (\mathbf{F},\mathbf{F})\}$, d'où $\ds P(D) = \frac{2}{4} = \frac{1}{2}$.
+
+	\begin{itemize}
+		\item $A \cap B = \{(\mathbf{P},\mathbf{F})\}$, d'où $P(A \cap B) = \frac{1}{4} = \frac{1}{2} \times \frac{1}{2} = P(A) \times P(B)$.
+		\item $B \cap D = \{(\mathbf{F},\mathbf{F})\}$, d'où $P(B \cap D) = P(B) \times P(D)$.
+		\item $A \cap D = \{(\mathbf{P},\mathbf{P})\}$, d'où $P(A \cap D) = P(A) \times P(D)$.
+		\item $A \cap B \cap D = \O$, mais $P(A) \times P(B) \times P(D) \neq 0 = P(\O) = P(A \cap B \cap D)$.
+	\end{itemize}
+\end{exo}
+
+\begin{prop}
+	Soit $(B_n)_{n\in\N}$\/ une suite d'événements indépendants. On a \[
+		P\Big(\bigcap_{n \in \N} B_n\Big) = \lim_{n\to \infty} \prod_{k=0}^n P(B_k)
+	.\]
+\end{prop}
+
+\begin{prv}
+	Par continuité décroissante, on sait que $P\big(\bigcap_{n \in \N} B_n\big) = \lim_{n \to \infty} P\big(\bigcap_{k=0}^n B_k\big)$. Or, les événements $B_k$\/ sont indépendants, donc $P\big(\bigcap_{k=0}^n B_k\big) = \prod_{k=0}^n P(B_k)$. D'où \[
+		P\Big(\bigcap_{n \in \N} \Big) = \lim_{n\to \infty} \prod_{k=0}^n P(B_k)
+	.\]
+\end{prv}
+
+\section{Probabilité conditionnelle}
+
+\begin{prop-defn}
+	Soit $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé. Soient $A, B \in \mathcal{A}$\/ deux événements. Si la probabilité de l'événement $A$\/ n'est pas nulle, alors
+	\begin{enumerate}
+		\item on appelle \textit{probabilité de $B$\/ sachant $A$}, et on note $P_A(B)$\/ ou $P(B  \mid A)$, le rapport \[
+				P_A(B) = P(B  \mid A) = \frac{P(A \cap B)}{P(A)}\;;
+			\]
+		\item l'application \begin{align*}
+				P_A: \mathcal{A} &\longrightarrow [0,1] \\
+				B &\longmapsto P(B  \mid A)
+			\end{align*} est une probabilité sur l'espace probabilisable $(\Omega, \mathcal{A})$.
+	\end{enumerate}
+\end{prop-defn}
+
+\begin{prv}
+	\textit{c.f.} poly.
+\end{prv}
+
+\begin{prop}
+	Soient $A$\/ et $B$\/ deux événements, où $P(A) \neq 0$.
+	\begin{enumerate}
+		\item Si $A$\/ et $B$\/ sont indépendants, alors $P(B) = P_A(B)$.
+		\item Si $A \subset B$, alors $P_A(B) = 1$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item On a $P_A(B) = P(A \cap B) \:/\: P(A) = P(A) \times P(B) \:/\: P(A) = P(B)$.
+		\item On a $A \cap B = A$, donc $P_A(B) = P(A \cap B) \:/\: P(A) = P(A) \:/\: P(A) = 1$.
+	\end{enumerate}
+\end{prv}
+
+\begin{rmk}
+	\textsc{Attention} : $B  \mid A$\/ n'est {\color{red}pas} un événement, c'est une notation différente. \guillemotleft~Calculer une probabilité conditionnelle, c'est \textsl{changer d'observateur}.~\guillemotright
+\end{rmk}
+
+\begin{exo}
+	\textsl{On lance deux fois une pièce. Calculer
+	\begin{enumerate}
+		\item la probabilité que la pièce tombe deux fois sur \textsc{Pile} sachant qu'elle tombe la première fois sur \textsc{Pile};
+		\item la probabilité que la pièce tombe deux fois sur \textsc{Pile} sachant qu'elle tombe au moins une fois sur \textsc{Pile}.
+	\end{enumerate}}
+
+	\begin{enumerate}
+		\item On note $A$\/ l'événement \guillemotleft~la pièce tombe deux fois sur \textsc{Pile},~\guillemotright\ et $B$\/ l'événement \guillemotleft~la pièce tombe la première fois sur \textsc{Pile}.~\guillemotright
+			\[
+				P_B(A) = P(A  \mid B) = \frac{P(A \cap B)}{P(B)} = \frac{1 / 4}{1/2} = \frac{1}{2}
+			.\]
+		\item On note $C$\/ l'événement \guillemotleft~la pièce tombe au moins une fois sur \textsc{Pile}.~\guillemotright\ Ainsi,
+			\[
+				P(A  \mid C) = \frac{P(A \cap C)}{P(C)} = \frac{1 / 4}{3/4} = \frac{1}{3}
+			.\]
+	\end{enumerate}
+\end{exo}
+
+\section{La formule des probabilités totales}
+
+\begin{defn}
+	Soit $I$ un ensemble fini ou dénombrable. On dit qu'une famille d'événements $(A_i)_{i\in I}$ est un \textit{système complet d'événements} si leur union est disjointe et certaine, autrement dit : \[
+		\forall i \neq j,\:A_i \cap A_j = \O \qquad \text{ et } \qquad \bigcup_{i \in I} A_i = \Omega
+	.\]
+	On dit que c'est un \textit{système quasi complet d'événements} si leur union est disjointe et presque certaine, autrement dit : \[
+		\forall i \neq j,\:A_i \cap A_j = \O \qquad \text{ et } \qquad P\Big(\bigcup_{i \in I} A_i \Big) = 1
+	.\]
+\end{defn}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item Si on fait une expérience aléatoire, alors un unique événement du système complet se réalise.
+		\item Si $A$ est un événement, alors $\{A,\bar{A}\}$\/ est un système complet d'événements.
+		\item Pour tout système quasi complet d'événements, $\sum_{i \in I} P(A_i) = 1$\/ par $\sigma$-additivité.
+	\end{enumerate}
+\end{rmk}
+
+\begin{met}
+	Un système complet d'événements $(A_i)_{i\in I}$\/ permet de décomposer un événement $B$\/ quelconque : on a $\bigcupdot_{i \in I} A_i = \Omega$, d'où $\forall B \in \mathcal{A}$, $\bigcupdot_{i \in  I} (B \cap A_i) = B \cap \big(\bigcup_{i \in I} A_i\big) = B \cap \Omega = B$, par distributivité de $\cap$\/ par rapport à $\cup$. Ainsi, on a $P(B) = \sum_{i \in I}P(B \cap A_i)$.
+\end{met}
+
+\begin{thm}[Probabilités totales]
+	Soit $(A_i)_{i\in I}$\/ un système quasi complet d'événements. Alors, \[
+		P(B) = \sum_{i \in I} P(B \cap A_i)
+	.\]
+	Si les événements $A_i$\/ ne sont pas de probabilités nulles, alors \[
+		P(B) = \sum_{i \in I} P(A_i) \times P(B  \mid A_i)
+	.\]
+\end{thm}
+
+\begin{prv}
+	On complète la famille d'événements $(A_i)_{i\in I}$\/ en un système complet d'événements en posant~$C = \Omega \setminus \bigcup_{i \in I} A_i$.
+	Alors, $\big(\bigcupdot_{i \in I} A_i \big) \cupdot C = \Omega$, et cet union est disjointe. D'où, pour tout événement $B \in \mathcal{A}$, $P(B) = P(B \cap C) + \sum_{i \in I} P(B \cap A_i)$. Or, $P(B \cap C) = 0$, car $\sum_{i \in I}P(A_i) = 1$, et $\Omega = C \cup \big(\bigcup_{i \in  I} A_i\big)$ et cette union est disjointe, d'où $P(\Omega) = 1 = P(C) + 1$, donc $P(C) = 0$\/ ; mais, comme $B \cap C \subset C$, alors $P(B \cap C) \le P(C) = 0$. On a donc bien $P(B \cap C) = 0$.
+\end{prv}
+
+\begin{exo}
+	On lance un dé à cinq faces. Calculer, pour chaque $n \in \N^*$, la probabilité $u_n$ de l'événement~$S_n$ : \guillemotleft~la somme des résultats obtenus lors des $n$ premiers lancers est paire.~\guillemotright
+
+	On considère le système complet d'événements $\{S_n, \bar{S}_n\}$. On a $P_{S_n}(S_{n+1}) = \frac{2}{5}$, et $P_{\bar{S}_n}(S_{n+1}) = \frac{3}{5}$. Or, $S_{n+1} = (S_{n+1} \cap S_n) \cupdot (S_{n+1} \cap \bar{S}_n)$, et cette union est disjointe. D'où
+	\begin{align*}
+		\overbrace{P(S_{n+1})}^{u_{n+1}} &= P(S_{n+1} \cap S_n) + P(S_{n+1} \cap \bar{S}_n)\\
+		&= P(S_n) \times P_{S_n}(S_{n+1}) + P(\bar{S}_n) \times P_{\bar{S}_n}(S_{n+1}) \\
+		&= \frac{2}{5} u_n + \frac{3}{5} (1 - u_n) \\
+		&= \frac{3}{5} - \frac{1}{5} u_n \\
+	\end{align*}
+	On résout cette suite définie par une relation de récurrence arithmético-géométrique. Pour cela, on commence par chercher un point fixe de cette relation (une suite constante vérifiant cette relation) : on résout
+	\[
+		\ell = \frac{3}{5} - \frac{1}{5}\ell \iff \frac{6}{5}\ell = \frac{3}{5} \iff \ell = \frac{1}{2}
+	.\]
+	D'où,
+	\[
+		\begin{array}{r r c c c c}
+			&u_{n+1} & = & -\frac{1}{5} u_n & + & \frac{3}{5} \\[1mm]
+			-&\ell & = & -\frac{1}{5} \ell & + & \frac{3}{5} \\[1mm] \hline
+			 & \underbrace{(u_{n+1} - \ell)}_{v_{n+1}} &=& -\frac{1}{5} \underbrace{(u_n - \ell)}_{v_n}
+		\end{array}
+	\] On a donc $v_n = \left( -\frac{1}{5} \right)^{n-1} v_1$, d'où \[
+		u_n - \ell = \left( -\frac{1}{5} \right)^{n-1} (u_1 - \ell)
+	\] donc \[
+		u_n = \left( -\frac{1}{5} \right)^{n-1} (u_1 - \ell) + \ell = -\left( -\frac{1}{5} \right)^{n-1} \left( \frac{3}{5} \right) + \frac{1}{2} = 3 \left( -\frac{1}{5} \right)^{n} + \frac{1}{2}
+	.\]
+\end{exo}
+
+\section{La formule des probabilités composées}
+
+\begin{exo}
+	\textsl{Une urne contient 5 boules blanches et 2 boules noires. On tire 2 boules l'une après l'autre et sans remise. Calculer la probabilité que les deux premières boules tirées soient blanches.}
+
+	On pose $B_1$\/ : \guillemotleft~la première boule est blanche~\guillemotright\ et $B_2$\/ : \guillemotleft~la seconde boule est blanche.~\guillemotright\@ On a, d'après la formule des probabilités composées, \[
+		P(B_1 \cap B_2) = P(B_1) \times P(B_2  \mid B_1)
+	.\]
+	Or, par équiprobabilité, $P(B_1) = \sfrac{5}{7}$, et $P(B_2  \mid B_1) = \sfrac{4}{6}$. On en déduit que \[
+		P(B_1 \cap B_2) = \frac{5}{7} \times \frac{4}{6} = \frac{10}{21}
+	.\]
+\end{exo}
+
+\begin{thm}[Formule des probabilités composées]
+	Soit $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé, et soit $(A_1, \ldots, A_n)$\/ une famille finie d'événements. Si la probabilité de $A_1 \cap A_2 \cap \cdots \cap A_n$\/ n'est pas nulle, alors \[
+		P(A_1 \cap \cdots \cap A_n) = P(A_1) \times P(A_1 \mid A_2) \times P(A_3  \mid A_1 \cap A_2) \cdots  P(A_n  \mid A_1 \cap \cdots \cap A_{n-1})
+	.\]
+\end{thm}
+
+\begin{prv}[par récurrence sur $n$]
+	\begin{itemize}
+		\item On a bien $P(A_1 \cap A_2) = P(A_1) \times P(A_2  \mid A_1)$\/ par définition de $P(A_2  \mid A_1)$.
+		\item \textit{c.f.}\ le poly
+	\end{itemize}
+\end{prv}

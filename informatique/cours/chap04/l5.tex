@@ -1,0 +1,105 @@
+\begin{prv}[par réduction de \textsc{Sat} à 3\textsc{sat}]
+	Soit $G$\/ une formule sur $\mathcal{Q}$, un ensemble de variables propositionnelles. Pour toute sous-formule $H$, on note 
+	\begin{itemize}
+		\item $x_H$\/ une variable propositionnelle,
+		\item $K_H$\/ une formule définie par
+			\begin{itemize}
+				\item si $H = \top$, $H = \bot$ ou $H = p \in \mathcal{Q}$, alors $K_H = H$,
+				\item si $H = \lnot H_1$, alors $K_H = \lnot x_{H_1}$,
+				\item si $H = H_1 \odot H_2$, avec $\odot \in \{{\to},{\lor},{\land},{\leftrightarrow}\}$, alors $K_H = x_{H_1} \odot x_{H_2}$.
+			\end{itemize}
+	\end{itemize}
+	Définissons alors la formule \[
+		K = \bigwedge_{H \text{ sous-formule de } G} (x_H \leftrightarrow K_H)
+	.\]
+	On note aussi, si $\mathcal{Q} \subseteq \mathcal{Q}'$\/ deux ensembles de variables propositionnelles, et $\rho \in \mathds{B}^\mathcal{Q}$, on note $\rho' \sqsupseteq \rho$\/ dès lors que $\mathrm{def}(\rho') = \mathcal{Q}'$\/ et $\forall x \in \mathcal{Q}$, $\rho(x) = \rho'(x)$.
+	On pose $\mathcal{Q}' = \mathcal{Q} \cup \{x_H  \mid H \text{ sous-formule de } G \}$.
+	On considère à présent le lemme suivant.
+	\begin{lem}
+		Soit $\rho \in \mathds{B}^\mathcal{Q}$. Il existe $\rho' \in \mathds{B}^{\mathcal{Q}'}$\/ tel que $\rho' \sqsupseteq \rho$\/ et $\left\llbracket K \right\rrbracket^\rho = \mathbf{V}$.
+	\end{lem}
+	\noindent Prouvons ce lemme.
+	\begin{prvk}
+		On définit \[
+			\rho'(x) = \begin{cases}
+				\rho(x) &\quad \text{ si } x \in \mathcal{Q}\\
+				\left\llbracket H \right\rrbracket^\rho &\quad \text{ si } x = x_H.
+			\end{cases}
+		\]
+		Soit alors $H$\/ une sous-formule de $G$.
+		\begin{itemize}
+			\item Si $H = \top $, alors $\rho'(x_H) = \left\llbracket H \right\rrbracket^\rho = \left\llbracket x_H \right\rrbracket^{\rho'}$, et $\left\llbracket K_H \right\rrbracket^{\rho'} = \left\llbracket H \right\rrbracket^{\rho'} = \left\llbracket \top \right\rrbracket^{\rho'} = \left\llbracket H \right\rrbracket^{\rho}$. Ainsi, $\left\llbracket x_H \leftrightarrow K_H \right\rrbracket^{\rho'} = \mathbf{V}$.
+			\item Si $H = \lnot H_1$, alors $\left\llbracket x_H \right\rrbracket^{\rho'} = \left\llbracket H \right\rrbracket^\rho$, et \[
+					\left\llbracket K_H \right\rrbracket^{\rho'} = \left\llbracket \lnot x_{H_1} \right\rrbracket^{\rho'} = \overline{\left\llbracket x_{H_1} \right\rrbracket^{\smash{\substack{~\\[1mm]\rho'}}}} = \overline{\left\llbracket H_1 \right\rrbracket^\rho} = \left\llbracket H \right\rrbracket^\rho
+				.\] On en déduit que $\left\llbracket x_H \leftrightarrow K_H \right\rrbracket^{\rho'} = \mathbf{V}$.
+			\item Si $H = H_1 \land H_2$, alors $\left\llbracket x_H \right\rrbracket^{\rho'} = \left\llbracket H \right\rrbracket^\rho$, et 
+				\begin{align*}
+					\left\llbracket K_H \right\rrbracket^{\rho'} &= \left\llbracket x_{H_1} \land x_{H_2} \right\rrbracket^{\rho'}\\
+					&= \left\llbracket x_{H_1} \right\rrbracket^{\rho'} \cdot \left\llbracket x_{H_2} \right\rrbracket^{\rho'} \\
+					&= \left\llbracket H_1 \right\rrbracket^\rho \cdot \left\llbracket H_2 \right\rrbracket^\rho \\
+					&= \left\llbracket H_1 \land H_2 \right\rrbracket^\rho \\
+					&= \left\llbracket H \right\rrbracket^\rho \\
+				\end{align*}
+			\item De même pour les autres cas\ldots
+		\end{itemize}
+		On a donc
+		\begin{align*}
+			\Big\llbracket \bigwedge_{H \text{ sous-formule de } G} x_H \leftrightarrow K_H\Big\rrbracket^{\rho'}
+			&= \bigdot_{H \text{ sous-formule de } G} \left\llbracket x_H \leftrightarrow K_H \right\rrbracket^{\rho'} \\
+			&= \mathbf{V} \\
+		\end{align*}
+		et donc $\left\llbracket K \right\rrbracket^{\rho'} = \mathbf{V}$.
+	\end{prvk}
+
+	\begin{lem}
+		Pour tout environnement propositionnel $\rho \in \mathds{B}^\mathcal{Q}$, et pour tout $\rho' \in \mathds{B}^{\mathcal{Q}'}$. Si $\left\llbracket K \right\rrbracket^{\rho'} = \mathbf{V}$, alors $\rho(x_{G}) = \left\llbracket G \right\rrbracket^\rho$.
+	\end{lem}
+
+	\begin{prvk}
+		Soient $\rho \in \mathds{B}^{\mathcal{Q}}$\/ et $\rho' \in \mathds{B}^{\mathcal{Q}'}$\/ deux environnements propositionnels.
+		\textit{Montrons, par induction sur les sous-formules de $G$, pour toute sous-formule $H$\/ de $G$, que $\rho'(x_H) = \left\llbracket H \right\rrbracket^\rho$.}
+		\begin{itemize}
+			\item Si $H = \top$, alors, comme $\left\llbracket K \right\rrbracket^{\rho'} = \mathbf{V}$, on a $\left\llbracket x_H \leftrightarrow K_H \right\rrbracket^{\rho'} = \mathbf{V}$, donc $\rho'(x_H) = \left\llbracket H \right\rrbracket^{\rho'} = \left\llbracket H \right\rrbracket^\rho$.
+			\item Si $H = \lnot H_1$, avec $\rho'(x_{H_1}) = \left\llbracket H_1 \right\rrbracket^\rho$\/ par hypothèse d'induction, alors $\left\llbracket K \right\rrbracket^{\rho'} = \mathbf{V}$\/ donc $\left\llbracket x_H \leftrightarrow K_H \right\rrbracket^{\rho'} = \mathbf{V}$, d'où
+				\begin{align*}
+					\rho'(x_H) &= \left\llbracket K_H \right\rrbracket^{\rho'}\\
+					&= \left\llbracket \lnot x_{H_1} \right\rrbracket^{\rho'} \\
+					&= \overline{\left\llbracket x_{H_1} \right\rrbracket^{\smash{\substack{~\\[1mm]\rho'}}}} \\
+					&= \overline{\left\llbracket H_1 \right\rrbracket^{\smash{\substack{~\\\rho}}}} \\
+					&= \left\llbracket \lnot H_1 \right\rrbracket^{\rho} \\
+					&= \left\llbracket H \right\rrbracket^\rho \\
+				\end{align*}
+			\item Si $H = H_1 \land H_2$, avec $\rho'(x_{H_1}) = \left\llbracket H_1 \right\rrbracket^\rho$, et $\rho'(x_{H_2}) = \left\llbracket H_2 \right\rrbracket^\rho$\/ par hypothèse d'induction, alors $\left\llbracket K \right\rrbracket^\rho = \mathbf{V}$\/ donc $\left\llbracket x_H \leftrightarrow K_H \right\rrbracket^{\rho'} = \mathbf{V}$\/ d'où 
+				\begin{align*}
+					\rho'(x_H) &= \left\llbracket K_H \right\rrbracket^{\rho'} \\
+					&= \left\llbracket x_{H_1} \land x_{H_2} \right\rrbracket^{\rho'} \\
+					&= \left\llbracket x_{H_1} \right\rrbracket^{\rho'}\cdot \left\llbracket x_{H_2} \right\rrbracket^{\rho'} \\
+					&= \left\llbracket H_1 \right\rrbracket^\rho \cdot  \left\llbracket H_2 \right\rrbracket^\rho \\
+					&= \left\llbracket H_1 \land H_2 \right\rrbracket^\rho \\
+					&= \left\llbracket H \right\rrbracket^\rho \\
+				\end{align*}
+			\item De même pour les autres cas\ldots
+		\end{itemize}
+	\end{prvk}
+
+	À l'instance $G$\/ du problème \textsc{Sat}, on associe donc la formule $K \land x_G$.
+	\begin{itemize}
+		\item[``$\implies$''] Soit $G \in \textsc{Sat}^+$, soit alors $\rho$\/ tel que $\left\llbracket G \right\rrbracket^\rho = \mathbf{V}$, alors il existe, d'après le premier lemme, un environnement $\rho'$\/ tel que $\left\llbracket K \right\rrbracket^{\rho'} = \mathbf{V}$. Le second lemme nous donne alors $\left\llbracket x_G \right\rrbracket^{\rho'} = \left\llbracket G \right\rrbracket^\rho = \mathbf{V}$ donc $\left\llbracket K \land x_G \right\rrbracket^{\rho'}$\/ d'où $\left\llbracket K \land x_G \right\rrbracket \in \textsc{Sat}^+$.
+		\item[``$\impliedby$''] Si $K \land x_G \in \textsc{Sat}^+$, il existe donc $\rho'$\/ tel que $\left\llbracket K \land x_G \right\rrbracket^{\rho'} = \mathbf{V}$\/ donc $\left\llbracket K \right\rrbracket^{\rho'} = \mathbf{V}$\/ et $\rho'(x_G) = \mathbf{V}$. Soit alors $\rho$\/ la restriction de $\rho'$\/ à $\mathcal{Q}$. Ainsi, d'après le second lemme, $\left\llbracket G \right\rrbracket^\rho = \rho'(x_G) = \mathbf{V}$.
+	\end{itemize}
+\end{prv}
+
+\begin{rmk}
+	Pour tout $n \ge 3$, le problème $n$-\textsc{cnf}-\textsc{sat} est \textbf{NP}-difficile. Ceci peut être prouvé par réduction avec la fonction identité à 3\textsc{sat}.
+\end{rmk}
+
+\begin{defn}
+	On dit qu'un problème est \textbf{NP}-complet s'il est dans la classe \textbf{NP} et dans la classe \textbf{NP}-difficile : \[
+		\text{\textbf{NP}-complet} = \text{\textbf{NP}-difficile} \cap \text{\textbf{NP}}
+	.\]
+	\index{problème!\textbf{NP}-complet}
+\end{defn}
+
+\begin{rmk}
+	Le problème \textsc{Sat} est \textbf{NP}-complet.
+\end{rmk}

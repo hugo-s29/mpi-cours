@@ -1,0 +1,75 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} 0
+	\end{center}
+
+	\paragraph{Exercice 1}
+	Cette limite est, à première vue, une forme indéterminée. On procède à un développement limité après avoir réarrangés les différents termes de l'expression. Soit $x$ un réel non nul.
+	On a
+	\begin{align*}
+		\frac{(1+x)^{\frac{\ln x}{x}}-x}{x(x^x - 1)} &= \frac{\mathrm{e}^{\frac{1}{x}\ln(x)\ln(1+x)} - x}{x^{x+1} - x} \\
+		&= \frac{\mathrm{e}^{\frac{1}{x}\ln(x)\big(x - \frac{x^2}{2} + \po(x^2)\big)} - x}{x^{x+1} - x} \\
+		&= \frac{\mathrm{e}^{\ln(x)\times \big(1 + \frac{x}{2}+\po(x)\big)} - x}{x^{x+1} - x} \\
+		&= \frac{\cancel x\big(x^{\frac{x}{2} + \po(x)} - 1\big)}{\cancel x(x^x - 1)} \\
+		&= \frac{\mathrm{e}^{\left( \frac{x}{2} + \po(x) \right) \ln x} - 1}{\mathrm{e}^{x \ln x} - 1} \\
+		&= \frac{\frac{x}{2} \ln x + \po(x \ln x) + 1 - 1}{x \ln x + 1 - 1 + \po(x \ln x)} \\
+		&= \frac{\frac{1}{2} + \po(1)}{1+ \po(1)} \\
+		&\tendsto{x\to 0^+} \frac{1}{2} \\
+	\end{align*}
+	\bigskip
+	\bigskip
+	\paragraph{Exercice 2}
+	\begin{enumerate}
+		\item Comme $\frac{\ln n}{n^2 - 1} \sim \frac{\ln n }{n^2} = \frac{\ln n}{n^{0{,}5}} \times \frac{1}{n^{1{,}5}} = \po\left( \frac{1}{n^{1{,}5}} \right)$\/ et $\sum \frac{1}{n^{1{,}5}}$\/ converge par critère de {\sc Riemann}, la série $\sum b_n$\/ converge donc.
+		\item Soit $x \in {[0,1]}$. On procède par récurrence. Soit $P$, le prédicat défini par \[
+				P(n) : \quad``\:x + \cdots + x^{n-1} \ge (n-1)\:x^{n+1}.\:"
+			\]
+			\begin{itemize}
+				\item On suppose $n = 2$. On a bien, comme $x \in [0,1]$, $x \ge x^2$. D'où $P(2)$.
+				\item On suppose que le prédicat $P$\/ est vrai jusqu'à un certain rang $n \ge 2$. Soit $n \ge 2$\/ tel que $P(n)$\/ soit vrai i.e.\ \[
+						x + \cdots + x^{n-1} \ge (n-1)\:x^{n+1}
+					.\]
+					On a donc, en multipliant par $x$\/ de chaque côtés de l'inégalité \[
+						x^2 + \cdots + x^{n} \ge (n-1)x^{n+2}
+					.\]
+					On ajoute $x$\/ à chacun des membres et on utilise l'inégalité $x \ge x^{n+2}$\/ : \[
+						x + x^2 + \cdots + x^n \ge (n-1)\:x^{n+2} + x^{n+2} \ge n(x^{n+2}.
+					\] D'où, $P(n+1)$.
+			\end{itemize}
+			On conclut, par récurrence, que, pour tout $n \ge 2$, $x + \cdots + x^{n-1} \ge (n-1)\:x^{n+1}$. Soit $n \ge 2$. On en déduit que \[
+				\frac{x^n}{1 + x + \cdots + x^{n-1}} \le \frac{x^n}{1 + (n-1)x^{n+1}}
+			.\] Et, par croissance de l'intégrale, on a donc \[
+				\boxed{a_n = \int_{0}^{1} \frac{x^n}{1 + x + \cdots + x^{n-1}}~\mathrm{d}x \le \int_{0}^{1} \frac{x^n}{1 + (n-1)x^{n+1}}~\mathrm{d}x.}
+			\]
+		\item Soit $k \in \left\llbracket 2,n \right\rrbracket$.
+			\begin{align*}
+				\int_{0}^{1} \frac{x^k}{1 + (k-1)x^{k+1}}~\mathrm{d}x &= \bigg[\ln\big(1 + (k-1) \times x^{k+1}\big) \times  \frac{1}{k+1} \times \frac{1}{k-1} \bigg]_0^1 \\
+				&= \frac{1}{k^2 - 1} \Big(\ln(1 + (k-1)) - \ln 1\Big) \\
+				&= \frac{\ln k}{k^2 - 1} \\
+			\end{align*}
+			Or, d'après la question 1., on sait que la série $\sum \frac{\ln n}{n^2 - 1}$\/ converge. Et, on sait que $\forall n \in \N\setminus \{0,1\},\: 0 \le a_n \le b_n$. D'où, par le théorème des gendarmes, \fbox{$\sum a_n$\/ converge.}
+	\end{enumerate}
+	\bigskip
+	\bigskip
+	\paragraph{Exercice 3}
+	\begin{enumerate}
+		\item Prouvons ce résultat par récurrence. On pose, pour $n \in \N^*$, \[
+				P(n):\quad``\:C_n + i S_n = \mathrm{e}^{in\theta/2} \times \frac{\sin\big((n+1)\theta / 2\big)}{\sin\big(\theta / 2\big)}.\:"
+			\]
+			\begin{itemize}
+				\item On pose $n = 1$. On a 
+					\[
+						C_1 + i S_1 = 1 + \cos \theta + i \sin \theta
+					\] et, \[
+						\mathrm{e}^{i\theta/2} \times \frac{\sin \theta}{\sin \frac{\theta}{2}} = \frac{\sin \theta}{\sin \frac{\theta}{2}} \left( \cos \frac{\theta}{2} + i \sin \frac{\theta}{2} \right) = i \sin \theta + \sin \theta \times \cotan \frac{\theta}{2} = i \sin \theta + 1 + \cos \theta
+					\] car \[
+						\frac{1 + \cos \theta}{\sin \theta} = \frac{2 \cos^2 \frac{\theta}{2}}{2 \sin \frac{\theta}{2} \cos \frac{\theta}{2}} = \cotan \frac{\theta}{2}
+					.\]
+				\item 
+			\end{itemize}
+	\end{enumerate}
+\end{document}

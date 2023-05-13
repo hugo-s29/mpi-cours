@@ -1,0 +1,33 @@
+\documentclass{article}
+
+\usepackage{pstricks}
+\input{../../preamble.tex}
+\usepackage{pst-labo}
+
+\definecolor{black}{HTML}{000000}
+\definecolor{white}{HTML}{ffffff}
+\color{black}
+\pagecolor{white}
+
+\begin{document}
+	\begin{figure}[H]
+		\centering
+		\begin{pspicture}(0,0)(1,16)
+			\psset{unit=1cm,glassType=becher}
+			\pstDosage[couleurReactifBurette=mauve]
+			%\psframe[fillstyle=solid,fillcolor=gray!50!cyan,linewidth=0em,linecolor=gray](-1.75,2.2)(-1.25,3)
+			\rput(2,3.5){\pstTubeEssais[glassType=becher,aspectLiquide1=Vinaigre]}
+			\psframe[fillstyle=solid,fillcolor=gray,linewidth=0em,linecolor=gray](-2.25,2.2)(-2.75,3.8)
+			\psframe[fillstyle=solid,fillcolor=gray,linewidth=0em,linecolor=gray](2.5,2.2)(3,3.8)
+			\psline[linearc=0.25](-1.5,2.8)(-1.5,4.5)(1.75,4.5)(1.75,2.8)
+			\psline[linearc=0.25](-1.75,2.8)(-1.75,4.75)(2,4.75)(2,2.8)
+			\psline[linearc=0.75](-2.5,3.8)(-2.5,5)(-4,5)(-4,-3)(4.25,-3)(4.25,5)(2.75,5)(2.75,3.8)
+			\rput(-1.5,2.4){$\mathrm{Fe}^{2+}$}
+			\rput(-2.5,3){$\mathrm{Pt}$}
+			\rput(-1.75,10){$\vrt{\mathrm{MnO}_4^-}$}
+			\pscircle[fillstyle=solid](0.125,-3){0.5}
+			\rput(0.135,-3){$\mathrm{V}$}
+			\rput(0,0){\rput(2.75,3){$\vrt{\mathrm{AgCl}}$}}
+		\end{pspicture}
+	\end{figure}
+\end{document}

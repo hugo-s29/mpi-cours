@@ -1,0 +1,163 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\titleanx{B}{Algorithmes {\sc Dijkstra} et $A^*$}
+
+\begin{document} %% EXACT
+	On s'intéresse, dans cette annexe, à l'algorithme $A^*$.
+	Cette annexe se situe à l'intersection des chapitres sur les graphes, et sur les jeux.
+	L'algorithme $A^*$ est une modification de l'algorithme de \textsc{Dijkstra}.
+	Dans cette annexe, on prouvera la correction de l'algorithme $A^*$.
+
+	On se place dans le contexte d'exécution d'un algorithme de calcul de plus cours chemin utilisant un tableau de distances $\mu$, et le manipulant en n'effectuant que des opérations \textsc{Relâcher}.
+	Notons le graphe $G = (V,E)$, le sommet source $s$.
+	Notons également $d(\cdot,\cdot)$ la distance induite par les arêtes du graphe $G$.
+	De plus, on notera $c(\cdot,\cdot)$ les coûts (positifs, non nuls) d'une arête de $G$.
+	Notons $\ell(\cdot)$ les rongeurs des chemins.
+
+	\begin{numlem}
+		\[
+			\forall (u,v) \in E,\quad d(s,v) \le d(s, u) + c(u,v)
+		.\]
+	\end{numlem}
+
+	\begin{prv}
+		Soit $(u,v) \in E$.
+		Soit $\gamma_u$ un plus court chemin de $s$ à $u$.
+		Alors, $\gamma_u \cdot v$ est un chemin de $s$ à $v$ :
+		\[
+			\ell(\gamma_u \cdot v) = \ell(\gamma_u) + c(u,v) = d(s,u) + c(u,v) \ge d(s,v).
+		\]
+	\end{prv}
+
+	\begin{numlem}
+		Pour tout sommet $u$, la valeur de $\mu[u]$ est décroissant à mesure que l'algorithme s'exécute.
+	\end{numlem}
+
+	\begin{prv}
+		Soit $\ubar{\mu}$ et $\bar\mu$ les valeurs de $\mu$ avant et après une opération $\textsc{Relâcher}(x,y)$.
+		Pour tout sommet $v \neq y$, $\bar\mu[v] = \ubar\mu[v]$.
+		De plus, par disjonction de cas,
+		\begin{itemize}
+			\item ou bien $\bar\mu[y] = \ubar\mu[y]$, \textsc{ok}.
+			\item ou bien $\bar\mu[y] = \ubar\mu[x] + c(x,y)$ lorsque $\ubar\mu[x] + c(x,y) \le \ubar\mu[y]$, donc $\bar\mu[y] \le \ubar\mu[y]$, \textsc{ok}.
+		\end{itemize}
+	\end{prv}
+
+	\begin{numlem}
+		Supposons que l'algorithme ait initialisé $\mu$ de la manière suivante : \[
+			\forall u \in V,\quad\quad \mu[u] = \begin{cases}
+				+\infty & \text{ si } u \neq s\\
+				0 & \text{ sinon}.
+			\end{cases}
+		\] Alors, tout au long de l'exécution de l'algorithme, pour tout sommet $u$, $\mu[u] \ge d(s,u)$.
+	\end{numlem}
+
+	\begin{prv}
+		\begin{description}
+			\item[Initialement] La propriété est vraie par hypothèse.
+			\item[Hérédité] Supposons vrai jusqu'à un certain état $\ubar\mu$, pour une opération $\textsc{Relâcher}(x,y)$.
+				Pour tout sommet $v \neq y$, $\ubar\mu[v] = \bar\mu[v] \ge d(s,v)$.
+				De plus, par disjonction de cas,
+				\begin{itemize}
+					\item si $\bar\mu[y] = \ubar\mu[y] \ge d(s,y)$ ;
+					\item sinon si $\ubar\mu[y] = \ubar\mu[x] + c(x,y) \ge d(s,x) + c(x,y) \ge d(s,y)$ par hypothèse de récurrence, puis par lemme 1.
+				\end{itemize}
+		\end{description}
+	\end{prv}
+
+	\begin{crlr}
+		Si \guillemotleft~à un moment~\guillemotright\ $\mu[u] = d(s,u)$, alors \guillemotleft~pour toujours après~\guillemotright\ $\mu[u] = d(s,u)$.
+		\qed
+	\end{crlr}
+
+	\begin{numlem}
+		Si $(s, \ldots, u, v)$ est un plus court chemin de $s$ à $v$ tel que $\ubar\mu[u] = d(s,u)$ \guillemotleft~à un certain moment de l'exécution de l'algorithme.~\guillemotright\@ Notons $\bar\mu$ obtenu par $\textsc{Relâcher}(u,v)$.
+	\end{numlem}
+
+	\begin{prv}
+		On a \[
+			\bar\mu = \begin{cases}
+				\ubar\mu[v] & \text{ si } \ubar\mu[v] < \ubar\mu[u] + c(u,v)\\
+				\ubar\mu[u] + c(u,v) &\text{ sinon}.
+			\end{cases}
+		\]Par disjonction de cas,
+		\begin{itemize}
+			\item si $\ubar\mu[v] < \ubar\mu[u] + c(u,v) = d(s, u) + c(u,v) = d(s,v)$, et donc, en utilisant le lemme 3, $\bar\mu[v] = \ubar\mu[v] = d(s,v)$.
+			\item sinon, $\bar\mu[v] = \ubar\mu[u] + c(u,v) = d(u,v) + c(u, v) = d(s,v)$.
+		\end{itemize}
+	\end{prv}
+
+	\begin{numlem}
+		Soit $(s=x_0, x_1, x_2, \ldots, x_n)$ un plus court chemin. Si on effectue des opérations \hbox{$\textsc{Relâcher}(x_i, x_{i+1})$} dans l'ordre $0 \to n - 1$, possiblement entremêlés avec d'autres opérations $\textsc{Relâcher}$, alors pour tout $i \in \llbracket 0,n \rrbracket$, $\mu_{\text{final}}[x_i] = d(s, x_i)$.
+	\end{numlem}
+
+	\begin{prv}[par récurrence]
+		\begin{itemize}
+			\item Initialement, $\mu[x_0] = d(s, x_0) = d(s,s)$.
+			\item Et, pour tout les $i$ inférieurs stricts, $\mu[x_i] = d(s, x_i)$, on conclut par le lemme 4.
+		\end{itemize}
+	\end{prv}
+
+	(De ce lemme découle l'algorithme de \textsc{Bellman-Ford}.)
+
+	\begin{crlr}
+		L'algorithme \textsc{Dijkstra} est correct.
+	\end{crlr}
+
+	\begin{prv}
+		Soit $t \in V$, un sommet du graphe. Soit $(s = x_0, x_1, \ldots, x_{p-1}, x_p = t)$ un plus court chemin de $s$ à $t$. Montrons que $\mu_{\text{final}}[t] = d(s, t)$.
+		En utilisant le lemme 5, il suffit de montrer que \textsc{Dijkstra} relâche les arêtes dans cet ordre.
+		Supposons les sommets extraits $\mathrm{todo}$ dans l'ordre $x_0, \ldots, x_i$, pour $i \in \llbracket 0,p-1 \rrbracket$.
+		Par l'absurde, supposons que \textsc{Dijkstra} sorte $x_k$ de $\mathrm{todo}$ pour $k \in \llbracket i+2, p \rrbracket$.
+		\guillemotleft~À ce moment là,~\guillemotright\ on a \[
+			d(s, x_k) \le \mu[x_k] \le \mu[x_{i+1}] \le d(s, x_{i+1}),
+		\]d'après le lemme 5, ce qui est absurde ($k > i + 1$).
+	\end{prv}
+
+	\begin{crlr}
+		L'algorithme $A^*$ est correct.
+	\end{crlr}
+
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\Procedure{Relâcher}{$u,v$}
+			\If{$\mu[v] > \mu[u] + c(u,v)$}
+			\State $\mu[v] \gets \mu[u] + c(u,v)$
+			\State $\pi[v] \gets u$
+			\State $\eta[v] \gets \mu[v] + h(v)$
+			\EndIf
+			\EndProcedure
+		\end{algorithmic}
+		\caption{Algorithme $A^*$ (partiel)}
+	\end{algorithm}
+
+	\begin{prv}
+		Par l'absurde, supposons que non.
+		Soit $t \in V$, un sommet du graphe, tel que $\mu_{\text{final}}[t] \neq d(s,t)$.
+		Donc $d = \mu_{\text{final}}[t] > d(s,t) = d^*$.
+		Soit $(s = x_0, x_1, \ldots, x_{p-1}, x_p = t)$ un plus court chemin de $s$ à $t$ de longueur $d^*$.
+		L'algorithme commence par visiter $x_0 = s$ et on relâche les arêtes sortantes.
+		Alors, $\mu[x_i] = d(s, x_1)$ et $\eta[x_1] = \mu[x_1] + \mu[x_1] + h(x_1) \le d(s, x_1) + d(x_1, t) = d(s,t) = d^* < d$ par hypothèse.
+		\guillemotleft~À ce state,~\guillemotright\ $\eta[t] = \mu[t] + h(t) \ge d + 0$.
+		Ainsi, $x_1$ devrait être choisi avant $t$. À un tel moment, $\mu[x_1] = d(s, x_1)$, on relâche alors ses arêtes sortantes ; en particulier $x_1$ et $x_2$. Ceci assure alors que $\mu[x_2] = d(s, x_2)$, et $\eta[x_2] = \mu[x_2] + h(x_2) \le d(sn x_2) + d(x_2, t) \le d(s,t) = d^* < d$.
+		\guillemotleft~De proche en proche,~\guillemotright\ alors que l'on choisit $x_{p-1}$ dans $\mathrm{todo}$, on a $\mu[x_{p-1}] = d(s, x_{p-1})$.
+		On relâche alors $\mu[x_p] = d(s, x_p) = d^*$.
+		Or, $d = \mu_{\text{final}}[t] \le \mu_{\text{à ce moment}}[t]$. Absurde.
+	\end{prv}
+
+	\begin{exm}[ré-entrée dans $\mathrm{todo}$]
+		\begin{comment}
+			     b (h = 6)
+					/ \
+			 1 /   \ 1
+				/  3  \     5
+			 s - - - a - - - - t
+		        (h = 0)   (h = 0)
+		\end{comment}
+		Exécution de l'algorithme $A^*$ sur l'entrée ci-dessus.
+		La pile $\mathrm{todo}$ est vaut donc $\cancel s, \cancel a, \cancel b, \cancel t, \cancel a$.
+	\end{exm}
+\end{document}

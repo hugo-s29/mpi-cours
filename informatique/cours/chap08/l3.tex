@@ -1,0 +1,93 @@
+En pratique, la détermination des attracteurs nécessite une quantité bien trop importante de calculs. On souhaite revenir à une idée développée précédemment : réaliser un $\min$-$\max$. Mais, pour cela, il est nécessaire de donner une notion de \guillemotleft~valeur~\guillemotright\ a chaque état du jeu. On définit donc une \textit{fonction d'heuristique} qui, à un état, associé sa valeur. Le choix de cette fonction reste, cependant, très subjectif.
+
+\section{Résolution par heuristique}
+
+On suppose définie une \textit{fonction d'heuristique} $h$ de la forme : \[
+	h : \overset{\mathclap{\substack{\text{joueur}\\\downarrow}}}{\{\mathrm{A},\mathrm{B}\}}  \times \underset{\mathclap{\substack{\uparrow\\\text{états}}}}{V} \to \overbrace{\Z \cup \{+\infty,-\infty\}}^{\bar{\Z}}
+.\]
+
+On représente informatiquement l'ensemble $\bar{\Z}$\/ par le type \textsc{OCaml} \texttt{int\_bar} défini ci-dessous
+\begin{lstlisting}[language=caml,caption={Type \texttt{int\_bar} représentant un élément l'ensemble $\bar{\Z}$~}]
+	type int_bar =
+		| PInt
+		| NInt
+		| F of int
+\end{lstlisting}
+
+On peut donc définir l'algorithme \textsc{MinMax}.
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree Un état $e$, un seuil de profondeur $d$, le joueur $j$
+		\Sortie Un score
+		\If{$\mathrm{succ}(e) = \O$}
+			\If{$e \in \mathcal{O}_j$} \State\Return $+\infty$
+			\ElsIf{$e \in \mathcal{O}_{\mathrm{autre}(j)}$} \State\Return $-\infty$
+			\Else \State\Return $0$
+			\EndIf
+		\ElsIf{$d = 0$}
+			\State\Return $h(j, e)$
+		\Else
+			\If{$j = \mathrm{joueur}(e)$}
+				\State\Return $\max\{\textsc{MinMax}(e', d-1, j) \mid e' \in \mathrm{succ}(e)\}$
+			\Else
+				\State\Return $\min\,\{\textsc{MinMax}(e', d-1, j) \mid e' \in \mathrm{succ}(e)\}$
+			\EndIf
+		\EndIf
+	\end{algorithmic}
+	\caption{Algorithme \textsc{MinMax}}
+\end{algorithm}
+
+\begin{exm}
+	\textit{c.f.\ cahier-de-prépa} On applique l'algorithme \textsc{MinMax} pour Alice.
+\end{exm}
+
+\begin{exm}[\textsc{td} 13.\ Exercice 4]
+\end{exm}
+
+On peut améliorer l'algorithme \textsc{MinMax} avec \guillemotleft~l'élagage $\alpha$, $\beta$.~\guillemotright\ 
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree Un état $e$, un seuil de profondeur $d$, le joueur $j$, et $\alpha, \beta \in \bar{\Z}$
+		\Sortie Un score dans $[\alpha, \beta]$
+		\If{$\mathrm{succ}(e) = \O$}
+			\If{$e \in \mathcal{O}_j$} \State\Return $\beta$
+			\ElsIf{$e \in \mathcal{O}_{\mathrm{autre}(j)}$} \State\Return $\alpha$
+			\Else
+				\If{$\beta \le 0$}\ \Return $\beta$
+				\ElsIf{$\alpha \ge 0$}\ \Return $\alpha$
+				\Else\ \Return $0$
+				\EndIf
+			\EndIf
+		\ElsIf{$d = 0$}
+			\If{$h(j, e) \ge \beta$}\ \Return $\beta$
+			\ElsIf{$h(j, e) \le \alpha$}\ \Return $\alpha$
+			\Else\ \Return $h(j, e)$
+			\EndIf
+		\Else
+			\If{$\mathrm{joueur}(e) = j$}
+				\State $v \gets \alpha$
+				\For{$e' \in \mathrm{succ}(e)$}
+					\State $v \gets \max(v, \textsc{MinMaxÉlagué}(e', d-1, j, v, \beta))$
+					\If{$v \ge \beta$}
+						\State\Return $\beta$
+					\EndIf
+				\EndFor
+				\State\Return $v$
+			\Else
+				\State $u \gets \beta$
+				\For{$e' \in \mathrm{succ}(e)$}
+					\State $u \gets \min(u, \textsc{MinMaxÉlagué}(e', d-1, j, \alpha, u))$
+					\If{$u \le \alpha$}
+						\State\Return $\alpha$
+					\EndIf
+				\EndFor
+				\State\Return $u$
+			\EndIf
+		\EndIf
+	\end{algorithmic}
+	\caption{Algorithme \textsc{MinMax} avec élagage $\alpha$, $\beta$}
+\end{algorithm}
+

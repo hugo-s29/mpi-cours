@@ -1,0 +1,41 @@
+\section{Problèmes de partitions}
+
+\begin{enumerate}
+	\item On définit les quatre problèmes comme\\
+		$\textsc{SubsetSum} : \begin{cases}
+			\text{\textbf{Entrée}} &: n \in \N,\ (w_1, \ldots, w_n) \in \N^n \text{ et } W \in \N\\
+			\text{\textbf{Sortie}} &: \text{Existe-t-il une partie } I \in \wp(\left\llbracket 1,n \right\rrbracket) \text{ telle que } \sum_{i \in I} w_i = W \text{ ?}
+		\end{cases}$\\
+		$\textsc{Partition} : \begin{cases}
+			\text{\textbf{Entrée}} &: n \in \N \text{ et } (w_1, \ldots, w_n) \in \N^n\\
+			\text{\textbf{Sortie}} &: \text{Existe-t-il } I \in \wp(\left\llbracket 1,n \right\rrbracket) \text{ telle que } \sum_{i \in I} w_i = \sum_{i \in \left\llbracket 1,n \right\rrbracket\setminus I} w_i \text{ ?}
+		\end{cases}$\\
+		$\textsc{Knapsack} : \begin{cases}
+			\text{\textbf{Entrée}} &: n \in \N,\ (x_1, \ldots, x_n) \in \N^n,\ (v_1, v_2, \ldots, v_n) \in \N^n,\ P \in \N \text{ et } K \in \N\\
+			\text{\textbf{Sortie}} &: \text{ Existe-t-il } I \in \wp(\left\llbracket 1,n \right\rrbracket) \text{ telle que } \sum_{i \in I} x_i \le P \text{ et } \sum_{i \in I} v_i \ge K \text{ ?}
+		\end{cases}$\\
+		$\textsc{BinPacking} : \begin{cases}
+			\text{\textbf{Entrée}} &: n \in \N,\ (t_1, \ldots, t_n) \in \N^n,\ C \in \N \text{ et } K \in \N\\
+			\text{\textbf{Sortie}} &:
+				\text{Existe-t-il $k \in \N$\/ et $(I_1, \ldots, I_k)\in \wp(\left\llbracket 1,n \right\rrbracket)^k$\/ $k$\/ parties de $\left\llbracket 1,n \right\rrbracket$\/}\\
+			&\mathrel{\phantom{:}}\text{telles que $\bigcup_{i \in \left\llbracket 1,k \right\rrbracket} I_i = \left\llbracket 1,n \right\rrbracket$, $\forall i \neq j$, $I_i \cap I_j = \O$, $k \le K$\/ et}\\
+			&\mathrel{\phantom{:}}\text{$\forall i \in \left\llbracket 1,k \right\rrbracket$, $\sum_{j \in I_i} t_j \le C$\/ ?}
+		\end{cases}$\\
+	\item
+		\begin{enumerate}
+			\item Soit $(\Omega,W)$\/ une entrée de \textsc{SubsetSum}. On fabrique l'entrée $(\Omega, \Omega, W, W)$\/ du problème \textsc{Knapsack}. On pose $\Omega = (w_1, \ldots, w_n)$\/ et on a 
+				\begin{align*}
+					(\Omega, W) \in \text{SubsetSum}^+ \iff& \exists A \in \wp(\Omega),\:\sum_{w \in A} w = W\\
+					\iff& \exists A \in \wp(\Omega), \sum_{w \in A} w \ge W \text{ et } \sum_{w \in A} w \le W\\
+					\iff& (\Omega, \Omega, W, W) \in \textsc{Knapsack}^+.
+				\end{align*}
+				Cette réduction est polynômiale.
+			\item Soit $\Omega$\/ une entrée de \textsc{Partition}. On pose $\Omega = (w_1, \ldots, w_n)$. Fabriquons l'entrée $(\Omega, S/2)$\/ du problème \textsc{SubsetSum}, où $S = \sum_{i=1}^n w_i$. On suppose $S \equiv 0 \mod 2$.
+				On a
+				\begin{align*}
+					\Omega \in \textsc{Partition} \iff& \exists I \subseteq \left\llbracket 1,n \right\rrbracket,\: \sum_{i \in I} w_i = \sum_{i \in \llbracket 1,n \rrbracket \setminus I}w_i\\
+					\iff& \exists I \subseteq \llbracket 1,n \rrbracket,\:\sum_{i \in I} w_i = \frac{S}{2}\\
+					\iff& (\Omega, S/2) \in \textsc{SubsetSum}^+
+				\end{align*}
+		\end{enumerate}
+\end{enumerate}

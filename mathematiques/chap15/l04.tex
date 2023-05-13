@@ -1,0 +1,109 @@
+\begin{rap}[comatrice]
+	\begin{align*}
+		\det A &= \begin{vNiceMatrix}[first-row,first-col]
+			&& & & \substack{\ds j\\ \ds\downarrow} &  &\\
+			&a_{11} & a_{12} & \ldots & \red{a_{1j}} & \ldots & a_{1n}\\
+			& a_{21} & a_{22} & \ldots & \red{a_{2j}} & \ldots & a_{2n}\\
+			& \vdots & \vdots & \ddots & \red\vdots & \ddots & \vdots\\
+			i \to & a_{i1} & a_{i2} & \ldots & \red{a_{ij}} & \ldots & a_{in}\\
+			&\vdots & \vdots & \ddots & \red\vdots & \ddots & \vdots\\
+			& a_{n1} & a_{n2} & \ldots & \red{a_{nj}} & \ldots & a_{nn}
+		\end{vNiceMatrix}\\
+		&= (-1)^{1 + j} a_{1j} \Delta_{1j} + (-1)^{2+j} a_{2j} \Delta_{2j} + \cdots + (-1)^{n + j} a_{n,j} \Delta_{n,j}\\
+		&=\sum_{i = 1}^n (-1)^{i+j}a_{i,j} \Delta_{i,j},
+	\end{align*}
+	où la matrice $\Delta_{i,j}$ est le déterminant de la matrice carrée obtenue en supprimant la colonne $j$ et la ligne $i$.
+	La matrice $\Delta_{i,j}$ s'appelle le \textit{mineur} ; le \textit{cofacteur} est le terme $(-1)^{i+j} \Delta_{i,j}$.
+	Si $j \neq k$, alors $\sum_{i=1}^n (-1)^{i+j} a_{i,k} \Delta_{i,j} = 0$, car il s'agit du déterminant où deux colonnes sont égales.
+	Ainsi, $\sum_{i=1}^n (-1)^{i+j} a_{i,k}\Delta_{i,j} = \det(A) \cdot \delta_{j,k}$, où $\delta_{j,k}$ est le symbole de Kronecker.
+	On pose $b_{j,i} = (-1)^{i+j} \Delta_{i,j}$, et on a donc $\sum_{i=1}^n (-1)^{i+j} a_{i,k}\Delta_{i,j} = \sum_{i=1}^n b_{i,j} a_{i,k}$. En nommant $(b_{j,i}) = B$, on trouve donc $B\cdot A = \det(A) \cdot I_n$.
+	Si $\det A \neq 0$, alors \[
+		\left( \frac{1}{\det A} B \right) \cdot A = I_n \quad\quad\text{ et donc }\quad\quad
+		A^{-1} = \frac{1}{\det A} B
+	.\]
+	La \textit{comatrice} est la matrice $B$ transposée : $[\com A]_{i,j} = (-1)^{i+j} \cdot \Delta_{i,j}$
+	Avec cette définition, on a donc \[
+		A^{-1} = \frac{1}{\det A} \cdot (\com A)^\T
+	.\]
+\end{rap}
+
+\begin{rap}[déterminant]
+	\[
+		\det A = \sum_{\sigma \in \mathfrak{S}_n} \varepsilon(\sigma) a_{1,\sigma(1)} a_{2,\sigma(2)} \cdots a_{n,\sigma(n)}
+	.\]
+\end{rap}
+
+\begin{exo}
+	\begin{slshape}
+		\begin{enumerate}
+			\item Soient $H \in \mathcal{M}_n(\R)$ et $I_n$ la matrice identité. Montrer que \[
+					\det(I_n + H) = 1 + \tr H + \po(H)
+				.\]
+			\item En déduire que la fonction $\det : \mathcal{M}_n(\R) \to \R$ est différentiable en $I_n$. Quelle est sa différentielle en $I_n$ ?
+			\item Soit $A \in \mathcal{M}_n(\R)$ une matrice inversible. Montrer que $\det$ est différentiable en $A$. Quelle est sa différentielle en $A$ ?
+		\end{enumerate}
+	\end{slshape}
+
+	\begin{enumerate}
+		\item On calcule, en utilisant la formule du déterminant rappelée précédemment :
+			\begin{align*}
+				\det (I_n + H) &=
+				\begin{vmatrix}
+					1 + h_{11} & h_{12} & \ldots & h_{1n}\\
+					h_{21} & 1 + h_{22} & \ldots & h_{2n}\\
+					\vdots & \vdots & \ddots & \vdots\\
+					h_{n1} & h_{n2} & \ldots & 1 + h_{nn}
+				\end{vmatrix}\\
+				&= 1 + (h_{11} + h_{22} + \cdots + h_{nn}) + \text{termes d'ordre supérieur ou égal à 2 en $h$}\\
+				&= 1 + \tr H + \po(H) \\
+			\end{align*}
+		\item Or, $\tr$ est une forme linéaire, donc $\det$ est différentiable en $I_n$ et $\mathrm{d}\!\det(I_n) \cdot H = \tr H$ (oui, c'est moche).
+		\item Comme $A \in \mathrm{GL}_n(\R)$, on a
+			\begin{align*}
+				\det (A + H) = \det\big(A \cdot (I_n + A^{-1} \cdot H)\big) &= \det A \times \det(I_n + A^{-1} \cdot H)\\
+				&= \det A \times (1 + \tr(A^{-1}H) + \text{reste}') \\
+				&= \det A + \det A \times \tr(A^{-1}H) + \text{reste} \\
+			\end{align*}
+			où $\text{reste} = \det(A) \cdot \|A^{-1}H\|\varepsilon(A^{-1}H) = \|H\|\varepsilon'(H)$ car $\|A^{-1}H\| \le \|A^{-1}\|\times \|H\|$ en choisissant une norme sous-multiplicative et $\|A^{-1}\| \times \det(A) \varepsilon(A^{-1}H)  \to 0$ quand $H\to 0$ car $A^{-1}H \to 0$, car $0\le \|A^{-1} H\| \le \|H\|\to 0$ quand $\|H\|\to 0$ avec la norme sous-multiplicative.
+			Donc, $\det$ est différentiable en $A \in \mathrm{GL}_n(\R)$ et \[
+				\mathrm{d}\!\det(A) \cdot H = \det(A) \times \tr(A^{-1}H)
+			.\]
+	\end{enumerate}
+\end{exo}
+
+\begin{prop}
+	\[
+		\begin{tikzcd}
+			f \text{ est de classe } \mathcal{C}^1 \arrow[d, Rightarrow, "\text{ Taylor Young (plus tard\ldots)}"] \arrow[dr, Rightarrow, bend left]\\
+			f \text{ est différentiable en } \vec{a} \arrow[r, Rightarrow] \arrow[d, Rightarrow, bend left]\arrow[d, Leftarrow, bend right, "\text{\huge$\times$}"{anchor=center, sloped}] & f \text{ est continue en }\vec{a}\\
+			f \text{ possède des dérivées partielles en } \vec{a} \arrow[ru, Rightarrow, bend right, "\text{\huge$\times$}"{anchor=center, sloped}]
+		\end{tikzcd}
+	.\]
+\end{prop}
+
+\begin{prv}
+	Supposons $f$ différentiable en $\vec{a}$. Montrons que $f$ est continue en $\vec{a}$.
+	On sait que $f(\vec{a} + \vec{h}) = f(\vec{a}) + \mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\| \varepsilon(\vec{h})$.
+	Montrons que $f(\vec{a} + \vec{h}) \to f(\vec{a})$ quand $\vec{a} \to \vec{h}$.
+	Montrons donc que $f(\vec{a} + \vec{h}) - f(\vec{a}) = \hat\varepsilon(\vec{h})$.
+	Or, $f(\vec{a} + \vec{h}) - f(\vec{a}) = \mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\| \varepsilon(\vec{h})$.
+	On a $\|\vec{h}\| \varepsilon(\vec{h}) \to 0$ quand $\vec{h} \to \vec{0}$.
+	Et, $\mathrm{d}f(\vec{a})$ est linéaire sur un espace vectoriel de dimension finie, donc $\mathrm{d}f(\vec{a})$ est continue, d'où $\mathrm{d}f(\vec{a}) \cdot \vec{h} \to \mathrm{d}f(\vec{a})\cdot \vec{0} = \vec{0}$ car $\mathrm{d}f(\vec{a})$ est linéaire.
+	D'où, \[
+		f(\vec{a} + \vec{h}) - f(\vec{a}) = \underbrace{\mathrm{d}f(\vec{a}) \cdot \vec{h}}_{\to 0} + \underbrace{\|\vec{h}\| \varepsilon(\vec{h})}_{\to 0} \tendsto{\vec{h} \to \vec{0}} \vec{0}
+	.\]
+\end{prv}
+
+\begin{exo}[Une fonction qui possède des dérivées partielles, mais pas continue]
+	\begin{slshape}
+		Soit la fonction $f : \R^2 \to \R$ définie par \[
+			f(x,y) = \frac{xy}{x^2 + y^2} \text{ si } (x,y) \neq (0,0) \quad\quad \text{ et } \quad\quad f(0,0) = 0
+		.\]
+		Montrer que la fonction $f$ possède des dérivées partielles $\partial_1 f(0,0)$ et $\partial_2 f(0,0)$ en $(0,0$) mais que $f$ n'est pas continue en $(0,0)$.
+	\end{slshape}
+
+	La fonction $f$ n'est pas continue en $(0, 0)$ car $f(x,x) \to \frac{1}{2} \neq f(0,0)$ quand $x\to 0$.
+	D'une part, $\big(f(0+h, 0) - f(0,0)\big)/h = \big(f(h,0)\big)/h = 0 / h = 0 \to 0$, lorsque $h \to 0$. D'où, $\partial_1 f(0,0)$ existe et $\partial_1 f(0,0) = 0$.
+	De même, $\partial_2 f(0,0) = 0$ par symétrie.
+\end{exo}
+

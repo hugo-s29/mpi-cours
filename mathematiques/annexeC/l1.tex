@@ -1,0 +1,271 @@
+Nous avons vu au chapitre 12 que toute application linéaire ou multilinéaire sur un espace vectoriel normé de dimension finie est continue et que, par conséquent, sont des applications continues :
+\begin{itemize}
+	\item la transposée $\square^\T : \mathcal{M}_{n,n}(\mathds{K}) \ni A \mapsto A^\T$,
+	\item un changement de base $\mathcal{M}_{n,n}(\mathds{K}) \ni A \mapsto P^{-1}\cdot A\cdot P$,
+	\item la multiplication matricielle : $\big(\mathcal{M}_{n,n}(\mathds{K})\big)^2 \ni (A,B) \mapsto A\cdot B$.
+\end{itemize}
+Par suite, si $(A_n)_{n\in\N}$ et $(B_n)_{n\in\N}$\/ sont deux suites de matrices carrées telles que \smash{$A_n \tendsto{n\to \infty} A$} et $B_n \tendsto{n\to \infty} B$ alors
+\begin{enumerate}[label=(\arabic*)]
+	\item $A_n^\T \tendsto{n\to \infty} A^\T$,
+	\item $P^{-1} \cdot A_n \cdot P \tendsto{n\to \infty} P^{-1}\cdot A\cdot P$,
+	\item $A_n \cdot B_n \tendsto{n\to \infty} A \cdot B$.
+\end{enumerate}
+On s'intéresse maintenant, non plus à des suites, mais à des séries de vecteurs.
+
+\begin{defn}
+	Soit $(\vec{u}_n)_{n\in\N}$\/ une suite de vecteurs d'un espace vectoriel normé $E$. On dit que la série de vecteurs $\sum \vec{u}_n$\/ :
+	\begin{itemize}
+		\item \textit{converge} si la suite de vecteurs $(\vec{S}_n)_{n\in \N} = \big(\sum_{k=0}^n \vec{u}_k\big)_{n \in \N}$ converge ;
+		\item \textit{converge absolument} si la série de réels $\sum\,\|\vec{u}_n\|$ converge.
+	\end{itemize}
+\end{defn}
+
+\begin{prop}
+	Dans un espace vectoriel normé de dimension \ul{finie}, si une série de vecteurs converge absolument, elle converge (simplement).
+\end{prop}
+
+\begin{prv}
+	On suppose l'espace vectoriel $E$ de dimension $d$. Toutes les normes étant équivalentes en dimensions finie, on choisit une norme adaptée : $\|\vec{u}_n\|_\infty = \max(|u_{n,1}|, \ldots, |u_{n,d}|)$ où les $u_{n,i}$ sont les coordonnées du vecteur $\vec{u}_n$ dans une base de $E$.
+	Pour tout $n \in \N$ et tout $i \in \llbracket 1,n \rrbracket$, on a $0 \le |u_{n,i}| \le \|\vec{u}_n\|_\infty$.
+	Or, par hypothèse, la série $\sum \|\vec{u}_n\|_\infty$\/ converge. D'où, pour tout $i \in \llbracket 1,d \rrbracket$, la série $\sum |u_{n,i}|$ converge.
+	D'où, la série $\sum u_{n,i}$ converge.
+	Et, en dimension finie, la convergence implique une convergence coordonnées par coordonnées.
+	On en déduit que la série $\sum \vec{u}_n$ converge.
+\end{prv}
+
+\begin{rmkn}
+	On munit l'espace vectoriel normé $\mathcal{M}_{n,n}(\mathds{K})$ d'une norme \ul{sous-multiplicative}. Soient $A \in \mathcal{M}_{n,n}(\mathds{K})$ une matrice carrée et $\sum a_n z^n$ une série entière (réelle ou complexe) de rayon de convergence $R$ : si $\|A\| < R$, alors la série de matrices $\sum a_k A^k$ converge.
+
+	En effet, la norme étant sous-multiplicative, on a $\|A^k\| \le \|A\|^k$ pour $k \in \N^*$.
+	Pour tout entier $k \in \N^*$, on a $\|a_k A^k\| = |a_k| \cdot \|A^k\| \le |a_k| \cdot \|A\|^k$.
+	Or, $\|A\| < R$ et la série $\sum a_k \cdot \|A\|^k$ converge absolument.
+	On en déduit que la série $\sum a_k A^k$\/ converge absolument, donc converge (simplement).
+\end{rmkn}
+
+\bigskip
+
+\begin{exm}[Séries géométriques]
+	On munit l'espace vectoriel $\mathcal{M}_{n,n}(\mathds{K})$ d'une norme \ul{sous-multiplicative}.
+	Si $\|A\| < 1$, alors $I_n - A$ est inversible et \[
+		(I_n - A)^{-1} = \sum_{k=0}^\infty A^k
+	.\]
+	De même si la matrice $A$ est nilpotente.\footnote{À savoir, l'hypothèse $\|A\| < 1$\/ n'est plus obligatoire.}
+
+	En effet, la série entière $\sum z^n$\/ a pour rayon de convergence $R = 1$.
+	Soit $N \in \N$.
+	On calcule
+	\[
+		(I_n - A) \cdot \sum_{k=0}^N A^k = \sum_{k=0}^N A^k - \sum_{k=1}^{N+1} A^k = A^0 - A^{N+1} = I_n - A^{N+1}
+	.\]
+	On a $0\le \|A^{N+1}\| \le \|A\|^{n+1}$ qui tend vers $0$ quand $N\to \infty$ car $\|A\| < 1$.
+	D'où, d'après le théorème des gendarmes, on a $A^{N+1}$ converge vers la matrice nulle quand $N \to \infty$.
+	Et, comme $\|A\| < 1$, la suite $\big(\sum_{k=0}^N A^k\big)$ converge.
+	Ainsi, par continuité de l'application linéaire $\mathcal{M}_{n,n}(\mathds{K}) \ni M \mapsto (I_n - A) \cdot M$ sur l'espace $\mathcal{M}_{n,n}(\mathds{K})$ de dimension finie.
+	\textsl{Autre rédaction} : par continuité du produit matriciel.
+	Par unicité de la limite, on a $(I_n - A) \cdot \sum_{k=0}^\infty A^k = I_n$.
+	On en déduit que \[
+		\sum_{k=0}^\infty A^k = (I_n - A)^{-1}
+	.\]
+
+	Si $A$ est nilpotent d'ordre $\nu$, alors
+	\[
+		(I_n - A) \cdot \sum_{k=0}^{\nu - 1} A^k = \sum_{k=0}^{\nu - 1} A^k - \sum_{k=1}^\nu A^k = I_n - A^{\nu} = A
+	.\]
+\end{exm}
+
+\begin{defn}
+	On appelle \textit{exponentielle d'une matrice} $A \in \mathcal{M}_{n,n}(\mathds{K})$ quelconque, que l'on note $\exp A$ ou $\mathrm{e}^A$, la matrice \[
+		\exp A = \mathrm{e}^A = \sum_{k=0}^\infty \frac{1}{k!}A^k
+	.\] 
+\end{defn}
+
+Cette définition reste vraie peu importe la norme choisie, comme le rayon de convergence de la série entière $\sum z^n / k!$\/ a un rayon de convergence infini.
+
+\begin{exm}
+	\begin{enumerate}
+		\item L'exponentielle de la matrice nulle $(0)$ est $I_n$ car $\sum_{k=0}^\infty (0)^k / k! = I_n + (0) + \cdots = I_n$.
+		\item L'exponentielle d'une matrice diagonale $\mathrm{diag}(\lambda_1, \ldots, \lambda_n)$ est $\exp \mathrm{diag}(\lambda_1, \ldots, \lambda_n) = \mathrm{diag}(\mathrm{e}^{\lambda_1}, \ldots, \mathrm{e}^{\lambda_n})$. En effet,
+
+			\null\hfill\null
+				\resizebox{0.9\linewidth}{!}{
+					\null\hfill\null
+					$\ds\exp \begin{pmatrix}
+					\lambda_1 & &\\
+					& \ddots &\\
+					& & \lambda_n
+				\end{pmatrix} =
+				\begin{pmatrix}
+					1 & &\\
+					& \ddots &\\
+					& & 1
+				\end{pmatrix}
+				+ \frac{1}{1!}
+				\begin{pmatrix}
+					\lambda_1 & &\\
+					& \ddots &\\
+					& & \lambda_n
+				\end{pmatrix} 
+				+ \frac{1}{2!}
+				\begin{pmatrix}
+					\lambda_1^2 & &\\
+					& \ddots &\\
+					& & \lambda_n^2
+				\end{pmatrix} + \cdots = 
+				\begin{pmatrix}
+					\mathrm{e}^{\lambda_1} & &\\
+					& \ddots &\\
+					& & \mathrm{e}^{\lambda_n}
+				\end{pmatrix}
+				$}
+			\null\hfill\null
+		\item D'une part, on a
+
+			\null\hfill\null
+			\resizebox{0.9\linewidth}{!}{
+					$\ds\exp \begin{pmatrix}
+						0 & -\theta\\
+						\theta & 0
+				\end{pmatrix} =
+				I_n + \begin{pmatrix}
+					0 & -\theta\\
+					\theta & 0
+				\end{pmatrix} +
+				\frac{1}{2!}
+				\begin{pmatrix}
+					-\theta^2 & 0\\
+					0 & -\theta^2
+				\end{pmatrix}
+				+ \frac{1}{3!}
+				\begin{pmatrix}
+					0 & \theta^3\\
+					-\theta^3 & 0
+				\end{pmatrix} +
+				\frac{1}{4!} \begin{pmatrix}
+					\theta^4 & 0\\
+					0 & \theta^4
+				\end{pmatrix} + \cdots 
+				$} \null\hfill\null
+
+			Or, $\sum_{p=0}^{\infty} \frac{1}{(2p)!} \cdot A^{2p} = {\cos \theta\quad 0\choose 0 \quad \cos \theta}$\/ et $\sum_{p=0}^{\infty} \frac{1}{(2p)!} \cdot A^{2p} = {0 \quad -\sin \theta\choose \sin \theta \quad 0}$.
+			Enfin, on en conclut que \[
+				\exp \begin{pmatrix}
+					0 & -\theta\\
+					\theta & 0
+				\end{pmatrix} = \begin{pmatrix}
+					\cos \theta & -\sin \theta\\
+					\sin \theta & \cos \theta
+				\end{pmatrix}
+			.\] 
+	\end{enumerate}
+\end{exm}
+
+\begin{prop}
+	Soient $P \in \mathrm{GL}_n(\mathds{K})$\/ et $A \in \mathcal{M}_{n,n}(\mathds{K})$ et $B \in \mathcal{M}_{n,n}(\mathds{K})$.
+	\begin{enumerate}
+		\item Si $AB = BA$, alors $\mathrm{e}^{A+B} = \mathrm{e}^{A} \cdot \mathrm{e}^{B}$.
+		\item La matrice $\mathrm{e}^{A}$ est inversible et $(\mathrm{e}^{A})^{-1} = \mathrm{e}^{-A}$.
+		\item La transposée de l'exponentielle est l'exponentielle de la transposée : $(\exp A)^\T = \exp(A^\T)$.
+		\item L'exponentielle d'une matrice est invariante par changement de base : $\exp(P^{-1} \cdot A \cdot P) = P^{-1} \cdot \exp A \cdot P$.
+		\item La fonction $t \mapsto \mathrm{e}^{tA}$ est dérivable et $\ds\frac{\mathrm{d}}{\mathrm{d}t} \mathrm{e}^{tA} = A\cdot \mathrm{e}^{tA} = \mathrm{e}^{tA}\cdot A$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item La démonstration de ce point est dans le poly.
+		\item Les matrices $A$ et $-A$ commutent, d'où $\mathrm{e}^{A + (-A)} = \mathrm{e}^{A}\cdot \mathrm{e}^{-A}$. On a donc $I_n = \mathrm{e}^{A} \cdot \mathrm{e}^{-A}$.
+		\item Pour tout $N \in \N$, on a \[
+					\exp (A^\T) \xleftarrow[N\to \infty]{(**)} \sum_{n=0}^N \frac{1}{n!} (A^\T)^n = \Big(\sum_{n=0}^N \frac{1}{n!} (A^n)\Big)^\T \xrightarrow[N\to \infty]{(*)} (\exp A)^\T
+			.\] par continuité de la transposée (pour $(*)$) et par définition (pour $(**)$).
+		\item On procède comme le point précédent, par continuité du changement de base.
+		\item On pose $f : t \mapsto \mathrm{e}^{tA}$, et on calcule
+			\[
+				\frac{f(t+h) - f(t)}{h} = \frac{\mathrm{e}^{(t+h)A}-\mathrm{e}^{tA}}{h} = \frac{\mathrm{e}^{hA} \cdot \mathrm{e}^{tA} - \mathrm{e}^{tA}}{h} = \frac{(\mathrm{e}^{hA} - I_n) \cdot \mathrm{e}^{tA}}{h}
+			.\]
+			De plus, $(\exp(hA) - I_n) / h \to A$\/ quand $h \to 0$ car \[
+				\exp(hA) = I_n + hA + (hA)^2 \underbrace{\Big(\sum_{k=2}^\infty \frac{1}{k!} (hA)^{k-2}\Big)}_{\varepsilon(h)}
+			\]d'où $(\exp(hA) - I_n) / h = (hA + h^2 \varepsilon(h)) / h = A + h \varepsilon(h) \to A$.
+			De plus, le produit matriciel est continu.
+			Donc $f$ est dérivable et $f'(t) = A\cdot  \mathrm{e}^{tA}$. De plus, $A \cdot \mathrm{e}^{tA} = \mathrm{e}^{tA} \cdot A$.
+	\end{enumerate}
+\end{prv}
+
+\begin{exmn}[Cadeaux]
+	\begin{slshape}
+		\begin{enumerate}[label=(\textit{\alph*})]
+			\item En supposant connaître les éléments de $\Sp A$, quelles sont les valeurs propres de $\Sp\mathrm{e}^A$ ?\quad\quad\quad($\triangleright\quad \Sp \mathrm{e}^A = \exp(\Sp A)$)
+			\item Que vaut $\det \mathrm{e}^{A}$ ? \quad\quad\quad($\triangleright\quad \det \mathrm{e}^{A} = \mathrm{e}^{\tr A}$)
+			\item Interpréter géométriquement l'égalité $\exp \begin{pmatrix} 0 & - \theta\\ \theta & 0 \end{pmatrix} = \begin{pmatrix} \cos \theta & - \sin\theta\\ \sin \theta & \cos \theta \end{pmatrix}$.
+		\end{enumerate}
+	\end{slshape}
+
+	\begin{enumerate}[label=(\textit{\alph*})]
+		\item Rappel : une matrice est trigonalisable si, et seulement si, son polynôme caractéristique~$\chi_A$ est scindé.
+			En particulier, pour toute matrice $A \in \mathcal{M}_{n,n}(\C)$, $A$ est trigonalisable.
+			Soit $A \in \mathcal{M}_{n,n}(\C)$.
+			Soit $P \in \mathrm{GL}_n(\C)$ telle que $P^{-1}\cdot A\cdot P = T$ soit triangulaire.
+			Ainsi, \[
+				T =
+				\begin{pNiceMatrix}
+					\lambda_1& & \Block{2-2}{*} &\\
+					& \lambda_2 & &\\
+					\Block{2-2}{0} && \ddots &\\
+					&&& \lambda_n
+				\end{pNiceMatrix}
+			.\]
+			D'où,
+			\begin{align*}
+				\mathrm{e}^{T} &= I_n + T + \frac{T^2}{2!} + \frac{T^3}{3!} + \cdots\\
+				&= \begin{pNiceMatrix}
+					1& & \Block{2-2}{0} &\\
+					& 1 & &\\
+					\Block{2-2}{0} && \ddots &\\
+					&&& 1
+				\end{pNiceMatrix} + \begin{pNiceMatrix}
+					\lambda_1& & \Block{2-2}{*} &\\
+					& \lambda_2 & &\\
+					\Block{2-2}{0} && \ddots &\\
+					&&& \lambda_n
+				\end{pNiceMatrix} + \frac{1}{2!} \begin{pNiceMatrix}
+					\lambda_1^2& & \Block{2-2}{*} &\\
+					& \lambda_2^2 & &\\
+					\Block{2-2}{0} && \ddots &\\
+					&&& \lambda_n^2
+				\end{pNiceMatrix} + \cdots \\
+				&= \begin{pNiceMatrix}
+					\mathrm{e}^{\lambda_1}& & \Block{2-2}{*} &\\
+					& \mathrm{e}^{\lambda_2} & &\\
+					\Block{2-2}{0} && \ddots &\\
+					&&& \mathrm{e}^{\lambda_n}
+				\end{pNiceMatrix} \\
+			\end{align*}
+			D'où, $\Sp \mathrm{e}^T = \{\mathrm{e}^{\lambda_1}, \ldots, \mathrm{e}^{\lambda_n}\}$.
+			Or, $\mathrm{e}^{T} = \mathrm{e}^{P^{-1}\cdot A\cdot P} = P^{-1} \cdot  \mathrm{e}^{A} \cdot  P$.
+			D'où, $\mathrm{e}^{T}$ et $\mathrm{e}^{A}$ sont semblables.
+			On en déduit que $\Sp \mathrm{e}^{A} = \Sp \mathrm{e}^{T} = \exp(\Sp A)$, car le spectre est un invariant de similitude.
+		\item De même, $\det \mathrm{e}^T = \det \mathrm{e}^A$ car le déterminant et la trace sont des invariants de similitude. Or, \[
+				\det \mathrm{e}^T = \mathrm{e}^{\lambda_1} \times \mathrm{e}^{\lambda_2} \times \cdots \times \mathrm{e}^{\lambda_n} = \mathrm{e}^{\lambda_1 + \cdots + \lambda_n} = \mathrm{e}^{\tr T}
+			.\]
+			On en déduit que $\det \mathrm{e}^A = \det \mathrm{e}^{T} = \exp(\tr T) = \exp(\tr A)$.
+		\item On relie cette question avec l'exercice 6 du \textsc{td} 16 :
+			\begin{align*}
+				(E) \iff& \underbrace{\begin{pmatrix}
+					x'\\ y'
+				\end{pmatrix}}_{X'} = \underbrace{\begin{pmatrix}
+					0 & -\omega\\
+					\omega & 0
+				\end{pmatrix}}_A \cdot\underbrace{ \begin{pmatrix}
+					x \\ y
+				\end{pmatrix}}_X\\
+				\iff& X'(t) = A\cdot X(t) \\
+				\iff& \forall t \in \R,\: X(t) = \ds\underbrace{\begin{pmatrix}
+					\cos \omega t & -\sin \omega t\\
+					\sin \omega t & \cos \omega t
+				\end{pmatrix}}_{\ts\exp \begin{pmatrix}
+					0 & -\omega t\\
+					\omega t & 0
+				\end{pmatrix} = \exp(tA)} \cdot X(0) \\
+			\end{align*}
+			Et alors ? On utilise la proposition 6 : $\ds \frac{\mathrm{d}}{\mathrm{d}t} \mathrm{e}^{tA} \cdot X(0) = A \cdot \mathrm{e}^{tA} X(0)$. En posant $X(t) = \mathrm{e}^{tA} \cdot X(0)$, on obtient $\ds\frac{\mathrm{d}}{\mathrm{d}t} X(t) = A \cdot X(t)$, ce qui est l'équation $(E)$. On peut résoudre des équations différentielles avec l'exponentielle de matrices.
+	\end{enumerate}
+\end{exmn}

@@ -1,0 +1,50 @@
+\section{Non monotonie du caractère décidable des langages}
+
+\textit{\begin{enumerate}
+	\item Montrer qu'il existe trois langages $A$, $B$\/ et $C$\/ tels que $A \subseteq B \subseteq C$, que $A$\/ soit décidable, $B$\/ indécidable et $C$\/ décidable.
+	\item Montrer qu'il existe $A$, $B$\/ et $C$\/ trois langages tels que $A \subseteq B \subseteq C$, que $A$\/ soit indécidable, $B$\/ décidable, et $C$\/ indécidable.
+\end{enumerate}}
+
+\begin{enumerate}
+	\item On pose $A = \O$, et $C = \Sigma^*$, et $B = \{(M,w)  \mid M \text{ s'arrête sur } w\}$.
+	\item Soit $w \in \Sigma^*$. On pose \[
+			L_0 = \{\texttt{serialise\_couple}(w, M)  \mid M \in L_{\textsc{ArrêtUniv}}\text{\footnote{\textit{i.e.\ $M$ est le code d'une machine s'arrêtant sur toute entrée}}}\}
+		.\] Montrons que le langage $L_0$\/ est indécidable.
+		Soit $M \in \mathcal{O}$\/ une entrée du problème \textsc{ArrêtUniv}.
+		\begin{align*}
+			\texttt{serialise\_couple}(w, M) \in L_0 \iff& M \text{ s'arrête sur toutes ses entrées}\\
+			\iff& M \in \textsc{ArrêtUniv}^+.
+		\end{align*}
+		En effet, la fonction $f$\/ de cette réduction est définie comme ci-dessous.
+		\begin{lstlisting}[language=caml]
+let %*$f$*) (%*$M$*) : string) : string =
+	serialise_couple %*$w$*) %*$M$*)
+		\end{lstlisting}
+		Par réduction de \textsc{ArrêtUniv} à \textsc{Appartient}$_{L_0}$, le problème \textsc{Appartient}$_{L_0}$ est indécidable.
+
+		On pose ensuite \[
+			L_1 = \{\texttt{serialise\_couple}(M, w) \mid w \in \Sigma^*, M \in L_{\textsc{ArrêtUniv}} \}
+		.\]
+		Soit $M \in \mathcal{O}$\/ une entrée du problème \textsc{ArrêtUniv}.
+		La fonction $g$\/ de cette réduction est définie comme ci-dessous.
+		\begin{lstlisting}[language=caml]
+let %*$g$*) (%*$M$*): string) : string =
+	serialise_couple %*$M$*) "a"
+		\end{lstlisting}
+		\begin{align*}
+			g(M) \in L_1 \iff& \begin{cases}
+				\texttt{"a"} \in \Sigma^*\\
+				M \in \textsc{ArrêtUniv}^+
+			\end{cases}\\
+			\iff& M \in \textsc{ArrêtUniv}^+
+		\end{align*}
+		On pose $w = \text{``}\texttt{fun}\ s \to \texttt{true}.\text{''}$ On a $L_0 \subseteq L \subseteq L_2$ où \[
+			L = \{\texttt{serialise\_couple}(\text{``}\texttt{fun}\ s \to \texttt{true}\text{''}, w)  \mid w \in \Sigma^*\} 
+		.\] Le langage $L$\/ est décidable. En effet, le code ci-dessous décide du problème \textsc{Appartient}$_L$.
+		\begin{lstlisting}[language=caml]
+let decide%*$_L$*) (w: string) : bool =
+	let m = String.length w in
+	w.[n - 1] = `)' && w%*$_{|\llbracket 0,15\rrbracket}$*) = "(fun s -> true)("
+		\end{lstlisting}
+\end{enumerate}
+

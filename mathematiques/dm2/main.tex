@@ -1,0 +1,237 @@
+\documentclass[a4paper]{article}
+
+\input{../preamble.tex}
+
+\begin{document}
+	\begin{center}
+		\Huge $\mathbf{DM_2}$\/ Mathématiques
+	\end{center}
+
+	\begin{center}
+		\LARGE \scshape Problème 1
+	\end{center}
+
+	\section*{Le groupe symplectique}
+
+	\begin{enumerate}
+		\item On calcule $J^2$\/ et $J^\top$ en fonction de $I_{2n}$\/ et de $J$\/ : \[
+				J^2 = \begin{pmatrix}
+					0_n - I_{n} & 0_n + 0_n\\
+					0_n + 0_n & -I_n + 0_n
+				\end{pmatrix} = -\begin{pmatrix}
+					I_n&0_n\\
+					0_n&I_n
+				\end{pmatrix} = -I_{2n},
+			\] et \[
+				J^\top = \begin{pmatrix}
+					0_n & I_n\\
+					-I_n&0_n
+				\end{pmatrix} = -J
+			.\] On remarque que $J \times J^\top = J \times (-J) = -(-I_{2n}) = I_{2n}$. On en déduit que $J$\/ est inversible et $J^{-1} = J^\top$.
+		\item On remarque que $J^\top \times J \times J = I_{2n} \times J = J$\/ et donc $J \in \mathcal{S}p_{2n}$.
+			\begin{align*}
+				\begin{pmatrix}
+					I_n&-\alpha I_n\\
+					0_n&I_n
+				\end{pmatrix} \begin{pmatrix}
+					0_n&-I_n\\
+					I_n&0_n
+				\end{pmatrix} \begin{pmatrix}
+					I_n&0_n\\
+					-\alpha I_n&I_n
+				\end{pmatrix}
+				&=
+				\begin{pmatrix}
+					-\alpha I_n & -I_n\\
+					I_n&0_n
+				\end{pmatrix} \begin{pmatrix}
+					I_n&0_n\\
+					-\alpha I_n & I_n
+				\end{pmatrix}\\ &= \begin{pmatrix}
+					0_n & -I_n\\
+					I_n & 0_n
+				\end{pmatrix} = J
+			.\end{align*}
+			On en déduit que $K(\alpha) \in \mathcal{S}p_{2n}$\/ pour tout réel $\alpha$.
+		\item Soit $U \in \mathcal{G}_n$. Soit $L_U$\/ comme défini dans l'énoncé. On calcule ${L_U}^\top\:J\:L_U$ :
+			\begin{align*}
+				\begin{pmatrix}
+					U^\top &0_n\\
+					0_n&U^{-1}
+				\end{pmatrix}\cdot \begin{pmatrix}
+					0_n&-I_n\\
+					I_n&0_n
+				\end{pmatrix} \cdot \begin{pmatrix}
+					U&0_n\\
+					0_n&(U^{-1})^\top
+				\end{pmatrix} &= \begin{pmatrix}
+					0_n&-U^\top\\
+					U^{-1}&0_n
+				\end{pmatrix} \cdot \begin{pmatrix}
+					U&0_n\\
+					0_n&(U^{-1})^\top 
+				\end{pmatrix}\\
+				&= \begin{pmatrix}
+					0_n&-I_n\\
+					I_n&0_n
+				\end{pmatrix} = J
+			.\end{align*}
+			On en déduit que $L_U \in \mathcal{S}p_{2n}$\/ pour toute matrice $U \in \mathcal{G}_n$.
+		\item Soit $M \in \mathcal{S}p_{2n}$. On a donc $M^\top\:J\:M = J$, d'où \[
+				\det(M^\top) \times \det(J) \times \det(M) = \det J \quad\text{i.e.} \det(M)^2 = 1
+			\] car $\det J \neq 0$\/ (car elle est inversible) et donc, on en déduit que $\det M \in \{-1,1\}$.
+		\item Soient $A$\/ et $B$\/ deux matrices de $\mathcal{S}p_{2n}$. On a donc $A^\top \:J\:A = J$, et $B^\top\:J\:B = J$. On pose $M = A \cdot B$\/ et \[
+				M^\top J M = B^\top A^\top J A B = B^\top J B = J
+			.\] On en déduit que $A \cdot B \in \mathcal{S}p_{2n}$.
+		\item On sait que $I_{2n} \in \mathcal{S}p_{2n}$. Soit $A \in \mathcal{S}p_{2n}$. On sait que $\det A \neq 0$\/ ; la matrice $A$\/ est donc inversible.
+			On a $A^\top J A = J$, d'où ${(A^\top)}^{-1}\cdot A^\top\cdot J\cdot A\cdot A^{-1} = {(A^\top)}^{-1}\cdot J\cdot A^{-1}$. On en déduit donc que $J = {(A^{-1})}^\top \cdot J\cdot A^{-1}$\/ et donc $A^{-1} \in \mathcal{S}p_{2n}$.
+		\item Soit $M \in \mathcal{S}p_{2n}$. On a donc $M^\top\:J\:M = J$, d'où $(M^\top\:J\:M)^{-1} = J^{-1}$ i.e.\ $M^{-1}\:J^\top\:{(M^\top)}^{-1} = J^\top$. D'où $M\cdot M^{-1} J^\top (M^\top)^{-1} \cdot M^\top = M\cdot J M^\top$\/ et donc $J = M\cdot J\cdot M^\top$, autrement dit, \[\boxed{M^\top \in \mathcal{S}p_{2n}.}\]
+		\item \marginpar{À faire\ldots}
+	\end{enumerate}
+	\section*{Centre de $\mathcal{S}p_{2n}$}
+	\begin{enumerate}
+		\item[9.] Soit $N \in \mathcal{S}p_{2n}$. On sait que $I_{2n}\cdot N = N = N\cdot I_{2n}$, d'où $I_{2n} \in \mathcal{Z}$.
+			De même, $-I_{2n} \cdot N = -N = N \cdot (-I_{2n})$, d'où $-I_{2n} \in \mathcal{Z}$. On a donc \[
+				\boxed{\{-I_{2n}, I_{2n}\} \subset \mathcal{Z}.}
+			\]
+		\item[10.] On remarque que $L = K(-1)^\top \in \mathcal{S}p_{2n}$. Or, comme $M \in \mathcal{Z}$, $L\cdot M = M \cdot L$. D'où \[
+				M\cdot L = \begin{pmatrix}
+					A&A+B\\
+					C&C+D
+				\end{pmatrix} = \begin{pmatrix}
+					A+C&B+D\\
+					C&D
+				\end{pmatrix} = L \cdot M
+			.\] On en déduit que $C = 0_n$, $A = D$.
+			On sait que $L^\top \in \mathcal{S}p_{2n}$, d'où $L^\top \cdot M = M\cdot L^\top$\/ et donc \[
+				\begin{pmatrix}
+					A + B & B\\
+					C + D & D
+				\end{pmatrix} = \begin{pmatrix}
+					A & B\\
+					A + C & B + D
+				\end{pmatrix}
+			.\] On en déduit donc que $B = 0_n$. La matrice $M$\/ est donc de la forme \[
+				M = \begin{pmatrix}
+					A&0_n\\
+					0_n&A
+				\end{pmatrix}
+			.\] Or, $\det M = (\det A)^2 \neq 0$\/ et donc $\det A \neq 0$. On en déduit que la matrice $A$\/ est inversible.
+		\item[11.] On calcule $M \cdot L_U$\/ puis $L_U\cdot M$\/ :
+			\begin{align*}
+				M \cdot L_U &= \begin{pmatrix}
+					A&0_n\\
+					0_n&A
+				\end{pmatrix} \cdot \begin{pmatrix}
+					U&0_n\\
+					0_n&(U^{-1})^\top
+				\end{pmatrix} \\
+				&= \begin{pmatrix}
+					A\cdot U&0_n\\
+					0_n&A\cdot (U^{-1})^\top
+				\end{pmatrix} ; \\
+			\end{align*}
+			\begin{align*}
+				L_U\cdot M &= \begin{pmatrix}
+					U&0_n\\
+					0_n&(U^{-1})^\top
+				\end{pmatrix} \cdot \begin{pmatrix}
+					A&0_n\\
+					0_n&A
+				\end{pmatrix} \\
+				&= \begin{pmatrix}
+					U\cdot A& 0_n\\
+					0_n&(U^{-1})^\top \cdot A
+				\end{pmatrix}. \\
+			\end{align*}
+			Or, $M \in \mathcal{Z}$\/ et $L_U \in \mathcal{S}p_{2n}$, d'où $M\cdot L_U = L_U\cdot M$. On en déduit donc que $U\cdot A = A \cdot U$.
+		\item[12.] Les seules matrices commutant dans $\mathcal{G}_n$\/ sont les matrices $I_n$\/ et $-I_n$, on a donc $A \in \{I_n,-I_n\}$\/ et donc $M = I_{2n}$\/ ou $M = -I_{2n}$, d'où $\mathcal{Z} \subset \{-I_{2n}, I_{2n}\}$. On en déduit que \[
+			\boxed{\mathcal{Z} = \{-I_{2n}, I_{2n}\}.}
+		\]
+	\end{enumerate}
+	\section*{Déterminant d'une matrice symplectique}
+	\begin{enumerate}
+		\item[13.]
+			On pose $M = {a\:b\choose c\:d} \in \mathscr{M}_2$\/ et on calcule $M^\top \cdot J\cdot M$\/ :
+			\begin{align*}
+				\begin{pmatrix}
+					a&c\\
+					b&d
+				\end{pmatrix} \cdot \begin{pmatrix}
+					0&-1\\
+					1&0
+				\end{pmatrix}  \cdot \begin{pmatrix}
+					a&b\\
+					c&d
+				\end{pmatrix}
+				&= \begin{pmatrix}
+					c&-a\\
+					d&-b
+				\end{pmatrix} \cdot \begin{pmatrix}
+					a&b\\
+					c&d
+				\end{pmatrix} \\
+				&= \begin{pmatrix}
+					ac-ca&cb-ad\\
+					da-bc&db-bd
+				\end{pmatrix} \\
+				&= \begin{pmatrix}
+					0&-\det M\\
+					\det M&0
+				\end{pmatrix} \\
+			\end{align*}
+			Or, \[
+				M \in \mathcal{S}p_2 \iff M^\top \cdot J\cdot M = J
+			.\]
+			D'où \[
+				\begin{pmatrix}
+					a&b\\
+					c&d
+				\end{pmatrix} \in \mathcal{S}p_2 \iff \begin{cases}
+					\det M = 1\\
+					-\det M = -1
+				\end{cases} \iff \det M = 1
+			.\]
+			On a montré que \[
+				\boxed{M \in \mathcal{S}p_{2} \iff \det M = 1.}
+			\]
+		\item[14.]On procède à une analyse-synthèse.
+			\begin{itemize}
+				\item[\sc Analyse] Soient $Q,U,V,W \in \mathscr{M}_n$.
+					On calcule \[
+						\begin{pmatrix}
+							I_n & Q\\
+							0_n&I_n
+						\end{pmatrix} \cdot \begin{pmatrix}
+							U&0_n\\
+							V&W
+						\end{pmatrix} = \begin{pmatrix}
+							U+QV&QW\\
+							V&W
+						\end{pmatrix}
+					.\]
+					Ainsi, en comparant avec les coefficients de la matrice ${A\:B\choose C\:D}$, on en déduit que \[
+						D = W \qquad V = C\qquad Q = B \cdot D^{-1}\qquad U = A - B \cdot D^{-1}\cdot C
+					.\]
+				\item[{\sc Synthèse}] On pose $W = D$, $V = C$, $Q = B\cdot D^{-1}$\/ et $U = A - BD^{-1}C$. On calcule \[
+					\begin{align*}
+						\begin{pmatrix}
+							I_n & Q\\
+							0_n&I_n
+						\end{pmatrix} \cdot \begin{pmatrix}
+							U&0_n\\
+							V&W
+						\end{pmatrix} &= \begin{pmatrix}
+							U+QV&QW\\
+							V&W
+						\end{pmatrix}\\ &= \begin{pmatrix}
+							A-BD^{-1}C+BD^{-1}C&BD^{-1}\cdot D\\
+							C&D
+						\end{pmatrix}\\ &= \begin{pmatrix}
+							A&B\\
+							C&D
+						\end{pmatrix}.
+					\end{align*}
+			\end{itemize}
+	\end{enumerate}
+\end{document}

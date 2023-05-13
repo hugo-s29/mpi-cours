@@ -1,0 +1,130 @@
+\section{\textit{Mutex}}
+
+Le mot \textit{mutex} vient de \textit{mutual exception} (exclusion mutuelle).
+
+\begin{defn}~\\[2mm]
+	\begin{minipage}{0.5\textwidth}
+		Le type de données abstrait \textsf{verrou} fournit 
+		\begin{itemize}
+			\item un type \texttt{t} : le type des verrous,
+			\item une fonction $\texttt{lock} : \texttt{t} \to \texttt{unit}$ qui ferme le verrou,
+			\item une fonction $\texttt{unlock} : \texttt{t} \to \texttt{unit}$ qui ouvre le verrou,
+			\item une fonction $\texttt{create} : (\:) \to \texttt{t}$ qui crée un verrou,
+		\end{itemize}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.5\textwidth}
+		\begin{lstlisting}[language=c]
+	lock(v);
+	/* section critique */
+	unlock(v);
+		\end{lstlisting}
+	\end{minipage}\\
+	de sorte que, lorsque plusieurs fils d'exécution exécutent de manière concurrent l'algorithme ci-dessous,
+	on ait
+	\begin{enumerate}
+		\item au plus un seul fil d'exécution dans la section critique (exclusion mutuelle) ;
+		\item un fil d'exécution en attente (ayant appelé la fonction \texttt{lock}) n'empêche pas d'autres fils d'exécutions d'accéder à la section critique ;
+		\item un fil d'exécution ayant fini \texttt{lock} aura accès à un moment à la section critique.
+	\end{enumerate}
+\end{defn}
+
+\subsection{À deux fils d'exécutions}
+On se restreint, pour simplifier, dans le cas où l'on n'a que deux fils d'exécutions.
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\MarkedState A{red}\quad\Mark C{mainblue} Soit $\mathrm{Dedans}$\/ un tableau de taille 2 initialisé à $\mathbf{F}$.
+		\Procedure{Lock}{$i$} \Comment{$i \in \{0,1\} $ est l'identifiant du fil}
+		\State $o \gets 1 - i$ \Comment{identifiant de l'autre fil d'exécution}
+		\While{$\mathrm{Dedans}[o]$}
+		\State rien
+		\EndWhile\Mark B{red}\quad\Mark D{mainblue}\ConnectStates AB{red}\ConnectStates CD{mainblue}
+		\State $\mathrm{Dedans}[i] \gets \mathbf{V}$
+		\EndProcedure
+		\Procedure{Unlock}{$i$}
+		\State $\mathrm{Dedans}[i] \gets \mathbf{F}$
+		\EndProcedure
+	\end{algorithmic}
+	\caption{Tentative 1 d'implémentation du type \textsf{verrou}}
+\end{algorithm}
+
+Mais, cet tentative ne résout pas le problème. En effet, l'exécution où l'ordonnanceur exécute l'algorithme jusqu'à la fin de tant que pour le fil 1, puis passe au fil 2, est un contre-exemple à la tentative 1 d'implémentation du type \textsf{verrou}. $\triangleright$ propriété d'exclusion mutuelle
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\MarkedState A{red}\quad\Mark C{mainblue} Soit $\mathrm{Want}$\/ un tableau de taille 2 initialisé à $\mathbf{F}$.
+		\Procedure{Lock}{$i$} \Comment{$i \in \{0,1\} $ est l'identifiant du fil}
+		\State $o \gets 1 - i$ \Comment{identifiant de l'autre fil d'exécution}
+		\State \Mark B{red}\quad\Mark D{mainblue}\ConnectStates AB{red}\ConnectStates CD{mainblue} $\mathrm{Want}[i] \gets \mathbf{V}$
+		\While{$\mathrm{Want}[o]$}
+		\State rien
+		\EndWhile
+		\EndProcedure
+		\Procedure{Unlock}{$i$}
+		\State $\mathrm{Want}[i] \gets \mathbf{F}$
+		\EndProcedure
+	\end{algorithmic}
+	\caption{Tentative 2 d'implémentation du type \textsf{verrou}}
+\end{algorithm}
+
+Cette tentative ne résout pas non plus le programme : si l'ordonnanceur exécute le fil 1 jusqu'à avant la boucle tant que, puis passe au fil 2, les deux fils sont bloqués. $\triangleright$ propriété de non-entreblocage
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\State $\mathrm{turn}\gets 0$ \Comment{premier fil d'exécution}
+		\Procedure{Lock}{$i$}
+		\State $o \gets 1 - i$
+		\While{$\mathrm{turn} = o$}
+		\State rien
+		\EndWhile
+		\EndProcedure
+		\Procedure{Unlock}{$i$}
+		\State $o \gets 1 - i$
+		\State $\mathrm{turn} \gets o$
+		\EndProcedure
+	\end{algorithmic}
+	\caption{Tentative 3 d'implémentation du type \textsf{verrou}}
+\end{algorithm}
+
+Cette tentative impose une alternance 0 puis 1 puis 0\ldots\@ Mais, si l'un des deux fils termine, alors l'autre est bloqué.
+
+Dans la suite, on suppose qu'un fil ne meure pas dans la section critique, ou lors de l'appel de $\Call{Lock}{i}$, ou lors de l'appel de $\Call{Unlock}{i}$.
+
+On donne donc la tentative finale, ci-dessous, qui réussi à combler toutes les hypothèses du type \textsf{verrou}.
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\State $\mathrm{turn}\gets 0$ \Comment{premier fil d'exécution}
+		\State Soit $\mathrm{Want}$\/ un tableau de taille 2 initialisé à $\mathbf{F}$.
+		\Procedure{Lock}{$i$}
+		\State $o \gets 1 - i$
+		\State $\mathrm{Want}[i] \gets \mathbf{V}$
+		\State $\mathrm{turn} \gets o$
+		\While{$\mathrm{turn} = o$ et $\mathrm{Want}[o]$}
+		\State rien
+		\EndWhile
+		\EndProcedure
+		\Procedure{Unlock}{$i$}
+		\State $\mathrm{Want}[i] \gets \mathbf{F}$
+		\EndProcedure
+	\end{algorithmic}
+	\caption{Tentative 4 d'implémentation du type \textsf{verrou} -- Algorithme de \textsc{Peterson}}
+\end{algorithm}
+
+On vérifie que les trois propriétés du type \textsf{verrou} sont vérifiées.
+\begin{enumerate}[label=\textbf{\arabic*.}]
+	\item \textbf{Exclusion mutuelle.} Par l'absurde, supposons que les deux fils d'exécutions sont dans la section critique. Ainsi, $\mathrm{Want}[0] = \mathrm{Want}[1] = \mathbf{V}$.
+		Le fil d'exécution 0 nous donne que $\mathrm{Want}[1] = \mathbf{F}$ ou $\mathrm{turn} \neq 1$.
+		Le fil d'exécution 1 nous donne que $\mathrm{Want}[0] = \mathbf{F}$ ou $\mathrm{turn} \neq 0$.
+		On en déduit que $\mathrm{turm} \neq 0$ et $\mathrm{turn} \neq 1$.
+		Or, $\mathrm{turn} \in \{0,1\}$ (on peut le montrer par un rapide invariant). D'où l'absurdité.
+	\item \textbf{Non-interblocage.}
+		Si les deux conditions de boucles sont vraies, alors $\mathrm{turn} = 0$ et $\mathrm{turn} = 1$, ce qui est absurde.
+	\item \textbf{Résilience à la mort de l'autre fil d'exécution.}\footnote{\textit{i.e.} accès peu importe si l'autre est encore en vie ou non.}
+		Supposons que le fil d'exécution n'exécute plus $\Call{Lock}{1}$ (mais il a exécuté $\Call{Unlock}{1}$ avant de partir). Alors, $\mathrm{Want}[1] = \mathbf{F}$, et ce pour toujours. Donc, le fil 0 n'est pas bloqué.
+\end{enumerate}

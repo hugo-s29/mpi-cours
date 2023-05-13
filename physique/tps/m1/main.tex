@@ -1,0 +1,181 @@
+\documentclass[a4paper,twocolumn,10pt]{report}
+
+%\usepackage{concmath}
+\usepackage{tgschola}
+\input{../../preamble.tex}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{comment}
+\usepackage{pgfornament}
+\usepackage{graphicx}
+
+\definecolor{black}{HTML}{000000}
+\definecolor{white}{HTML}{ffffff}
+\color{black}
+\pagecolor{white}
+
+\begin{asydef}
+	white = rgb("ffffff");
+	black = rgb("000000");
+	defaultpen(black + fontsize(8pt));
+\end{asydef}
+
+\titletp{m\:1}{Mesure des coefficients de frottement }{\begin{tabular}{c}Hugo \textsc{Salou}\\Noémie \textsc{Combey}\end{tabular}}{Hugo \textsc{Salou} \& Noémie \textsc{Combey}}
+
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\green}[1]{{\color{green}#1}}
+\def\thesection{\Roman{section}.}
+
+\begin{document}
+	L'objectif de ce \textsc{tp} est la mesure, avec incertitudes, des deux coefficients de frottement : statique ($f_\mathrm{s}$) et dynamique ($f_\mathrm{d}$).
+
+	\section{Mesure du coefficient de frottement statique $f_\mathrm{s}$}
+
+	Pour mesurer la valeur du coefficient de frottement statique, on dispose une planche en bois à un angle $\alpha$\/ de la paillasse.
+	Initialement, on choisit $\alpha = 0$ : la planche est sur la paillasse. Puis, on pose un bloc de bois sur cette planche, sans lui donner de vitesse initiale.
+	On augment progressivement l'angle $\alpha$, jusqu'à ce que le bloc ne commence à glisser.
+	On note la valeur de l'angle $\alpha$\/ dans cette condition, on notera cet angle $\alpha_{\lim}$.
+	Le montage est représenté dans la figure 1.
+
+	\begin{figure}[H]
+		\centering
+		\incfig{fig1}
+		\caption{Protocole 1, mesure de $f_\mathrm{s}$\/}
+	\end{figure}
+
+	On ne mesure pas l'angle $\alpha$\/ directement, on mesure plutôt la hauteur $h$\/ de la planche en un point fixe, et on mesure la distance $d$\/ entre ce point et le bord en contact avec la paillasse.
+	En choisissant le même point pour chacune des mesures, la distance $d$\/ est constante, on ne mesure que $h$. De plus, on a l'égalité \[
+		\alpha = \Arcsin\! \left( \frac{h}{d} \right)\!
+	.\]
+	
+	Ainsi, on suit le protocole décrit précédemment, et on réalise les mesures des données représentées dans la table 1.
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline
+			$h$\/ ($\mathrm{mm}$) & $\alpha_{\lim}$\/ ($^\circ$)\\ \hline \hline
+			$160$&$20{,}35$ \\ \hline
+			$178$&$22{,}77$\\ \hline
+			$168$&$21{,}42$\\ \hline
+			$168$&$21{,}42$\\ \hline
+			$150$&$19{,}031$\\ \hline
+			$164$&$20{,}89$\\ \hline
+			$162$&$20{,}62$\\ \hline
+			$143$&$18{,}11$\\ \hline
+			$175$&$22{,}36$\\ \hline
+			$158$&$20{,}09$\\ \hline
+			$176$&$22{,}50$\\ \hline
+			$188$&$24{,}12$\\ \hline
+		\end{tabular}
+		\caption{Mesure de l'angle $\alpha$}
+	\end{table}
+
+	Les mesures sont réalisés avec des blocs de différentes masses, et différentes surfaces.
+	Ainsi, on remarque que l'angle $\alpha_{\lim}$\/ (et donc $f_\mathrm{s}$) dépend de ces deux facteurs, même si les lois de \textsc{Coulomb} affirment que $f_\mathrm{s}$\/ ne dépend que des matériaux en contact.
+
+	On estime l'incertitude de mesure sur la distance $d$\/ à $u(d) = 10\:\mathrm{mm}/\!\sqrt{3} = 6\:\mathrm{mm}$. La mesure de la distance $d$\/ est de \[
+		{\color{cyan} d = 830 \pm 6\: \mathrm{mm}}
+	.\] De plus, par analyse statistique des données de la table précédente, on trouve que \[
+		{\color{cyan} h = 166 \pm 10\: \mathrm{mm}}
+	.\]
+	Par composition des incertitudes, on trouve que
+	\[
+		u\!\left( \frac{h}{d} \right) = \frac{1}{d} \cdot \sqrt{u^2(h) + u^2(d) \cdot \left( \frac{h}{d} \right)^{\!\!2}} \mathrel{\overset{\text{(AN)}}=} 0{,}01
+	.\] Ainsi, toujours par composition des incertitudes, on a
+	\begin{align*}
+		u(\alpha) &= \Arcsin'(h / d) \cdot u(h / d)\\
+		&= \frac{u(h / d)}{\sqrt{1 - \left( \frac{h}{d} \right)^2}} \\
+		{}_\text{(AN)}&= 0{,}01\: \mathrm{rad} \\
+		&= 0{,}7\:^\circ. \\
+	\end{align*}
+	On en déduit donc la mesure de l'angle limite $\alpha$\/ : \[
+		{\color{cyan} \alpha_{\lim} = 21{,}1 \pm 0{,}7\:^\circ}
+	.\]
+	Et, d'après le cours, on sait calculer $f_\mathrm{s}$\/ avec la valeur de cet angle : $f_\mathrm{s} = \tan(\alpha_{\lim}) \simeq 0{,}38$.
+	Or, par composition des incertitudes, on a
+	\begin{align*}
+		u(f_\mathrm{s}) &= (1 + \tan^2 \alpha_{\lim}) \cdot u(\alpha_{\lim})\\
+		&= (1 + {f_\mathrm{s}}^2) \cdot u(\alpha_{\lim})  \\
+		_\text{(AN)} &= 0{,}01 \\
+	\end{align*}
+	On en déduit donc la mesure du coefficient de frottement statique : \[
+		{\color{cyan}f_\mathrm{s} = 0{,}38 \pm 0{,}01}
+	.\]
+
+	\section{Mesure du coefficient de frottement dynamique $f_\mathrm{d}$}
+
+	Pour mesurer la valeur de $f_\mathrm{d}$, on utilise le protocole suivant. On place deux points sur la planche, un point d'arrivé, et un point de départ. On positionne la planche à un angle $\alpha$\/ constant, suffisamment proche de $\alpha_{\lim}$\/ pour qu'un bloc ne tombe pas trop vite, mais suffisamment loin de $\alpha_{\lim}$\/ pour qu'un bloc ne s'arrête pas entre le départ et l'arrivée. On mesure le temps $\mathrm{\Delta}t$\/ nécessaire pour que le bloc passe du point de départ au point d'arrivée.
+	Ce protocole est représenté dans la figure 2.
+
+	\begin{figure}[H]
+		\centering
+		\incfig{fig2}
+		\caption{Protocole 2, mesure de $f_\mathrm{d}$\/}
+	\end{figure}
+
+	On commence par chercher une relation mathématique entre la durée $\mathrm{\Delta}t$, et le coefficient de frottement $f_\mathrm{d}$. Les forces s'appliquant au système \{\:bloc\:\} sont, son poids $\vec{P}$, et la réaction du support $\vec{R}$. On se place dans le référentiel terrestre $\mathcal{R}_\mathrm{t}$\/ supposé galiléen, et on utilise des coordonnées cartésiennes, avec l'axe $(Ox)$\/ suivant la planche, pointant vers la droite, et l'axe $(Oy)$\/ pointant vers le haut, perpendiculairement à la planche.
+	Ainsi, d'après le principe fondamental de la dynamique, \[
+		m \cdot \frac{\mathrm{d}^2 \vv{OM}}{\mathrm{d}t^2} = \vec{R} + \vec{P}
+	.\]
+	Dans ces coordonnées, on a $\vec{P} = mg\sin \alpha \:\vec{e}_x - mg \cos \alpha \:\vec{e}_y$. On décompose $\vec{R}$\/ en $\vec{R} = N\: \vec{e}_y - T\: \vec{e}_x$.
+	Ainsi, en projetant selon $\vec{e}_x$\/ puis $\vec{e}_y$, le \textsc{pfd} devient \[
+		\begin{cases}
+			-m\ddot{x} = T - mg\sin \alpha \quad\quad &(1) \\
+			\mathord{\phantom{-}}m\ddot{y} = N -mg\cos \alpha.\quad\quad&(2)
+		\end{cases}
+	\]
+	Or, le bloc reste sur la planche, donc $y = 0$, et donc $\ddot{y} = 0$. Ainsi, $N = mg \cos \alpha$, et donc $T = f_\mathrm{d}\,mg \cos \alpha$, d'après les lois de \textsc{Coulomb}.
+	On obtient donc \[
+		\ddot{x} = g (\sin \alpha - f_\mathrm{d} \cos \alpha)
+	.\] D'où, \[
+		\dot{x} = t \cdot g(\sin \alpha - f_\mathrm{d} \cos \alpha) + v_0,
+	\] et donc \[
+		\mathrm{\Delta}x = \frac{1}{2}(\mathrm{\Delta}t)^2 \cdot g(\sin \alpha - f_\mathrm{d} \cos \alpha) + v_0 (\mathrm{\Delta}t)
+	.\]
+	On suppose $v_0 = 0\:\mathrm{m}/\mathrm{s}$, et ainsi \[
+		f_\mathrm{d} = -\frac{2 \mathrm{\Delta}x}{(\mathrm{\Delta}t)^2 \cdot g \cdot \cos \alpha} + \tan \alpha
+	.\]
+
+	On réalise à présent les mesures à l'aide du protocole décrit précédemment. On rassemble ces mesures dans la table 2.
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline & $\mathrm{\Delta}t$ ($\mathrm{s}$)\\\hline
+			1&$4{,}063$ \\\hline
+			2&$3{,}011$ \\\hline
+			3&$3{,}025$ \\\hline
+			4&$3{,}062$ \\\hline
+			5&$4{,}036$ \\\hline
+		\end{tabular}
+		\begin{tabular}{|c|c|}
+			\hline & $\mathrm{\Delta}t$ ($\mathrm{s}$)\\\hline
+			6&$2{,}044$ \\\hline
+			7&$2{,}078$ \\\hline
+			8&$2{,}075$ \\\hline
+			9&$5{,}028$ \\\hline
+			10&$7{,}056$ \\\hline
+		\end{tabular}
+		\caption{Mesures de $\mathrm{\Delta}t$, pour des valeurs de $\mathrm{\Delta}x$\/ et $\alpha$\/ fixés.}
+	\end{table}
+
+	Comme pour la mesure précédente, les mesures de la table 2 sont réalisées avec des blocs de masse et surface différente. Ainsi, ces facteurs influent sur la valeur de $\mathrm{\Delta}t$, et donc sur la valeur de $f_\mathrm{d}$. Mais, les lois de \textsc{Coulomb} affirment que $f_\mathrm{d}$\/ ne dépendent pas de la masse, ou de la surface de contact mais des matériaux en contact.
+	Ainsi, on choisit la valeur moyenne de $\mathrm{\Delta}t$\/ : \[
+		{\color{cyan} \mathrm{\Delta}t = 3{,}5478\:\mathrm{s}}
+	.\]
+	Également, $\mathrm{\Delta}x = 0{,}602\:\mathrm{m}$, et $\alpha = 0{,}2426\:\mathrm{rad}$. On en déduit que \[
+		{\color{cyan} f_\mathrm{d} = 0{,}24}
+	.\]
+
+	\section{Conclusion}
+
+	D'après le cours, les valeurs de $f_\mathrm{s}$\/ et $f_\mathrm{d}$\/ pour le frottement bois--bois sont \[
+		f_\mathrm{s} \simeq 0{,}5 \quad\text{ et }\quad f_\mathrm{d} \simeq 0{,}3
+	.\] Les valeurs trouvées précédemment ($f_\mathrm{s} = 0{,}38$\/ et $f_\mathrm{d} = 0{,}24$), sont proches.
+	On a pu remarquer que les lois de \textsc{Coulomb} ne sont que des approximations, qui ne prennent pas en compte la masse ou la surface en contact, même si ces facteurs ont un effet visible.
+
+	\sign
+
+	~
+\end{document}

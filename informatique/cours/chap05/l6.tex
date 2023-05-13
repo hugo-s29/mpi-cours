@@ -1,0 +1,51 @@
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Procedure{Augmente}{$x,\text{chaîne}$}
+			\For{$y \in \mathrm{Succ}(x) \setminus \text{chaîne}$}
+				\If{$y$ est libre dans $C$}
+					\State\Return $\mathrm{Some}\big(\text{chaîne} \uplus (y)\big)$\/
+				\Else
+					\State Soit $z$\/ tel que $\{y,z\} \in C$.
+					\State $r \gets \text{\Call{Augmente}{$z,\text{chaîne} \uplus (y,z)$}}$\/ 
+					\If{$r \neq \mathrm{None}$}
+						\State\Return $r$\/
+					\EndIf
+					\State\Return $\mathrm{None}$\/
+				\EndIf
+			\EndFor
+		\EndProcedure
+		\If{$s$ est libre dans $C$}
+			\State\Return \Call{Augmente}{$s,(s)$}
+		\Else
+			\State\Return $\mathrm{None}$\/
+		\EndIf
+	\end{algorithmic}
+	\caption{\textsc{ChaîneAugmentante} : Trouver une chaîne augmentante dans un graphe biparti $G = (S, A)$\/ muni d'un couplage $C$\/ partant d'un sommet $s \in S$ }
+\end{algorithm}
+
+\begin{rmk}
+	Si un sommet n'est pas libre dans le couplage $C$, il n'est pas libre dans les couplage obtenus par inversion de chaîne depuis $C$.
+\end{rmk}
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree $G = (S, A)$\/ un graphe biparti, avec $S = S_1 \cupdot S_2$\/
+		\State $C \gets\O$\/ 
+		\State $\mathrm{Done} \gets \O$\/ 
+		\While{$\exists x \in S_1 \setminus \mathrm{Done}$}
+			\State Soit un tel $x$.
+			\State $r \gets \text{\Call{ChaîneAugmentante}{$G,C,x$}}$\/
+			\If{$r \neq \mathrm{None}$}
+				\State $\mathrm{Some}(a) \gets r$\/
+				\State On inverse la chaîne $a$\/ dans $C$.
+			\EndIf
+			\State $\mathrm{Done} \gets \{x\} \cup \mathrm{Done}$\/
+		\EndWhile
+		\State\Return $C$\/
+	\end{algorithmic}
+	\caption{Calcul d'un couplage maximum}
+\end{algorithm}
+
+

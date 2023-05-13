@@ -1,0 +1,75 @@
+\begin{prop}
+	La relation $\preceq$\/ est un \textit{pré-ordre} :
+	\begin{itemize}
+		\item $\preceq $\/ est réflective ;
+		\item $\preceq $\/ est transitive.
+	\end{itemize}
+\end{prop}
+
+\begin{prv}
+	Soit $Q$\/ un problème de décision.
+	\begin{itemize}
+		\item $Q \preceq Q$\/ par la fonction identité, qui est totale et calculable.
+		\item Soient $Q$, $R$\/ et $S$\/ trois problèmes de décision tels que $Q \preceq R$\/ et $R \preceq S$. Soit donc $f_1$\/ la réduction de $Q$\/ à $R$, et $f_2$\/ la réduction de $R$\/ à $S$. Soit $f = f_2 \circ f_1 : \mathcal{E}_Q \to \mathcal{E}_S$. La fonction $f$\/ est totale comme composée de fonctions totales, $f$\/ est calculable comme composée de fonctions calculables. De plus,
+			\begin{align*}
+				\forall e \in \mathcal{E}_Q,\qquad f(e) \in S^+ \iff& f_2(f_1(e)) \in S^+\\
+				\iff& f_1(e) \in R^+\\
+				\iff& e \in Q^+
+			\end{align*}
+	\end{itemize}
+\end{prv}
+
+\section{Classe \textbf{P} et \textbf{NP}}
+
+Pour répondre à un problème, on peut le résoudre par des algorithmes plus ou moins rapides. Mais, l'objectif de cette section est de montrer que certains problèmes ne peuvent se résoudre que par des algorithmes lents, et que l'on ne peut pas faire mieux.
+
+\begin{defn}
+	Le modèle de calcul impose une représentation des entrées par chaînes de caractères. Cela induit donc une notion de \textit{taille d'entrée}, qui est la longueur de la chaîne de caractères.
+	\index{taille d'entrée}
+\end{defn}
+
+
+\subsection{Complexité d'une machine}
+
+\begin{defn}
+	Étant donné une machine $\mathcal{M}$ et une entrée $w \in \Sigma^*$, on note $C^\mathcal{M}(w)$\/ le nombre d'opérations élémentaires effectuées lors de l'appel de $\mathcal{M}$\/ sur $w$. Lorsque $\smash{w \xrightarrow[\mathcal{M}]{} {\circlearrowleft}}$, on définit $C^\mathcal{M} = +\infty$.
+
+	Pour $n \in \N$, on définit alors \[
+		C^\mathcal{M}_n = \max \{ C^\mathcal{M}(w)  \mid w \in \Sigma^n \}
+	.\]
+	\index{machine!nombre d'opérations élémentaires!($C^\mathcal{M}(w)$)}
+	\index{machine!nombre d'opérations élémentaires!maximal pour un mot de taille $n$\/ ($C^\mathcal{M}_n$)}
+\end{defn}
+
+\begin{rmk}
+	On a, $\forall n \in \N$, $C_n^\mathcal{M} \in \bar{\N} = \N \cup \{+\infty\}$.
+\end{rmk}
+
+\begin{defn}
+	Soit $f : \N\to \N$\/ une fonction totale et calculable. On note $\textsc{Time}(f)$\/ l'ensemble des machines $\mathcal{M}$\/ telles que
+	\begin{itemize}
+		\item $\mathcal{M}$\/ s'arrête sur toute entrée ;
+		\item $\big(C_n^\mathcal{M}\big)_{n \in \N} = \mathcal{O}\big(\big(f(n)\big)_{n \in \N}\big)$.
+	\end{itemize}
+	\index{machine!ensemble $\textsc{Time}(f)$}
+\end{defn}
+
+\subsection{Classe \textbf{P}}
+
+\begin{defn}
+	On dit d'une machine $\mathcal{M}$\/ qu'elle est de \textit{complexité polynômiale} dès lors qu'il existe $k \in \N$\/ tel que $\mathcal{M} \in \textsc{Time}(n^k)$.
+	\index{machine!de complexité polynômiale}
+\end{defn}
+
+\begin{defn}
+	On dit d'une fonction (partielle ou non), qu'elle est \textit{calculable en temps polynômial} dès lors qu'il existe une machine $\mathcal{M}$\/ de complexité polynômiale la calculant.
+	\index{fonction!calculable!en temps polynômial}
+\end{defn}
+
+\begin{exm}
+	\begin{itemize}
+		\item l'identité ($n \mapsto n$)
+		\item la fonction successeur ($n\mapsto n+1$)
+	\end{itemize}
+\end{exm}
+

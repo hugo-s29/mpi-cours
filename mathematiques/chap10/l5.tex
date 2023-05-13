@@ -1,0 +1,78 @@
+\section{Produit de Cauchy et somme de deux séries entières}
+
+\begin{rap}[produit de \textsc{Cauchy}]
+	On rappelle le produit de deux polynômes : on pose $A = \sum_{n=0}^{\deg A} a_n X^n$\/ et $B = \sum_{p=0}^{\deg B} b_p X^p$, le produit de ces deux polynômes est donc
+	\begin{align*}
+		A \times B &= \Big(\sum_{n=0}^{\deg A} a_n X^n\Big)\Big(\sum_{p=0}^{\deg B} b_p X^p\Big) \\
+		&= \sum_{k=0}^{\deg A + \deg B} c_k X^k \quad\quad\quad \text{ où } c_k = \sum_{n+p = k } a_n b_p.
+	\end{align*}
+	On définit alors le \textit{produit de \textsc{Cauchy}} de deux séries : si $\sum u_n$\/ et $\sum v_n$\/ convergent absolument, alors $\sum w_n$\/ converge absolument, en posant $w_k = \sum_{n+p = k} u_n v_p $.
+	De plus, \[
+		\sum_{k=0}^\infty w_k = \Big(\sum_{n=0}^\infty u_n\Big)\Big(\sum_{p=0}^\infty v_p\Big)
+	.\]
+\end{rap}
+
+\begin{prop}
+	\begin{enumerate}
+		\item Soit $c_n = a_n + b_n$. Le rayon de convergence de la série $\sum c_n x^n$\/ vaut $R_c = \min(R_a, R_b)$ (ou plus sur $R_a = R_b$) et \[
+				\forall x \in {]-R_c,R_c[},\quad \sum_{n=0}^\infty c_n x^n = \sum_{n=0}^\infty a_n x^n + \sum_{n=0}^\infty b_n x^n
+			.\]
+		\item Si $\sum a_n x^n$ et $\sum b_n x^n$ ont respectivement pour rayons de convergence $R_a$ et $R_b$, alors $\sum c_n x^n$ a pour rayon de convergence $R_c \ge \min(R_a, R_b)$, où $c_k = \sum_{n+p = k} a_n + b_p$, et \[
+				\forall x \in {]-R_c, R_c[},\:
+				\Big(\sum_{n=0}^\infty a_n x^n\Big)\Big(\sum_{p=0}^\infty b_p x^p\Big) = \sum_{k=0}^\infty c_k x^k
+			\]
+	\end{enumerate}
+\end{prop}
+
+\begin{exm}
+	\begin{enumerate}
+		\item La série $\sum x^n$\/ a pour rayon de convergence 1, et la série entière $1 - x$\/ a pour rayon de convergence $+\infty$.
+			Et, $\forall x \in {]-1,1,[},\: \sum_{n=0}^\infty x^n = \frac{1}{1-x}$. Le produit de \textsc{Cauchy} des deux séries entières $\sum x^n = \sum a_k x^k$\/ et $1 - x = \sum b_\ell x^\ell$\/ est la série $\sum c_n x^n$, où  
+			\begin{align*}
+				c_n &= \sum_{k+\ell = n} a_k b_\ell\\
+				&= \sum_{\ell=0}^n a_{n-\ell} b_\ell\\
+			\end{align*}
+			D'où, $c_0 = 1$, $c_1 = 1 - 1 = 0$\/ et $\forall n \ge 2$, $c_n = 0$.
+			Donc $\sum c_n x^n = 1$, qui a pour rayon de convergence $+\infty \neq \min(R_a, R_b)$. On retrouve ce résultat car \[
+				\underbrace{\frac{1}{1-x}}_{\sum_{n=0}^\infty x^n} \times (1-x) = 1
+			.\]
+		\item({\color{cyan} tarte à la crème}) La série entière $\sum H_n x^n$,\footnote{où $H_n = \frac{1}{1} + \frac{1}{2} + \cdots + \frac{1}{n}$.} est le produit de \textsc{Cauchy} des deux séries entières $\sum \frac{x^n}{n}$\/ et $\sum x^n$.
+			En effet, \[
+				c_n x^n = \sum_{k+\ell = n} \frac{x^k}{k} x^\ell = \sum_{k=1}^n \frac{1}{k} x^n = H_n x^n
+			.\]
+			Or, $R_c \ge \min(R_a, R_b) = \min(1,1) = 1$. D'où, \[
+				\forall x \in {]{-1},1[},
+				\Big(\sum_{n=1}^\infty \frac{x^n}{n}\Big)\Big(\sum_{n=0}^\infty x^n\Big) = \sum_{n=1}^\infty H_n x^n
+			\] et donc \[
+				-\ln (1- x) \times \frac{1}{1-x} = \sum_{n=1}^\infty H_n x^n
+			.\]
+	\end{enumerate}
+\end{exm}
+
+\begin{exo}[{\color{cyan} tarte à la crème}\relax]
+	\textsl{Soient $x,y \in \R$. Montrer que $\mathrm{e}^x\cdot \mathrm{e}^y = \mathrm{e}^{x+y}$.}
+	On sait que $\mathrm{e}^{x} = \sum_{n=0}^\infty \frac{x^n}{n!}$.
+	On veut montrer que $\big(\sum_{n=0}^\infty \frac{x^n}{n!}\big)\big(\sum_{n=0}^\infty \frac{x^n}{n!}\big) = \sum_{n=0}^\infty \frac{(x+y)^k}{k!}$. Le rayon de convergence de la série $\exp$\/ est $+\infty$, le rayon de convergence du produit de \textsc{Cauchy} de deux séries $\exp$\/ est supérieur à $\min(+\infty,+\infty)$, \textit{i.e.}\ il faut $+\infty$.
+	Le produit de \textsc{Cauchy} de ces deux séries est la série $\sum w_k$\/ avec
+	\begin{align*}
+		w_k = \sum_{n+p=k} u_n v_p = \sum_{n+p=k} \frac{x^n}{n!} \frac{y^p}{p!}
+		&= \sum_{n=0}^k \frac{x^n\: y^{k-n}}{n!\: (k-n)!} \\
+		&= \frac{1}{k!}\sum_{n=0}^k \frac{k!}{n!\:(n-k)!} x^n y^{n-k}\\
+		&= \frac{1}{k!} (x+y)^k \\
+	\end{align*}
+\end{exo}
+
+\section{Séries entières complexes}
+
+\begin{exo}
+	\textsl{Montrer que, pour tout $\theta \in \R$, \[
+		\mathrm{e}^{i \theta} = \cos \theta + i \sin \theta
+	.\]}
+	On a $\forall z \in \C$, $\mathrm{e}^{z} = \sum_{n=0}^\infty \frac{z^n}{n!}$.
+	En particulier, si $z = i\theta$, on a \[
+		\mathrm{e}^{i\theta} = \sum_{n=0}^\infty \frac{(i\theta)^n}{n!}
+		= \sum_{n=0}^\infty (-1)^n \frac{\theta^{2n}}{(2n)!} + i \sum_{n=0}^\infty (-1)^{2n+1} \frac{\theta^{2n+1}}{(2n+1)!} = \cos \theta + i \sin \theta
+	.\]
+\end{exo}
+
+

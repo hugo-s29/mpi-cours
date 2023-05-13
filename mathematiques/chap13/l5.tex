@@ -1,0 +1,80 @@
+\begin{rap}
+	On rappelle que $f$\/ est \textit{continue} si, et seulement si \[
+		\forall \red{\vec{a}} \in A,\:\forall \varepsilon > 0,\: \exists \delta_{\red{\vec{a}}} > 0,\:\forall \vec{x} \in A,\quad\quad \|\vec{x} - \vec{a}\| \le \delta_{\red{\vec{a}}} \implies \|f(\vec{x}) - f(\vec{a}) \|\le \varepsilon
+	.\]
+\end{rap}
+
+\begin{defn}
+	Soit $A$\/ une partie d'un espace vectoriel normé $E$. On dit qu'une fonction $f$\/ est
+	\begin{itemize}
+		\item \textit{uniformément continue} sur $A$\/ si \[
+				\forall \varepsilon > 0,\: \exists \delta > 0,\: \forall (\vec{a},\vec{x}) \in A^2,\quad\quad \|\vec{x} - \vec{a}\| \le \delta \implies \|f(\vec{x}) - f(\vec{a})\|\le \varepsilon\;
+			;\]
+		\item \textit{lipschitzienne} sur $A$\/ si \[
+				\exists k \in \R,\: \forall (\vec{a},\vec{x}) \in A^2, \quad\quad \|f(\vec{x}) - f(\vec{a})\| \le k \cdot \|\vec{x} - \vec{a}\|
+			.\]
+	\end{itemize}
+\end{defn}
+
+\begin{exm}
+	D'après l'exercice 2, toute norme $N$\/ vérifie l'inégalité \[
+		\forall (\vec{x}, \vec{y}) \in E^2,\quad\quad \big|N(\vec{x}) - N(\vec{y})\big| \le 1\cdot  N(\vec{x} - \vec{y})
+	.\]L'application $N$\/ est donc $1$-lipschitzienne de l'espace vectoriel normé $E$\/ vers $\R$. \[
+		\boxed{\text{Toute norme est lipschitzienne, donc, \textit{a fortiori}, uniformément continue.}}
+	\]
+\end{exm}
+
+\begin{prop}
+	On a \[
+		\text{lipschitzienne } \substack{\ds\implies\\ \ds\centernot{\impliedby}}
+		\text{ uniformément continue } \substack{\ds\implies\\ \ds\centernot{\impliedby}}
+		\text{ continue}
+	.\] 
+\end{prop}
+
+\begin{prv}
+	Pour la première implication, on pose $\delta = \varepsilon / k$, et ça marche bien.
+	Pour la seconde implication, on revient à la définition de uniformément continue, ce qui vérifie la définition de continue.
+\end{prv}
+
+\begin{exo}
+	\begin{slshape}
+		\begin{enumerate}
+			\item Montrer que la fonction $x \mapsto x^2$\/ est continue mais pas uniformément continue sur~$\R$.
+			\item Montrer que la fonction $x \mapsto \sqrt{x}$\/ est uniformément continue mais pas lipschitzienne sur $[0,1]$.
+		\end{enumerate}
+	\end{slshape}
+
+	\begin{enumerate}
+		\item La fonction $g: x \mapsto x^2$\/ est continue mais pas uniformément continue sur $\R$.
+			En effet, \[
+				\forall a \in \R,\:\forall \varepsilon > 0,\: \exists \delta > 0,\: \quad\quad |h| \le \delta \implies \big|g(a+h) - g(a)\big| \le \varepsilon
+			\]car $|g(a+h) - g(a)| = |(a+h)^2 - a^2| = |2ah + h^2| \le \varepsilon$\/ si $2|a|\:|h| + |h|^2 - \varepsilon \le 0$, donc si $X^2 + 2|a|\: X - \varepsilon$\/ a un discriminant négatif ou nul, mais ce discriminant, donc les racines du polynôme dépend de $a$.
+		\item La fonction $x \mapsto \sqrt{x}$\/ est continue sur $[0,1]$, donc uniformément continue sur $[0,1]$, grâce au théorème de \textsc{Heine}.
+			Mais, $f : x \mapsto \sqrt{x}$\/ n'est pas lipschitzienne sur $[0,1]$. Par l'absurde, supposons la lipschitzienne. Il existe donc $k \in \R$\/ tel que, pour tous $(a,x) \in [0,1]^2$, $\big|f(x) - f(a)\big| \le k\:|x-a|$. D'où, pour tous $x \neq a$, \[
+				\left| \frac{f(x) - f(a)}{x - a} \right| \le k
+				.\]Ainsi, comme $f$\/ est dérivable sur $]0,1]$, \[
+				\forall a \neq 0, \quad \frac{1}{2\sqrt{a}} = f'(a) = \lim_{x\to a}\: \left| \frac{f(x) - f(a)}{x - a} \right| \le K
+			\] car les inégalités larges passent à la limite.
+			C'est absurde car \[
+				k \ge \lim_{a\to 0^+} \frac{1}{2\sqrt{a}} = +\infty
+			.\] 
+	\end{enumerate}
+\end{exo}
+
+\section{Linéarité \& continuité}
+
+\begin{thm}
+	Soient $E$\/ et $F$\/ deux espaces vectoriels normés. Soit $f$\/ une application \textbf{linéaire} de $E$\/ vers $F$. Il y a équivalence entre
+	\begin{multicols}2
+		\begin{enumerate}
+			\item $f$\/ est continue sur $E$\/ ;
+			\item $f$\/ est continue en $\vec{0}$ ;
+			\item $f$\/ est bornée dans la boule unité de $E$\/ ;
+			\item[5.] $f$\/ est lipschitzienne sur $E$\/ ;
+			\item[6.] $f$\/ est uniformément continue ;
+			\item[4.] il existe un réel $k$\/ tel que $\forall \vec{x} \in E$, $\|f(\vec{x})\| \le k\:\|\vec{x}\|$.
+		\end{enumerate}
+	\end{multicols}
+\end{thm}
+

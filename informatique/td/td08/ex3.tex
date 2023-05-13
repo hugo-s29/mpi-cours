@@ -1,0 +1,59 @@
+\section{\textsc{Clique}, \textsc{Stable} et \textsc{Couv.Sommets}}
+
+\begin{enumerate}
+	\item Soit $G = (S, A)$\/ un graphe. On pose $G' = (S, A')$\/ où~$A' = \big\{\{x,y\} \in \mathcal{C}_2(S)\:\big|\: \{x,y\} \not\in A\big\}$.\footnote{On note $\mathcal{C}_p(E)$\/ l'ensemble des parties de $E$\/ de cardinal $p$.}
+
+		Prouvons la réduction de \textsc{Clique} à \textsc{Stable}.
+		Soit $(G, K)$\/ une entrée du problème \textsc{Clique}.
+		Fabriquons l'entrée $(G', K)$\/ de \textsc{Stable}, comme défini précédemment.
+		Montrons que $(G, K) \in \textsc{Clique}^+ \iff (G', K) \in \textsc{Stable}^+$.
+		On a
+		\begin{align*}
+			(G, K) \in \textsc{Clique}^+ \iff& \exists S_1 \subseteq S_2 \text{ avec } |S_1| \ge K,\: \forall x \neq y \in S_1,\: \{x,y\} \in A\\
+			\iff& \exists S_1 \subseteq S_2 \text{ avec } |S_1| \ge K,\: \forall x \neq y,\: \{x,y\} \not\in A'\\
+			\iff& (G', K) \in \textsc{Stable}^+.
+		\end{align*}
+		La réduction est calculable en temps polynômiale. On a donc $\textsc{Clique}\preceq_\mathrm{p} \textsc{Stable}$.
+
+		La réduction de \textsc{Stable} à \textsc{Clique} est la même. Elle est également en temps polynômiale.
+	\item Montrons la réduction de \textsc{CouvSommets} à \textsc{Clique}.
+		Soit $(G, K)$\/ une entrée du problème \textsc{CouvSommets}. Fabriquons $(G', n - K)$\/ une entrée du problème \textsc{Stable}, où $G' = (S, A')$\/ comme défini à la question précédente, et $n = |S|$. On a 
+		\begin{align*}
+			&(G, K) \in \textsc{CouvSommets}^+\\
+			\iff& \exists S_1 \subseteq S \text{ avec } |S_1| \le K,\:\forall \{x,y\} \in A,\: x \in S_1 \text{ ou } x \in S_2\\
+			\iff& \exists S_1 \subseteq S \text{ avec } |S_1| \le K,\:\forall x \neq y \in S \setminus S_1,\: \{x,y\} \not\in A\\
+			\iff& \exists S_1 \subseteq S \text{ avec } |S \setminus S_1| \le |S| - K,\:\forall x \neq y \in S \setminus S_1,\: \{x,y\}  \in A'\\
+			\iff& \exists S_2 \subseteq S \text{ avec }|S_2| \ge |S| - K,\:\forall x \neq y \in S_2,\: \{x,y\}  \in A'\\
+			\iff& (G', |S|-K) \in \textsc{Stable}^+.
+		\end{align*}
+	\item On représente le graphe $G$\/ pour l'entrée $\{x \lor x \lor y, \lnot x \lor \lnot y \lor \lnot y, x \lor y \lor y\}$.
+		\begin{figure}[H]
+			\centering
+			\tikzfig{ex3-q3}
+			\caption{Représentation du graphe $G$\/ pour l'entrée $\{x \lor x \lor y, \lnot x \lor \lnot y \lor \lnot y, x \lor y \lor y\}$}
+		\end{figure}
+	\item Montrons la réduction de 3\textsc{sat} à \textsc{Clique}.
+		Soit $H = \{c_1, \ldots, c_m\}$\/ une instance de 3\textsc{sat}.
+		Construisons le graphe $G$\/ comme proposé dans l'énoncé. On construit alors l'entrée de \textsc{Clique} $(G, m)$.
+		Soit $(G, m) \in \textsc{Clique}^+$. C'est donc qu'il existe une clique de $G$\/ de taille $m$ ; nommons la $C$.
+		Deux sommets $(i, \_)$\/ et $(j, \_)$\/ ne sont pas reliés dans $G$\/ si $i = j$. Ainsi, \[
+			\forall i \in \left\llbracket 1,m \right\rrbracket,\:\exists !j \in \left\llbracket 0,2 \right\rrbracket,\: (i,j) \in C
+		.\]
+		Soient $p$\/ et $\lnot p$\/ deux littéraux. Si $p \in C$, alors $\lnot p \not\in C$. Si $\lnot p \in C$, alors $p \not\in C$. On construit alors l'environnement propositionnel
+		\begin{align*}
+			\rho: \mathcal{Q} &\longrightarrow \mathds{B} \\
+			p &\longmapsto \begin{cases}
+				\mathbf{V} &\quad \text{ si } p \in C\\
+				\mathbf{F} &\quad \text{ sinon}.
+			\end{cases}
+		\end{align*}
+		Pour $i \in \left\llbracket 1,m \right\rrbracket$, soit $j \in \left\llbracket 0,2 \right\rrbracket$, tel que $(i,j) \in C$, on a donc $\left\llbracket \ell_{i,j} \right\rrbracket^\rho = \mathbf{V}$. On en déduit que $\forall i \in \left\llbracket 1,m \right\rrbracket,\:\left\llbracket c_i \right\rrbracket^\rho = \mathbf{V}$.
+		On en déduit que $\left\llbracket H \right\rrbracket^\rho = \mathbf{V}$, \textit{i.e.}\ $H \in \text{3\textsc{sat}}^+$.
+
+		Réciproquement, supposons $H \in \text{3\textsc{sat}}^+$. Alors, soit $\rho \in \mathds{B}^{\mathcal{Q}}$\/ tel que $\left\llbracket H \right\rrbracket^\rho = \mathbf{V}$.
+		On a \[
+			\forall i \in \left\llbracket 1,m \right\rrbracket,\:\exists j \in \left\llbracket 0,2 \right\rrbracket,\:\left\llbracket \ell_{i,j} \right\rrbracket^\rho = \mathbf{V}
+		.\] Notons $\varphi(i)$\/ un tel $j$. On fabrique alors l'ensemble de $m$\/ sommets $C = \{(i,\varphi(i))  \mid i \in \left\llbracket 1,m \right\rrbracket\}$. Soient $(i, \varphi(i))$\/ et $(j, \varphi(j))$\/ deux éléments de $C$.
+		Si $i \neq j$, alors $\{(i,\varphi(i)),(j,\varphi(j))\} \in A$, car $\left\llbracket \ell_{i,\varphi(i)} \right\rrbracket^\rho = \mathbf{V}$\/ et $\left\llbracket \ell_{j,\varphi(j)} \right\rrbracket^\rho = \mathbf{V}$. On en déduit que $C$\/ est une clique de taille $m$. Ainsi, $(G, m) \in \textsc{Clique}^+$.
+	\item Comme \textsc{Clique} est \textbf{NP}-difficile, alors \textsc{Stable} et \textsc{CouvSommets} sont \textbf{NP}-difficile. Montrons que \textsc{Clique} est un problème \textbf{NP}. Le programme \textsc{Clique} est vérifiable en temps polynômiale : \ldots
+\end{enumerate}

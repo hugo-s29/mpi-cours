@@ -1,0 +1,35 @@
+\section{Lois de \textsc{de Morgan}}
+\begin{enumerate}
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\lnot (p \lor q), p \vdash p}
+				\infer 1[$\lor$i,g]{\lnot (p\lor q), p \vdash p \lor q}
+				\infer 0[Ax]{\lnot (p \lor q),p \vdash \lnot (p \lor q)}
+				\infer 2[$\lnot$e]{\lnot (p \lor q),p \vdash \bot} % (p\/q) NOREVERSE
+				\infer 1[$\lnot$i]{\lnot (p \lor q) \vdash \lnot p} % A
+				\infer 0[Ax]{\lnot (p \lor q), q \vdash q}
+				\infer 1[$\lor$i,d]{\lnot (p \lor q), q \vdash p \lor q}
+				\infer 0[Ax]{\lnot (p \lor q), q \vdash \lnot (p \lor q)}
+				\infer 2[$\lnot$e]{\lnot (p \lor q), q \vdash \bot} % (p\/q)
+				\infer 1[$\lnot$i]{\lnot (p \lor q) \vdash \lnot q} % A
+				\infer 2[$\land$i]{\lnot (p \lor q) \vdash \lnot p \land\lnot q}
+			\end{prooftree}
+		.\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\lnot p \lor \lnot q, p \lor q \vdash p \lor q}
+				\infer 0[Ax]{\lnot p \land \lnot q, p \lor q, p \vdash p}
+				\infer 0[Ax]{\lnot p \land \lnot q, p \lor q, p \vdash \lnot p \land \lnot q}
+				\infer 1[$\land$e,d]{\lnot p \land \lnot q, p \lor q, p \vdash \lnot p} % H1 M N
+				\infer 2[$\lnot$e]{\lnot p \land \lnot q, p \lor q, p \vdash \bot} % p
+				\infer 0[Ax]{\lnot p \land \lnot q, p \lor q, q \vdash q}
+				\infer 0[Ax]{\lnot p \land \lnot q, p \lor q, q \vdash \lnot q \land \lnot q}
+				\infer 1[$\land$e,d]{\lnot p \land \lnot q, p \lor q, q \vdash \lnot q} % H1 M N
+				\infer 2[$\lnot$e]{\lnot p \land \lnot q, p \lor q, q \vdash \bot} % q
+				\infer 3[$\lor$e]{\lnot p \land \lnot q \vdash \bot} % p\/q U V
+				\infer 1[$\lnot$i]{\lnot p \land \lnot q \vdash\lnot (p \lor q) } % A
+			\end{prooftree}
+		.\]
+\end{enumerate}

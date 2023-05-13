@@ -1,0 +1,168 @@
+\subsection{Définitions équivalentes}
+
+Comment représenter une dérivation en machine ? On considère les règles de production $\mathrm{X} \to \mathrm{XX}$ et $\mathrm{X} \to a$. On peut, par exemple, représenter une dérivation par un ensemble de possibilités : \[
+	\mathrm{X} \Rightarrow \mathrm{XX} \Rightarrow \{a \mathrm{X}, \mathrm{X} a, \mathrm{XXX}\} \Rightarrow \cdots
+.\]Mais, avec une telle définition, il y a explosions du nombre de possibilités.
+
+\begin{defn}[Dérivation immédiatement gauche (resp.\ droite)]
+	Étant donnée une grammaire $\mathcal{G} = (\mathcal{V}, \Sigma, P, I)$, et étant donnés deux mots $u$ et $v$ de $(\Sigma \cup \mathcal{V})^*$, on dit que $u$ \textit{dérive immédiatement à gauche} (resp.\ droite) de $u$ dès lors qu'il existe $x \in \Sigma^*$, $y \in (\Sigma \cup \mathcal{V})^*$ (resp.\ $x \in (\Sigma \cup \mathcal{V})^*$ et $y \in \Sigma^*$), et $(V \to w_1\ldots w_n) \in P$ tels que $u = x V y$ et $v = x \cdot w_1 w_2 \ldots w_n \cdot y$.
+	On note alors $u \Rightarrow_\mathrm{g} v$ (resp.\ $u \Rightarrow_\mathrm{d} v$).
+	On définit, de la même manière que pour la dérivation simple, $\Rst _\mathrm{g}$ et $\Rst _\mathrm{d}$.
+\end{defn}
+
+\begin{exm}
+	On considère une grammaire ayant pour règles de production $\mathrm{X} \to \mathrm{XX}$ et $\mathrm{X} \to a$.
+	A-t-on
+	\begin{itemize}
+		\item $\mathrm{X} \Rst _\mathrm{g} a \mathrm{X}$ ? \quad\quad\gtk \quad\quad\quad\quad\quad ($\mathrm{X} \Rightarrow_\mathrm{g} \mathrm{XX} \Rightarrow_\mathrm{g} a \mathrm{X}$)
+		\item $\mathrm{X} \Rst _\mathrm{g} \mathrm{X} a$ ? \quad\quad\rcs
+	\end{itemize}
+\end{exm}
+
+\begin{defn}[Arbre de dérivation]
+	Étant donnée une grammaire $\mathcal{G} = (\mathcal{V}, \Sigma, P, S)$, on appelle \textit{arbre de dérivation} un arbre dont les nœuds sont étiquetés par des éléments de $\{\varepsilon\} \cup \mathcal{V} \cup \Sigma$ et tel que
+	\begin{itemize}
+		\item tout nœud interne (ayant des fils) est étiquetés par un élément de $\mathcal{V}$,
+		\item la racine est étiquetée par $S$,
+		\item tout nœud interne ayant une étiquette $V$ et ayant des fils $T_1, \ldots, T_n$ où $n \neq 0$ dont les racines sont étiquetées par $w_1, \ldots, w_n$ avec $(V \to w_1 \ldots w_n) \in P$.
+		\item tout nœud interne d'étiquette $V$ ayant pour unique fils l'arbre feuille réduit à $\varepsilon$ et tel que $(V \to \varepsilon) \in P$.
+	\end{itemize}
+\end{defn}
+
+Dans la suite du chapitre, on fixe $\mathcal{G} = (\mathcal{V}, \Sigma, I, P)$ une grammaire.
+
+\begin{exm}~
+	\begin{figure}[H]
+		\centering
+		\Tree[.$\mathrm{B}$
+			$\red($
+			[.$\mathrm{B}$ $\mathrm{B}$ $\mathrm{B}$
+			]
+			$\red)$ 
+		]
+		\quad\quad \quad\quad \quad\quad
+		\Tree[.$\mathrm{B}$ $\varepsilon$ ]
+		\quad\quad \quad\quad \quad\quad
+		\Tree[.$\mathrm{B}$ [.$\mathrm{B}$ $\red($ [.$\mathrm{B}$ $\varepsilon$ ] $\red)$ ] [.$\mathrm{B}$ $\varepsilon$ ]]
+		\caption{Exemple d'arbres de dérivation}
+	\end{figure}
+\end{exm}
+
+\begin{defn}[\protect\guillemotleft~production~\protect\guillemotright\ d'un arbre]
+	On définit inductivement la fonction $\mathrm{prod}$ de l'ensemble des arbres de la grammaire $\mathcal{G}$ vers $(\Sigma \cup \mathcal{V})^*$, comme 
+	\begin{itemize}
+		\item $\mathrm{prod}\big(\mathrm{Leaf}(x)\big) = x$,
+		\item $\mathrm{prod}\big(\mathrm{Node}(\_, [T_1, \ldots, T_n])\big) = \mathrm{prod}(T_1) \cdot \mathrm{prod}(T_2) \cdot \ldots \cdot \mathrm{prod}(T_n)$.
+	\end{itemize}
+\end{defn}
+
+\begin{exm}
+	Dans les arbres de dérivation exemples précédents, la fonction $\mathrm{prod}$ retourne $\red(\mathrm{BB}\red)$, $\varepsilon$ et $\red(\:\red)$.
+\end{exm}
+
+\begin{rmk}[Notation]
+	On dit qu'un arbre de dérivation $T$ est \guillemotleft~\textit{clos}~\guillemotright\ lorsque $\mathrm{prod}(T) \in \Sigma^*$.
+\end{rmk}
+
+\begin{exm}
+	Dans les exemples précédents, le premier arbre n'est pas \guillemotleft~clos~\guillemotright\ mais les deux suivants le sont.
+\end{exm}
+
+\begin{prop}
+	Étant donné $w \in \Sigma^*$, il est équivalent de dire que
+	\begin{enumerate}[label=(\arabic*)]
+		\item $w \in \mathcal{L}(\mathcal{G})$,
+		\item $S \Rst _\mathrm{g} w$
+		\item $S \Rst _\mathrm{d} w$
+		\item il existe un arbre de dérivation $T$ dont $w$ est le produit.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	On procède la démonstration dans l'ordre suivant.
+	\[
+		\begin{tikzcd}
+			&\text{(3)}\ar[dr, Rightarrow]&\\
+			\text{(4)}\ar[ur, Rightarrow] \ar[r, Rightarrow]&\text{(2)}\ar[r, Rightarrow]& \text{(1)} \ar[ll, Rightarrow, bend left=45]\\
+		\end{tikzcd}
+	.\]
+	\begin{itemize}
+		\item\textbf{(4) $\implies$ (2).}
+			Soit la propriété $\mathcal{P}(T)$ : \guillemotleft~si $w \in \Sigma^*$ admet $T$ comme arbre de dérivation ($w$ est le produit de $T$) avec $T$ un arbre de dérivation généralisé, enraciné en $V \in \mathcal{V}$, alors $V \Rst _\mathrm{g} w$.~\guillemotright\ 
+			Montrons cette propriété par induction.
+			\begin{itemize}
+				\item Si $T = \mathrm{Leaf}(x)$ avec $x \in \Sigma \cup \{\varepsilon\}$, alors \textsc{ok} par un arbre de dérivation.
+				\item Si $\mathrm{T} = \mathrm{Node}(V, [T_1, \ldots, T_n])$, alors, pout $i \in \llbracket 1,n \rrbracket$, raisonnons par disjonction.
+					\begin{itemize}
+						\item Si $T_i$ a une racine d'étiquette $w_i \in \Sigma$, alors $\mathrm{prod}(T_i) = w_i$, donc $w_i \Rst _\mathrm{g} \mathrm{prod}(T_i)$
+						\item Si $T_i$ a une racine d'étiquette $w_i \in \mathcal{V}$, alors, par hypothèse d'induction sur $T_i$, on a $w_i \Rst _\mathrm{g} \mathrm{prod}(T_i)$.
+					\end{itemize}
+					Ainsi, par concaténation, $\mathrm{prod}(T) = \mathrm{prod}(T_1) \cdot \ldots \cdot \mathrm{prod}(T_n)$.
+					Or, $(V \to w_1 \ldots w_n) \in P$.
+					Alors, considérons la dérivation
+					\begin{align*}
+						V &\Rightarrow_\mathrm{g} w_1w_2\ldots w_n\\
+							&\Rst _\mathrm{g} \mathrm{prod}(T_1) \cdot w_2 \ldots w_n\\
+							&\Rst _\mathrm{g} \mathrm{prod}(T_1) \cdot \mathrm{prod}(T_2)\\
+							&\Rst _\mathrm{g} \cdots \Rst _\mathrm{g} \mathrm{prod}(T_1) \cdot \mathrm{prod}(T_2) \cdot \ldots \cdot  \mathrm{prod}(T_n)
+					\end{align*}
+			\end{itemize}
+		\item \textbf{(2) $\implies$ (1).} Vrai car $\Rightarrow_\mathrm{g}$ est \guillemotleft~inclus dans~\guillemotright\ $\Rightarrow$ (c'est un cas particulier).
+		\item \textbf{(1) $\implies$ (4).}
+			Soit la propriété $\mathcal{P}_n$ \guillemotleft~$\forall V \in \mathcal{V}$, $\forall w \in \Sigma^*$, si $V \Rightarrow^n w$, alors $w$ admet un arbre de dérivation généralisé enraciné en $V$.~\guillemotright\@ Montrons le par induction.
+			\begin{itemize}
+				\item Si $n = 0$, absurde.
+				\item Si $V \Rightarrow^n w$ avec $n \ge 1$, donc $V \Rightarrow w_1 w_2 \ldots w\Rightarrow^{n-1} w$ donc $(V \to w_1 w_2 \ldots w_n) \in P$, alors, par lemme de décompositions, il existe $\tilde{w}_1, \ldots, \tilde{w}_p$ tels que $w = \tilde{w}_1 \cdot \ldots \cdot \tilde{w}_p$ et $\forall i \in \llbracket 1,p \rrbracket$, $w_i \Rightarrow^{p_i} \tilde{w}_i$ avec $\sum_{i=1}^p p_i = n - 1$.
+					D'où, $\forall i \in \llbracket 1,p \rrbracket$, $p_i < n$.
+					Par hypothèse d'induction, il existe, pour tout $i \in \llbracket 1,p \rrbracket$, un arbre $T_i$ produisant $\tilde{w}_i$ enraciné en $w_i$.
+					Soit alors $T = \mathrm{Node}(w, [T_1, \ldots, T_p])$.
+					Ainsi, $\mathrm{prod}(T) = \tilde{w}_1 \cdot \ldots \cdot \tilde{w}_p = w$.
+					Dans l'éventualité où l'un des $p_i$ aurait le mauvais goût d'être nul, on fabrique, à la place, l'arbre $T_i = \mathrm{Leaf}(w_i)$.
+			\end{itemize}
+	\end{itemize}
+\end{prv}
+
+\begin{defn}
+	Une grammaire est dite \textit{ambigüe} s'il existe un mot $w$ de son langage admettant au moins deux arbres de dérivations.
+\end{defn}
+
+\begin{exm}
+	On considère la grammaire de non-terminal initial $\mathrm{B}$ ayant pour règles de production $\mathrm{F} \to 0  \mid 1  \mid \cdots  \mid 9$ et $\mathrm{B} \to \mathrm{B} + \mathrm{B}  \mid \mathrm{B} - \mathrm{B}  \mid \mathrm{F}$.
+	Le mot \guillemotleft~$1 - 1 + 9$~\guillemotright\ admet les deux arbres de dérivations ci-dessous.
+	\begin{figure}[H]
+		\centering
+		\Tree[.$\mathrm{B}$
+			[.$\mathrm{B}$
+				[.$\mathrm{F}$ $1$ ]
+			]
+			$-$
+			[.$\mathrm{B}$
+				[.$\mathrm{B}$
+					[.$\mathrm{F}$ $1$ ]
+				]
+				$+$
+				[.$\mathrm{B}$
+					[.$\mathrm{F}$ $9$ ]
+				]
+			]
+		]
+		\quad\quad\quad\quad
+		\Tree[.$\mathrm{B}$
+			[.$\mathrm{B}$
+				[.$\mathrm{B}$
+					[.$\mathrm{F}$ $1$ ]
+				]
+				$-$
+				[.$\mathrm{B}$
+					[.$\mathrm{F}$ $1$ ]
+				]
+			]
+			$+$
+			[.$\mathrm{B}$
+				[.$\mathrm{F}$ $9$ ]
+			]
+		]
+	\caption{Arbres de dérivations de \protect\guillemotleft~$1 - 1 + 9$~\protect\guillemotright}
+	\end{figure}
+\end{exm}
+

@@ -4,11 +4,15 @@
 % \tikzstyle{NAME}=[PROPERTY LIST]
 
 % Node styles
-\tikzstyle{new style 0}=[fill=cyan, draw=black, shape=circle]
+\tikzstyle{new style 0}=[fill=mainblue, draw=black, shape=circle]
 \tikzstyle{new style 1}=[fill=none, draw=none, shape=circle]
+\tikzstyle{dashed}=[dotted]
+\tikzstyle{new style 2}=[fill=red, draw=black, shape=circle]
 
 % Edge styles
 \tikzstyle{arrow}=[->]
 \tikzstyle{double arrow}=[<->]
 \tikzstyle{rev. arrow}=[<-]
-\tikzstyle{arrow3}=[->, fill=none, draw={rgb,255: red,0; green,128; blue,128}]
+\tikzstyle{arrow3}=[->, fill=none, draw=maingreen]
+\tikzstyle{dd}=[-, dotted]
+\tikzstyle{red}=[-, draw=red]

@@ -1,0 +1,159 @@
+\section{Convergence normale et continuité}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+		draw((-5, 0)--(5, 0), dashed, Arrow(TeXHead));
+		draw((-2, 0)--(2, 0));
+		draw((-2,-0.25)--(-2,0.25));
+		draw((2,-0.25)--(2,0.25));
+		label("$-R$", (-2,-0.25), align=S);
+		label("$R$", (2,-0.25), align=S);
+		label("?", (-2,0.25), align=N);
+		label("?", (2,0.25), align=N);
+		label("divergence grossière", (-4, 0), align=N);
+		label("divergence grossière", (4, 0), align=N);
+		label("convergence absolue \& continuité", (0, 0.5), align=N);
+		label("$x$", (5, 0), align=SE);
+		draw((-0.95,0.25)--(-1,0.25)--(-1,-0.25)--(-0.95,-0.25));
+		draw((0.95,0.25)--(1,0.25)--(1,-0.25)--(0.95,-0.25));
+		draw((1,0)--(-1,0), black+2);
+		label("convergence normale", (0,-0.5), align=S);
+	\end{asy}
+	\caption{Convergence normale d'une série entière}
+\end{figure}
+
+\begin{thm}
+	\begin{enumerate}
+		\item La série entière $\sum a_n x^n$\/ converge normalement (donc uniformément) sur tout segment inclus dans $]-R,R[$. Mais, la convergence normale étant une propriété globale, on ne peut pas \guillemotleft~faire sauter la barrière.~\guillemotright
+		\item La somme $x\mapsto \sum_{n=0}^\infty a_n x^n$\/ est une fonction continue sur $]-R,R[$.
+	\end{enumerate}
+\end{thm}
+
+\begin{thm}[\textsc{Abel} radial]
+	Si la série numérique $\sum a_n R^n$\/ converge, alors \[
+		\sum_{n=0}^\infty a_n x^n \tendsto{x\to R^-} \sum_{n=0}^\infty a_n R^n
+	.\]
+\end{thm}
+
+\section{Intégrer}
+
+\begin{thm}
+	Soit $R$\/ le rayon de convergence d'une série entière.
+	\begin{enumerate}
+		\item Le rayon de convergence de la série entière $\sum \frac{a_n}{n+1}x^{n+1}$\/ est aussi égal à $R$.
+		\item \[
+				\sum_{n=0}^{\infty} \frac{a_n}{n+1} x^{n+1} = \int_{0}^{x} \Big( \sum_{n=0}^\infty a_n t^n \Big)~\mathrm{d}t
+			.\]
+	\end{enumerate}
+
+	\guillemotleft~On peut intégrer terme à terme sans changer son rayon de convergence.~\guillemotright
+\end{thm}
+
+
+\begin{exm}
+	
+\end{exm}
+
+\begin{exo}
+	
+\end{exo}
+
+\section{Dériver}
+
+\begin{thm}
+	Avec les notations précédentes,
+	\begin{enumerate}
+		\item le rayon de convergence de la série entière $\sum n a_n x^{n-1}$\/ est aussi égal à $R$,
+		\item pour $x \in {]-R,R[}$, \[
+				\sum_{n=1}^\infty n a_n x^{n-1} = \frac{\mathrm{d}}{\mathrm{d}x} \sum_{n=0}^\infty a_n x^n
+			,\]
+		\item la somme \begin{align*}
+				f: {]-R,R[} &\longrightarrow \R \\
+				x &\longmapsto \sum_{n=0}^\infty a_n x^n
+			\end{align*} est de classe $\mathcal{C}^\infty$, et $\forall n \in \N$, $a_n = \frac{f^{(n)}(0)}{n!}$.
+	\end{enumerate}
+	\guillemotleft~On peut dériver terme à terme sans changer son rayon de convergence.~\guillemotright
+\end{thm}
+
+\begin{exo}
+	On considère la série entière $\sum \frac{n + 5}{(n + 2)(n+2)} x^n$.
+	\textsl{Calculons son rayon de convergence}.
+
+	\ul{\textbf{Idée}} :
+	On intègre terme à terme la série entière $\sum x^n$, et on obtient la série entière $\sum \frac{x^{n+1}}{n+1}$. On ré-intègre la série : $\sum \frac{x^{n+2}}{(n+1)(n+2)}$.
+	On multiplie par $x^3$, et on obtient la série entière $\sum \frac{x^{n+5}}{(n+1)(n+2)}$, que l'on peut dériver terme à terme pour obtenir la série entière $\sum \frac{n+5}{(n+1)(n+2)} x^{n+4}$. On divise\footnote{On suppose dans ce cas $x \neq 0$, et on s'occupera du cas $x = 0$\/ à part.} par $x^4$\/ pour trouver la série demandée : $\sum \frac{(n+5)}{(n+1)(n+2)} x^n$.
+	\marginpar{\guillemotleft~Mieux vaut intégrer le plus tôt possible pour déterminer le rayon de convergence~\guillemotright}
+	Cette méthode fonctionne car on peut intégrer/dériver sans changer son rayon de convergence.
+	Le rayon de convergence de la série $\sum x^n$\/ est $R = 1$, donc le rayon de convergence de la série $\sum \frac{n+5}{(n+1)(n+2)} x^n$\/ est $R = 1$.
+
+	\ul{\textbf{Rédaction}} :
+	On a $\forall x \in {]-1,1[}$, $\sum_{n=0}^\infty x^n = \frac{1}{1-x}$, d'où en intégrant, $\forall x \in {]-1,1[}$, $\sum_{n=0}^\infty \frac{x^{n+1}}{n+1}= \int_{0}^{x} \frac{1}{1-t}~\mathrm{d}t = \mathbin{\red-} \ln(1-x)$. D'où, en intégrant,
+	\begin{align*}
+		\forall x \in {]-1,1[},\quad \sum_{n=0}^\infty \frac{x^{n+2}}{(n+1)(n+2)} &= - \int_{0}^{x} 1 \times \ln(1-t)~\mathrm{d}t\\
+		&= -\big[t \ln(1-t)\big] - \int_{0}^{x} \frac{t}{1-t}~\mathrm{d}t\\
+		&= x \ln(1-x) - \int_{0}^{x} \left[-1 + \frac{1}{1-t}\right]~\mathrm{d}t \\
+		&= -x\ln(1-x) - \big[-x -\ln(1-x)\big] \\
+		&= (1-x) \ln(1-x) + x.
+	\end{align*}
+	De même pour les autres étapes du raisonnement.
+
+	\ul{\textbf{Autre méthode}} : on a $\frac{n+5}{(n+1)(n+2)} \simi_{n\to \infty} \frac{1}{n}$\/ d'où, les séries entières $\sum \frac{(n+5)}{(n+1)(n+2)} x^n$, et $\sum \frac{x^n}{n}$\/ ont le même rayon de convergence, qui vaut $R = 1$.\footnote{Il s'agit de la série entière convergent vers $\ln(1-x)$.}
+\end{exo}
+
+\begin{exm}[séries entières \& équations différentielles]
+	\begin{enumerate}
+		\item On pose
+			\begin{align*}
+				\exp: \R &\longrightarrow \R \\
+				x &\longmapsto \mathrm{e}^{x} = \sum_{n=0}^{\infty} \frac{x^n}{n!}.
+			\end{align*}
+			En dérivant terme à terme, et on retrouve bien $x \mapsto \exp (x)$, et son rayon de convergence est le même.
+			On a donc montré que $\exp$\/ est \textit{une} solution de $y' = y$. De plus, la fonction $x \mapsto K\:\mathrm{e}^{x}$\/ est aussi une solution de cette équation différentielle.
+			Montrons, avec la méthode de la variation de la constante, que ces fonctions sont les seules solutions de $y'= y$. On pose $y(x) = k(x) \mathrm{e}^k$, et on a
+			\begin{align*}
+				y'(x) = y(x) \iff& k'(x) \mathrm{e}^{x} + \cancel{k(x) \mathrm{e}^{x}} = \cancel{k(x)\mathrm{e}^{x}} \\
+				\iff& k'(x)\: \mathrm{e}^{x} = 0 \\
+				\iff&  k'(x) = 0 \\
+				\iff& \exists K \in \R,\: k(x) = K.
+			\end{align*}
+			D'où, la solution générale de l'équation $y' = y$\/ est : $\forall x \in \R,\: y(x) = K \mathrm{e}^{x}$.
+		\item Soit $\alpha \in \R$. On considère la série entière $\sum a_n x^n$\/ où \[
+				a_0 = 1\quad \text{ et } \quad a_n = \frac{\alpha(\alpha - 1)\cdots (\alpha - n + 1)}{n!} \text{ si } n > 0
+			.\] Soit $(u_n)_{n\in\N}$\/ défini comme $u_n = |a_n x^n|$, et on calcule, si $\alpha \not\in \N$,
+			\begin{align*}
+				\frac{u_{n+1}}{u_n} &= \left| \frac{a_{n+1}}{a_n} \times \frac{x^{n+1}}{x^n} \right|\\
+				&= |x| \times \left|\frac{\alpha (\alpha - 1)\cdots (\alpha-n+1) (\alpha - n)}{\alpha (\alpha - 1)\cdots (\alpha-n+1)}\right| \times \frac{n!}{(n+1)!} \\
+				&= \frac{|\alpha-n|}{n + 1}\:|x| \tendsto{n\to +\infty} |x| \\
+			\end{align*}
+			D'après le critère de \textsc{d'Alembert}, si $|x| > 1$, alors la série diverge, et si $|x| < 1$, alors la série converge. On en déduit que $R = 1$.
+			Soit, pour tout $x \in {]-1,1[}$, $f(x) = 1 + \sum_{n=1}^\infty a_n x^n$.
+			On peut dériver terme à terme sans changer le rayon de convergence. D'où 
+			\[
+				\forall x \in {]-1,1[},\quad f'(x) = \sum_{n=1}^\infty n a_n x^{n-1} = \sum_{n=1}^\infty \frac{\alpha (\alpha - 1)\cdots (\alpha - n + 1)}{(n-1)!} x^{n-1}
+			.\] Montrons que $f$\/ est solution de l'équation $\alpha y - (1+x) y' = 0$ :
+			\begin{align*}
+				\alpha\: f(x) - (1+x)\: f'(x)
+				&= \alpha \Big(1 + \sum_{n=1}^\infty a_n x^n\Big) - (1+x) \sum_{n=1}^\infty n a_n x^{n-1} \\
+				&= \alpha + \sum_{n=1}^\infty x^n (\alpha a_n - n a_n) - \sum_{n=1}^\infty n a_n x^{n-1}  \\
+				&= \alpha + \sum_{n=1}^\infty \big(x^n a_n (\alpha - n) - n a_n x^{n-1}\big) \\
+				&= 0 \\
+			\end{align*}
+			En effet, $(n+1) a_{n+1} = (\alpha - n) a_n$, par construction de la suite $(a_n)_{n\in\N}$, et \[
+				\alpha + \sum_{n=1}^N \big(x^n (n+1) a_{n+1} - x^{n+1} n a_n\big)
+				= \alpha - \alpha + x^N (N+1) a_{N+1} \tendsto{N\to \infty} 0
+			.\]
+			D'où, $f$\/ est solution de l'équation différentielle $\alpha y - (1+x) y' = 0$. Or, $x \mapsto K (1+x)^\alpha$\/ est une solution de cette équation différentielle. On fait varier la constante : on pose, pour $x \in {]-1,1[}$, $y(x) = k(x)\: (1+x)^\alpha$\/
+			\begin{align*}
+				&\mathrel{\phantom-}\alpha y(x) - (1+x)\: y'(x) - \alpha k(x)\: (1+x)^\alpha\\
+				&- (1+x)\big(k'(x) (1+x)^\alpha + \alpha\:k(x)(1+x)^{\alpha - 1}\big) = 0\\
+				\iff& \forall x \in{]-1,1[},\:(1+x)^{\alpha + 1} k'(x) = 0\\
+				\iff& \forall x \in {]-1,1[}, k'(x) = 0 \\
+				\iff&  \exists K \in \R,\: k(x) = K \\
+				\iff& \exists K \in \R,\:\forall x \in {]-1,1[}, f(x) = K (1+x)^\alpha \\
+			\end{align*}
+			Or, $f(0) = 1$\/ et donc $K = 1$.
+	\end{enumerate}
+\end{exm}
+

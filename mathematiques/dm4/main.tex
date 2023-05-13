@@ -1,0 +1,170 @@
+\documentclass[a4paper]{article}
+
+\input{../preamble.tex}
+%\usepackage{concmath}
+%\usepackage{tgschola}
+
+\let\bfseries\scshape
+
+\begin{document}
+	\begin{center}
+		\Huge \textbf{DM\textsubscript4 Mathématiques}
+	\end{center}
+
+	\begin{center}
+		\LARGE \textsc{Problème 1}
+	\end{center}
+	
+	\begin{enumerate}
+		\item Les événements $E_1$\/ et $E_2$\/ sont certains. Au 1\tsup{er} et au 2\tsup{nd} duel, le gagnant n'est pas encore désigné, peu importe les gagnants de ces duels. Pour calculer la probabilité de l'événement $E_3$, on passe au complémentaire : l'événement $\bar{E}_3$\/ correspond à \guillemotleft~le joueur 0 ou le joueur 1 ne gagne pas le duel.~\guillemotright\@ Ainsi, en notant $G^i_k$\/ l'événement \guillemotleft~le joueur~$A_k$\/ gagne le $i$-ème duel,~\guillemotright\ on a $\bar{E}_3 = (G_0^1 \cap G_0^2 \cap G_0^3) \cup (G_1^1 \cap G_1^2 \cap G_1^3)$, et cette union est disjointe. D'où 
+			\begin{align*}
+				P(\bar{E}_3) &= P(G_0^1 \cap G_0^2 \cap G_0^3) + P(G_1^1 \cap G_1^2 \cap G_1^3)\\
+				&= {}\mathbin{\phantom+} P(G_0^1) \times P(G_0^2  \mid G_0^1) \times P(G_0^3  \mid G_0^1 \cap G_0^2) \\
+				&\mathrel{\phantom=}{} + P(G_1^1) \times P(G_1^2  \mid G_1^1) \times P(G_1^3  \mid G_1^1 \cap G_1^2)\\
+				&= 2 \times \left( \frac{1}{2} \right)^3 = \frac{1}{4} \\
+			\end{align*}
+			On en déduit que $P(E_3) = 1 - P(\bar{E}_3) = \frac{3}{4}$.
+			On a bien $\frac{1}{2}P(E_2) + \frac{1}{4}P(E_1) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4} = P(E_3)$.
+		\item Soit $n\ge 3$. On pose $U_k$\/ l'événement \guillemotleft~il n'y a pas encore de gagnant désigné et le joueur $A_k$\/ remporte le duel $k$,~\guillemotright\ et $V_k$\/ l'événement \guillemotleft~il n'y a pas encore de gagnant désigné et le joueur $A_{k-1}$\/ remporte le duel $k$.~\guillemotright\@ Ainsi, $E_n = U_n \cup V_n$ et cette union est disjointe. Ainsi, $P(E_n) = P(U_n) + P(V_n)$.
+			D'une part, on a que $U_n = E_{n-1} \cap G^k_k$, donc $P(U_n) = P(E_{n-1}) \times P(G_k^k  \mid E_{n-1}) = \frac{1}{2}P(E_{n-1})$.
+			D'autre part, on a $V_n = E_{n-2} \cap G_{k-1}^{k-1} \cap G_{k-1}^k$, d'où $P(V_n) = P(E_{n-2}) \times P(G_{k-1}^{k-1}  \mid E_{n-2}) \times P(G_{k-1}^k  \mid E_{n-2} \cap G_{k-1}^{k-1}) = \frac{1}{2} \times \frac{1}{2} \times  P(E_{n-2})$.
+			On en déduit donc que\\
+			\null\hfill$\forall n \ge 3,\quad P(E_n) = \frac{1}{2}P(E_{n-1}) + \frac{1}{4} P(E_{n-2}).\hfill(\mathcal{R}_1)$
+		\item On pose, pour $n \ge 3$, $u_n = P(E_n)$. Ainsi, d'après $(\mathcal{R}_1)$, \[
+				\forall n \ge 3,\quad u_n = \frac{1}{2} u_{n-1} + \frac{1}{4} u_{n-2}
+			.\]
+			L'équation caractéristique de $(\mathcal{R}_1)$\/ est $x^2 = \frac{1}{2} x + \frac{1}{4}$. On résout donc $4x^2 - 2x - 1 = 0$. Le discriminant de ce trinôme est~$\Delta = 20 > 0$. On en déduit que les racines de cette équation caractéristique sont \[
+				x_1 = \frac{2 + \sqrt{20}}{8} = \frac{1 + \sqrt{5}}{4} \qquad \text{ et } \qquad x_2 = \frac{2 + \sqrt{20}}{8} = \frac{1 - \sqrt{5}}{4}
+			.\] Ainsi, il existe deux constantes réelles $\lambda$\/ et $\mu$\/ que l'on peut déterminer à l'aide de $u_1$\/ et $u_2$, telles que \[
+				P(E_n) = u_n = \lambda\times {x_1}^n + \mu\times{x_2}^n
+			.\]
+		\item L'événement $E_{n+1}$\/ est inclus dans $E_n$, ainsi la suite $(E_n)_{n\in\N}$\/ est décroissante (au sens de l'inclusion). Ainsi, par continuité décroissante, on a \[
+				P\Big(\bigcap_{n=2}^\infty E_n\Big) = \lim_{n\to \infty} P(E_n) = 0
+			\] comme $|r_1| < 1$\/ et $|r_2| < 1$. L'événement, que l'on notera $W$, \guillemotleft~le tournoi désignera un vainqueur~\guillemotright\ est le complémentaire de l'événement $\bigcap_{n=2}^{\infty} E_n$. Ainsi, $P(W) = 1 - P\big(\bigcap_{n=2}^\infty E_n\big) = 0$.
+	\end{enumerate}
+
+	\begin{center}
+		\LARGE \textsc{Problème 2}
+	\end{center}
+
+	\begin{enumerate}
+		\item Soient $u,v \in \exists $. On a
+			\begin{align*}
+				\det\big(G(u,v)\big) &= \left<u \mid u \right>\:\left<v \mid v \right> - \left<v \mid u \right>\:\left<u \mid v \right>\\
+				&= \|u\|^2\:\|v\|^2 - \left<u \mid v \right>^2 \text{ par symétrie }\\
+				&= \big(\|u\|\:\|v\| - \left<u \mid v \right>\big)
+				\big(\|u\|\:\|v\| + \left<u \mid v \right>\big)\\
+				&= \big(\|u\|\:\|v\| - \left<u \mid v \right>\big)
+				\big(\|-u\|\:\|v\| - \left<(-u) \mid v \right>\big)\\
+				&\ge 0 \text{ par inégalité de \textsc{Cauchy-Schwarz}}.
+			\end{align*}
+			Ce déterminant est nul si, et seulement si $u$\/ et $v$\/ sont colinéaires (d'après l'égalité de \textsc{Cauchy-Scharz}). Ainsi, $u$\/ et $v$\/ non colinéaires est un condition nécessaire et suffisante pour que $\det G(u,v)$\/ soit strictement positif.
+		\item
+			\begin{enumerate}
+				\item On calcule, pour $(i,j) \in \llbracket 1,n \rrbracket^2$,
+					\begin{align*}
+						\big(G(v_1,\ldots,v_n)\big)_{i,j} &= \left<v_i  \mid v_j \right>\\
+																							&= \Big< \sum_{k=1}^n a_{k,i} e_k \:\Big|\: \sum_{k=1}^n a_{k,j} e_k\Big>\\
+						&= \sum_{k=1}^n a_{k,i}\Big<e_k \:\Big|\sum_{p=1}^n a_{p,j} e_p \Big> \\
+						&= \sum_{k=1}^n \sum_{p=1}^n a_{k,i} a_{p,j} \left<e_k  \mid e_p \right>  \\
+						&= \sum_{k=1}^n a_{k,i} a_{k,j} \text{ car la base } (e_1,\ldots,e_n)  \text{ est orthonormée }\\
+						&= \sum_{k=1}^n (A^\top)_{i,k}\:(A)_{k,j} \\
+						&= (A^\top \cdot A)_{i,j} \\
+					\end{align*}
+					D'où $G(v_1,\ldots,v_n) = A^\top \cdot A$.
+				\item On a $\det G(v_1,\ldots,v_n) = \det (A^\top \cdot A) = \det A^\top \times \det A = \det^2 A \ge 0$.
+				\item On cherche à montrer que $\Ker A = \Ker G(v_1, \ldots, v_n)$. Soit $X \in \mathcal{M}_{n,1}(\R)$. Montrons que $A\cdot X = 0$\/ si, et seulement si $A^\top \cdot A\cdot X = 0$, d'après (a). On remarque que, si $A\cdot X = 0$, alors $A^\top \cdot (A\cdot X) = 0$.
+					Réciproquement, si $A^\top \cdot A \cdot X = 0$, alors $(A\cdot X)^\top \cdot A\cdot X = X^\top \cdot A^\top \cdot A^\top \cdot X = 0$.
+					Mais, avec le produit scalaire canonique sur $\mathcal{M}_{n,n}(\R)$, on a $\left<AX \mid AX \right> = 0$, d'où $AX = 0$.
+					D'après (a), $\Ker G(v_1, \ldots, v_n) = A^\top \cdot A$. Ainsi, d'après le théorème du rang,
+					\begin{align*}
+						\rg A = \dim(\Im A) &= \dim \mathcal{M}_{n,1}(\R) - \dim(\Ker A)\\
+						&= \dim \mathcal{M}_{n,1}(\R) - \dim G(v_1, \ldots, v_n)\\
+						&= \dim\!\big(\!\Im G(v_1, \ldots, v_n)\big)\\
+						&= \rg G(v_1, \ldots, v_n)
+					\end{align*}
+				\item On sait que, pour $j \in \llbracket 1,n \rrbracket$, $v_j = \sum_{i=0}^n a_{i,j} e_j$. On a donc bien $\dim (\Im A) = \dim \Vect(v_1, \ldots, v_n)$. D'où, d'après la question précédente, \[
+					\dim \Vect(v_1, \ldots, v_n) = \dim\!\big(\!\Im G(v_1, \ldots, v_n)\big)
+				.\]
+			\end{enumerate}
+		\item
+			\begin{enumerate}
+				\item On a
+					\begin{align*}
+						G(v_1, \ldots, v_n, z) &= \begin{pmatrix}
+							\left<v_1 \mid v_1 \right> & \ldots & \left<v_1 \mid v_n \right> & \left<v_1 \mid z \right>\\
+							\vdots & \ddots & \vdots & \vdots\\
+							\left<v_n  \mid v_1 \right> & \ldots & \left<v_n  \mid v_n \right> & \left<v_n  \mid z \right>\\
+							\left<z  \mid v_1 \right> & \ldots & \left<z  \mid v_n \right> & \left<z  \mid z \right>
+						\end{pmatrix}\\
+						&= \begin{pmatrix}
+							\left<v_1 \mid v_1 \right> & \ldots & \left<v_1 \mid v_n \right> & 0\\
+							\vdots & \ddots & \vdots & \vdots\\
+							\left<v_n  \mid v_1 \right> & \ldots & \left<v_n  \mid v_n \right> & 0 \\
+							0 & \ldots & 0 & \|z\|^2
+						\end{pmatrix} \\
+					\end{align*}
+					Le déterminant de cette matrice diagonale par blocs est le produit des déterminants de chaque bloc, d'où \[
+						\det G(v_1, \ldots, v_n, z) = \det G(v_1, \ldots, v_n) \cdot \|z\|^2
+					.\]
+				\item On exprime $y \in F$\/ dans la base $(v_1, \ldots, v_n)$\/ : soient $y_1, \ldots, y_n$\/ tels que $y = \sum_{i=0}^n y_i v_i$.
+					\begin{align*}
+						G(v_1, \ldots, v_n, y+z) &= \begin{pmatrix}
+							\left<v_1 \mid v_1 \right> & \ldots & \left<v_1 \mid v_n \right> & \left<v_1 \mid y + z \right>\\
+							\vdots & \ddots & \vdots & \vdots\\
+							\left<v_n  \mid v_1 \right> & \ldots & \left<v_n  \mid v_n \right> & \left<v_n  \mid y + z \right>\\
+							\left<y+z  \mid v_1 \right> & \ldots & \left<y+z  \mid v_n \right> & \left<y + z  \mid y + z \right>
+						\end{pmatrix}\\
+						&= \begin{pmatrix}
+							\left<v_1 \mid v_1 \right> & \ldots & \left<v_1 \mid v_n \right> & \left<v_1 \mid z \right>\\
+							\vdots & \ddots & \vdots & \vdots\\
+							\left<v_n  \mid v_1 \right> & \ldots & \left<v_n  \mid v_n \right> & \left<v_n  \mid z \right>\\
+							\left<y+z  \mid v_1 \right> & \ldots & \left<y+z  \mid v_n \right> & \left<z  \mid y + z \right>
+						\end{pmatrix}\\
+					\end{align*}
+					en appliquant soustrayant les $p$\/ premières colonnes, multipliées par $y_i$\/ : $C_{n+1} \gets C_{n+1} - \sum_{i=1}^n y_i\:C_i$, où les $C_i$\/ sont les colonnes de la matrice.
+					Ainsi, on a \[
+						G(v_1, \ldots, v_n, y + z)
+						= \begin{pmatrix}
+							\left<v_1 \mid v_1 \right> & \ldots & \left<v_1 \mid v_n \right> & 0\\
+							\vdots & \ddots & \vdots & \vdots\\
+							\left<v_n  \mid v_1 \right> & \ldots & \left<v_n  \mid v_n \right> & 0\\
+							\left<y+z  \mid v_1 \right> & \ldots & \left<y+z  \mid v_n \right> & \left<z \mid z \right>
+						\end{pmatrix}
+					.\] Cette matrice est triangulaire par blocs, d'où, \[
+						\det G(v_1, \ldots, v_n, y + z) = \det G(v_1, \ldots, v_n) \cdot \|z\|^2
+					.\]
+				\item Soit $x \in E$. On pose $y = p(x) \in F$\/ et $z = x - p(x) \in F^\perp$. D'où, d'après la question précédente, \[
+					\mathrm{d}(x,F) = \|z\| = \sqrt{\frac{\det G(v_1, \ldots, v_n, x)}{\det G(v_1,\ldots,v_n)}}
+				.\] La racine carrée est bien définie d'après la question (2b).
+			\end{enumerate}
+		\item
+			\begin{enumerate}
+				\item On remarque que, pour tout couple $(i,j) \in \llbracket 0,n - 1 \rrbracket^2$, on a \[
+						\left<X^i  \mid X^j \right> = \int_{0}^{1} t^{i}\cdot t^{j}~\mathrm{d}t = \left[ \frac{t^{i+j+1}}{i+j+1} \right]_0^1 = \frac{1}{i + j + 1} = (H_n)_{i,j}
+					.\]Ainsi, la matrice $H_n$\/ est donc la matrice de \textsc{Gram} pour le produit scalaire dans $\R_{n-1}[X]$\/ : $H_n = G(1, X, \ldots, X^{n-1})$.
+					La famille $(1, X, \ldots, X^{n-1})$\/ étant une base de $\R_{n-1}[X]$, elle est libre, d'où $\det G(1, X, \ldots, X^n) \neq 0$, d'après la question (2a) car $\det A = \det_\mathcal{B}(1, X, \ldots, X^n)$, pour une base orthonormalisée $\mathcal{B}$. La matrice $H_n$\/ est donc inversible.
+				\item D'après le théorème des moindres carrés, la fonction $P \in \R_{n-1}[X] \mapsto \|X^n-P\|$\/ atteint un minimum pour $P = p(X^n)$, où $p$\/ est la projection orthogonale de $\R_n[X]$\/ sur $\R_{n-1}[X]$.
+					D'où, en posant $p(X^n) = a_0 + a_1 X + \cdots + a_{n-1}X^{n-1}$, la fonction $f$\/ admet un minimum avec $(a_0, a_1, \ldots, a_{n-1})$, les coefficients de $p(X^n)$. Avec ces coefficients, la valeur de $f$\/ est alors $\|X^n - p(X^n)\|^2$.
+					Or, $\|X^n - p(X^n)\| = \mathrm{d}(X^n, \R_{n-1}[X])$, et, d'après la question (3c), on a, \[
+						\|X^n - p(X^n)\|^2 = \frac{\det G(1, X, \ldots, X^{n-1}, X^n)}{\det G(1, X, \ldots, X^{n-1})} = \frac{\det H_{n+1}}{\det H_n}
+					.\]
+			\end{enumerate}
+	\end{enumerate}
+
+	\begin{center}
+		\LARGE \textsc{Problème 3}
+	\end{center}
+	\begin{enumerate}
+		\item
+			\begin{enumerate}
+				\item On considère la série entière $\sum \frac{x^n}{n!}$, dont la somme vaut la fonction $\exp$.
+					La série $\sum \frac{1}{n!}$\/ converge, d'où $(\mathcal{P}_1)$.
+					La limite $\lim_{x\to 1^-} \exp x$\/ existe et est finie ; elle vaut~$\mathrm{e}$, d'où $(\mathcal{P}_2)$.
+				\item On considère la série entière $\sum (-x)^n$, qui converge vers la fonction $f: x \mapsto \frac{1}{1+x}$. La série $\sum (-1)^n$\/ diverge, elle ne vérifie donc pas $(\mathcal{P}_1)$. Mais, $f$\/ admet une limite finie en 1 : $f(1) = \frac{1}{2}$, d'où $(\mathcal{P}_2)$.
+				\item On considère la série entière $\sum \frac{x^n}{n}$, qui converge vers la fonction $f:x\mapsto \ln(1-x)$. La série $\sum \frac{1}{n}$\/ diverge, elle ne vérifie donc pas $(\mathcal{P}_1)$.
+					Et, $\lim_{x\to 1^-} \ln(1-x) = -\infty$, elle ne vérifie donc pas $(\mathcal{P}_2)$.
+				\item 
+			\end{enumerate}
+	\end{enumerate}
+\end{document}

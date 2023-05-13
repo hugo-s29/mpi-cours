@@ -1,0 +1,48 @@
+\section{Programmation dynamique}
+
+On rappelle le problème \textsc{Knapsack} : \[
+	\begin{cases}
+		\text{\textbf{Entrée}} &: n \in \N,\: w \in (\N^*)^n,\: v \in (\N^*)^n,\: P \in \N\\
+		\text{\textbf{Sortie}} &:\max_{x \in \{0,1\}^n} \big\{\left<x,v \right> \:\big|\: \left<x,w \right> \le P \}.
+	\end{cases}
+\]
+
+On pose \[\textsc{sad}(n, w, v, P) = \max_{x \in \{0,1\}^n} \big\{\left<x,v \right> \:\big|\: \left<x,w \right> \le P \},\] et \[\mathrm{sol}(n, w, v, P) = \{\left<x,v \right>  \mid \left<x,w \right> \le P,\: x \in \{0,1\}^n \}.\] Lorsque $y \in \R^n$, avec $y = (y_1, \ldots, y_n)$, on note $\R^{n-1} \owns \tilde y = (y_2, y_3, \ldots, 0)$. Ainsi, si $n > 0$,
+\begin{align*}
+	\mathrm{sol}(n, w, v, P) &= \{\left<x, v \right>  \mid \left< x,w \right> \le P,\: x \in \{0,1\}^n \text{ et } x_1 = 0\}\\
+	&\quad\cup \{\left<x, v \right>  \mid \left< x,w \right> \le P,\: x \in \{0,1\}^n \text{ et } x_1 = 1\}\\
+	&= \{\left<\tilde{x}, \tilde{v} \right>  \mid \left<\tilde{x}, \tilde{w} \right> \le P,\: x u\in \{0,1\}^n \text{ et } x_1 = 0\} \\
+	&\quad\cup \{v_1 + \left<\tilde{x}, \tilde{v} \right>  \mid \left<\tilde{x},\tilde{w} \right> \le P - w_1,\: x \in \{0,1\}^n \text{ et } x_1 = 1\}\\
+	&= \{\left<y, \tilde{v} \right>  \mid \left<y, \tilde{w} \right> \le P \text{ et } y \in \{0,1\}^{n-1}\}  \\
+	&\quad\cup \{v_1 + \left<y, \tilde{v} \right>  \mid \left<y, \tilde{w} \right> \le P - w_1 \text{ et } y \in \{0,1\}^{n-1}\}
+\end{align*}
+D'où, par passage au $\max$, si $n > 0$,
+\begin{align*}
+	\textsc{sad}(n, w, v, P) &= \max( \\
+	&\quad\quad \max \{\left<y  \mid \tilde{v} \right>  \mid \left<y, \tilde{w} \right> \le P \text{ et } y \in \{0,1\}^{n-1}\}\\
+	&\quad\quad v_1 + \max \{\left<y  \mid \tilde{v} \right>  \mid \left<y, \tilde{w} \right> \le P - w_1 \text{ et } y \in \{0,1\}^{n-1}\} \\
+	&) = \max\!\big(\textsc{sad}(n-1, \tilde{w}, \tilde{v}, P), v_1 + \textsc{sad}(n-1, \tilde{w}, \tilde{v}, P - w_1)\big).
+\end{align*}
+Si $n = 0$, alors $\textsc{sad}(0, v, w, P) = 0$.
+
+\begin{rmk}
+	Si on le code \textit{tel quel}, il y aura $\mathcal{O}(2^n)$ appels récursifs. Mais, on a $(n+1)(P+1)$\/ sous-problèmes.
+\end{rmk}
+
+Notons alors, pour $n$, $v$, $w$, $P$ fixés, $(s_{i,j})_{\substack{i \in \llbracket 1,n \rrbracket\\ j \in \llbracket 0,P \rrbracket}}$\/ tel que \[
+	s_{i,j} = \textsc{sad}\Big(n-i, v_{\big|\llbracket i+1,n \rrbracket}, w_{\big|\llbracket i+1,n \rrbracket}, j\Big)
+.\]
+On a alors $\textsc{sad}(n, v, w, P) = s_{0,P}$. Ainsi, pour $j \in \llbracket 0,P \rrbracket$, $s_{n,j} = 0$ ; pour $i \in \llbracket 0,n \rrbracket$, $s_{i,0} = 0$ ; \[
+	s_{i,j} = \max(s_{i+1,j}, v_{i+1} + s_{i+1,j- w_{i+1}})
+;\] et, si $w_{i+1} > j$, alors $s_{i,j} = s_{i+1,j}$.
+
+La complexité de remplissage de la matrice est en $\mathcal{O}(n\,P)$\/ en temps et en espace.
+On n'a pas prouvé $\text{\textbf{P}} = \text{\textbf{NP}}$, la taille de l'entrée est
+\begin{itemize}
+	\item pour un entier $n$\/ : $\log_2(n)$,
+	\item pour un tableau de $n$\/ entiers : $n \log_2(n)$,
+	\item pour un tableau de $n$\/ entiers : $n \log_2(n)$,
+	\item pour un entier $P$ : {\color{red}$\log_2(P)$}.
+\end{itemize}
+Vis à vis de la taille de l'entrée, la complexité de remplissage est {\color{red}exponentielle}.
+

@@ -1,0 +1,109 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\def\khollenum{20}
+
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+\fancyhead[R]{\scshape Khôlle n\tsup{o} \khollenum}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} \khollenum
+	\end{center}
+
+	\paragraph{Exercice 1.}
+	\begin{enumerate}
+		\item Pour tout entier $k \in \N$, et pour tout $t \in {]0,1]}$, on a $|t^{2k} \ln t| \le |{\ln t}| = -\ln t$. Et, l'intégrale $\int_{0}^{1} |{\ln t}|~\mathrm{d}t = -\int_{0}^{1} \ln t~\mathrm{d}t$ converge.
+			D'où, l'intégrale $\int_{0}^{1} |t^{2k} \ln t|~\mathrm{d}t$ converge.
+			On en déduit que l'intégrale $I_k$ converge, pour tout entier $k \in \N$.
+
+			Soit $x \in {]0,1]}$.
+			On calcule
+			\begin{align*}
+				\int_{x}^{1} t^{2k} \ln t~\mathrm{d}t &= \left[ \frac{t^{2k+1}}{2k+1} \ln t \right]_x^1 - \int_{x}^{1} \frac{t^{2k+1}}{2k+1} \cdot \frac{1}{t}~\mathrm{d}t && \substack{\text{ car $\ln$ et $t \mapsto t^{2k}$ sont $\mathcal{C}^1$}\hfill\null\\\text{par intégration par parties sur le segment $[x,1]$}}\\
+				&= \frac{-x^{2k+1}}{2k+1} - \int_{x}^{1} \frac{t^{2k}}{2k+1}~\mathrm{d}t \\
+				&= -\frac{x^{2k+1}}{2k+1} - \left[ \frac{t^{2k+1}}{(2k+1)^2} \right]_x^1  \\
+				&= -\frac{x^{2k+1}}{2k+1} - \frac{1}{(2k+1)^2} + \frac{x^{2k+1}}{(2k+1)^2} \\
+				&\tendsto{x\to 0} -\frac{1}{(2k+1)^2}.
+			\end{align*}
+			On en déduit que, pour tout $k \in \N$, $I_k = -1 / (2k+1)^2$.
+		\item La série de fonctions $\sum f_k$, où $f_k : t \mapsto t^{2k} \ln t$, converge simplement vers la fonction $t \mapsto \ln t / (1 - t^2)$ sur $]0,1[$.
+			Les fonctions $f_k$ sont continues et intégrables : \[
+				\int_{0}^{1} |f_k(t)|~\mathrm{d}t = -\int_{0}^{1} t^{2k} \ln t~\mathrm{d}t = -I_k
+			.\]
+			Et, la série $\sum (-I_k) = -\sum 1 / (2k+1)^2$ converge car, pour tout $k \in \N$, $0 \le 1/(2k+1)^2 \le 1 / k^2$ et la série $\sum 1/k^2$ converge.
+			Ainsi, la fonction $g : t \mapsto \ln t / (1 - t^2)$ est intégrable sur $]0,+\infty[$, donc $f = -g$ l'est aussi ; et,
+			\begin{align*}
+				\int_{0}^{1} \frac{\ln t}{t^2 - 1}~\mathrm{d}t &= -\sum_{k=0}^\infty \int_{0}^{1} f_k(t)~\mathrm{d}t\\
+				&= \sum_{k=0}^\infty (-I_k)\\
+				&= \sum_{k=0}^\infty \frac{1}{(2k+1)^2}\\
+				&= \sum_{k=1}^\infty \frac{1}{k^2} - \sum_{k=1}^\infty \frac{1}{(2k)^2} && \substack{\text{ par somme termes pairs/impairs}\\ \text{pour la série $\sum 1 / k^2$ }} \\
+				&= \frac{\pi^2}{6} - \frac{1}{4} \sum_{k=1}^\infty \frac{1}{k^2} \\
+				&= \frac{\pi^2}{6}\left( 1 - \frac{1}{4} \right)  \\
+				&= \frac{\pi^2}{8}. \\
+			\end{align*}
+	\end{enumerate}
+
+	\paragraph{Exercice 2.}
+	\begin{enumerate}
+		\item La fonction $\ln$\/ est de classe $\mathcal{C}^2$ sur $]0,+\infty[$ donc deux fois dérivable sur cet intervalle et, pour tout $x > 0$, $\ln'' x = -1/x^2 < 0$. La fonction $\ln$\/ est donc concave sur $]0,+\infty[$.
+			Soient $a$, $b$ et $c$ trois réels strictement positifs.
+			Par concavité de la fonction $\ln$, on a $\ln\big((a + b + c) / 3\big) \le (\ln a + \ln b + \ln c) / 3$.
+			D'où, $\ln\big((a+b+c) / 3\big) \le \ln(abc) / 3 = \ln \sqrt[3]{abc} $.
+			Par croissance de $\ln$, on en déduit que \[
+				\frac{a+b+c}{3} \ge \sqrt[3]{abc} 
+			.\]
+		\item La fonction $f$ est de classe $\mathcal{C}^1$ sur $(\R^+_*)^2$, donc différentiable sur $(\R^+_*)^2$. On calcule $\nabla f(x,y) = \big(1 - \sfrac1{yx^2},1 - \sfrac1{xy^2}\big)$.
+			On procède par analyse-synthèse.
+			\begin{description}
+				\item[Analyse.] On suppose que $f$ atteint un extremum local en $(x,y) \in (\R_+^*)^2$. Ainsi, $\nabla f(x,y) = 0$.
+					D'où, $1 = 1 / yx^2$ et $1 = 1/xy^2$. On en déduit que $yx^2 = xy^2$, d'où $x = y$.
+					Or, $1 = 1 / yx^2 = 1 / x^3$, d'où $x = y = 1$.
+					Ainsi, si un extremum est atteint, il sera en $(1,1)$.
+				\item[Synthèse.] Montrons que $f$ atteint un minimum en $(1,1)$.
+					Montrons ainsi que $f(x,y) \ge f(1,1) = 3$ pour tout vecteur $(x,y) \in (\R^+_*)^2$.
+					\[
+						f(x,y) = x + y + \frac{1}{xy} \ge 3 \sqrt[3]{\frac{xy}{xy}} = 3 = f(1,1)
+					.\]
+			\end{description}
+			On en déduit que $f$ atteint un minimum global en $(1,1)$, et n'a pas de maximum (local ou global) et n'a pas d'autres minima (locaux ou globaux).
+	\end{enumerate}
+
+	\paragraph{Exercice 3.}
+	\begin{enumerate}
+		\item L'univers $\Omega$ est l'ensemble des $(n+1)$-uplets d'éléments de $\llbracket 1,n \rrbracket$ : $\Omega = \llbracket 1,n \rrbracket^{n+1}$.
+			Soit $k \in \llbracket 2,n+1 \rrbracket$. L'événement $(X = k)$\/ n'est pas vide car le $(n+1)$-uplet \[
+				u_k = (1, 2, \ldots, {k-2}, 1, 1, \ldots, 1)
+			\] est un élément de $(X = k)$.
+			D'où, par croissance de la probabilité, $P(\{u_k\}) \le P(X = k)$, car $\{u_k\} \subset (X=k)$.
+			Or, par équiprobabilité, $P(\{u_k\}) = 1 / \Card \Omega = 1 / n^{n+1} > 0$.
+			On en déduit que $P(X = k) > 0$.
+		\item Montrons $P(X > k) \neq 0$. On a $(X > k) = (X \ge k + 1)$, d'où $P(X > k) = P({X \ge k+1}) > 0$ car $k + 1 \in \llbracket 2,n \rrbracket$.
+			On sait que $(X > k+ 1) \cap (X > k) = (X > k + 1)$ car $(X > k) \subset (X > k + 1)$.
+			On a montré précédemment que $P(X > k) \neq 0$.
+			On en déduit, par définition des probabilités conditionnelles, \[
+				P(X > k + 1) = P\big((X > k+ 1) \cap (X > k)\big) = P(X > k + 1  \mid X > k) \cdot P(X > k)
+			.\]
+		\item Au $(k + 1)$-ième lancer, on choisit une boule parmi $n$ avec équiprobabilité.
+			Pour que $X > k + 1$ sachant que $X > k$, il faut tirer une boule non tirée, il y en a $n - k$.
+			D'où, $P(X > k + 1  \mid X > k) = (n-k) / n$.
+		\item Montrons, par récurrence sur $k$, la propriété $\mathcal{P}(k)$ : \guillemotleft~$P(X > k) = n! / (n^k \cdot (n-k)!)$.~\guillemotright
+			\begin{itemize}
+				\item Pour $k = 0$, on a $P(X > 0) = 1 = n! / (n^0 \cdot n!)$.
+					Ainsi, $\mathcal{P}(0)$ est vraie.
+				\item On suppose $\mathcal{P}(k)$ vraie, montrons que $\mathcal{P}(k+1)$ est aussi vraie. En appliquant l'égalité des probabilités trouvées à la question précédente, qui est valide comme $k \in \llbracket 1,n - 1 \rrbracket$, on calcule
+					\begin{align*}
+						P(X > k + 1) &= P(X > k + 1  \mid X > k) \cdot P(X > k)\\
+						&= \frac{n - k}{n}\cdot \frac{n!}{n^k \cdot (n-k)!} \\
+						&= \frac{n!}{n^{k+1} \cdot (n-k+1)!}. \\
+					\end{align*}
+					Ainsi, $\mathcal{P}(n+1)$ est vraie.
+			\end{itemize}
+			On en déduit, par récurrence, que $P(X > k) = n! / \big(n^k \cdot (n -k)!\big)$, pour tout $k \in \llbracket 1,n-1 \rrbracket$.
+			De plus, pour $k = n$, on a $P(X > n) = 0$ car il n'y a que $n$ boules dans l'urne.
+	\end{enumerate}
+
+\end{document}
+
+

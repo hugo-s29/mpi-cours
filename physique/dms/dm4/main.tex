@@ -1,0 +1,373 @@
+\documentclass[a4paper, 11pt]{article}
+
+\input{../../preamble.tex}
+\usepackage{comment}
+\usepackage{slantsc}
+%\usepackage{concmath}
+
+\fancyhead{} \fancyfoot{}
+\fancyfoot[C]{{\sffamily\itshape--\:\thepage\:--}}
+\fancyhead[R]{DM\textsubscript4 Physique}
+\fancyhead[L]{Hugo \textsc{Salou} \& Noémie \textsc{Combey}, \textit{MPI}$^\star$}
+
+\def\thefigure{\alph{figure}}
+
+%\usepackage{bera}
+%\usepackage{tgpagella}
+%\usepackage{quattrocento}
+%\usepackage[t,lf]{spectral}
+\usepackage{tgschola}
+\renewcommand{\sfdefault}{cmr}
+\begin{comment}
+\let\gguillemotleft\guillemotleft
+\let\gguillemotright\guillemotright
+\def\guillemotleft{\textsf{\gguillemotleft}}
+\def\guillemotright{\textsf{\gguillemotright}}
+\end{comment}
+
+
+\pagecolor{truewhite}
+\definecolor{black}{HTML}{000000}
+\definecolor{white}{HTML}{ffffff}
+\color{black}
+
+\begin{asydef}
+	white = rgb("ffffff");
+	black = rgb("000000");
+	defaultpen(black + fontsize(8pt));
+\end{asydef}
+
+\let\underline\ul
+
+\begin{document}
+	\begin{center}
+		\LARGE\scshape ---\quad Problème n\textsuperscript o\,1\quad--- \\
+		\itshape Température de surface de la Terre et de la Lune
+	\end{center}
+
+	\begin{multicols}{2}
+		Dans tout cet exercice, les figures réalisées ne seront pas à l'échelle : les distances entre planètes sont réduites pour la lisibilité.
+
+		\noindent {\large\bfseries Température terrestre}\quad\hrule
+		\noindent{\large\itshape I.\ \underline{Un modèle bien fruste}}
+		\begin{enumerate}
+			\item Premièrement, la surface d'une sphère est donnée par \[
+					S_\mathrm{S} = 4 \pi {R_\mathrm{S}}^2
+				.\] Et, par la loi de \textsc{Stefan}, à l'équilibre radiatif et thermique,
+				\[
+					P_\mathrm{S} = \Phi_\mathrm{S} = S_\mathrm{S} \: \varphi^0 = S_\mathrm{S} \cdot \sigma \cdot T_\mathrm{S} ^4
+				.\] On en déduit que \[
+					\boxed{P_\mathrm{S} = 4 \pi\: {R_\mathrm{S}}^2\: \sigma\: {T_\mathrm{S}}^4 .}
+				\]
+
+				La puissance reçue par la Terre à une distance $D_\mathrm{ST}$\/ est proportionnelle au ratio de la surface d'un disque du même rayon que la Terre placé à une distance $D_\mathrm{ST}$\/ du Soleil, et de la surface totale d'une sphère de rayon $D_\mathrm{ST}$.
+				\begin{figure}[H]
+					\centering
+					\begin{asy}
+						import solids;
+						settings.render = 0;
+						settings.prc = false;
+						dot("$\mathrm{S}$", O, align=NE);
+						size(5cm);
+						triple T = (-2, -2, 0);
+						revolution r = sphere(T, 0.2);
+						draw(r, 1, longitudinalpen=nullpen);
+						draw(r.silhouette());
+
+						for(int i = 0; i < 20; ++i) {
+							real global_alpha = (i / 19) * silhouette.length;
+							int num = min(floor(global_alpha), silhouette.length - 1);
+							real frac = global_alpha - num;
+							path3 p = silhouette[num];
+							real len = length(p);
+							triple z = point(p, frac);
+							draw(O--z, red);
+						}
+					\end{asy}
+					\caption{Puissance reçue par la Terre provenant du Soleil}
+				\end{figure}
+				Ainsi, on a donc \[
+					P_0 = P_\mathrm{S} \cdot \frac{\pi\: {R_\mathrm{T}}^2}{4\pi\: {D_\mathrm{ST}}^2}
+				.\] 
+				On en déduit la relation \[
+					\boxed{P_0 = P_\mathrm{S} \cdot \left( \frac{R_\mathrm{T}}{2D_\mathrm{ST}} \right)^{\!\!2}.}
+				\]
+				À cette expression de la puissance reçue, on peut appliquer la loi de \hbox{\textsc{Stefan}}, à l'équilibre radiatif et thermique,
+				\begin{align*}
+					T_\mathrm{T} &= \sqrt[4]{\frac{P_0}{\sigma\: S_\mathrm{T}}}\\
+					&= \sqrt[4]{\frac{1}{\sigma}\: P_\mathrm{S} \cdot \left( \frac{R_\mathrm{T}}{2D_\mathrm{ST}}\right)^{\!\!2} \cdot \frac{1}{4\pi\: {R_\mathrm{T}}^2}}  \\
+					&= \sqrt[4]{4\pi\: {R_\mathrm{S}}^2\: {T_\mathrm{S}}^4 \cdot \left(\frac{1}{2D_\mathrm{ST}}\right)^{\!\!2} \cdot \frac{1}{4\pi}}  \\
+					&= T_\mathrm{S} \cdot \sqrt{ \frac{R_\mathrm{S}}{2D_\mathrm{ST} }} \\
+				\end{align*}
+				Ainsi, on en déduit donc l'expression de la température à la surface de la Terre : \[
+					\boxed{T_\mathrm{T} = T_\mathrm{S} \cdot \sqrt{\frac{R_\mathrm{S}}{2D_\mathrm{ST}}}  .}
+				\]
+			\item Par définition de l'\textit{albédo}, la proportion de rayonnement absorbé est $1 - A_\mathrm{T}$. Ainsi, on multiplie par ce facteur la relation entre $P_0$\/ et $P_\mathrm{S}$\/ : \[
+					P_0 = (1-A_\mathrm{T}) \cdot P_\mathrm{S} \cdot \left( \frac{R_\mathrm{T}}{2D_\mathrm{ST}} \right)^{\!\!2}
+				.\]
+				Et, on utilise, à nouveau, la loi de \hbox{\textsc{Stefan}}, à l'équilibre radiatif et thermique :
+				\[
+					T_\mathrm{T} = \sqrt[4]{\frac{P_0}{\sigma\: S_\mathrm{T}}} 
+				.\] On en déduit donc \[
+					\boxed{T_\mathrm{T} = T_\mathrm{S} \cdot \sqrt{\frac{R_\mathrm{S}}{2\:D_\mathrm{ST}} \cdot (1-A_\mathrm{T})^{1/2}}.}
+				\] On met ce résultat à la puissance 4, et on trouve \[
+					\boxed{{T_\mathrm{T}}^4 = {T_\mathrm{S}}^4 \cdot \left( \frac{R_\mathrm{S}}{2D_\mathrm{ST}} \right)^{\!\!2} \cdot (1-A_\mathrm{T}),}
+				\] ce qui correspond bien à l'égalité demandée.
+			\item On réalise l'application numérique avec les valeurs $A_\mathrm{T} = 0{,}35$, $R_\mathrm{S} = 7 \times 10^{5}\:\mathrm{km}$, $R_\mathrm{T}  = 6{,}38\times 10^{3}\:\mathrm{km}$, $T_\mathrm{S} = 5\,800\:\mathrm{K}$\/ et $D_\mathrm{ST} = 1{,}5\times 10^8\:\mathrm{km}$. On trouve \[
+					\boxed{T_\mathrm{T} \simeq 251\:\mathrm{K} \simeq -22\:^\circ\mathrm{C}.}
+				\]
+				Cette température ne correspond pas au $15\:^\circ \mathrm{C}$\/ habituel, on change donc de modèle.
+		\end{enumerate}
+		\noindent{\large\itshape II.\ \underline{Influence de l’atmosphère terrestre}}
+		\begin{enumerate}[start=4]
+			\item Le rayonnement de la Terre est de nature infrarouge (due à sa température). Mais, le rayonnement solaire est notamment de nature visible. L'absorption de l'atmosphère dépend donc de la longueur d'onde du rayonnement. Cette absorption peut être due à une interaction avec certaines particules de l'atmosphère telles que l'eau ou le dioxyde de carbone.
+			\item La proportion du rayonnement passant l'atmosphère est $1 - \alpha$\/ ; la proportion du rayonnement arrivé sur Terre qui est absorbé est $1 - A_\mathrm{T}$. D'où l'expression de la puissance absorbée \[
+					\boxed{P_1 = P_0 \cdot (1-\alpha)\cdot (1-A_\mathrm{T}).}
+				\]
+				De plus, d'après la loi de \textsc{Stefan}, à l'équilibre, $P_2 = \sigma \cdot {T_\mathrm{a}}^4\cdot S_\mathrm{T}$. Ainsi, \[
+					\boxed{P_2 = \sigma \cdot {T_\mathrm{a}}^4 \cdot 4 \pi \cdot {R_\mathrm{T}}^2.}
+				\]
+				On réalise un bilan thermique pour la Terre.
+				La puissance reçue est $P_1 + P_2$ ; on note la puissance émise $P_\mathrm{T}$. Ainsi, à l'équilibre, \[
+					\quad\quad\quad\quad\phantom{(\star)} P_1 + P_2 = P_\mathrm{T}.\quad\quad\quad\quad(\star)
+				\]
+				De plus, l'atmosphère émet un rayonnement de puissance $2P_2$\/ (même rayonnement dirigé vers la Terre, que vers l'espace, d'après \textit{Fig.\ 1} du sujet) ; et, elle reçoit le rayonnement émis par la Terre (qui a une puissance $P_\mathrm{T}$), et le rayonnement provenant du Soleil non absorbé par la surface terrestre : $P_0 \cdot (1-A_\mathrm{T}) \cdot \alpha = P_1 \cdot \frac{\alpha}{1-\alpha}$.
+				D'où, à l'équilibre, on a \[
+					\quad\quad\phantom{(\star\star)} 2P_2 = P_\mathrm{T} + \frac{\alpha}{1-\alpha} \cdot  P_1.\quad\quad(\star\star)
+				\]
+				Ainsi, en soustrayant $(\star\star)$\/ et $2 \times (\star)$, on obtient \[
+					-2P_1 = -P_\mathrm{T} + \frac{\alpha}{1-\alpha} P_1
+				\] donc
+				\begin{align*}
+					P_\mathrm{T} &= \frac{\alpha + 2 (1-\alpha)}{1-\alpha} P_1\\
+					&= P_1 \cdot \frac{2-\alpha}{1-\alpha} \\
+				\end{align*}
+				De plus, on applique la loi de \textsc{Stefan} à l'équilibre thermique afin de trouver une expression de la puissance émise par la Terre : \[
+					P_\mathrm{T} = \sigma \cdot T'_\mathrm{T}{}^4 \cdot 4\pi\cdot R_\mathrm{T} {}^2
+				.\]
+				Ainsi, on en déduit que
+				\begin{align*}
+					&\sigma \: T'_\mathrm{T}{}^4 \:  4\pi \: R_\mathrm{T}{}^2 = P_1 \: \frac{2-\alpha}{1-\alpha}\\
+					\iff& \sigma \: T'_\mathrm{T}{}^4 \:  4\pi \: R_\mathrm{T}{}^2\\
+					&\quad\quad\quad\quad\quad= P_0\:(1-A_\mathrm{T})\,(2-\alpha)\\
+					\iff& \sigma \: T'_\mathrm{T}{}^4 \:  4\pi \: R_\mathrm{T}{}^2\\
+					&\quad\quad\quad\!\!= \sigma \: T_\mathrm{T}{}^4 \: 4\pi\: R_\mathrm{T}{}^2 \: (2-\alpha) \quad (\diamondsuit)\\
+					\iff& \boxed{T_\mathrm{T}'{}^4 = T_\mathrm{T}{}^4 \cdot (2-\alpha),} \\
+				\end{align*}
+				ce qui est la relation demandée. Dans la ligne $(\diamondsuit)$, on utilise la loi de \textsc{Stefan} pour déterminer la puissance du flux absorbé par la Terre, sans prendre en compte l'atmosphère.
+			\item On réalise l'application numérique demandée : \[
+					T'_\mathrm{T} \mathrel{\overset{\text{(AN)}}=} 251 \cdot \sqrt[4]{1{,}65} = 284\:\mathrm{K}
+				.\]
+			\item On reprend les équations $(\star)$\/ et $(\star\star)$, et on calcule la somme des deux : \[
+				P_1 \cdot \frac{1}{1-\alpha} = P_2
+			.\] Or, $P_1 / (1 - \alpha) = P_0 \cdot (1 - A_\mathrm{T})$, et on a déjà calculé cette puissance à la ligne~$(\diamondsuit)$. Ainsi, on en déduit que \[
+				\sigma\: T_\mathrm{T}{}^4\: 4\pi\:R_\mathrm{T}{}^2
+				= \sigma T_\mathrm{a}{}^4\:4\pi\:R_\mathrm{T},
+			\] et donc, en simplifiant : \[
+				\boxed{T_\mathrm{a} = T_\mathrm{T}.}
+			\] 
+		\end{enumerate}
+		\noindent {\large\bfseries Température lunaire}\quad\hrule
+		\noindent{\large\itshape III.\ \underline{Température de la surface ensoleillée}}
+
+		\begin{enumerate}[start=8]
+			\item Sans atmosphère, la Lune correspond au modèle utilisé pour la Terre dans la partie \textit{I}. On remplace les données terrestres par les données lunaires, et on obtient, à partir de la question 2.,  la formule \[
+					\boxed{T_\mathrm{L,Soleil} = T_\mathrm{S} \cdot \sqrt[4]{\left( \frac{R_\mathrm{S}}{2D_\mathrm{SL}} \right)^{\!\!2} \cdot (1-A_\mathrm{L})}.}
+				\] La Lune étant en orbite circulaire autour de la Terre, sa distance moyenne au Soleil correspond, approximativement, à la distance Terre--Soleil, d'où $D_\mathrm{SL} \simeq D_\mathrm{TL} = 1{,}5 \cdot 10^8$.
+				Après application numérique, on trouve
+				\begin{align*}
+					T_\mathrm{L,Soleil} &= 5\,800 \sqrt[4]{\left( \frac{7\cdot 10^5}{3 \cdot 10^8} \right)^{\!\!2} \cdot (1-0{,}073) } \\
+					&= 274{,}9\:\mathrm{K}\\
+				\end{align*}
+				Ainsi, on en déduit que \[
+					\boxed{T_\mathrm{L,Soleil} = 1{,}4\:^\circ\mathrm{C}.}
+				\] 
+			\item Non, due à sa géométrie sphérique, les rayons provenant du Soleil ne sont absorbés que par la moitié de sa surface. La température la plus élevée est au centre de cette surface, comme montré sur la figure suivante.
+				En effet, la puissance rayonnement reçu par une surface $S$\/ donnée diminue en s'éloignant du centre de la partie ensoleillée ; et, la température est proportionnelle à la puissance reçue pour une surface $S$\/ donnée, d'après la loi de \textsc{Stefan}.
+				\begin{figure}[H]
+					\centering
+					\begin{asy}
+						import patterns;
+						add("hatch",hatch(2mm));
+						size(5cm);
+						draw(unitcircle);
+						filldraw(arc((0, 0), 1, -90, 90)--cycle, pattern("hatch"));
+						label("Lune", 1.2*dir(60));
+
+						real xa = -2;
+						real xb = -1.1;
+						
+						void f(real theta) {
+							real dtheta = 5/cos(theta);
+							pair p1 = dir(theta-dtheta);
+							pair p2 = dir(theta+dtheta);
+							draw(arc((0, 0), 1, theta-dtheta, theta+dtheta), black+1.5);
+							real x1 = p1.x; real x2 = p2.x;
+							real y1 = p1.y; real y2 = p2.y; real pad = 0.2;
+							draw((xa, y1) -- (xb, y1), Arrow(TeXHead));
+							draw((xa, y2) -- (xb, y2), Arrow(TeXHead));
+							draw((xb, y1) -- (x1 - pad, y1));
+							draw((xb, y2) -- (x2 - pad, y2));
+						}
+
+						f(115);
+						f(-115);
+						f(180);
+						label(Label("Soleil", (xa-0.4, 0), Rotate((0, 1))), (xa-0.4, 0));
+					\end{asy}
+					\caption{Température lunaire non uniforme, rayonnement solaire}
+				\end{figure}
+			\item On considère une surface élémentaire $\mathrm{d}S$, proche du centre de la moitié ensoleillée de la Lune.
+				On réalise un bilan thermique sur cette surface : le rayonnement reçu est le rayonnement émis par le Soleil absorbé par la Lune. La puissance reçue par la Lune, à une distance $D_\mathrm{ST}$, est inversement proportionnelle à la surface totale d'une sphère de rayon $D_\mathrm{ST}$ (\textit{c.f.} 1.). Le rayonnement émis suis la loi de \textsc{Stefan}. Ainsi, \[
+					(1 - A_\mathrm{L}) \cdot P_\mathrm{S} \cdot \frac{\mathrm{d}S}{4\pi\, D_\mathrm{ST}{}^2} = \sigma \cdot T_\mathrm{L,max}{}^4 \cdot \mathrm{d}S
+				\] d'où,
+				\begin{align*}
+						(1 - A_\mathrm{L}) \cdot \sigma \cdot T_\mathrm{S}{}^4 \cdot 4\pi\cdot R_\mathrm{S}{}^2 \cdot \frac{\mathrm{d}S}{4\pi\: D_\mathrm{ST}{}^2}\\
+						=\sigma\cdot  T_\mathrm{L,max}{}^4 \cdot \mathrm{d}S.&
+				\end{align*}
+				On trouve donc, en simplifiant, \[
+					T_\mathrm{L,max} = T_\mathrm{S} \cdot \sqrt[4]{(1-A_\mathrm{L}) \cdot \left( \frac{R_\mathrm{S}}{D_\mathrm{ST}} \right)^{\!\!2}}
+				.\] À un facteur $\sqrt{2}$\/ près, on reconnaît l'expression de $T_\mathrm{L,Soleil}$. Ainsi, \[
+					\boxed{T_\mathrm{L,max} = \sqrt{2} \cdot T_\mathrm{L, Soleil}.}
+				\] On réalise l'application numérique : \[
+				\boxed{T_\mathrm{L,max} = 389\: \mathrm{K} = 116\:^\circ \mathrm{C}.}
+				\]
+		\end{enumerate}
+
+		\noindent{\large\itshape IV.\ \underline{Le \guillemotleft~claire de Terre.~\guillemotright}}
+	\end{multicols}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			import patterns;
+			add("hatch",hatch(2mm));
+			draw(unitcircle);
+			size(15cm);
+			label("\colorbox{white}{Terre}", (0, -0.33), rgb("ffffff")+fontsize(12));
+			label("Terre", (0, -0.4));
+			filldraw(arc((0, 0), 1, -90, 90)--cycle, pattern("hatch"));
+			draw(circle((0, 5), 0.6));
+			label("Lune", (0, 5.3));
+			draw((1.4, 0)--(1.4, 5), Arrows(TeXHead));
+			label("$D_\mathrm{TL}$", (1.4, 2.5), align=E);
+			pair A = dir(135);
+			pair B = dir(-100)*0.6 + (0,5);
+			for(real r = -A.y; r < A.y; r += A.y/3) {
+				draw((-10, r)--(-8, r), Arrow(TeXHead));
+			}
+			label(Label("Soleil", Rotate((0, 1))), (-11, 0));
+			draw(arc((0, 0), 1, 135-10, 135+10), black+1.5);
+			draw(arc((0, 5), 0.6, -100-10, -100+10), black+1.5);
+			label("$\mathrm{d}S_\mathrm{T}$", dir(135)*0.65, align=S+W/5);
+			label("$\mathrm{d}S_\mathrm{L}$", dir(-90)*0.65*0.6 + (-0.1, 4.8), align=SW);
+			dot((0,0)); dot((0,5));
+			draw((0,0)--dir(135));
+			draw((0,5)--dir(-100)*0.6 + (0,5));
+			draw((0,5)--dir(-90)*0.6 + (0,5));
+			draw(arc((0, 0), 0.3, 90, 135));
+			draw(arc((0, 5), 0.4, -90, -100));
+			label("$\alpha$", 0.45*dir((90+135)/2));
+			label("$\beta$", 0.3*dir(-(100+90)/2) + (0.2, 5));
+			draw((0,0)--(0,5), dashed);
+			draw((0,0)--(0,5), dashed);
+			pair nz(pair z) { real x = z.x; real y = z.y; return (x,y)/sqrt(x*x+y*y); }
+			draw(A -- B);
+			draw(A -- 0.6*nz(B - A) + A, Arrow(TeXHead));
+			for(real t = -80; t <= 80; t += 40) {
+				draw(A--A+dir(t+135)*0.4, gray, Arrow(TeXHead));
+			}
+			draw((-10, A.y)--(A.x - 0.05, A.y), Arrow(TeXHead));
+			draw(A--(0, A.y), dotted+gray);
+		\end{asy}
+		\caption{Représentation de la situation}
+	\end{figure}
+
+	\begin{multicols}{2}
+		\begin{enumerate}[start=11]
+			\item La puissance surfacique d'un rayonnement provenant de la Terre reçu par la Lune est \[
+					\varphi_\mathrm{T/L} = \frac{P_\mathrm{T/L}}{S_\mathrm{L}} = \frac{\sigma\:T_\mathrm{a}{}^4\:4\pi\:R_\mathrm{T}{}^2}{4\pi\: D_\mathrm{TL}{}^2}
+				.\] Ainsi, on en déduit que \[
+					\boxed{\varphi_\mathrm{T/L} = \sigma\: T_\mathrm{a}{}^4 \: \left( \frac{R_\mathrm{T}}{D_\mathrm{TL}} \right)^{\!\!2}.}
+				\]
+
+				On s'intéresse maintenant au flux provenant du solaire, reflété par la Terre et reçu par la Lune.
+				Tout d'abord, la Terre reçoit une puissance solaire, sur une surface élémentaire $\mathrm{d}S_\mathrm{T}$, de \[
+					\mathrm{d}P_{\mathrm{S / T},\,\textsf{reçue},\,\alpha} = P_\mathrm{S} \cdot \frac{\mathrm{d}S_\mathrm{T} \cdot  \sin \alpha}{4\pi\:D_\mathrm{ST}{}^2},
+				\] car la puissance est proportionnelle au ratio surface $\mathrm{d}S_\mathrm{T}\cdot \sin \alpha$ (ce qui correspond à la surface élémentaire apparente au Soleil), avec la surface d'une sphère de rayon $D_\mathrm{ST}$.
+				La puissance réfléchie, selon une demi-sphère, est donc \[
+					\mathrm{d}P_{\mathrm{S / T},\,\textsf{réfléchie},\,\alpha} = A_\mathrm{T} \cdot \mathrm{d}P_{\mathrm{S / T},\,\textsf{reçue},\,\alpha}
+				.\]
+				D'où, la puissance reçue par la surface élémentaire $\mathrm{d}S_\mathrm{L}$\/ vaut \[
+					\mathrm{d}P_{\mathrm{S / L},\,\alpha} = \mathrm{d}P_{\mathrm{S/T},\,\textsf{réfléchie},\,\alpha} \cdot \frac{\mathrm{d}S_\mathrm{L} \cdot \cos \beta}{2 \pi\: D_\mathrm{LT}{}^2}
+				\] car la puissance réfléchie est émise selon une demi-sphère.
+				Comme on peut le remarquer sur la figure c, si l'on modifie le schéma en augmentant la distance $D_\mathrm{TL}$\/ représentée, de telle sorte à ce qu'il soit 50 fois plus grand que le rayon de la Terre, alors l'angle $\beta$\/ devient très petit : on réalise donc l'approximation $\cos \beta = 1$. On a donc \[
+					\mathrm{d}P_{\mathrm{S / L},\, \alpha} = \mathrm{d}P_{\mathrm{S / T},\,\textsf{réfléchie},\,\alpha} \cdot \frac{\mathrm{d}S_\mathrm{L}}{2\pi\:D_\mathrm{LT}{}^2}
+				.\] 
+				Or, d'autres rayons, avec une autre incidence $\alpha$\/ sur Terre, contribuent aussi à ce rayonnement ; on somme donc ces puissances.
+				L'angle $\alpha$\/ est entre $0$\/ et $\frac{\pi}{2}$ : avec d'autres valeurs, il n'y aurait pas de rayons dirigés vers la Lune.
+				Ainsi,
+				\begin{align*}
+					&\mathrel{\phantom=}\mathrm{d}P_{\mathrm{S / L},\textsf{tot}}\\
+					&= \int_{\mathrlap{\textsf{Terre}\ (\sfrac{1}{4})}}\quad\quad\quad\quad \mathrm{d}P_{\mathrm{S / L}, \alpha}\\
+					&= P_\mathrm{S} \cdot A_\mathrm{T} \cdot \frac{\mathrm{d} S_\mathrm{L}}{2\pi\: D_\mathrm{LT}{}^2} \cdot \frac{1}{4\pi\:D_\mathrm{ST}{}^2} \int_{\mathrlap{\textsf{Terre}\:(\sfrac{1}{4})}}\: \sin \alpha~\mathrm{d}S_\mathrm{T}\\
+					&= P_\mathrm{S} \cdot A_\mathrm{T} \cdot \frac{\mathrm{d} S_\mathrm{L}}{2\pi\: D_\mathrm{LT}{}^2} \cdot \frac{\pi\: R_\mathrm{T}{}^2 / 2}{4\pi\:D_\mathrm{ST}{}^2} \\
+					&= \frac{1}{2} \cdot P_\mathrm{S} \cdot A_\mathrm{T} \cdot \left(\frac{R_\mathrm{T}}{D_\mathrm{ST}}\right)^{\!\!2} \cdot \frac{\mathrm{d}S_\mathrm{L}}{2\pi\:D_\mathrm{LT}{}^2} \\
+				\end{align*}
+				On reconnaît l'expression de $P_0$\/ (sans albédo) : \[
+					\varphi_\mathrm{S/L} = \frac{\mathrm{d}P_\mathrm{S / L,\, tot}}{\mathrm{d}S_\mathrm{L}} = \frac{P_0}{2} \cdot A_\mathrm{T} \cdot \frac{1}{2\pi\:D_\mathrm{LT}{}^2}.
+				\] Ainsi \[
+					\varphi _\mathrm{S / L} = \sigma\: T_\mathrm{S}{}^4 \: \left( \frac{R_\mathrm{T}}{2D_\mathrm{ST}} \right)^{\!\!2}\: \frac{4\pi\:R_\mathrm{S}{}^2}{4\pi\:D_\mathrm{LT}{}^2},
+				\] en développant complètement l'expression de $P_0$.
+				On en déduit que \[
+					\boxed{\varphi_\mathrm{S / L} = \sigma\:T_\mathrm{S}{}^4\: \left( \frac{R_\mathrm{T}\:R_\mathrm{S}}{2\:D_\mathrm{ST}\:D_\mathrm{LT}} \right)^{\!\!2}.}
+				\]
+
+				On réalise l'application numérique pour ces deux puissances surfaciques :
+				\begin{gather*}
+					\varphi_\mathrm{T / L} = 6{,}245 \times 10^{-2}\:\mathrm{W}/\mathrm{m}^2,\\
+					\varphi_\mathrm{S / L} = 3{,}339 \times 10^{-2}\:\mathrm{W}/\mathrm{m}^2.
+				\end{gather*}
+			\item On se place à l'équilibre thermique, et on réalise un bilan des flux surfaciques \[
+					(1 - A_\mathrm{L})\cdot (\varphi_\mathrm{T / L} + \varphi_\mathrm{S / L}) = \sigma\cdot T_\mathrm{L,\,Terre}'{}^4,
+				\] d'après la loi de \textsc{Stefan}.
+				D'où, \[
+					\boxed{T_\mathrm{L,\, Terre}' = \sqrt[4]{(1-A_\mathrm{L}) \cdot (\varphi_\mathrm{T / L} + \varphi_\mathrm{S / L}) \cdot \frac{1}{\sigma}}.}
+				\] On réalise l'application numérique : \[
+				T_\mathrm{L,\,Terre}' = 36{,}06\:\mathrm{K}
+				.\]
+			\item D'après les questions 10 et 12, la température lunaire maximale, en tenant uniquement compte du rayonnement solaire, est de $389\:\mathrm{K}$\/ ; la température lunaire maximale, en tenant uniquement compte du rayonnement émis ou réfléchis par la Terre, est de $36{,}06\:\mathrm{K}$.
+				Ainsi, au centre de la face éclairée de la Lune, la température est approximativement celle induite par le rayonnement solaire.
+			\item On a \[
+					\!\!\!\!\!\!\!\!\boxed{0{,}35\:\mathrm{\mu m} \lesssim \lambda_\textsf{visible} \le 0{,}75\:\mathrm{\mu m} \le \lambda_\textsf{IR} \lesssim 10\:\mathrm{\mu m}.}
+				\]
+			\item D'après la loi de \textsc{Wein}, $\lambda_\mathrm{m} \cdot T_\mathrm{m} = 3\:\mathrm{mm}/\mathrm{K}$. Ainsi, après application numérique, on trouve \[
+					\lambda_\mathrm{m} = 10,9\:\mathrm{\mu m}
+				\] avec la température moyenne lunaire trouvée à la question 8 : $T_\mathrm{L,\,Soleil} = 274{,}9\:\mathrm{K}$.
+				Le rayonnement est donc majoritairement infrarouge.
+				Le rayonnement visible provenant de la Lune est le rayonnement solaire réfléchis en direction de la Terre, ce qui correspond à $A_\mathrm{L} = 7{,}3\:\%$\/ du rayonnement en direction de la Lune.
+			\item La puissance libérée par la Lune entière est
+				\begin{align*}
+					P_\mathrm{L} &= V_\mathrm{L} \cdot p_\mathrm{L}\\
+					&= \frac{4}{3}\pi\: R_\mathrm{L}{}^3 \cdot p_\mathrm{L}  \\
+				\end{align*}
+				Ainsi, à l'équilibre thermique, la puissance libérée par radioactivité est égale à celle émise par rayonnement corps noir : \[
+					\frac{4}{3}\pi\:R_\mathrm{L}{}^3\:p_\mathrm{L} = \sigma\:T_\textsf{L, roches}{}^4\:4\pi\:R_\mathrm{L}{}^2
+				\] d'où \[
+					\boxed{T_\textsf{L, roches} = \sqrt[4]{\frac{1}{3\sigma}\:R_\mathrm{L}\:p_\mathrm{L}}.}
+				\] Après application numérique, on trouve \[
+					T_\textsf{L, roches} = 17{,}86\:\mathrm{K}
+				.\]
+			\item Dans les zones très éclairées, la température n'augmente pas fortement en prenant en compte la radioactivité.
+		\end{enumerate}
+	\end{multicols}
+	\vfill
+	\begin{center}
+		{
+			\fontfamily{ccr}\selectfont
+			\textit{\textbf{\.{\"i}}}
+		}
+	\end{center}
+	\vfill
+	\null
+\end{document}

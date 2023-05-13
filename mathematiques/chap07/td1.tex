@@ -1,0 +1,55 @@
+\section{Exercice 4}
+
+On a \[
+	\begin{cases}
+		a_{n+1} = \frac{1}{2} b_n + \frac{1}{2} c_n\\
+		b_{n+1} = \frac{1}{2} a_n + \frac{1}{2} c_n\\
+		c_{n+1} = \frac{1}{2} a_n + \frac{1}{2} b_n.\\
+	\end{cases}
+\]
+D'où, \[
+	\underbrace{\begin{pmatrix}
+		a_{n+1}\\b_{n+1}\\c_{n+1}
+	\end{pmatrix}}_{U_{n+1}} = \frac{1}{2} \underbrace{\begin{pmatrix}
+		0&1&1\\
+		1&0&1\\
+		1&1&0
+	\end{pmatrix}}_M \cdot \underbrace{\begin{pmatrix}
+		a_{n}\\b_{n}\\c_{n}
+	\end{pmatrix}}_{U_n}
+.\]
+Diagonalisons cette matrice $M$.
+On a \[
+	\chi_M(X) = (X - 1)^2 \cdot (X + 2)
+.\]
+En effet, soit $\lambda \in \R$, on calcule
+\begin{align*}
+	\det(\lambda I_3 - M) &=
+	\begin{vmatrix}
+		\lambda & -1 & -1\\
+		-1 & \lambda & -1\\
+		-1 & -1 & \lambda
+	\end{vmatrix}\\
+	&= 
+	\begin{vmatrix}
+		\lambda + 1 & -\lambda - 1 & 0\\
+		0 & \lambda + 1 & -\lambda- 1\\
+		-1 & -1 & \lambda
+	\end{vmatrix}\\
+	&= (\lambda + 1) \left( 
+	\begin{vmatrix}
+		\lambda + 1 & -\lambda - 1\\
+		-1 & \lambda
+	\end{vmatrix} + 
+	\begin{vmatrix}
+		0 & -\lambda - 1\\
+		-1 & \lambda
+	\end{vmatrix}\right) \\
+	&= (\lambda + 1)(\lambda^2 + \cancel\lambda - \cancel\lambda - 1 - \lambda - 1)\\
+	&= (\lambda + 1)(\lambda^2 - \lambda + 2) \\
+	&= (\lambda + 1)^2\cdot (\lambda - 2) \\
+\end{align*}
+
+D'où, $\Sp(M) = \{1,-2\}$.
+
+

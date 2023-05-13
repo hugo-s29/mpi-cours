@@ -1,0 +1,253 @@
+\section{Lois conjointe et marginales}
+
+\begin{prop-defn}
+	Soit $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé. Si $X$ et $Y$ sont deux variables aléatoires discrètes, alors l'application 
+	\begin{align*}
+		(X,Y): \Omega &\longrightarrow X(\Omega) \times Y(\Omega) \\
+		\omega &\longmapsto \big(X(\omega), Y(\omega)\big)
+	\end{align*}
+	est aussi une variable aléatoire discrète, appelée \textit{couple de variables aléatoires discrètes} $(X, Y)$.
+\end{prop-defn}
+
+La loi de probabilité du couple $(X, Y)$ est appelée \textit{loi conjointe} : \[
+	\forall (i,j) \in I \times J, \quad\quad P\big((X,Y) = (a_i, b_j)\big) = P(X = a_i, Y = b_j) = P\big((X = a_i) \cap (Y = b_j)\big) = p_{i,j}
+\] où chaque $p_{i,j}$ appartient à $[0, 1]$. On vérifie bien $\sum_{i \in I}\sum_{j \in J} p_{i,j} = 1$.
+
+Les lois de de $X$ et de $Y$ sont appelées \textit{lois marginales}. La loi conjointe permet de retrouver les lois marginales :
+\begin{gather*}
+	\forall i \in I, \quad\quad P(X = a_i) = \sum_{j \in J} P(X = a_i, Y = b_j)\\
+	\forall j \in J,\quad\quad P(Y = b_j) = \sum_{i \in I} P(X = a_i, Y = b_j).
+\end{gather*}
+En effet, $(X = a_i) = \bigcup_{j \in J}\big[(X = a_i) \cap (Y = b_j)\big]$, et cette union est disjointe. Ainsi, $P(X = a_i) = \sum_{j \in J} P\big[(X = a_i) \cap (Y = b_j)\big] = \sum_{j \in J} p_{i,j}$. De même pour la probabilité $P(Y = b_j) = \sum_{i \in I} p_{i,j}$.
+
+\red{\large\danger\textsc{Attention}} Les lois marginales ne permettent pas toujours de retrouver la loi conjointe : \guillemotleft~on perd la notion de corrélation entre les deux variables aléatoires.~\guillemotright\@
+
+\begin{exo}
+	\begin{slshape}
+		Une boîte contient 3 boules blanches et 4 boules noires. On tire au hasard, l'une après l'autre, deux boules. Soient $X$ et $Y$ les variables aléatoires définies par : $X$ est égale à 0 si la première boule tirée est blanche, à 1 si elle est noire. De même pour $Y$ avec la seconde boule.
+
+		Compléter les tableaux suivants dans les deux cas :
+		\begin{enumerate}
+			\def\arraystretch{2}
+			\item si le tirage se fait sans remise.
+				\[
+					\begin{NiceArray}{|c|c|c|}[first-row,first-col]
+						& Y = 0 & Y = 1 & \text{\textup{total}}\\ \hline
+						X = 0 & p_{00} = \frac{3}{7} \times \frac{2}{6} = \frac{1}{7} & p_{01} = \frac{3}{7} \times \frac{2}{6} = \frac{2}{7} & P(X = 0) = \frac{3}{7} \\ \hline
+						X = 1 & p_{10} = \frac{4}{7} \times \frac{3}{6} = \frac{2}{7} & p_{11} = \frac{4}{7} \times \frac{2}{6} = \frac{2}{7} & P(X = 1) = \frac{4}{7}\\ \hline
+						\text{\textup{total}}& P(Y = 0) = \frac{3}{7} & P(Y = 1) = \frac{4}{6} & 1\\ \hline
+					\end{NiceArray}
+				.\]
+			\item si le tirage se fait avec remise.
+				\[
+					\begin{NiceArray}{|c|c|c|}[first-row,first-col]
+						& Y = 0 & Y = 1 & \text{\textup{total}}\\ \hline
+						X = 0 & p_{00} = \frac{3}{7} \times \frac{3}{7} = \frac{9}{49} & p_{01} = \frac{3}{7} \times \frac{4}{7} = \frac{12}{49} & P(X = 0) = \frac{3}{7} \\ \hline
+						X = 1 & p_{10} = \frac{4}{7} \times \frac{3}{7} = \frac{12}{49} & p_{11} = \frac{4}{7} \times \frac{4}{7} = \frac{16}{49} & P(X = 1) = \frac{4}{7}\\ \hline
+						\text{\textup{total}}& P(Y = 0) = \frac{3}{7} & P(Y = 1) = \frac{4}{6} & 1\\ \hline
+					\end{NiceArray}
+				.\]
+		\end{enumerate}
+	\end{slshape}
+\end{exo}
+
+\begin{defn}
+	Soit $(\Omega, \mathcal{A}, P)$ un espace probabilisé. On dit que deux variables aléatoires $X$ et $Y$ sont \textit{indépendantes}, et on note $X \mathrel{\Bot} Y$, si \[
+		\forall (a, b) \in X(\Omega) \times Y(\Omega), \quad\quad P(X = a, Y = b) = P(X = a) \cdot P(Y = b)
+	.\]
+	Soit $(X_i)_{i\in I}$\/ une famille (finie ou non) de variables aléatoires. On dit que ces variables aléatoires ont
+	\begin{itemize}
+		\item \textit{deux à deux indépendantes} si \[
+			\forall i \neq j \in I,\forall (a,b),\quad\quad P(X_i = a_i, X_j = b) = P(X_i = a) \cdot P(X_j = b)
+			,\]
+		\item \textit{indépendantes} si, pour toute partie finie non vide $J \subset I$, \[
+				\forall (a_j)_{j\in J}, \quad\quad P\Big(\bigcap_{j \in J} (X_j = a_j)\Big) = \prod_{j \in J} P(X_j = a_j)
+		.\]
+	\end{itemize}
+\end{defn}
+
+Les propriétés ci-dessous sont admises.
+\begin{prop}
+	Soient $X$ et $Y$ deux variables aléatoires indépendantes d'un espace probabilisé $(\mathcal{W}, \mathcal{A}, P)$,
+	\begin{enumerate}
+		\item $\forall A \subset X(\Omega), \forall B \in Y(\Omega),\quad\quad P(X \in A, Y \in B) = P(X \in A) \cdot P(X \in B)$,
+		\item pour toutes fonctions $\varphi$ et $\psi$, les \textit{vad} $\varphi(X)$ et $\psi(Y)$ sont indépendantes.
+	\end{enumerate}
+
+	\textbf{Lemme des coalitions} :
+	Soit $\varphi$\/ et $\psi$ deux fonctions.
+	Si $X_1, \ldots, X_n$ sont des variables aléatoires indépendantes, alors \[
+		\forall p \in \llbracket 1,n-1 \rrbracket,\quad\quad \varphi(X_1, \ldots, X_p) \mathrel{\Bot} \psi(X_{p+1}, \ldots, X_n)
+	.\]
+\end{prop}
+
+
+\section{La somme de deux variables aléatoires}
+
+Soit $(\Omega, \mathcal{A}, P)$ un espace probabilisé. La \textit{somme} $Z$ de deux \textit{vard} $X$ et $Y$ définie par \[
+	\forall \omega \in \Omega, \quad\quad Z(\omega) = X(\omega) + Y(\omega)
+.\]
+La loi conjointe du couple $(X, Y)$ permet de calculer la loi de probabilité de la forme \[
+	\forall c \in Z(\Omega), \quad\quad P(Z = c) = \sum_{\substack{i\in I\\j \in J\\ a_i + b_j = c}} p_{i,j}
+.\]
+
+\begin{exo}
+	\begin{slshape}
+		Soit $X_1$ et $X_2$ deux variables aléatoires \textbf{indépendantes}. Montrer que
+		\begin{enumerate}
+			\item si $X_1 \sim \mathcal{B}(n_1, p)$ et $X_2 \sim \mathcal{B}(n_2, p)$, alors \[
+					X_1 + X_2 \sim \mathcal{B}(n_1 + n_2, p)
+				\] où $n_1 \in \N^*$, $n_2 \in \N^*$ et $p \in {]0,1[}$ a la même valeur pour les deux viables aléatoires. En déduire $\mathrm{E}(X_1 + X_2)$ et $\mathrm{V}(X_1 + X_2)$. \hfill \textbf{(stabilité de la loi binomiale)}
+			\item si $X_1 \sim \mathcal{P}(\lambda_1)$ et $X_2 \sim \mathcal{P}(\lambda_2)$, alors \[
+					X_1 + X_2 \sim \mathcal{P}(\lambda_1 + \lambda_2)
+				\] où $\lambda_1 \in \R^+_*$, et $\lambda_2 \in \R^+_*$. En déduire $\mathrm{E}(X_1 + X_2)$ et $\mathrm{V}(X_1 + X_2)$. \hfill \textbf{(stabilité de la loi de \textsc{Poisson})}
+		\end{enumerate}
+	\end{slshape}
+
+	\begin{enumerate}
+		\item On a
+			\begin{align*}
+				\forall s \in \llbracket 0, n_1 + n_2 \rrbracket,
+				\quad\quad (X_1 + X_2 = s) &= \bigcup_{k_1 + k_2 = s} (X_1 = k_1, X_2 = k_2)\\
+				&= \bigcup_{k_1 + k_2 = s} \big[(X_1 = k_1) \cap (X_2 = k_2)\big]\\
+			\end{align*}
+			et cette union est disjointe. D'où,
+			\begin{align*}
+				P(X_1 + X_2 = s) &= \sum_{k_1 + k_2 = s} P\big((X_1 = k_1) \cap (X_2 = k_2)\big)\\
+				&= \sum_{k_1 + k_2 = s} P(X_1 = k_1) \cdot P(X_2 = k_2) & \text{ car } X_1 \mathrel{\Bot} X_2 \\
+				&= \sum_{k_1+k_2 = s} {n_1\choose k_1} p^{k_1} q^{n_1 - k_1} \times {n_2\choose k_2} p^{k_2} q^{n_2 - k_2}  \\
+				&= \sum_{k_1 + k_2 = s} p^{k_1 + k_2} \cdot q^{n_1 + n_2 - k_1 - k_2} {n_1\choose k_1} {n_2 \choose k_2} \\
+				&= p^s \cdot q^{n_1 + n_2 - s} \sum_{k_1 + k_2 = s} {n_1\choose k_1}{n_2\choose k_2} \\
+				&= p^s \cdot q^{n_1 + n_2 - s} {n_1 + n_2 \choose s} &\text{ d'après la formule de \textsc{Vandermonde}}\\
+			\end{align*}
+			D'où, $X_1 + X_2 \sim \mathcal{B}(n_1 + n_2, p)$.
+			On en déduit que \[
+				\mathrm{E}(X_1 + X_2) = (n_1+n_2)p \quad\quad \mathrm{V}(X_1 + X_2) = (n_1+n_2) pq
+			.\]
+		\item On a $X_1(\Omega) = X_2(\Omega) = \N$, et $\forall k \in X_1(\Omega)$, $P(X_1 = k_1) = \mathrm{e}^{-\lambda_1} \cdot \lambda_1^{k_1} / k_1!$, de même pour $X_2$.
+			Ainsi, $(X_1 + X_2)(\Omega) = \N$. On a \[
+				(X_1 + X_2 = s) = \bigcup_{k_1 + k_2 = s} \big[(X_1 = k_1) \cap (X_2 = k_2)\big]
+			\] et cette union est disjointe, d'où
+			\begin{align*}
+				P(X_1 + X_2 = s) &= \sum_{k_1 + k_2 = s} P\big[(X_1 = k_1) \cap (X_2 = k_2)\big]\\
+				&= \sum_{k_1+k_2 = s} P(X = k_1) \cdot P(X_2 = k_2) && \text{ car } X_1 \mathrel{\Bot} X_2 \\
+				&= \sum_{k_1 + k_2 = s} \mathrm{e}^{-\lambda_1} \cdot \frac{\lambda_1^{k_1}}{k_1!} \cdot \mathrm{e}^{-\lambda_2} \cdot \frac{\lambda_2^{k_2}}{k_2!} \\
+				&= \mathrm{e}^{-(\lambda_1+\lambda_2)} \sum_{k_1 + k_2 = s} \frac{\lambda_1^{k_1} \cdot \lambda_2^{k_2}}{k_1! \cdot k_1!} \\
+				&= \mathrm{e}^{-(\lambda_1 + \lambda_2)} \sum_{k=0}^s \frac{\lambda_1^k \cdot \lambda_2^{s - k}}{k! \cdot (s-k)!} \\
+				&= \mathrm{e}^{-(\lambda_1 + \lambda_2)} \cdot \frac{1}{s!} \sum_{k=0}^s {s_1 \choose k} \lambda_1^k \lambda_2^{s-k}  \\
+				&= \mathrm{e}^{-(\lambda_1+\lambda_2)} \cdot\frac{1}{s!} (\lambda_1 + \lambda_2)^s. \\
+			\end{align*}
+			Ainsi, $X_1 + X_2 \sim \mathcal{P}(\lambda_1 + \lambda_2)$. On en déduit que \[
+				\mathrm{E}(X_1 + X_2) = \lambda_1 + \lambda_2 \quad\quad \mathrm{V}(X_1 + X_2) = \lambda_1 + \lambda_2
+			.\]
+	\end{enumerate}
+\end{exo}
+
+\section{Espérance et variance d'une somme}
+
+\begin{prop}
+	Soit $(\Omega, \mathcal{A}, P)$ un espace probabilisé. Si deux variables aléatoires $X$ et $Y$ sont d'espérance finie, alors leur somme $X+Y$ est aussi d'espérance finie et \[
+		\mathrm{E}(X) + \mathrm{E}(Y) = \mathrm{E}(X + Y)
+	.\]\textit{Mieux}, pour tout couple de réels $(\alpha, \beta) \in \R^2$, la variable aléatoire $\alpha X + \beta Y$ est d'espérance finie et \[
+		\mathrm{E}(\alpha X + \beta Y) = \alpha\mathrm{E}(X) + \beta \mathrm{E}(Y)
+	.\]
+\end{prop}
+
+\begin{prop-defn}
+	Soit $(X,Y)$ un couple de variables aléatoires réelles discrètes d'un espace probabilisé. Si $X^2$ et $Y^2$	sont d'espérance finie, alors \[
+		\mathrm{V}(X + Y) = \mathrm{V}(X) + \mathrm{V}(Y) + 2\Cov(X, Y)
+	\] où $\Cov(X, Y)$ est appelée la \textit{covariance} de $(X, Y)$ et est définie par \[
+		\Cov(X, Y) = \mathrm{E}\Big[\big(X - \mathrm{E}(X)\big) \cdot \big(Y - \mathrm{E}(Y)\big)\Big] = \mathrm{E}(X \cdot Y) - \mathrm{E}(X) \cdot \mathrm{E}(Y)
+	.\]
+\end{prop-defn}
+
+\begin{prv}
+	On a $\mathrm{V}(X) = \mathrm{E}\big(\big(X - \mathrm{E}(X)\big)^2\big) = \mathrm{E}(X^2) - \big[\mathrm{E}(X)\big]^2$. De même, $\mathrm{V}(Y) = \mathrm{E}\big(\big(Y - \mathrm{E}(Y)\big)^2\big) = \mathrm{E}(Y^2) - \big[\mathrm{E}(Y)\big]^2$, et $\mathrm{V}(X+Y) = \mathrm{E}\big(\big(X+Y - \mathrm{E}(X+Y)\big)^2\big) = \mathrm{E}\big((X+Y)^2\big) - \big[\mathrm{E}(X+Y)\big]^2$.
+	Ainsi,
+	\begin{align*}
+		\mathrm{V}(X + Y) &= \mathrm{E}(X^2 + Y^2 - 2 XY) - \big(\mathrm{E}(X) + \mathrm{E}(Y)\big)^2  \\
+		&= \mathrm{E}(X^2) + \mathrm{E}(Y^2) +2\mathrm{E}(XY) - [\mathrm{E}(X)]^2 - [\mathrm{E}(Y)]^2 - 2\mathrm{E}(X)\mathrm{E}(Y)\\
+		&= \mathrm{V}(X) + \mathrm{V}(Y) + 2\big[\mathrm{E}(XY) - \mathrm{E}(X) \mathrm{E}(Y)\big] \\
+	\end{align*}
+\end{prv}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item $\Cov(X, X) = \mathrm{E}(X^2) - [\mathrm{E}(X)]^2 = \mathrm{V}(X)$.
+		\item La covariance est une forme bilinéaire symétrique \st{définie} positive. En effet, la symétrie est assurée par commutativité du produit ; la bilinéarité est assurée par la linéarité de l'espérance ; la positivité est assurée par le fait que $\big(X-\mathrm{E}(X)\big)^2$ est une \textit{vard} à valeurs positive.
+	\end{enumerate}
+\end{rmk}
+
+\begin{prop}[inégalité de \textsc{Cauchy-Schwarz}]
+	Soit $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé, et $(X, Y)$ un couple de variables aléatoires réelles discrètes. Si $X^2$ et $Y^2$ sont d'espérance finie, alors \[
+		\big(\mathrm{E}(XY)\big)^2 \le \mathrm{E}(X^2) \cdot \mathrm{E}(Y^2)
+		\quad\quad \text{ et }\quad\quad
+		\big[{\Cov(X,Y)}\big]^2 \le \mathrm{V}(X) \cdot \mathrm{V}(Y)
+	.\]
+\end{prop}
+
+\begin{prv}
+	Pour la seconde formule, on utilise l'inégalité de \textsc{Cauchy-Scharz} pour les produits scalaires (le caractère défini n'a pas été utilisé dans la démonstration) : $|{\Cov(X,Y)}| \le \sqrt{\mathrm{V}(X)} \cdot \sqrt{\mathrm{V}(y)}$ et donc $\big[\Cov(X,Y)\big]^2 \le \mathrm{V}(X) \times \mathrm{V}(Y)$. De même pour l'autre inégalité.
+\end{prv}
+
+\begin{defn}
+	Soit un couple $(X, Y)$ de variables aléatoires réelles discrètes, tel que $X^2$ et $Y^2$ sint d'espérances finies. On dit que $X$ et $Y$ ne sont pas \textit{corrélées} si $\Cov(X, Y) = 0$.
+\end{defn}
+
+\begin{thm}
+	Soit $(X, Y)$ un couple de variables aléatoires tel que $X^2$ et $Y^2$ sont d'espérance finie. On a
+	\begin{align*}
+		X \text{ et } Y \text{ indépendantes } \implies \mathrm{E}(XY) = \mathrm{E}(X)\:\mathrm{E}(Y) \iff& \Cov(X,Y) = 0\\
+		\iff& \mathrm{V}(X + Y) = \mathrm{V}(X) + \mathrm{V}(Y)
+	\end{align*}
+\end{thm}
+
+On a donc \[
+	X \text{ et } Y \text{ indépendantes }\quad \substack{\ds\implies\\[2mm] \ds\centernot{\impliedby}} \quad X \text{ et } Y \text{ non corrélées}
+.\]
+
+\begin{exo}
+	\begin{slshape}
+		Soit $X$ une variable aléatoire qui prend, de manière équiprobable, les valeurs 3 valeurs $-1$, $0$ et $1$. Soit $Y = |X|$.
+		\begin{enumerate}
+			\item Calculer $\mathrm{E}(X)$, $\mathrm{E}(Y)$, $\mathrm{E}(XY)$, $\mathrm{V}(X)$, $\mathrm{V}(Y)$, et $\mathrm{V}(X+Y)$.
+			\item Les variables aléatoires $X$ et $Y$ sont-elles indépendantes ?
+		\end{enumerate}
+	\end{slshape}
+
+	\begin{enumerate}
+		\item
+			Par équiprobabilité, $P(X = 1) = P(X = 0) = P(X = -1) = 1/3$. Ainsi, \[
+				\mathrm{E}(X) = \sum_{k \in \llbracket -1,1 \rrbracket} k P(X = k) = -1 \times \frac{1}{3} + 0 \times \frac{1}{3} + 1 \times \frac{1}{3} = 0
+			.\] Et, \[
+				\mathrm{E}(Y) = \sum_{k \in \llbracket -1,1 \rrbracket} |k|\:P(X = k) = \frac{1}{3} + 0 + \frac{1}{3} = \frac{2}{3}
+			\]d'après le théorème de transfert. Or,
+			\begin{align*}
+				\mathrm{E}(XY) &= P(XY = 1) - P(XY = -1)\\
+				&= P(X = 1) \cdot P_{(X = 1)}(Y = 1) - P(X = -1) \cdot P_{(X = -1)}(Y = 1) \\
+				&= \frac{1}{3} \times 1 - \frac{1}{3} \times 1 \\
+				&= 0. \\
+			\end{align*}
+			Également,
+			\begin{align*}
+				\mathrm{V}(X) &= \mathrm{E}(X^2) - \big[\mathrm{E}(X)\big]^2\\
+				&= \mathrm{E}(X^2) - 0^2 \\
+				&= (-1)^2\: P(X = -1) + 0^2\:P(X = 0) + 1^2\:P(X = 1) \\
+				&= \frac{2}{3} \\
+			\end{align*}
+			De plus, \[
+				\mathrm{V}(Y) = \mathrm{E}(Y^2) - \big[\mathrm{E}(Y)\big]^2 = \mathrm{E}(X^2) - \left( \frac{2}{3} \right)^2 = \frac{2}{3} \left( 1 - \frac{1}{3} \right)  = \frac{2}{9}
+			.\]
+
+			On calcule
+			\begin{align*}
+				\mathrm{V}(X + Y) &= \mathrm{V}(X) + \mathrm{V}(Y) + 2\Cov(X, Y)\\
+				&= \frac{2}{3} + \frac{2}{9} + 2\big(\mathrm{E}(XY) - \mathrm{E}(X)\cdot  \mathrm{E}(Y)\big) \\
+				&= \frac{2}{3} + \frac{2}{9} + 2 \underbrace{\left( 0 - 0 \times \frac{2}{3} \right)}_{\Cov(X, Y) = 0} \\
+			\end{align*}
+		\item On a $\Cov(X, Y) = 0$, les variables aléatoires $X$ et $Y$ ne sont pas corrélées (\textit{i.e.} sont \textit{décarrelées}).
+			Mais, elles ne sont pas indépendantes : \[
+				\frac{1}{3} = P(X = -1, Y = 1) \neq P(X = -1) \times P(Y = 1) = \frac{2}{9}
+			.\]
+	\end{enumerate}
+\end{exo}

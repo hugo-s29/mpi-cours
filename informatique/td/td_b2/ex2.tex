@@ -1,0 +1,17 @@
+\section{Multiplication d'entiers par algorithme de \textsc{Karatsuba}}
+
+\begin{enumerate}
+	\item On peut éventuellement rajouter des zéros à gauche jusqu'à avoir la même taille pour les deux nombres.
+	\item L'algorithme a une complexité en $\mathcal{O}(n^2)$.
+	\item On a $u = u_\mathrm{a} + 2^p \cdot u_\mathrm{b}$, où $p = |u| / 2$.
+		De même, $v = v_\mathrm{a} + 2^p \cdot v_\mathrm{b}$.
+		On remarque que \[
+			\mathrm{prod}(u, b) = \mathrm{prod}(u_\mathrm{a}, v_\mathrm{a}) + 2^p \big(\mathrm{prod}(u_\mathrm{a}, v_\mathrm{b}) + \mathrm{prod}(u_\mathrm{b}, v_\mathrm{a})\big) + 2^{2p} \cdot \mathrm{prod}(u_\mathrm{b}, v_\mathrm{b}).
+		\]
+		Avec $|u| = 2^p$, on note la complexité $C_p$. On a $C_p = 4 C_{p-1} + K = 4(4 C_{p-2} + K) + K = 4^p C_0 + K \sum_{i=0}^{p-1} 4^i$.
+		On en déduit que $C_o = \Theta(4^p)$. Or, $p = \log_2 |u|$, d'où $4^{\log_2 |u|} = n^2$.
+		L'algorithme est en $\mathcal{O}(n^2)$.
+	\item On remarque que $u_\mathrm{a} v_\mathrm{a} + u_\mathrm{b} v_\mathrm{b} - (u_\mathrm{a} - u_\mathrm{b})(v_\mathrm{a} - v_\mathrm{b}) = u_\mathrm{a}v_\mathrm{a} + u_\mathrm{b} v_\mathrm{b}$.
+		Ainsi, $C_p = 3 C_{p-1} + K$, d'où $C_p = \Theta(3^p)$.
+		On en déduit que l'algorithme est en $\mathcal{O}(n^{\log_2 3})$.
+\end{enumerate}

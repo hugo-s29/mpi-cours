@@ -1,0 +1,28 @@
+\section{Construction de grammaires}
+
+\begin{enumerate}
+	\item
+		\begin{itemize}
+			\item $\mathcal{G}_0 = (\Sigma, \{\mathrm{L}, \mathrm{A}, \mathrm{S}\}, \{\mathrm{S} \to \mathrm{LLLA}, \mathrm{L} \to a  \mid b, \mathrm{A} \to \mathrm{LA}  \mid \varepsilon\}, \mathrm{S})$,
+			\item $\mathcal{G}_1 = (\Sigma, \{\mathrm{L}, \mathrm{A}, \mathrm{S}\}, \{\mathrm{S} \to \mathrm{A}a \mathrm{A}a \mathrm{A} a \mathrm{A}, \mathrm{A} \to \mathrm{L}\mathrm{A}  \mid \varepsilon, \mathrm{L} \to a  \mid b\}, \mathrm{S})$,
+			\item $\mathcal{G}_2 = (\Sigma, \{\mathrm{S},\mathrm{V}\}, \{\mathrm{S} \to a \mathrm{X} a  \mid b \mathrm{X} b, \mathrm{X} \to a \mathrm{X}  \mid b \mathrm{X}  \mid \varepsilon\}, \mathrm{S})$,
+			\item $\mathcal{G}_3(\Sigma, \{\mathrm{S}, \mathrm{X}\}, \{\mathrm{S} \to \mathrm{X}, \mathrm{X}\to \mathrm{S}\}, \mathrm{S})$.
+		\end{itemize}
+	\item
+		\begin{itemize}
+			\item $\mathcal{G}_4 = (\Sigma, \{\mathrm{L},\mathrm{S}, \mathrm{X}\}, \{\mathrm{S} \to \mathrm{L} \mathrm{X}, \mathrm{L} \to a \mid b, \mathrm{X} \to \mathrm{LLX}  \mid \varepsilon\}, \mathrm{S})$,
+			\item $\mathcal{G}_5 = (\Sigma, \{\mathrm{S}, \mathrm{X}\}, \{ \mathrm{S} \to \mathrm{X} a \mathrm{X}, \mathrm{X} \to a \mathrm{X}  \mid b \mathrm{X}  \mid \varepsilon\}, \mathrm{S})$,
+			\item $\mathcal{G}_6 = (\Sigma, \{\mathrm{S}, \mathrm{X}\}, \{\mathrm{S} \to a \mathrm{S} a  \mid b \mathrm{S} b  \mid \mathrm{X}, \mathrm{X} \to \varepsilon  \mid a  \mid b\}, \mathrm{S})$,
+			\item \textit{c.f.} exercice 1.
+		\end{itemize}
+	\item
+		\begin{itemize}
+			\item $\mathcal{G}_8 = (\Sigma, \{\mathrm{S}\}, \{\mathrm{S} \to \varepsilon  \mid a \mathrm{S} b\}, \mathrm{S})$,
+			\item $\mathcal{G}_9 = (\Sigma, \{ \mathrm{S}, \mathrm{X} \}, \{\mathrm{S} \to a \mathrm{S} b  \mid \mathrm{S} \mathrm{X}, \mathrm{X} \to b \mathrm{X}  \mid \varepsilon\}, \mathrm{S})$,
+			\item $\mathcal{G}_{10} = (\Sigma, \{\mathrm{S}\}, \{\mathrm{S} \to a \mathrm{S} bb  \mid \mathrm{S} b  \mid \varepsilon\}, \mathrm{S})$
+		\end{itemize}
+	\item
+		\begin{itemize}
+			\item $\mathcal{G}_{11} = (\Sigma, \{\mathrm{S} \to a \mathrm{S} b  \mid b \mathrm{S} a \mid a \mathrm{S} \mid \mathrm{SS}  \mid \varepsilon\}, \mathrm{S})$,
+		\end{itemize}
+\end{enumerate}

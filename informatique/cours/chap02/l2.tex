@@ -7,7 +7,7 @@ On étudie le tri rapide. On considère les fonctions ``\,Partitionner,'' puis `
 	\begin{algorithmic}[1]
 		\Entree $T$\/ le tableau à trier, $g$, $d$\/ et $p$\/ trois entiers (bornes du tableau)
 		\Sortie un entier $J$\/ et le sous-tableau $T[g..d]$\/ est modifié en $\bar{T}$\/ de sorte que $\bar{T}\footnotemark\relax[J] = \ubar{T}[p]$, et $\forall i \in \left\llbracket g, J-1 \right\rrbracket$, $\bar{T}[i] \le \bar{T}[J]$, et $\forall i \in \left\llbracket J+1, d \right\rrbracket$, $\bar{T}[i] \ge \bar{T}[J]$, et $\forall i \in \left\llbracket 0,n-1 \right\rrbracket \setminus \left\llbracket g,d \right\rrbracket$, $\bar{T}[i] = \ubar{T}[i]$, et $\bar{T}$\/ est une permutation de $\ubar{T}$.
-		\State \Call{Échanger}{$T, g, d$} 
+		\State \Call{Échanger}{$T, J, d$} 
 		\State $J \gets g$\/
 		\State  $I \gets g$\/ 
 		\While{$I < d$}

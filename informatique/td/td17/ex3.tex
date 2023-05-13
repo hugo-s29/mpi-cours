@@ -1,0 +1,203 @@
+\section{Rendez-vous à l'aide de sémaphores}
+
+\subsection{Deux fils d'exécutions se rencontrent une fois}
+
+\begin{enumerate}
+	\item
+		On considère les fils $P_1$ et $P_2$. Dans le programme principal, on crée deux sémaphores~$\mathcal{S}_1$ et $\mathcal{S}_2$, initialisés à $0$.
+		\begin{multicols}{2}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $A_1$
+					\State $\texttt{release}\ \mathcal{S}_2$
+					\State $\texttt{acquire}\ \mathcal{S}_1$
+					\State $B_1$
+				\end{algorithmic}
+				\caption{Fil d'exécution $P_1$}
+			\end{algorithm}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $A_2$
+					\State $\texttt{release}\ \mathcal{S}_1$
+					\State $\texttt{acquire}\ \mathcal{S}_2$
+					\State $B_2$
+				\end{algorithmic}
+				\caption{Fil d'exécution $P_2$}
+			\end{algorithm}
+		\end{multicols}
+		Pour généraliser, on considère 3 sémaphores $\mathcal{S}_1$, $\mathcal{S}_2$ et $\mathcal{S}_3$ initialement à $0$. On définit donc les fils $P_1$, $P_2$ et $P_3$ définis ci-dessous.
+		\begin{multicols}{3}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $A_1$
+					\State $\texttt{release}\ \mathcal{S}_2$
+					\State $\texttt{release}\ \mathcal{S}_3$
+					\State $\texttt{acquire}\ \mathcal{S}_1$
+					\State $\texttt{acquire}\ \mathcal{S}_1$
+					\State $B_1$
+				\end{algorithmic}
+				\caption{Fil d'exécution $P_1$}
+			\end{algorithm}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $A_2$
+					\State $\texttt{release}\ \mathcal{S}_1$
+					\State $\texttt{release}\ \mathcal{S}_3$
+					\State $\texttt{acquire}\ \mathcal{S}_2$
+					\State $\texttt{acquire}\ \mathcal{S}_2$
+					\State $B_2$
+				\end{algorithmic}
+				\caption{Fil d'exécution $P_2$}
+			\end{algorithm}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $A_3$
+					\State $\texttt{release}\ \mathcal{S}_1$
+					\State $\texttt{release}\ \mathcal{S}_2$
+					\State $\texttt{acquire}\ \mathcal{S}_3$
+					\State $\texttt{acquire}\ \mathcal{S}_3$
+					\State $B_3$
+				\end{algorithmic}
+				\caption{Fil d'exécution $P_3$}
+			\end{algorithm}
+		\end{multicols}
+	\item
+		On perds l'indépendance des fils $P_1$ et $P_2$.
+		Pour généraliser la solution, on considère les algorithmes ci-dessous.
+
+		\begin{multicols}{3}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $A_1$
+				\end{algorithmic}
+				\caption{Fil $P_1$}
+			\end{algorithm}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $B_1$
+				\end{algorithmic}
+				\caption{Fil $P_1'$}
+			\end{algorithm}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $A_2$
+				\end{algorithmic}
+				\caption{Fil $P_2$}
+			\end{algorithm}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $B_2$
+				\end{algorithmic}
+				\caption{Fil $P_2'$}
+			\end{algorithm}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $A_3$
+				\end{algorithmic}
+				\caption{Fil $P_3$}
+			\end{algorithm}
+			\begin{algorithm}[H]
+				\centering
+				\begin{algorithmic}[1]
+					\State $B_3$
+				\end{algorithmic}
+				\caption{Fil $P_3'$}
+			\end{algorithm}
+		\end{multicols}
+
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\State lancer $P_1$, $P_2$ et $P_3$ en parallèle
+				\State attendre la fin de $P_1$, $P_2$ et $P_3$
+				\State lancer $P_1'$, $P_2'$ et $P_3'$ en parallèle
+			\end{algorithmic}
+			\caption{Programme principal}
+		\end{algorithm}
+
+	\item Non, les instructions $B_2$ et $A_1$ pourraient être exécutées en parallèle, mais ce n'est pas possible avec la subdivision des fils.
+\end{enumerate}
+
+\subsection{Plusieurs fils se rencontrent une fois}
+
+\begin{enumerate}[start=4]
+	\item On considère l'algorithme ci-dessous.
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\Procedure{CréeBarrière}{}
+				\State Soit un verrou $\mathcal{V}$.
+				\State Soit $i = 0$.
+				\State Soit un sémaphore $\mathcal{S}$ initialisé à $0$.
+				\State\Return $\mathcal{b} = (\mathcal{V}, \mathcal{S}, i)$.
+				\EndProcedure
+				\Procedure{AppelBarrière}{$b$}
+				\State $(\mathcal{V}, \mathcal{S}, i) \gets \mathcal{b}$
+				\State $\texttt{lock}(\mathcal{V})$
+				\State $i \gets i + 1$
+				\If{$i = n$}
+				\For{$k \in \llbracket 1,n \rrbracket$}
+				\State $\texttt{release}\ \mathcal{S}$
+				\EndFor
+				\EndIf
+				\State $\texttt{unlock}(\mathcal{V})$
+				\State $\texttt{acquire}\ \mathcal{S}$
+				\EndProcedure
+			\end{algorithmic}
+			\caption{Implémentation de la structure barrière $\mathcal{b}$}
+		\end{algorithm}
+\end{enumerate}
+
+\subsection{Plusieurs fils d'exécution se rencontrent plusieurs fois}
+
+\begin{enumerate}[start=5]
+	\item 
+	\item On considère l'algorithme suivant.
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\Procedure{CréeBarrière}{$n$}
+				\State Soit un verrou $\mathcal{V}$.
+				\State Soit $i = 0$, et soit $\mathrm{nb} = i$.
+				\State Soit un sémaphore $\mathcal{S}$ initialisé à $0$.
+				\State\Return $\mathcal{b} = (\mathcal{V}, \mathcal{S}, i, \mathrm{nb})$.
+				\EndProcedure
+				\Procedure{AppelBarrière}{$b$}
+				\State $(\mathcal{V}, \mathcal{S}, i) \gets \mathcal{b}$
+				\State $\texttt{lock}(\mathcal{V})$
+				\State $i \gets i + 1$
+				\If{$i = n$}
+				\For{$k \in \llbracket 1,n \rrbracket$}
+				\State $\texttt{release}\ \mathcal{S}$
+				\EndFor
+				\EndIf
+				\State $\texttt{unlock}(\mathcal{V})$
+				\State $\texttt{acquire}\ \mathcal{S}$
+				\EndProcedure
+				\Procedure{JeNeViendraisPlus}{$\mathcal{b}$}
+				\State $(\mathcal{V}, \mathcal{S}, i, \mathrm{nb}) \gets \mathcal{b}$
+				\State $\texttt{lock}(\mathcal{V})$\/
+				\State $\mathrm{nb} \gets \mathrm{nb} - 1$
+				\If {$i = \mathrm{nb}$}
+				\For{$k \in \llbracket 1,\mathrm{nb} \rrbracket$}
+				\State $\texttt{release}\ \mathcal{S}$
+				\EndFor
+				\State $i \gets 0$
+				\EndIf
+				\State $\texttt{unlock}(\mathcal{V})$
+				\EndProcedure
+			\end{algorithmic}
+			\caption{Implémentation de la structure barrière robuste $\mathcal{b}$}
+		\end{algorithm}
+\end{enumerate}
+

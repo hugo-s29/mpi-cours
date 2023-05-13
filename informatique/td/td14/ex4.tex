@@ -1,0 +1,25 @@
+\section{Raisonner par induction sur une grammaire}
+
+\begin{enumerate}
+	\item Montrons le par induction.
+		\begin{itemize}
+			\item \textbf{Cas $\mathrm{S} \to a \mathrm{S}$.}
+				Soit $w = a w'$ un mot, où $ba$ n'est pas un sous-mot de $w'$.
+				Alors, $ba$ n'est pas un sous-mot de $w=aw'$.
+			\item \textbf{Cas $\mathrm{S} \to \mathrm{S}b$.}
+				Soit $w = w' b$ un mot, où $ba$ n'est pas un sous-mot de $w'$.
+				Alors, $ba$ n'est pas un sous-mot de $w=w'b$.
+			\item \textbf{Cas $S \to \varepsilon  \mid a  \mid b$.}
+				Le mot $ba$ n'est pas un sous-mot de $a$, ni de $b$, ni de $\varepsilon$.
+		\end{itemize}
+	\item Montrons, par double-inclusion, que $\mathcal{L}(\mathcal{G}) = \mathcal{L}(a^* b^*)$.
+		\begin{itemize}
+			\item[``$\supseteq$'']
+				Soit $w \in \mathcal{L}(a^*b^*)$. Il existe $m$ et $n$ deux entiers tels que $w = a^n b^m$.
+				On applique la dérivation \[
+					\underbrace{\mathrm{S} \Rightarrow a \mathrm{S} \Rightarrow aa \mathrm{S} \Rightarrow \cdots \Rightarrow a^n \mathrm{S}}_{n \text{ fois}} \mathrel{\Rightarrow} \underbrace{a^n \mathrm{S} b \Rightarrow a^n \mathrm{S} bb \Rightarrow \cdots \Rightarrow a^n \mathrm{S} b^m}_{m \text{ fois}} \Rightarrow a^n b^m
+				.\]
+			\item[``$\subseteq$''] D'après la question 1, on a ce sens de l'inclusion.
+		\end{itemize}
+\end{enumerate}
+

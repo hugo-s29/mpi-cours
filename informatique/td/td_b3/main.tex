@@ -1,0 +1,81 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\titletd{B 3}{Invariants plus complexes}
+
+\begin{document} % EXACT
+	\begin{lstlisting}[language=caml,caption=Tri par insertion]
+let swap (t: int array) (i: int) (j: int): unit =
+	let tmp = t.(i) in
+	t.(i) <- t.(j);
+	t.(j) <- tmp
+
+let range (t: int array) (idx: int): unit =
+	(* idx : endroit mal range, t[0, idx - 1] : trie *)
+	let curseur = ref idx in
+	while (!curseur > 0 && t.(!curseur - 1) > t.(!curseur)) do
+		swap t (!curseur) (!curseur - 1);
+		curseur := !curseur - 1
+	done
+
+let tri_insertion (t: int array): unit =
+	let n = Array.length t in
+	for i = 0 to n - 1 do
+		range t i
+	done
+	\end{lstlisting}
+
+	\begin{prop}
+		Spot $t$ un tableau d'entiers de taille $n$.
+		La fonction \texttt{tri\_insertion} appelée sur $t$ termine et produit un tableau $t'$ tel que
+		\begin{itemize}
+			\item $t'$ est trié,
+			\item $t'$ est une permutation de $t$.
+		\end{itemize}
+	\end{prop}
+
+	\begin{prop}
+		Soit $t$ un tableau d'entiers de taille $n$.
+		Soit $\mathrm{idx} \in \llbracket 0,n-1 \rrbracket$.
+		Si le sous-tableau $t[0,\mathrm{idx} - 1]$ est trié par ordre croissant, alors $\texttt{range}\ t\ \mathrm{idx}$\/ termine et produit un tableau $t'$ tel que
+		\begin{itemize}
+			\item $t'$ est trié par ordre croissant,
+			\item $t'$ est une permutation de $t$.
+		\end{itemize}
+	\end{prop}
+
+	\begin{prv}
+		Soit $t_0$ un tableau de taille $n$.
+		Soit $\mathrm{idx} \in \llbracket 0,n-1 \rrbracket$ tel que $t_0[0,\mathrm{idx}-1]$ est trié.
+		On considère $(\mathcal{I})$ le système suivant : \[
+			(\mathcal{I}): \begin{cases}
+				\texttt{curseur} \ge 0 \quad\quad & (\mathcal{P}_1)\\
+				t[\texttt{curseur}, \mathrm{idx}] \text{ est trié}\quad\quad & (\mathcal{P}_2)\\
+				t[0, \texttt{curseur} - 1] \text{ est trié}\quad\quad & (\mathcal{P}_3)\\
+				t \text{ est une permutation de } t_0\quad\quad & (\mathcal{P}_4)
+			\end{cases}
+		.\]
+		Montrons que $(\mathcal{I})$ est un invariant.
+		\begin{itemize}
+			\item \textbf{Initialisation.} Au début, $t = t_0$ et $\texttt{curseur} = \mathrm{idx}$. Les propriétés de $\mathcal{I}$ sont vérifiées.
+			\item \textbf{Hérédité.} Soit $\ubar{t}$, $\underline{\texttt{curseur}}$, et $\bar{t}$, $\overline{\texttt{curseur}}$\/ les valeurs de $t$ et \texttt{curseur} avant (resp. après) une itération de boucle.
+				Par hypothèse de récurrence, $\underline{\texttt{curseur}} \ge 0$, le sous-tableau $\ubar{t}[\underline{\texttt{curseur}}, \mathrm{idx}]$ est trié, $\ubar{t}[0,\underline{\texttt{curseur}} - 1]$, $\ubar{t}$ est une permutation de $t_0$.
+				De plus, par condition de boucle, $\underline{\texttt{curseur}} > 0$ et $\ubar{t}[\underline{\texttt{curseur}} - 1] > \ubar{t}[\underline{\texttt{curseur}}]$.
+				D'après le code, on a également $\overline{\texttt{curseur}} = \underline{\texttt{curseur}} - 1$, et pour tout $i \in \llbracket 0,n-1 \rrbracket$, où $i \not\in \{\underline{\texttt{curseur}}, \underline{\texttt{curseur}} - 1\}$, $\bar{t}[i] = \ubar{t}[i]$.
+				Et, $\bar{t} [\underline{\texttt{curseur}}] = \ubar{t}[\underline{\texttt{curseur}} - 1]$, et $\bar{t}[\underline{\texttt{curseur}} - 1] = \bar{t}[\underline{\texttt{curseur}}]$.
+				On en déduit trivialement que $\bar{t}$ est une permutation de $\ubar{t}$, qui est une permutation de $t_0$, d'où $(\mathcal{P}_4)$.
+				De plus, $\overline{\texttt{curseur}} \ge 0$, d'où $(\mathcal{P}_1)$.
+				Montrons $(\mathcal{P}_2)$, \textit{i.e.}\ $\forall i \in \llbracket \overline{\texttt{curseur}}, \mathrm{idx} - 1 \rrbracket$, $\bar{t}[i] \le \bar{t}[i+1]$.
+				Soit donc $i \in \llbracket \overline{\texttt{curseur}}, \mathrm{idx} - 1 \rrbracket$.
+				\begin{itemize}
+					\item Si $i = \overline{\texttt{curseur}}$, alors $\bar{t}[i] = \bar{t}[\overline{\texttt{curseur}}] = \bar{t}[\underline{\texttt{curseur}} - 1] = \ubar{t}[\underline{\texttt{curseur}}] < \ubar{t}[\underline{\texttt{curseur}} - 1] < \bar{t}[\underline{\texttt{curseur}}] < \bar{t}[\overline{\texttt{curseur}} + 1] < \bar{t}[i+1]$.
+					\item Si $i \in \llbracket \overline{\texttt{curseur}} + 1, \mathrm{idx} - 1 \rrbracket$, alors $\bar{t}[i] = \ubar{t}[i] \le \ubar{t}[i + 1] \le \bar{t}[i+1]$.
+				\end{itemize}
+				On en déduit $(\mathcal{P}_2)$.
+				Montrons $(\mathcal{P}_3)$.
+				Soit $i \in \llbracket 0, \overline{\texttt{curseur}} - 2 \rrbracket$. Alors, $\bar{t}[i] = \ubar{t}[i] \le \ubar{t}[i + 1] \le \bar{t}[i+1]$, d'où $(\mathcal{P}_3)$.
+		\end{itemize}
+		On enrichit l'invariant en ajoutant la propriété $(\mathcal{P}_5)$ : $\forall i \in \llbracket 0, \texttt{curseur} - 1 \rrbracket$, $\forall j \in \llbracket \texttt{curseur} + 1, \mathrm{idx} \rrbracket$, $\ubar{t}[i] \le \ubar{t}[j]$.
+	\end{prv}
+\end{document}

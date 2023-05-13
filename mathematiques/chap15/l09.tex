@@ -1,0 +1,68 @@
+\section{Dérivées secondes}
+
+\begin{defn}
+	Soit $p \in \N^*$, un ouvert $D \subset \R^p$ et une fonction $f : D \to \R, (x_1, \ldots, x_p) \mapsto f(x_1, \ldots, x_p)$.
+	\begin{enumerate}
+		\item Soit un point $\vec{a} = (a_1, \ldots, a_p) \in D$. Si la $i$-ème dérivée partielle $\partial_i f$ existe sur $D$ et possède une $j$-ième dérivée partielle en $\vec{a}$, alors le nombre réel $\partial_j (\partial_i f)(\vec{a})$ est une \textit{dérivée partielle} en $\vec{a}$, et est noté $\partial_j \partial_i f(\vec{a})$ ou $\partial^2 f(\vec{a}) / \partial x_j \partial x_i$.\footnotemark
+			Cette dérivée seconde s'écrit aussi parfois $\partial_{1,2} f$.
+		\item On dit que $f$ est de classe $\mathcal{C}^2$ sur $D$ si les $p^2$ fonctions $\partial_j \partial_i f$ sont continues sur $D$.
+	\end{enumerate}
+\end{defn}
+\footnotetext{Cette notation vient de $\frac{\partial}{\partial x_j}\left( \frac{\partial f}{\partial x_i} \right)$.}
+
+\textit{A priori}, $\partial_1 \partial_2 f$ est différent de $\partial_2 \partial_1 f$.
+
+\begin{exo}
+	\begin{slshape}
+		Soit la fonction $f : \R^2 \to \R$ définie par \[
+			f(x,y) = xy \cdot \frac{x^2-y^2}{x^2 + y^2} \text{ si } (x,y) \neq (0,0) \quad\quad \text{ et } \quad\quad f(0,0) = 0
+		.\]
+		Montrer que $\ds \frac{\partial^2 f}{\partial x\: \partial y}(0,0) = +1$ et $\ds \frac{\partial^2 f}{\partial y\: \partial x}(0,0) = -1$.
+	\end{slshape}
+
+	Si $(x,y) \neq (0,0)$, alors
+	\begin{align*}
+		\partial_1 f(x,y) &= \frac{\ds\frac{\partial }{\partial x} \big(xy(x^2 - y^2)\big)\cdot (x^2 + y^2) - xy(x^2 - y^2) \cdot \frac{\partial }{\partial x}(x^2 - y^2)}{(x^2 + y^2)^2}\\
+		&= \frac{[y(x^2 - y^2) + 2x^2y](x^2 + y^2) - 2x^2y (x^2 - y^2)}{(x^2+y^2)^2} \\
+	\end{align*}
+	Et, pour $h > 0$, $\big(f(h, 0) - f(0,0)\big)/h = 0 \to 0$ quand $h \to 0$, d'où $\partial_1 f(0,0) = 0$.
+	De plus, \[
+		\frac{\ds \frac{\partial }{\partial x}f(0,h) - \frac{\partial }{\partial x}f(0,0)}{h} = \frac{-h^5 / h^4}{h} = -1 \tendsto{h\to 0} -1
+	.\]
+	D'où, $\ds \frac{\partial f}{\partial y\partial x}(0,0) = -1$.
+
+	On procède de même pour montrer que $\ds \frac{\partial f}{\partial x\partial y}(0,0) = 1$ car $f(x,y) = -f(y,x)$.
+\end{exo}
+
+\begin{prop}[Théorème de Schwarz]
+	Soit $D$ un ouvert de $\R^p$, et $f : D \to \R$ une fonction de classe $\mathcal{C}^2$. Alors, \[
+		\partial_i \partial_j f = \partial_j \partial_i f, \quad\quad \text{ pour tout } (i,j) \in \llbracket 1,p \rrbracket^2
+	.\]
+\end{prop}
+
+\begin{thm}[Formule de Taylor \& Young à l'ordre 2, admise]
+	(On se place dans $\R^2$, mais ce résultat s'étend à $\R^p$ de la même manière.)
+	Si $f : D \to \R$ est de classe $\mathcal{C}^2$, alors
+	\begin{align*}
+		f(a+h,b+k) &= f(a,b) && \text{ ordre 0}\\
+							 &\mathrel{\phantom=}+\: h\:\partial_1 f(a,b) + k\:\partial_2 f(a,b) && \text{ ordre 1}\\
+							 &\mathrel{\phantom=}+\: \frac{h^2}{2}\: \partial_1 \partial_1 f(a,b) + hk\:\partial_1 \partial_2 f(a,b) + \frac{k^2}{2}\:\partial_2 \partial_2 f(a,b) && \text{ ordre 2}\\
+							 &\mathrel{\phantom=}+\: \|\vec{h}\|^2 \:\varepsilon(\vec{h}) && \text{ reste}
+	\end{align*}
+	où $\vec{h} = (h,k)$, et $\varepsilon(\vec{h}) \to \vec{0}$.
+\end{thm}
+
+On note le développement à l'ordre 2 comme $\alpha h^2 + 2 \beta hk + \gamma k^2$.\footnote{C'est une forme quadratique.} On note cette application $q_{(a,b)}$.
+On peut calculer le terme d'ordre 2 par produit matriciel : \[
+	\underbrace{\begin{pmatrix}
+		h & k
+	\end{pmatrix}}_{\big[\vec{h}\big]^\top} \cdot
+	\underbrace{\begin{pmatrix}
+		\alpha & \beta\\
+		\beta & \gamma
+	\end{pmatrix}}_{\mathrm{H}_f(a,b)} \cdot 
+	\underbrace{\begin{pmatrix}
+		h \\ k
+	\end{pmatrix}}_{\big[\vec{h}\big]}
+.\]
+

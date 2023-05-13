@@ -1,0 +1,32 @@
+\section{Substitution}
+
+\begin{enumerate}
+	\item~\\
+		\begin{figure}[H]
+			\centering
+			\begin{tabular}{ccc}
+				\Tree[.$\forall x$ [.$\exists z$ [.$P$ [.$f$ $y$ $z$ ] $x$ ]]]
+				& $\longrightarrow$ &
+				\Tree[.$\forall x$ [.$\exists z$ [.$P$ [.$f$ $y$ $z$ ] $x$ ]]]
+			\end{tabular}
+			\caption{Calcul de la substitution $F\big[x \mapsto f(y,z)\big]$, pour la formule 1}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\begin{tabular}{ccc}
+				\Tree[.$\forall x$ [.$\exists z$ [.$P$ [.$g$ $y$ $z$ $x$ ] $x$ ]]]
+				& $\longrightarrow$ &
+				\Tree[.$\forall \red w$ [.$\exists \red t$ [.$P$ [.$g$ $\red w$ $\red t$ [.$\red f$ $\red y$ $\red z$ ]] [.$\red f$ $\red y$ $\red z$ ] ]]]
+			\end{tabular}
+			\caption{Calcul de la substitution $F\big[x \mapsto f(y,z)\big]$, pour la formule 2}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\begin{tabular}{ccc}
+				\Tree[.$\to$ [.$\forall w$ [.$P$ [.$h$ $w$ ] $x$ ]] [.$\forall x$ [.$\forall z$ [.$q$ $x$ [.$f$ $z$ $z$ ]]]]]
+				& $\longrightarrow$ &
+				\Tree[.$\to$ [.$\forall w$ [.$P$ [.$h$ $w$ ] [.$\red f$ $\red y$ $\red z$ ]]] [.$\forall x$ [.$\forall z$ [.$q$ $x$ [.$f$ $z$ $z$ ]]]]]
+			\end{tabular}
+			\caption{Calcul de la substitution $F\big[x \mapsto f(y,z)\big]$, pour la formule 3}
+		\end{figure}
+\end{enumerate}

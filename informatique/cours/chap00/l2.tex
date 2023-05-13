@@ -2,6 +2,7 @@
 
 \begin{defn}
 	On suppose donné un ensemble $\mathcal{P}$\/ de variables propositionnelles.
+	\index{variable propositionnelle}
 \end{defn}
 
 \begin{defn}
@@ -20,6 +21,8 @@
 	\end{multicols}
 
 	On nomme l'ensemble des formules $\mathcal{F}$.
+	\index{ensemble des formules}
+	\index{formule logique}
 \end{defn}
 
 \begin{exm}
@@ -66,6 +69,7 @@
 		 G \land H &\longmapsto 1 + \mathrm{taille}(G) + \mathrm{taille}(H)\\
 		 G \lor H &\longmapsto 1 + \mathrm{taille}(G) + \mathrm{taille}(H).
 	\end{align*}
+	\index{taille (d'une formule)}
 \end{defn}
 
 \begin{defn}[Ensemble des variables propositionnelles]
@@ -78,6 +82,7 @@
 		G \odot H&\longmapsto \mathrm{vars}(G) \cup \mathrm{vars}(H)\\
 	\end{align*}
 	où $\odot$\/ correspond à $\cup$, $\cap$, $\to$ ou $\leftrightarrow$.
+	\index{variables (d'une formule)}
 \end{defn}
 \footnotetext{Le $\wp(E)$\/ représente ici l'ensemble des parties de $E$.}
 
@@ -93,6 +98,7 @@
 			p &\text{ sinon}.
 		\end{cases}
 	\end{align*}
+	\index{substitution}
 \end{defn}
 
 \begin{exm}
@@ -112,6 +118,7 @@
 		\end{cases}
 	\]
 	où $\odot$\/ correspond à $\cup$, $\cap$, $\to$ ou $\leftrightarrow$.
+	\index{substitution!application à une formule}
 \end{defn}
 
 \begin{exm}
@@ -122,6 +129,7 @@
 
 \begin{defn}
 	On appelle parfois {\it clés}\/ d'une substitution de $\sigma$, l'ensemble des variables propositionnelles sur lequel elle n'est pas l'identité.
+	\index{substitution!clés}
 \end{defn}
 
 \begin{defn}
@@ -130,6 +138,7 @@
 		\sigma \cdot  \sigma': \mathcal{P} &\longrightarrow \mathcal{F} \\
 		p &\longmapsto \big(p[\sigma]\big)[\sigma].
 	\end{align*}
+	\index{substitution!composée}
 \end{defn}
 
 \begin{exm}
@@ -180,9 +189,8 @@
 \end{prv}
 
 \begin{defn}
-	On appelle {\it relation sous formule}, la relation définie Samedi.
-
-	\todo{Recopier cette formule (sinon ça va être drôle en Juin)}
+	On appelle {\it relation sous-formule}, la relation $\diamond$ définie dans la section 3 du chapitre~$-\text{1}$.
+	\index{relation d'ordre!sous-formule}
 \end{defn}
 
 \section{Sémantique}
@@ -191,6 +199,7 @@
 
 \begin{defn}
 	On note $\mathds{B} = \{{\bfm V},{\bfm F}\}$\/ l'{\it ensemble des booléens}.
+	\index{booléens!(ensemble)}
 \end{defn}
 
 \begin{defn}
@@ -206,6 +215,7 @@
 		\end{tabular}
 		\caption{Opération $\cdot $\/ sur les booléens}
 	\end{table}
+	\index{booléens!opération $\cdot$}
 
 	\begin{table}[H]
 		\centering
@@ -218,6 +228,7 @@
 		\end{tabular}
 		\caption{Opération $+$\/ sur les booléens}
 	\end{table}
+	\index{booléens!opération $+$}
 
 	\begin{table}[H]
 		\centering
@@ -226,16 +237,17 @@
 			${\bfm F}\/$\/&${\bfm V}\/$\/\\
 			${\bfm V}\/$\/&${\bfm F}\/$\/\\
 		\end{tabular}
-		\caption{Opération $\bar{\cdot}$\/ sur les booléens}
+		\caption{Opération $\bar{\square}$\/ sur les booléens}
 	\end{table}
+	\index{booléens!opération $\bar{\square}$}
 \end{defn}
 
-\begin{rmk}\hbox{}
+\begin{rmk}~
 
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{c|c|c}
-			{\sc Nom}\/&$\cdot$\/&$+$\/\\
+			{\sc Nom}\/&$\cdot$\/&$+$\/\\ \hline
 			Commutativité&$a\cdot b = b\cdot a$\/ &$a+b=b+a$\/ \\
 			Neutre&${\bfm V}\/ \cdot a = a$\/ & ${\bfm F}\/ + a = a$\/ \\
 			Absorbant&${\bfm F}\/ \cdot a = {\bfm F}\/$\/&${\bfm V}\/ \cdot a = {\bfm V}\/$ \\
@@ -253,10 +265,12 @@
 
 \begin{defn}[Environnement propositionnel]
 	On appelle {\it environnement propositionnel}\/ une fonction de $\mathcal{P}$\/ dans $\mathds{B}$.
+	\index{environment propositionnel}
 \end{defn}
 
 \begin{defn}
 	On appelle {\it fonction booléenne}\/ une fonction de $\mathds{B}^{\mathcal{P}}$\/ dans $\mathds{B}$. On note l'ensemble des fonctions booléennes $\mathds{F}$.
+	\index{fonction booléenne}
 \end{defn}
 
 \begin{rmk}
@@ -288,6 +302,7 @@
 		\item $\left\llbracket G \to H \right\rrbracket ^{\rho} = \overline{\left\llbracket G \right\rrbracket^{\rho}} + \left\llbracket H \right\rrbracket ^{\rho}$\/ ;
 		\item $\left\llbracket G \leftrightarrow H \right\rrbracket ^{\rho} = \left( \overline{\left\llbracket G \right\rrbracket^\rho} + \left\llbracket H \right\rrbracket ^\rho \right)  \cdot \left( \overline{\left\llbracket H \right\rrbracket^\rho} + \left\llbracket G \right\rrbracket^\rho \right)$.
 	\end{itemize}
+	\index{formule!interprétation}
 \end{defn}
 
 \begin{exm}
@@ -308,6 +323,7 @@
 		\mathds{F} \ni \left\llbracket G \right\rrbracket : \mathds{B}^{\mathcal{P}} &\longrightarrow \mathds{B}  \\
 		\rho &\longmapsto \left\llbracket G \right\rrbracket^{\rho}.
 	\end{align*}
+	\index{formule!fonction booléenne associée}
 \end{defn}
 
 \begin{exm}
@@ -327,6 +343,7 @@
 \begin{defn}
 	On dit que $G$\/ et $H$\/ sont {\it équivalents}\/ si et seulement si $\left\llbracket G \right\rrbracket = \left\llbracket H \right\rrbracket$.
 	On note alors $G \equiv H$.
+	\index{formule!équivalence}
 \end{defn}
 
 \begin{defn}[Conséquence sémantique]
@@ -334,7 +351,7 @@
 		\forall \rho \in \mathds{B}^{\mathcal{P}},\:\big(\left\llbracket G \right\rrbracket^{\rho} = {\bfm V}\/ \big) \implies \big(\left\llbracket H \right\rrbracket^\rho = {\bfm V}\/ \big)
 	.\]
 
-	On le note $G \models H$.
+	On le note $G \models H$. \index{formule!conséquence sémantique}
 \end{defn}
 
 \begin{prop}

@@ -1,0 +1,49 @@
+\begin{multicols}{2}
+	\recapsep{Formules}
+	\begin{recap-box}
+		On définit l'ensemble des formules $\mathcal{F}$\/ par induction nommé avec les règles
+		\vspace{-2\baselineskip}
+		\begin{multicols}{2}
+			\begin{itemize}
+				\item $\red\lnot\big|^1$\/ ;
+				\item $\red\land\big|^2$\/ ;
+				\item $\red\lor\big|^2$\/ ;
+				\item $\red\to\big|^2$\/ ;
+				\item $\red\leftrightarrow\big|^2$\/ ;
+				\item $\red\top\big|^0$\/ ;
+				\item $\red\bot\big|^0$\/ ;
+				\item $\red V\big|^0_{\mathcal{P}}$.
+			\end{itemize}
+		\end{multicols}
+	\end{recap-box}
+	\begin{recap-box}
+		On définit inductivement $\mathrm{taille}(F)$, pour $F \in \mathcal{F}$, la taille de cette formule, \textit{i.e.}\ le nombre d'opérateurs dans cette formule.
+		On définit également l'ensemble des variables $\mathrm{vars}(F)$\/ d'une formule $F \in \mathcal{F}$.
+	\end{recap-box}
+	\begin{recap-box}
+		Une \textit{substitution} est une fonction de $\mathcal{P}$\/ dans $\mathcal{F}$, où elle est l'identité partout, sauf en nombre fini de variables, alors nommés \textit{clés} de cette substitution.
+		On note $F[\sigma]$\/ l'application d'une substitution $\sigma$\/ à une formule $F \in \mathcal{F}$.
+		On définit la composée de deux substitutions $\sigma \cdot \sigma'$, comme $\sigma \cdot \sigma' : p \mapsto (p[\sigma])[\sigma']$, {\color{red} cela ne correspond pas à la définition mathématique d'une composition de fonctions}.
+	\end{recap-box}
+	\recapsep{Fonctions booléennes}
+	\begin{recap-box}
+		Un \textit{environnement propositionnel} est une fonction de $\mathcal{P}$\/ dans $\mathds{B}$.
+		Une \textit{fonction booléenne} est une fonction de $\mathds{B}^\mathcal{P}$\/ dans $\mathds{B}$. L'ensemble $\mathds{F}$\/ est l'ensemble des fonctions booléennes.
+	\end{recap-box}
+	\begin{recap-box}
+		On définit inductivement l'\textit{interprétation} d'une formule $F \in \mathcal{F}$\/ dans un environment $\rho$. On note ce booléen $\llbracket F \rrbracket^\rho$.
+		On note également $\llbracket F \rrbracket$\/ l'application $\rho \mapsto \llbracket F \rrbracket^\rho$.
+	\end{recap-box}
+	\recapsep{Liens sémantiques}
+	\begin{recap-box}
+		On note $G \equiv H$\/ si, et seulement si $\llbracket G \rrbracket = \llbracket H \rrbracket$.
+		On note $G \models H$\/ dès lors que, pour $\rho \in \mathds{B}^\mathcal{P}$, si $\llbracket G \rrbracket^\rho = \mathbf{V}$, alors $\llbracket H \rrbracket^\rho = \mathbf{V}$.
+		On étend cette définition pour un ensemble $\Gamma$\/ de formules $G$.
+		On a $G \equiv H$\/ si, et seulement si $G \models H$\/ et $H \models G$.
+	\end{recap-box}
+	\begin{recap-box}
+		Une formule \textit{valide} ou \textit{tautologique} est une formule dont l'interprétation vaut toujours $\mathbf{V}$, peu importe l'environnement propositionnel.
+		Une formule satisfiable est une formule dont l'interprétation vaut $\mathbf{V}$, pour un certain environnement propositionnel.
+		Si $\rho \in \mathds{B}^\mathcal{P}$\/ vérifie $\llbracket F \rrbracket^\rho = \mathbf{V}$, on dit que $\rho$\/ est un \textit{modèle} de $F$.
+	\end{recap-box}
+\end{multicols}

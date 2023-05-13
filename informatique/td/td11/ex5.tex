@@ -1,0 +1,16 @@
+\section{Distributivité des quantificateurs}
+
+\begin{enumerate}
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\forall x,\:(\varphi \land \psi) \vdash\forall x,\:(\varphi \land \psi)}
+				\infer 1[$\forall$e]{\forall x,\:(\varphi \land \psi) \vdash\varphi \land \psi}
+				\infer 1[$\land$e,g]{\forall x,\:(\varphi \land \psi) \vdash\varphi}
+				\infer 1[$\forall$i]{\forall x,\:(\varphi \land \psi) \vdash \forall x,\: \varphi}
+				\hypo{\vdots}
+				\infer 1{\forall x,\:(\varphi \land \psi) \vdash \forall x,\: \psi}
+				\infer 2{\forall x,\:(\varphi \land \psi) \vdash (\forall x,\: \varphi) \land (\forall x,\: \psi)}
+			\end{prooftree}
+		.\] 
+\end{enumerate}

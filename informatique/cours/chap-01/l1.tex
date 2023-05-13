@@ -6,7 +6,7 @@ let rec fact n =
 	else n * (fact (n-1));;
 \end{lstlisting}
 
-Ce programme calcule la factorielle d'un nombre ? En développant, l'expression de $3!$, on a
+\lettrine{C}{e programme} calcule la factorielle d'un nombre ? En développant, l'expression de $\texttt{fact}\ 3$, on a
 \begin{align*}
 	(\text{\tt fact } 3) &= 3 \times (\text{\tt fact } 2) \\
 	&= 3 \times (2 \times (1 \times 1)) \\
@@ -73,9 +73,11 @@ On en conclut que, avec les outils de l'année passée, il est difficile de prou
 
 \section{Ordre}
 
-\begin{defn}[Élements minimaux] Lorsque $(E, \preceq)$\/ est un espace ordonné, et $A \subseteq E$\/ (``inclut ou égal'') est une partie de $E$, on appelle {\it élément minimal}\/ de $A$\/ un élément $x \in A$\/ tel que \[
+\begin{defn}[Élements minimaux]
+	Lorsque $(E, \preceq)$\/ est un espace ordonné, et $A \subseteq E$\/ (``inclut ou égal'') est une partie de $E$, on appelle {\it élément minimal}\/ de $A$\/ un élément $x \in A$\/ tel que \[
 	\forall y \in A,\,y \preceq x \implies y = x
 .\]
+	\index{élément minimal (ensemble ordonné)}
 \end{defn}
 
 \begin{exm}
@@ -117,6 +119,7 @@ On en conclut que, avec les outils de l'année passée, il est difficile de prou
 
 \begin{defn}[Ordre bien fondé]
 	Un ordre est {\it bien fondé\/} s'il n'existe pas de suite infiniment strictement croissante.
+	\index{ordre bien fondé (ensemble ordonné)}
 \end{defn}
 
 \begin{exm}
@@ -188,6 +191,7 @@ On peut donc utiliser le principe de la récurrence pour tout ensemble ordonné 
 	Soit $(A, \preceq_A)$\/ et $(B, \preceq_B)$\/ deux ensembles ordonnés on définit alors $\preceq_\times$\/ sur $A\times B$\/ par \[
 		\forall (a,b), (a', b') \in A \times B,\,(a,b) \preceq_\times (a',b') \mathop{\iff}^{\text{def.}}(a \preceq_A a' \mathop{\text{et}} b \preceq_B b')
 	.\]
+	\index{relation d'ordre!produit ($\preceq_\times$)}
 \end{defn}
 
 \begin{prop}

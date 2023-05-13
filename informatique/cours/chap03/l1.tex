@@ -1,7 +1,7 @@
 \section{Motivation}
 
-L'intelligence artificielle est vu comme un \guillemotleft~objet magique~\guillemotright\ mais ce n'est pas le cas : c'est ce que nous allons étudier dans ce chapitre.
-Il existe plusieurs méthodes permettant l'apprentissage : descente de gradient, ?, \ldots
+\lettrine{L}{'intelligence artificielle} est vue comme un \guillemotleft~objet magique~\guillemotright\ mais ce n'est pas le cas : c'est ce que nous allons étudier dans ce chapitre.
+Il existe plusieurs méthodes permettant l'apprentissage : descente de gradient, $k$-plus proches voisins, \ldots
 
 La base de donnée la plus utilisée est {\sc mnist}\/ : elle contient 60\,000 images de $28 \times 28$\/ pixels représentant un chiffre, et le chiffre correspondant.
 L'idée de l'apprentissage est de \guillemotleft~deviner~\guillemotright\ le chiffre dessiné en connaissant l'image.
@@ -12,6 +12,7 @@ L'idée de l'apprentissage est de \guillemotleft~deviner~\guillemotright\ le chi
 	On appelle {\it signature de données}\/ un $n$-uplet de paires nom, ensemble ; on le typographie \[
 		\big(\text{nom}_1 : S_1, \text{nom}_2 : S_2, \ldots, \text{nom}_n : S_n\big)
 	.\]
+	\index{signature de données}
 \end{defn}
 
 \begin{exm}
@@ -26,6 +27,7 @@ L'idée de l'apprentissage est de \guillemotleft~deviner~\guillemotright\ le chi
 	Étant donné une signature de données $\mathds{S} = \big(\text{nom}_1 : S_1, \ldots, \text{nom}_n : S_n\big)$, on appelle {\it donnée}\/ un vecteur \[
 		\bar{v} = (v_1, v_2, \ldots, v_n) \in S_1 \times S_2 \times \cdots \times S_n
 	.\]
+	\index{donnée}
 \end{defn}
 
 \begin{exm}
@@ -37,6 +39,7 @@ L'idée de l'apprentissage est de \guillemotleft~deviner~\guillemotright\ le chi
 
 \begin{defn}
 	Étant donné une signature de données $\mathds{S}$, on appelle {\it jeu de données}\/ un ensemble fini de vecteurs de signature $\mathds{S}$.
+	\index{jeu de données}
 \end{defn}
 
 \begin{defn}
@@ -45,6 +48,7 @@ L'idée de l'apprentissage est de \guillemotleft~deviner~\guillemotright\ le chi
 		\item d'un jeu de données $S$,
 		\item d'une fonction $f: S \to \mathcal{C}$\/ de classification.
 	\end{itemize}
+	\index{jeu de données!classifié}
 \end{defn}
 
 \begin{comment}
@@ -60,7 +64,8 @@ On distingue deux méthodes d'apprentissage :
 L'objectif de cette section est de construire des fonctions de classification, à partir d'un jeu de données classifié.
 
 \begin{defn}
-	Étant donné une signature de données $\mathds{S}$, et un ensemble de classes $\mathcal{C}$, on appelle {\it fonction de classification}\/ une fonction des données de de signature $\mathds{S}$\/ dans $\mathcal{C}$.
+	Étant donné une signature de données $\mathds{S}$, et un ensemble de classes $\mathcal{C}$, on appelle {\it fonction de classification}\/ une fonction des données de signature $\mathds{S}$\/ dans $\mathcal{C}$.
+	\index{fonction de classification}
 \end{defn}
 
 \begin{rmk}
@@ -74,19 +79,23 @@ L'objectif de cette section est de construire des fonctions de classification, �
 	\begin{asy}
 		size(10cm);
 		draw(box((-1,-1),(1,1)));
-		void s(string t, pair v, real r, int k) {
+		void s(string t, pair v, real r, real r0, int k) {
 			real a = v.x;
 			real b = v.y;
-			for(int i = 0; i < k; ++i) {
-				pair off = unitrand() * r * expi(unitrand() * 2pi);
-				label(t, off + (a,b));
+			int n = floor(sqrt(k));
+			for(real i = 0.5; i < n; ++i) {
+				for(real j = 0.5; j < n; ++j) {
+					pair off = unitrand() * r0 * expi(unitrand() * 2pi);
+					pair pos = (a,b) + (i-n/2,j-n/2)*2r/n + off;
+					label(t,pos);
+				}
 			}
 		}
 		srand(0);
-		s("$\circ$", (-0.5, 0.5), 0.5, 20);
-		s("$\diamond$", (0.5, 0.5), 0.5, 10);
-		s("$\star$", (-0.5, -0.5), 0.5, 40);
-		s("$\times$", (0.5, -0.5), 0.5, 50);
+		s("$\odot$", (-0.5, 0.5), 0.5, 0.05, 20);
+		s("$\diamond$", (0.5, 0.5), 0.5, 0.05, 10);
+		s("$\star$", (-0.5, -0.5), 0.5, 0.05, 40);
+		s("$\times$", (0.5, -0.5), 0.5, 0.05, 50);
 	\end{asy}
 	\caption{Représentation de l'algorithme des $k$\/ plus proches voisins}
 \end{figure}
@@ -95,7 +104,7 @@ L'objectif de cette section est de construire des fonctions de classification, �
 	\centering
 	\begin{algorithmic}[1]
 		\Entree Un jeu de données classifié $(S, c)$, un vecteur d'entrée $\bar{v}$\/ 
-		\State On trie $S$\/ par distance à croissante de $v$\/ en $d_1$, $d_2$, \ldots, $d_{k}$, $d_{k+1}$, \ldots
+		\State On trie $S$\/ par distance croissante de $v$\/ en $d_1$, $d_2$, \ldots, $d_{k}$, $d_{k+1}$, \ldots
 		\State Soit $D$\/ un dictionnaire de $\mathcal{C}$\/ vers $\N$\/ initialisé à 0\footnotemark
 		\For{$j \in \left\llbracket 1,k \right\rrbracket$}
 		\State $D\big[c(d_j)\big] \gets D\big[c(d_j)\big] + 1$
@@ -117,24 +126,26 @@ L'objectif de cette section est de construire des fonctions de classification, �
 	On appelle {\it matrice de confusion}\/ d'un algorithme de prédiction $\mathcal{A}$\/ sur un jeu de données classifié $(T, c)$, la matrice \[
 		\Big(\Card \{t \in T \mid \mathcal{A}(t) = i \text{ et } c(t) = j\}\Big)_{(i,j) \in \mathcal{C}^2}
 	.\]
+	\index{matrice de confusion}
 
-	Dans le cas particulier dans le cas d'une classification $(\bfm V, \bfm F)$, on nomme
+	Dans le cas particulier d'une classification $(\bfm V, \bfm F)$, on nomme
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{c|c|c}
 			\diagbox{$\mathcal{A}$}{vrai}&$\bfm F$&$\bfm V$\\ \hline
 			$\bfm F$& vrai négatif & faux négatif\\ \hline
 			$\bfm V$& faux positif& vrai positif
-		\end{tabular}
+		\end{tabular}.
 		\caption{Matrice de confusion dans le cas d'une classification en $\bfm V$\/ et  $\bfm F$}
 	\end{table}
+	\index{vrai positif} \index{faux négatif}
+	\index{faux positif} \index{vrai négatif}
 \end{defn}
 
-{\slshape Comment améliorer la performance de l'algorithme des $k$\/ plus proches voisins ?} En dimension~1, on peut utiliser une dichotomie. Mais, dans des dimensions plus grandes, l'ordre lexicographique, et l'ordre produit ne fonctionnent pas. Mais, on peut appliquer une ``dichotomie'' en changeant de dimension. Par exemple, en deux dimension, on a 
+{\slshape Comment améliorer la performance de l'algorithme des $k$\/ plus proches voisins ?} En dimension~1, on peut utiliser une dichotomie. Mais, dans des dimensions plus grandes, l'ordre lexicographique, et l'ordre produit ne fonctionnent pas. Mais, on peut appliquer une ``dichotomie'' en changeant de dimension. Par exemple, en deux dimension, on obtient la dichotomie ci-dessous.
 
 \begin{figure}[H]
 	\centering
-	\todo{Représenter le schéma}
 	%      |    |
 	% 5    |    4
 	%---2--+    |
@@ -143,6 +154,21 @@ L'objectif de cette section est de construire des fonctions de classification, �
 	%  |   |
 	%  3   |
 	%  |   |
+	\begin{asy}
+		size(5cm);
+		draw((0, -5)--(0, -0.5)); draw((0, 0.5)--(0, 5));
+		label("0", (0, 0));
+		draw((0, 1)--(0.5, 1)); draw((1.5, 1)--(5, 1));
+		label("1", (1, 1));
+		draw((0, 2)--(-1.5, 2)); draw((-2.5, 2)--(-5, 2));
+		label("2", (-2, 2));
+		draw((-3, 2)--(-3, -1.5)); draw((-3, -2.5)--(-3, -5));
+		label("3", (-3, -2));
+		draw((3, 1)--(3, 1.5)); draw((3, 2.5)--(3, 5));
+		label("4", (3, 2));
+		draw((-3.5, 2)--(-3.5, 2.5)); draw((-3.5, 3.5)--(-3.5, 5));
+		label("5", (-3.5, 3));
+	\end{asy}
 	\caption{Représentation de la ``dichotomie'' en dimension 2}
 \end{figure}
 
@@ -150,7 +176,7 @@ Pour représenter cette structure de données, on utilise un arbre binaire comme
 
 \begin{figure}[H]
 	\centering
-	\todo{Faire l'arbre}
+	\Tree[.0 [.2 5 3 ] [.1 4 {} ]]
 	\caption{Arbre $2$-dimensionnel représentant la ``dichotomie'' précédente}
 \end{figure}
 
@@ -183,7 +209,7 @@ Pour représenter cette structure de données, on utilise un arbre binaire comme
 	\begin{algorithmic}[1]
 		\Entree Un arbre $k$-dimensionnel et un vecteur $v$\/
 		\If{$T$ est vide}
-			\State\Return $\O$\/
+			\State\Return None
 		\Else
 			\State $\text{Nœud}\big((u,i), G, D\big) \gets T$
 			\If{$u_i \le v_i$}
@@ -209,6 +235,7 @@ Pour représenter cette structure de données, on utilise un arbre binaire comme
 					\Else\State\Return $W$\/
 					\EndIf
 				\EndIf
+				\Else\State$\langle$comme le cas précédent$\rangle$
 			\EndIf
 		\EndIf
 	\end{algorithmic}

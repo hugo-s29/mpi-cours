@@ -1,0 +1,122 @@
+\section{Probabilité}
+
+\begin{defn}
+	Le couple $(\Omega, \mathcal{A})$\/ est appelé \textit{espace probabilisable}. On le munit d'une probabilité $P$\/ (définie ci-dessous). Ainsi, le triplet $(\Omega, \mathcal{A}, P)$\/ est dit \textit{espace probabilisable}.
+
+	Une \textit{probabilité} $P$\/ sur $(\Omega, \mathcal{A})$\/ est une application $P : \mathcal{A} \longrightarrow [0,1]$\/ telle que
+	\begin{enumerate}
+		\item $P(\Omega) = 1$\/ ;
+		\item Pour toute suite $(A_n)_{n\in\N}$\/ d'événements deux-à-deux incompatibles,\\
+			\null\hfill $\ds P\Big(\bigcupdot_{n \in \N} A_n\Big) = \sum_{n \in \N}P(A_n)$. \hfill ($\sigma$-additivité).
+	\end{enumerate}
+\end{defn}
+
+\begin{rmk}
+	Une union, finie ou dénombrable, est toujours commutative et on peut donc la notera indifféremment $\bigcup_{n \in \N}$ ou $\bigcup_{n=1} ^\infty$. Une somme finie de scalaires est commutative, une somme dénombrable aussi si la série est absolument convergente (c'est le cas de la série $\sum P(A_n)$ dans la définition précédente) : on peut noter indifféremment $\sum_{n=0}^\infty$\/ ou $\sum_{n \in \N}$.
+\end{rmk}
+
+\begin{prop}
+	\begin{enumerate}
+		\item $P(\O) = 0$.
+		\item Pour toute suite finie $(A_1, \ldots, A_n) \in \mathcal{A}^n$ d'événements deux-à-deux incompatibles,\\
+			\null\hfill$\ds P\Big(\bigcupdot_{i=1}^n A_n\Big) = \sum_{i=1}^n P(A_n)$\hfill (additivité).
+		\item Pour tout événement $A \in \mathcal{A}$, $P(\bar{A}) = 1 - P(A)$.
+		\item Pour tout couple $(A, B) \in \mathcal{A}^2$\/ d'événements,\\
+			\null\hfill$A \subset B \implies P(A) \le P(B)$. \hfill(croissance de la probabilité)
+		\item Pour tout couple $(A, B) \in \mathcal{A}^2$\/ d'événements, $P(A \cup B) = P(A) + P(B) + P(A \cap B)$.
+		\item Pour toute famille finie d'événements $(A_1, \ldots, A_n) \in \mathcal{A}^n$,\\
+			\null\hfill$\ds P\Big(\bigcup_{n=1}^n A_n\Big) \le \sum_{n=1}^n P(A_n)$\hfill (sous-additivité).
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item On utilise le point 3.\ : $P(\O) = P(\bar{\Omega}) = 1 - P(\Omega) = 0$.
+		\item \textit{c.f.} poly
+		\item On utilise le point 5.\ : $1 = P(A \cup \bar{A}) = P(A) + P(\bar{A}) + P(A \cap \bar{A}) = P(A) + P(\bar{A})$, d'où $P(\bar{A}) = 1 - P(A)$.
+		\item Si $A \subset B$, on a $B = A \cupdot (B\setminus A)$, et donc $P(B) = P(A) + P(B\setminus A) \ge P(A)$.
+		\item On a, d'une part $A = (A \cap B) \cupdot (A \setminus B)$, donc $P(A) = P(A \cap B) + P(A \setminus B)$, et d'autre part, $B = (B \cap A) \cupdot (B \setminus A)$, d'où $P(B) = P(B \cap A) + P(B \setminus A)$. Or, $(A \setminus B) \cupdot (B \setminus A) \cupdot (A \cap B) = A\cup B$, d'où \[
+				P(A \setminus B) + P(B \setminus A) + P(A \cap B)
+			.\]
+	\end{enumerate}
+\end{prv}
+
+\section{La continuité (dé)croissante}
+
+\begin{thm}
+	Soit $(A_n)_{n\in\N}$\/ une suite d'événements.
+	\begin{enumerate}
+		\item Si $\forall n$, $A_n \subset A_{n+1}$, alors $\ds P\Big(\bigcup_{n \in \N} A_n\Big) = \lim_{n\to \infty} P(A_n)$. \hfill(continuité croissante)
+		\item Si $\forall n$, $A_n \supset A_{n+1}$, alors $\ds P\Big(\bigcap_{n \in \N} A_n\Big) = \lim_{n\to \infty} P(A_n)$. \hfill(continuité décroissante)
+	\end{enumerate}
+\end{thm}
+
+\begin{prv}
+	On crée une suite d'événements $(B_n)_{n\in\N}$\/ : on pose $B_0 = A_0$, et pour $n \in \N^*$, on pose $B_n = A_{n+1} \setminus A_n$.
+	L'union $\bigcup_{n \in \N} B_n$\/ est disjointe. D'où \[
+		P\Big(\bigcupdot_{n \in \N}  B_n\Big) = \sum_{n=0}^\infty P(B_n) = \lim_{N\to \infty} \sum_{n=0}^N P(B_n)
+	.\]
+	De plus, $\bigcup_{n \in \N} A_n = \bigcup_{n \in B_n}$, d'où $P\big(\bigcup_{n \in \N} A_n\big) = P\big(\bigcap_{n \in \N} B_n\big)$.
+	Enfin (télescope), comme $A_n = A_{n-1} \cupdot B_n$\/ (par construction), d'où \[
+		P(A_n) = P(A_{n-1}) + P(B_n) \quad \text{\textit{i.e.}}\quad P(B_n) = P(A_n) - P(A_{n-1})
+	\]
+	Ainsi, $\sum_{n=0}^N P(B_n) = P(A_N) - P(A_0) + P(B_0) = P(A_N)$.
+	On en déduit que \[
+		P\Big(\bigcup_{n \in \N} A_n\Big) = \lim_{n\to \infty} P(A_n)
+	.\]
+
+	Pour la continuité croissante, on passe au complémentaire \textit{c.f.} poly.
+\end{prv}
+
+\begin{crlr}
+	Pour toute suite $(B_n)_{n\in\N}$\/ d'événements, on a \[
+		P\Big(\bigcup_{n \in \N} B_n\Big) = \lim_{n\to \infty} P\Big(\bigcup_{k = 1}^n B_k\Big)\quad \text{et}\quad P\Big(\bigcap_{n \in \N} B_n\Big) = \lim_{n\to \infty} P\Big(\bigcap_{k=1}^n B_n\Big).
+	\]
+\end{crlr}
+
+\begin{prv}
+	Soit $A_n = \bigcup_{k=1}^n B_k$, alors $A_{n+1} = A_n \cup B_{n+1}$, d'où $A_{n+1} \subset A_n$. Et, $\bigcup_{n \in \N} A_n = \bigcup_{n \in \N} B_n$. On conclut à l'aide du théorème 10.
+\end{prv}
+
+\begin{exo}
+	\textsl{On lance indéfiniment une pièce qui tombe de manière équiprobable sur \textsc{Pile} ou \textsc{Face}. Montrer que la probabilité d'obtenir toujours \textsc{Pile} est nulle.}
+
+	On pose l'événement $A_n$\/ : \guillemotleft~la pièce est tombée sur \textsc{Pile} aux $n$ premiers lancers.~\guillemotright\@ Ainsi, l'événement \guillemotleft~obtenir toujours \textsc{Pile}~\guillemotright\ vaut $E = \bigcap_{n \in \N^*} A_n$. On a aussi $A_{n+1} \subset A_n$. D'où, par continuité décroissante, $P(E) = \lim_{n\to \infty} P(A_n)$. Or, il y a équiprobabilité, d'où
+	\[
+		P(A_n) = \frac{\text{\#\:résultats favorables}}{\text{\#\:résultats possibles}} = \frac{\Card(A_n)}{\Card(\Omega)} = \frac{1}{2^n}
+	.\] On en déduit que $P(E) = \lim_{n\to \infty}2^{-n} = 0$.
+
+	L'événement $E$\/ n'est pas impossible ($E \neq \O$) mais sa probabilité est nulle.
+\end{exo}
+
+\begin{defn}
+	On dit qu'un événement est :
+	\begin{itemize}
+		\item \textit{négligeable} ou \textit{presque impossible} si sa probabilité est nulle ;
+		\item \textit{presque certain} si sa probabilité vaut 1.
+	\end{itemize}
+\end{defn}
+
+\begin{prop}[$\sigma$-sous-additivé]
+	Soit $(A_n)_{n\in\N}$\/ une suite d'événements. Si la série $\sum P(A_n)$\/ converge, alors \[
+		P\Big(\bigcup_{n \in \N} A_n\Big) \le \sum_{n \in \N} P(A_n)
+	.\]
+\end{prop}
+
+\begin{prv}
+	Par récurrence avec $P(A \cup B) \le P(A) + P(B)$, on peut démontrer que \[
+		P\Big(\bigcup_{n = 1}^N A_n\Big) \le \sum_{n=1}^N P(A_n)
+	.\] Montrons que les limites, quand $N\to \infty$, existent.
+	\begin{itemize}
+		\item $\lim_{n\to \infty} \sum_{k=0}^n P(A_k)$\/ existe par hypothèse.
+		\item D'après le théorème de la continuité croissante (corolaire 11), on a $\lim_{n\to \infty} P\big(\bigcup_{k=0}^n A_k\big) = P\big(\bigcup_{n \in \N} A_n\big)$.
+	\end{itemize}
+\end{prv}
+
+\begin{crlr}
+	\begin{enumerate}
+		\item Une union finie ou dénombrable d'événements négligeables est un événement négligeable.
+		\item Une intersection finie ou dénombrable d'événements presque certains est un événement presque certain.
+	\end{enumerate}
+\end{crlr}
+

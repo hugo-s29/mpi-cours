@@ -1,0 +1,134 @@
+On montre la correction de cet algorithme. On cherche des invariants \textit{intéressants}, que l'on ne prouvera pas. Pour la boucle ``tant que,'' dans la procédure \textsc{ExploreDescendants}, on choisit les invariants
+\begin{enumerate}
+	\item pour tout couple de sommets $(u,v) \in S^2$, si $\Cl(u) \subseteq \mathrm{Res}$\/ et que $u\xrightarrow* v$, alors $\Cl(v) \subseteq \mathrm{Res}$\/ et $\mathrm{rand}_{\mathrm{Res}}(u) \le \mathrm{rang}_{\mathrm{Res}}(v)$,
+	\item $K(\mathrm{todo}) \cup \mathrm{Res} = \mathrm{Visit\acute es}$, où où $K(\mathrm{todo})$\/ est l'ensemble des premières composantes des couples de $\mathrm{todo}$,
+	\item les clés de $\mathrm{todo}$, du fond de la pile au sommet forment un chemin,
+	\item si $u$\/ est un élément de $\mathrm{Visit\acute es}$, et $v$\/ est un descendant de $u$,
+		\begin{itemize}
+			\item ou bien $v \in \mathrm{Res}$,
+			\item ou bien $v \in K(\mathrm{todo})$\/ 
+			\item ou bien $v$\/ est un descendant d'un élément d'une liste adjointe à un élément $w \in K(\mathrm{todo})$\/ tel que $u \xrightarrow* w$.
+		\end{itemize}
+\end{enumerate}
+On admet que ces 4 propriétés sont invariantes.
+À la fin, $\forall x \in \mathrm{Res}$, $\Cl(x) \subseteq \mathrm{Res}$, et dnc l'invariant 1 assure alors que nous avons un tri préfixe.
+
+\subsection{Algorithme de Kosaraju}
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree Un graphe $G = (S, A)$\/ 
+		\Sortie Les composantes fortement connexes de $G$\/ 
+		\State On calcule un tri préfixe de $G$.
+		\State On parcours $G^\top$\/ en utilisant l'ordre $T$\/ comme points de régénération.
+		\State On retourne le plus petit partitionnement associé au parcours.
+	\end{algorithmic}
+	\caption{Algorithme de Kosaraju}
+\end{algorithm}
+
+\subsection{Applications}
+
+\begin{thm}
+	$2\textsc{-cnf-sat} \in \text{\textbf{P}}$.
+\end{thm}
+
+\begin{exm}
+	On considère la formule $H = (x \lor \lnot y) \land (\lnot y \lor z) \land (y \lor \lnot z) \land(y \lor z)$. Elle est équivalente à 
+	\begin{align*}
+		H' = &\mathbin{\phantom\land}  (\lnot x \to \lnot y)\\
+		&\land (y \to x)\\
+		&\land (y \to z)\\
+		&\land (\lnot z \to \lnot y)\\
+		&\land (z \to y)\\
+		&\land (\lnot y \to \lnot z)\\
+		&\land (\lnot y \to z)\\
+		&\land (\lnot z \to y)
+	\end{align*}
+	En replaçant les $\to $\/ par des arrêtes dans un un graphe, on obtient celui représenté ci-dessous.
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\tikzfig{ex-graphe-2cnfsat}
+	\caption{Représentation d'une formule $2$-\textsc{cnf-sat} par un graphe}
+\end{figure}
+
+\begin{prvk}
+	Soit $H \in 2\textsc{cnf}$. On pose \[
+		H = (\ell_{1,1} \lor \ell_{1,2}) \land \ldots \land (\ell_{n,1} \lor \ell_{n,2})
+	.\]
+	Dans la suite, on note $\ell_{i,j}^\mathrm{c}$\/ le littéral opposé à $\ell_{i,j}$.
+	À la formule $H$, nous associons le graphe $G_H$\/ défini comme suit :
+	\begin{gather*}
+		S_H = \big\{(\ell_{i,j})  \mid i \in \llbracket 1,n \rrbracket, j \in \{1,2\} \big\}  \cup \big\{(\ell_{i,j}^\mathrm{c})  \mid i \in \llbracket 1,n \rrbracket, j \in \{1,2\}\big\}, \\
+		A_H = \big\{ (\ell_{i,1}^\mathrm{c}, \ell_{i,2}  \mid i \in \llbracket 1,n \rrbracket \big\} \cup \big\{ (\ell_{i,2}^\mathrm{c}, \ell_{i,1})  \mid i \in \llbracket 1,n \rrbracket \big\}.
+	\end{gather*}
+
+	\begin{lem}
+		Si $\rho$\/ est un modèle de $H$\/ et $u \xrightarrow* v$\/ tel que $\llbracket u \rrbracket^\rho = \mathbf{V}$, alors $\llbracket v \rrbracket^\rho = \mathbf{V}$.
+	\end{lem}
+	\begin{prv}
+		 Soit $\rho$\/ un modèle de $H$.
+		 Montrons par récurrence $P_n :{}$``si $u\xrightarrow* v$ par un chemin de longueur $n$ et $\llbracket u \rrbracket^\rho = \mathbf{V}$, alors $\llbracket v \rrbracket^\rho = \mathbf{V}$.''
+		\begin{itemize}
+			\item $P_0$\/ : $u = v$, donc \textsc{ok}.
+			\item $P_{n+1}$\/ : supposons $P_n$\/ vraie pour $n \in \N$. Soient $u$\/ et $v$\/ tels que  \[
+					u \to u_1 \to u_2 \to \cdots \to u_n \to u_{n+1} = v
+				\] et $\llbracket u_n \rrbracket^\rho = \mathbf{V}$.
+				D'après $P_n$, $\llbracket u_n \rrbracket^\rho = \mathbf{V}$. Or, $(u_n, u_{n+1}) \in A_H$. C'est donc que $u_n^\mathrm{c} \lor u_{n+1} \in H$.
+				Or, $\llbracket u_n \rrbracket^\rho = \mathbf{V}$, donc $\llbracket u_n^\mathrm{c} \rrbracket^\rho = \mathbf{F}$. Or, $\llbracket u_n \lor v \rrbracket^\rho = \mathbf{V}$\/ et donc $\llbracket v \rrbracket^\rho = \mathbf{V}$.
+		\end{itemize}
+		On conclut par récurrence.
+	\end{prv}
+
+	\begin{prop}
+		$H$\/ est satisfiable si, et seulement si aucune variable et sa négation ne se trouvent dans la même \textsc{cfc} de $G_H$.
+	\end{prop}
+
+	\begin{prv}
+		\begin{itemize}
+			\item[``$\implies$''] Par contraposée, soit $x$ et $\lnot x$\/ se trouvant dans la même \textsc{cfc} de $G_H$. On procède par l'absurde. Soit $\rho$\/ un environnement propositionnel tel que $\llbracket H \rrbracket^\rho = \mathbf{V}$.
+				\begin{itemize}
+					\item  Si $\rho(x) = \mathbf{V}$, alors $\llbracket x \rrbracket^\rho = \mathbf{V}$. Or, $x \xrightarrow* \lnot x$. Alors, d'après le lemme, $\llbracket \lnot x \rrbracket^\rho = \mathbf{V}$\/ et donc $\rho(x) = \mathbf{F}$, absurde.
+					\item Si $\rho(x) = \mathbf{F}$, alors $\llbracket \lnot x \rrbracket^\rho$. Or, $\lnot x\xrightarrow* x$\/ et donc, d'après le lemme, $\llbracket x \rrbracket^\rho = \mathbf{V}$\/ d'où $\rho(x) = \mathbf{V}$, absurde.
+				\end{itemize}
+				Il n'existe donc pas un tel $\rho$.
+			\item[``$\impliedby$'']
+				Si $G_H$\/ est telle qu'aucune variable et sa négation soient dans la même \textsc{cfc}. Soit $x \in \mathcal{Q}$\/ une variable propositionnelle. Soit $C_1,\ldots,C_p$\/ les composantes fortement connexes du graphe, triées par ordre topologique \textit{i.e.}\ pour  $(i,j) \in \llbracket 1,p \rrbracket^2$, si $j > i$, alors il n'y a pas de chemin d'un élément de $C_j$\/ vers un élément de $C_i$.
+				Regardons alors où sont rangés $x$\/ et $\lnot x$. Si $x \in C_i$\/ et $\lnot x \in C_j$\/ avec $i < j$, on définit alors $\rho(x) = \mathbf{F}$. Sinon, on définit $\rho(x) = \mathbf{V}$.
+				Montrons alors que $\rho$\/ est un modèle de $H$ : $\llbracket H \rrbracket^\rho = \mathbf{V}$.
+				Par l'absurde, soit $\ell_{i,1} \lor \ell_{i,2}$\/ une 2-clause de $H$\/ telle que $\llbracket \ell_{i,1} \lor\ell_{i,2} \rrbracket^\rho = \mathbf{F}$, donc $\llbracket \ell_{i,1} \rrbracket^\rho = \mathbf{F}$\/ et $\llbracket \ell_{i,2} \rrbracket^\rho = \mathbf{F}$.
+				Alors, $(\ell_{i,2}^\mathrm{c},\ell_{i,1})$\/ est une arrête de $G_H$ et, $(\ell_{i,1}^\mathrm{c},\ell_{i,2})$\/ est une arrête de $G_H$.
+				Ainsi, en notant $a$\/ l'indice de la composante $\ell_{i,2}^\mathrm{c}$, $b$\/ l'indice de $\ell_{i,1}$, $c$\/ l'indice de $\ell_{i,1}^\mathrm{c}$\/ et $d$\/ l'indice de $\ell_{i,2}$, on a $a \le  b$, $b < c$\/ par définition de $\rho$, $c \le d$\/ et $d < a$\/ par définition de $\rho$, d'où \[
+					a \le b < c \le d < a
+				,\] ce qui est absurde.
+				On a donc pour toute 2-clause $\ell_{i,1} \lor \ell_{i,2}$\/ de $H$, $\llbracket \ell_{i,1} \lor \ell_{i,2} \rrbracket^\rho = \mathbf{V}$\/ et donc $\llbracket H \rrbracket^\rho = \mathbf{V}$.
+		\end{itemize}
+	\end{prv}
+
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\Entree $H$\/ une 2-\textsc{cnf}
+			\Sortie $\rho$\/ un modèle de $H$\/ ou $\mathrm{None}$\/ si $H$\/ n'est pas satisfiable
+			\State On construit $G_H$\/ 
+			\State On construit les \textsc{cfc} $C_1,\ldots,C_p$\/ de $G_H$\/ (dans un ordre topologique)
+			\If{il existe $x$\/ et $i \in \llbracket 1,p \rrbracket$\/ tel que $x \in C_i$\/ et $\lnot x \in C_i$}
+				\State \Return $\mathrm{None}$\/
+			\Else
+				\State\Return $\rho$\/ défini comme \begin{align*}
+					\rho: \mathcal{Q} &\longrightarrow \mathds{B} \\
+					x &\longmapsto \begin{cases}
+						\mathbf{F} & \quad \text{ si } i < j\\
+						\mathbf{V}&\quad \text{ sinon}
+					\end{cases}
+				\end{align*}
+				où $x \in C_i$\/ et $\lnot x \in C_j$.
+			\EndIf
+		\end{algorithmic}
+		\caption{Solution au problème \textsc{2cnfsat}}
+	\end{algorithm}
+
+\end{prvk}
+

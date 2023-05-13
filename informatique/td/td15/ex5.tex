@@ -1,0 +1,48 @@
+\section{Les langages réguliers sont non contextuels}
+
+\subsection{Avec des automates}
+
+\begin{enumerate}
+  \item On pose $P$ l'ensemble des règles de productions définies comme \[
+      \{X_q \to \ell X_{q'}  \mid (q, \ell, q') \in \delta\} \cup \{X_q \to \varepsilon  \mid q \in F\}
+    .\]
+    Montrons par récurrence $\mathcal{P}(n)$ : \[
+      \text{\guillemotleft~$\forall q \in \Q,\:\mathcal{L}_n(\mathcal{A}_q) = \{w \in \mathcal{L}  \mid |w| = n\} = \{w \in \Sigma^n  \mid X_q \Rst w\} = G_n(q)$.~\guillemotright}
+    \]
+    \begin{itemize}
+      \item Pour $n = 0$, soit $q \in Q$ et soit $w \in \Sigma^*$.
+	Si $w \in \mathcal{L}_n(\mathcal{A}_q)$, alors $w = \varepsilon$ et $q \in F$, d'où $(X_q \to \varepsilon) \in P$ donc $X_q \Rst w$ donc $w \in G_n(q)$.
+	Réciproquement, si $w \in G_n(q)$, alors $X_q \Rst \varepsilon$ car il n'y a pas d'$\varepsilon$-transitions, donc $q \in F$ et donc $w = \varepsilon \in \mathcal{L}_n(\mathcal{A}_q)$.
+      \item Soit $n \in \N$. On suppose $\mathcal{P}(n)$ vraie. Soit $q \in Q$ et soit $w \in \Sigma^{n+1}$.
+	Si $w \in \mathcal{L}_{n+1}(\mathcal{A}_q)$, alors il existe une exécution acceptante \[
+	  q \xrightarrow{w_1} q_1 \to \cdots \to q_n \xrightarrow{w_{n+1}} q_{n+1} \in F
+	.\]
+	D'où, $w_2 \ldots w_{n+1} \in \mathcal{L}_n(\mathcal{A}_{q_1}) = G_n(q_1)$ par hypothèse donc $X_{q_1} \Rst w_2 \ldots w_{n+1}$.
+	Or, $(q, w_1, q_1) \in \delta$ donc $(X_q \to w_n X_{q_1}) \in P$ et donc $X_q \Rightarrow w_1 X_{q_1} \Rst w$.
+	D'où, $X_q \Rst w$ et donc $w \in G_{n+1}(q)$.
+
+	Réciproquement, si $w \in G_{n+1}(q)$ alors $X_q \Rst w$. Soit $w' \in Q$ tel que $X_q \Rightarrow w_1 X_{q'}$. Alors, $(q, w_1, q') \in \delta$.
+	De plus, $|w_2\ldots w_n| = n$ et $X_{q'} \Rst w_2 \ldots w_{n+1}$ donc $w_2 \ldots w_{n+1} \in G_n(q') = \mathcal{L}_n(\mathcal{A}_{q'})$.
+	Il existe donc une exécution acceptante \[
+	  q' \xrightarrow{w_2} q_2 \to \cdots \to q_n \xrightarrow{w_{n+1}} q_{n + 1} \in F
+	.\]
+	Or, $(q, w_1, q') \in \delta$ d'où \[
+	  q \xrightarrow{w_1} q' \xrightarrow{w_2} q_2 \to \cdots \to q_n \xrightarrow{w_{n+1}} q_{n + 1} \in F
+	\] est une exécution acceptante de $\mathcal{A}_q$. On en déduit que $w \in \mathcal{L}_{n+1}(\mathcal{A}_q)$.
+    \end{itemize}
+  \item On en conclut que tout langage régulier est représentable par une grammaire non-contextuelle.
+\end{enumerate}
+
+\subsection{Avec des expressions régulières}
+
+\begin{enumerate}[start=3]
+  \item On pose $P$ l'ensemble de règles de productions défini comme
+    \begin{align*}
+      P &= \phantom\cup\{X_r \to X_r X_{r'}  \mid \varepsilon \text{ tel que } r = (r')^* \}\\
+	&\phantom=\cup \{X_r \to X_{r_1} \mid X_{r_2} \text{ tel que } r = r_1  \mid r_2 \} \\
+	&\phantom=\cup \{X_r \to X_{r_1} X_{r_2} \text{ tel que } r = r_1 \cdot r_2 \} \\
+	&\phantom=\cup \{X_r \to r \text{ tel que } r \in \Sigma \} \\
+	&\phantom=\cup \{X_r \to \varepsilon \text{ tel que } r = \varepsilon \} \\
+    \end{align*}
+\end{enumerate}
+

@@ -1,0 +1,110 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\def\khollenum{14}
+
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+\fancyhead[R]{\scshape Khôlle n\tsup{o} \khollenum}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} \khollenum
+	\end{center}
+
+	\paragraph{Exercice 1.}
+	\begin{enumerate}
+		\item On note $A$\/ l'événement \guillemotleft~$X$\/ est pair.~\guillemotright\@ On a $A = \bigcup_{n \in \N} (X = 2n)$, et cette union est disjointe. D'où,
+			\begin{align*}
+				P(A) = \sum_{n = 0}^\infty P(X = 2n) &= \sum_{n=0}^\infty \mathrm{e}^{-\lambda} \cdot \frac{\lambda^{2n}}{(2n)!} \\
+				&= \mathrm{e}^{-\lambda} \sum_{n=0}^\infty \frac{\lambda^{2n}}{(2n)!} \\
+			\end{align*}
+			Or, la série entière $\sum \frac{x^{2n}}{(2n)!}$\/ a pour rayon de convergence $+\infty$, et \[
+				\forall x \in \R,\quad \sum_{n=0}^\infty \frac{x^{2n}}{(2n)!} = \ch x
+			.\] D'où, $P(A) = \mathrm{e}^{-\lambda} \cdot \ch \lambda$.
+
+			On pose $B$\/ l'événement \guillemotleft~$X$\/ est impair.~\guillemotright\@ On a $B = \bigcup_{n \in \N} (X = 2n+1)$, et cette union est disjointe. D'où,
+			\begin{align*}
+				P(B) = \sum_{n=0}^\infty P(X = 2n+1) &= \sum_{n=0}^\infty \mathrm{e}^{-\lambda} \frac{x^{2n+1}}{(2n+1)!} \\
+				&= \mathrm{e}^{-\lambda}\sum_{n=0}^\infty \frac{\lambda^{2n+1}}{(2n+1)!} \\
+			\end{align*}
+			Or, la série entière $\sum \frac{x^{2n+1}}{(2n+1)!}$\/ a pour rayon de convergence $+\infty$, et, \[
+				\forall x \in \R, \quad \sum_{n=0}^\infty \frac{x^{2n+1}}{(2n+1)!} = \sh x
+			.\] D'où, $P(B) = \mathrm{e}^{-\lambda} \cdot \sh \lambda$.
+
+			Or, pour tout réel $x$, $\ch x \ge \sh x$. Ainsi, $P(A) \ge P(B)$.
+		\item Soit $n > \lambda - 1$.
+			On sait que $(X  \ge n) = \bigcup_{i \in \N}(X = i+ n)$, et cette union est disjointe. D'où,
+			\begin{align*}
+				P(X \ge n) = \sum_{i=0}^\infty P(X = i + n) &= \sum_{i=0}^\infty \mathrm{e}^{-\lambda} \cdot \frac{\lambda^{i+n}}{(i+n)!}\\ &= \mathrm{e}^{-\lambda}\cdot \lambda^n \sum_{i=0}^\infty \frac{\lambda^i}{(i+n)!}\\
+				&\le \mathrm{e}^{-\lambda} \lambda^n \sum_{i=0}^\infty \frac{\lambda^i}{n! \times (n+1)^i} \\
+				&\le \mathrm{e}^{-\lambda}\cdot \frac{\lambda^n}{n!} \sum_{i=0}^n \left( \frac{\lambda}{n+1} \right)^i
+			\end{align*}
+			Et, la série entière $\sum x^n$\/ est géométrique, son rayon de convergence est 1, et \[
+				\forall x \in {]-1,1[},\quad \sum_{n=0}^\infty x^n = \frac{1}{1-x}
+			.\]
+			Or, par hypothèse, $0 < \lambda < n + 1$, donc $0 <\frac{\lambda}{n+1} < 1$.
+			D'où, \[
+				P(X \ge n) \le \mathrm{e}^{-\lambda}\: \frac{\lambda^n}{n!} \cdot \frac{1}{1 - \frac{\lambda}{n+1}}
+			.\]
+		\item D'une part, on a $P(X \ge n) \ge P(X = n)$\/ car $(X \ge n) \supset (X = n)$. D'autre part, $P(X \ge n) \le P(X = n)/ (1 - \frac{\lambda}{n + 1})$, et \[
+				\frac{1}{1-\frac{\lambda}{n+1}} \tendsto{n\to \infty} 1
+			.\] D'où, $P(X \ge n) \simi_{n\to +\infty} P(X = n)$.
+
+			On a donc $P(X \ge n) = P(X = n) + \po\big(P(X = n)\big)$. Or, $(X \ge n) = (X = n) \cup (X > n)$, et cette union est disjointe, d'où,
+			\begin{align*}
+				P(X > n) = P(X \ge n) - P(X = n) &= P(X = n) + \po\big(P(X = n)\big) - P(X = n)\\
+				&= \po\big(P(X = n)\big)
+			\end{align*}
+	\end{enumerate}
+
+	\paragraph{Exercice 2.}
+	\begin{enumerate}[start=0]
+		\item Soit $x \in \R^*$, et soit $n \in \N^*$.
+			\begin{align*}
+				\left| \frac{\sqrt{n+1}\:x^{n+1}}{\sqrt{n}\:x^n} \right| = |x| \sqrt{1 + \frac{1}{n}}  \tendsto{n\to +\infty} |x|
+			\end{align*}
+			D'après le critère de \textsc{d'Alembert}, la série entière $\sum \sqrt{n}\:x^n$\/ a pour rayon de convergence~1.
+		\item Soit $x \in {]0,1[}$. On a $\sqrt{n}\:x^n \ge x^n$, pour $n \in \N^*$. D'où, \[
+				g(x) = \sum_{n=0}^\infty \sqrt{n}\:x^n \ge \sum_{n=0}^\infty x^n = \frac{1}{1-x}
+			.\] Comme $|x| < 1$, on en déduit que \[
+				g(x) \ge \frac{1}{1-x} \ge \frac{x}{1-x}
+			.\]
+			Et, $\frac{x}{1-x} \tendsto{x\to 1^-} +\infty$, d'où $g(x) \tendsto{x\to 1^-} +\infty$.
+		\item Soit $x \in {]-1,1[}$. On calcule
+			\begin{align*}
+				f(x) = (1-x) g(x) &= g(x) - x\:g(x) \\
+				&= \sum_{n=0}^\infty \sqrt{n}\:x^n - x\sum_{n=0}^\infty \sqrt{n}\:x^n \\
+				&= \sum_{n=0}^\infty \sqrt{n}\:x^n - \sum_{n=0}^\infty \sqrt{n}\:x^{n+1} \\
+				&= \sum_{n=1}^\infty \sqrt{n} x^n - \sum_{n=1}^\infty \sqrt{n - 1} x^n \\
+				&= \sum_{n=1}^\infty (\sqrt{n} - \sqrt{n-1})x^n \\
+			\end{align*}
+		\item On calcule, pour $N \in \N$,
+			\[
+				\sum_{n=1}^N (\sqrt{n} - \sqrt{n-1}) = \sum_{n=1}^N \sqrt{n} - \sum_{n=0}^{N-1} \sqrt{n} = \sqrt{N} - \sqrt{0} = \sqrt{N} \tendsto{N\to \infty} +\infty
+			\] 
+			par télescopage. D'où, la série $\sum(\sqrt{n} -\sqrt{n-1})$\/ diverge.
+			On pose, $h : x \mapsto \sqrt{x} - \sqrt{x-1}$, dérivable sur $]1, +\infty[$, et \[
+				\forall x > 1,\quad h'(x) = \frac{1}{2\sqrt{x}} - \frac{1}{2\sqrt{x-1}} < 0
+			\] car $2\sqrt{x} > 2 \sqrt{x-1}$, et par décroissance de la fonction inverse.
+			Et, \[
+				\forall n > 1,\quad\frac{\sqrt{n}}{\sqrt{n-1}} = \sqrt{\frac{1}{1-\frac{1}{n}}} \tendsto{n\to \infty} 1,
+			\] d'où $\sqrt{n-1} = \sqrt{n} + \po(n)$. Ainsi, $\sqrt{n} - \sqrt{n-1} = \po(n) \tendsto{n\to \infty} 0$.
+			D'où, la suite $(\sqrt{n} -\sqrt{n-1})$\/ tend vers 0 en décroissant. D'après le théorème des séries alternées, on en déduit que la série $\sum (\sqrt{n} - \sqrt{n-1})\cdot (-1)^n$\/ converge.
+		\item On en déduit que le rayon de convergence de la série $\sum \big(\sqrt{n} - \sqrt{n-1}\big)$\/ est 1 (d'après la question précédente).
+		\item D'après la question 3, la série $\sum (\sqrt{n} - \sqrt{n-1})\:(-1)^n$\/ converge. D'après le théorème radial d'\textsc{Abel}, on en déduit que \[
+				f(x) = \sum_{n=1}^\infty (\sqrt{n} - \sqrt{n-1}) x^n \tendsto{x\to -1^+} \sum_{n=1}^\infty (\sqrt{n} - \sqrt{n-1}) (-1)^n = f(-1)
+			.\] Or, $\smash{g(x) = f(x) / (1-x) \tendsto{x\to-1^+} f(-1) / 2}$. On en déduit que $g(x)$\/ admet une limite finie en $-1^+$.
+	\end{enumerate}
+
+	\paragraph{Exercice 3.}
+	Soit $x \in \R^*$.
+	\[
+		\left| \frac{S_{n+1} x^{n+1}}{S_n x^n} \right| = |x| \cdot \frac{a_n + S_n}{S_n} = |x| \cdot \left(1 + \frac{a_n}{S_n}\right) \tendsto{n\to \infty} |x|
+	.\] D'où, par le critère de \textsc{d'Alembert}, le rayon de convergence de la série $\sum S_n x^n$\/ est donc 1.
+
+	Et, $a_n > 0$, donc, pour tout $x \in \R$, $0 \le \sum a_n x^n \le \sum S_n x^n$, et la série $\sum S_n x^n$\/ converge pour tout $x \in {]-1,1[}$, la série $\sum a_n x^n$\/ converge aussi pour tout $x \in {]-1,1[}$. On en déduit que le rayon de convergence de cette série entière est supérieur ou égal à 1. De plus, la série $\sum a_n$\/ diverge car $(S_n)$\/ diverge, d'où le rayon de convergence de la série entière $\sum a_n x^n$\/ est inférieur ou égal à 1.
+	Le rayon de convergence de la série $\sum a_n x^n$\/ est donc égal à 1.
+\end{document}
+
+

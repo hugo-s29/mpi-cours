@@ -1,0 +1,70 @@
+\paragraph{Interlude : grammaires contextuelles.}
+Dans une grammaire contextuelle, une règle de production peut-être de la forme $b \mathrm{B} \to a \mathrm{B} a \mathrm{B}$, où $\Sigma = \{a,b\}$.
+Ces règles dépendent du contexte, et non juste des symboles.
+
+\bigskip
+
+\begin{lem}[de décomposition]
+	Étant donnée une grammaire non contextuelle $(\mathcal{V}, \Sigma, P, S)$, soit $w = w_1\ldots w_n$ un mot de $n$ lettres tel qu'il existe $p \in \N$ et $v \in (\Sigma \cup \mathcal{V})^*$ tel que $w \Rightarrow^p v$ alors il existe $\tilde{v}_1, \tilde{v}_2, \ldots, \tilde{v}_n \in (\Sigma \cup \mathcal{V})^*$ et $p_1, \ldots, p_n \in \N$ tels que $w_1 \Rightarrow^{p_1}  \tilde{v}_1$, $w_2 \Rightarrow^{p_2} \tilde{v}_2$, \ldots, $w_n \Rightarrow^{p_n} \tilde{v}_n$, et $v = \tilde{v}_1 \cdots \tilde{v}_n$, et $\sum_{i=1}^n p_i = p$.
+\end{lem}
+
+\bigskip
+
+\begin{prv}
+	On procède par récurrence sur $p \in \N$.
+	\begin{itemize}
+		\item\textbf{cas de base ($p = 0$).} On a $w_1w_2\ldots w_n \Rightarrow^0 v$, d'où $v = w_1 w_2 \ldots w_n$. On choisit donc $\tilde{v}_i = w_i$ et $p_i = 0$ pour tout $i \in \llbracket 1,n\rrbracket$. On a alors, pour tout $i \in \llbracket 1,n \rrbracket$, $w_i \Rightarrow^0 \tilde{v}_i$, et $v = \tilde{v}_1 \ldots \tilde{v}_n$ et $\sum_{i=1}^n p_i = 0 = p$.
+		\item \textbf{hérédité.}
+			Soit $w \Rightarrow w_1\ldots w_{q-1} u_1u_2\ldots u_r w_{q+1}\ldots w_n \Rightarrow^{p-1} v$, où $(w_q \to u_1\ldots u_r) \in P$.
+			Soit donc, par hypothèse de récurrence, $\hat{v}_1, \hat{v}_2, \ldots, \hat{v}_{n-1+r}$ tels que
+			\begin{itemize}
+				\item $\forall i \in \llbracket 1,q_1 \rrbracket$, $w_i \Rightarrow^{s_i} \hat{v}_i$,
+				\item $\forall i \in \llbracket 1,r \rrbracket$, $u_i \Rightarrow^{s_{i+q-1}} \hat{v}_{i+q-1}$,
+				\item $\forall i \in \llbracket q+1,n \rrbracket$, $w_i \Rightarrow^{s_{i + r-1}} \hat{v}_{i+r-1}$,
+				\item et $\sum_{i=1}^{n-1+r} s_i = p - 1$.
+			\end{itemize}
+			On pose alors, pour tout $i \in \llbracket 1,q-1 \rrbracket$, $\tilde{v}_i = \hat{v}_i$,  $\tilde{v}_q = \hat{v}_q \hat{v}_{q+1} \cdots \hat{v}_{q+r - 1}$, et pour tout $i \in \llbracket q+1,n \rrbracket$, $\tilde{v}_i = \hat{v}_{i+r - 1}$.
+			On pose aussi, pour $i \in \llbracket 1,q-1 \rrbracket$, $p_i = s_i$, puis $p_q = 1 + \sum_{i=1}^r s_{i+q-1}$, et, pour $i \in \llbracket q+1,n \rrbracket$, $p_i = s_{i+r - 1}$.
+
+			On a clairement $v = \tilde{v}_1 \tilde{v}_2 \cdots \tilde{v}_n$.
+			De plus, $\sum_{i=1}^n p_i = \Big(\sum_{i=1}^{n+r-1} s_i\Big) + 1 = (p - 1) + 1 = p$.
+			Et surtout, pour $i \in \llbracket 1,q-1 \rrbracket$, $w_i \Rightarrow^{s_i} \hat{v}_i$ donc $w_i \Rightarrow^{p_i} \tilde{v}_i$.
+			Ainsi, \[
+				w_q \Rightarrow u_1 \ldots u_r \Rightarrow^{\sum_{i=1}^r s_{i+q-1}} \underbrace{\hat{v}_q \ldots \hat{v}_{q+r-1}}_{\tilde{v}_q}
+			,\] donc $w_q \Rightarrow^{p_q} \tilde{v}_q$ et, pour $i \in \llbracket q+1,n \rrbracket$ , $w_i \Rightarrow^{s_{i+r-1}} \hat{v}_{r+r-1}$ et $w_i \Rightarrow^{p_i} \tilde{v}_i$.
+	\end{itemize}
+\end{prv}
+
+\subsection{Preuves par induction}
+
+\begin{prop}[principe d'induction]
+	Étant donnée une grammaire $\mathcal{G} = (\mathcal{V}, \Sigma, P, S)$, et un non-terminal $V \in \mathcal{V}$, on note localement $V_{\downarrow} = \{w \in \Sigma^*  \mid V\Rst w\}$.\footnotemark\@ Soit alors un ensemble de propriétés $\mathcal{P}_V$ pour $V \in \mathcal{V}$, tel que, $\forall (V \to w_1 w_2 \ldots w_n) \in P$, $\forall (\hat{w}_1, \hat{w}_2, \ldots, \hat{w}_m) \in (\Sigma^*)^m$ \[
+		\left(\forall i \in \llbracket 1,m \rrbracket, \begin{cases}
+			w_i \in \Sigma \implies \hat{w}_i = w_i\\
+			w_i \in \mathcal{V} \implies \text{ $\hat{w}_i$ vérifie $\mathcal{P}_{w_i}$}
+		\end{cases}\right)
+		\implies \hat{w}_i\ldots \hat{w}_n \text{ vérifie } \mathcal{P}_V
+	,\]
+	alors pour tout $V \in \mathcal{V}$, $V_\downarrow$ vérifie $\mathcal{P}_V$.
+\end{prop}
+\footnotetext{Avec cette définition, $\mathcal{L}(\mathcal{G}) = S_{\downarrow}$.}
+
+\begin{exm}
+	On considère $\mathcal{G}$ la grammaire \[
+		\mathcal{G} = \big(\{\mathrm{P},\mathrm{I},\mathrm{X}\}, \{a\}, \{\mathrm{P}\to \varepsilon, \mathrm{I} \to a, \mathrm{P} \to a \mathrm{P} a, \mathrm{I} \to a \mathrm{I} a, \mathrm{X} \to \mathrm{IPI}\}, \mathrm{X} \big)
+	.\]
+	On pose les propriétés $\mathcal{P}_\mathrm{P}(w)$ : \guillemotleft~$|w|$ est pair~\guillemotright\ ; $\mathcal{P}_\mathrm{I}(w)$ : \guillemotleft~$|w|$ est impair~\guillemotright\ ; et, $\mathcal{P}_\mathrm{X}(w)$ : \guillemotleft~$|w|$ est pair.~\guillemotright\ 
+	\begin{itemize}
+		\item \textbf{cas $\mathrm{P} \to \varepsilon$.} Le mot $\varepsilon$ est de taille pair donc $\mathcal{P}_\mathrm{P}(\varepsilon)$ est vrai.
+		\item \textbf{cas $\mathrm{I} \to a$.} $|a|$ est impair donc $\mathcal{P}_\mathrm{I}(a)$ est vrai.
+		\item \textbf{cas $\mathrm{P} \to a \mathrm{P} a$.}
+			Soit donc $w = a w' a$ avec $w'$ vérifiant $\mathcal{P}_\mathrm{P}$.
+			Alors, $|w| = 2 + |w'|$ qui est pair.
+		\item \textbf{cas $\mathrm{I} \to a \mathrm{I} a$.}
+			Soit donc $w = a w' a$ avec $w'$ vérifiant $\mathcal{P}_\mathrm{I}$.
+			Alors, $|w| = 2 + |w'|$ qui est impair.
+		\item \textbf{cas $\mathrm{X} \to \mathrm{IPI}$.}
+			Soit donc $w = x y z$, avec $x$ et $z$ vérifiant $\mathcal{P}_\mathrm{I}$, et $y$ vérifiant $\mathcal{P}_\mathrm{P}$.
+			Alors, $|w| = |x| + |y| + |z|$, qui est pair.
+	\end{itemize}
+\end{exm}

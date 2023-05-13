@@ -1,0 +1,53 @@
+\subsection{Lien avec les langages décidables}
+
+\begin{prop}
+	Les langages des grammaires non contextuelles sont des langages décidables.
+	\qed
+\end{prop}
+
+La preuve de cette propriété est dans le \textsc{td} 15. (On peut montrer, par programmation dynamique, que l'appartenance d'un mot à une grammaire non contextuelle est calculable en temps polynômial, en $\mathcal{O}(n^3)$.)
+
+\begin{exm}
+	$\triangleright$ \textsc{td} 15, exercice 1.
+\end{exm}
+
+\begin{exm}
+	On considère l'alphabet $\Sigma = \{C, L\!P, R\!P\}$ et les règles de production $\mathrm{S} \to \mathrm{TS}  \mid C$ et $\mathrm{T} \to L\!P \cdot \mathrm{S} \cdot R\!P$.
+	Codons un programme reconnaissant la grammaire définie par ces règles.
+	On représente $\Sigma$ par le type \texttt{token} où $C$ correspond à \texttt{C}, $L\!P$ à \texttt{LP} et $R\!P$ à \texttt{RP}.
+
+	\begin{lstlisting}[language=caml,caption=Programme reconnaissant une grammaire $\mathcal{G}$]
+type token = C | LP | RP
+type word = token list
+
+type non_term = S | T
+
+(* closed derivation tree *)
+type cdt =
+  | Node of non_term * cdt list
+  | Leaf of token option
+
+
+exception Non
+
+let rec parse_s (w: word): cdt * word =
+  match w with
+  | C ::  w' -> (Node(S, [Leaf(Some C)]), w')
+  | _        ->
+      let (g, w')  = parse_t w  in
+      let (d, w'') = parse_s w' in
+      (Node (S, [g; d]), w'')
+and parse_t (w: word): cdt * word =
+  match w with
+  | LP :: w' -> begin
+      let (u, w'') = parse_s w' in
+      match w'' with
+      | RP :: w''' -> (Node (T,
+					[Leaf (Some LP); u; Leaf (Some RP)]), w''')
+      | _          -> raise Non
+    end
+  | _ -> raise Non
+	\end{lstlisting}
+\end{exm}
+
+

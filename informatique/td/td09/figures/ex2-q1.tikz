@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (-2, 0) {$a$};
+		\node [style=new style 0] (1) at (2, 0) {$b$};
+		\node [style=new style 0] (2) at (0, -2) {$c$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow] (0) to (1);
+	\end{pgfonlayer}
+\end{tikzpicture}

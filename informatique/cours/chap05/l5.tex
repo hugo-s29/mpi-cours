@@ -1,0 +1,230 @@
+\paragraph{Une structure pour la gestion des partitions : \textsf{UnionFind}.}
+
+\begin{defn}[Type de données abstrait \textsf{UnionFind}]
+	On définit le type de données abstrait \textsf{UnionFind} comme contenant
+	\begin{itemize}
+		\item un type \texttt{t} de partitions ;
+		\item un type \texttt{elem} des éléments manipulés par les partitions ;
+		\item $\texttt{initialise\_partition} : \texttt{elem list} \to \texttt{t}$\/ retournant le partitionnement dans lequel chaque élément est seul dans sa classe ;
+		\item $\texttt{find} : (\texttt{t} \mathbin{\texttt{*}} \texttt{elem}) \to \texttt{elem}$\/ retournant un représentant de la classe de l'élément. Si deux éléments $x$\/ et $y$\/ sont dans la même classe, dans le partitionnement $p$, alors $\texttt{find}(p,x) = \texttt{find}(p,y)$ ;
+		\item $\texttt{union} : (\texttt{t} \mathbin{\texttt{*}} \texttt{elem} \mathbin{\texttt{*}} \texttt{elem}) \to \texttt{t}$\/ retourne le partitionnement dans lequel on a fusionné les classes des arguments.
+	\end{itemize}
+	\index{type \textsf{UnionFind}}
+\end{defn}
+
+\begin{exm}
+	On réalise le \textit{pseudo-code} ci-dessous.
+	\begin{itemize}
+		\item $p \gets \texttt{initialise\_partition}([1, 2, 3, 4, 5])$\/ $\leadsto$ $\{\{1\}, \{2\}, \{3\}, \{4\}, \{5\}\}$
+		\item $\texttt{find}(p, 1) = 1$\/ 
+		\item $\texttt{union}(p, 1, 3)$\/ $\leadsto$ $\{\{1,3\}, \{2\}, \{4\}, \{5\}\}$
+		\item $\texttt{find}(p, 1) = \texttt{find}(p, 3)$
+	\end{itemize}
+\end{exm}
+
+On implémente ce type abstrait en \textsc{OCaml}.
+
+\begin{rmk}[Niveau zéro -- listes de liste]~
+	\begin{lstlisting}[language=caml,caption=Implémentation du type \textsf{UnionFind} en \textsc{OCaml}]
+type 'a t = 'a list list
+
+let initialise_partition (l: 'a list): 'a t =
+	List.map (fun x -> [ x ] ) l
+
+let rec find (p: 'a t) (x: 'a): 'a =
+	match p with
+	| classe :: classes ->
+			if List.mem x classe then List.hd classe
+			else find classes x
+	| [] -> raise Not_Found
+
+let est_equiv (p: 'a t) (x: 'a) (y: 'a): bool = 
+	(find p x) = (find p y)
+
+let rec extrait_liste (x: 'a) (p: 'a t): 'a list * 'a p =
+	match p with
+	| classe :: classes ->
+			if List.mem x classe then (classe, classes)
+			else
+				let cl, cls' = extrait_liste x classes in
+				(cl, classe :: cls')
+	| [] -> raise Not_Found
+
+let union (p: 'a t) (x: 'a) (y: 'a): 'a t =
+	if est_equiv p x y then p
+	else
+		let cx, p' = extrait_liste x p in
+		let cy, p'' = extrait_liste y p' in
+		(cx @ cy) :: p''
+	\end{lstlisting}
+\end{rmk}
+
+\begin{rmk}[Niveau un -- tableau de classes]
+	Dans la case du tableau, on inscrit le numéro de sa classe.
+	Pour \texttt{find}, on prend le premier ayant la même classe.
+	Pour \texttt{union}, on re-numérote vers un numéro commun.
+	Par exemple, \[
+		\begin{array}{|c|c|c|c|c|c|}
+			\hline
+			0 & 1 & 0 & 0 & 1 & 2\\ \hline
+			0 & 1 & 2 & 3 & 4 & 5 \\ \hline
+		\end{array}\quad\quad\longleftrightarrow\quad\quad\{\{0,2,3\},\{1,4\},\{5\}\}
+	.\]
+\end{rmk}
+
+\begin{rmk}[Niveau deux -- tableau de représentants]
+	Dans les cases du tableau, on écrit le représentant de la classe de $i$.
+	Pour \texttt{find}, on lit la case.
+	Pour \texttt{union}, on re-numérote vers un numéro commun.
+	Par exemple, \[
+		\begin{array}{|c|c|c|c|c|c|}
+			\hline
+			2 & 4 & 2 & 2 & 4 & 5\\ \hline
+			0 & 1 & 2 & 3 & 4 & 5 \\ \hline
+		\end{array}\quad\quad\longleftrightarrow\quad\quad\{\{0,2,3\},\{1,4\},\{5\}\}
+	.\]
+\end{rmk}
+
+\begin{rmk}[Niveau trois -- arbres]
+	Pour $\texttt{union}(0, 1)$, on cherche le représentant de 0 (2) puis celui de 1 (4). On fait pointer 4 vers 2.
+	Pour la suite de l'implémentation, \textit{c.f.}\ \textsc{dm}$_3$.
+
+	\begin{figure}[H]
+		\centering
+		\tikzfig{ex-unionfind-arbres}
+		\caption{Représentation par des arbres}
+	\end{figure}
+\end{rmk}
+
+Avec cette nouvelle structure, on peut maintenant revenir sur l'algorithme de \textsc{Kruskal}.
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree Un graphe $G = (S, A, c)$\/ un graphe non orienté, pondéré
+		\Sortie Un \textsc{acpm}
+		\State Soit $(e_i)_{i\in\llbracket 1,m \rrbracket}$\/ un tri des arrêtes par coût croissant
+		\State $f \gets 0$\/ \Comment{Nombre d'\textsl{\texttt{union}} effectuées}
+		\State $p \gets \texttt{initialise\_partition}(S)$\/ 
+		\State $I \gets 0$\/ 
+		\State $B \gets \O$\/ 
+		\While{$f < n - 1$}
+			\State $\{x,y\} \gets e_I$\/ 
+			\If{$\texttt{find}(p, x) \neq \texttt{find}(p, y)$}
+				\State $p \gets \texttt{union}(p, x, y)$\/ 
+				\State $B \gets B \cup \{\!\{x,y\}\!\}$\/ 
+				\State $f \gets f + 1$\/ 
+			\EndIf
+			\State $I \gets I + 1$\/
+		\EndWhile
+		\State\Return $(S,B)$
+	\end{algorithmic}
+	\caption{Algorithme de \textsc{Kruskal} -- version 2}
+\end{algorithm}
+
+\paragraph{Étude de complexité.}
+Notons $C_{\texttt{find}}^n$\/ un majorant du coût de \texttt{find} sur une structure contenant $n$\/ éléments, notons $C_{\texttt{union}}^n$\/ un majorant du coût de \texttt{union} sur une structure contenant $n$\/ éléments, et notons $C_{\texttt{init}}^n$\/ un majorant du coût de \texttt{init} sur une structure contenant $n$\/ éléments.
+La complexité de cet algorithme est de \[
+	\mathcal{O}\big(C_{\texttt{init}}^n + 2m\:C_{\texttt{find}}^n + n\: C_{\texttt{union}}^n + m \log_2 m\big)
+.\]
+
+\section{Couplage dans un graphe biparti}
+
+\begin{defn}[Couplage]
+	On appelle \textit{couplage} d'un graphe non orienté $G = (S, A)$, la donnée d'un sous-ensemble $C \subseteq A$\/ tel que \[
+		\forall \{x,y\}, \{x',y'\} \in C,\:
+		\quad\quad \{x,y\} \cap \{x',y'\} \neq \O
+		\implies
+		\{x,y\}  = \{x', y'\}
+	.\]
+
+	\index{graphe!couplage}
+\end{defn}
+
+\begin{figure}[H]
+	\centering
+	\tikzfig{ex-couplage}
+	\caption{Exemple de couplage}
+\end{figure}
+
+\begin{exm}
+	On réutilise l'exemple ci-dessous dans toute la section.
+	L'ensemble $C = \{\{a,2\}, \{b,3\}\}$\/ est un couplage.
+	Mais, l'ensemble $C' = \{\{a,1\}, \{a,2\}\}$\/ n'en est pas un.
+\end{exm}
+
+\begin{defn}
+	Un couplage est dit \textit{maximal} s'il est maximal pour l'inclusion ($\subseteq$).
+	Un couplage est dit \textit{maximum} si son cardinal est maximal.
+	\index{graphe!couplage!maximal}
+	\index{graphe!couplage!maximum}
+\end{defn}
+
+\begin{exm}
+	Dans l'exemple précédent, 
+	\begin{itemize}
+		\item le couplage $C = \{\{a,2\}, \{b,3\}\}$\/ n'est ni maximal, ni maximum ;
+		\item le couplage $C' = \{\{a,2\}, \{b, 3\}, \{d, 4\}\}$\/ est maximal mais pas maximum ;
+		\item le couplage $C'' = \{\{a,1\}, \{b,3\}, \{c,2\}, \{d,4\}\}$\/ est maximum.
+	\end{itemize}
+\end{exm}
+
+\begin{rmk}
+	Dans toute la suite, on ne considère que des graphes bipartis.
+\end{rmk}
+
+\begin{defn}
+	Étant donné un graphe biparti $G = (S, A)$\/ et un couplage $C$, un sommet $x$\/ est dit \textit{libre} dès lors que \[
+		\forall \{y,z\} \in C,\: x \not\in \{y,z\}
+	.\]
+	Une chaîne élémentaire\footnotemark $(c_0, c_1, \ldots, c_{2p+1})$\/ est dit \textit{augmentante} si
+	\begin{itemize}
+		\item $c_0$\/ et $c_{2n+1}$\/ sont libres ;
+		\item $\forall i \in \llbracket 0,p \rrbracket$, $\{c_{2i}, c_{2i+1}\}\in A \setminus C$ ;
+		\item $\forall i \in \llbracket 0,p-1 \rrbracket$, $\{c_{2i+1}, c_{2i+2}\} \in C$.
+	\end{itemize}
+\end{defn}
+\footnotetext{\textit{i.e.}\ une chaîne sans boucles.}
+
+\begin{exm}~
+	\begin{figure}[H]
+		\centering
+		\tikzfig{ex-chaine-augmentante}
+		\caption{Chaîne augmentante}
+	\end{figure}
+\end{exm}
+
+\begin{exm}
+	Dans l'exemple de cette section, $(d, 4)$\/ et $(c, 2, a, 1)$\/ sont deux chaînes augmentantes.
+\end{exm}
+
+\begin{prop}
+	Étant donné un graphe biparti $G = (S, A)$\/ avec $S = S_1 \cupdot S_2$ (partitionnement du graphe biparti), un couplage $C$\/ est maximum si, et seulement s'il n'admet pas de chaînes augmentantes.
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\implies$'']
+			Soit $C$\/ un couplage admettant une chaîne augmentante. Montrons que $C$\/ n'est pas maximum.
+			Soit la chaîne augmentante\footnotemark \[
+				c_0 \to c_1 \Rightarrow c_2 \to c_3 \Rightarrow c_4 \to \cdots \to c_{2p - 1} \Rightarrow c_{2p} \to c_{2p+1}
+			.\]
+			On considère alors le couplage \[
+				C' = \Big(C \setminus \big\{\{c_{2i+1},c_{2i+2} \} \mid i \in \llbracket 0,p-1 \rrbracket\big\}\Big) \cup \big\{\{c_{2i},c_{2i+1}\}  \mid i \in \llbracket 0,p \rrbracket\big\}
+			.\]
+			On transforme donc la chaîne en \[
+				c_0 \Rightarrow c_1 \to c_2 \Rightarrow c_3 \to \cdots \to c_{2p-1} \to c_{2p} \Rightarrow c_{2p+1}
+			.\]
+			C'est bien un couplage, et $\Card(C') = \Card C + 1$. $C$\/ n'est donc pas un couplage maximum.
+		\item[``$\impliedby$'']
+			Soit $C$\/ un couplage non maximum. Montrons que $C$\/ admet une chaîne augmentante. Soit $M$\/ un couplage maximum, et $D = C \mathrel{\triangle} M = (C \setminus M) \cupdot (M \setminus C)$.
+			On a $\Card C < \Card M$\/ et $\Card(C \setminus M) < \Card(M \setminus C)$.
+			On remarque que, si $c_0 \to c_1 \to c_2 \to \cdots \to c_{p-1}\to c_p$\/ est une chaîne de $D$, (si $c_0 \to c_1 \in C \setminus M$\/ et $c_1 \to c_2 \in C \setminus M$\/ donc $c_1$\/ est dans deux arrêtes distinctes d'un couplage $C$, ce qui est absurde ; de même pour les autres arrêtes). Ainsi, 2 arrêtes consécutives ne sont pas dans la même composante de l'union $(C \setminus M) \cupdot (M \setminus C)$.
+			Considérons la relation d'équivalence $\sim$\/ sur $D$\/ définie par $\{x,y\} \sim \{z,t\} \iffdef$ il existe une chaîne de $D$\/ utilisant l'arrête $\{x,y\}$\/ et l'arrête $\{z,t\}$.
+			Soit le partitionnement $D_1, \ldots, D_q$\/ de $D$\/ par $\sim$.
+			Par inégalité de cardinal, il existe un $D_i$\/ tel que \[
+				\Card \{e \in D_i  \mid e \in C\} < \Card \{e \in D_i  \mid e \in M\}
+			.\] L'ensemble $D_i$\/ contient alors une chaîne augmentante.
+	\end{itemize}
+\end{prv}
+\footnotetext{On représente $\Rightarrow$ pour les arrêtes dans le couplage $C$.}

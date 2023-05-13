@@ -1,0 +1,48 @@
+\section{Formule de \textsc{Bayes}}
+
+\begin{thm}[Formule de \textsc{Bayes}]
+	Soient $A$\/ et $B$\/ deux événements de probabilités non-nulles. Alors, \[
+		P(A  \mid B) = \frac{P(A) \times P(B  \mid A)}{P(B)}
+	.\]
+\end{thm}
+
+\begin{prv}
+	Par définition, on a \[
+		P(A  \mid B) = \frac{P(A \cap B)}{P(B)} \qquad \text{et}\qquad
+		P(B  \mid A) = \frac{P(A \cap B)}{P(A)}
+	.\]
+	Ainsi, par produit en croix, on a \[
+		P(A  \mid B) = \frac{P(A) \times P(B  \mid A)}{P(B)}
+	.\]
+\end{prv}
+
+\begin{met}
+	On peut utiliser la formule de \textsc{Bayes} avec la formule des probabilités totales, comme dans l'exercice suivant.
+\end{met}
+
+\begin{exo}
+	\begingroup\slshape
+	Un joueur tire une carte dans un jeu de 52 cartes (il y a 4 as dans ce jeu). On suppose qu'un tricheur est certain de tirer un as et qu'il y a, parmi les joueurs, une proportion $p \in{]0, 1[}$ de tricheurs :
+	\begin{itemize}
+		\item quelle est la probabilité qu'un joueur, pris au hasard, tire un as ?
+		\item le joueur vient de tirer un as, quelle est la probabilité qu'il ait triché ?
+	\end{itemize}
+	\endgroup
+	\bigskip
+
+	On pose les événements $T$\/ : \guillemotleft~le joueur est un tricheur~\guillemotright\ et $A$\/ : \guillemotleft~le joueur tire un as.~\guillemotright\@ On a donc $P(A  \mid T) = 1$, et $P(A  \mid \bar{T}) = \frac{4}{52} = \frac{1}{13}$. $(T, \bar{T})$\/ est un système complet d'événements, d'où \[
+		P(A) = P(T) \times P(A  \mid T) + P(\bar{T}) \times P(A  \mid \bar{T})
+	,\] d'après la formule des probabilités totales. D'où, \[
+		P(A) = p + \frac{1-p}{13} = \frac{12}{13}p + \frac{1}{13}
+	.\]
+
+	On nous demande $P(T  \mid A)$. On a calculé $P(A  \mid T)$, et d'après la formule de \textsc{Bayes}, on a \[
+		P(T) \times P(A  \mid T) = P(A) \times P(T  \mid A)
+	.\] D'où,
+	\begin{align*}
+		P(T  \mid A) &= \frac{P(T) \times P(A  \mid T)}{P(A)}\\
+		&= \frac{p}{\frac{12}{13}p + \frac{1}{13}} \\
+		&= \frac{13p}{12p+1} \\
+	\end{align*}
+\end{exo}
+

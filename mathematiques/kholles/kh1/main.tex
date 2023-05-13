@@ -1,0 +1,106 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} 1
+	\end{center}
+
+	\paragraph{Exercice 1}
+	On considère quatre cas : $a = 1$, $a = -1$, $|a| < 1$\/ et $|a| > 1$.
+	\begin{itemize}
+		\item[{\sc Cas 1}] On pose $a = 1$. On étudie donc la convergence de la série $\sum \frac{1}{1+n}$. Or, on sait que $\sum \frac{1}{1+n} \sim \sum \frac{1}{n}$, et cette série diverge. On en déduit que, si $a = 1$, la série \fbox{$\sum \frac{a^n}{n + a^{2n}}$\/ diverge.}
+		\item[{\sc Cas 2}] On pose $a = -1$. On étudie donc la convergence de la série $\sum \frac{(-1)^n}{n + 1}$. Nous savons que la suite $\left( \frac{1}{n+1} \right)$\/ est décroissante et tend vers 0. D'après le théorème des séries alternées, la série \fbox{$\sum \frac{(-1)^n}{n+1}$\/ converge} donc.
+		\item[{\sc Cas 3}] Soit $a \in \R \setminus [-1,1]$.
+			On sait que, $n = \po(a^n)$\/ quand $n$\/ tend vers $+\infty$. Et donc, \[
+				\frac{a^n}{n + a^{2n}} = \frac{a^n}{a^{2n} + \po(a^n)} = \frac{1}{a^n + \po(1)} = \po_{n\to +\infty}(a^{-n})
+			.\] Or, comme $|a| > 1$, $\frac{1}{|a|} < 1$\/ et donc $\sum a^{-n}$\/ converge (car $\sum |a|^{-n}$\/ converge). On en déduit que \fbox{$\sum \frac{a^n}{n + a^{2n}}$ converge.}
+		\item[{\sc Cas 4}] Soit $a \in {]-1,1[}$. On sait que, comme $|a| < 1$, $a^n = \po(n^2)$. Ainsi, on a \[
+			\frac{a^n}{n + a^{2n}} = \frac{\po(n^2)}{n + \po(n^4)} = \frac{\po(n)}{1 + \po(n^3)} = \frac{1}{\po(n^2)}
+		.\] Mais, comme la série $\sum \frac{1}{n^2}$\/ converge, on en déduit que la série \fbox{$\sum \frac{a^n}{n + a^{2n}}$\/ converge.}
+	\end{itemize}
+	\bigskip
+	\bigskip
+	\paragraph{Exercice 2}
+	\begin{enumerate}
+		\item Montrons que $\big(\mathrm{SL}_2(\R), \times\big)$\/ est un sous-groupe de $\mathrm{GL}_2(\R)$.
+			On sait que $I_2 \in \mathrm{SL}_2(\R)$\/ car $\det I_2 = 1$.
+			Soient $A$\/ et $B$\/ deux matrices de $\mathrm{SL}_2(\R)$.
+			Montrons que $A \times B^{-1} \in \mathrm{SL}_2(\R)$.
+			Tout d'abord, nous savons que $B^{-1}$\/ existe car $\det B = 1 \neq 0$. Et, $\det(A \times B^{-1}) = \det A \times \frac{1}{\det B} = 1$. On en conclut que $A\times B^{-1} \in \mathrm{SL}_2(\R)$. On a montré \[
+				\boxed{\text{$\mathrm{SL}_2(\R)$\/ est un sous-groupe de $\mathrm{GL}_2(\R)$}.}
+			\]
+		\item D'après l'énoncé, nous savons que \begin{align*}
+			\varphi: \mathrm{SL}_2(\R) &\longrightarrow \mathscr{F}(\R,\R) \\
+			\begin{pmatrix}
+				a&b\\
+				c&d
+			\end{pmatrix} &\longmapsto \left(x \mapsto \frac{ax + b}{cx + d}\right).
+		\end{align*}
+		Soient $M$\/ et $N$\/ deux matrices de $\mathrm{SL}_2(\R)$. Montrons que $\varphi(M \cdot N) = \varphi(M) \circ\varphi(N)$.
+		On pose $M = {a\: b\choose c\: d}$\/ et $N = {u\: v\choose w\: z}$.
+		Calculons $M \cdot N$\/ :
+		\[
+			M \cdot N = \begin{pmatrix}
+				a&b\\
+				c&d
+			\end{pmatrix} \cdot \begin{pmatrix}
+				u&v\\
+				w&z
+			\end{pmatrix} = \begin{pmatrix}
+				au + bw & av + bz\\
+				cu + dw & bv + dz
+			\end{pmatrix}
+		.\] Et, soit $x \in \R$, on a
+		\[
+			\big(\varphi(M)  \circ \varphi(N)\big)(x) = \frac{a \frac{ux+v}{wx+z} + b}{c \frac{ux+v}{wx+z} + d} = \frac{au\,x + av + bw\,x + bz}{cu\,x + cv + dw\,x+dz} = \varphi \begin{pmatrix}
+				au + vw & av + bz\\
+				cu + dw & cv + dz
+			\end{pmatrix} (x)
+		\] On a bien $\varphi(M\cdot N) = \varphi(M)  \circ \varphi(N)$.
+		On cherche, à présent, $\Ker \varphi$. On procède par analyse-synthèse.
+		\begin{itemize}
+			\item[{\sc Analyse}] Soit ${a\:b\choose c\:d} \in \Ker \varphi$. On a donc \[
+					\varphi \begin{pmatrix}
+						a&b\\
+						c&d
+					\end{pmatrix} = \left(x \mapsto \frac{ax + b}{cx + d}\right) = (x\mapsto 0)
+				.\] D'où, on en déduit que $(x \mapsto ax + b) = (x\mapsto 0)$, autrement dit, $a = b= 0$.
+			\item[{\sc Synthèse}] On en déduit que \[
+				\boxed{\Ker \varphi = \Vect\left( \begin{pmatrix} 0&0\\0&1\\\end{pmatrix}, \begin{pmatrix} 0&0\\1&0\\\end{pmatrix} \right).}
+			\] En effet, soient $\alpha, \beta \in \R$, on calcule $\varphi{0\:0\choose \alpha\:\beta}(x) = \frac{0x + 0}{\alpha x + \beta} = 0$.
+		\end{itemize}
+	\end{enumerate}
+	\bigskip
+	\bigskip
+	\paragraph{Exercice 3}
+	\begin{enumerate}
+		\item Montrons que $\big(\sqrt{I}, +\big)$\/ est un sous-groupe de $A$\/ et que $\forall i \in \sqrt{I},\:\forall a \in A,\: i \times a \in \sqrt{I}$.
+			\begin{itemize}
+				\item $0 \in I$\/ (car c'est un sous-groupe de $(A,+)$) et donc $0 \in \sqrt{I}$\/ (car $x^1 \in I$).
+				\item Soient $x$\/ et $y$\/ deux éléments de $\sqrt{I}$. On pose $n$\/ et $m$\/ deux entiers tels que $x^m \in I$\/ et $y^n \in I$. Quitte à intervertir $x$\/ et $y$ ainsi que $m$\/ et $n$, on peut suppose que $n < m$. Ainsi, en posant $k = n + m$, on calcule, à l'aide de la formule du binôme de {\sc Newton} (qui est applicable car $A$\/ est un anneau commutatif), $(x-y)^{k}$\/ : \[
+							\sum_{i=0}^n {k \choose i} (-1)^{k-i} x^{i} y^{k-i} = \sum_{i=0}^{m} {k \choose i} (-1)^{k-i} x^i y^{k-i}  + \sum_{i=m + 1}^{m+n} {k \choose i} (-1)^{k-i} x^i y^{k-i}
+					.\] Or, avec $i \in \left\llbracket 0,m \right\rrbracket$, on a $k-i \ge n$\/ et donc $y^{k-i} \in I$ (car $I$\/ est un idéal).
+					De même, avec $i \in \left\llbracket m+1,m+n \right\rrbracket$, $i \ge m$\/ et donc $x^{i} \in I$\/ (car $I$\/ est un idéal).
+					On en déduit, comme $I$\/ est un idéal et que c'est, par conséquent, un sous groupe de $(A,+)$, que \[
+						(x-y)^k = \underbrace{\sum_{i=0}^m {k\choose i} (-1)^{k-i} x^i y^{k-i}}_{\in I} + \underbrace{\sum_{i=m+1}^{m+n} {k\choose i} (-1)^{k-i} x^{i} y^{k-i}}_{\in I} \in I
+					.\]
+					On en déduit que $\big(\sqrt{I}, +\big)$\/ est un sous-groupe de $A$.
+				\item En posant $n = 1$, on a $\sqrt{I} \supset \{x \in A  \mid x^n \in I\} = \{x \in I\} = I$. D'où $I \subset \sqrt{I}$.
+			\end{itemize}
+		\item
+			\begin{enumerate}
+				\item On sait que $I \cap J$\/ est un sous-groupe de $(A, +)$. Soit $i \in I \cap J$. Soit $a \in A$. Comme $i \in I$, on sait que $a\cdot i \in I$. De même, comme $i \in J$, $a\cdot i \in J$. On en déduit que $a\cdot i \in I \cap J$. On en déduit que $I \cap J$\/ est un idéal de $A$.
+				\item On suppose $I \subset J$. Soit $i \in \sqrt{I}$. Soit $n \in \N^*$\/ tel que $i^n \in I \subset J$. D'où $i^n \in J$\/ et donc $i \in \sqrt{J}$.
+				\item
+					\begin{itemize}
+						\item[``$\subset$''] Soit $x \in \sqrt{I \cap J}$. Il existe $n \in \N^*$\/ tel que $x^n \in I \cap J$\/ donc $x^n \in I$\/ et $x^n \in J$. On en déduit que $x \in \sqrt{I}$\/ et $x \in \sqrt{J}$, d'où $x \in \sqrt{I} \cap \sqrt{J}$.
+						\item[``$\supset$''] Soit $x \in \sqrt{I} \cap \sqrt{J}$.
+							Comme $x \in \sqrt{I}$, soit $n \in \N^*$\/ tel que $x^n \in I$. De même, comme $x \in \sqrt{J}$, soit $m \in \N^*$\/ tel que $x^m \in J$. Ainsi, en posant $N = m + n$, on a $x^{m+n} \in I$\/ (car $I$\/ est un idéal) et $x^{m+n} \in J$\/ (car $J$\/ est un idéal). On en déduit que $x^{m+n} \in I \cap J$\/ et donc $x^{m+n} \in \sqrt{I \cap J}$.
+					\end{itemize}
+			\end{enumerate}
+		\item Si $I$\/ et $J$\/ deux idéaux tels que $I\subset J$, alors $\sqrt{I} \subset \sqrt{J}$. Mais $\sqrt{I}$\/ est un idéal et, $I \subset \sqrt{I}$, d'où $\sqrt{I} \subset \sqrt{\sqrt{I}}$. On montre donc $\sqrt{\sqrt{I}} \subset \sqrt{I}$. Soit $x \in \sqrt{\sqrt{I}}$. Soit $n \in \N^*$\/ tel que $x^n \in \sqrt{I}$. Soit $m \in \N^*$\/ tel que $(x^n)^m \in I$. On a donc $x^{n\cdot m} \in I$\/ et donc $x \in \sqrt{I}$.
+	\end{enumerate}
+\end{document}

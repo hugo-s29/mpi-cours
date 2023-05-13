@@ -1,0 +1,133 @@
+\section{Variables aléatoires discrètes}
+
+\begin{defn}
+  \begin{enumerate}
+    \item Soit $(\Omega,\mathcal{A})$ un espace probabilisable.
+        Une \textit{variable aléatoire discrète} (\textit{vad}) est une fonction $X$ définie sur l'unitvers $\Omega$ telle que
+        \begin{enumerate}
+        \item l'ensemble $X(\Omega)$ des valeurs prises par $X$ est fini ou dénombrable ;
+        \item pour chaque valeur $a \in X(\Omega)$ prise par $X$, l'ensemble $X^{-1}(\{a\})$ est un événement, noté $(X = a)$. Autrement dit, \[\forall a \in X(\Omega), (X=a) = X^{-1}(\{a\}) \in \mathcal{A}. \]
+        \end{enumerate}
+    \item Soient $(\Omega, \mathcal{A}, P)$ un espace probabilisé, et $X$ une variable aléatoire discrète. La \textit{loi de probabilité} de $X$ est la fonction
+        \begin{align*}
+          X(\Omega) &\longrightarrow [0,1]\\
+          a &\longmapsto P(X = a).
+        \end{align*}
+  \end{enumerate}
+\end{defn}
+
+\begin{rap}
+  Soit $f: E \to F$ une fonction. On a \[
+    \forall A \in \wp(E),\: f(A) = \{ y \in F \mid \exists x \in A,\: y = f(x)\},
+  \] et \[
+    \forall B \in \wp(F),\: f^{-1}(B) = \{ x \in E \mid f(x) \in B \}.
+  \] Ainsi, $x \in f^{-1}(B) \iff f(x) \in B$.
+\end{rap}
+
+
+\begin{exo}
+  L'univers $\Omega$, ensemble des résultats, est $\llbracket 1,6 \rrbracket^{2}$.
+  Soit $X$ la variable aléatoire, qui est la somme des deux dés : on a
+  \begin{align*}
+    X: \Omega &\longrightarrow \R\\
+    (x,y) &\longmapsto x + y.
+  \end{align*}
+  Ainsi, $X(\Omega) = \llbracket 2, 12 \rrbracket$.
+  \begin{table}[H]
+    \centering
+    \begin{tabular}{|c|ccccccccccc|}
+      \hline
+      $a$ & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12\\ \hline
+      $P(X = a)$ & $\frac{1}{36}$ & $\frac{2}{36}$ & $\frac{3}{36}$ & $\frac{4}{36}$ & $\frac{5}{36}$ & $\frac{6}{36}$ &
+      $\frac{5}{36}$ & $\frac{4}{36}$ & $\frac{3}{36}$ & $\frac{2}{36}$ & $\frac{1}{36}$ \\ \hline
+    \end{tabular}
+    \caption{Loi de probabilité de $X$}
+  \end{table}
+\end{exo}
+
+\begin{rmk}
+  \begin{enumerate}
+    \item On a $f^{-1}\Big(\bigcup_{i \in I} A_{i}\Big) = \bigcup_{i \in I} f^{-1}(A_{i})$, et $f^{-1}\Big(\bigcap_{i \in I} A_{i})\Big) = \bigcap_{i \in I} f^{-1}(A_{i})$.
+  \end{enumerate}
+\end{rmk}
+
+\begin{exm}
+  \textit{c.f.}\ polycopié
+\end{exm}
+
+\begin{prop-defn}
+  Soient $(\Omega,\mathcal{A},P)$ un espace probabilisé, et une \textit{vad} $X: \Omega \to E$ à valeurs dans un ensemble $E$.
+  \begin{enumerate}
+    \item Pour tout $A \in \wp(E)$, $X^{-1}(A) \in \mathcal{A}$ est un événement noté $(X \in A)$.
+    \item L'application \begin{align*}
+            P_{X} : \wp(E) &\longrightarrow A\\
+            A & \longmapsto P(X \in A)
+          \end{align*} est une probabilité sur l'espace probabilisable $\big(E, \wp(E)\big)$.
+  \end{enumerate}
+\end{prop-defn}
+
+\begin{exo}[{\color{cyan}tarte à la crème}\null]
+  L'univers $\Omega$ est défini comme $\Omega = \llbracket 1, N \rrbracket^{n}$ : c'est l'ensemble des $n$-uplets de $\llbracket 1, N \rrbracket$. La variable $X$ est la fonction définie comme
+  \begin{align*}
+    X : \Omega &\longrightarrow \llbracket 1, N\rrbracket\\
+    (x_{1}, \ldots, x_{n}) &\longmapsto \max_{i \in \llbracket 1,n \rrbracket} x_{i}.
+  \end{align*}
+  On cherche la loi de probabilité de $X$.
+  \textsc{Attention}, on ne cherche pas $P(X = a)$ pour tout $a$, mais $P(X \le a)$ pour tout $a$. Cela correspond à l'événement \guillemotleft~tous les numérons tirés sont inférieurs à $a$.~\guillemotright\@ Par équiprobabilité,
+  \begin{align*}
+    P(X \le a) &= \frac{\Card (X \le a)}{\Card(\Omega)}\\
+    &= \frac{a^{n}}{N^{n}}
+  \end{align*}
+  Finalemement, pour tout $a \in \llbracket 1, N\rrbracket$, $P(X = a) + P(X \le a -1) = P(X \le a)$ ; en effet, $(X \le a - 1) \cup (X = a) = (X \le a)$, et cette union est disjointe.
+  D'où, $\forall a \in \llbracket 1, N\rrbracket$,
+  \begin{align*}
+    P(X = a) &= P(X \le a) - P(X \le a - 1)\\
+    &= \left(\frac{a}{N} \right)^{n} - \left(\frac{a - 1}{N} \right)^{n}
+  \end{align*}
+\end{exo}
+
+\section{La loi binomiale}
+
+\begin{defn}
+  Soient $n \in \N^{*}$, $p \in {]0, 1[}$, et $q = 1 - p$. On dit qu'une variable aléatoire discrète $X$ suit une \textit{loi de binomiale} de paramètres $(n,p)$, et on note $X \sim \mathcal{B}(n,p)$ si \[
+    X(\Omega) = \llbracket 1,n\rrbracket,\quad\text{et}\quad\forall k \in X(\Omega),\: P(X = k) = {n \choose k}\cdot p^{k}\cdot q^{n-k}.
+  \]
+
+  Une \textit{épreuve de Bernoulli} de paramètre $p \in {]0, 1[}$ est une expérience aléatoire qui peut donner deux résultats : un \guillemotleft~succès~\guillemotright\ $S$ avec une probabilité $p$, ou un \guillemotleft~échec~\guillemotright\ $E$ avec la probabilité $q = 1 - p$.
+\end{defn}
+
+
+\begin{prop}
+  Soient $n \in \N^{*}$ et $p \in {]0, 1[}$. Soit $X$ la \textit{vad} égale au nombre de succès parmi $n$ épreuves de Bernoulli de paramètre $p$. Si ces épreuves sont \ul{indépendantes}, alors $X \sim \mathcal{B}(n,p)$.
+\end{prop}
+
+\begin{prv}
+  L'ensemble $(X = k)$ est l'événement \guillemotleft~obtenir $k$ succès parmi $n$ essais.~\guillemotright\@ Autrement dit, c'est l'ensemble des $n$-listes $(x_{1},x_{2},\ldots,x_{n})$ dont le nombre de succès vaut $k$, et chaque $x_{i} \in \{S,E\}$.
+  Réaliser cet événement, c'est (1) placer $k$ succès parmi les $n$ essais, et il y en a ${n\choose k}$ manières ; (2) placer les $n-k$ échecs, il y a 1 manière. Il y a donc ${n\choose k}$ listes favorables.
+  La prboabilité de chacune de ces listes est $p^{k} \times q^{n-k}$ par indépendance.
+\end{prv}
+
+\begin{exm}
+  \textit{c.f.}\ polycopié
+\end{exm}
+
+\begin{exo}
+  On a $X \sim \mathcal{B}(n,p)$.
+  Ainsi, d'après la définition 7, $X(\Omega) = \llbracket 1,n \rrbracket$, et $\forall k \in X(\Omega)$, $P(X = k) = {n\choose k} p^{k} q^{n - k}$. \textsl{Montrons que $n - X \sim \mathcal{B}(n, q)$} avec $q = 1 - p$.
+  On veut donc montrer que $\forall k \in (n - X)(\Omega)$, $P(n - X = k) = {n \choose k}\cdot q^{k}\cdot p^{n-k}$.
+  \begin{align*}
+    P(X = n-k) &= {n \choose n - k} p^{n-k} q^{n-(n-k)}\\
+               &= {n\choose n-k} q^{k} p^{n-k}\\
+               &={n \choose k} q^{k} p^{n-k}\quad\text{par symétrie des coefficients binomiaux}.
+  \end{align*}
+
+  On peut également remarquer que la variable aléatoire $n - X$ est le nombre d'echecs.
+\end{exo}
+
+\section{La loi géométrique}
+
+\begin{defn}
+  Soit $p \in {]0, 1[}$. On pose $q = 1 - p$. On dit qu'une \textit{vad} $T$ suit une \textit{loi géométrique} de paramètre $p$, et on note $T \sim \mathcal{G}(p)$ si \[
+    T(\Omega) = \N^{*} \quad \text{et}\quad \forall k \in T(\Omega),\:P(T = k) = p \cdot q^{k-1}.
+  \]
+\end{defn}

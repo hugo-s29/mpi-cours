@@ -1,0 +1,31 @@
+\section{Un changement de modèle de calcul}
+
+\begin{enumerate}
+	\item Pour toute machine $M$, on considère la \textit{super-machine} $\mathcal{M}_M$\/ suivante :
+		\begin{lstlisting}[language=caml,caption=\textit{Super-machine} résolvant le problème de l'\textsc{Arrêt} sur une machine classique,mathescape]
+let arret ($n_{\mathbf{V}}$: int) (x: string): bool =
+	let ($M$,$w$) = deserialise_couple x in
+	decide$_\textrm{\textsc{ArrêtÉtapes}}$ $M$ $w$ $n_{\mathbf{V}}$
+		\end{lstlisting}
+		où la fonction \texttt{decide}$_{\textsc{ArrêtÉtapes}}$ décide du problème \[
+			\textsc{ArrêtÉtapes} : \begin{cases}
+				\text{\textbf{Entrée}} &: M \in \mathscr{O},\: w \in \Sigma^*,\:n \in \N\\
+				\text{\textbf{Sortie}}&: M \text{ se termine-t-elle sur } w \text{ en moins de } n \text{ étapes élémentaires ?}
+			\end{cases}
+		.\] D'après le cours, ce problème est décidable. Ainsi, pour tout mot $w \in \Sigma^*$\/ et toute machine $M$,
+		\begin{align*}
+			\smash{w \xrightarrow[\mathcal{M}_M]{} \mathbf{V}} \iff&\exists n \in \N,\: \texttt{arret}\ n\ (\texttt{serialise\_couple}\ M\ w) = \texttt{true}\\
+			\iff& \exists n \in \N,\: M \text{ s'arrête en moins de } n \text{ étapes sur } w \\
+			\iff& M \text{ s'arrête sur l'entrée } w \\
+			\iff& (M, w) \in \textsc{Arrêt}^+.
+		\end{align*}
+	\item Par l'absurde, supposons le problème de l'arrêt pour les \textit{super-machines} décidable. Soit \texttt{arret} une fonction décidant de ce problème. On considère la machine suivante.
+		\begin{lstlisting}[language=caml,caption=Programme paradoxe proubant que le problème de l'arrêt des \textit{super-machines} est indécidable,mathescape]
+let paradoxe ($n$: int) ($w$: string): bool =
+	if arret $n$ (serialise_couple $w$ $w$) then
+		(while true do () done; true)
+	else false
+		\end{lstlisting}
+		Soit $S_{\texttt{paradoxe}}$\/ la sérialisation de la fonction \texttt{paradoxe} ci-dessous.
+		Analysons l'exécution de $(\texttt{paradoxe}\ n\ S_{\texttt{paradoxe}})$. Soit $c = (\texttt{serialise\_couple}\ S_{\texttt{paradoxe}}\ S_{\texttt{paradoxe}})$.
+\end{enumerate}

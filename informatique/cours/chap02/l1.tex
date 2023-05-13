@@ -1,7 +1,11 @@
 \section{Introduction}
 
+\lettrine{D}{ans ce chapitre}, on s'intéresse aux algorithmes probabilistes de deux types : \textsc{Monte-Carlo} et \textsc{Las-Vegas}.
+L'idée est de donner une définition plus mathématique d'un \guillemotleft~algorithme probabiliste~\guillemotright\ et de l'influence de l'aléatoire.
+
 \begin{defn}
 	Un algorithme {\it déterministe}\/ est un algorithme tel que pour chaque entrée~$I$\/ de l'algorithme, l'exécution de l'algorithme produit toujours exactement la même suite d'états.
+	\index{algorithme!déterministe}
 \end{defn}
 
 \begin{rmk}
@@ -10,6 +14,7 @@
 
 \begin{defn}
 	Un algorithme {\it probabiliste}\/ est un algorithme opérant sur un ensemble $\mathcal{E}$, tel que la suite d'états obtenus par exécution de l'algorithme sur une entrée $e \in \mathcal{E}$\/ est une variable aléatoire.
+	\index{algorithme!probabiliste}
 \end{defn}
 
 \begin{rmk}
@@ -75,11 +80,13 @@
 
 \begin{defn}[Algorithme de type {\sc Las Vegas}]
 	Étant donné un problème $P$, un algorithme probabiliste répondant au problème $P$\/ est dit de type {\sc Las Vegas}\/ dès lors que, s'il se termine, c'est en donnant une réponse correcte.
+	\index{algorithme!de type \textsc{Las Vegas}}
 \end{defn}
 
 \begin{defn}[Algorithme de type {\sc Monte-Carlo}]
 	Étant donné un problème $P$, un algorithme probabiliste répondant au problème $P$\/ est dit de type {\sc Monte-Carlo}\/ dès lors que son temps d'exécution dépend uniquement de son entrée.
 	L'algorithme peut cependant répondre de manière erronée au problème $P$\/ avec une \guillemotleft~certaine~\guillemotright\ probabilité.
+	\index{algorithme!de type \textsc{Monte-Carlo}}
 \end{defn}
 
 \begin{rmk}

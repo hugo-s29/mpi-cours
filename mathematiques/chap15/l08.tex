@@ -1,0 +1,123 @@
+\begin{prop}
+	Soit $f$ une fonction de classe $\mathcal{C}^1$ sur un \textbf{convexe} $D$. La fonction $f$ est constante sur $D$ si, et seulement si, son gradient $\nabla f(\vec{x})$ est nul en tout point $\vec{x} \in D$. De même si $D$ est connexe par arcs.
+\end{prop}
+
+\begin{prv}
+	L'implication est évidente, une fonction constante a un gradient nul.
+	Montrons la réciproque. D'après la règle de la chaîne, pour toute fonction dérivable $M$, on a $(f \circ M)'(t) = \left<\nabla f(M(t))  \mid M'(t) \right> = 0$ car $\nabla f(M(t))$ est nul par hypothèse.
+	Montrons que, pour tout vecteurs $\vec{a}$ et $\vec{b}$ de $D$, $f(\vec{a}) = f(\vec{b})$.
+	On suppose $f$ de classe $\mathcal{C}^1$.
+	On pose $M$ un chemin de $\vec{a}$ vers $\vec{b}$, on admet que $M$ est de classe $\mathcal{C}^1$, et on a \[
+		f(\vec{b}) - f(\vec{a}) = f\circ M(1) - f\circ M(0) = \int_{0}^{1} (f\circ M)'(t)~\mathrm{d}t = \int_{0}^{1} 0~\mathrm{d}t = 0
+	.\] 
+\end{prv}
+
+\section{La différentielle d'une composée}
+
+\begin{prop}
+	Soient $E$, $F$ et $G$ trois espaces vectoriels normés, et soient $U \subset E$ et $V \subset F$ des ouverts.
+	Soit $f : U \to F$ et $g : V \to G$ deux fonctions telles que $f(U \subset V)$.
+	Ainsi,
+	\[
+		\begin{tikzcd}
+			E \supset U \ar[r]  & F \supset V \ar[r] & G\\
+			\vec{x} \ar[r, mapsto, "f"] & \vec{y} = f(\vec{x}) \ar[r, mapsto, "g"] & g(\vec{y}) = (g  \circ f)(\vec{x})
+		\end{tikzcd}
+	.\]
+	Si $f$ est différentiable en $\vec{a} \in U$, et $g$ est différentiable en $\vec{b} = f(\vec{a})$, alors $g \circ f$ est différentiable en $\vec{a}$, et \[
+		\boxed{\mathrm{d}(g  \circ f)(\vec{a}) = \mathrm{d}g(\vec{b})  \circ \mathrm{d}f(\vec{a}).}
+	\]
+\end{prop}
+
+\begin{prv}
+	On suppose $f$ et $g$ différentiable. Montrons que $g \circ f$ est différentiable.
+	La fonction $f$ est différentiable, on calcule donc $f(\vec{a} + \vec{h}) = f(\vec{a}) + \mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\|\:\varepsilon_1(\vec{h}) = \vec{b} + \vec{k}$, en posant $\vec{b} = f(\vec{a})$.
+	Et,
+	\begin{align*}
+		g(\vec{b} + \vec{k}) &= g(\vec{b}) + \mathrm{d}g(\vec{b}) \cdot \vec{k} + \|\vec{k}\|\:\varepsilon_2(\vec{k})\\
+												 &= g\circ f(\vec{a}) + \mathrm{d}g(\vec{b}) \cdot \big[\mathrm{d}f(\vec{a})\cdot \vec{h} + \|\vec{h}\|\:\varepsilon_1(\vec{h})\big] + \|\mathrm{d}f(\vec{a}) \cdot \vec{h} + \vec{h}\: \varepsilon_1(\vec{h})\|\:\varepsilon_2(\mathrm{d}f(\vec{a})\cdot \vec{h} + \|\vec{h}\|\:\varepsilon_1(\vec{h})) \\
+												 &= g\circ f(\vec{a}) + \big[\mathrm{d}g(\vec{b}) \circ \mathrm{d}f(\vec{a})\big] \cdot \vec{h} + \po(\vec{h})\\
+	\end{align*}
+	En effet, en nommant $\vec{R}$ le (futur) reste de $g(\vec{b} + \vec{k})$, on a $\vec{R} = \mathrm{d}f(\vec{b}) \cdot [\|\vec{h}\|\:\varepsilon_1(\vec{h})] + \|\mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\|\:\varepsilon_1(\vec{h})\|\:\varepsilon_2\big(\mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\|\:\varepsilon_1(\vec{h})\big)$.
+	D'où,
+	\begin{align*}
+		0 &\le \bigg\|\frac{\mathrm{d}g(\vec{b}) \cdot \big[\|\vec{h}\|\:\varepsilon_1(\vec{h})\big] + \big\| \mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\|\:\varepsilon_1(\vec{h})\big\|\: \varepsilon_2(\mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\|\,\varepsilon_1(\vec{h}))}{\|\vec{h}\|}\bigg\|\\
+			&\le \frac{\big\|\mathrm{d}g(\vec{b}) \cdot \big[\|\vec{h}\|\:\varepsilon_1(\vec{h})\big]\big\| + \big\| \mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\|\:\varepsilon_1(\vec{h})\big\|\:\big\| \varepsilon_2(\mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\|\,\varepsilon_1(\vec{h}))\big\|}{\|\vec{h}\|} \mathrlap{\quad\quad\text{par inégalité triangulaire}}\\
+			&\le \frac{\|\vec{h}\|\cdot \big\|\mathrm{d}g(\vec{b}) \cdot \big[\:\varepsilon_1(\vec{h})\big]\big\| + \big(\big\| \mathrm{d}f(\vec{a}) \cdot \vec{h}\big\| +\big\| \|\vec{h}\|\:\varepsilon_1(\vec{h})\big\|\big) \:\big\|\varepsilon_2(\mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\|\,\varepsilon_1(\vec{h}))\big\|}{\|\vec{h}\|}\\
+			&\le \frac{\|\vec{h}\|\cdot \big\|\mathrm{d}g(\vec{b}) \cdot \big[\:\varepsilon_1(\vec{h})\big]\big\| + \big(\sub{\mathrm{d}f(\vec{a})} \cdot \|\vec{h}\| +\|\varepsilon_1(\vec{h})\| \cdot \|\vec{h}\|\big)\:\big\| \varepsilon_2(\mathrm{d}f(\vec{a}) \cdot \vec{h} + \|\vec{h}\|\,\varepsilon_1(\vec{h}))\big\|}{\|\vec{h}\|}\\
+			&\le \|\mathrm{d}g(\vec{b}) \cdot \varepsilon_1(\vec{h})\|+ \|(\sub{\mathrm{d}f(\vec{a})} + \|\varepsilon_1(\vec{h})\|)\cdot \varepsilon_2(\ldots)\|\\
+			&\le \sub{\mathrm{d}f(\vec{b})} \cdot \|\varepsilon_1(\vec{h})\|+ (\sub{\mathrm{d}f(\vec{a})} + \|\varepsilon_1(\vec{h})\|) \cdot \|\varepsilon_2(\ldots)\| \tendsto{\vec{h} \to \vec{0}} 0\\
+	\end{align*}
+\end{prv}
+
+En généralisant la règle de la chaîne \[
+	\frac{\mathrm{d}}{\mathrm{d}t} f  \circ M(t) = \frac{\partial f}{\partial x} \cdot \frac{\mathrm{d}x}{\mathrm{d}t} + \frac{\partial f}{\partial y} \cdot \frac{\mathrm{d}y}{\mathrm{d}t}
+,\] on obtient le corolaire suivant.
+
+\begin{crlr}
+	Avec les hypothèses précédentes, en notant $p = \dim E$, $q = \dim F$, $n = \dim G$, et $(y_1, \ldots, y_k) = \vec{y} = f(\vec{x})$, on a \[
+		\forall j \in \llbracket 1,p \rrbracket, \quad\quad \frac{\partial}{\partial x_j} g \circ f(\vec{a}) = \sum_{k=0}^q \underbrace{\frac{\partial g}{\partial y_k}}_{\partial_k g} \cdot \frac{\partial f_k}{\partial x_k}
+	.\]
+	On peut exprimer le même résultat avec la jacobienne : \[
+		\boxed{ \mathrm{J}_{g \circ f}(\vec{a}) = \mathrm{J}_g(\vec{b}) \cdot \mathrm{J}_f(\vec{a}),}
+	\]qui représente matriciellement l'égalité $\mathrm{d}(g\circ f)(\vec{a}) = \mathrm{d}g(\vec{b})  \circ \mathrm{d}f(\vec{a})$.
+\end{crlr}
+
+\begin{prv}
+	On a \[
+		\underbrace{\begin{pmatrix}
+			\partial_1 (g \circ f)_1 & \partial_2 (g\circ f)_1 & \ldots & \partial_p(g \circ f)_1 \\
+			\partial_1 (g \circ f)_2 & \partial_2 (g\circ f)_2 & \ldots & \partial_p(g \circ f)_2 \\
+			\vdots & \vdots & \ddots & \vdots\\
+			\partial_1 (g \circ f)_p & \partial_2 (g\circ f)_p & \ldots & \partial_p(g \circ f)_p \\
+		\end{pmatrix}}_{\mathrm{J}_{g  \circ f}}
+		=
+		\underbrace{\begin{pmatrix}
+			\partial_1 g_1 & \partial_2 g_2 & \ldots & \partial_q g_1\\
+			\partial_1 g_2 & \partial_2 g_2 & \ldots & \partial_q g_2\\
+			\vdots & \vdots & \ddots & \vdots\\
+			\partial_1 g_n & \partial_2 g_n & \ldots & \partial_q g_n\\
+		\end{pmatrix}}_{\mathrm{J}_{g}}
+		\cdot
+		\underbrace{\begin{pmatrix}
+			\partial_1 f_1 & \partial_2 f_1 & \ldots & \partial_p f_1\\
+			\partial_1 f_2 & \partial_2 f_2 & \ldots & \partial_p f_2\\
+			\vdots & \vdots & \ddots & \vdots\\
+			\partial_1 f_q & \partial_2 f_q & \ldots & \partial_p f_q\\
+	\end{pmatrix}}_{\mathrm{J}_f}
+	,\] ce qui donne l'autre expression en \guillemotleft~regardant coordonnées par coordonnées.~\guillemotright
+\end{prv}
+
+\begin{exm}[Le gradient en coordonnées polaires]
+	Soit $f : \R^2 \to \R$ une fonction différentiable.
+	La fonction $F$ définie par $F(r, \varphi) = f(r \cos \varphi, r \sin \varphi)$ pour $r > 0$ et $\varphi \in \R$.
+	Cette fonction s'écrit également $f \circ M$, avec la fonction $M$ définie à l'exercice 9.
+	\[
+		\begin{tikzcd}
+			(r, \varphi) \ar[r, mapsto, "M"] & M(r, \varphi) = (x,y) \ar[r, mapsto, "f"] & f(x,y)
+			(r, \varphi) \ar[rr, mapsto, "F = f \circ M"] && F(r, \varphi)
+		\end{tikzcd}
+	.\]
+	La fonction $F$ est différentiable car $f$ et $M$ le sont.\footnotemark\@ Ainsi,
+
+	\begin{adjustbox}{center}
+		\null\bigskip\null
+		$\left.\begin{array}{rl}
+			\ds\frac{\partial F}{\partial r} = \frac{\partial x}{\partial r} \cdot \frac{\partial f}{\partial x} + \frac{\partial y}{\partial r} \cdot \frac{\partial f}{\partial y} &\ds= \cos \varphi \cdot \frac{\partial f}{\partial x} + \sin \varphi \cdot \frac{\partial f}{\partial y}
+			\\
+			\ds\frac{\partial F}{\partial \varphi} = \frac{\partial x}{\partial \varphi} \cdot \frac{\partial f}{\partial x} + \frac{\partial y}{\partial \varphi} \cdot \frac{\partial f}{\partial y} &\ds= -r \sin \varphi \cdot \frac{\partial f}{\partial x} + r \cos\varphi \cdot \frac{\partial f}{\partial y}
+		\end{array}\right\}
+		\underset{\substack{L_1 \gets \cos \varphi L_1 - \sin\varphi L_2 / r\\ \sin \varphi L_1 + \cos \varphi L_2 / r}}\iff
+		\begin{cases}
+			\ds\frac{\partial f}{\partial x} &\ds= \cos \varphi \cdot \frac{\partial F}{\partial r} - \frac{\sin \varphi}{r} \cdot \frac{\partial F}{\partial \varphi}\\
+			\ds\frac{\partial f}{\partial y} &\ds= \sin \varphi \cdot \frac{\partial F}{\partial r} - \frac{\cos \varphi}{r} \cdot \frac{\partial F}{\partial \varphi}\\
+		\end{cases}$
+		\null\bigskip\null
+	\end{adjustbox}
+	On retrouve donc \[
+		\nabla f(x,y) = \frac{\partial F}{\partial r} \cdot \vec{u}_r + \frac{1}{r} \cdot \frac{\partial F}{\partial \varphi} \cdot \vec{u}_{\varphi}
+	,\]en posant $\vec{u}_r = (\cos \varphi, \sin \varphi)$ et $\vec{u}_\theta = (-\sin \varphi, \cos \varphi)$.
+\end{exm}
+\footnotetext{$f$ différentiable par hypothèse, et $M$ est de classe $\mathcal{C}^1$, donc différentiable.}
+
+

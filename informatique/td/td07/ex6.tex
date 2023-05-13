@@ -1,0 +1,58 @@
+\section{Amélioration de code}
+
+\begin{enumerate}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Fonction morte]
+let mort (s: string): string =
+	let f (a: int) = a in
+	"sortie"
+		\end{lstlisting}
+	\item On réalise une réduction du problème \textsc{ArrêtUniv} au problème \textsc{CodeMort}.
+		Soit $\mathcal{M}$\/ une entrée du problème \textsc{ArrêtUniv}.
+		Fabriquons l'entrée $M$\/ du problème \textsc{CodeMort}, comme montré ci-dessous.
+		\begin{lstlisting}[language=caml,caption=Réduction de \textsc{ArrêtUniv} à \textsc{CodeMort}]
+let %*$M$*) (s: string): string =
+	execute %*$\mathcal{M}$*) s;
+	let f (a: string) = a in
+	f x
+		\end{lstlisting}
+		Ainsi, avec cette construction de la machine $M$, on définition $u$ comme $\texttt{execute}\ \mathcal{M}\ \texttt{s}$, on définit $d$\/ comme \lstinline[language=caml,keepspaces]{let f (a: string) = a in}, et on définit $v$\/ comme $\texttt{f}\ \texttt{x}$.
+		Alors,
+		\begin{align*}
+			M \in \textsc{CodeMort}^+ \iff& \mathcal{L}(u\cdot d\cdot v) = \mathcal{L}(u\cdot v) \\
+			\iff& \forall \texttt{s} \in \Sigma^*,\: \text{la ligne 4 est atteinte} \\
+			\iff& \forall \texttt{s} \in \Sigma^*,\: \texttt{execute}\ \mathcal{M}\ \texttt{s} \text{ se termine} \\
+			\iff& \forall \texttt{s} \in \Sigma^*,\:\mathcal{M} \text{ se termine sur l'entrée } \texttt{s}\\
+			\iff& \mathcal{M} \in \textsc{ArrêtUniv}^+.
+		\end{align*}
+		Or, comme \textsc{ArrêtUniv} est indécidable, \textsc{CodeMort} aussi.
+	\item~
+		\begin{lstlisting}[language=caml,caption=Variable constante]
+let f (s: string): string =
+	let x = ref 3 in
+	let y = int_of_string s in
+	string_of_int (!x + y)
+
+let f (s: string): string =
+	let y = int_of_string s in
+	string_of_int (3 + y)
+		\end{lstlisting}
+	\item Soit $M$\/ une entrée du problème \textsc{CodeMort}. Fabriquons l'entrée $(M', \mathcal{V})$\/ du problème $P$\/ de détection de variables constantes. Soit $F$\/ l'ensemble des ``fonctions locales'' de $M$.\footnote{S'il y a plusieurs fonctions ayant le même nom, on les numérote de telle sorte que leurs noms soient différents.}
+		Au début de la machine $M'$, on définit, pour chaque fonction locale $\texttt{f} \in F$, la variable $\texttt{x}_\texttt{f}$\/ comme \lstinline[language=caml,mathescape]{let x$_\texttt f$ = ref 0 in}. On pose $\mathcal{V}$\/ l'ensemble de ces nouvelles variables : \[
+			\mathcal{V} = \{ \texttt{x}_{\texttt{f}}  \mid \texttt{f} \in F\}
+		.\]
+		Puis, on transforme chaque définition de fonction locale $\texttt{f} \in F$ en
+		\begin{lstlisting}[language=caml,mathescape]
+let f %*$\langle$\textrm{arguments de \texttt{f}}$\rangle$*) =
+	incr x$_\texttt{f}$;
+	%*$\langle$\textrm{code original de \texttt{f}}$\rangle$*)
+		\end{lstlisting}
+		Ainsi,
+		\begin{align*}
+			(M', \mathcal{V}) \in P^+ \iff& \exists \texttt{x}_\texttt{f} \in \mathcal{V},\: \text{la variable } \texttt{x}_\texttt{f} \text{ n'est pas modifiée}  \\
+			\iff& \exists \texttt{f} \in F,\: \text{la fonction \texttt{f} n'est pas appelée}  \\
+			\iff& \exists \texttt{f} \in F,\: \texttt{f} \text{ est une fonction morte} \\
+			\iff& M \in \textsc{CodeMort}^+.
+		\end{align*}
+		Or, comme le problème \textsc{CodeMort} est indécidable, le problème de détection de variables constantes l'est aussi.
+\end{enumerate}

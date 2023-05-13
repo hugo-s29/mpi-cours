@@ -1,0 +1,65 @@
+\section{Mots de \textsc{\L ukasiewicz}}
+
+\begin{enumerate}
+	\item On a $\Sigma \cap \mathcal{L} = \{\square\} $, $\Sigma^2 \cap \mathcal{L} = \O$\/ et $\Sigma^3 \cap \mathcal{L} = \{\circle\square\square\}$.
+	\item Montrons que $\Sigma^{2N} \cap \mathcal{L} = \O$, pour tout $N \in \N^*$. (Dans le cas $N = 0$, le seul mot est $\varepsilon$, et il n'est pas dans $\mathcal{L}$.)
+		Soit $w \in \Sigma^{2N} \cap \mathcal{L}$.
+		On sait que $-1 = \overline{w}^{|w|} = \overline{w}^{|w|-1} + \textsf{va}(w_{|w|}) \ge \textsf{va}(w_{|w|})$, d'où $w_{|w|} = \square$, et $\overline{w}^{|w| - 1} = 0$.
+		On pose $w = u \cdot \square$, le mot $u$ est donc de longueur impaire.
+		Or, la somme $\sum_{k=1}^{|u|} \textsf{va}(w_i)$ est une somme d'un nombre impaire de termes valant $-1$ ou $1$, elle ne peut pas être nulle.
+		Mais, comme $\overline{w}^{|w| - 1} = 0$, donc elle est nulle, une contradiction.
+		On en déduit que $\mathcal{L} \cap \Sigma^{2N} = \O$.
+		Par suite, on conclut que $\mathcal{L}$ ne contient pas de mots pairs.
+	\item On suppose $\mathcal{L}$ reconnaissable par un automate $\mathcal{A}$ à $n$ états.
+		On considère le mot $w = \circle^n \cdot \square^n \cdot \square \in \mathcal{L}$.
+		Alors, par application du lemme de l'étoile à l'automate $\mathcal{A}$ avec ce mot $w$, il existe donc $x$, $y$ et $z$ trois mots de $\Sigma^*$ tels que $w = xyz$, $|xy| \le n$, $y \neq \varepsilon$ et, pour tout $p \in \N$, $xy^pz \in \mathcal{L}$.
+		D'où, $x = \circle^k$, $y = \circle^j$ et $z = \circle^{n-k-j}\cdot \square^{n+1}$, où $k$ et $j$ sont des entiers.
+		De plus, $j \neq 0$ car, sinon, $y = \varepsilon$.
+		Alors, $xy^pz \in \mathcal{L}$, pour tout $p \in \N$.
+		En particulier, pour $p = 0$, $xz \in \mathcal{L}$.
+		Or, $xz = \circle^{n-j}\cdot \square^{n+1} \not\in \mathcal{L}$ car $\overline{xz}^{|xz|} = (n-j) - (n+1) = -j - 1 \neq -1$ car $j \neq 0$.
+		On en déduit donc que que $\mathcal{L}$ n'est pas reconnaissable par un automate à $n$ états.
+		Ceci étant vrai pour tout $n$, alors $\mathcal{L}$ n'est pas un langage régulier.
+	\item~
+		\begin{lstlisting}[language=caml,caption=Fonction \texttt{est\_luka} testant si $w$ est un mot de \L ukasiewicz]
+let est_luka (w: word): bool =
+  let l = List.map va w in
+  let rec aux (l: int list) (s: int): bool =
+    match l with
+    | []     -> s = -1
+    | x :: q -> s >= 0 && aux q (s + x)
+  in aux l 0
+		\end{lstlisting}
+	\item Soit $w = u \cdot v \in \mathcal{L}$, où $u \neq \varepsilon$ est un préfixe strict de $w$.
+		Alors, $0 \le \overline w^{|u|} = \overline u^{|u|} \neq -1$ donc $u \not\in \mathcal{L}$.
+	\item Soient $u$ et $v$ deux mots de $\mathcal{L}$. On pose $w = \circle \cdot u \cdot v$. Montrons que $w \in \mathcal{L}$. On pose $n = |u|$, et $m = |v|$.
+		\begin{itemize}
+			\item On a $\overline w^0 = 0 \ge 0$,
+			\item et $\overline w^1 = \textsf{va}(\circle) = 1 \ge 0$,
+			\item et, pour tout $i \in \llbracket 1,n \llbracket$, $\overline w^{i+1} = \overline u^i + \textsf{va}(\circle) \ge \textsf{va}(\circle) \ge 0$,
+			\item et, pour tout $i \in \llbracket 1,m \llbracket$, $\overline w^{i+n+1} = \overline u^{n} + \overline v^i + \textsf{va}(\circle) = \overline v^i \ge 0$,
+			\item et finalement, $\overline w^{n+m+1} = \overline u^n + \overline v^m + \textsf{va}(\circle) = -1 - 1 + 1 = -1$.
+		\end{itemize}
+		On en conclut que $w \in \mathcal{L}$.
+	\item Soit $w \in \mathcal{L}$, un mot de taille $n$. Comme montré précédemment, $\overline w^{n-1} = 0$. Ainsi, l'ensemble $\{k \in \llbracket 1,n \rrbracket  \mid \overline w^i = 0\}$\/ est une partie de $\N$ non vide, elle admet donc un minimum que l'on notera $k$.
+		De plus, on a montré que $w_0 = \circle$.
+		On en déduit que $w$ peut être décomposé en \[
+			w = \circle \cdot \underbrace{w_2w_3\ldots w_k}_{u} \cdot \underbrace{w_{k+1}w_{k+2}\ldots w_n}_v
+		.\] Montrons que $u$ et $v$ sont des mots de $\mathcal{L}$.
+		D'une part, pour $i \in \llbracket 1,k - 2 \rrbracket$, $0 < \overline w^{i+1} = \overline u^i + \textsf{va}(\circle)$, d'où $\overline u^i \ge 0$.
+		De plus, $0 = \overline w^k = \overline u^{k-1} + \textsf{va}(\circle)$, d'où $\overline u^{k-1} = \overline u^{|u|} = -1$.
+		Également, pour $i \in \llbracket 1,n-k-1 \rrbracket$, $0 \le \overline w^{k + i} = \overline w^k + \overline v^i = \overline v^i$.
+		Finalement, $-1 = \overline w^{n} = \overline w^k + \overline v^{n-k} = \overline v^{|v|}$.
+		On en conclut que $u$ et $v$ sont bien des mots de $\mathcal{L}$.
+
+		Montrons, à présent, l'unicité de la décomposition.
+		On suppose qu'il existe $u'$ et $v'$ deux mots de $\mathcal{L}$ tels que $w = \circle \cdot u' \cdot v'$.
+		Nous savons, en particulier, que $\overline w^{1+|u'|} = 0$, afin de maintenir la condition $u \in \mathcal{L}$.
+		Alors, $1 + |u'| \le p$, et donc $|u'| \ge |u|$. Le mot $u'$ est donc un préfixe de $u$.
+		Au vu de la question 5., afin que $u'$ soit un mot de $\mathcal{L}$, il est nécessaire que $u'$ ne soit pas un préfixe strict de $u$. On en déduit que $u' = u$.
+	\item On utilise habilement la question précédente, et on pose \[
+			\mathcal{G} = (\{\mathrm{L}\}, \Sigma, \{\mathrm{L} \to \circle \mathrm{LL} \mid \circle \}, \mathrm{L})
+		.\]
+		La question précédente montre la non-ambigüité de la grammaire, et que $\mathcal{L}(\mathcal{G}) = \mathcal{L}$.
+	\item 
+\end{enumerate}

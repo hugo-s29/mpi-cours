@@ -1,0 +1,114 @@
+\begin{exm}
+	On munit l'espace vectoriel $\mathcal{M}_{n,1}(\mathds{K})$\/ de la norme définie par $\|X\|_\infty = \max_{j \in  \llbracket 1,n \rrbracket} |x_j|$\/ pour tout vecteur colonne $X = (x_j)_{j\in\llbracket 1,n \rrbracket}$. Soit $A \in \mathcal{M}_{n,1}(\mathds{K})$\/ une matrice carrée : \[
+		\forall X \in \mathcal{M}_{n,1}(\mathds{K}),\quad\quad \|AX\|_\infty \le K \cdot \|X\|_\infty \quad \quad \text{ avec } K = \max_{i \in \llbracket 1,n \rrbracket} \sum_{j=1}^n |a_{i,j}|
+	.\]
+	On a $\sub A_\infty = \max_{i \in \llbracket 1,n \rrbracket} \sum_{j=1}^n |a_{i,j}|$.
+
+	On détermine le plus petit réel $K$ tel que $\|AX\|_\infty \le K \cdot \|X\|$, pour tout vecteur colonne $X \in \mathcal{M}_{n,1}(\mathds{K})$.
+	On pose $Y = AX$, et on a $y_i = \sum_{j=1}^n a_{i,j} x_j$.
+	Ainsi, $\|AX\| = \max_{i \in \llbracket 1,n \rrbracket} |y_i|$.
+	Or, pour tout $i\in \llbracket 1,n \rrbracket$, $|y_i| = \left| \sum_{i = 1}^n a_{i,j} x_j \right| \le \sum_{i=1}^n |a_{i,j}|\cdot |x_j| \le \sum_{j=1}^n |a_{i,j}| \cdot \|X\|_\infty \le \|X\|_\infty \sum_{j=1}^n |a_{i,j}|$.
+	On pose ainsi $K = \max_{i\in\llbracket 1,n\rrbracket}\sum_{j=1}^n |a_{i,j}|$, et on a donc $\| AX\|_\infty \le K \cdot \|X\|_\infty$.
+	
+	Pour montrer $K = \sub A_\infty$, il suffit de réaliser l'égalité $\|AX\|_\infty = K\cdot \|X\|_\infty$, pour un vecteur $X$ non nul.
+	On voudrait que $\max_{i\in \llbracket 1,n\rrbracket} \left| \sum_{j=1}^n a_{i,j} x_j\right| = \left(\max_{i \in \llbracket 1,n\rrbracket} \sum_{i=1}^n |a_{i,j}|\right) \times \big(\max_{i \in \llbracket 1,n\rrbracket} |x_i|\big)$.
+	Il existe $k\in\llbracket 1,n\rrbracket$, tel que $K = \sum_{j=1}^n |a_{k,j}|$.
+	On choisit $x_j = +1$ si $a_{k,j} > 0$, et $x_j = -1$ si $a_{k,j} \le 0$. (Autrement dit, on a $x_j = \sgn a_{k,j}$.)
+\end{exm}
+
+\begin{exo}[itérées et projecteurs]
+	\begin{slshape}
+		Soit $E$ un espace vectoriel normé, et soit $f \in \mathcal{L}_\mathrm c(E)$ un endomorphisme continu.
+		On suppose que la suite $(f^n)_{n\in\N}$ des itérées de $f$ converge. Montrer que :
+		\begin{enumerate}
+			\item sa limite est un projecteur,
+			\item sa limite est nulle si $\sub f < 1$.
+		\end{enumerate}
+	\end{slshape}
+	
+	Soit $f \in \mathcal{L}_\mathrm{c}(E)$. Soit $\ell \in \mathcal{L}(E)$ telle que $f^n \tendsto{n\to\infty} \ell$.
+	\begin{enumerate}
+		\item On a $f^{2n} \tendsto{n\to\infty} \ell$, car la suite $(f^{2n})_{n\in\N}$ est une suite extraite de la suite $(f^n)_{n\in\N}$.
+			L'application $\sub\cdot$ est sous-multiplicative, d'où \[
+				\forall (f,g) \in \mathcal{L}_\mathrm{c}(E),\quad\quad \sub{f \circ g} \le \sub f \cdot \sub g.
+			\] Ainsi, l'application $\circ$ est continue.
+			D'où, $f^{2n} = f^n \circ f^n \tendsto{n\to\infty} \ell^2$. Par unicité de la limite, $\ell^2 = \ell$, c'est donc un projecteur.
+			
+			Autre méthode :
+			\begin{align*}
+				0\le \sub{f^{2n} - \ell^2} &= \sub{f^n \circ f^n - \ell\circ\ell}\\
+				&= \sub{f^n \circ f^n - f^n \circ \ell + f^n \circ \ell - \ell \circ \ell}\\
+				&\le \sub{f^n \circ f^n - f^n \circ \ell} + \sub{f^n \circ\ell - \ell \circ \ell}\\
+			\end{align*}
+			par inégalité triangulaire. Ainsi,
+			\begin{align*}
+				0 \le \sub{f^{2n} - \ell^2} &\le \sub{f^n \circ (f^n - \ell)} + \sub{(f^n - \ell) \circ \ell}\\
+				&\le \sub{f^n} \times \underbrace{\sub{f^n - \ell}}_{\to 0} + \underbrace{\sub{f^n - \ell}}_{\to 0} \times \sub\ell \tendsto{n-\to \infty} 0
+			\end{align*}
+			car, $\sub{f^n} \to \sub\ell$ par hypothèse et continuité de la norme.
+			Par le théorème des gendarmes, on en déduit que $f^{2n} \to \ell^2$.
+		\item On a $\sub{f^2} \le \sub f^2$, d'où, par récurrence, on a $\forall n\in\N^*$, $0 \le \sub{f^n} \le \sub f^n \tendsto{n\to\infty} 0$ (car $\sub f \le 1$ par hypothèse).
+			D'après le théorème des gendarmes, on a $\sub {f^n} \tendsto{n\to\infty} 0$.
+			Or, l'application $\sub\cdot$ est continue, $\sub{f^n} \tendsto{n\to\infty} \sub\ell$.
+			Par unicité de la limite, on trouve $\sub\ell = 0$. On en déduit que $\ell = 0$.
+	\end{enumerate}
+\end{exo}
+
+\section{Ouverts et fermés}
+
+\begin{defn}
+	Soit $A$ une partie d'un espace vectoriel normé $E$. On dit que
+	\begin{enumerate}
+		\item un point $\vec{a} \in E$ est \textit{intérieur à $A$} s'il existe $\varepsilon > 0$ tel que $B(\vec{a}, \varepsilon) \subset A$ ;
+		\item l'ensemble $A$ est un \textit{ouvert} ou une \textit{partie ouverte} de $E$ si, pour tout vecteur $\vec{a} \in A$, il existe~$\varepsilon > 0$ tel que $B(\vec a, \varepsilon) \subset A$ ;
+		\item l'ensemble $A$ est un \textit{fermé} ou une \textit{partie fermée} de $E$ si son complémentaire $E\setminus A$ est un ouvert de $E$.
+	\end{enumerate}
+\end{defn}
+
+Avec cette définition, la partie $A$ est un ouvert de $E$ si, et seulement si, tout vecteur $\vec{a}$ de $A$ est intérieur à $A$.
+
+\begin{rmk}
+	\begin{enumerate}
+		\item L'intersection d'une famille d'ouverts n'est pas toujours un ouvert. Contre-exemple : \[\bigcap_{n\in\N^*} \left]{-\frac{1}{n}},\frac{1}{n}\right[ = \{0\}.\]
+		\item L'union d'une famille de fermés n'est pas toujours un fermé. Contre-exemple : \[\bigcup_{n\in\N^*} \left[-1+\frac{1}{n}, 1 - \frac{1}{n} \right] = {]{-1},1[}.\]
+		\item La réunion d'une famille d'ouverts est toujours un ouvert. L'intersection d'une famille de fermés est toujours un fermé.
+			\begin{prv}
+				Soit $(A_i)_{i\in I}$\/ une famille d'ouverts. On pose $A = \bigcup_{i \in I} A_i$.
+				Montrons que, pour tout $\vec{x} \in A$, il existe $\varepsilon > 0$ tel que $B(\vec{x}, \varepsilon) \subset A$.
+				Soit $\vec{x} \in A$. Il existe $i \in I$\/ tel que $\vec{x} \in A_i$. Or $A_i$\/ est un ouvert, il existe down $\varepsilon > 0$, tel que $B(\vec{x}, \varepsilon) \subset A_i \subset B$. L'ensemble $B$\/ est donc un ouvert.
+
+				Soit $(F_i)_{i\in I}$\/ une famille de fermés. On pose $F = \bigcap_{i \in I} F_i$. Montrons que $E \setminus F$\/ est un ouvert.
+				Or, $E \setminus F = \bigcup_{i \in I} (E \setminus F_i)$, et pour tout $i \in I$, $E \setminus F_i$\/ est un ouvert. L'union d'une famille d'ouverts est un ouvert. On en déduit que $F$\/ est un fermé.
+			\end{prv}
+		\item L'intersection d'une famille \textbf{finie} d'ouverts est un ouvert. L'union d'une famille \textbf{finie} de fermés est toujours un fermé.
+			\begin{prv}
+				Soit $(A_i)_{i\in I}$\/ une famille \textbf{finie} d'ouverts. Soit $\vec{x} \in \bigcap_{i \in I} A_i$. Ainsi, pour tout $i \in I$, $\vec{x} \in A_i$. Or, $A_i$\/ est un ouvert. Il existe donc $\varepsilon_i > 0$\/ tel que $B(\vec{x}, \varepsilon_i) \subset A_i$.
+				On pose donc $\varepsilon = \min_{i \in I} \varepsilon_i$. Alors, $B(\vec{x}, \varepsilon) \subset \bigcap_{i \in I} A_i$.
+
+				On passe au complémentaire, et on conclut comme dans la démonstration précédente.
+			\end{prv}
+	\end{enumerate}
+\end{rmk}
+
+\begin{exo}
+	\begin{slshape}
+		Soient $a$ et $b$ deux réels tels que $a < b$. Montrer que
+		\begin{enumerate}
+			\item les intervalles $]{-\infty}, b[$, $]a,b[$, et $]a,{+\infty}[$ sont des ouverts de $\R$ ;
+			\item les intervalles $]{-\infty}, b]$, $[a,b]$, et $[a,{+\infty}[$ sont des fermés de $\R$ ;
+			\item l'intervalle $[a,b[$ n'est, ni ouvert, ni fermé.
+		\end{enumerate}
+	\end{slshape}
+
+	\begin{enumerate}
+		\item Montrons que ${]{-\infty}, {b}[}$ est un ouvert. Soit $x \in {]{-\infty}, {b}[}$.
+			On pose $\varepsilon = (b - x) / 2$. Ainsi, on a bien ${]x-\varepsilon,x+\varepsilon[} \subset {]{-\infty},b[}$.
+			De même pour les autre cas.
+		\item L'intervalle $]{-\infty},b]$\/ est un fermé, car $\R \setminus {]{-\infty},b[} = {]b,+\infty[}$\/ est un ouvert d'après la question précédente. De même pour les autres cas.
+		\item L'intervalle $[a,b[$\/ n'est pas un ouvert car, pour tout $\varepsilon > 0$, $B(a, \varepsilon) \not\subset [a,b[$.
+			Et, l'intervalle $[a,b[$ n'est pas un fermé car $\R \setminus {[a,b[} = {]-\infty, a[} \cup [b, +\infty[$\/ n'est pas un ouvert.
+	\end{enumerate}
+\end{exo}
+
+
+

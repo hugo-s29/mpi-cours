@@ -1,0 +1,157 @@
+\subsection{Rangement particulier de graphe}
+
+\begin{defn}[Sommet ouvert]
+	Soit $(L_1, \ldots, L_n)$\/ un parcours de $G$.
+	Pour $k \in \llbracket 1,n \rrbracket$\/ et $i \in {\llbracket 1,k \llbracket}$, on dit que $L_i$\/ est \textit{ouvert} à l'étape $k$\/ si \[
+		\mathrm{Succ}(L_i) \not\subseteq \{L_j  \mid j \in {\llbracket 1,k \llbracket}\}
+	\] où $\mathrm{Succ}(L_i)$\/ est l'ensemble des successeurs de $L_i$.
+	\index{graphe!sommet ouvert}
+\end{defn}
+
+Cette définition nous permet de définir les parcours en largeur et en profondeur.
+
+\begin{defn}[parcours en largeur]
+	Soit $(L_1, \ldots, L_n)$\/ un parcours. Il est dit \textit{en largeur} si chaque sommet du parcours qui n'est pas un point de régénération est un successeur du premier sommet ouvert à cette étape : \[
+		\forall k \in \llbracket 2,n \rrbracket,\qquad\mathcal{B}(\{L_j  \mid j \in {\llbracket 1,k \llbracket}\} = \O \quad\text{ ou }\quad L_k \in \mathrm{Succ}(L_{i_0})
+	\] avec $i_0 = \min \{i \in {\llbracket 1,k \llbracket}  \mid L_i \text{ ouvert à l'étape } k\} $.
+	\index{graphe!parcours!en largeur}
+\end{defn}
+
+\begin{defn}[parcours en profondeur]
+	Soit $(L_1, \ldots, L_n)$\/ un parcours. Il est dit \textit{en largeur} si chaque sommet du parcours qui n'est pas un point de régénération est un successeur du dernier sommet ouvert à cette étape : \[
+		\forall k \in \llbracket 2,n \rrbracket,\qquad\mathcal{B}(\{L_j  \mid j \in {\llbracket 1,k \llbracket}\}) = \O \quad\text{ ou }\quad L_k \in \mathrm{Succ}(L_{i_0})
+	\] avec $i_0 = \max\{i \in {\llbracket 1,k \llbracket}  \mid L_i \text{ ouvert à l'étape } k\} $.
+	\index{graphe!parcours!en profondeur}
+\end{defn}
+
+\begin{exm}
+	Dans le graphe ci-dessous, un parcours en largeur est \[
+		\ubar{a} \to c \to b \to d \to f \leadsto \ubar{e}
+	.\] Les sommets soulignées sont les points de régénération.
+	On peut remarquer qu'il n'y a pas unicité du parcours en largeur, on aurait pu commencer le parcours par $\ubar{a} \to b \to c \to \cdots$, et ce parcours est aussi un parcours en largeur.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{ex-parcours-en-largeur}
+		\caption{Exemple de graphe orienté -- parcours en largeur}
+	\end{figure}
+
+	Sur le même graphe, un parcours en profondeur est \[
+		\ubar{a} \to b \to f \to c \to d \leadsto \ubar{e}
+	.\] De même, il n'y a pas unicité du parcours en profondeur.
+\end{exm}
+
+\begin{defn}[tri topologique]
+	Soit $(T_i)_{i\in\llbracket 1,n \rrbracket}$\/ une permutation des sommets. On dit que~$T$\/ est un \textit{tri topologique} si \[
+		\forall (i,j) \in \llbracket 1,n \rrbracket^2,\: \quad \text{ si }(T_i, T_j) \in A \text{ alors } i \le j
+	.\]
+	\index{graphe!tri!topologique}
+\end{defn}
+
+\begin{exm}
+	Un tri topologique du graphe ci-dessous est la permutation indiquée dans le graphe.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{ex-tri-topologique}
+		\caption{Tri topologique d'un graphe}
+	\end{figure}
+\end{exm}
+
+\begin{defn}
+	Soit une permutation de sommets $(T_i)_{i\in\llbracket 1,n \rrbracket}$. On appelle \textit{rang} de $u \in S$\/ dans $T$\/ le plus petit indice dans $T$\/ d'un élément accessible ($u\xrightarrow{*} v$) et co-accessible ($v\xrightarrow{*} u$) depuis $u$. On définit \[
+		\mathrm{rang}_T(u) = \min \{i \in \llbracket 1,n \rrbracket  \mid T_i \sim_G u\}
+	.\]
+	\index{graphe!rang}
+\end{defn}
+
+\begin{defn}
+	Étant donné une permutation $(T_i)_{i\in\llbracket 1,n \rrbracket}$\/ des sommets de $G$,
+	on définit la relation \[
+		{\preceq_T} = \{(u,v) \in S^2 \mid \mathrm{rang}(u) \le \mathrm{rang}(v)\}
+	.\] On dit alors que $T$\/ est un \textit{tri préfixe} dès lors que, pour tout $(u,v) \in S^2$, si $u \xrightarrow{*} v$\/ alors $u \preceq_T v$.
+	\index{graphe!relation $\preceq_T$}
+	\index{graphe!tri!préfixe}
+\end{defn}
+
+\begin{rmk}
+	Étant donné une permutation $T$, pour tout couple de sommets $(u,v)$, \[
+		u \sim_G v \iff (u \preceq_T v \text{ et } v \preceq_T u)
+	.\]
+\end{rmk}
+
+\subsection{Graphe transposé et \textsc{cfc}}
+
+\begin{defn}
+	Étant donné un graphe $G = (S, A)$, on appelle \textit{graphe  transposé} de $G$, que l'on note $G^\top$, le graphe \[
+		G^\top = \Big(S, \big\{(y,x) \in S^2 \:\big|\: (x,y) \in A\big\}\Big)
+	.\]
+	\index{graphe!transposé}
+\end{defn}
+
+\begin{prop}
+	Soit $T$\/ un tri préfixe de $G$. Soit $L$\/ un parcours de $G^\top $\/ utilisant l'ordre des points de régénération induit par $T$. Alors, la partition associée à $L$\/ est la décomposition en composantes forment connexes.
+\end{prop}
+
+\begin{prv}
+	Soit $T$\/ un tri préfixe du graphe $G$. Soit $L$\/ un parcours de $G^\top$. Montrons que le partitionnement associé à $L$\/ est la décomposition en composantes fortement connexes. Il suffit de montrer que, si $u$\/ et $v$\/ sont dans la même partition du parcours $L$\/ de $G^\top$\/ : $u \sim_G v$.
+
+	\textbf{Remarque} : les composantes fortement connexes de $G$\/ et $G^\top $\/ sont les mêmes.
+
+	Soient $u$\/ et $v$\/ deux sommets dans la même partition de $L$.
+	C'est donc qu'il existe un point de régénération $L_{r_k}$\/ tel que $L_{r_k} \xrightarrow*_{G^\top} u$\/ et $L_{r_k} \xrightarrow*_{G^\top} v$. Ainsi, $L_{r_k} \xleftarrow*_G u$\/ et $L_{r_k} \xleftarrow*_G v$. Alors, $\mathrm{rang}_T(u) \le \mathrm{rang}_T(L_{r_k})$.
+
+	Supposons que $L_{r_k} \centernot{\xrightarrow*}_G u$. Alors, $\mathrm{rang}_T(u) \neq \mathrm{rang}_T(L_{r_k})$. D'où, il existe $w \sim_G u$\/ apparaissant avant (strictement) $L_{r_k}$\/ dans $T$. Ce qui est absurde car on aurait dû visiter $w$\/ avant.
+
+	On en déduit que $L_{r_k} \xrightarrow*_{G} u$, et $v \xrightarrow*_G u$, De même pour $v$, on a $L_{r_k} \xrightarrow*_G v$\/ et $u\xrightarrow*_G v$. Finalement, on a \[
+		u \sim_G v
+	.\]
+\end{prv}
+
+\begin{exm}~\\
+	\begin{figure}[H]
+		\centering
+		\tikzfig{ex-graphe-1}
+		\caption{Exemple de tri préfixe}
+	\end{figure}
+	Un tri préfixe dans le graphe ci-dessous est $g \gets f \gets c \gets e \gets d \revs\leadsto i \revs\leadsto b \gets a \revs\leadsto h$. Il s'agit d'un parcours en profondeur.
+\end{exm}
+
+\subsection{Calcul de tri préfixe}
+
+On peut donc donner un algorithme calculant un tri préfixe. On donne cet algorithme en impératif, même si la version récursive est plus simple.
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree Un graphe $G = (S, A)$.
+		\Sortie Un tri préfixe des sommets de $G$.
+		\Procedure{ExploreDescendants}{$s$, $\mathrm{Visit\acute es}$, $\mathrm{Res}$}
+			\State \textbf{Entrée} Un graphe $G = (S,A)$, $\mathrm{Res}$, $\mathrm{Visit\acute es}$, $s \in S$.
+			\State \textbf{Sortie} Modifie $\mathrm{Res}$\/ et $\mathrm{Visit\acute es}$\/ de sorte  que $\mathrm{Res}$\/ soit un parcours préfixe de $\mathrm{Visit\acute es}$\/ et des sommets accessibles depuis $s$.
+			\State $\mathrm{todo} \gets \mathrm{pileVide}$\/
+			\State $\mathrm{empiler}\big((s, \mathrm{Succ}(s)), \mathrm{todo}\big)$\/ 
+			\State $\mathrm{Visit\acute es} \gets \{s\}  \cup \mathrm{Visit\acute es}$\/ 
+			\While{$\mathrm{todo} \neq \mathrm{pileVide}$}
+				\State $(x, \ell) \gets \mathrm{depiler}(\mathrm{todo})$\/ 
+				\If{$\ell = (\:)$}
+					\State $\mathrm{Res} \gets x \cdot \mathrm{Res}$\/ 
+				\Else
+					\State $t \cdot \ell' \gets \ell$\/  \Comment{on sépare la tête $t$\/ du reste $\ell'$ de la pile $\ell$.}
+					\State $\mathrm{empiler}((x, \ell'), \mathrm{todo})$\/ 
+					\If{$t \not\in \mathrm{Visit\acute es}$}
+						\State $\mathrm{Visit\acute es} \gets \{t\} \cup \mathrm{Visit\acute es}$\/ 
+						\State $\mathrm{empiler}\big((t, \mathrm{Succ}(t)), \mathrm{todo}\big)$\/
+					\EndIf
+				\EndIf
+			\EndWhile
+		\EndProcedure \bigskip
+		\State $\mathrm{Visit\acute es} \gets\O$\/
+		\State $\mathrm{Res} \gets (\:)$\/ 
+		\While {$S \setminus \mathrm{Visit\acute es} \neq \O$}
+			\State $s \gets \text{un sommet de } S \setminus \mathrm{Visit\acute es}$\/ 
+			\State \Call{ExploreDescendants}{$s$, $\mathrm{Visit\acute es}$, $\mathrm{Res}$}
+		\EndWhile
+		\State\Return $\mathrm{Res}$\/
+	\end{algorithmic}
+	\caption{Calcul d'un tri préfixe}
+\end{algorithm}
+

@@ -1,0 +1,267 @@
+\lettrine{D}{ans ce chapitre}, on s'intéresse à la théorie des jeux.
+L'objectifs est de modéliser des interactions (économie, coopération, \ldots).
+On s'intéressera, par contre, à une petite partie de la théorie des jeux : les jeux d'accessibilité.
+Par exemple, les échecs et le go sont deux jeux d'accessibilité, mais on s'intéressera à des jeux beaucoup plus simples.
+On cherchera les stratégies gagnantes pour ces jeux, des heuristiques.
+On raccrochera ce chapitre avec la théorème des graphes.
+
+Par exemple, on peut coder un programme répondant, \textit{plus ou moins correctement}, au jeu puissance 4. [Démonstration d'un jeu de puissance 4.]
+
+
+Dans un premier temps, on s'intéresse à un jeu simple. On a 13 allumettes : \[
+	|\quad|\quad|\quad|\quad|\quad|\quad|\quad|\quad|\quad|\quad|\quad|\quad|\quad|
+.\]
+On peut retirer une, deux ou trois allumettes. Le joueur retirant la dernière allumette perd.
+On peut représenter le jeu par un graphe, et \textit{jouer} au jeu est se déplacer dans ce graphe. Ce graphe est \textit{biparti}.
+
+\section{Jeux sur un graphe}
+
+\begin{defn}
+	On appelle \textit{arène} la donnée
+	\begin{itemize}
+		\item d'un graphe biparti orienté $G = (V, E)$, avec $V = V_\mathrm{A} \cupdot V_\mathrm{B}$\/ la séparation en deux sommets de ce graphes bipartis ;
+		\item d'un sommet initial $s$.
+	\end{itemize}
+\end{defn}
+
+\begin{defn}
+	Un état du jeu (un sommet de l'arène) est dit \textit{terminal} lorsqu'il n'a pas de successeurs. On note, dans la suite, $V_\mathrm{A}^\star$\/ et $V_\mathrm{B}^\star$\/ les états non terminaux (notation non officielle).
+\end{defn}
+
+\begin{rmk}
+	Les états $V_\mathrm{A}$\/ sont les états où c'est à Alice de jouer.
+	Les états $V_\mathrm{B}$\/ sont les états où c'est à Bob de jouer.
+\end{rmk}
+
+\begin{exm}
+	On reprend l'exemple du jeu des allumettes. La figure ci-dessus représente les états du jeu. Les états
+	{\raisebox{-2pt}{\tikz\node[thick,minimum size=3.5mm,inner sep=0pt,auto,draw,circle,red] at (0,0){$i$};}}
+	représentent les états de Alice (\textit{i.e.}\ des éléments de $V_\mathrm{A}$), les états
+	{\raisebox{-2pt}{\tikz\node[thick,minimum size=3.5mm,,inner sep=0pt,auto,draw,rectangle,mauve] at (0,0){$j$};}}
+	représentent les états de Bob (\textit{i.e.}\ des éléments de $V_\mathrm{B}$).
+	Les états doublement encadrés sont terminaux, les autres sont non terminaux.
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[minimum size=7.5mm,scale=2,font=\small,inner sep=0pt,auto,every node/.style=thick]
+		\node[draw,circle,red] (A13) at (0, 0) {13};
+		\node[draw,rectangle,mauve] (B12) at (-1, -1) {12};
+		\node[draw,rectangle,mauve] (B11) at ( 0, -1) {11};
+		\node[draw,rectangle,mauve] (B10) at ( 1, -1) {10};
+		\node[draw,circle,red] (A11) at (-2, -2) {11};
+		\node[draw,circle,red] (A10) at (-1, -2) {10};
+		\node[draw,circle,red] (A9)  at ( 0, -2) {9 };
+		\node[draw,circle,red] (A8)  at ( 1, -2) {8 };
+		\node[draw,circle,red] (A7)  at ( 2, -2) {7 };
+		\node[draw,rectangle,mauve] (B9) at (-2, -3) {9};
+		\node[draw,rectangle,mauve] (B8) at (-1, -3) {8};
+		\node[draw,rectangle,mauve] (B7) at ( 0, -3) {7};
+		\node[draw,rectangle,mauve] (B6) at ( 1, -3) {6};
+		\node[draw,rectangle,mauve] (B5) at ( 2, -3) {5};
+		\node[draw,rectangle,mauve] (B4) at ( 3, -3) {4};
+		\node[draw,circle,red] (A6) at (-2, -4) {6};
+		\node[draw,circle,red] (A5) at (-1, -4) {5};
+		\node[draw,circle,red] (A4) at ( 0, -4) {4};
+		\node[draw,circle,red] (A3) at ( 1, -4) {3};
+		\node[draw,circle,red] (A2) at ( 2, -4) {2};
+		\node[draw,circle,red,double] (A1) at ( 3, -4) {1};
+		\node[draw,rectangle,mauve] (B3) at (-1, -5) {3};
+		\node[draw,rectangle,mauve] (B2) at ( 0, -5) {2};
+		\node[draw,rectangle,mauve,double] (B1) at ( 1, -5) {1};
+		\draw[->] (A4) -- (B1);
+		\draw[->] (A5) -- (B2);
+		\draw[->] (A6) -- (B3);
+		\draw[->] (A7) -- (B4);
+		\draw[->] (A8) -- (B5);
+		\draw[->] (A9) -- (B6);
+		\draw[->] (A10) -- (B7);
+		\draw[->] (A11) -- (B8);
+		\draw[->] (A13) -- (B10);
+		\draw[->] (A3) -- (B1);
+		\draw[->] (A4) -- (B2);
+		\draw[->] (A5) -- (B3);
+		\draw[->,dashed] (A6) -- (B4);
+		\draw[->] (A7) -- (B5);
+		\draw[->] (A8) -- (B6);
+		\draw[->] (A9) -- (B7);
+		\draw[->] (A10) -- (B8);
+		\draw[->] (A11) -- (B9);
+		\draw[->] (A13) -- (B11);
+		\draw[->] (A2) -- (B1);
+		\draw[->] (A3) -- (B2);
+		\draw[->] (A4) -- (B3);
+		\draw[->,dashed] (A5) -- (B4);
+		\draw[->,dashed] (A6) -- (B5);
+		\draw[->] (A7) -- (B6);
+		\draw[->] (A8) -- (B7);
+		\draw[->] (A9) -- (B8);
+		\draw[->] (A10) -- (B9);
+		\draw[->,dashed] (A11) -- (B10);
+		\draw[->] (A13) -- (B12);
+		\draw[->] (B4) -- (A1);
+		\draw[->] (B5) -- (A2);
+		\draw[->] (B6) -- (A3);
+		\draw[->] (B7) -- (A4);
+		\draw[->] (B8) -- (A5);
+		\draw[->] (B9) -- (A6);
+		\draw[->] (B10) -- (A7);
+		\draw[->] (B11) -- (A8);
+		\draw[->] (B12) -- (A9);
+		\draw[->,dashed] (B3) -- (A1);
+		\draw[->] (B4) -- (A2);
+		\draw[->] (B5) -- (A3);
+		\draw[->] (B6) -- (A4);
+		\draw[->] (B7) -- (A5);
+		\draw[->] (B8) -- (A6);
+		\draw[->,dashed] (B9) -- (A7);
+		\draw[->] (B10) -- (A8);
+		\draw[->] (B11) -- (A9);
+		\draw[->] (B12) -- (A10);
+		\draw[->,dashed] (B2) -- (A1);
+		\draw[->,dashed] (B3) -- (A2);
+		\draw[->] (B4) -- (A3);
+		\draw[->] (B5) -- (A4);
+		\draw[->] (B6) -- (A5);
+		\draw[->] (B7) -- (A6);
+		\draw[->,dashed] (B8) -- (A7);
+		\draw[->,dashed] (B9) -- (A8);
+		\draw[->] (B10) -- (A9);
+		\draw[->] (B11) -- (A10);
+		\draw[->] (B12) -- (A11);
+	\end{tikzpicture}
+	\caption{États du jeu des allumettes}
+	\label{fig:jeu-allu}
+\end{figure}
+
+\begin{defn}
+	Un \textit{jeu d'accessibilité} est déterminé par une arène $G = (V_\mathrm{A} \cupdot V_\mathrm{B}, E)$ de sommet initial $s$, et deux ensembles $\mathcal{O}_\mathrm{A}$\/ et $\mathcal{O}_\mathrm{B}$\/ de sommets terminaux tels que
+	\begin{itemize}
+		\item $\mathcal{O}_\mathrm{A} \cap \mathcal{O}_\mathrm{B} = \O$,
+		\item $\mathcal{O}_\mathrm{A} \subseteq V_\mathrm{A} \cupdot V_\mathrm{B}$,
+		\item et $\mathcal{O}_\mathrm{B} \subseteq  V_\mathrm{A} \cupdot V_\mathrm{B}$.
+	\end{itemize}
+	L'ensemble $\mathcal{O}_\mathrm{A}$\/ représente les sommets \guillemotleft~\textit{gagnants}~\guillemotright\ pour Alice.
+	L'ensemble $\mathcal{O}_\mathrm{B}$\/ représente les sommets \guillemotleft~\textit{gagnants}~\guillemotright\ pour Bob.
+\end{defn}
+
+\begin{rmk}
+	Ils ne forment pas nécessairement une partition des sommets terminaux.
+\end{rmk}
+
+\begin{exm}
+	Dans la figure~\ref{fig:jeu-allu}, l'état gagnant pour Alice est 
+	{\raisebox{-2pt}{\tikz\node[double,thick,minimum size=3.5mm,inner sep=0pt,auto,draw,circle,red] at (0,0){1};}}
+	; celui de Bob est 
+	{\raisebox{-2pt}{\tikz\node[double,thick,minimum size=3.5mm,,inner sep=0pt,auto,draw,rectangle,mauve] at (0,0){1};}}.
+\end{exm}
+
+\begin{defn}
+	Une \textit{partie depuis un sommet $s$} dans un jeu d'accessibilité est une suite (finie ou infinie) de sommets formant un chemin dans l'arène, partant de $s$, telle que, si la partie est finie, le dernier sommet est terminal.
+
+	On dit d'une partie
+	\begin{itemize}
+		\item qu'elle est \textit{gagnée par Alice} si elle est finie et le dernier sommet est dans $\mathcal{O}_\mathrm{A}$\/ ;
+		\item qu'elle est \textit{gagnée par Bob} si elle est finie et le dernier sommet est dans $\mathcal{O}_\mathrm{B}$\/ ;
+		\item qu'elle est nulle sinon.
+	\end{itemize}
+\end{defn}
+
+\begin{exm}
+	\todo{Ajouter exemple} ?
+\end{exm}
+
+\begin{defn}
+	On appelle \textit{stratégie pour Alice} une fonction $f : V_\mathrm{A}^\star \to V_\mathrm{B}$\/ telle que, pour tout état $s_\mathrm{A} \in V_\mathrm{A}^\star$,  on a $\big(s_\mathrm{A}, f(s_\mathrm{A})\big) \in E$.
+	
+	Soit $N \in \N \cup \{+\infty\}$\/ la longueur d'une partie $(s_1, s_2, \ldots, s_n, \ldots, s_N\:?)$, cette partie est dite \textit{jouée selon une stratégie $f$} si \[
+		\forall i \in \llbracket 1, N + 1 \llbracket, \quad s_i \in V_\mathrm{A}^\star  \implies s_{i+1} = f(s_i)
+	.\]
+
+	Une stratégie pour Alice est dit \textit{gagnante depuis un état $s$\/} dès lors que toute partie depuis $s$\/ jouée selon $f$ est gagnée par Alice.
+	Plus généralement, une stratégie est dit \textit{gagnante} si elle est gagnante depuis l'état initial.
+
+	\bigskip
+	\centerline{------------------------------------------------}
+	\medskip
+
+	On appelle \textit{stratégie pour Bob} une fonction $f : V_\mathrm{B}^\star \to V_\mathrm{B}$\/ telle que, pour tout état $s_\mathrm{B} \in V_\mathrm{B}^\star$,  on a $\big(s_\mathrm{B}, f(s_\mathrm{B})\big) \in E$.
+	
+	Soit $N \in \N \cup \{+\infty\}$\/ la longueur d'une partie $(s_1, s_2, \ldots, s_n, \ldots, s_N\:?)$, cette partie est dite \textit{jouée selon une stratégie $f$} si \[
+		\forall i \in \llbracket 1, N + 1 \llbracket, \quad s_i \in V_\mathrm{B}^\star  \implies s_{i+1} = f(s_i)
+	.\]
+
+	Une stratégie pour Bob est dit \textit{gagnante depuis un état $s$\/} dès lors que toute partie depuis $s$ jouée selon $f$ est gagnée par Bob.
+\end{defn}
+
+\begin{exm}
+	La stratégie {\tikz\draw[-{Implies[]},mauve,thick,double] (0,0) to (0.35, 0);} est gagnante pour Bob.
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[minimum size=7.5mm,xscale=2,yscale=1.5,font=\small,inner sep=0pt,auto,every node/.style=thick,bend angle=10]
+			\node[draw,circle,red] (A0) at ( 0, 0){};
+			\node[draw,rectangle,mauve] (B1) at (-1,-1){};
+			\node[draw,rectangle,mauve] (B2) at ( 1,-1){};
+			\node[draw,circle,red] (A1) at (-1.5,-2){};
+			\node[draw,circle,red,double] (A2) at (-0.5,-2){};
+			\node[draw,circle,red] (A3) at (0.5,-2){};
+			\node[draw,circle,red] (A4) at (1.5,-2){};
+			\node[draw,rectangle,mauve,double] (B3) at (-1.75,-3){};
+			\node[draw,rectangle,mauve,double] (B4) at (-1.25,-3){};
+			\node[draw,rectangle,mauve,double] (B5) at (0.25,-3){};
+			\node[draw,rectangle,mauve,double] (B6) at (0.75,-3){};
+			\node[draw,rectangle,red,minimum size=8mm] (B7) at (1.25,-3){};
+			\node[draw,rectangle,mauve,minimum size=7mm] at (1.25,-3){};
+			\node[draw,rectangle,mauve] (B8) at (1.75,-3){};
+			\draw[->] (A0) -- (B1); \draw[->] (A0) -- (B2);
+			\draw[->] (B1) -- (A1); \draw[->] (B1) -- (A2);
+			\draw[->] (B2) -- (A3); \draw[->] (B2) -- (A4);
+			\draw[->] (A1) -- (B3); \draw[->] (A1) -- (B4);
+			\draw[->] (A3) -- (B5); \draw[->] (A3) -- (B6);
+			\draw[->] (A4) -- (B7);
+			\draw[->,bend right] (A4) to (B8); \draw[->,bend right] (B8) to (A4);
+			\draw[-{Implies[]},mauve,thick,double] (B8) to (A4);
+			\draw[-{Implies[]},mauve,thick,double,bend right] (B2) to (A3);
+			\draw[-{Implies[]},mauve,thick,double,bend left] (B1) to (A1);
+		\end{tikzpicture}
+		\caption{Stratégie gagnante pour Bob}
+	\end{figure}
+\end{exm}
+
+\paragraph{Interlude : représentation machine des jeux.}
+On représente le graphe de manière \ul{implicite}.
+
+\begin{lstlisting}[language={[Objective]caml},caption={Représentation machine des jeux, types}]
+type joueur
+type etat
+
+val joueur : etat -> move
+val possibilite_moves : etat -> etat list
+val init : etat
+val est_gagant : etat -> joueur option
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=caml,caption={Représentation machine du jeux des allumettes}]
+type joueur = Alice | Bob
+type etat = { allu : int; joueur : joueur }
+
+let autre = function
+| Alice -> Bob
+| Bob -> Alice
+
+let joueur (e: etat) = e.joueur
+let init = { allu = 13; joueur = Alice }
+let est_gagnant (e: etat) = 
+	if e.allu = 1 then Some(autre e.joueur)
+	else None
+let possible_moves (e: etat) = 
+	(if e.allu > 3 then
+		[{ allu = e.allu - 3; joueur = autre e.joueur }] else [])
+	@ (if e.allu > 2 then
+		[{ allu = e.allu - 2; joueur = autre e.joueur }] else [])
+	@ (if e.allu > 1 then
+		[{ allu = e.allu - 1; joueur = autre e.joueur }] else [])
+\end{lstlisting}
+
+

@@ -1,0 +1,102 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\def\khollenum{18}
+
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+\fancyhead[R]{\scshape Khôlle n\tsup{o} \khollenum}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} \khollenum
+	\end{center}
+
+	\paragraph{Exercice 1.}
+	\begin{enumerate}
+		\item Soient $\mathrm{G}_{X_1}$ et $\mathrm{G}_{X_2}$ les fonctions génératrices de $X_1$ et $X_2$ respectivement.
+			On note $\mathrm{G}_{X_1+X_2}$ la fonction génératrice de $X_1 + X_2$.
+			On sait que $\mathrm{G}_{X_1+X_2} = \mathrm{G}_{X_1} \cdot \mathrm{G}_{X_2}$, car $X_1$ et $X_2$ sont indépendantes.
+			De plus, $X_1 \sim \mathcal{P}(\lambda_1)$ d'où $\mathrm{G}_{X_1}(t) = \mathrm{e}^{\lambda_1(t-1)}$, pour tout réel $t$.
+			De même, $\mathrm{G}_{X_2}(t) = \mathrm{e}^{\lambda_2(t-1)}$ pour tout réel $t$ car $X_2 \sim \mathcal{P}(\lambda_2)$.
+			On en déduit que, pour tout réel $t$, $\mathrm{G}_{X_1+X_2}(t) = \mathrm{e}^{\lambda_1(t-1)} \cdot \mathrm{e}^{\lambda_2(t-1)} = \mathrm{e}^{(\lambda_1+\lambda_2)(t-1)}$.
+			On reconnaît la série génératrice d'une loi de Poisson $\mathcal{P}(\lambda_1 + \lambda_2)$. Or, les termes de la série génératrice permettent de déterminer les probabilités des valeurs prisent par la variable aléatoire.
+			D'où, $(X_1+X_2)\sim \mathcal{P}(\lambda_1 + \lambda_2)$.
+		\item
+			\begin{align*}
+				&\mathrel{\phantom=} P(X_1 = j  \mid X_1 + X_2 = k)\\
+				&= P\big((X_1 = j \cap (X_1+X_2=k)\big) \cdot P(X_1 + X_2 = k) && \text{ car } P(X_1+X_2 = k) \neq 0,\\
+				&= P\big((X_1 = j) \cap (X_2 = k - j)\big) \cdot P(X_1 + X_2 = k) \\
+				&= P(X_1 = j) \cdot P(X_2 = k - j) \cdot P(X_1 + X_2 = k) && \text{ par indépendance de $X_1$ et $X_2$}, \\
+				&= \mathrm{e}^{-\lambda_1} \frac{\lambda_1^j}{j!} \times \mathrm{e}^{-\lambda_2} \frac{\lambda_2^{k-j}}{(k-j)!} \times \mathrm{e}^{-\lambda_1 - \lambda_2} \frac{(\lambda_1 + \lambda_2)^k}{k!} && \text{ car } (X_1 + X_2) \sim \mathcal{P}(\lambda_1+\lambda_2) \\
+				&= \mathrm{e}^{-2(\lambda_1+\lambda_2)} \frac{\big(\lambda_1^{k+1}\lambda_2^{k-j} + \lambda_1^{j} \lambda_2^{k-j+1}\big)^k}{j! \cdot (k-j)! \cdot k!} \\
+				&= \frac{\mathrm{e}^{-2(\lambda_1+\lambda_2)}}{2\cdot k!} {k\choose j} \big(\lambda_1^{k+1}\lambda_2^{k-j} + \lambda_1^{j} \lambda_2^{k-j+1}\big)^k \\
+			\end{align*}
+	\end{enumerate}
+
+	\paragraph{Exercice 2.}
+	\begin{enumerate}
+		\item Soient $\vec{x}$ et $\vec{y}$ deux vecteurs de $\bar{F}$. Soient $\lambda$ et $\mu$ deux réels. Par la caractérisation séquentielle de l'adhérence, il existe deux suites $(\vec{x}_n)_{n \in \N}$ et $(\vec{y}_n)_{n \in \N}$ de vecteurs de $F$ convergent vers $\vec{x}$ et $\vec{y}$ respectivement.
+			On pose $(\vec{z}_n)_{n\in\N}$ la suite de vecteurs de $F$ définie par $\vec{z}_i = \lambda \vec{x}_i + \mu \vec{y}_i$, pour tout entier $i$.
+			Ainsi, par somme des limites, la suite $(\vec{z}_n)_{n\in\N}$ converge vers $\lambda \vec{x} + \mu \vec{y}$.
+			Par la caractérisation séquentielle de l'adhérence, on en déduit que $\lambda \vec{x} + \mu \vec{y} \in \bar{F}$.
+			D'où, $\bar{F}$ est un sous-espace vectoriel de $E$.
+		\item 
+			\begin{enumerate}
+				\item On suppose $\bar{F} \neq F$. Soit $\vec{v} \in \bar{F}$ tel que $\vec{v} \not\in F$.
+					Alors, $(\Vect \vec{v}) \cap F = \{\vec{0}\}$ donc $\Vect \vec{v}$ et $F$ sont en somme directe.
+					Ainsi, comme $F$ admet un supplémentaire de dimension 1 dans $E$, on en déduit que $(\Vect\vec{v}) \oplus F = E$.
+				\item On sait que $\bar{F}$ est un sous-espace vectoriel de $E$.
+					Or, $\vec{v} \in \bar{F}$ et $F \subset \bar{F}$, donc $E = (\Vect \vec{v}) \oplus F \subset \bar{F}$. Or, $\bar{F} \subset E$ d'après la question 1.
+					On en déduit que $\bar{F} = E$.
+			\end{enumerate}
+	\end{enumerate}
+
+	\paragraph{Exercice 3.}
+	\begin{enumerate}
+		\item Pour montrer que $\bar{A} = A$, on utilise la caractérisation séquentielle de l'adhérence.
+			Soit $(f_n)_{n\in\N}$ une suite de fonctions de $A$ qui converge pour la norme $\|\cdot\|_\infty$ vers une fonction $f \in \mathcal{C}([0,1],\R)$.
+			On sait que la suite de fonctions converge uniformément. En effet, \[
+				\sup_{t \in [0,1]} \|f_n(t) - f(t)\| \mathrel{\overset*=} \max_{t \in [0,1]} |f_n(t) - f(t)| = \|f_n - f\|_\infty \tendsto{n\to \infty} 0.
+			\]L'égalité $*$ est assurée car les fonctions $f$ et $f_n$ sont continues sur un segment.
+			Ainsi, on a $0 = f_n(0) \to f(0)$ quand $n \to \infty$ ; de même, $0 = f_n(1) \to f(1)$.
+			On en déduit donc que $f(0) = f(1) = 0$.
+			De plus, par interversion limite--intégrale sur un segment, \[
+				1 = \int_{0}^{1} f_n(t)~\mathrm{d}t \tendsto{n\to \infty} \int_{0}^{1} f(t)~\mathrm{d}t
+				\quad\quad \text{ d'où } \quad\quad \int_{0}^{1} f(t)~\mathrm{d}t = 1
+			.\]
+			On en déduit donc que $f \in A$.
+			On peut en conclure que l'ensemble $A$ est un fermé dans $\mathcal{C}([0,1], \R)$.
+		\item On considère la suite de fonctions continues $(f_n)_{n \in \N^*}$ définies comme montré dans la figure ci-dessous.
+			\begin{figure}[H]
+				\centering
+				\begin{tikzpicture}[scale=3]
+					\draw[->] (-0.1, 0) -- (1.2, 0);
+					\draw[->] (0, -0.1) -- (0, 1.2);
+					\draw[red,thick] (0, 0) -- (0.25, 1) -- (0.75, 1) -- (1, 0);
+					\draw[red, dotted] (0.25, 1) -- (0.25, 0);
+					\draw[red, dotted] (0.75, 1) -- (0.75, 0);
+					\draw[<->] (0, -0.15) -- (0.25, -0.15);
+					\draw[<->] (0.75, -0.15) -- (1, -0.15);
+					\node at (0.125, -0.25){${1\over n}$};
+					\node at (0.875, -0.25){${1\over n}$};
+					\draw (-0.04, 1) -- (0.04, 1);
+					\draw (1, -0.04) -- (1, 0.04);
+					\node at (-0.1, 1){$b_n$};
+					\node at (1, -0.1){$1$};
+				\end{tikzpicture}
+				\caption{Suite de fonctions $(f_n)_{n \in \N^*}$}
+			\end{figure}
+			La suite $(b_n)_{n \in \N}$ est définie par, pour $n \in \N^*$, $b_n = 1 / (1 - \frac{1}{n})$.
+			Par construction de la suite de fonctions $(f_n)_{n \in \N^*}$, on a bien $f_n(0) = f_n(1) = 0$, pour tout entier $n \in \N^*$.
+			De plus, 
+			\[
+				\int_{0}^{1} f_n(t)~\mathrm{d}t = b_n \times \left( 1 - \frac{1}{n} \right) = 1.
+			\]
+			On en déduit que $(f_n)_{n \in \N^*}$ est une suite de fonctions de $A$.
+			Par définition de $d$, on a $d(0, A) \le d(0, f_n) = \|f_n\|_\infty = b_n$.
+			Or, $b_n \to 1$ quand $n \to \infty$, et $\inf$ est le plus grand minorant, donc $d(0, A) \le 1$.
+	\end{enumerate}
+\end{document}
+
+

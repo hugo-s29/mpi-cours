@@ -1,0 +1,81 @@
+\begin{rmk}
+	Soit $a$ un élément de $I \subset \R$ un intervalle ouvert. Une fonction $f : I \to \R$ est dérivable en $a$ si, et seulement si elle est différentiable en $a$. Et alors, $f'(a) = \mathrm{d}f(a)\cdot 1$.
+\end{rmk}
+
+\begin{defn}
+	Si $f : E \to F$ est une fonction différentiable en chaque point $\vec{a} \in U$ d'une partie $U \subset E$, alors on dit que $f$ est \textit{différentiable} sur $U$ et l'application
+	\begin{align*}
+		\mathrm{d}f: U &\longrightarrow \mathcal{L}(E, F) \\
+		\vec{a} &\longmapsto \mathrm{d}f(\vec{a})
+	\end{align*}
+	est appelée la \textit{différentielle} de $f$ sur $U$.
+	Si chacune des $n$ fonctions $f_i$ est de classe $\mathcal{C}^1$ sur $U$, alors on dit que $f$ est de classe $\mathcal{C}^1$ sur $U$.
+\end{defn}
+
+\begin{prop}
+	\begin{enumerate}
+		\item
+			\[
+				\begin{tikzcd}
+					\text{$f$ est de classe $\mathcal{C}^1$ sur $U$} \arrow[r, Rightarrow, bend left=20]
+					\arrow[r, Leftarrow, bend right=20, "\text{\huge$\times$}"{anchor=center, sloped}] & \text{$f$ est différentiable sur $U$}
+				\end{tikzcd}
+			.\]
+		\item La fonction $f$ est $\mathcal{C}^1$ sur $U$ si, et seulement si $f$ est différentiable sur $U$ et sa différentielle $\mathrm{d}f$ est continue sur $U$.
+	\end{enumerate}
+\end{prop}
+
+\begin{exo}[Une fonction différentiable mais pas $\mathcal{C}^1$]
+	\begin{slshape}
+		Montrer que la fonction $f$ définie à l'exercice 5 est différentiable sur $\R^2$ mais n'est pas $\mathcal{C}^1$ sur $\R^2$.
+	\end{slshape}
+
+	On a déjà montré que $f$ n'est pas $\mathcal{C}^1$, \textit{i.e.}\ $\partial_1 f$ ou $\partial_2 f$ n'est pas continue (\textit{c.f.} exercice 5).
+	Mais $f$ est différentiable. En effet, montrons qu'il existe $\alpha$ et $\beta$ deux réels tels que pour tout vecteur $\vec{h} = (h,k) \in \R^2$, $f(a+h, b+k) = f(a,b) + \alpha h + \beta k + \po(\vec{h})$.
+	\begin{itemize}
+		\item si $a \neq 0$, alors $f$ est $\mathcal{C}^1$ et, d'après la formule de \textsc{Taylor-Young}, $f$ est différentiable.
+		\item si $a = 0$, alors $f(0+h, b+k) = h \times h \sin\left( \frac{b+k}{h} \right) = h \times \po(h)$ car $\sin\left( \frac{b+k}{h} \right)$ est bornée.
+			Ainsi, $f(h,b+k) = f(0,b) + 0h + 0k + \po(h)$.
+	\end{itemize}
+	La fonction $f$ est donc différentiable sur $\R^2$.
+\end{exo}
+
+\begin{exm}
+	\begin{enumerate}
+		\item La norme \guillemotleft~deux~\guillemotright\ définie sur $\R^p$ par $N(\vec{x}) = \sqrt{\smash{{x_1}^2 + \cdots + {x_p}^2}}$ est de classe $\mathcal{C}^1$ sur $\R^p \setminus \{\vec{0}\}$ et \[
+				\forall \vec{a} \in \R^p \setminus \{\vec{0}\},\:\forall \vec{h} \in \R^p,\quad\quad \mathrm{d}N(\vec{a}) \cdot \vec{h} = \frac{\langle\:\vec{a} \mid \vec{h}\:\rangle}{N(\vec{a})}
+			,\] où $\langle\:\vec{a} \mid \vec{h}\:\rangle = \sum_{i=1}^p a_ih_i$ est le produit scalaire des vecteurs $\vec{a}$ et $\vec{b}$.
+		\item La fonction $\det : \mathcal{M}_n(\R) \to \R$ est de classe $\mathcal{C}^1$ et \[
+				\forall A \in \mathcal{M}_n(\R),\:\forall H \in \mathcal{M}_n(\R),\quad\quad \det(A + H) = \det A + \tr(B^\T\cdot H) + \po(H)
+			,\]où $B = \com A$ est la comatrice de $A$.
+
+			On a déjà montré le résultat pour $A \in \mathrm{GL}_n(\R)$ (exercice 12). En effet, $B^\T = \det(A) A^{-1}$, et on conclut par linéarité de $\tr$.
+
+			Montrons maintenant le résultat pour $A$ quelconque.
+			On sait déjà que $\det$ est de classe $\mathcal{C}^\infty$ car $\det A = \sum_{\sigma \in \mathfrak{S}_n} \varepsilon(\sigma) a_{1,\sigma(1)} \cdots a_{n,\sigma(n)}$ (par les \guillemotleft~théorèmes généraux~\guillemotright).
+			En développant selon la colonne $j$, pour la ligne $i$, on trouve que le terme devant $a_{i,j}$ est $(-1)^{i+j} \Delta_{i,j}$. En effet, aucun terme ne contient $a_{i,j}$ car on supprime la $j$-ième colonne. Ainsi, \[
+				\frac{\partial \det}{\partial a_{i,j}} = (-1)^{i+j} \Delta_{i,j}
+			,\] qui est une fonction continue. Ainsi, $\det$ est de classe $\mathcal{C}^1$, et, d'après le formule de \textsc{Taylor-Young},
+			\begin{align*}
+				\det(A + H) &= \det A + \sum_{i=1}^n \sum_{j=1}^n h_{i,j} \overbrace{(-1)^{i+j} \Delta_{i,j}}^{[\com A]_{i,j}} + \po(H)\\
+				&= \det A + \sum_{(i,j) \in \llbracket 1,n \rrbracket^2} h_{i,j} b_{i,j} + \po(H) \\
+				&= \det A + \tr(B^\T\cdot H) + \po(H) \\
+			\end{align*}
+			car on reconnaît la formule du produit scalaire sur $\mathcal{M}_n(\R)$.
+	\end{enumerate}
+\end{exm}
+
+\begin{rmk}
+	De ce dernier exemple, il en résulte que la fonction $\det : \mathcal{M}_n(\R) \to \R$ est continue (car $\mathcal{C}^1 \implies \text{différentiable}\implies\mathcal{C}^0$). D'où, $\mathrm{GL}_n(\R) = \det^{-1}(\R^*)$ est l'image réciproque, par la fonction continue $\det$, de l'ouvert $\R^*$. Ainsi, $\mathrm{GL}_n(\R)$ est un ouvert de $\mathcal{M}_n(\R)$.
+	On avait aussi montré que $\mathrm{GL}_n(\R)$ est dense dans $\mathcal{M}_n(\R)$ (exercice 26 du chapitre 13).
+\end{rmk}
+
+\section{Le gradient}
+
+L'espace vectoriel $E$ était, jusqu'ici, normé et de dimension finie. On le munit désormais d'un produit scalaire ; $E$ est donc un espace euclidien.
+
+\begin{prop-defn}
+	Si $f: E \to \red\R$ est différentiable en $\vec{a} \in E$, alors il existe un unique vecteur de $E$, appelé le \textit{gradient} de $f$ en $\vec{a}$, et noté $\nabla f(\vec{a})$ ou $\grad f(\vec{a})$, tel que \[
+		\forall \vec{h} \in E,\quad\quad \mathrm{d}f(\vec{a})\cdot \vec{h} = \langle\vec{h} \mid \nabla f(\vec{a})\rangle
+	\] est le le produit scalaire du vecteur déplacement $\vec{h}$ et du gradient de $f$ en $\vec{a}$. Si $(\vec{e}_1, \ldots, \vec{e}_p)$ est une base orthonormée de $E$, alors $\nabla f(\vec{a}) = \partial_1 f(\vec{a})\: \vec{e}_1 + \cdots + \partial_p f(\vec{a})\: \vec{e}_p$.
+\end{prop-defn}

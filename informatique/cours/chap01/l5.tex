@@ -65,12 +65,17 @@ On s'intéresse à un autre ensemble de langages, les {\it langages locaux}.
 	On défini également l'ensemble \[
 		\Lambda(L) = L \cap \{\varepsilon\}
 	.\]
+	\index{langage!lettre préfixe}
+	\index{langage!lettre suffixe}
+	\index{langage!facteur de taille 2}
+	\index{langage!non facteur}
 \end{defn}
 
 \begin{defn}
-	Soit $L$\/ un langage. On définit le langage local engendré par $L$\/ comme étant \[
+	Soit $L$\/ un langage. On définit le \textit{langage local engendré} par $L$\/ comme étant \[
 		\rho(L) =\Lambda(L) \cup \Big(P(L) \cdot \Sigma^* \cap \Sigma^* \cdot S(L)\Big)\setminus \Sigma^* N(L) \Sigma^*
 	.\]
+	\index{langage!local!engendré}
 \end{defn}
 
 \begin{exm}
@@ -80,7 +85,8 @@ On s'intéresse à un autre ensemble de langages, les {\it langages locaux}.
 \end{exm}
 
 \begin{defn}
-	Un langage est dit local s'il est son propre langage engendré i.e.\ $\rho(L) = L$.
+	Un langage est dit \textit{local} s'il est son propre langage engendré i.e.\ $\rho(L) = L$.
+	\index{langage!local}
 \end{defn}
 
 \begin{prop}

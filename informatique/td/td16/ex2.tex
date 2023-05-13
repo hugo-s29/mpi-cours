@@ -1,0 +1,51 @@
+\section{Généralisation de l'algorithme de Peterson à $N$ fils}
+
+\begin{enumerate}
+	\item \textit{c.f.} cours
+	\item Les algorithmes 1 et 2 ne sont pas corrects. On donne deux exécutions posant problème.
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\State\Mark A {mainred}\quad\Mark B {mainblue}\quad\Mark C{maingreen} $\mathrm{Turn} \gets 0$
+				\State\Mark D{mainred}\ConnectStates AD{mainred}\quad\quad$\mathrm{Want}$ est un tableau de $N$ booléens initialisé à $\mathbf{F}$.
+				\Procedure {Lock}{$i$}
+				\State $\mathrm{Want}[i] \gets \mathbf{V}$
+				\State $\mathrm{Turn} \gets i + 1\ \mathrm{mod}\ N$
+				\While{$\mathrm{Turn} \neq i$ et $\mathrm{Want}[\mathrm{Turn}]$}
+				\State rien
+				\EndWhile
+				\State\Mark E{mainblue}\quad\Mark F{maingreen}
+				\ConnectStates BE{mainblue}
+				\ConnectStates CF{maingreen}
+				\EndProcedure
+				\Procedure{Unlock}{$i$}
+				\State $\mathrm{Want} \gets \mathbf{F}$\/
+				\EndProcedure
+			\end{algorithmic}
+			\caption{Proposition 1}
+		\end{algorithm}
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\State\Mark A {mainred}\quad\Mark B {mainblue}\quad\Mark U{mainorange}\quad\Mark C{maingreen} $\mathrm{Turn} \gets 0$
+				\State\Mark D{mainred}\ConnectStates AD{mainred}\quad\:\:\Mark V{mainorange}\ConnectStates[] UV{mainorange}\ \;$\mathrm{Want}$ est un tableau de $N$ booléens initialisé à $\mathbf{F}$.
+				\Procedure {Lock}{$i$}
+				\State $\mathrm{Want}[i] \gets \mathbf{V}$
+				\State $\mathrm{Turn} \gets i + 1\ \mathrm{mod}\ N$
+				\While{$\mathrm{Turn} \neq i$}
+				\If{$\mathrm{Want}[\mathrm{Turn}]$}
+				\State
+				\State\Mark E{mainblue}\quad\Mark F{maingreen}
+				\ConnectStates BE{mainblue}
+				\ConnectStates CF{maingreen}
+				$\mathrm{Turn} \gets \mathrm{Turn} + 1\ \mathrm{mod}\ N$
+				\EndIf
+				\EndWhile
+				\EndProcedure
+				\Procedure{Unlock}{$i$}
+				\State $\mathrm{Want} \gets \mathbf{F}$\/
+				\EndProcedure
+			\end{algorithmic}
+			\caption{Proposition 2}
+		\end{algorithm}
+\end{enumerate}

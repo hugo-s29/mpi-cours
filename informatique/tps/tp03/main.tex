@@ -1,0 +1,46 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+\usepackage{tikzit}
+\input{../../styles.tikzstyles}
+
+%\titletp{4}{Langages et expressions régulières (2)}
+
+\begin{document}
+	\paragraph{Q.\ 1}
+	Soit $q \in Q$.
+	Si $q \in F$, alors $\mathcal{L}_0(\mathcal{A}_q) = \{\varepsilon\}$.
+	Si $q \not\in F$, alors $\mathcal{L}_0(\mathcal{A}_q) = \O$.
+
+	\paragraph{Q.\ 2}
+	Soit $q \in Q$\/ et soit $n \in \N^*$. On a \[
+		\mathcal{L}_n(\mathcal{A}_q) = \overbrace{\bigcup_{\{(\ell,q')  \mid (q,\ell,q') \in \delta\}} \ell \cdot \mathcal{L}_{n-1}(\mathcal{A}_q)}^{\cup_\mathcal{L}}
+	.\]
+	Montrons le par double inclusion.
+
+	\begin{itemize}
+		\item[``$\subseteq$'']
+			Soit $w \in \mathcal{L}_n(\mathcal{A}_q)$. Il existe donc \[
+				q \xrightarrow{w_1} q' \xrightarrow{w_2} q_2 \to \cdots \xrightarrow{w_n} q_n \in F
+			\] une exécution acceptante de $\mathcal{A}_{q}$. Alors \[
+				q' \xrightarrow{w_2} q_2 \to \cdots \xrightarrow{w_n} q_n \in F
+			\] est un exécution acceptante de $\mathcal{A}_{q'}$. D'où $w_2\ldots w_n \in \mathcal{L}_{n-1}(\mathcal{A}_{q'})$. On en déduit que $w \in w_1 \cdot \mathcal{L}_{n-1}(\mathcal{A}_{q'}) \subset \cup_\mathcal{L}$.
+		\item[``$\supseteq$'']
+			Soit $(\ell, q') \in \{(\ell,q')  \mid (q, \ell, q') \in \delta\}$, et $w \in \ell \cdot \mathcal{L}_{n-1}(\mathcal{A}_{q'})$. Donc $w_2\ldots w_{n} \in \mathcal{L}_{n-1}(\mathcal{A}_{q'})$. Ainsi, il existe \[
+				q' \xrightarrow{w_2} q_2 \to \cdots \xrightarrow{w_n} q_n \in F
+			\] une exécution acceptante dans $\mathcal{A}_{q'}$. Or, $(q, \ell, q') \in \delta$\/ et donc \[
+				q \xrightarrow{\ell = w_1} q' \xrightarrow{w_2} q_2 \to \cdots \xrightarrow{w_n} q_n \in F
+			\] est une exécution acceptante dans $\mathcal{A}_q$. On en déduit que $w \in \mathcal{L}_n(\mathcal{A}_q)$.
+	\end{itemize}
+
+	\paragraph{Q.\ 3} \[
+		\mathcal{L}_n(\mathcal{A}) = \bigcup_{q \in I} \mathcal{L}_n(\mathcal{A}_q)
+	.\]
+
+	\paragraph{Q.\ 4}~\\
+	\begin{figure}[H]
+		\centering
+		\tikzfig{figures/auto1}
+	\end{figure}
+	\paragraph{Q.\ 5} On a une majoration en $(n+1) \cdot M$.
+\end{document}

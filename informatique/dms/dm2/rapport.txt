@@ -1,0 +1,3 @@
+* J'ai traité avec succès : l'exercice 1, Q1 à Q20 et l'exercice 2, Q1 à Q3.
+* Je ne suis pas allé plus loin car je n'ai pas réussi à trouver l'emplacement du (ou des) bug(s).
+* J'ai une tentative ratée pour la Q4 (et Q5) de l'exo 2 j'aimerais bien un retour.

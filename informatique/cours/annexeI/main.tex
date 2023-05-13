@@ -1,0 +1,35 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\titleanx{I}{Preuves de correction pour les fonctions récursives}
+
+\begin{document} %% EXACT
+	On considère l'insertion dans un arbre binaire de recherche.
+	Démontrons qu'elle est correcte.
+	On adopte les notations de l'annexe G sur les arbres rouges-noirs.
+	Montrons que, pour tout ABR $t$, et pour tout étiquette $e \in \mathds{E}$, 
+	\[
+		\mathrm{\acute{e}tiquettes}(\texttt{insertion}(t, x)) = \mathrm{\acute{e}tiquettes}(t) \cup \{x\}
+	.\]
+	Montrons le par induction.
+	\begin{enumerate}
+		\item Si $t = \texttt{E}$. Soit $x \in \mathds{E}$ : \[
+				\mathrm{\acute{e}tiquettes}(\texttt{insertion}(\texttt{E},x)) = \mathrm{\acute{e}tiquettes}(N(x, \texttt{E},\texttt{E})) = \{x\} = \mathord{\underbrace{\mathrm{\acute{e}tiquettes}(\texttt{E})}_{\O}} \cup \{x\}
+			.\]
+		\item Si $t = \texttt{N}(y, g, d)$. Soit $x \in \mathds{E}$.
+			\begin{itemize}
+				\item si $x < y$, alors
+					\begin{align*}
+						\mathrm{\acute{e}tiquettes}(\texttt{insertion}(t,x))
+						&= \mathrm{\acute{e}tiquettes}(\texttt{N}(y, \texttt{insertion}(g,x), d)) \\
+						&= \{x\} \cup \mathrm{\acute{e}tiquettes}(\texttt{insertion}(g,x)) \cup \mathrm{\acute{e}tiquettes}(d) \\
+						&= \{y\}  \cup \mathrm{\acute{e}tiquettes}(g) \cup \{x\} \cup \mathrm{\acute{e}tiquettes}(d) \\
+						&= \mathrm{\acute{e}tiquettes}(\texttt{N}(y,g,d)) \cup \{x\} \\
+						&= \mathrm{\acute{e}tiquettes}(t) \cup \{x\} \\
+					\end{align*}
+				\item on procède de même pour les autres cas.
+			\end{itemize}
+	\end{enumerate}
+	On procède de même pour les autres propriétés.
+\end{document}

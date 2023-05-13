@@ -1,0 +1,234 @@
+On définit, dans la suite de cette section, l'introduction et l'élimination de $\forall$\/ et $\exists$. Mais, nous devons réaliser des \textit{substitutions}, et c'est ce que nous allons faire dans le reste de cette sous-section.
+
+\begin{defn}
+	On définit $\mathrm{vars}$\/ inductivement sur $\mathcal{T}(\mathcal{S}, \mathcal{V})$ par :
+	\begin{itemize}
+		\item si $x \in \mathcal{V}$, $\mathrm{vars}(x) = \{x\}$\/ ;
+		\item $\ds\mathrm{vars}\big(f(t_1, \ldots, t_n)\big) = \bigcup_{i=1}^n \mathrm{vars}(t_i)$.
+	\end{itemize}
+\end{defn}
+
+\begin{defn}
+	On définit inductivement deux fonctions \[
+		\textsf{FV} : \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V}) \longrightarrow \wp(\mathcal{V})\footnotemark
+		\quad\quad\quad
+		\textsf{BV} : \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V}) \longrightarrow \wp(\mathcal{V})\footnotemark
+	\]
+	par
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item $\textsf{FV}(\top) = \O$,
+			\item $\textsf{FV}(\bot) = \O$,
+			\item $\textsf{FV}(G\odot H) = \textsf{FV}(G) \cup \textsf{FV}(H)$ avec~$\odot \in \{\land, \lor, \to, \leftrightarrow\}$,
+			\item $\textsf{FV}\big(P(t_1, \ldots, t_n)\big) = \bigcup_{i=1}^n \mathrm{vars}(t_i)$,
+			\item $\textsf{FV}(\lnot G) = \textsf{FV}(G)$,
+			\item $\textsf{FV}(\forall x,\: G) = \textsf{FV}(G) \setminus \{x\}$,
+			\item $\textsf{FV}(\exists x,\: G) = \textsf{FV}(G) \setminus \{x\}$,
+		\end{itemize}
+	\end{multicols}
+	et 
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item $\textsf{BV}(\top) = \O$,
+			\item $\textsf{BV}(\bot) = \O$,
+			\item $\ds\textsf{BV}\big(P(t_1, \ldots, t_n)\big) = \O$,
+			\item $\textsf{BV}(\lnot G) = \textsf{BV}(G)$,
+			\item $\ds\textsf{BV}(G\odot H) = \textsf{BV}(G) \cup \textsf{BV}(H)$ avec~$\odot \in \{\land, \lor, \to, \leftrightarrow\}$,
+			\item $\textsf{BV}(\forall x,\: G) = \textsf{BV}(G) \cup \{x\}$,
+			\item $\textsf{BV}(\exists x,\: G) = \textsf{BV}(G) \cup \{x\}$,
+		\end{itemize}
+	\end{multicols}
+\end{defn}
+\footnotetext{\textsf{FV}: \textit{free variable}, variable libre}
+\footnotetext{\textsf{BV}: \textit{bound variable}, variable liée}
+
+\begin{exm}
+	\todo{Inclure exemple}.
+	$\textsf{BV}(F) = \{x,y\}$\/ et $\textsf{FV}(F) = \{y,z\}$.
+\end{exm}
+
+\begin{defn}[$\alpha$-renommage]
+	On appelle \textit{$\alpha$-renommage} l'opération consistant à renommer les occurrences liées des variables dans une formule.
+	%\index{$\alpha$-renommage}
+\end{defn}
+
+\begin{exm}
+	On considère la formule \[
+		\big(\forall x,\: P(X)\big) \land \big(\forall x,\: \forall y,\: Q(x, x \mathbf{+} y)\big)
+	.\]
+	Elle a pour $\alpha$-renommage les formules 
+	\begin{itemize}
+		\item $\big(\forall x,\: P(x)\big) \land \big(\forall x,\: \forall y,\: Q(x, x \mathbf{+} y)\big)$ ;
+		\item $\big(\forall \red{z},\: P(\red{z})\big) \land \big(\forall x,\: \forall y,\: Q(x, x \mathbf{+} y)\big)$ ;
+		\item $\big(\forall z,\: P(z)\big) \land \big(\forall \red{z},\: \forall y,\: Q(\red{z}, \red{z} \mathbf{+} y)\big)$ ;
+		\item $\big(\forall z,\: P(z)\big) \land \big(\forall x,\: \forall \red{z},\: Q(x, x \mathbf{+} \red{z})\big)$ ;
+		\item \st{$\big(\forall z,\: P(z)\big) \land \big(\forall \red{y},\: \forall \red{y},\: Q(\red{y}, \red{y} \mathbf{+} \red{y})\big)$}.
+	\end{itemize}
+\end{exm}
+
+\subsection{Substitution}
+
+\begin{defn}[Substitution]
+	Une \textit{substitution} est une fonction de $\mathcal{V} \longrightarrow \mathcal{T}(\mathcal{S}, \mathcal{V})$\/ qui est l'identité partout, sauf sur un nombre fini de variables que l'on appelle \textit{clé} de cette substitution.
+\end{defn}
+
+\begin{exm}
+	On considère la substitution \begin{align*}
+		\sigma: \mathcal{V} &\longrightarrow \mathcal{T}(\mathcal{S}, \mathcal{V}) \\
+		x &\longmapsto 
+		\begin{cases}
+			y \mathbf{+} y &\text{ si } x = y\\
+			x &\text{ sinon}.
+		\end{cases}
+	\end{align*}
+	L'ensemble des clés de cette substitution sont $\{y\}$ ; en effet, $\sigma(y) = y \mathbf{+} y$, et $\sigma(z) = z$.
+\end{exm}
+
+\begin{defn}[Application d'une substitution à un terme]
+	Étant donné une substitution $\sigma$, on définit inductivement la fonction
+	\begin{align*}
+		\cdot\:[\sigma]: \mathcal{T}(\Sigma, \mathcal{V}) &\longrightarrow \mathcal{T}(\mathcal{S}, \mathcal{V}) \\
+		t &\longmapsto t[\sigma]
+	\end{align*}
+
+	par
+	\begin{itemize}
+		\item $x[\sigma] = \sigma(x)$\/ avec $x \in \mathcal{V}$\/ ;
+		\item $\big(f(t_1, \ldots, t_n)\big)[\sigma] = f\big(t_1[\sigma], \ldots, t_n[\sigma]\big)$.
+	\end{itemize}
+\end{defn}
+
+\begin{defn}[Application d'une substitution à une formule]
+	Étant donné une substitution $\sigma$, on définit inductivement l'application de la substitution $\sigma$\/ à une formule par 
+	\begin{multicols}{2}
+		\begin{itemize}
+			\item $\top[\sigma] = \top$\/ ;
+			\item $\bot[\sigma] = \bot$\/ ;
+			\item $P(t_1, \ldots, t_n)[\sigma] = P\big(t_1[\sigma], \ldots, t_n[\sigma]\big)$\/ ;
+			\item $(G \odot H)[\sigma] = G[\sigma] \odot H[\sigma]$ \\ avec $\odot \in \{\lor,\land,\to ,\leftrightarrow\}$ ;
+			\item $(\lnot G)[\sigma] = \lnot \big(G[\sigma]\big)$ ;
+			\item $(\forall x,\: G)[\sigma] = \forall x,\:G\big[\sigma[x \mapsto x]\big]$\/
+			\item $(\exists x,\: G)[\sigma] = \exists x,\:G\big[\sigma[x \mapsto x]\big]$\/
+		\end{itemize}
+	\end{multicols}
+	\danger\ On s'assurera que les variables apparaissent dans l'espace image de la substitution~$\sigma$\/ n'intersecte pas avec les variables liées de $G$\/ lors du calcul de $G[\sigma]$. Ce peut-être assuré au moyen du $\alpha$-renommage.
+\end{defn}
+
+\begin{exm}
+	On considère la formule $P(x, y) \land \big(\forall x,\: Q(x,y)\big)$.
+	On applique la substitution $\sigma : (x \mapsto x \mathbf{+} y,\: y \mapsto 0)$.
+	\begin{figure}[H]
+		\centering
+		\Tree[.$\land$ [.$P$ $x$ $y$ ] [.$\forall x$ [.$Q$ $x$ $y$ ] ] ]
+		\quad\quad
+		\Tree[.$\land$ [.$P$ [.$\mathbf{+}$ $x$ $y$ ] $0$ ] [.$\forall x$ [.$Q$ $x$ $0$ ] ] ]
+		\caption{Arbre de syntaxe de la formule $P(x, y) \land \big(\forall x,\: Q(x,y)\big)$, application de la substitution $\sigma = (x \mapsto x \mathbf{+} y,\: y \mapsto 0)$}
+	\end{figure}
+\end{exm}
+
+\begin{exm}
+	On considère la même formule, et la substitution $\sigma : (y \mapsto x \mathbf{+} x)$.
+	\begin{figure}[H]
+		\centering
+		\begin{tabular}{ccc}
+			\Tree[.$\land$ [.$P$ $x$ $y$ ] [.$\forall x$ [.$Q$ $x$ $y$ ] ] ]
+			&
+			\Tree[.$\land$ [.$P$ $x$ [.$\mathbf{+}$ $x$ $x$ ]] [.$\forall x$ [.$Q$ $x$ [.$\mathbf{+}$ $x$ $x$ ]]]]
+			&
+			\Tree[.$\land$ [.$P$ $x$ $y$ ] [.$\forall \red z$ [.$Q$ $\red z$ $y$ ] ] ]\\
+			formule originale&substitution sans $\alpha$-renommage& substitution après $\alpha$-renommage
+		\end{tabular}
+		\caption{Arbre de syntaxe de la formule $P(x, y) \land \big(\forall x,\: Q(x,y)\big)$, application de la substitution $\sigma = (y \mapsto x \mathbf{+} x)$ directement et avec $\alpha$-renommage}
+	\end{figure}
+\end{exm}
+
+\subsection{Extension au premier ordre de la déduction naturelle}
+
+On ajoute les règles suivantes.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{Sc|Sc|Sc}
+		\hline
+		\textsc{Symbole} & \textsc{Règle d'introduction} & \textsc{Règle d'élimination}\\ \hline \hline 
+		\multirow{2}{*}{$\forall$}&$\ptree{\hypo{\Gamma \vdash G}\infer 1[$\forall$i]{\Gamma \vdash \forall x,\: G}}$
+		&$\ptree{\hypo{\Gamma \vdash \forall x,\: G}\infer 1[$\forall$e]{\Gamma \vdash G\big[(x \mapsto t)\big]}}$\\
+		&$x \not\in \textsf{FV}(\Gamma)$&$\mathrm{vars}(t) \cap \textsf{BV}(G) = \O$\\ \hline
+		\multirow{2}{*}{$\exists$}&\multirow{2}{*}{$\ptree{\hypo{\Gamma \vdash G\big[(x \mapsto t)\big]}\infer 1[$\exists$i]{\Gamma \vdash \exists x,\: G}}$}
+		&$\ptree{\hypo{\Gamma \vdash \exists x,\: H}\hypo{\Gamma, H \vdash G}\infer 2[$\exists$e]{\Gamma \vdash G}}$\\
+		&& $x \not\in \textsf{FV}(\Gamma) \cup \textsf{FV}(G)$\/
+		\\ \hline
+	\end{tabular}
+	\caption{Extension au premier ordre de la déduction naturelle}
+\end{table}
+
+\begin{exm}
+	\[
+		\begin{prooftree}
+			\infer 0[Ax]{\forall x,\:P(\mathbf{0},x) \vdash \forall x,\:P(\mathbf{0},x)}
+			\infer 1[$\forall$e]{\forall x,\:P(\mathbf{0},x) \vdash P(\mathbf{0},\mathbf{1})} % P(\mathbf{0},x); x; \mathbf{1}
+			\infer 1[$\exists$i]{\forall x,\:P(\mathbf{0},x) \vdash \exists y,\: P(y, \mathbf{1})} % P(y,\mathbf{1}); y; \mathbf{0}
+			\infer 1[$\to$i]{\vdash \big(\forall x,\: P(\mathbf{0}, x)\big) \to \big(\exists y,\: P(y, \mathbf{1})\big)}
+		\end{prooftree}
+	\]
+\end{exm}
+
+\begin{exm}
+	\[
+		\begin{prooftree}
+			\infer 0[Ax]{\forall x,\:P(x) \vdash \forall x,\:P(x)}
+			\infer 1[$\forall$e]{\forall x,\:P(x) \vdash P(x)}
+			\infer 1[$\exists$i]{\forall x,\:P(x) \vdash \exists x,\:P(x)}
+			\infer 1[$\to$i]{\vdash \big(\forall x,\:P(x)\big) \to \big(\exists x,\: P(x)\big)}
+		\end{prooftree}
+	\] 
+\end{exm}
+
+\begin{landscape}
+	\begin{exm}
+		On pose $F_1 = \exists x,\:P(x)$\/ et $F_2 = \forall x,\:\forall y,\: \big(P(x) \to Q(y)\big)$.
+		{\footnotesize
+		\[\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!
+			\begin{prooftree}
+				\infer 0[Ax]{F_1, F_2 \vdash \exists x,\: P(x)}
+				\infer 0[Ax]{F_1,F_2,P(x)\vdash\exists y,\:P(x) \to Q(y)\vdash\exists y,\:P(x) \to Q(y)}
+				\infer 0[Ax]{\Gamma, P(x) \to Q(y), P(x) \vdash P(x) \to Q(y)}
+				\infer 0[Ax]{\Gamma, P(x) \vdash P(x)}
+				\infer 2[$\to$e]{F_1,F_2,P(x),\big(\exists y\:P(x) \to Q(y)\big),P(x) \to Q(y) \vdash Q(y)}
+				\infer 1[$\exists$i]{F_1,F_2,P(x),\big(\exists y\:P(x) \to Q(y)\big),P(x) \to Q(y) \vdash \exists y,\:Q(y)}
+				\infer 2[$\exists$e]{F_1,F_2,P(x),\big(\exists y\:P(x) \to Q(y)\big) \vdash \exists z,\: Q(z)}
+				\infer 1[$\to$i]{F_1,F_2,P(x) \vdash \big(\exists y\:P(x) \to Q(y)\big)\to \big(\exists z,\: Q(z)\big)}
+				\infer 0[Ax]{F_1, F_2, P(x) \vdash \forall x,\: \exists y,\:P(x) \to Q(y)}
+				\infer 1[$\forall$e]{F_1, F_2, P(x) \vdash \exists y,\: P(x) \to Q(y)}
+				\infer 2[$\to$e]{F_1, F_2, P(x) \vdash \exists z,\: Q(z)}
+				\infer 2[$\exists$e]{\exists x,\: P(x);\forall x,\:\exists y,\:\big(P(x) \to Q(y)\big) \vdash \exists z,\:Q(z)}
+			\end{prooftree}
+		\]}
+	\end{exm}
+
+	\begin{exm}[Paradoxe du buveur]
+		On pose $\varphi = \exists x,\:\lnot B(x)$.
+		\[\hspace{-3cm}
+			\begin{prooftree}
+				\infer 0[TE]{\O\vdash \varphi \lor \lnot \varphi}
+				\infer 0[Ax]{\varphi \vdash \varphi}
+				\infer 0[Ax]{\varphi, \lnot B(x), B(x) \vdash B(x)}
+				\infer 0[Ax]{\varphi, \lnot B(x), B(x) \vdash \lnot B(x)}
+				\infer 2{\varphi, \lnot B(x),B(x) \vdash \bot}
+				\infer 1[$\bot$e]{\varphi, \lnot B(x), B(x) \vdash \forall y,\:B(y)}
+				\infer 1[$\to$i]{\varphi, \lnot B(x) \vdash B(x) \to \forall y,\:B(y)}
+				\infer 1[$\exists$i]{\varphi, \lnot B(x) \vdash \exists x,\:\big(B(x) \to \forall y,\: B(y)\big)}
+				\infer 2[$\exists$e]{\varphi \vdash \exists x,\:\big(B(x) \to \forall y,\:B(y)\big)}
+				\infer 0[Ax]{\lnot\big(\exists x,\:\lnot B(x)\big),B(x),\lnot  B(y) \vdash \lnot \big(\exists x,\: \lnot B(x)\big)}
+				\infer 0[Ax]{\lnot\big(\exists x,\:\lnot B(x)\big),B(x),\lnot B(y) \vdash \lnot B(y)}
+				\infer 1[$\exists$i]{\lnot\big(\exists x,\:\lnot B(x)\big),B(x),\lnot  B(y) \vdash \exists x,\:\lnot B(x)}
+				\infer 2[$\lnot$e]{\lnot\big(\exists x,\:\lnot B(x)\big),B(x),\lnot  B(y) \vdash \bot}
+				\infer 1[Abs]{\lnot\big(\exists x,\:\lnot B(x)\big),B(x) \vdash B(y)}
+				\infer 1[$\forall$i]{\lnot \varphi, B(x) \vdash \forall y,\:B(y)}
+				\infer 1[$\to$i]{\lnot \varphi \vdash B(x) \vdash \forall y,\: B(y)}
+				\infer 1[$\exists$i]{\lnot \varphi \vdash \exists x,\: \big(B(x) \to \forall y,\: B(y)\big)}
+				\infer 3[$\lor$e]{\O \vdash \exists x,\: \big(B(x) \to \forall y,\:B(y)\big)}
+			\end{prooftree}
+		\]
+	\end{exm}
+\end{landscape}

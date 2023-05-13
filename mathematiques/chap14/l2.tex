@@ -1,0 +1,103 @@
+\begin{crlr}
+	Si $X_1,\ldots,X_n$ sont des variables aléatoires réelles discrètes indépendantes deux à deux, alors la variance de la somme est égale à la somme des variances : \[
+		\mathrm{V}(X_1 + \cdots + X_n) = \mathrm{V}(X_1) + \cdots + \mathrm{V}(X_n)
+	.\] 
+\end{crlr}
+
+\begin{prv}
+	\begin{align*}
+		\mathrm{V}(X_1 + \cdots + X_n) &= \Cov(X_1 + \cdots + X_n, X_1 + \cdots + X_n) \\
+		&= \Cov\Big(\sum_{i=1}^n X_i, \sum_{j=1}^n X_j\Big) \\
+		&= \sum_{i=1}^n \sum_{j=1}^n \Cov(X_i, X_j) && \text{ par bilinéarité} \\
+	\end{align*}
+	Or, pour tout $i \neq j$, $X_i \mathrel{\Bot} X_j$, d'où $\Cov(X_i, X_j) = 0$.
+	Ainsi, \[
+		\mathrm{V}(X_1 + \cdots + X_n) = \sum_{i=1}^n \Cov(X_i, X_i) = \sum_{i=1}^n \mathrm{V}(X_i)
+	.\]
+\end{prv}
+
+\begin{rap}
+	La \textit{série génératrice} de la variable aléatoire $X$ est $\mathrm{G}_X$ définie comme \[
+		\forall t \in {]{-R},R[},\quad\mathrm{G}_X(t) = \sum_{n = 0}^\infty P(X = n) \cdot t^n
+	.\]
+	De plus, on a $P(X = k) = \mathrm{G}_X{}^{(k)}(0) {\big/} k!$.
+\end{rap}
+
+\begin{prop}
+	Soient $X$ et $Y$ deux variables aléatoires à valeurs dans $\N$. Soient $\mathrm{G}_X$, $\mathrm{G}_Y$ et $\mathrm{G}_{X+Y}$ les fonctions génératrices des variables aléatoires $X$, $Y$ et $X+Y$. Si $X$ et $Y$ sont \ul{indépendantes}, alors \[
+		\forall t \in [-1,1],\quad\quad \mathrm{G}_{X+Y}(t) = \mathrm{G}_X(t) \cdot \mathrm{G}_Y(t)
+	.\]
+\end{prop}
+
+\marginpar{$\ds\vartriangleright$~Chapitre 11, entre la définition 30 et la proposition 31.}
+\begin{prv}
+	L'événement $(X + Y = n)$ est égal à $\bigcup_{k=0}^n \big[(X = k) \cap (Y = n - k)\big]$, et cette union est disjointe. D'où, $P(X + Y = n) = \sum_{k=0}^n P\big[(X = k) \cap (Y = n - k)\big]$.
+	Or, $X \mathrel\Bot Y$, d'où $P\big[(X = k) \cap (Y = n- k)\big] = P(X = k) \cdot P(Y = n - k)$. Ainsi, \[
+		P(X + Y = n) = \sum_{k=0}^n \underset{\mathclap{\substack{\uparrow\\[1mm] P(X = k)}}}{a_k} \times \overset{\mathclap{\substack{P(Y = n-k)\\[1mm]\downarrow}}}{b_{n-k}}
+	.\] Or, les séries convergent absolument, d'où, par produit de \textsc{Cauchy}, $\mathrm{G}_{X + Y}(t) = \mathrm{G}_X(t) \cdot \mathrm{G}_Y(t)$, pour tout $t \in {]{-1},1[}$.
+	En $t = -1$, et en $t = 1$, les séries convergent absolument également.
+	Ainsi, \[
+		\forall t \in [-1,1], \quad\quad \mathrm{G}_{X+Y}(t) = \mathrm{G}_X(t) \cdot \mathrm{G}_Y(t)
+	.\]
+\end{prv}
+
+
+\marginpar{\color{cyan}Tarte à la crème}
+\marginpar{$\ds\vartriangleright$ Chapitre 11, exercice 32}
+\begin{exo}
+	\textsl{Refaire l'exercice 5, mais utiliser la proposition précédente.}
+
+	\begin{enumerate}
+		\item On rappelle que $X_1 \sim \mathcal{B}(n_1,p)$, $X_2 \sim \mathcal{B}(n_2, p)$ et $X_1 \mathrel\Bot X_2$.
+			Ainsi, pour tout $t \in [-1,1]$, $\mathrm{G}_{X_1 + X_2}(t) = \mathrm{G}_{X_1}(t) \cdot \mathrm{G}_{X_2}(t)$.
+			Et, $\forall t$, $\mathrm{G}_{X_1}(t) = (pt + q)^{n_1}$ et $\mathrm{G}_{X_2}(t) = (pt + q)^{n_2}$.
+			D'où, \[
+				\forall t \in [-1,1],\quad \mathrm{G}_{X_1+X_2}(t) = (pt+q)^{n_1} \cdot (pt + q)^{n_2} = (pt + q)^{n_1+n_2}
+			.\]
+			Par égalité des séries génératrices\footnotemark, on en déduit que $X+Y \sim \mathcal{B}(n_1+n_2, p)$.
+		\item De même, comme $X_1 \sim \mathcal{P}(\lambda_1)$, $\forall t$, $\mathrm{G}_{X_1}(t) = \mathrm{e}^{-\lambda_1} \cdot \mathrm{e}^{-\lambda_1 t}$ ; et comme $X_2 \sim \mathcal{P}(\lambda_2)$, $\forall t$, $\mathrm{G}_{X_2}(t) = \mathrm{e}^{-\lambda_2} \cdot \mathrm{e}^{-\lambda_2 t}$.
+			De plus, $X_1 \mathrel\Bot X_2$, d'où $\forall t \in [-1,1], \mathrm{G}_{X_1+X_2}(t) = \mathrm{G}_{X_1}(t) \times \mathrm{G}_{X_2}(t) = \mathrm{e}^{-(\lambda_1 + \lambda_2)} \cdot \mathrm{e}^{-(\lambda_1 + \lambda_2) t}$.
+			D'où, $X_1 + X_2 \sim \mathcal{P}(\lambda_1 + \lambda_2)$.
+	\end{enumerate}
+\end{exo}
+\footnotetext{En effet, la série génératrice permet de déterminer les probabilités, d'où la loi d'une variable aléatoire.}
+
+\section{La loi faible des grands nombres}
+
+\begin{thm}[Loi faible des grands nombres]
+	Soit $(\Omega, \mathcal{A}, P)$ un espace probabilisé. Soient $(X_k)_{n \in \N}$ une suite de variables aléatoires discrètes. Et, pour tout $n \in \N^*$, $Z_n = \frac{1}{n} \sum_{k=1}^n X_k$. Si les variables aléatoires sont deux à deux indépendantes, et si elles sont de même espérance $\mu$, et de même variance $\sigma^2$, alors \[
+		\forall a > 0, \quad\quad P(|Z_n - \mu| \ge a) \le \frac{1}{n} \cdot \left( \frac{\sigma}{a} \right)^{\!2} \tendsto{n\to \infty} 0
+	.\]%
+	\guillemotleft~S'éloigner de la moyenne théorique est de plus en plus rare en itérant les mesures.~\guillemotright
+\end{thm}
+
+\begin{prv}
+	On applique l'inégalité de \textsc{Bienaimé-Thebychev} à la variable aléatoire $Z_n$ : \[
+		\forall a > 0,\quad\quad P\big(\big|Z_n - \mathrm{E}(Z_n)\big| \ge a\big) \le \frac{\mathrm{V}(Z_n)}{a^2}
+	.\]
+	Or, $\mathrm{E}(Z_n) = \frac{1}{n} \sum_{i=1}^n \mathrm{E}(X_i) = \frac{1}{n} \cdot n \mu = \mu$ par linéarité de l'espérance. De plus,
+	\begin{align*}
+		\mathrm{V}(Z_n) &= \mathrm{V}\left(\frac{X_1 + \cdots + X_n}{n} \right)  \\
+		&= \frac{1}{n^2} \mathrm{V}(X_1 + \cdots + X_n) \\
+		&= \frac{1}{n^2} \big( \mathrm{V}(X_1) + \cdots + \mathrm{V}(X_n) \big) && \text{par indépendance deux à deux des $X_i$} \\
+		&= \frac{1}{n^2} \cdot n \sigma^2 \\
+		&= \frac{\sigma^2}{n}. \\
+	\end{align*}
+	D'où,$\forall a > 0$, $P\big(\big|Z_n - \mu\big| \ge a\big) \le \sigma^2/(n\cdot a^2)$.
+\end{prv}
+
+\begin{exm}[Règle d'or de \textsc{Bernoulli}]
+	On répète {\color{red}indépendamment} une épreuve de \textsc{Bernoulli}, c'est à dire une expérience aléatoire qui peut donner deux résultats : un succès avec la probabilité $p$, ou un échec avec la probabilité $q = 1 - p$. Soit $Z_n$ la \textit{fréquence}\footnotemark\ des succès après $n$ épreuves.
+
+	On pose $X_k$ la variable aléatoire valant 1 en cas de succès de la $k$-ième épreuve de Bernoulli, 0 sinon.
+	D'une part, $\mu = \mathrm{E}(X_i) = 0 \times P(X_i = 0) + 1 \times P(X_i = 1) = p$.
+	D'autre part, $\sigma^2 = \mathrm{V}(X_i) = p\cdot q$ car $X_i \sim \mathcal{B}(1, p)$.
+	On applique la loi faible des grands nombres : \[
+		\forall a > 0, \quad\quad P(|Z_n - p| \ge a) \le \frac{pq}{na^2} \tendsto{n\to \infty} 0
+	.\]
+
+	Donc la probabilité que \guillemotleft~la fréquence $Z_n$ des succès s'écarte de la probabilité $p$~\guillemotright\ tend vers 0 quand le nombre $n$ d'épreuves de \textsc{Bernoulli} tend vers $+\infty$.
+\end{exm}
+\footnotetext{\textit{i.e.} le nombre moyens de succès : $\frac{1}{n} \sum_{i = 1}^n X_i$.}
+
+

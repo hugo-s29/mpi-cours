@@ -1,0 +1,59 @@
+\section{Implications (partie 2 : transformations)}
+
+\begin{enumerate}
+	\item \textit{c.f.} Exercice 5, question 4.
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p\to q, p \land r \vdash p \to q}
+				\infer 0[Ax]{p\to q, p \land r \vdash p \land r}
+				\infer 1[$\land$e,g]{p\to q, p \land r \vdash p}
+				\infer 2[$\to$e]{p\to q, p \land r \vdash q}
+				\infer 0[Ax]{p\to q, p \land r \vdash p \land r}
+				\infer 1[$\land$e,g]{p\to q, p \land r \vdash r}
+				\infer 2[$\land$i]{p\to q, p \land r \vdash q \land r}
+				\infer 1[$\to$i]{p\to q \vdash (p \land q) \to (q \land r)}
+			\end{prooftree}
+		\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{(p \land r) \to (q \land r), r, p \vdash (p \land r) \to (q \land r)}
+				\infer 0[Ax]{(p \land r) \to (q \land r), r, p \vdash p}
+				\infer 0[Ax]{(p \land r) \to (q \land r), r, p \vdash r}
+				\infer 2[$\land$i]{(p \land r) \to (q \land r), r, p \vdash p \land r}
+				\infer 2[$\to$e]{(p \land r) \to (q \land r), r, p \vdash q \land r}
+				\infer 1[$\lor$e,g]{(p \land r) \to (q \land r), r, p \vdash q}
+				\infer 1[$\to$i]{(p \land r) \to (q \land r), r \vdash p \land q}
+			\end{prooftree}
+		.\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p \to q, p \lor r \vdash p \lor r}
+				\infer 0[Ax]{p \to q, p \lor r, p \vdash p \to q}
+				\infer 0[Ax]{p \to q, p \lor r, p \vdash p}
+				\infer 2[$\to$e]{p \to q, p \lor r, p \vdash q}
+				\infer 1[$\lor$i,g]{p \to q, p \lor r, p \vdash q \lor r}
+				\infer 0[Ax]{p \to q, p \lor r, r \vdash r}
+				\infer 1[$\lor$i,d]{p \to q, p \lor r, r \vdash q \lor r}
+				\infer 3[$\lor$e]{p\to q, p \lor r \vdash q \lor r}
+				\infer 1[$\to$i]{p\to q \vdash (p \lor r) \to (q \lor r)}
+			\end{prooftree}
+		\]
+	\item On pose $\Gamma = p,q, (p \land q) \to r, \lnot r$.
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\Gamma \vdash (p \land q) \to r}
+				\infer 0[Ax]{\Gamma \vdash p}
+				\infer 0[Ax]{\Gamma \vdash q}
+				\infer 2[$\land$i]{\Gamma \vdash p \land q}
+				\infer 2[$\to$e]{\Gamma \vdash r}
+				\infer 0[Ax]{\Gamma \vdash \lnot r}
+				\infer 2[$\lnot$e]{\Gamma \vdash \bot}
+				\infer 1[$\lnot$i]{\lnot r, p, (p \land q) \to r \vdash \lnot q}
+				\infer 1[$\to$i]{(p \land q) \to r, \lnot r, \vdash p \to \lnot q}
+			\end{prooftree}
+		\]
+	\item On pose $\Gamma = $\/
+\end{enumerate}

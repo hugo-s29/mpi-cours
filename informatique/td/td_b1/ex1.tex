@@ -1,0 +1,31 @@
+\section{Complexité amortie}
+
+\begin{enumerate}
+	\item
+		\begin{enumerate}
+			\item Soit $n \in \N$.
+				\begin{itemize}
+					\item Si $n$\/ est pair, \hfill$\ds\sum_{i=0}^{n-1} c_i = \sum_{i=1}^{n/2} 1 + \sum_{i=1}^{n / 2} 3 = 2n$.\hfill\null
+					\item Si $n$ est impair,
+						\begin{align*}
+							\sum_{i=0}^{n-1} c_i &= \sum_{i = 1}^{\left\lfloor \frac{n}{2} \right\rfloor + 1} 1 + \sum_{i=1}^{\left\lfloor \frac{n}{2} \right\rfloor} 3\\
+							&= \left\lfloor \frac{n}{2} \right\rfloor + 1 + 3 \left\lfloor \frac{n}{2} \right\rfloor \text{ car } n = 2\left\lfloor \frac{n}{2} \right\rfloor + 1 \\
+							&= 4 \left\lfloor \frac{n}{2} \right\rfloor + 1 \\
+							&= n + 2 \left\lfloor \frac{n}{2} \right\rfloor \\
+							&= n + n - 1 \\
+							&= 2n - 1 \\
+						\end{align*}
+				\end{itemize}
+			\item On pose $h$\/ la fonction de potentiel définie comme \begin{align*}
+					h: \N &\longrightarrow \R^+ \\
+					n & \longmapsto \begin{cases}
+						0 & \text{ si $n$ est pair},\\
+						1 & \text{ si $n$ est pair}.
+					\end{cases}
+				\end{align*}
+				\begin{itemize}
+					\item Si $n$\/ est pair, \hfill $\ds\ubar{C}_o(n) = C_o(n) + h(n+1) - h(n) = 1 + 1 = 2$.\hfill\null
+					\item Si $n$\/ est impair, \hfill $\ds \ubar{C}_o(n) = C_o(n) + h(n+1) - h(n) = 3 + 0 - 1 = 2$.\hfill\null
+				\end{itemize}
+		\end{enumerate}
+\end{enumerate}

@@ -1,0 +1,93 @@
+\section{Apprentissage non supervisé}
+
+On rappelle que l'\textit{apprentissage non supervisé} utilise des données non classifiées. L'objectif est de les classifier. Plus rigoureusement, étant donné un jeu de données $\mathcal{D}$, on veut partitionner~$\mathcal{D}$\/ en $\{S_1, S_2, \ldots, S_n\}$\/ où les $S_i$\/ sont regroupés par \guillemotleft~similitude.~\guillemotright
+
+\begin{rmk}
+	Dans le reste de cette section, $\mathcal{D} \subseteq \R^p$, avec $p \in \N^*$, et la notion de similitude est donnée par la distance euclidienne.
+\end{rmk}
+
+\subsection{Algorithme \textsc{hac}, classification hiérarchique ascendant}
+
+\begin{defn}
+	Étant donné deux sous-ensembles $A$\/ et $B$\/ de $\mathcal{D}$\/ disjoints et non-vides, on définit différentes \textit{mesures de dissimilarité} :
+	\begin{itemize}
+		\item $D(A,B) = \min \{d(a,b)  \mid a \in A, b \in B\}$\/ ;
+		\item $D(A,B) = \max \{d(a,b)  \mid a \in A, b \in B\}$\/ ;
+		\item $D(A,B) = \frac{1}{|A|\:|B|} \times \sum_{(a,b) \in A \times B} d(a,b)$,
+	\end{itemize}
+	où $d(a,b)$\/ représente la distance entre $a$\/ et $b$.
+	\index{mesure de dissimilarité}
+\end{defn}
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\State $P \gets \big\{ \{x\}  \mid x \in \mathcal{D} \big\}$
+		\While{$|P| \ge 2$ et {\red?}\footnotemark}
+		\State Soit $A,B \in P$ minimisant $D(A,B)$\/ avec $A \neq B$\/ 
+		\State $P \gets \big(P \setminus \{A,B\}\big) \cup \{A \cup B\}$\/
+		\EndWhile
+		\State\Return $P$
+	\end{algorithmic}
+	\caption{Algorithme \textsc{hac}}
+\end{algorithm}
+\footnotetext{où, pour {\red?}, on peut choisir (1) un critère sur le nombre de classes (2) un critère sur la valeur de la plus petite dissimilarité}
+
+\subsection{$k$-moyenne}
+
+Au préalable, on fixe le nombre de classes $k$\/ que l'on souhaite obtenir après exécution de l'algorithme.
+
+\begin{prop}
+	On considère la fonction \begin{align*}
+		f: \R^p &\longrightarrow \R \\
+		H &\longmapsto \sum_{v \in \mathcal{D}} \|H - v\|_2^2.
+	\end{align*}
+	Cette fonction atteint son minimum en le barycentre $G$.
+\end{prop}
+
+\begin{prv}
+	Soit $G$\/ le barycentre de $\mathcal{D}$. Soit $H \in \R^p$. Montrons que $f(H) > f(G)$. On calcule
+	\begin{align*}
+		f(H) &= f(H - G + G) \\
+		&= \sum_{v \in \mathcal{D}} \Big<(H - G + G) - v \:\Big|\: (H - G + G) - v \Big> \\
+		&= \sum_{v\in \mathcal{D}} \Big(\big<G - v  \:\big|\: G - v \big> + 2 \big<H - G  \:\big|\: H - v \big> + \big< H - G  \:\big|\: H - G \big>\Big) \\
+		&= f(G) + \underbrace{|\mathcal{D}| \cdot \|H - G\|_2^2}_{\ds\ge 0} + \underbrace{2 \Big<H - G\:\Big|\sum_{v \in \mathcal{D}} (G - v)\Big>}_{\substack{\ds= 0\\[1mm]\text{ par définition du barycentre}}} \\
+	\end{align*}
+	Donc, si $H \neq G$, on a bien $f(H) > f(G)$.
+\end{prv}
+
+Dans la suite de cette sous-section, on s'intéresse à des partitionnement particuliers : étant donné une famille $(m_i)_{i\in\left\llbracket 1,k \right\rrbracket}$ de vecteurs de $\R^p$, et un entier $j \in \left\llbracket 1,k \right\rrbracket$, on définit \[
+	\mathcal{C}^m_j = \Big\{v \in \mathcal{D} \:\Big|\: \argmin_{i \in \left\llbracket 1,k \right\rrbracket} \|v-m_i\|_2 = j \Big\}
+.\]
+
+\begin{rmk}
+	En cas d'égalité ($\|v - m_{i_1}\|_2 = \|v - m_{i_2}\|_2$), le ``$\argmin$'' retourne le plus petit indice : $\min(i_1, i_2)$.
+\end{rmk}
+
+Étant donné une famille $(m_i)_{i\in\left\llbracket 1,k \right\rrbracket}$\/ de vecteurs de $\R^p$, on a donc un partitionnement $\{\mathcal{C}^m_j  \mid j \in \left\llbracket 1,k \right\rrbracket\}$.
+
+\begin{defn}
+	Étant donné une famille $(m_i)_{i\in\left\llbracket 1,k \right\rrbracket}$\/ de vecteurs de $\R^p$, on définit \[
+		L(m) = \sum_{k=1}^n \Big( \sum_{v \in \mathcal{C}^m_i} \|v - m_i\|_2^2 \Big)
+	.\]
+\end{defn}
+
+Pour minimiser localement la fonction $L$, on aimerait que les $(m_i)_{i\in\left\llbracket 1,k \right\rrbracket}$\/ soient les barycentres des $(\mathcal{C}^m_i)_{i\in\left\llbracket 1,k \right\rrbracket}$. Mais, la définition des $(\mathcal{C}_i^m)$\/ dépend de la position des $(m_i)$. Ainsi, en itérant ce procédé, en modifiant les $(m_i)$\/ pour être les barycentres des $(\mathcal{C}_i^m)$\/ respectifs, puis en modifiant les $(\mathcal{C}_i^m)$, la famille $(m_i)_{i\in\left\llbracket 1,k \right\rrbracket }$\/ converge vers les barycentres des classes.
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree $\mathcal{D}$\/ et $k$\/ 
+		\State $(m_i)_{i\in\left\llbracket 1,k \right\rrbracket} \gets k \text{ vecteurs de } \mathcal{D}$\/
+		\State $\mathrm{stable} \gets \mathbf{F}$\/ 
+		\While{$\lnot \mathrm{stable}$}
+			\State $C \gets (\mathcal{C}^m_i)_{i\in\left\llbracket 1,k \right\rrbracket}$\/
+			\State $m' \gets \big(\mathrm{barycentre}(\mathcal{C}_i)\big)_{i \in \left\llbracket 1,k \right\rrbracket}$\/
+			\State $\mathrm{stable} \gets m \mathrel{\overset?=} m'$\/
+			\State $m \gets m'$\/
+		\EndWhile
+		\State \Return $C$\/
+	\end{algorithmic}
+	\caption{$k$-moyenne}
+\end{algorithm}
+

@@ -1,0 +1,60 @@
+\section{Annexe I : Retour sur la diagonalisation}
+
+\begin{itemize}
+	\item \textsl{Soient $A$\/ et $B$\/ deux matrices diagonalisables qui commutent. Montrer qu'il existe une matrice inversible $P$\/ telle que $P^{-1} \cdot A\cdot P$\/ et $P^{-1} \cdot A \cdot P$\/ sont diagonales.}
+		La matrice $A$\/ représente un endomorphisme $f$\/ dans une base $\mathcal{B}$, et la matrice $B$\/ représente un endomorphisme $g$\/ dans la même base $\mathcal{B}$.
+		Par hypothèse, $A$\/ est diagonalisable, d'où il existe une matrice inversible $P$\/ telle que~$P^{-1}\cdot A\cdot P = A'$\/ est diagonale.
+		Les matrices $A$\/ et $B$\/ commutent, d'où les sous-espaces propres de $A$\/ sont stables par $B$.
+		D'où, $P^{-1} \cdot B \cdot P = B'$\/ est diagonale par blocs.
+		Or, la matrice $B'$\/ est diagonalisable (car $B$\/ est diagonalisable), et $B'$\/ est diagonale par blocs.
+		D'où, chaque bloc de $B'$\/ est diagonalisable, car\ldots\ 
+		Diagonalisons le bloc $B_1$\/ : dans une nouvelle $\mathcal{B}'_1 = (\varepsilon'_1, \ldots, \varepsilon'_{d_1})$, la matrice $g(\varepsilon_1') = \mu_1 \varepsilon'_1$, \ldots, et $g(\varepsilon'_{d_1}) = \mu_{d_1} \varepsilon'_{d_1}$. De plus, $f(\varepsilon'_1) = \lambda_1 \varepsilon'_1$, \ldots, $f(\varepsilon'_{d_1}) = \lambda_1 \varepsilon'_{d_1}$. En effet, les vecteurs $(\varepsilon_i')_i$\/ sont des combinaisons linéaires des vecteurs $\varepsilon_j \in \mathrm{SEP}_f(\lambda_1)$. On procède de même pour les autres blocs. Ainsi, il existe une matrice inversible $Q \in \mathrm{GL}_n(\mathds{K})$\/ telle que $Q^{-1}\cdot A\cdot Q$\/ et $Q^{-1}\cdot B \cdot Q$\/ sont diagonalisables.
+	\item \textsl{Comparer les spectres et les sous-espaces propres de $A$\/ et $A^k$\/ (avec $k \in \N^*$)} La matrice $A \in \mathcal{M}_n(\C)$\/ est donc trigonalisable, il existe une matrice inversible $P \in \mathrm{GL}_n(\C)$\/ telle que $P^{-1}\cdot A \cdot P = T$\/ est triangulaire : \[
+			T =
+			\begin{pmatrix}
+				\lambda_1 & * & \ldots & *\\
+				0 & \ddots & \ddots & \vdots\\
+				\vdots & \ddots & \ddots & *\\
+				0 & \ldots & 0 & \lambda_n
+			\end{pmatrix}
+		.\]
+		D'où, $\chi_A(X) = \chi_T(X) = (\lambda_1  - X)(\lambda_2 - X) \cdots (\lambda_n - X)$, donc $\Sp(A) = \Sp(T) = \{\lambda_1, \ldots, \lambda_n\}$. De plus, \[
+			T^k =
+			\begin{pmatrix}
+				\lambda_1^k & * & \ldots & *\\
+				0 & \ddots & \ddots & \vdots\\
+				\vdots & \ddots & \ddots & *\\
+				0 & \ldots & 0 & \lambda_n^k
+			\end{pmatrix}
+		.\] D'où, $\Sp(A^k) = \Sp(T^k) = \{\lambda_1^k, \ldots, \lambda_n^k\}$. En outre, si $A \cdot X = \lambda X$, alors $A^k \cdot X = \lambda^k \cdot X$. D'où, $\mathrm{SEP}_A(\lambda) \subset \mathrm{SEP}_{A^k}(\lambda^k)$\/
+	\item(Exercice de khôlle) Soit $A \in \mathcal{M}_n(\R)$\/ telle que $A$\/ est diagonalisable. D'où il existe une matrice inversible $P \in \mathrm{GL}_n(\R)$\/ telle que la matrice $D = P^{-1}\cdot A\cdot P$\/ sont diagonale : \[
+				D = \begin{pmatrix}
+					\lambda_1 & & &\\
+					& \lambda_2 & & & \\
+					&  & \ddots & &\\
+					& & & & \lambda_n
+				\end{pmatrix}
+			.\] D'où, \[
+				D^k = \begin{pmatrix}
+					\lambda^k_1 & & &\\
+					& \lambda_2^k & & & \\
+					&  & \ddots & &\\
+					& & & & \lambda_n^k
+				\end{pmatrix}
+			.\] D'où,$\Sp(A^k) = \Sp(D^k) = \{\lambda_1^k, \ldots, \lambda_n^k\}$, et $\forall k$, $AX = \lambda X$\/ donc $A^k\cdot X = \lambda^k X$. D'où, $\mathrm{SEP}_A(\lambda) \subset \mathrm{SEP}_{A^k}(\lambda^k)$.
+	\item On suppose $A \in \mathcal{M}_n(\R)$\/ diagonalisable et $k$\/ impair. Il existe donc une matrice inversible $P \in \mathrm{GL}_n(\R)$\/ telle que \[
+		P^{-1}\cdot A\cdot P =
+		\left(
+			\begin{array}{c|c|c|c}
+				\begin{array}
+					\lambda_1 & & \\
+					& \ddots & \\
+					& & \lambda_1
+				\end{array}
+			\end{array}
+		\right) 
+	.\] 
+\end{itemize}
+
+
+

@@ -1,0 +1,215 @@
+\begin{exm}
+	La fonction $f$ définie par $f(x,y) = \ln(x^2+y^2)$ est de classe $\mathcal{C}^1$ sur $\R^2 \setminus \{(0,0)\}$ et \[
+		\forall (x,y) \neq (0,0),\quad\quad \nabla f(x,y) = \left( \frac{2x}{x^2+y^2}, \frac{2y}{x^2+y^2} \right)
+	.\]
+	La figure ci-dessous représente, en chaque point $(x,y)$ différent de l'origine, le gradient de $f$ en $(x,y)$. On obtient ainsi un champ de vecteurs.
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		pair g(real x, real y) { return (2x/(x*x+y*y), (2y/(x*x+y*y))); }
+
+		real eps = 0.14;
+
+		size(8cm);
+
+		draw((-4.5, 0) -- (4.5, 0), Arrow(TeXHead));
+		draw((0, -4.5) -- (0, 4.5), Arrow(TeXHead));
+
+		for (real r = 0.5; r < 4; r += 0.5) {
+			draw(circle((0,0), r), deepcyan);
+		}
+
+		for (real theta = 0; theta < 360; theta += 10) {
+			for (real r = 0.5; r < 4; r += 0.5) {
+				pair m = dir(theta) * r;
+				pair m2 = g(m.x, m.y) * eps;
+				draw(m--m+m2, red, Arrow(TeXHead));
+			}
+		}
+	\end{asy}
+	\caption{Le champ des gradients de $(x,y) \mapsto \ln(x^2+y^2)$}
+\end{figure}
+
+On se déplace dans un espace euclidien $E$, le long d'une courbe paramétrée par $M : t \mapsto M(t)$, et on évalue, à chaque instant $t$, la valeur de $f\big(M(t)\big)$ prise par une fonction scalaire $f$ en un point $M(t)$.
+
+\begin{lem}[Règle de la chaîne]
+	Soit $f : U \to \R$ définie sur un ouvert $U$ de l'espace euclidien $E$. (Dans ce lemme, on se place en dimension 2, mais ce résultat est vrai dans un espace $E$ de dimension $p$.)
+	Soit $M : I \to E$ définie sur un intervalle $I$ de $\R$.
+	Si $M(I) \subset U$ et les fonctions $f$ et $M$ sont différentiables, alors $f  \circ M : t \mapsto f\big(M(t)\big)$ est différentiable et, pout tout $t \in I$,
+	\begin{align*}
+		(f \circ M)'(t) &= \frac{\mathrm{d}}{\mathrm{d}t} f\big(M(t)\big)\\
+		&= x'(t) \cdot \frac{\partial f}{\partial x}\big(M(t)\big) + y'(t) \frac{\partial f}{\partial y}\big(M(t)\big) \\
+		&= \langle\: M'(t)  \mid \nabla f(M(t))\:\rangle \\
+		&= \mathrm{d}f\big(M(t)\big) \cdot M'(t) \\
+	\end{align*}
+	est le produit scalaire du vecteur vitesse $M'(t)$ et du gradient de $f$ en $M$.
+	De plus, si $f$ et $M$ sont de classe $\mathcal{C}^1$, alors $f \circ M$ l'est aussi.
+\end{lem}
+
+\begin{prv}
+	On pose, pour tout réel $t$, $M(t) = \big(x(t), y(t)\big)$.
+	On suppose $f$ différentiable, et $M$ dérivable (par rapport à $t$).
+	Montrons que $f\circ M$ est dérivable, et calculer $(f\circ M)'(t)$.
+	On calcule $f\circ M(t + u) - f\circ M(t) = f\big(x(t+u), y(t+u)\big) - f\big(x(t), y(t)\big)$.
+	Or, comme $x$ est dérivable, et $x(t+ u) = x(t) + u\, x'(t) + u\:\varepsilon_1(u)$. En effet, cette expression est équivalente à $\big(x(t+u) - x(t)\big) / u = x'(t) + \varepsilon_1(u)$, qui tend vers $x'(t)$ quand $u \to 0$.
+	De même, $y(t + u) = y(t) + u\,y'(t) + u\:\varepsilon_2(u)$.
+	D'où, \[
+		f\big(x(t+u), y(t+u)\big) = f\big(x(t) + \underbrace{u\,x'(t) + u\:\varepsilon_1(u)}_{h}, y(t) + \underbrace{u\,y'(t) + u\:\varepsilon_2(u)}_{k}\big).
+	\]
+	Or, par hypothèse, $f$ est différentiable, d'où $\delta = f(x(t),y(t)) + \mathrm{d}f(x(t),(y))\cdot \vec{h} + \|\vec{h}\|\: \varepsilon(\vec{h})$, en posant $\vec{h} = (h, k)$.
+	Ainsi,
+	\begin{align*}
+		f \circ M(t + u) - f \circ M(t) &= \mathrm{d}f\big(x(t), y(t)\big) \cdot \vec{h} + \|\vec{h}\| \cdot \varepsilon(\vec{h})\\
+		&= \big<\nabla f(M(t))\:\big|\: (u\,x'(t) + u\:\varepsilon_1(u), u\,y'(t) + u\:\varepsilon_2(u)) \big>\\
+		&+ \|(u\,x'(t) + u\:\varepsilon_1(u), u\,y'(t) + u\:\varepsilon_2(u))\| + \varepsilon\big((u\,x'(t) + u\:\varepsilon_1(u), u\,y'(t) + u\:\varepsilon_2(u))\big) \\
+		&= u\Big(\big<\nabla f(M(t))\:\big|\: (x'(t) + \varepsilon_1(u), y'(t) + \varepsilon_2(u)) \big>\\
+		&+ \|(x'(t) + \varepsilon_1(u), y'(t) + \varepsilon_2(u))\| + \varepsilon\big((x'(t) + \varepsilon_1(u), y'(t) + \varepsilon_2(u))\big)\Big) \\
+	\end{align*}
+	D'où, \[
+		\frac{f \circ M(t + u) - f\circ M(t)}{u} \tendsto{u \to 0} \big<\nabla f\big(M(t)\big) \:\big|\: M'(t) \big>
+	.\] 
+\end{prv}
+
+Dans le lemme précédent, les fonctions $f$ et $M$ ont la représentation suivante.
+\[
+	\begin{tikzcd}
+		t \ar[r, mapsto, "M"] & M(t) \ar[r, mapsto, "f"] & f\big(M(t)\big)\\[-2mm]
+		I \ar[r] & U \ar[r] & \R\\[-2mm]
+		t \ar[rr, mapsto, "f \circ M"] && f  \circ M(t)\\
+	\end{tikzcd}
+\]
+On en déduit que $(f  \circ M)'(t) = 0$ si, et seulement si, le vecteur vitesse $M'(t)$ est orthogonal au gradient de $f$ en $M(t)$, à un instant $t$.
+En particulier, si la fonction $f$ est constante le long de la trajectoire, \textit{i.e.}\ si la trajectoire $M(I)$ est incluse dans la courbe de niveau de $f$, alors le gradient de $f$ est orthogonal au vecteur vitesse en chaque point de la trajectoire.
+
+
+\begin{defn}
+	On dit qu'un vecteur $\vec{v} \in E$ est \textit{tangent} à une partie $C \subset E$ en un point $\vec{a} \in C$ s'il existe un application dérivable $M : I \to E$ telle que $M(I) \subset C$, et s'il existe $t_0 \in I$ tel que $M(t_0) = \vec{a}$ et $M'(t_0) = \vec{v}$.
+	On note $\mathrm{T}_{\vec{a}}C$ l'ensemble des vecteurs tangents à $C$ en $\vec{a}$, il est nommé \textit{l'espace tangent}.
+
+	On dit alors qu'un vecteur est \textit{orthogonal} à la partie $C$ s'il est orthogonal à $\mathrm{T}_{\vec{a}}C$.
+\end{defn}
+
+\begin{center}
+	\guillemotleft~Un vecteur est tangent s'il est un vecteur vitesse.~\guillemotright
+\end{center}
+
+\begin{thm}[admis]
+	Soient $f: E \to \R$ une fonction de classe $\mathcal{C}^1$, et une partie $C \subset E$, telle que $f$ est constante sur $C$.
+	Soit $\vec{a} \in C$.
+	Si $\nabla f(\vec{a}) \neq \vec{0}$, alors un vecteur $\vec{v} \in E$ est tangent à $C$ si, et seulement si $\vec{v}$ est orthogonal à $\nabla f(\vec{a})$.
+
+	Autrement dit : $\mathrm{T}_{\vec{a}}C$ est l'hyperplan $\big[\!\Vect\!\big(\nabla f(\vec{a})\big)\big]^\perp = \Ker \mathrm{d}f(\vec{a})$.
+\end{thm}
+
+Le gradient de $f$ en $\vec{a}$ est donc orthogonal à $C$ : $\nabla f(\vec{a}) \perp \mathrm{T}_{\vec{a}}C$. Ainsi, le champ électrostatique est orthogonal aux équipotentielles, la ligne de plus petite pente est orthogonal aux lignes de niveau, \textit{etc}.
+
+\begin{exo}
+	\begin{slshape}
+		Déterminer une équation de la droite tangente à l'hyperbole d'équation $x^2 - y^2 = 1$ au point $(\sqrt{2}, 1)$.
+	\end{slshape}
+
+	On nomme $\mathcal{H}$ l'hyperbole donnée dans l'énoncé.
+	On a bien $A = (\sqrt{2}, 1) \in \mathcal{H}$ car $\sqrt{2}^2 - 1^2 = 1$.
+	On cherche une équation de $\mathrm{T}_A\mathcal{H}$.
+
+	\begin{itemize}
+		\item \textbf{Avec le théorème 25.} Soit la fonction $f$ définie comme
+			\begin{align*}
+				f: \R^2 &\longrightarrow \R \\
+				(x,y) &\longmapsto x^2 - y^2.
+			\end{align*}
+			Cette fonction $f$ est de classe $\mathcal{C}^1$ et est constante sur $\mathcal{H}$.
+			On calcule le gradient de $f$ en $A$ : $\nabla f(A) = (\partial f(\sqrt{2},1) / \partial x, \partial f(\sqrt{2},1) / \partial y) = 2(\sqrt{2}, -1)$.
+			\begin{align*}
+				N = (x,y) \in \mathrm{T}_{A}\mathcal{H} \iff& \vv{AN} \perp \nabla f(A) \\
+				\iff& (x-\sqrt{2}, y-1) \perp (\sqrt{2}, -1) \\
+				\iff& \sqrt{2}(x-\sqrt{2}) - 1(y-1) = 0 \\
+				\iff& \sqrt{2}x - y = 1 \\
+				\iff& y = \sqrt{2}x - 1 \\
+			\end{align*}
+		\item \textbf{Avec la définition 24.}
+			On rappelle que \[
+				(x,y) \in \mathcal{H}_+ \iff
+				(x > 0 \text{ et } x^2 - y^2 = 1)
+				\iff \exists t \in \R,\: (x = \ch t \text{ et } y = \sh t)
+			.\]
+			Soit $M : t \mapsto \big(x(t), y(t)\big) = (\ch t, \sh t)$ un point de $\mathcal{H}_+$.
+			Il existe un instant $t_0 \in \R$ tel que $M(t_0) = (\sqrt{2}, 1)$.
+			La fonction $M$ est dérivable et $M'(t) = (\sh t, \ch t) = (1, \sqrt{2})$ est tangent à $\mathcal{H}$.
+			\begin{align*}
+				N=(x,y) \in \mathrm{T}_A \mathcal{H} \iff \vv{AN} \mathrel{/\!/} M'(t_0) \iff
+				\begin{vmatrix}
+					x-\sqrt{2} & 1\\
+					y - 1 & \sqrt{2}
+				\end{vmatrix} = 0
+				\iff y = \sqrt{2} x - 1.
+			\end{align*}
+	\end{itemize}
+\end{exo}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		import math;
+
+		size(5cm);
+		axes(EndArrow);
+		pair F(real x) { return (cosh(x), sinh(x)); }
+		pair G(real x) { return (-cosh(x), sinh(x)); }
+		draw(graph(F, -2, 2), red);
+		draw(graph(G, -2, 2), red);
+		pair a = (sqrt(2), 1);
+		pair g = 2 * (sqrt(2), -1);
+		draw(a--a+g, magenta, Arrow(TeXHead));
+		label("$\nabla f(A)$", g + a, magenta, align=S);
+		drawline(a, (0, -1), purple);
+		label("$\mathrm T_A\mathcal H$", (0, -1), purple, align=NW);
+		pair v = (1, sqrt(2));
+		dot("$A = M(t_0)$", a, align=N);
+		draw(a--a+v, deepcyan, Arrow(TeXHead));
+		label("$M'(t_0)$", a+v, deepcyan, align=NW);
+	\end{asy}
+	\caption{Hyperbole $\mathcal{H}$, gradient en $A$ et tangente en $A$.}
+\end{figure}
+
+\begin{exm}
+	La sphère $S \subset \R^3$ de rayon 1 et de centre $\vec{0} = (0,0,0)$ est la surface paramétrée par \[
+		\forall (\varphi,\theta) \in \R^2, \quad\quad \begin{cases}
+			x(\varphi,\theta) = \cos \theta \cos \varphi\\
+			y(\varphi, \theta) = \cos \theta \sin \varphi\\
+			z(\varphi,\theta) = \sin \theta.
+		\end{cases}
+	\]
+	Les vecteurs $\partial M(\varphi, \theta) / \partial \varphi) = (-\cos \theta \sin \varphi,  \cos \theta \cos \varphi, 0)$ et $\partial M(\varphi,\theta) / \partial \theta = (-\sin \theta \cos \varphi, -\sin \theta \sin \varphi, \cos \theta)$ sont tangents à la sphère en le point $M(\varphi, \theta)$.
+	Le plan tangent à la sphère au point $(a,b,c)$ est orthogonal au vecteur \[
+		\frac{\partial M}{\partial \varphi}(\varphi, \theta) \wedge \frac{\partial M}{\partial \theta}(\varphi,\theta) = (\cos^2 \theta \cos \varphi, \cos^ \theta \sin \varphi, \cos \theta \sin \varphi) = \cos \theta\: (a,b,c),
+	\] qui est non nul si $\cos \theta \neq 0$ (\textit{i.e.}\ si le point $M(\varphi,\theta) = (a,b,c)$ n'est, si au pôle Sud, ni au pôle Nord).
+
+	En effet, on cherche une équation du plan $P$ tangent.
+	\begin{align*}
+		N(x,y,z) \in P \iff& \det(\vv{MN}, \partial M / \partial \varphi, \partial M / \partial \theta) = 0 \\
+		\iff&
+		\begin{vmatrix}
+			x - a& ? & ?\\
+			y - b& ? & ?\\
+			z - c& ? & ?
+		\end{vmatrix} = 0\\
+		\iff& {?} \cdot (x-a) + {?} \cdot (y -b) + {?}\cdot (z-c) = 0 \\
+	\end{align*}
+	Autre méthode : \hfill $\ds N(x,y,z) \in P \iff \vv{MN} \perp \left( \frac{\partial M}{\partial \varphi} \land \frac{\partial M}{\partial \theta} \right) \iff \Big<\:\vec{MN}\:\Big|\: \frac{\partial M}{\partial \varphi} \land \frac{\partial M}{\partial \theta}\Big> = 0$. \hfill\null\\
+	Autre autre méthode : la même sphère $S$ est la surface de niveau 1 de la fonction $f : \R^3 \to \R,\ (x,y,z) \mapsto x^2+y^2+z^2$.
+	En chaque point $(a,b,c)$ de la sphère le plan tangent a pour équation $ax + by + cz = 0$.
+	On calcule le gradient de $f$ au point $(a,b,c)$ : \[
+		\nabla f(a,b,c) = \big(\partial_1 f(a,b,c), \partial_2 f(a,b,c), \partial_3 f(a,b,c)\big)
+		= (2a, 2b, 2c) = 2(a,b,c)
+	.\]
+	Ainsi,
+	\begin{align*}
+		N(x,y,z) \in P \iff \vv{MN} \perp \nabla f(M) \iff& \bigg<\bigg(\substack{x-a\\y-b\\z-c}\bigg)\bigg|\bigg(\substack{a\\b\\c}\bigg)\bigg> = 0\\
+		\iff& a(x-a) + b(y-b) + c(z-c) = 0\\
+		\iff& ax + by + cz = a^2 + b^2 + c^2 = 1
+	\end{align*}
+\end{exm}

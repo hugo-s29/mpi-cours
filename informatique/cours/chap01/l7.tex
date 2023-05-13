@@ -40,6 +40,7 @@
 			(e_1^*)_\varphi = ((e_1)_\varphi)^*.
 		\]
 	\end{multicols}
+	\index{langage!substitution}
 \end{defn}
 
 \begin{prop}
@@ -88,10 +89,12 @@
 \subsection{Automates locaux}
 
 \begin{defn}[automate local, local standard]
-	Un automate $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ est dit local dès lors que pour out $\forall (q_1,q_2,\ell,q_3,q_4) \in \mathcal{Q}\times \mathcal{Q}\times \Sigma\times \mathcal{Q}\times \mathcal{Q}$, \[
+	Un automate $\mathcal{A} = (\Sigma, \mathcal{Q}, I, F, \delta)$\/ est dit \textit{local} dès lors que pour out $\forall (q_1,q_2,\ell,q_3,q_4) \in \mathcal{Q}\times \mathcal{Q}\times \Sigma\times \mathcal{Q}\times \mathcal{Q}$, \[
 		(q_1,\ell,q_3) \in \delta \quad\text{et}\quad(q_2,\ell,q_4) \in \delta \qquad\implies\qquad q_3 = q_4
 	.\]
-	L'automate $\mathcal{A}$\/ est dit, de plus, standard lorsque $\Card(I) = 1$\/ et qu'il n'existe pas de transitions entrante en l'unique état initial $q_0$.
+	L'automate $\mathcal{A}$\/ est dit, de plus, \textit{standard} lorsque $\Card(I) = 1$\/ et qu'il n'existe pas de transitions entrante en l'unique état initial $q_0$.
+	\index{automate!local}
+	\index{automate!local!standard}
 \end{defn}
 
 \begin{prop}

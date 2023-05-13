@@ -1,0 +1,57 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+\usepackage{concmath}
+
+\let\bfseries\scshape
+
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} 11
+	\end{center}
+
+	\paragraph{Exercice 2}
+	\begin{enumerate}
+		\item Soient $P$\/ et $Q$\/ deux polynômes. On pose $P = a_0 + a_1 X + \cdots + a_n X^n$\/ et $Q = b_0 + b_1X + \cdots + b_m X^m$.
+			Ainsi, $P \times Q = c_0 + c_1 X + \cdots + c_p X^p$\/ où $p = n \times m$\/ et, pour tout $k \in \llbracket 0,p \rrbracket $, $c_k = \sum_{j=0}^p a_j b_k$.
+			Par linéarité de l'intégrale, si chacune des intégrales $\int_{0}^{+\infty} c_k t^k \mathrm{e}^{-t}~\mathrm{d}t$\/ converge, alors l'intégrale $\int_{0}^{+\infty} P(t) \cdot Q(t) \cdot \mathrm{e}^{-t}~\mathrm{d}t$\/ converge.
+			Pour tout $k \in \llbracket 0,p \rrbracket$, l'intégrale $\int_{0}^{+\infty} c_k\:t^k\: \mathrm{e}^{-t}~\mathrm{d}t$\/ est impropre en 0. On a
+			\begin{align*}
+				\int_{0}^{a} c_k\:t^k\: \mathrm{e}^{-t}~\mathrm{d}t
+				&= [c_k t^k \mathrm{e}^{-t}]_0^a + \int_{0}^{a} c_k \mathrm{e}^{-t}~\mathrm{d}t \\
+				&= c_k\: a^k\: \mathrm{e}^{-a} - [c_k\: \mathrm{e}^{-t}]_0^a \\
+				&= c_k\:a^k\: \mathrm{e}^{-a} + c_k - c_k\: \mathrm{e}^{-a} \\
+			\end{align*}
+			qui converge quand $a \to +\infty$\/ par croissances comparées. Ainsi, l'intégrale $\int_{0}^{+\infty} P(t)\:Q(t)\: \mathrm{e}^{-t}~\mathrm{d}t$\/ converge.
+		\item %Soient $P$\/ et $Q$\/ deux polynômes. On pose $P = a_0 + a_1 X + \cdots + a_n X^n$\/ et $Q = b_0 + b_1X + \cdots + b_m X^m$.
+			\begin{description}
+				\item[Symétrie] Par commutativité du produit de polynôme, on a bien \[
+						\langle P \mid Q \rangle = \int_{0}^{+\infty} P(t)\:Q(t)\: \mathrm{e}^{-t}~\mathrm{d}t = \int_{0}^{+\infty} Q(t)\:P(t)\: \mathrm{e}^{-t}~\mathrm{d}t = \langle Q\mid P \rangle
+					.\]
+				\item[Biinéarité] Par linéarité de l'intégrale, on a
+					\begin{align*}
+						\langle \alpha A + \beta B  \mid Q \rangle
+						&= \int_{0}^{+\infty} \big(\alpha\: A(t) + \beta\: B(t)\big)\:Q(t) \mathrm{e}^{-t}~\mathrm{d}t \\
+						&= \alpha \int_{0}^{+\infty} A(t)\:Q(t)\: \mathrm{e}^{-t}~\mathrm{d}t + \beta \int_{0}^{+\infty} B(t)\:Q(t)\: \mathrm{e}^{-t}~\mathrm{d}t \\
+						&= \alpha \langle A \mid Q \rangle + \beta \langle B  \mid Q \rangle,\\
+					\end{align*}
+					d'où la linéarité à gauche. Par symétrie, on conclut que l'application $\varphi : (P,Q) \mapsto \langle P  \mid Q \rangle$\/ est bilinéaire.
+				\item[Positivité]
+					On a, pour $t \in \R^+$, $P^2(t)\: \mathrm{e}^{-t} \ge 0$. D'où, par croissance de l'intégrale, on a \[
+						\langle P \mid P\rangle = \int_{0}^{+\infty} P^2(t)\: \mathrm{e}^{-t}~\mathrm{d}t \ge \int_{0}^{+\infty} 0~\mathrm{d}t = 0
+					.\]
+				\item[Définition]
+					On suppose $\int_{0}^{+\infty} P^2(t)\: \mathrm{e}^{-t}~\mathrm{d}t = 0$. Or, la fonction $t \mapsto P^2(t)\: \mathrm{e}^{-t}$\/ est positive, et continue (par produit de fonctions continues). On en déduit que  \[
+						\forall t \in \R^+,\: P^2(t)\: \mathrm{e}^{-t} = 0
+					.\]
+					Mais, $\forall t \in \R^+$, $\mathrm{e}^{-t} > 0$. On en déduit que $\forall t \in \R^+,\:P(t) = 0$. Le polynôme $P$\/ a donc une infinité de racines, c'est donc le polynôme nul.
+			\end{description}
+			On en déduit que l'application $\varphi : (P, Q) \mapsto \langle P \mid Q \rangle$\/ est un produit scalaire.
+		\item 
+	\end{enumerate}
+
+\end{document}
+
+

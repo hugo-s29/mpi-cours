@@ -1,0 +1,174 @@
+Avec une représentation implicite du graphe, on ne stocke pas l'entièreté du graphe directement mais on ne récupère que les successeurs d'un sommet en particulier.
+
+Par exemple, pour écrire un moteur de recherche, on utilise aussi une représentation implicite pour le graphe \textit{internet} ; on ne peut pas \textit{juste} télécharger l'entièreté du graphe.
+
+\paragraph{Attracteur.}
+
+\begin{rmk}
+	On suppose que les deux joueurs (Alice et Bob) jouent intelligemment.
+	On se met à la place d'Alice. Bob joue le ``mieux'' pour lui, et le ``pire'' pour nous.
+	Nous jouerons le ``mieux'' pour nous.
+	Ainsi, Bob jouera vers un état de valeur minimale, nous jouerons vers un état de valeur maximale.
+\end{rmk}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[scale=2,minimum size=7.5mm,inner sep=0pt]
+		\node[draw,thick,red,circle] (A0) at (0, 0) {A};
+		\node[draw,thick,rectangle,mauve] (B1) at (-2, -1.5) {B};
+		\node[draw,thick,rectangle,mauve] (B2) at (0, -1.5) {B};
+		\node[draw,thick,rectangle,mauve] (B3) at (2, -1.5) {B};
+		\node[draw,thick,red,circle] (A11) at (-2.5, -3) {A};
+		\node[draw,thick,red,circle] (A12) at (-2, -3) {A};
+		\node[draw,thick,red,circle] (A13) at (-1.5, -3) {A};
+		\node[draw,thick,red,circle] (A21) at (-0.5, -3) {A};
+		\node[draw,thick,red,circle] (A22) at (0, -3) {A};
+		\node[draw,thick,red,circle] (A23) at (0.5, -3) {A};
+		\node[draw,thick,red,circle] (A31) at (1.5, -3) {A};
+		\node[draw,thick,red,circle] (A32) at (2, -3) {A};
+		\node[draw,thick,red,circle] (A33) at (2.5, -3) {A};
+		\draw[->, bend right] (A0) to node[fill=white]{max} (B1);
+		\draw[->] (A0) to node[fill=white]{max} (B2);
+		\draw[->, bend left] (A0) to node[fill=white]{max} (B3);
+		\draw[->, bend right] (B1) to node[fill=white]{min} (A11);
+		\draw[->] (B1) to node[fill=white]{min} (A12);
+		\draw[->, bend left] (B1) to node[fill=white]{min} (A13);
+		\draw[->, bend right] (B2) to node[fill=white]{min} (A21);
+		\draw[->] (B2) to node[fill=white]{min} (A22);
+		\draw[->, bend left] (B2) to node[fill=white]{min} (A23);
+		\draw[->, bend right] (B3) to node[fill=white]{min} (A31);
+		\draw[->] (B3) to node[fill=white]{min} (A32);
+		\draw[->, bend left] (B3) to node[fill=white]{min} (A33);
+	\end{tikzpicture}
+	\caption{Stratégie de minimisation pour Bob, et de maximisation pour Alice}
+\end{figure}
+
+\begin{defn}
+	On définit la suite d'ensembles $(\mathcal{A}_i)_{i\in\N}$\/ par $\mathcal{A}_0 = \mathcal{O}_\mathrm{A}$, et, pour tout $n \in \N$,
+	\begin{align*}
+		\mathcal{A}_{n+1} = \mathcal{A}_n &\cup \{s_\mathrm{B} \in V_\mathrm{B}^\star  \mid \forall s_\mathrm{A} \in \mathrm{succ}(s_\mathrm{B}),\: s_\mathrm{A} \in \mathcal{A}_n \}\\
+		&\cup \{s_\mathrm{A} \in V_\mathrm{A}^\star  \mid \exists s_\mathrm{B} \in \mathrm{succ}(s_\mathrm{A}),\: s_\mathrm{B} \in \mathcal{A}_n \}.\\
+	\end{align*}
+	On a appelle alors \textit{attracteur d'Alice} les états $\mathcal{A} = \bigcup_{n \in \N} \mathcal{A}_n$.
+\end{defn}
+
+\begin{rmk}
+	La suite des $(\mathcal{A}_n)_{n \in \N}$\/ est croissante pour l'inclusion $\subseteq$, et ultimement stationnaire car le graphe est fini : \[
+		\exists N \in \N,\: \forall n \ge N,\quad\quad \mathcal{A}_n = \mathcal{A}_N
+	.\]
+\end{rmk}
+
+De même, on définit la suite d'ensembles $(\mathcal{B}_n)_{n \in \N}$\/ et l'ensemble $\mathcal{B}$\/ des attracteurs de Bob, en permutant les deux joueurs dans la définition précédente.
+
+\begin{exm}
+	\todo{Ajouter exemple, \textit{c.f.\ cahier de prépa}}
+	Si Bob joue intelligemment, il est garanti de gagner.
+\end{exm}
+
+\begin{rmk}
+	On remarque que les ensembles $\bigcup_{n \in \N} \mathcal{A}_n$\/ et $\bigcup_{n\in \N} \mathcal{B}_n$\/ ne forment pas une partition de l'ensemble des états : l'intersection est bien vide, mais l'union de ces deux ensembles ne couvre pas l'ensemble des états.
+\end{rmk}
+
+\begin{defn}[Stratégie induite par les attracteurs]
+	Soit $\mathcal{A}$\/ l'ensemble des attracteurs d'Alice. On définit la stratégie suivante
+	\begin{align*}
+		f: V_\mathrm{A}^\star &\longrightarrow V_\mathrm{B} \\
+		s_\mathrm{A} &\longmapsto \begin{cases}
+			s_\mathrm{B} \in \mathrm{succ}(s_\mathrm{A}) \cap \mathcal{A} & \quad\text{ si } s_\mathrm{A} \in \mathcal{A}\\
+			s_\mathrm{B} \in \mathrm{succ}(s_\mathrm{A}) \text{ quelconque} & \quad \text{ sinon}.
+		\end{cases}
+	\end{align*}
+	Cette stratégie est nommée \textit{stratégie induite par les attracteurs}.
+\end{defn}
+
+\begin{defn}
+	Soit $s \in \mathcal{A}$ un attracteur. On appelle \textit{rang} de $s$, notée $\rg(s)$\/ l'entier  \[
+		\rg(s) = \min \{n \in \N  \mid s \in \mathcal{A}_n\}
+	.\]
+\end{defn}
+
+\begin{lem}
+	Pour tout entier $n$, pour tout état $s \in \mathcal{A}_n$,  un des trois cas est vrai :
+	\begin{itemize}
+		\item $s \in \mathcal{O}_\mathrm{A}$\/ ;
+		\item $n > 0$, $s \in V_\mathrm{A}^\star$ et il existe $s_\mathrm{B} \in \mathrm{succ}(s)$\/ tel que $s_\mathrm{B} \in \mathcal{A}_{n-1}$\/ ;
+		\item $n > 0$, $s \in V_\mathrm{B}^\star$ et pour tout $s_\mathrm{A} \in \mathrm{succ}(s)$, $s_\mathrm{A} \in \mathcal{A}_{n-1}$.
+	\end{itemize}
+\end{lem}
+
+\begin{prv}
+	Par récurrence.
+	\begin{itemize}
+		\item Si $n = 0$, alors $\mathcal{A}_0 = \mathcal{O}_\mathrm{A}$.
+		\item Supposons la propriété vraie au rang $n$. Soit $s \in \mathcal{A}_{n+1}$. Alors,
+			\begin{itemize}
+				\item ou bien $s \in \mathcal{A}_n$, et on conclut par hypothèse de récurrence.
+				\item ou bien $s \in V_\mathrm{A}^\star$, et il existe $s_\mathrm{B} \in \mathrm{succ}(s)$\/ tel que $s_\mathrm{B} \in \mathcal{A}_n$, alors \textsc{ok} ;
+				\item ou bien $s \in B_\mathrm{B}^\star$, et pour tout $s_\mathrm{A} \in \mathrm{succ}(s)$, $s_\mathrm{A} \in \mathcal{A}_n$, alors \textsc{ok}.
+			\end{itemize}
+	\end{itemize}
+\end{prv}
+
+\begin{prop}
+	On a $\mathcal{A} \cap \mathcal{B} = \O$.
+\end{prop}
+
+\begin{prv}
+	Montrons par récurrence que, pour tout entier $n$, $\mathcal{A}_n \cap \mathcal{B}_n = \O$. \todo{finir cette partie de la preuve}.
+	Soit $N \in \N$ tel que $\mathcal{A}_n = \mathcal{A}_N$, pour tout $n \ge N$.
+	Soit $M \in \N$ tel que $\mathcal{B}_n = \mathcal{B}_M$, pour tout $n \ge M$.
+	Ainsi, $\mathcal{A} = \mathcal{A}_N$\/ et $\mathcal{B} = \mathcal{B}_M$.
+	On pose $K = \max(M, N)$, et on a donc \[
+		\mathcal{A} \cap \mathcal{B} = \mathcal{A}_K \cap \mathcal{B}_K = \O
+	.\]
+\end{prv}
+
+\begin{prop}
+	Si $f$\/ est une stratégie induite par les attracteurs d'Alice $\mathcal{A}$, et que $s \in \mathcal{A}$, alors toute partie jouée selon $f$\/ depuis $s$\/ est gagnante pour Alice.
+\end{prop}
+
+\begin{prv}
+	Soit $(s_n)_{n\in\llbracket 1,N + 1\llbracket}$, avec $N \in \N\cup \{+\infty\}$, une partie jouée selon $f$ depuis $s$.
+	\begin{itemize}
+		\item Montrons $\forall n \in \llbracket 1,N+1 \llbracket$, $s_n \in \mathcal{A}$.
+			Par récurrence. On a $s_1 = s \in \mathcal{A}$, d'où l'initialisation. Si la propriété est vraie au rang $n \in \llbracket 1,N \llbracket$ (ainsi $s_{n+1}$ existe),
+			\begin{itemize}
+				\item si $s_n \in V_\mathrm{A}^\star$, alors $s_{n+1} = f(s_n) \in \mathrm{succ}(s_n) \cap \mathcal{A}$ donc $s_{n+1} \in \mathcal{A}$,
+				\item si $s_n \in V_\mathrm{B}^\star$, on a $s_n \in \mathcal{A}$\/ et $s_{n+1} \in \mathrm{succ}(s_n)$, d'où $s_{n+1} \in \mathcal{A}$.
+			\end{itemize}
+			Concluant ainsi la récurrence.
+		\item Montrons que $N \neq +\infty$.
+			En effet, montrons que, $\forall n \in \llbracket 1,N \llbracket$, $\rg(s_{n+1}) < \rg(s_n)$.
+			L'état $s_n \in \mathcal{A}$, son rang est bien défini. De plus, $s_n \in \mathcal{A}_{r}$, où $r = \rg(s_n)$. Or, $s_n \not\in \mathcal{O}_\mathrm{A}$.
+			D'après le lemme, $s_{n+1} \in \mathcal{A}_{r - 1}$, donc $\rg(s_{n+1}) \le r - 1 < r$.
+			Ainsi, $N \neq +\infty$\/ par existence du variant, comme l'ensemble ordonné $(\N, \le)$\/ est bien fondé.
+	\end{itemize}
+	Ainsi, $(s_n)_{n\in\llbracket 1,N + 1\llbracket}$\/ est une partie finie, et $\forall n \in \llbracket 1,N \rrbracket$, $s_n \in \mathcal{A}$. L'état $s_N$\/ est terminal, et donc $s_N \in \mathcal{O}_\mathrm{A}$, d'où le résultat.
+\end{prv}
+
+\begin{prop}
+	Soit $s$\/ un sommet admettant une stratégie gagnante pour Alice. Alors, $s$\/ est un attracteur : $s \in \mathcal{A}$.
+\end{prop}
+
+\begin{prv}
+	Montrons par récurrence forte : \guillemotleft~si $s$ est un sommet admettant une stratégie gagnante $f$ et que toute partie jouée depuis $s$ selon $f$ est de longueur au plus $n$, alors $s \in \mathcal{A}_n$.~\guillemotright\ 
+	\begin{itemize}
+		\item Si le sommet $s$ admet une stratégie gagnante, et toute partie depuis $s$ est de longueur $0$, alors $s \in \mathcal{O}_\mathrm{A} = \mathcal{A}_0$.
+		\item Supposons, pour tout $k \in \llbracket 1,n \rrbracket$, l'hypothèse de récurrence. Montrons la propriété pour $n + 1$. Soit $s$\/ admettant une stratégie gagnante $f$ et tel que toute partie jouée depuis $s$ selon $f$ est de longueur au plus $n+1$.
+			\begin{itemize}
+				\item Si $s \in V_\mathrm{B}$, alors
+					\begin{itemize}
+						\item si $s$ est terminal, $s \in \mathcal{O}_\mathrm{A} \subseteq \mathcal{A}$.
+						\item sinon, soit $s_1 \in \mathrm{succ}(s)$. Soit $\gamma$\/ une partie jouée selon $f$ depuis $s_1$. $\gamma$ est une partie jouée selon $f$ depuis $s$, elle est donc gagnante et de longueur au plus $n + 1$. Alors $\gamma$\/ est gagnante et de longueur au plus $n$ donc $s_1$ vérifie les prémisses de l'hypothèse de récurrence, et donc $s_1 \in \mathcal{A}_n$. Ceci étant vrai pour tout $s_1 \in \mathrm{succ}(s)$, on a $s \in \mathcal{A}_{n+1}$.
+					\end{itemize}
+				\item Si $s \in V_\mathrm{A}$, alors
+					\begin{itemize}
+						\item si $s$ est terminal, alors $s \in \mathcal{O}_\mathrm{A} \subseteq \mathcal{A}$.
+						\item sinon, soit $s_1 = f(s)$, alors $s_1$ admet une stratégie gagnante ($f$), et toute partie jouée depuis $s_1$ est de longueur, au plus, $n$. L'état $s_1$ vérifie donc les prémisses l'hypothèse de récurrence. Ainsi $s_1 \in \mathcal{A}_n$, et donc $s$\/ a un successeur dans $\mathcal{A}_n$. On en déduit $s \in \mathcal{A}_{n+1}$.
+					\end{itemize}
+			\end{itemize}
+	\end{itemize}
+	Soit alors $s$ admettant une stratégie gagnante $f$. Ainsi, toute partie jouée depuis $s$ selon $f$ est finie. On peut donc conclure grâce à la démonstration par récurrence ci-avant.
+\end{prv}
+
+

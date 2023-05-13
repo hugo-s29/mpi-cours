@@ -1,0 +1,187 @@
+\begin{thm}
+	L'ajout des quatre règles précédentes à la déduction naturelle, intuitionniste ou classique, maintient sa correction.
+	\qed
+\end{thm}
+
+\begin{rmk}[\textsc{Hors-Programme}]
+	L'ajout de ces règles maintient également sa complétude vis-à-vis de la logique classique.
+\end{rmk}
+
+\subsection{Règles dérivées}
+
+On définit de manière informelle la notion de \textit{règle dérivée} comme des règles que l'on peut obtenir comme combinaison des règles déjà existantes.
+
+\begin{exm}
+	On considère la règle nommée TE$'$ définie comme \[
+		\begin{prooftree}
+			\hypo{\Gamma, H \vdash G}
+			\hypo{\Gamma, \lnot H \vdash G}
+			\infer 2[TE$'$]{\Gamma \vdash G}
+		\end{prooftree}
+	.\] Elle se dérive des règles TE et $\lor$e : \[
+		\begin{prooftree}
+			\infer 0[Ax]{\Gamma \vdash H \lor \lnot H}
+			\hypo{\Gamma, H \vdash G}
+			\hypo{\Gamma, \lnot H \vdash G}
+			\infer 3[$\lor$e]{\Gamma \vdash G}
+		\end{prooftree}
+	.\]
+\end{exm}
+
+\begin{rmk}
+	Si $\Gamma \vdash G$\/ est prouvable, et si $\Gamma \subseteq \Gamma'$, alors $\Gamma' \vdash G$\/ est prouvable.
+	On ajoute donc parfois une règle dit d'\textit{affaiblissement}, définie comme \[
+		\begin{prooftree}
+			\hypo{\Gamma' \vdash G}
+			\infer 1[Aff]{\Gamma \vdash G}
+		\end{prooftree}
+		\quad\quad \Gamma ' \subseteq \Gamma
+	.\]
+\end{rmk}
+
+\subsection{Sémantique}
+
+On considère la formule défini par l'arbre de syntaxe suivant. On a $\mathcal{P} = \{P(1), Q(1)\}$, $\mathcal{S} = \{\oplus(2), \tilde 0(0), \tilde 1(0), \ominus(3)\}$\/ et $\mathcal{V} \supseteq \{x,y,z\}$.
+\begin{figure}[H]
+	\centering
+	\Tree[.$\forall x$ [.$\exists y$ [.$\land$ [.$Q$ [.$\ominus$ $\tilde 1$ $y$ $z$ ]] [.$\lnot$ [.$P$ [.$\oplus$ $\tilde 0$ $x$ ]]]]]]
+	\caption{Arbre de syntaxe exemple}
+\end{figure}
+Pour interpréter une formule de la logique du premier ordre, on doit définir le ``monde'' des variables, leur valeur, la valeur d'une constante et d'une fonction, la valeur des prédicats, et le sens des quantificateurs.
+
+\begin{defn}[Domaine]
+	On appelle \textit{domaine d'interprétation} des termes un ensemble non vide $\mathbf{\mathrm{M}}$.
+\end{defn}
+
+\begin{exm}
+	On peut choisir $\mathbf{\mathrm{M}} = \R$, ou $\mathbf{\mathrm{M}} = \N$, $\mathbf{\mathrm{M}} = \Z$, $\mathbf{\mathrm{M}} = \mathds{B}$\/ ou $\mathbf{\mathrm{M}} = \mathcal{T}(\mathcal{S}, \mathcal{V})$.
+\end{exm}
+
+Dans toute la suite de cette section, on fixe les ensembles $\mathcal{S}$, $\mathcal{V}$\/ et $\mathcal{P}$.
+
+\begin{defn}[Environnement de variables]
+	On appelle \textit{environnement de variable} sur $V \subseteq \mathcal{V}$\/ une fonction \[
+		\mu : V \longrightarrow \mathbf{\mathrm{M}}
+	.\]
+\end{defn}
+
+\begin{exm}
+	On a par exemple $\mu= (x \mapsto 3)$.
+\end{exm}
+
+\begin{defn}[Structure d'interprétation]
+	On appelle \textit{structure d'interprétation} la donnée de
+	\begin{itemize}
+		\item un domaine $\mathbf{\mathrm{M}}$\/ ;
+		\item une fonction $f^M : \mathbf{\mathrm{M}}^{\mathfrak{a}(f)} \longrightarrow \mathbf{\mathrm{M}}$\/ pour chaque symbole $f \in \mathcal{S}$\/ ;
+		\item une fonction $P^M : \mathbf{\mathrm{M}}^{\mathfrak{a}(P)} \longrightarrow \mathds{B}$\/ pour chaque symbole $P \in \mathcal{P}$.
+	\end{itemize}
+	On typographie une telle structure $M$.
+\end{defn}
+
+\begin{exm}
+	Si $\mathcal{S} = \{\oplus(2), \ominus(2)\}$, $\mathcal{P} = \{{\incirc<}(2), {\incirc=}(2)\} $, et $\mathbf{\mathrm{M}} = \N$, alors on définit les fonctions
+	\begin{multicols}{2}
+		\begin{align*}
+			\oplus^M: \N^2 &\longrightarrow \N \\
+			(m,n) &\longmapsto m + n,
+		\end{align*}
+		\begin{align*}
+			\ominus^M: \N^2 &\longrightarrow \N \\
+			(n, m) &\longmapsto \begin{cases}
+				n - m & \text{ si } n \ge m\\
+				0 & \text{ sinon},
+			\end{cases}
+		\end{align*}
+		\begin{align*}
+			{\incirc<}^M: \N^2 &\longrightarrow \mathds{B} \\
+			(n,m) &\longmapsto \begin{cases}
+				\mathbf{V} & \text{ si } n < m\\
+				\mathbf{F} & \text{ sinon},
+			\end{cases}
+		\end{align*}
+		et
+		\begin{align*}
+			{\incirc=}^M: \N^2 &\longrightarrow \mathds{B} \\
+			(n,m) &\longmapsto \begin{cases}
+				\mathbf{V} & \text{ si } n = m\\
+				\mathbf{F} & \text{ sinon}.
+			\end{cases}
+		\end{align*}
+	\end{multicols}
+\end{exm}
+
+\begin{defn}
+	On définit la fonction \texttt{eval} prenant en argument
+	\begin{itemize}
+		\item un terme $t$,
+		\item une structure d'interprétation,
+		\item un environnement sur au moins les variables de $t$,
+	\end{itemize}
+	et s'évaluant dans $\mathbf{\mathrm{M}}$, telle que $\texttt{eval}(x, M, \mu) = \mu(x)$\/ avec $x \in \mathcal{V}$, et que
+	\begin{align*}
+		&\texttt{eval}\big(f(t_1, t_2, \ldots,t_{\mathfrak{a}(f)}), M, \mu)\\ =& f^M(\texttt{eval}(t_1, M, \mu), \texttt{eval}(t_2, M, \mu),\ldots, \texttt{eval}(t_{\mathfrak{a}(f)}, M, \mu)\big)
+	\end{align*}
+\end{defn}
+
+\begin{exm}
+	Avec la structure précédente, on a
+	\begin{align*}
+		\texttt{eval}\Big(\!\!\oplus\!\big(x, \ominus(x,y)\big), M, (x \mapsto 1, y \mapsto 2)\Big)
+		&= \oplus^M\Big(\mu(x), \ominus^M\big(\mu(x), \mu(y)\big)\Big) \\
+		&= 1 + \ominus^M(1, 2) \\
+		&= 1 + 0 = 1 \\
+	\end{align*}
+\end{exm}
+
+\begin{defn}[Interprétation des formules]
+	On définit inductivement $\llbracket \cdot \rrbracket^{M,\mu}$\/ comme
+	\begin{itemize}
+		\item $\ds\llbracket \top \rrbracket^{M,\mu} = \mathbf{V}\/$\/ ;
+		\item $\ds\llbracket \bot \rrbracket^{M,\mu} = \mathbf{F}\/$\/ ;
+		\item $\ds\llbracket \lnot G \rrbracket ^{M,\mu} = \overline{\llbracket G \rrbracket^{M,\mu}}$\/ ;
+		\item $\ds\llbracket G \land H \rrbracket ^{M,\mu} = \llbracket G \rrbracket ^{M,\mu} \cdot \llbracket H \rrbracket ^{M,\mu}$\/ ;
+		\item $\ds\llbracket G \lor H \rrbracket^{M,\mu} = \llbracket G \rrbracket ^{M,\mu} + \llbracket H \rrbracket ^{M,\mu}$\/ ;
+		\item $\ds\llbracket G \to H \rrbracket ^{M,\mu} = \overline{\llbracket G \rrbracket^{M,\mu}} + \llbracket H \rrbracket ^{M,\mu}$\/ ;
+		\item $\ds\llbracket G \leftrightarrow H \rrbracket ^{M,\mu} = \left( \overline{\llbracket G \rrbracket^{M,\mu}} + \llbracket H \rrbracket ^{M,\mu} \right)  \cdot \left( \overline{\llbracket H \rrbracket^{M,\mu}} + \llbracket G \rrbracket^{M,\mu} \right)$ ;
+		\item $\ds\big\llbracket P(t_1, \ldots, t_{\mathfrak{a}(P)}) \big\rrbracket^{M, \mu} = P^M\big(\texttt{eval}(t_1, M, \mu), \ldots, \texttt{eval}(t_{\mathfrak{a}(P)}, M, \mu)\big)$\/ ;
+		\item $\ds\llbracket \exists x,\: G \rrbracket^{M,\mu} = \sbigplus_{v_x \in \mathbf{\mathrm{M}}} \llbracket G \rrbracket^{M,\mu[x \mapsto v_x]}$\/ ;
+		\item $\ds\llbracket \forall x,\: G \rrbracket^{M,\mu} = \sbigdot_{v_x \in \mathbf{\mathrm{M}}} \llbracket G \rrbracket^{M,\mu[x \mapsto v_x]}$,
+	\end{itemize}
+	où on définit $\sbigplus \mathcal{B} = \mathbf{V} \iff \mathbf{V} \in \mathcal{B}$, et $\bigdot \mathcal{B} = \mathbf{F} \iff \mathbf{F} \in \mathcal{B}$\/ avec $\mathcal{B} \subseteq \{\mathbf{V},\mathbf{F}\}$.
+\end{defn}
+
+\begin{exm}
+	On pose $\mathcal{S} = \{{\oplus}(2), Z(0)\}$, $\mathcal{P} = \{{\incirc\le}(2), {\incirc=}(2)\}$, et \[
+		G = \forall x,\:\Big(\exists y,\:\Big(\exists z, {\incirc=}\big(x, \oplus(y, z)\big) \land \lnot {\incirc=}\big(z, Z\big)\Big)\Big)
+	.\]
+	On considère la structure $M$\/ définie comme donnée de $\mathbf{\mathrm{M}} = \N$, ${\oplus^M} = {+}$, $Z^M = 0$, ${\incirc=^M} = {\le}$, et ${\incirc=^M} = {``="}$.
+	Ainsi, \[
+		\llbracket G \rrbracket^{M, (\:)} = \bigdot_{v_x \in \N}\bigg(\bigplus_{v_y \in \N} \bigg( \bigplus_{v_z \in \N} \mathds{1}_{v_x = v_y + v_z} \cdot \overline{\mathds{1}_{v_z = 0}}\bigg)\bigg)
+	,\] où l'on définit $\mathds{1}_G$\/ comme $\mathbf{V}$ si $G$\/ est vrai, et $\mathbf{F}$\/ sinon.
+	Pour $v_x = 0$, alors, pour tous $v_y \in \N$ et $v_z \in \N$, on a $\mathds{1}_{v_x = v_y + v_z} \cdot \overline{\mathds{1}_{v_z = 0}} = \mathbf{F}$.
+	Ainsi, $\llbracket G \rrbracket^{M,\mu} = \mathbf{F}$.
+	\todo{cas où $\mathbf{\mathrm{M}} = \Z$}
+\end{exm}
+
+\begin{defn}
+	Une formule $G$\/ de la logique du premier ordre est dite \textit{satisfiable} dès lors qu'il existe une structure $M$, et un environnement de variables $\mu$\/ tel que $\llbracket G \rrbracket^{M,\mu} = \mathbf{V}$.
+
+	Une structure $M$\/ est dit \textit{modèle} de $G$\/ dès lors que, pour tout environnement de variables $\mu$, on a $\llbracket G \rrbracket^{M,\mu} = \mathbf{V}$.
+
+	Une formule $G$ de la logique du premier ordre est dite \textit{valide} dès lors que pour toute structure $M$, et tout environnement de variables $\mu$, on a $\llbracket G \rrbracket^{M,\mu} =\mathbf{V}$.
+
+	Étant donné deux formules $G$\/ et $H$, on dit que $H$\/ est \textit{conséquence sémantique} de $G$\/ dès lors que, pour toute structure $M$\/ et environnement de variables $\mu$, si $\llbracket G \rrbracket^{M,\mu} = \mathbf{V}$, alors $\llbracket H \rrbracket^{M,\mu} = \mathbf{V}$. On le note $G \models H$.
+
+	On dit que deux formules $G$\/ et $H$\/ sont \textit{équivalentes} dès lors que, $G \models H$\/ et $H \models G$. On le note $G \equiv H$.
+\end{defn}
+
+\begin{rmk}
+	\begin{itemize}
+		\item Une formule est dit \textit{close} dès lors que $\textsf{FV}(H) = \O$.
+		\item Une formule de ma forme $P(t_1, t_2, \ldots, t_{\mathfrak{a}(P)})$\/ est appelée \textit{formule atomique} ou \textit{prédicat atomique}.
+		\item Si $\textsf{FV}(G) = \{x_1, \ldots, x_n\}$, la formule $\forall x_1, \ldots, \forall x_n,\: G$\/ est appelée \textit{cloture universelle} de $G$.
+			La formule $\exists x_1, \ldots, \exists x_n,\:G$\/ est appelée \textit{cloture existentielle} de $G$.
+	\end{itemize}
+\end{rmk}
+

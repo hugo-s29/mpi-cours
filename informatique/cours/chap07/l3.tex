@@ -1,0 +1,199 @@
+\begin{rmk}
+	Cette preuve ne fait pas d'hypothèses sur le résultat de l'algorithme. Tout algorithme répondant au problème est une $\frac{1}{\Delta(G)}$-approximation.
+\end{rmk}
+
+\begin{exmk}
+	On appelle \textit{couverture par sommets} d'un graphe $G = (S,A)$\/ la donnée d'un ensemble $X \subseteq S$\/ tel que \[
+		\forall \{u,v\} \in A,\quad u \in X \text{ ou } v \in X
+	.\]
+	\begin{exm}
+		L'ensemble {\raisebox{-2pt}{\tikz\node [style=new style 2] at (0, 0) {};}} est une couverture par sommets du graphe ci-dessous.
+		\begin{figure}[H]
+			\centering
+			\tikzfig{couv-par-sommets}
+			\caption{Exemple de couverture par sommets}
+		\end{figure}
+	\end{exm}
+
+	On considère le problème \[
+		\begin{cases}
+			\text{\textbf{Entrée}} &:\ G = (S, A) \text{ un graphe}\\
+			\text{\textbf{Sortie}}&: \text{ une couverture de cardinal maximal}.
+		\end{cases}
+	\]
+	Ce problème peut-être résolu à l'aide du calcul de couplages maximal.
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\Entree $G = (S, A)$\/ un graphe
+			\Sortie $C$\/ un couplage maximal, \textit{non nécessairement maximum}
+			\State $C \gets \O$\/ 
+			\While{$\exists \{u,v\} \in A$, $u$\/ libre dans $C$\/ et $v$\/ libre dans $C$\/}
+			\State Soit $\{u,v\}$\/ une telle arrête.
+			\State $C \gets C \cup \big\{\{u,v\}\big\}$
+			\EndWhile
+			\State\Return $C$\/
+		\end{algorithmic}
+		\caption{Calcul d'un couplage maximal (\textsc{CouplageMaximal})}
+	\end{algorithm}
+	L'algorithme retourne un couplage maximal d'après la négation de la condition de boucle.
+	On répond donc au problème avec l'algorithme ci-dessous.
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\Entree $G = (S, A)$\/ un graphe
+			\Sortie Une couverture par sommets
+			\State $C \gets \Call{CouplaxeMaximal}{G}$\/
+			\State \Return $\{ u \in S  \mid \exists v \in S,\: \{u,v\} \in C\}$.
+	\end{algorithmic}
+		\caption{Approximation de couverture par sommets}
+	\end{algorithm}
+	L'algorithme retourne une couverture : soit $X$\/ la valeur retournée pour une entrée $G = (S , A)$. Soit $\{u,v\} \in A$.
+	Si $u \not\in X$\/ et $v \not\in X$, alors le couplage $C$\/ calculé pour l'algorithme n'est pas maximal, on peut y ajouter $\{u,v\}$.
+	Montrons que l'algorithme $\mathcal{A}$\/ est une $2$-approximation du problème \guillemotleft~couverture par sommets.~\guillemotright\ \[
+		\forall G \in \mathcal{E}, \quad\mathcal{A}(G) \le 2\: \mathrm{OPT}(G)
+	.\]
+	Soit $G \in \mathcal{E}$. Soit $X$\/ la couverture par sommets calculé par $\mathcal{A}$\/ sur $G$, et $C$\/ le couplage calculé par cet algorithme.
+	Soit $X^\star $\/ la couverture par sommets optimale.
+	Soit donc \begin{align*}
+		\varphi:\quad\quad C &\longrightarrow X^\star \\
+		\{u,v\}  &\longmapsto \begin{cases}
+			u &\text{ si } u \in X^\star \\
+			v &\text{ si } v \in X^\star 
+		\end{cases}
+	\end{align*}
+	Soit $(c_1, c_2) \in C^2$, tels que $\varphi(c_1) = \varphi(c_2)$, alors $c_1$\/ et $c_2$\/ partagent un sommet, ce qui est absurde (\textit{c.f.} définition de couplage).
+	Donc $\varphi$\/ est injective, d'où  $|C| \le |X^\star|$.
+	Or, $\mathcal{A}(X) = |X| = 2 |C| \le 2\,|X^\star| \le 2\,\mathrm{OPT}(X)$.
+\end{exmk}
+
+
+\section{\textit{Branch and Bound} --- Séparation et évaluation}
+\textit{Branch and Bound} n'est pas un algorithme, mais une famille d'algorithmes, similairement au algorithmes diviser pour régner.
+Ces algorithmes répondent à des problèmes de maximisation.
+Les algorithmes \textit{Branch and Bound} sont des algorithmes enrichit de trois fonctions :
+\begin{itemize}
+	\item une fonction \texttt{branch} de branchement, \textit{i.e.} découpage en sous-problèmes,
+	\item une fonction \texttt{valeur} donnant un résultat, pas forcément optimal, \textit{i.e.}\ elle associe une solution partielle à une solution,
+	\item une fonction \texttt{bound} donnant un majorant de la solution optimale, complétant cette solution partielle.
+\end{itemize}
+Avec les deux dernières fonctions, on borne la valeur de la solution optimale.
+
+\begin{exm}[\textsc{pl} et \textsc{plne}]
+	\textit{c.f.}\ \textsc{dm4}.
+\end{exm}
+
+\begin{exm}
+	On considère le problème \textsc{Knapsack} :
+
+	\noindent\resizebox{\textwidth}{!}{
+		$\begin{cases}
+			\text{\textbf{Entrée}} \!\!&:\ n \in \N,\: (v_i)_{i\in\llbracket 1,n \rrbracket} \in (\N^*)^n,\: (w_i)_{i\in\llbracket 1,n \rrbracket} \in (\N^*)^n, \text{ et } P \in \N^*\\
+			\text{\textbf{Sortie}} \!\!&: \text{ une allocation $I$ maximale d'objets de somme de poids $(w_i)_{i \in I}$\/ inférieure ou égale à $P$.}
+		\end{cases}$
+	}
+
+	\noindent
+	Dans toute la suite de l'exemple, les $(v_i)_{i \in \llbracket 1,n \rrbracket}$\/ et $(w_i)_{i \in \llbracket 1,n \rrbracket}$\/ sont triés par $v_i / w_i$\/ décroissants.
+
+	\textbf{Tentative 1.} Algorithme glouton.
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\State $I \gets \O$\/ 
+			\State $S \gets 0$\/ 
+			\For{$i \in \llbracket 1,n \rrbracket$}
+			\If{$S + w_i \le P$}
+			\State $I \gets I \cup \{i\}$\/ 
+			\State $S \gets S + w_i$
+			\EndIf
+			\EndFor
+			\State\Return $I$
+		\end{algorithmic}
+		\caption{Algorithme glouton $\mathcal{G}^\N$ répondant au problème \textsc{Knapsack}}
+	\end{algorithm}
+	Cet algorithme ne donne pas toujours une solution optimale, voici un contre-exemple : $P = 3$, $(v_i) = (1, 2)$\/ et $(w_i) = (1, 3)$. L'algorithme renvoie $\mathcal{G}^\N(E_1) = 1$\/ mais la solution optimale $\mathrm{OPT}(E_1) = 2$, pour l'entrée $E_1$.
+	On peut compléter une solution partielle à l'aide de cet algorithme, on a donc défini la fonction \texttt{valeur}.
+
+	\textbf{Tentative 2.} On résout le problème associé dans $\R$, définit ci-dessous: \[
+		\textsc{Knapsack}_\R\begin{cases}
+			\text{\textbf{Entrée}} \!\!&:\ n \in \N,\: (v_i)_{i\in\llbracket 1,n \rrbracket} \in (\N^*)^n,\: (w_i)_{i\in\llbracket 1,n \rrbracket} \in (\N^*)^n, \text{ et } P \in \N^*\\
+			\text{\textbf{Sortie}} \!\!&:\ \argmax_{x \in S} \sum_{i=1}^n x_i v_i
+		\end{cases}
+	\] où $S = \Big\{(x_i)_{i\in\llbracket 1,n \rrbracket} \in [0,1]^n\:\Big|\:\sum_{i=1}^n x_i w_i \le P \Big\}$.
+	On résout ce problème à l'aide d'un algorithme glouton.
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\State $S \gets 0$
+			\State $i \gets 1$
+			\State $x \gets (0)_{i\in\llbracket 1,n \rrbracket}$
+			\While{$i \le n$ et $S + w_i < P$}
+			\State $S \gets S + w_i$
+			\State $x_i \gets 1$
+			\State $i \gets i + 1$
+			\EndWhile
+			\If{$i \le n$}
+			\State $x_i \gets \frac{P - S}{2}$
+			\State $S \gets P$
+			\EndIf
+			\State \Return $x$
+		\end{algorithmic}
+		\caption{Algorithme glouton $\mathcal{G}^\R$ répondant au problème \textsc{Knapsack}$_\R$}
+	\end{algorithm}
+	En notant $\mathrm{OPT}(e)$\/ une solution optimale à \textsc{Knapsack}, et $\mathrm{OPT}^\R(e)$\/ une solution optimale à \textsc{Knapsack}$_\R$, on a $\forall e \in \mathcal{E},\quad \mathrm{OPT}(e) \le \mathrm{OPT}^\R(e)$. De plus, à faire à la maison, le glouton $\mathcal{G}^\R$\/ donne la solution optimale : on a $\mathrm{OPT}^\R(e) = \mathcal{G}^\R(e)$.
+
+	On branche sur la partie fractionnaire. On considère l'entrée définie dans la table ci-après, avec $P = 20$.
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{c||c|c|c|c|c|c}
+			$i$ & $1$ & 2 & 3 & 4 & 5 & 6\\ \hline
+			$v_i$ & $13$ & $16$ & $19$ & $24$ & $3$ & $5$\\ \hline
+			$w_i$\/ & $6$ & $8$ & $10$ & $14$ & $2$ & $5$\\ \hline
+			$\approx v_i / w_i$ & $2{,}2$ & $2$ & $1{,}9$ & $1{,}7$ & $1{,}5$ & $1$
+		\end{tabular}
+		\caption{Entrée du problème \textsc{Knapsack}}
+	\end{table}
+	\begin{figure}[H]
+		\centering
+		\resizebox{\textwidth}{!}{
+			\begin{tikzpicture}
+				\node[rounded corners, draw] (1) at (0, 0) {$\substack{\ds\mathcal{G}^\N : \{1, 2, 5\} \leadsto 32\\\ds \mathcal{G}^\R : [1, 1, 0.6, 0, 0,0] \leadsto 40.4}$};
+				\node[rounded corners, draw] (2) at (-4, -2) {$\substack{\ds\mathcal{G}^\N : \{1, 2, 5\} \leadsto 32\\\ds \mathcal{G}^\R : [1, 1, 0, 0.4, 0,0] \leadsto 38.6}$};
+				\node[rounded corners, draw] (3) at (4, -2) {$\substack{\ds\mathcal{G}^\N : \{1, 3, 5\} \leadsto 35\\\ds \mathcal{G}^\R : [1, 0.5, 1, 0, 0,0] \leadsto 40}$};
+				\node[rounded corners, draw] (4) at (-6, -4) {$\substack{\ds\mathcal{G}^\N : \{1, 2, 5\} \leadsto 32\\\ds \mathcal{G}^\R : [1, 1, 0, 0, 1, 0.8] \leadsto 36}$};
+				\node[rounded corners, draw] (5) at (-2, -4) {$\substack{\ds\mathcal{G}^\N : \{1, 4\} \leadsto 37\\\ds \mathcal{G}^\R : [1, 0, 0, 1, 0, 0] \leadsto 37}$};
+				\node[rounded corners, draw] (6) at (2, -4) {$\substack{\ds\mathcal{G}^\N : \{1, 3, 5\} \leadsto 35\\\ds \mathcal{G}^\R : [1, 0, 1, 0.3, 0, 0] \leadsto 39.2}$};
+				\node[rounded corners, draw] (7) at (6, -4) {$\substack{\ds\mathcal{G}^\N : \{2,3,5\} \leadsto 38\\\ds \mathcal{G}^\R : [0.3,1,1,0,0,0] \leadsto 38.9}$};
+				\node[rounded corners, draw] (8) at (4, -7) {$\substack{\ds\mathcal{G}^\N : \{2,3,5\} \leadsto 38\\\ds \mathcal{G}^\R : [0, 1, 1, 0.4, 0, 0] \leadsto 38.4}$};
+				\node[rounded corners, draw, red] (9) at (8, -7) {pas de solution};
+				\draw[->] (1.west) to[bend right] (2.north); 
+				\node at (2.north |- 1.south west) {$x_3 = 0$};
+				\draw[->] (1.east) to[bend left] (3.north); 
+				\node at (3.north |- 1.south east) {$x_3 = 1$};
+				\draw[->] (2.west) to[bend right] (4.north); 
+				\node[yshift=-1cm,fill=white] at (4.north |- 2.west) {$x_4 = 0$};
+				\draw[->] (2.east) to[bend left] (5.north); 
+				\node[yshift=-1cm,fill=white] at (5.north |- 2.east) {$x_4 = 1$};
+				\draw[->] (3.west) to[bend right] (6.north); 
+				\node[yshift=-1cm,fill=white] at (6.north |- 3.west) {$x_2 = 0$};
+				\draw[->] (3.east) to[bend left] (7.north); 
+				\node[yshift=-1cm,fill=white] at (7.north |- 3.east) {$x_2 = 1$};
+				\draw[->] (7.west) to[bend right] (8.north); 
+				\node[yshift=-1cm,fill=white] at (8.north |- 7.west) {$x_1 = 0$};
+				\draw[->] (7.east) to[bend left] (9.north); 
+				\node[yshift=-1cm,fill=white] at (9.north |- 7.east) {$x_1 = 1$};
+				\node[below of=4, node distance=0.75cm] {non.};
+				\node[below of=5, node distance=0.75cm] {\textsc{ok}, mais non.};
+				\node[below of=6, node distance=0.75cm] {non.};
+				\draw[red,thick,round cap-round cap] (4.south west) -- (4.north east);
+				\draw[red,thick,round cap-round cap] (5.south west) -- (5.north east);
+				\draw[red,thick,round cap-round cap] (6.south west) -- (6.north east);
+			\end{tikzpicture}
+		}
+		\caption{Stratégie \textit{branch and bound} appliquée au problème \textsc{Knapsack}}
+	\end{figure}
+\end{exm}
+
+
+

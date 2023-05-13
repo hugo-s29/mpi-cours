@@ -1,0 +1,15 @@
+\section{Logique classique du premier ordre}
+
+\begin{enumerate}
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\lnot (\exists x,\: \lnot \varphi), \lnot \varphi \vdash \lnot (\exists x,\: \lnot \varphi)}
+				\infer 0[Ax]{\lnot (\exists x,\: \lnot \varphi), \lnot \varphi \vdash\lnot \varphi}
+				\infer 1[$\exists$i]{\lnot (\exists x,\: \lnot \varphi), \lnot \varphi \vdash\exists x,\: \lnot \varphi}
+				\infer 2[$\lnot$e]{\lnot (\exists x,\: \lnot \varphi),\lnot \varphi \vdash \bot}
+				\infer 1[Abs]{\lnot (\exists x,\: \lnot \varphi) \vdash \varphi}
+				\infer 1[$\forall$i]{\lnot (\exists x,\: \lnot \varphi) \vdash \forall x,\: \varphi}
+			\end{prooftree}
+		.\] 
+\end{enumerate}

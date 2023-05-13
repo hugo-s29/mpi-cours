@@ -1,0 +1,11 @@
+\section{Producteurs--consommateurs en mémoire non bornée}
+
+\subsection{Version allégée de la solution vue en cours}
+
+\begin{enumerate}
+	\item C'est le sémaphore $\mathrm{Plein}$\/ qui a pour rôle d'éviter les problèmes de dépassement. Avec l'hypothèse d'une mémoire non bornée, on retire l'appel $\texttt{acquire}\ \mathrm{Plein}$\/ de la procédure \textsc{Production}, l'appel $\texttt{release}\ \mathrm{Plein}$\/ de la procédure \textsc{Consommation}, et la création du sémaphore $\mathrm{Plein}$\/ de l'algorithme 1.
+	\item L'utilisation d'une telle variable sur plusieurs fils d'exécution nécessite un \textit{mutex} afin que l'écriture en mémoire ne soit faite qu'un fil à la fois.
+	\item 
+\end{enumerate}
+
+

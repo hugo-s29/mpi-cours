@@ -1,5 +1,6 @@
 \begin{defn}
 	On dit de deux automates $\mathcal{A}$\/ et $\mathcal{A}'$\/ qu'ils sont {\it équivalents}\/ si $\mathcal{L}(\mathcal{A}) = \mathcal{L}(\mathcal{A}')$.
+	\index{automate!équivalent}
 \end{defn}
 
 \begin{thm}
@@ -85,6 +86,8 @@ On construit la {\it table de transition}\/ :
 		\item {\it co-accessible}\/s'il existe une suite de transitions $q \xrightarrow{w_1} q_1 \to \cdots \to q_{n-1} \xrightarrow{w_n} q_n \in F$.
 
 	\end{itemize}
+	\index{automate!état accessible}
+	\index{automate!état co-accessible}
 \end{defn}
 
 Dans l'automate ci-dessous, l'état 0 n'est pas accessible et l'état 2 n'est pas co-accessible.
@@ -97,6 +100,7 @@ Dans l'automate ci-dessous, l'état 0 n'est pas accessible et l'état 2 n'est pa
 
 \begin{defn}
 	On dit d'un automate $\mathcal{A}$\/ qu'il est {\it émondé}\/ dès lors que chaque état est accessible et co-accessible.
+	\index{automate!émondé}
 \end{defn}
 
 \begin{prop}

@@ -1,0 +1,148 @@
+\section{Syntaxe et sémantique}
+\subsection{Syntaxe}
+
+\begin{enumerate}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Définition du type \texttt{formule} représentant les éléments de $\mathcal{F}$\/]
+type formule =
+  | Var   of string
+  | And   of formule * formule
+  | Or    of formule * formule
+  | Imply of formule * formule
+  | Equiv of formule * formule
+  | Top
+  | Bot
+  | Not   of formule
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Affichage du type \texttt{formule}]
+let rec print_formule (x: formule) : unit =
+  match x with
+  | Var(p) -> print_string p;
+  | And(p,q) ->
+      print_string "(";
+      print_formule p;
+      print_string "%*$\land$*)";
+      print_formule q;
+      print_string ")";
+  | Or(p,q) ->
+      print_string "(";
+      print_formule p;
+      print_string "%*$\lor$*)";
+      print_formule q;
+      print_string ")";
+  | Imply(p,q) ->
+      print_string "(";
+      print_formule p;
+      print_string "%*$\rightarrow$*)";
+      print_formule q;
+      print_string ")";
+  | Equiv(p,q) ->
+      print_string "(";
+      print_formule p;
+      print_string "%*$\leftrightarrow$*)";
+      print_formule q;
+      print_string ")";
+  | Top -> print_string "%*$\top$*)";
+  | Bot -> print_string "%*$\bot$*)";
+  | Not(p) ->
+      print_string "(";
+      print_string "%*$\lnot$*)";
+      print_formule p;
+      print_string ")"
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Ensemble de variables d'une formule de type \texttt{formule}]
+let rec vars (x: formule) : string set =
+  match x with
+  | Var(p) -> Set.add p Set.empty
+  | And(p,q) | Or(p,q) | Imply(p,q) | Equiv(p,q) -> Set.union (vars p) (vars q)
+  | Top | Bot -> Set.empty
+  | Not(p) -> vars p
+		\end{lstlisting}
+\end{enumerate}
+
+\subsection{Sémantique}
+
+\begin{enumerate}[start=4]
+	\item~
+		\begin{lstlisting}[language=caml,caption=Définition du type \texttt{env\_prop} représentant un environnement propositionnel]
+type env_prop = (string * bool) list
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Affichage du type \texttt{env\_prop}]
+let print_env_prop (e: env_prop): unit =
+  let strings = List.map
+    (fun (p, b) -> p ^ "%*$\mapsto$*)" ^ (if b then "V" else "F"))
+    e in
+  let concatenated = List.fold_left (fun s p -> s ^ "," ^ p) "" strings in
+  print_string("{" ^ concatenated ^ "}")
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Interprétation d'une formule]
+exception Missing_Env
+
+let rec interprete (f: formule) (e: env_prop) : bool =
+  match f with
+  | Var(p) ->
+      let rec aux e =
+        match e with
+        | [] -> raise Missing_Env
+        | (v,t)::_ when t -> true
+        | _::q -> aux q
+      in aux e
+  | And(p,q) -> (interprete p e) && (interprete q e)
+  | Or(p,q) -> (interprete p e) || (interprete q e)
+  | Imply(p,q) -> interprete (Or(q, Not(p))) e
+  | Equiv(p,q) -> (interprete p e) = (interprete q e)
+  | Top -> true
+  | Bot -> false
+  | Not(p) -> not (interprete p e)
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Génération des environnements propositionnels]
+let rec all_envs (vars: string list): env_prop list =
+  match vars with
+  | x :: q -> let envs = all_envs q in
+    let aux1 e = (x, true) :: e in
+    let aux2 e = (x, false) :: e in
+    (List.map aux1 envs) @ (List.map aux2 envs)
+  | [] -> []
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Résolution du problème \textsc{Sat}]
+let sat (f: formule): env_prop =
+  let envs = all_envs (vars f) in
+  let envs_valides = List.filter (interprete f) envs in
+  match envs_valides with
+  | [] -> raise Unsat
+  | x::_ -> x
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Résolution du problème \textsc{Valide}]
+let est_valide (f: formule): bool =
+  let envs = all_envs (vars f) in
+  List.for_all (interprete f) envs
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Vérification de ``conséquence sémantique'']
+let est_cons_semantique (f: formule) (g: formule): bool =
+  let envs = all_envs (vars f) in
+  let envs_f_valides = List.filter (interprete f) envs in
+  List.for_all (interprete g) envs_f_valides
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Vérification de ``équivalence'']
+let equiv (f: formule) (g: formule): bool =
+  let envs = all_envs (vars f) in
+  let envs_f_valides = List.filter (interprete f) envs in
+  let envs_g_valides = List.filter (interprete g) envs in
+  envs_f_valides = envs_g_valides
+		\end{lstlisting}
+	\item~\lstinputlisting[firstline=258,lastline=260,language=caml,caption=Calcul de modèles d'une formule]{main.ml}
+		\begin{lstlisting}[language=caml,caption=Calcul de modèles d'une formule]
+let models (f: formule): env_prop set =
+  let envs = all_envs (vars f) in
+  Set.of_list (List.filter (interprete f) envs)
+		\end{lstlisting}
+\end{enumerate}

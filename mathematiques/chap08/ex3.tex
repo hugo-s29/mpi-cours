@@ -1,0 +1,52 @@
+\section{Exercice 3}
+
+\begin{enumerate}
+	\item On a $F(0) = \int_{0}^{1} \frac{\mathrm{e}^{0}}{1+t^2}~\mathrm{d}t = \big[\Arctan t\big]_0^1 = \frac{\pi}{4}$, et \[
+			\forall x \in \R,\qquad 0 \le F(x) \le \int_{0}^{1} \mathrm{e}^{-x^2}~\mathrm{d}t = \mathrm{e}^{-x^2} \tendsto{x\to +\infty} 0,
+		\] d'où, d'après le théorème des gendarmes, $\lim_{x\to +\infty} F(x) = 0$.
+	\item On pose $X = \R$, $T = [0,1]$\/ et \begin{align*}
+			f: X \times T &\longrightarrow \R \\
+			(x,t) &\longmapsto \frac{\mathrm{e}^{-x^2(1+t^2)}}{1+t^2}.
+		\end{align*}
+		\begin{itemize}
+			\item Soit $t \in T$. La fonction $x \mapsto f(x,t)$\/ est de classe $\mathcal{C}^1$\/ sur $X$\/ comme composée de fonctions de classe $\mathcal{C}^1$.
+			\item Soit $x \in X$. La fonction $f_x :t \mapsto f(x,t)$\/ est continue comme composée de fonctions continues. De plus, l'intégrale $\int_{T} f(x,t)~\mathrm{d}t$\/ n'est pas impropre, la fonction $f_x$\/ est donc intégrable. Également, on calcule
+				\[
+					\forall t,\quad\frac{\partial f}{\partial x}(x,t) = -2x \frac{\mathrm{e}^{-x^2(1+t^2)}}{1+t^2} = -2x\:f(x,t).
+				\] La fonction $t \mapsto \frac{\partial f}{\partial x}(x,t)$\/ est continue par morceaux sur $T$.
+			\item On pose la fonction $\varphi : t \mapsto 2\sqrt{2} \frac{\mathrm{e}^{-2(1+t^2)}}{1+t^2}$, qui est continue par morceaux sur $T$, et on a \[
+				\forall t,\:\forall x,\quad \left| \frac{\partial f}{\partial x}(x,t) \right| = 2\:|x|\: f(x,t) \le \varphi(t)
+			.\]
+			En effet, on calcule \[
+				\forall x > 0,\quad \frac{\partial}{\partial x} \left| \frac{\partial f}{\partial x} \right|(x,t) = 2f(x,t) - 4x^2 f(x,t) = -2(x^2 - 2)\cdot f(x,t),
+			\] qui s'annule seulement pour $x = \sqrt{2}$\/ (car on a choisit $x > 0$), et il s'agit d'un maximum. Comme la fonction $x \mapsto \frac{\partial f}{\partial x}(x,t)$\/ est paire, il s'agit d'un maximum global sur $\R$. C'est pour cela que $\varphi(t) = \frac{\partial f}{\partial x}(\sqrt{2}, t)$.
+			De plus, la fonction $\varphi$\/ est intégrable, car l'intégrale $\int_{T} \varphi(t)~\mathrm{d}t$\/ n'est pas impropre.
+		\end{itemize}
+		\begin{align*}
+			F'(x) = \frac{\mathrm{d}}{\mathrm{d}x} \int_{T} f(x,t)~\mathrm{d}t &= \int_{T} \frac{\partial f}{\partial x}(x,t)~\mathrm{d}t\\
+			&= \int_{0}^{1} (-2x) f(x,t)~\mathrm{d}t \\
+			&= -2x \int_{0}^{1} f(x,t)~\mathrm{d}t \\
+			&= -2x \int_{0}^{1} \mathrm{e}^{-x^2 -x^2t^2}~\mathrm{d}t \\
+			&= -2x \mathrm{e}^{-x^2} \int_{0}^{1} \mathrm{e}^{-x^2t^2}~\mathrm{d}t \\
+		\end{align*}
+	\item La fonction $G$\/ est une primitive de la fonction $xt \mapsto \mathrm{e}^{-t^2}$, qui est continue. On en déduit, d'après le théorème fondamentale de l'algèbre, que $G$\/ est dérivable (sur $\R$).
+		On a
+		\begin{align*}
+			(G^2)'(x) &= -2\mathrm{e}^{-x^2} \int_{0}^{x} \mathrm{e}^{-t^2}~\mathrm{d}t\\
+			&= -2 \mathrm{e}^{-x^2} \int_{0}^{1} x \mathrm{e}^{-u^2 x^2}~\mathrm{d}u  \text{ avec le \textit{cdv} $ut = x$\/}\\
+			&= F'(x) \\
+		\end{align*}
+	\item On a $G(0) = 0$, et \[
+			\forall x \in \R^+,\quad\forall t \in [1,x],\: 0 \le \mathrm{e}^{-t^2} \le \mathrm{e}^{-t}
+		.\] Donc, par croissance de l'intégrale, \[
+			\forall x \in \R^+,\: 0 \le\int_{1}^{x} \mathrm{e}^{-t^2}~\mathrm{d}t = G(x) \le \int_{1}^{x} \mathrm{e}^{-t}~\mathrm{d}t
+		.\] Or, l'intégrale $\int_{1}^{+\infty} \mathrm{e}^{-t}~\mathrm{d}t$\/ converge, et l'intégrale $\int_{0}^{1} \mathrm{e}^{-t^2}~\mathrm{d}t$\/ n'est pas impropre, la fonction $G$\/ est donc majorée. Et, la fonction $G$\/ est croissante. On en déduit que la fonction $G$\/ converge en $+\infty$.
+	\item En primitivant la relation de la question 3, on trouve \[
+			G^2(x) = -F(x) + K \quad\text{ où }\quad K \in \R
+		.\] Ainsi, en passant à la limite, on a donc \[
+			G^2(x) + F(x) = K \tendsto{x \to +\infty} K = \lim_{x\to +\infty}G^2(x)
+		.\]
+		On en déduit que $\lim_{x\to +\infty} G(x) = \sqrt{K}$. Calculons $K$\/ : on a $K = G^2(0) + F(0) = \frac{\pi}{4}$. On en déduit que \[
+			G(x)\tendsto{x\to +\infty} G(x) = \int_{0}^{+\infty} \mathrm{e}^{-t^2}~\mathrm{d}t = \frac{\sqrt{\pi}}{2}
+		.\]
+\end{enumerate}

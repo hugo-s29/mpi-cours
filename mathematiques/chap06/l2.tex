@@ -1,0 +1,179 @@
+\begin{defn}
+	On dit qu'une série de fonctions $\sum f_n$\/ \textsl{converge normalement} sur $I \subset \R$\/ s'il existe une suite de réels $(u_n)_{n\in\N}$\/ tels que $\forall n,\:\forall x,\:|f_n(x)| \le u_n$, et que la série (numérique) des $\sum u_n$\/ converge.
+\end{defn}
+
+\begin{prop}
+	La série de fonctions $\sum f_n$\/ converge normalement si, et seulement si la série numérique $\sum\sup\:|f_n|$\/ converge.
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\impliedby$''] Soit, pour $n \in \N$, $u_n = \sup_{x \in I}\:|f_n(x)|$. Alors $u_n \ge |f_n(x)|$, $\forall x$. D'où, comme la série $\sum u_n$\/ converge, alors $\sum f_n$\/ converge normalement.
+		\item[``$\implies$''] $\sup_{x \in I}\:|f_n(x)|$\/ est un majorant, et c'est le plus petit. D'où, $÷\sup_{x \in I}\:|f_n(x)|$, qui est un majorant. Or, $\sum u_n$\/ converge, donc $\sum \sup_{x \in I}\:|f_n(x)|$.
+	\end{itemize}
+\end{prv}
+
+\begin{prop}
+	On a \[
+		\text{convergence simple}\quad\substack{\\\ds\impliedby\\\ds\centernot{\implies}}\quad\text{convergence uniforme}\quad\substack{\\\ds\impliedby\\\ds\centernot{\implies}}\quad\text{convergence normale}.
+	.\]
+\end{prop}
+
+\begin{prv}
+	Montrons $\text{convergence normale} \implies \text{convergence uniforme}$. Les autres cas ont déjà été traités au chapitre précédent. 
+	Soit $(f_n)_{n\in\N}$\/ une suite de fonctions dont la série $\sum f_n$\/ converge normalement. Montrons que la série de fonctions converge uniformément, \textit{i.e.}, $\sup_{x \in I}\:|R_n(x)| \tendsto{n\to \infty} 0$. Comme la série de fonctions $\sum f_n$\/ converge normalement, il existe une suite $(u_n)_{n\in\N}$\/ telle que $\forall n$, $\forall x$, $|f_n(x)| \le u_n$, et la série numérique $\sum u_n$\/ converge. On calcule
+	\begin{align*}
+		\big| R_n(x) \big| = \Big| \sum_{k=n+1}^{\infty} f_k(x) \Big| \le \sum_{k=n+1}^\infty\:|f_k(x)| \le \sum_{k=n+1}^\infty u_n,
+	\end{align*}
+	qui est un majorant.
+	{\color{gray}($R_n(x)$\/ existe car la série de réels $\sum f_n(x)$\/ converge car  $\sum |f_n(x)|$\/ converge car $|f_n(x)| \le u_n$, et $\sum u_n$\/ converge. Également, le reste $\sum_{k=n+1}^{\infty}|f_k(x)|$\/ existe car la série numérique $\sum |f_k(x)|$\/ converge.)} D'où, $0 \le \sup_{x \in I}\:|R_n(x)| \le \sum_{k=n+1}^\infty u_k$, qui tend vers 0 car tout reste d'une série numérique convergente tend vers 0. D'après le théorème d'existence de la limite par encadrement, $\sup_{x \in I}\:|R_n(x)| \tendsto{n\to \infty} 0$.
+\end{prv}
+
+\begin{exo}
+	\textsl{Soit, pour $n \in \N^*$, la fonction \begin{align*}
+		f_n: \R &\longrightarrow \R \\
+		x &\longmapsto \frac{(-1)^n}{n + x^2}.
+	\end{align*}
+	Montrer que
+	\begin{enumerate}
+		\item la série des fonctions $\sum f_n$\/ converge simplement sur $\R$\/ 
+		\item elle ne converge pas normalement sur $\R$\/ 
+		\item elle converge uniformément sur $\R$\/
+	\end{enumerate}
+	}
+
+	\begin{enumerate}
+		\item Soit $x \in \R$. La série numérique $\sum f_n(x)$\/ est une série alternée. Soit $(u_n)_{n\in\N}$\/ la suite définie par, pour $n \in \N$, $\frac{1}{n + x^2}$. Cette suite tend vers 0 et est décroissante ($u_{n+1} \le u_n$). D'où, d'après le théorème des séries alternées, la série numérique $\sum (-1)^n u_n$\/ converge. Ainsi, la série de fonctions $\sum f_n$\/ converge simplement sur $\R$.
+		\item La convergence n'est pas normal car $|f_n(x)| = \frac{1}{n+x^2}$. Or, $\sum\:|f_n(x)| = \sum \frac{1}{n + x^2}$\/ diverge car $\frac{1}{n+x^2} \sim \frac{1}{n}$\/ qui ne change pas de signe, et $\sum \frac{1}{n}$\/ par critère de \textsc{Riemann}. Donc, la série $\sum f_n$\/ ne converge pas normalement.
+		\item La convergence est uniforme car la suite des restes $\big(R_n(x)\big)_{n\in\N}$\/ converge uniformément vers 0. On a, pour $n \in \N^*$, $R_n(x) = \sum_{k=n+1} \frac{(-1)^n}{k+x^2}$. On veut montrer que $\sup_{x \in \R}\:|R_n(x)|\longrightarrow 0$. On sait que, pour tout $n \in \N^*$, pour tout $x \in \R$, $|R_n(x)| \le \frac{1}{n + 1 + x^2} \le \frac{1}{n+1}$, qui est un majorant. D'où, $\sup_{x \in \R}\:|R_n(x)| \le \frac{1}{n+1}$, qui tend vers 0. D'après le théorème d'existence de la limite par encadrement, $\sup_{x \in \R}\:|R_n(x)|$\/ tend vers 0.
+	\end{enumerate}
+\end{exo}
+
+\section{Continuité}
+
+\begin{thm}
+	Soient $I$\/ un intervalle de $\R$\/ et $a \in I$. Soit, pour chaque $n \in \N$, une fonction $f_n$\/ continue en $a$. Si la série de fonctions $\sum f_n$\/ converge uniformément sur $I$\/ vers une fonction $S$, alors $S$\/ est aussi continue en $a$.
+\end{thm}
+
+\begin{prv}
+	On pose, pour $n \in \N$, la somme partielle $S_n(x) = \sum_{k=0}^n f_k(x)$. Comme chaque fonction $f_n$\/ est continue, alors $S_n$\/ est continue. Or, comme la série de fonctions converge uniformément, on en déduit que la suite $(S_n)_{n\in\N}$\/ converge uniformément. Donc, par transmission de la continuité par convergence uniforme, la fonction $S: x\mapsto \sum_{n=0}^\infty f_n(x)$ est continue.
+\end{prv}
+
+\begin{crlr}
+	Une série de fonctions continue uniformément convergente, converge vers une fonction continue.
+\end{crlr}
+
+\begin{exo}
+	\textsl{Soit la série de fonctions $\sum x^n (1-x)$.} {\color{gray}(Soit $\forall n$, $\forall x$, $f_n(x) = x^n (1-x)$.)} \textsl{Montrons que $\sum f_n$\/ converge simplement mais pas uniformément.}
+
+	Soit $x \in [0,1]$. La série numérique $\sum f_n(x) = \sum x^n (1-x) = (1-x) \sum x^n$\/ converge car, si $x \in [0,1[$, alors $\sum x^n$\/ converge, et si $x = 1$, alors $\sum x^n (1-x) = \sum 0$\/ qui converge. Donc $\sum f_n$\/ converge simplement sur $[0,1]$.
+
+	Mais, chaque fonction $(f_n)_{n\in\N}$\/ est continue (c'est un polynôme), tandis que la somme ne l'est pas. En effet, \[
+		\forall x \in [0,1],\quad S(x) = \sum_{n=0}^{\infty} f_n(x) = \sum_{n=0}^\infty x^n (1-x)
+	.\] Or, si $x = 1$, alors $S(x) = 0$. Et, si $x \neq 1$, $\sum_{k=0}^{\infty} x^n (1-x) = (1-x) \sum_{k=0}^\infty = (1-x) \cdot \frac{1}{1-x} = 1$. La fonction $S$\/ n'est pas continue. Donc la convergence n'est pas uniforme.
+\end{exo}
+
+\begin{thm}[double-limite/interversion somme-limite]
+	Soit une suite de fonction $(f_n)_{n\in\N}$\/ de $I$\/ et soit $a \in \bar{\R}$, une extrémité de $I$. Si la série de fonctions $\sum f_n$\/ converge uniformément sur $I$, vers une fonction $S$\/ et si chaque fonction $f_n$\/ admet une limite finie $b_n$\/ en $a$, alors la série numérique $\sum b_n$\/ converge et $\lim_{x\to a}S(x) = \sum_{n=0}^\infty b_n$. Autrement dit, \[
+		\lim_{x\to a}\sum_{n=0}^\infty f_n(x) = \sum_{n=0}^\infty \lim_{x\to a}f_n(x)
+	.\]
+\end{thm}
+
+\begin{prv}
+	On pose, pour $n \in \N$, $S_n(x) = \sum_{k=0}^n f_k(x)$. La suite $(S_n)_{n\in\N}$\/ converge uniformément sur $I$. Également, on a $S_n(x) \tendsto{x\to a}\:\sum_{k=0}^n b_j$, car c'est une somme finie de limites. D'où, d'après le théorème de la double-limite pour les suites de fonctions (théorème 9 du chapitre précédent), on a \[
+		\lim_{x\to a}\underbrace{\lim_{n\to \infty} S_n(x)}_{\sum_{k=0}^\infty f_k(x)} = \lim_{n\to \infty} \lim_{x\to a} S_n(x)
+	.\]
+	Aussi, $\lim_{n\to \infty} \lim_{x\to a} S_n(x) = \lim_{n\to \infty} \Big(\lim_{x\to a} \sum_{k=0}^n f_k(x)\Big)$. Or, comme la somme $\sum_{k=0}^n f_k(x)$\/ est finie, et que \textsl{la limite d'une somme finie est la somme des limites}, on a donc \[
+		\lim_{x\to a} \sum_{n=0}^\infty f_n(x) = \lim_{n\to \infty} \Big(\sum_{k=0}^n \lim_{x\to a} f_k(x)\Big) = \sum_{k=0}^\infty \lim_{x\to a} f_k(x).
+	\]
+\end{prv}
+
+\begin{exo}
+	\textsl{On pose la fonction $S$\/ définie par \begin{align*}
+		S: \R &\longrightarrow \R \\
+		x &\longmapsto \sum_{n=1}^\infty \frac{(-1)^n}{n + x^2}.
+	\end{align*}Montrer, de deux manières, que $\lim_{x\to +\infty} S(x) = 0$.}
+	
+	On a déjà montré, dans l'exercice 8, que la série de fonctions $\sum f_n$\/ converge uniformément en notant $f_n : x\mapsto \frac{(-1)^n}{n + x^2}$. D'une part, la série de fonctions converge uniformément sur ${]-\infty,+\infty[}$. D'autre part, $\forall n$, $\lim_{x\to +\infty} f_n(x) = 0 \in \R$. D'où, d'après le théorème d'interversion somme-limite, \[
+		\lim_{x\to +\infty} S(x) = \sum_{n=1}^\infty \lim_{x\to +\infty} f_n(x) = \sum_{n=1}^\infty 0 = 0
+	.\]
+
+	\underline{Autre méthode} (sans le théorème d'interversion somme-limite, avec le théorème des séries alternées) : on a montré dans l'exercice 8, que $\frac{1}{n+x^2}$\/ tend vers 0 (quand $n\to \infty$) en décroissant, donc, d'après le théorème des séries alternées, la série numérique $\sum \frac{(-1)^n}{n + x^2}$\/ converge. De plus, encore d'après le \textsc{tsa}, \[
+		\forall x \in \R,\quad-\frac{1}{1+x^2}\le S(x) \le -\frac{1}{1+x^2} + \frac{1}{2+x^2}
+	.\] Or, $-\frac{1}{1+x^2} \tendsto{x\to +\infty} 0 \xleftarrow[x\to +\infty]{} -\frac{1}{1+x^2} + \frac{1}{2+x^2}$. Donc, d'après le théorème d'existence de la limite par encadrement, $S(x) \tendsto{x\to +\infty} 0$.
+\end{exo}
+
+\section{Intégrer}
+
+\begin{thm}
+	Soit une suite de fonctions $(f_n)_{n\in\N}$\/ définies sur un \underline{segment} $[a,b]$. Si la série de fonctions $\sum f_n$\/ converge uniformément vers $S$, alors $S$\/ est continue sur $[a,b]$\/ et \[
+		\int_{a}^{b} S(t)~\mathrm{d}t = \int_{a}^{b} \sum_{n=0}^\infty f_n(t)~\mathrm{d}t = \sum_{n=0}^\infty \int_{a}^{b} f_n(t)~\mathrm{d}t
+	.\]
+\end{thm}
+
+\begin{prv}
+	On pose, pour $n \in \N$, $S_n(x) = \sum_{k=1}^n f_k(x)$. Comme la série de fonctions $\sum f_n$\/ converge uniformément sur $[a,b]$, alors la suite de fonctions $(S_n)_{n\in\N}$\/ converge uniformément sur $[a,b]$. Aussi, chaque fonction $S_n$\/ est continue (car c'est une somme finie de fonctions continues). D'où, d'après le théorème d'interversion somme-intégrale (pour les suites de fonctions), on a \[
+		\int_{a}^{b} \underbrace{\lim_{n\to \infty} S_n(x)}_{\sum_{n=0}^\infty f_n(x)} ~\mathrm{d}x = \lim_{n\to \infty} \int_{a}^{b} S_n(x) ~\mathrm{d}x
+	.\] Or, comme la somme $S_n(x)$\/ est finie, on peut intervertir somme et intégrale : $\lim_{n\to \infty} \int_{a}^{b} \sum_{k=0}^n f_k(x)~\mathrm{d}x = \lim_{n\to \infty} \sum_{k=0}^n \int_{a}^{b} f_k(x)~\mathrm{d}x = \sum_{n=0}^\infty \int_{a}^{b} f_k(x)~\mathrm{d}x$.
+\end{prv}
+
+Ce théorème s'appelle le \textsl{théorème d'intégration terme à terme}. Ceci rappelle le théorème d'intégration terme à terme pour les développements limités : si $f(x) = a_0 + a_1 x + \cdots + a_n x^n + \po(x^n)$, alors
+\begin{align*}
+	\int_{0}^{x} f(t)~\mathrm{d}t &= \int_{0}^{x} \big(a_0 + a_1x + \cdots + a_n t^n + \po(t^n)\big)~\mathrm{d}t\\
+	&= a_0 x + a_1 \frac{x^2}{2} + \cdots a_n \frac{t^{n+1}}{n+1} + \po(x^{n+1}).
+\end{align*}
+
+\begin{exo}
+	Soit $x \in {]{-1},1[}$. On pose, pour tout $n$, $f_n(t) = t^n$\/ continue. La série de fonctions $\sum f_n$\/ converge uniformément sur le segment $[0, x]$ (ou $[x, 0]$ si $x < 0$), car elle converge normalement sur $[0,x]$. En effet, $\forall n \in \N$, $\forall t \in [0,x] \cup [x,0]$, $|f_n(t)| \le |x|^n$\/ qui ne dépend pas de $t$. Et, la série numérique $\sum |x|^n$\/ converge car c'est une série géométrique de raison $|x| \in {]{-1},1[}$. D'où, on peut intégrer $\frac{1}{1-x} = \sum_{k=0}^{\infty} x^n$\/ terme à terme : \[
+		-\ln(1-x) = \sum_{k=0}^\infty \frac{x^{n+1}}{n+1}
+	.\]
+\end{exo}
+
+\begin{thm}[intégration terme-à-terme sur un intervalle quelconque]
+	Soit $I$\/ un intervalle, et soit une suite de fonctions continues par morceaux et intégrables sur $I$. Si
+	\begin{enumerate}
+		\item la série de fonctions $\sum f_n$\/ converge simplement sur $I$\/ vers une fonction $S$\/ continue par morceaux sur $I$\/ ;
+		\item la série de réels $\sum \int_I |f_n(t)|~\mathrm{d}t$\/ converge,
+	\end{enumerate}
+	alors $S$\/ est intégrable et \[
+		\sum_{i=1}^\infty \int_I f_n(t) ~\mathrm{d}t = \int_{I} S(t)~\mathrm{d}t
+	.\]
+\end{thm}
+
+Ce théorème est admis, et la preuve n'utilise pas le théorème de la convergence dominée.
+
+\begin{exo}
+	\textsl{Montrer que l'intégrale $\int_{0}^{+\infty} \frac{x}{\mathrm{e}^x - 1}~\mathrm{d}x$\/ est convergente, et qu'elle vaut $\sum_{i=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}$.}
+
+	L'intégrale $\int_{0}^{+\infty} \frac{x}{\mathrm{e}^x - 1}~\mathrm{d}x$\/ est impropre. Elle converge si et seulement si les deux intégrales $I = \int_{0}^{1} \frac{x}{\mathrm{e}^{x}-1}~\mathrm{d}x$\/ converge et $J = \int_{1}^{+\infty}\frac{x}{\mathrm{e}^{x}-1} ~\mathrm{d}x$\/ converge.
+	On a $\frac{x}{\mathrm{e}^{x}-1} \simi_{x\to +\infty} \frac{x}{\mathrm{e}^{x}} = \frac{x}{\mathrm{e}^{\sfrac{x}{2}}} \times \frac{1}{\mathrm{e}^{\sfrac{x}{2}}} = \po(\mathrm{e}^{-x / 2})$, et $\mathrm{e}^{-x / 2}$\/ ne change pas de signe. Or, l'intégrale $\int_{1}^{+\infty} \mathrm{e}^{-x/2}~\mathrm{d}x$\/ converge, d'où $J$\/ aussi.
+	On a $\mathrm{e}^x = 1 + x + \po_{x\to 0}(x)$, d'où $\mathrm{e}^{x}-1 = x + \po(x) \simi_{x\to o} x$. Donc, $\frac{x}{\mathrm{e}^{x}-1} \simi_{x\to 0} 1$\/ d'où, $\frac{x}{\mathrm{e}^{x}-1} \longrightarrow 1$, donc l'intégrale $I$\/ est faussement impropre en 0, donc convergente.
+
+	Calculons sa valeur. On a $x/(\mathrm{e}^x-1) = x \mathrm{e}^{-x} / (1 - \mathrm{e}^{-x})$, et $\mathrm{e}^{-x} / (1-\mathrm{e}^{-x}) = \mathrm{e}^{-x} \sum_{k=0}^\infty (\mathrm{e}^{-x})^k$\/ pour tout $x \in {]0,+\infty[}$, car la série $\sum (\mathrm{e}^{-x})^k$\/ est une série géométrique dont la raison $\mathrm{e}^{-x}$, en valeur absolue, est strictement inférieure à 1. D'où \[
+		\int_{0}^{+\infty} \frac{x}{\mathrm{e}^{x}-1}~\mathrm{d}x = \int_{0}^{+\infty} \Big(\sum_{k=\red1}^\infty x \mathrm{e}^{-x}\Big)~\mathrm{d}x 
+	.\] En effet, on calcule l'intégrale suivante à l'aide d'une intégration par parties : \[
+		\int_{0}^{y} x \: \mathrm{e}^{-kx}~\mathrm{d}x = \left[ -\frac{x \mathrm{e}^{-kx}}{k} \right]_0^{y} - \int_{0}^{y} \left( -\frac{1}{k} \mathrm{e}^{-kx} \right) ~\mathrm{d}x \tendsto{y\to +\infty} -\frac{1}{k^2}
+	.\] On vérifie à présent les hypothèses d'intégration terme-à-terme sur un intervalle quelconque. Chaque fonction \begin{align*}
+		f_k: {]0,+\infty[} &\longrightarrow \R \\
+		x &\longmapsto x \mathrm{e}^{-kx}
+	\end{align*} est intégrable sur $]0,+\infty[$\/ car $\int_{0}^{+\infty} |f_k(x)|~\mathrm{d}x = \int_{0}^{+\infty} x \mathrm{e}^{-kx}~\mathrm{d}x$\/ qui converge (en \textsl{coupant l'exponentielle en deux}). La série de fonctions $\sum f_k$\/ converge simplement sur $]0,+\infty[$\/ car, soit $x > 0$, $\sum f_k(x) = \sum x \mathrm{e}^{-kx}$\/ converge (en \textsl{coupant l'exponentielle en deux}). La série numérique $\sum \int_{\R^+_*} |f_k(t)|~\mathrm{d}t$\/ converge car $\sum \frac{1}{k^2}$\/ converge.
+\end{exo}
+
+\section{Dériver}
+
+\begin{thm}[dérivation terme à terme]
+	Si toute fonction $f_n$\/ est de classe $\mathcal{C}^1$, que la série de fonctions $\sum f_n$\/ converge simplement sur $[a,b]$, et que la série de fonctions $\sum f'_n$\/ converge uniformément sur $[a,b]$, alors \[
+		\frac{\mathrm{d}}{\mathrm{d}x} \sum_{k=0}^\infty f_n(x) = \sum_{k=0}^\infty \frac{\mathrm{d}}{\mathrm{d}x}f_n(x)
+	.\]
+\end{thm}
+
+\begin{prv}
+	On pose, pour $n \in \N$, $S_n(x) = \sum_{k=0}^n f_k(x)$. La suite de fonctions $(S_n)_{n\in\N}$\/ converge simplement vers une fonction $S$. Et, la suite de fonctions $(S'_n)_{n\in\N}$\/ converge uniformément vers $S'$. Donc, d'après le théorème d'interversion dérivée-limite, on a \[
+		\frac{\mathrm{d}}{\mathrm{d}x} \underbrace{\lim_{n\to \infty} S_n(x)}_{\sum_{k=0}^\infty f_k(x)} = \lim_{n\to \infty} \frac{\mathrm{d}}{\mathrm{d}x} S_n(x)
+	.\]
+	Et, $\frac{\mathrm{d}}{\mathrm{d}x} S_n(x) = \sum_{k=0}^n \frac{\mathrm{d}}{\mathrm{d}x} f_n(x)$\/ car c'est une somme finie. D'où, \[
+		\frac{\mathrm{d}}{\mathrm{d}x} \sum_{k=0}^\infty f_k(x) = \lim_{n\to \infty} \sum_{k=0}^n \frac{\mathrm{d}}{\mathrm{d}x} f_n(x) = \sum_{k=0}^\infty \frac{\mathrm{d}}{\mathrm{d}x} f_n(x)
+	.\]
+\end{prv}
+
+

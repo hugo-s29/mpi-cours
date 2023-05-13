@@ -1,0 +1,88 @@
+\begin{prop}
+	Soient $E$\/ et $F$\/ deux espaces vectoriels normés, et soit $f : E \to F$\/ une application \textbf{continue}.
+	Si $B$ est un ouvert (resp.\ un fermé) de $F$, alors $f^{-1}(B)$ est un ouvert (resp.\ un fermé) de $E$.
+	Autrement dit, l'image réciproque d'un ouvert (resp.\ d'un fermé) par une application continue est un ouvert (resp.\ d'un fermé).
+\end{prop}
+
+\begin{rap}
+	Sans hypothèse sur $f$ et sur $B$, l'ensemble $f^{-1}(B)$ est l'ensemble des antécédents des éléments de $B$. Ainsi, \[
+		\vec{x} \in f^{-1}(B) \iffdef f(\vec{x}) \in B
+	.\]
+\end{rap}
+
+\begin{prv}
+	Soit $\vec{x} \in f^{-1}(B)$. Ainsi, $f(\vec{x}) \in B$.
+	Or, $B$\/ est un ouvert de $F$. Il existe donc $\zeta > 0$ tel que $B\big(f(\vec{x}), \zeta\big) \subset B$. Or, pour tout vecteur $\vec{y} \in F$, il existe $\varepsilon > 0$\/ tel que $\|\vec{x} - \vec{y}\| \le \varepsilon \implies\|f(\vec{x}) - f(\vec{y})\| \le \zeta$, comme $f$\/ est continue.
+	D'où, $B(\vec{x}, \varepsilon) \subset f^{-1}(B)$. On en déduit que $f^{-1}(B)$\/ est un ouvert.
+	De même pour un fermé car $E \setminus f^{-1}(B) = f^{-1}(F \setminus B)$.
+\end{prv}
+
+\begin{exo}
+	\begin{slshape}
+		Soit $f : E \to  \R$\/ une application continue d'un espace vectoriel normé $E$ vers $\R$. Montrer que
+		\begin{enumerate}
+			\item l'ensemble $A = \{\vec{x} \in E  \mid f(\vec{x}) > 0\}$\/ des solution de l'inéquation $f(\vec{x}) > 0$ est un ouvert de $E$ ;
+			\item l'ensemble $B = \{\vec{x} \in E  \mid f(\vec{x}) \ge 0\}$\/ des solution de l'inéquation $f(\vec{x}) \ge 0$ est un fermé de $E$ ;
+			\item l'ensemble $C = \{\vec{x} \in E  \mid f(\vec{x}) = 0\}$\/ des solution de l'équation $f(\vec{x}) = 0$ est un fermé de $E$ ;
+		\end{enumerate}
+	\end{slshape}
+	\begin{enumerate}
+		\item On a, $A = f^{-1}(]0, +\infty[)$. Or $]0,+\infty[$\/ est un ouvert de $\R$. L'ensemble $A$ est donc l'image réciproque d'un ouvert par une fonction continue donc $A$ est un ouvert.
+		\item On a, $B = f^{-1}([0, +\infty[)$. Or $[0,+\infty[$\/ est un fermé de $\R$. L'ensemble $B$ est donc l'image réciproque d'un fermé par une fonction continue donc $B$ est un fermé.
+		\item On a, $C = f^{-1}(\{0\}) \color{red} \neq f^{-1}(0)$, qui n'existe pas car $f$ n'est pas forcément bijective. Or $\{0\}$\/ est un fermé de $\R$. L'ensemble $C$ est donc l'image réciproque d'un fermé par une fonction continue donc $C$ est un fermé.
+	\end{enumerate}
+\end{exo}
+
+\begin{exmn}
+	L'équation $y = x^2$\/ est celle d'une parabole, et cette parabole est un fermé de $\R^2$.
+	En effet, l'ensemble $\{(x,y) \in \R^2  \mid f(x,y) = 0\} = f^{-1}(\{0\})$ avec $f(x,y) = y - x^2$.
+	Or, $\{0\}$	 est un fermé de $\R$, et l'application $f$ est continue.
+	Donc, la parabole d'équation $y = x^2$ est l'image réciproque d'une fonction continue, donc c'est un fermé.
+
+	De même, pour la courbe d'équation $y^3 - 3 x^2 = 7$ est aussi un courbe fermée du plan $\R^2$\/ : c'est l'image réciproque du fermé $\{0\}$\/ par l'application continue $f : (x,y) \mapsto y^3 - 3x^2 - 7$.
+\end{exmn}
+
+\begin{exm}
+	\begin{slshape}
+		Une boule ouverte est un ouvert.
+		Une boule fermée est un fermé.
+		Une sphère est un fermé.
+	\end{slshape}
+
+	En effet, $B(\vec{a}, r) = \{\vec{x} \in E  \mid \|\vec{x} - \vec{a}\| < r\} = f^{-1}(]{-\infty}, r[)$\/ en choisissant $f :\vec{x} \mapsto \|\vec{x} - \vec{a}\|$. Or, $]{-\infty},r[$\/ est un ouvert de $\R$, $f$ est continue car toute norme est 1-lipschitzienne. Donc $B(\vec{a}, r)$ est un ouvert.
+	De même pour $\bar{B}(\vec{a}, r)$\/ et $\bar{B}(\vec{a}, r) \setminus B(\vec{a}, r)$.
+\end{exm}
+
+\begin{exo}
+	\begin{slshape}
+		Soit $E$ un espace vectoriel de dimension finie. Montrer que tout hyperplan de $E$ est un fermé.
+	\end{slshape}
+	Soit $H$ un hyperplan d'un espace vectoriel normé de dimension finie. L'hyperplan $H$ est le noyau d'une forme linéaire $\varphi$ non nulle. Ainsi, $H = \Ker \varphi$, et $\varphi : E \xrightarrow{\text{linéaire}} \R$.
+	L'application $\varphi$ est continue comme le sont toutes les applications linéaires sur un espace vectoriel normé de dimension finie. Soit $\vec{x} \in E$ : $\vec{x}\in H \iff \varphi(\vec{x}) = 0$. Donc $H = \varphi^{-1}(\{0\})$. D'où, $H$\/ est l'image réciproque du fermé $\{0\}$ par la fonction continue $\varphi$ : c'est donc un fermé de $E$.
+\end{exo}
+
+\begin{prop}
+	Soit $A$ une partie d'un espace vectoriel normé $E$.
+	\begin{enumerate}
+		\item Son adhérence $\bar{A}$ est un fermé de $E$.
+		\item La partie $A$ est un fermé de $E$ si, et seulement si $A = \bar{A}$.
+		\item L'ensemble $A$ est un fermé de $E$ si, et seulement si, à chaque fois qu'une suite $(u_n)_{n\in\N}$\/ d'éléments de $A$ converge, la limite de $(u_n)_{n\in\N}$ appartient à $A$. \hfill (caractérisation séquentielle d'un fermé).
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item Montrons que $E \setminus \bar{A}$ est un ouvert. Soit $\vec{x} \in E \setminus \bar{A}$.
+			Alors $x \not\in \bar{A}$.
+			Il existe $\varepsilon > 0$\/ tel que $B(\vec{x}, \varepsilon) \cap A = \O$.
+			Soit $\vec{y} \in B(\vec{x}, \varepsilon)$.
+			Ainsi, $\vec{y} \not\in \bar{A}$. Or, $B(\vec{x}, \varepsilon)$\/ est in ouvert, il existe donc $\zeta > 0$\/ tel que $B(\vec{y}, \zeta) \subset B(\vec{x}, \varepsilon)$.
+			D'où, il existe $\zeta > 0$ tel que $B(\vec{y}, \zeta) \cap A = \O$.
+			Alors, $\vec{y} \not\in \bar{A}$.
+			D'où, $B(\vec{x}, \varepsilon) \cap \bar{A} = \O$.
+			On en déduit $B(\vec{x}, \varepsilon) \subset  E \setminus \bar{A}$.
+		\item Le point 1 démontre déjà la réciproque. Il nous suffit de montrer l'implication, \textit{c.f.} poly.
+		\item On utilise la caractérisation séquentielle de l'adhérence (proposition 23).
+	\end{enumerate}
+\end{prv}
+

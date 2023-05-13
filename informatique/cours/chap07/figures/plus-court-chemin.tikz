@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (0, 1) {$s$};
+		\node [style=new style 0] (1) at (2.5, 0) {};
+		\node [style=new style 0] (2) at (0, -1.5) {};
+		\node [style=new style 0] (3) at (1.5, -2.5) {$p$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow, bend left] (0) to (1);
+		\draw [style=arrow, bend left] (1) to (0);
+		\draw [style=arrow] (0) to (2);
+		\draw [style=arrow] (2) to (1);
+		\draw [style=arrow] (1) to (3);
+		\draw [style=arrow, bend right=270, looseness=1.75] (3) to (0);
+	\end{pgfonlayer}
+\end{tikzpicture}

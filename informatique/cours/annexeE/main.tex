@@ -1,0 +1,32 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\titleanx{D}{Tas et files de priorités}
+
+\begin{document} %% EXACT
+	L'objectif d'une file de priorité est de récupérer l'élément de priorité minimale.
+	On organise cette structure de données sous forme d'un arbre tournois.\footnote{Un arbre tournois n'est pas un arbre binaire de recherche.}
+	Un arbre tournois est un arbre dont la priorité d'un nœud est supérieur à celle de ses fils.
+	On impose une structure supplémentaire, l'arbre doit être parfait : l'arbre est complet jusqu'à l'avant dernier niveau, où il est replis à gauche.
+	 On définit plusieurs opérations sur cette file de priorité (de type \texttt{fp}, où les éléments sont de type \texttt{elem}) :
+	\begin{itemize}
+		\item $\texttt{insérer} : \texttt{fp} \to \texttt{elem} \to \texttt{fp}$ qui insère un élément,
+		\item $\texttt{lire\_min} : \texttt{fp} \to \texttt{elem}$ qui récupère l'élément de priorité minimale,
+		\item $\texttt{supprimer\_min} : \texttt{fp} \to \texttt{fp}$ qui supprime l'élément de priorité minimale,
+		\item ($\texttt{diminuer\_priorité} : \texttt{fp} \to \texttt{elem} \to \texttt{fp}$),\footnote{Cette opération est parfois omise car trop compliquée à implémenter.}
+		\item $\texttt{créer} : (\:) \to \texttt{fp}$.
+	\end{itemize}
+	On définit un type \texttt{btree}, représentant un arbre binaire, et on implémente les opérations ci-dessous en \textsc{OCaml}.
+	\begin{lstlisting}[language=caml,caption=Définition du type \texttt{btree}]
+type 'a btree =
+| Node of 'a * 'a btree * 'a btree
+| Empty
+	\end{lstlisting}
+	Pour l'opération \texttt{créer}, on retourne \texttt{Empty} (cela donne une complexité en $\Theta(1)$). 
+	Pour l'opération \texttt{insérer}, on insère l'élément comme feuille (de manière à conserver la propriété de l'arbre parfait), et on inverse le nœud avec son parent jusqu'à ce que la propriété soit vérifiée ($\Theta(\log_2 n)$).
+	Pour l'opération \texttt{lire\_min}, on lit la racine ($\Theta(1)$).
+	Pour l'opération \texttt{supprimer\_min}, on permute la racine et le dernier nœud (\textit{i.e.} le nœud le plus à droite de hauteur maximale), et on restore la structure d'arbre tournois en permutant un nœud et son fils de valeur minimale, et en répétant ($\Theta(\log_2 n)$).
+	Pour trouver le dernier nœud, on garde en mémoire cet emplacement.
+	On peut aussi implémenter cet algorithme avec un tableau ($\triangleright$ \textsc{tp}), ou avec une liste triée (mais la complexité est moins bien).
+\end{document}

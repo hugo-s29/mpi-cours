@@ -1,0 +1,63 @@
+\section{Sémaphore}
+
+Un sémaphore est utilisé pour assurer une propriété moins forte que le \textit{mutex} : on assure qu'il n'y a pas \guillemotleft~trop~\guillemotright\ de personnes dans la zone critique.
+On fixe un nombre maximal de fils qui sont dans la zone critique et on évite un \guillemotleft~flot~\guillemotright\ de personnes ininterrompu dans la zone critique.
+Par exemple, en \textsc{tp}, on n'a qu'un nombre limité d'ordinateurs. À l'entrée de la salle, on met à disposition les ordinateurs et chacun dépose le sien lorsqu'il a fini de l'utiliser.
+
+\begin{defn}
+	Le type de données abstrait \textsf{sémaphore} fournit
+	\begin{itemize}
+		\item le type \texttt{t} des sémaphores,
+		\item une fonction d'acquisition du sémaphore $\texttt{acquire} : \texttt{t} \to (\:)$,
+		\item une fonction de libération du sémaphore $\texttt{release} : \texttt{t} \to (\:)$,
+		\item une fonction de création/d'initialisation du sémaphore $\texttt{make} : \N\to \texttt{t}$,
+	\end{itemize}
+	tels que
+	\begin{itemize}
+		\item lors d'une tentative d'acquisition du sémaphore : si le compteur du sémaphore est nul, alors le fil d'exécution courant est mis en attente ; sinon, le compteur est décrémenté et le fil d'exécution peut continuer ;
+		\item lors de la libération du sémaphore : si un fil d'exécution est en attente, on le laisse continuer son exécution ; sinon, on incrémente le compteur.
+	\end{itemize}
+\end{defn}
+
+\begin{exm}
+	On considère deux \guillemotleft~types~\guillemotright\ de personnes. Les \textit{producteurs} qui peuvent écrire une donnée. Les \textit{consommateurs} qui récupère une donnée (qui consomme une donnée).
+	En tant que métaphore, on considère que les données sont des pommes.
+	Le producteur ne doit pas produire trop de pommes, le consommateur doit avoir des pommes à consommer.
+	On considère, à présent, l'algorithme ci-dessous.
+
+	\begin{algorithm}[H]
+		\centering
+		\begin{algorithmic}[1]
+			\Procedure{Producteur}{}
+			\State $\texttt{acquire}\ \mathrm{plein}$
+			\State $\texttt{lock}()$
+			\State Produit une pomme.
+			\State $\texttt{unlock}()$
+			\State $\texttt{release}\ \mathrm{vide}$
+			\EndProcedure
+			\bigskip
+
+			\Procedure{Consommateur}{}
+			\State $\texttt{acquire}\ \mathrm{vide}$
+			\State $\texttt{lock}()$
+			\State Mange une pomme.
+			\State $\texttt{unlock}()$
+			\State $\texttt{release}\ \mathrm{plein}$
+			\EndProcedure
+			\bigskip
+			\State $\mathrm{vide} \gets \texttt{make}\ 0$
+			\State $\mathrm{plein} \gets \texttt{make}\ \mathrm{nb\_pommes}$
+
+			\bigskip
+
+			\For{$i\in\llbracket 1,n \rrbracket$}
+			\State Soit un nouveau consommateur.\Comment{\textit{i.e.}\ un fil d'exécution qui exécute la procédure $\Call{Consommateur}{}$}
+			\EndFor
+			\For{$j\in \llbracket 1,m \rrbracket$}
+			\State Soit un nouveau producteur.\Comment{\textit{i.e.}\ un fil d'exécution qui exécute la procédure $\Call{Producteur}{}$}
+			\EndFor
+		\end{algorithmic}
+		\caption{Utilisation de la structure \textsc{sémaphore} dans une problématique producteur/consommateur}
+	\end{algorithm}
+\end{exm}
+

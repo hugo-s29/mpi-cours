@@ -1,0 +1,147 @@
+\begin{prop-defn}
+  Soit $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé, et soit $X$\/ une \textit{vard}. Si $X^2$\/ est d'espérance finie, alors $X$\/ aussi, et on appelle \textit{variance} le réel positif \[
+    \mathrm{V}(X) = \mathrm{E}\Big(\big[X - \mathrm{E}(X)\big]^2\Big) = \underbrace{\mathrm{E}(X^2) - \big(\mathrm{E}(X)\big)^2}_{\mathclap{\text{Relation de \textsc{König \& Huygens}}}} \ge 0
+  .\]
+  L'\textit{écart-type} $\sigma(X)$\/ est la racine carrée de la variance : \[
+    \sigma(X) = \sqrt{\mathrm{V}(X)}
+  .\]
+\end{prop-defn}
+
+\begin{prv}
+  On pose $\mu = \mathrm{E}(X)$, et on a $[X - \mu]^2 = X^2 - 2 \mu X + \mu^2$. D'où, par linéarité de l'espérance,
+  \begin{align*}
+    \mathrm{E}\big((X-\mu)^2\big)
+    &= \mathrm{E}(X^2 - 2\mu X + \mu^2) \\
+    &= \mathrm{E}(X^2) - 2\mu \mathrm{E}(X) + \mu^2 \\
+    &= \mathrm{E}(X^2) - 2\mu^2 + \mu^2 \\
+    &= \mathrm{E}(X^2) - \big(\mathrm{E}(X)\big)^2. \\
+  \end{align*}
+  De plus, d'après le lemme précédent, si $X^2$\/ est d'espérance finie, alors $X$\/ est d'espérance finie.
+\end{prv}
+
+\begin{rmk}
+  \begin{enumerate}
+    \item La variance mesure la \textit{dispersion}, ou l'\textit{étalement} des valeurs $a_i$\/ autour de l'espérance $\mathrm{E}(X)$. En particulier, s'il existe $a \in \R$\/ tel que $P(X = a) = 1$, alors $\mathrm{E}(X) = a$\/ et $\mathrm{V}(X) = 0$. (C'est même une équivalence.)
+    \item Si la variable $X$\/ a une unité ($\mathrm{km}/\mathrm{s}$, $\mathrm{V}/\mathrm{m}$, etc.), alors l'écart type a la même unité (d'où l'intérêt de calculer la racine carrée de la variance).
+    \item Soient $\alpha$\/ et $\beta$\/ deux réels. Si  $X^2$\/ est d'espérance finie, alors \[
+      \mathrm{V}(\alpha X + \beta) = \alpha^2\cdot  \mathrm{V}(X)
+    .\]
+    (Une translation ne change pas la dispersion des valeurs, et multiplier par un réel multiplie l'espérance, mais aussi la dispersion, d'où le carré.)
+  \end{enumerate}
+\end{rmk}
+
+\begin{exo}
+  \textsl{Montrer que
+  \begin{enumerate}
+    \item si $X \sim \mathcal{B}(n, p)$, alors $X^2$\/ est d'espérance finie et $\mathrm{V}(X) = n\cdot p\cdot q$.
+    \item si $T \sim \mathcal{G}(p)$, alors $T^2$\/ est d'espérance finie et $\mathrm{V}(T) = \frac{q}{p^2}$.
+    \item si $X \sim \mathcal{P}(\lambda)$, alors $X^2$\/ est d'espérance finie et $\mathrm{V}(X) = \lambda$.
+  \end{enumerate}
+  }
+
+  \begin{enumerate}
+    \item
+      Si $X \sim \mathcal{B}(n,p)$, alors $X(\Omega) = \llbracket 0,n \rrbracket$\/ et, pour $k \in X(\Omega)$, $P(X = k) = {n\choose k}\,p^k\,q^{n-k}$.
+      On a déjà montré que $\mathrm{E}(X) = n\cdot p$.
+      On va montrer que $\mathrm{V}(X) = n\,p\,q$.
+      La variable aléatoire $X^2$\/ est d'espérance finie car $X(\Omega)$\/ est fini.
+      Et,
+      \begin{align*}
+        \mathrm{E}(X^2) &= \sum_{k=0}^n k^2\: P(X = k)\\
+        &= \sum_{k=0}^n k^2 {n\choose p} p^k q^{n-k} \\
+        &= \ldots \\
+      \end{align*}
+      En effet, d'après la ``petite formule,'' on a \[
+        \forall k \ge 1,\quad k{n\choose k} = n{n-1 \choose k-1}
+      \] d'où, $(k-1) {n-1\choose k-1} = (n-1) \choose {n-2 \choose k-2}$. Ainsi, \[
+        \forall k \ge 2,\quad k(k-1){n\choose k} = n(n+1) {n-2\choose k-2}
+      .\] 
+    \item Si $T \sim \mathcal{G}(p)$, alors $T(\Omega) = \N^*$\/ et $\forall k \in T(\Omega)$, $P(T = k) = p \times q^{k-1}$.
+      On a déjà prouvé que $\mathrm{E}(T) = \frac{1}{p}$.
+      On veut montrer que $\mathrm{V}(T) = \frac{q}{p^2}$. Montrons que la variable $T^2$\/ possède une espérance : la série $\sum k^2\: P(T = k)$\/ converge absolument car $k^2 \:P(T = k) = k^2 \cdot p \cdot q^{k-1}$.
+      Or, pour $k \ge 2$, $\frac{\mathrm{d}^2}{\mathrm{d}x^2} x^k = k(k-1)\,x^{k-2}$. Et, on peut dériver terme à terme une série entière sans changer son rayon de convergence, et la série $\sum x^k$\/ a pour rayon de convergence 1. D'où, $\sum k(k-1)\, x^{k-2}$\/ a pour rayon de convergence 1. Or, $q \in {]0,1[} \subset {]-1,1[}$\/ donc la série $\sum k(k-1)q^{k-2}$\/ converge. De plus, $\sum k (k-1)\, q^{k-2} = \sum k^2\,q^{k-2} - \sum k\,q^{k-2}$.
+      D'où,  $\sum k^2 q^{k-2} = \sum k(k-1)\, q^{k-2} + \sum k\,q^{k-2}$, qui converge. Par suite,
+      \begin{align*}
+        \sum_{k=1}^\infty k^2\, P(T = k) &= \sum_{k=1}^\infty k^2\,p\,q^{k-1}\\
+        &= p + pq \sum_{k=2}^\infty k^2 q^{k-2} \\
+        &= p + pq \sum_{k=2}^\infty k(k-1)\,q^{k-2} + p\sum_{k=2}^\infty k\,q^{k-1} \\
+        &= p + pq\, \frac{2}{(1-q)^3} + p\left(\frac{1}{(1-q)^2} - 1 \right) \rlap{\quad\quad \text{\textit{c.f.} en effet après}}\\
+        &= p + pq\, \frac{2}{p^3} + p\left( \frac{1}{p^2} - 1 \right) \\
+        &= \frac{2q}{p^2} + \frac{1}{p} \\
+        &= \frac{2q + p}{p^2} \\
+        &= \frac{2q + (1-q)}{p^2} \\
+        &= \frac{q+1}{p^2}. \\
+      \end{align*}
+      En effet, $\forall x \in {]-1,1[}$, $\sum_{k=0}^\infty x^k = \frac{1}{1-x}$. D'où, pour $x \in {]-1,1[}$, \[
+        \sum_{k=1}^\infty k\,x^{k-1} = \frac{1}{(1-x)^2}
+        \quad \text{ et }\quad
+        \sum_{k=2}^\infty k(k-1)\,x^{k-2} = \frac{2}{(1-x)^3}
+      .\]
+      Ainsi, $\mathrm{E}(T^2) = \frac{q^{+1}}{p^2}$. D'où
+      \begin{align*}
+        \mathrm{V}(T) &= \mathrm{E}(T^2) - \big(\mathrm{E}(T)\big)^2 \\
+        &= \frac{q+1}{p^2} - \left( \frac{1}{p} \right)^2 \\
+        &= \frac{q}{p^2} \\
+      \end{align*}
+    \item À tenter
+  \end{enumerate}
+\end{exo}
+
+
+\section{Les inégalités de \textsc{Markov} et de \textsc{Bienaymé}--\textsc{Tchebychev}, inégalités de concentration}
+
+\begin{lem}[Markov]
+  Soit $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé, et soit $X$\/ une variable aléatoire \underline{positive}.
+  Si $X$\/ est d'espérance finie, alors \[
+    \forall a > 0, \quad P(X \ge a) \le \frac{\mathrm{E}(X)}{a}
+  .\]
+\end{lem}
+
+\begin{prv}
+  On suppose $X$\/ d'espérance finie. Ainsi, on a \[
+    \mathrm{E}(X) = \sum_{x \in X(\Omega)} x\:P(X = x)
+  .\]
+  Soit $I$\/ l'ensemble $I = \{x \in X(\Omega) \mid x \ge a\}$.
+  Alors, \[
+    \mathrm{E}(X) = \underbrace{\sum_{x \in I} x\:P(X = x)}_{\text{ ici } x \ge a} + \underbrace{\sum_{x \in X(\Omega) \setminus I} x\:P(X = x)}_{\ge 0 \text{ par hypothèse}}
+  .\]
+  D'où, \[
+    \mathrm{E}(X) \ge \sum_{x \in I} x\:P(X = x) \ge \sum_{x \in I} a\: P(X = x) = a \sum_{x \in I} P(X = x) \ge a\:P(x \ge a)
+  .\]
+\end{prv}
+
+\begin{prop}[\textsc{Bienaymé--Tchebychev}]
+  Soit $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé, et soit $X$\/ une \textit{vard}. Si $X^2$\/ est d'espérance finie, alors \[
+    \forall a > 0, \quad\quad P\Big(\big|X - \mathrm{E}(X)\big| \ge a\Big) \le \frac{\mathrm{V}(X)}{a^2}
+  .\]
+\end{prop}
+
+\begin{prv}
+  On pose $\mu = \mathrm{E}(X)$.
+  L'événement $\big(|X - \mu| \ge a\big) = \big((X - \mu)^2 \ge a^2\big)$, d'où, les probabilités \[
+    P\big(|X - \mu| \ge a\big) = P\big(\underbrace{(X - \mu)^2}_{\ge 0} \ge \underbrace{a^2}°{\ge 0}\big).
+  \] On valide donc \textit{une} des hypothèses de l'inégalité de \textsc{Markov}.
+  De plus, l'autre hypothèse est vérifiée : $X^2$\/ est d'espérance finie, donc $(X - \mu)^2$\/ aussi. On en déduit, d'après le lemme de \textsc{Markov}, que \[
+    P\big((X-\mu)^2 \ge a^2\big) \le \frac{\mathrm{E}\big((X-\mu)^2\big)}{a^2} = \frac{\mathrm{V}(X)}{a^2}
+  .\]
+\end{prv}
+
+\section{Série génératrice}
+
+\begin{defn}
+  Soit $X$\/ une \textit{vad} telle que $X(\Omega) \subset \N$. La \textit{série génératrice} de $X$\/ est la série entière $\sum a_n x^n$ de coefficients $a_n = P(X = n)$.
+\end{defn}
+
+
+La série $\sum a_n$\/ converge car sa somme vaut $\sum_{n=0}^\infty a_n = 1$. D'où, 
+\begin{itemize}
+  \item le rayon de convergence $R$\/ de la série est supérieur ou égal à 1.
+  \item la série génératrice converge normalement sur $[-1,1]$, car la série $\sum |a_n|$\/ converge, or, $\forall x \in [-1,1]$, $|p_nt^n| \le |p_n|$, d'où la convergence normale.
+    D'où la \textit{fonction génératrice} \[
+      \mathrm{G}_X \colon t \longmapsto \sum_{n=0}^\infty p_n t^n
+    \] est définie et même continue sur $[-1,1]$, car la convergence est uniforme.
+  \item la fonction génératrice $\mathrm{G}_X$\/ est de classe $\mathcal{C}^\infty$\/ sur $]-1,1[$\/ et \[
+      \forall k \in \N,\quad P(X = k) = a_n \frac{{\mathrm{G}_X}^{(k)}(0)}{k!}
+    .\] La fonction génératrice de $X$\/ permet donc de retrouver la loi de probabilité de $X$.
+\end{itemize}
+

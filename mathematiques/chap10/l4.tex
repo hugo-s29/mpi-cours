@@ -1,0 +1,110 @@
+\section{(Ne pas) être développable en série entière}
+
+\begin{defn}
+	Soit $r \in \R_*^+ \cup \{+\infty\} $. On dit qu'une fonction $f$\/ est \textit{développable en série entière} sur $]-r,r[$\/ s'il existe une série entière $\sum a_n x^n$\/ qui a un rayon de convergence $R \ge r$\/ telle que \[
+		\forall x \in {]-r,r[},\quad f(x) = \sum_{n=0}^\infty a_n x^n
+	.\]
+\end{defn}
+
+\begin{exm}
+	$\O$
+\end{exm}
+
+\begin{rmk}
+	$\O$\/
+\end{rmk}
+
+\begin{exo}
+	Soit $f : \begin{array}{rcl}
+		\R &\longrightarrow& \R \\
+		x &\longmapsto& \begin{cases}
+			\mathrm{e}^{-1 / x^2}&\text{ si } x \neq 0\\
+			0 &\text{ si } x = 0
+		\end{cases}
+	\end{array}$
+
+	\begin{enumerate}
+		\item Montrons que, pour $n \in \N$, $f$\/ est $\mathcal{C}^n$\/ sur $\R^*$, et il existe un polynôme $P_n$\/ tel que $\forall x \neq 0$, $f^{(n)}(x) = P_n(x)\:\frac{1}{x^{3n}}\: \mathrm{e}^{- 1 / x^2}$.
+			\begin{itemize}
+				\item Pour $n = 0$, alors $f^{(0)}(x) = \mathrm{e}^{- 1 / x^2} = \frac{1}{x^{3\times 0}}\times \mathrm{e}^{-1 / x^2}$, d'où $P_0(X) = 1$.
+				\item On suppose $f^{(n)}(x) = \frac{P_n(x)}{x^{3n}} \mathrm{e}^{-1/x^2}$. D'où $f^{(n)}$\/ est de classe $\mathcal{C}^1$\/ et
+					\begin{align*}
+						f^{(n+1)}(x) &= \frac{\mathrm{d}}{\mathrm{d}x} f^{(n)}(x) \\
+						&= \frac{\mathrm{d}}{\mathrm{d}x}\big[P_n(x) x^{-3n} \mathrm{e}^{- 1 / x^2}\big] \\
+						&= \frac{\mathrm{d}}{\mathrm{d}x} \big[P_n(x) x^{-3n}\big] + P_n(x) x^{-3n} \times \frac{2}{x^3} \mathrm{e}^{-1/x^2} \\
+						&= \Big( P'_n(x) x^{-3n} - 3n P_n(x) x^{-3n-1} + 2P_n(x) x^{-3n-3}\Big)\mathrm{e}^{- 1 / x^2} \\
+						&= \frac{x^3 P'_n(x) - 3n x^2P_n(x) + 2P_n(x)}{x^{3n+3}} \mathrm{e}^{ - 1/x^2} \\
+						&= \frac{P_{n+1}(x)}{x^{3(n+1)}} \mathrm{e}^{- 1 / x^2} \\
+					\end{align*}
+			\end{itemize}
+		\item Par récurrence :
+			\begin{itemize}
+				\item $f^{(0)}(0) = f(0) = 0$\/ par définition, et $f(x) = \mathrm{e}^{- 1 / x^2} \tendsto{x\to 0} 0 = f(0)$, donc $f$\/ est $\mathcal{C}^0$.
+				\item On suppose $f$\/ $\mathcal{C}^n$\/ sur $\R$\/ et $f^{(n)}(0) = 0$. On sait que, $f^{(n)}$\/ est continue sur $\R$\/ par hypothèse, $f^{(n)}$\/ est dérivable sur $\R^*$\/ car $f$\/ est $\mathcal{C}^\infty$\/ d'après la question 1. Et,
+					\begin{align*}
+						\frac{\mathrm{d}}{\mathrm{d}x} f^{(n)}(x) &= f^{(n+1)}(x) \\
+						&= \frac{P_{n+1}(x)}{x^{3n+3}} \mathrm{e}^{ - 1/x^2} \\
+						&\tendsto{x\to 0} 0 \text{ par croissances comparées}.
+					\end{align*}
+			\end{itemize}
+		\item $f$\/ est $\mathcal{C}^\infty$\/ mais pas développable en série entière. Par l'absurde, si $f$\/ est développable en série entière, alors $f(x) = \sum_{n=0}^\infty a_n x^n$\/ et $a_n = \frac{f^{(n)}(0)}{n!} = 0$, d'où $\forall x$, $f(x) = 0$, ce qui est absurde.
+	\end{enumerate}
+\end{exo}
+
+\begin{rap}[Théorème de la limite de la dérivée]
+	Si $f$\/ est continue sur $[a,b]$, dérivable sur $]a,b[$ et
+	\begin{enumerate}
+		\item $\lim_{x\to a^+} f'(x) = \ell \in \R$, alors $f$\/ est dérivable en $a$\/ et $f'(a) = \ell$.
+		\item $\lim_{x\to a^+} f'(x) = \pm \infty$, alors $f$\/ n'est pas dérivable en $a$, et la courbe possède une tangente verticale.
+		\item $\lim_{x\to a^+} f'(x)$\/ n'existe pas, alors on ne peut pas conclure.
+	\end{enumerate}
+\end{rap}
+
+\begin{prop}
+	Une fonction $f$\/ est développable en série entière sur $]-r,r[$\/ si, et seulement si
+	\begin{enumerate}
+		\item $f$\/ est $\mathcal{C}^\infty$\/ sur $]-r,r[$\/
+		\item $\forall x \in {]-r,r[}$, $R_N(x) \tendsto{N\to \infty} 0$\/ où $R_N(x) = f(x) - \sum_{n=0}^N \frac{f^{(n)}(0)}{n!} x^n$.
+	\end{enumerate}
+\end{prop}
+
+\noindent
+En effet, on a \[
+	f(x) = \sum_{n=0}^N \frac{f^{(n)}(0)}{n!} x^n + R_N(x),
+\] ainsi $\sum_{n=0}^N f^{n}(0) / n! \tendsto{N\to \infty} f(x) \iff R_N(x)\tendsto{N\to \infty} 0$.
+
+\begin{rap}[Formules de \textsc{Taylor}]
+	\ul{Formule de \textsc{Taylor-Young}} : si $f$\/ est de classe $\mathcal{C}^n$, alors
+	\begin{align*}
+		f(x) &= f(0) + \po(1)\\
+		&= f(0) + x\: f'(0) + \po(x)\\
+		&= f(0) + x\: f'(0) + \frac{x^2}{2!}\:f''(0) + \po(x^2)\\
+		&= f(0) + x\: f'(0) + \frac{x^2}{2!}\:f''(0) + \cdots + \frac{x^n}{n!}\:f^{(n)}(0) + \po(x^n)
+	\end{align*}
+	\ul{Formule de \textsc{Taylor} avec reste intégral\footnote{aussi appelé formule de \textsc{Taylor-Laplace}}} : si $f$\/ est de classe $\mathcal{C}^{n+1}$, alors
+	\begin{align*}
+		f(x) &= f(0) + \int_{0}^{x} f'(t)~\mathrm{d}t \\
+		&= f(0) + x\:f'(0) + \int_{0}^{x} (x-t)\: f''(t)~\mathrm{d}t \\
+		&= f(0) + x\:f'(0) + \frac{x^2}{2!}\: f''(0) + \int_{0}^{x} \frac{(x-t)^2}{2!}\: f'''(t)~\mathrm{d}t \\
+		&= f(0) + x\:f'(0) + \cdots + \frac{x^n}{n!}\: f^{(n)}(0) + \int_{0}^{x} \frac{(x-t)^n}{n!}\: f^{(n+1)}(t)~\mathrm{d}t \\
+	\end{align*}
+\end{rap}
+
+\begin{exo}
+	\begin{enumerate}
+		\item Montrons que, pour $x \in \R$, $\cos x = \sum_{n=0}^\infty (-1)^n \frac{x^{2n}}{(2n)!}$.
+			Pour $n \in \N$, $R_n(x) = \int_{0}^{x} \frac{(x-t)^n}{n!}\: \cos^{(n+1)}(t)~\mathrm{d}t$\/ car $\cos$\/ est $\mathcal{C}^{n+1}$.
+			Soit $x \in \R$. Montrons que $R_n(x) \tendsto{n\to \infty} 0$.
+			\begin{align*}
+				0 \le |R_n(x)| &= \bigg| \int_{0}^{x} \frac{(x-t)^n}{n!} \cos^{(n+1)}(t)~\mathrm{d}t \bigg|\\
+				&\le \bigg|\int_{0}^{x} \left| \frac{(x-t)^n}{n!}\: \cos ^{(n+1)}(t) \right|~\mathrm{d}t\bigg|\\
+				&\le \bigg|\int_{0}^{x} \frac{|x-t|^n}{n!}~\mathrm{d}t\bigg|
+			\end{align*}
+			car $|\cos^{(n+1)}(t)| \le 1$, $\forall t \in [0,x]$.
+			D'où, \[
+				0 \le |R_n(x)| \le \bigg| \int_{0}^{x} \frac{x^n}{n!}~\mathrm{d}t \bigg| = \frac{|x|^{n+1}}{n!} \tendsto{n\to \infty} 0
+			,\] car on sait que la série $\sum \frac{x^n}{n!}$\/ converge, donc le terme général tend donc vers 0.
+			Donc $\cos$\/ est développable en série entière sur $\R$.
+		\item De même pour $\sin$.
+	\end{enumerate}
+\end{exo}

@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (5, 0) {5};
+		\node [style=new style 0] (1) at (2, 0) {4};
+		\node [style=new style 0] (2) at (2, -2) {1};
+		\node [style=new style 0] (3) at (-1, 0) {2};
+		\node [style=new style 0] (4) at (0, -2) {3};
+		\node [style=new style 0] (5) at (-2, -2) {0};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=arrow, in=135, out=45, loop] (3) to ();
+		\draw [style=arrow, in=135, out=45, loop] (1) to ();
+		\draw [style=arrow, in=135, out=45, loop] (0) to ();
+		\draw [style=arrow] (1) to (2);
+		\draw [style=arrow] (3) to (4);
+		\draw [style=arrow] (3) to (5);
+	\end{pgfonlayer}
+\end{tikzpicture}

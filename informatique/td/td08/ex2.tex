@@ -1,0 +1,69 @@
+\section{Optimisation linéaire en nombres entiers}
+
+\begin{enumerate}
+	\item Montrons $\textsc{SysLin} \preceq_\mathrm{p} \textsc{SysLinIneg}$. Soient $n$, $m$, $A$\/ et $b$\/ les entrées du problème \textsc{SysLin}.
+		Fabriquons, en temps polynômial, les entrées $n',m',A', b'$\/ du problème \textsc{SysLinIneg} : on choisit $n' = 2n$, $m' = m$, $A' = {A \choose -A}$\/ et $b' = {b\choose -b}$.
+		Ainsi,
+		\begin{align*}
+			(n',m',A',b') \in \textsc{SysLinIneg}^+
+			&\iff \exists X,\: A'X \le b'\\
+			&\iff \exists X,\: AX \le b \text{ et } -AX \le -b\\
+			&\iff \exists X,\: AX = b\\
+			&\iff (n,m,A,b) \in \textsc{SysLin}^+
+		\end{align*}
+\end{enumerate}
+
+\begin{comment}
+\begin{enumerate}
+	\item Soient $(n,m) \in \N^2$, $A \in \mathcal{M}_{n,m}$\/ et $b \in \mathcal{M}_{n,1}$\/ une entrée du problème \textsc{SysLin}.
+		Construisions, en temps polynômial, les entrées $(n,m,A,b)$\/ et $(n,m,-A,-b)$\/ du problème \textsc{SysLinIneg}.
+		On a 
+		\begin{align*}
+			&\big((n,m,A,b),(n,m,-A,-b)\big) \in (\textsc{SysLinIneg}^+)^2\\
+			\iff& \exists X, X',\: AX \le b \text{ et } -AX' \le -b \\
+			\iff& \exists X,X',\: AX \le b \text{ et } AX' \ge b \\
+			\iff& \exists X,\: AX = b \\
+			\iff& (n,m,A,b) \in \textsc{SysLin}^+. \\
+		\end{align*}
+		D'où la réduction polynomiale $\textsc{SysLin} \preceq_{\mathrm{p}} \textsc{SysLinIneg}$.
+	\item La réduction $\textsc{SysLinIneg} \preceq_{\mathrm{p}} \textsc{SysLinGénéralisé}$ avec le choix ${\bowtie} = ({\le},{\le},\ldots,{\le})$.
+		On s'intéresse à l'autre réduction.
+		Soit $(n,m,A,b,{\bowtie})$\/ une entrée du problème \textsc{SysLinGénéralisé}. On construit, en temps polynômal, les entrées $(n,m,A',b')$\/ et $(n, m, A'', b'')$\/ du problème \textsc{SysLinIneg} en posant
+		\begin{align*}
+			\forall i \in \llbracket 1,n \rrbracket,\:\forall j \in \llbracket 1,m \rrbracket,\: &A'_{i,j} = \begin{cases}
+				0 \text{ si } {\bowtie_i} = {\ge}\\
+				A_{i,j} \text{ sinon}
+			\end{cases}\\
+			&A''_{i,j} = \begin{cases}
+				0 \text{ si } {\bowtie_i} = {\ge}\\
+				-A_{i,j} \text{ sinon}
+			\end{cases}\\
+			&b'_i = \begin{cases}
+				0 \text{ si } {\bowtie_i} = {\ge}\\
+				b_i \text{ sinon}
+			\end{cases}\\
+			&b''_i = \begin{cases}
+				0 \text{ si } {\bowtie_i} = {\ge}\\
+				-b_i \text{ sinon}.
+			\end{cases}
+		\end{align*}
+		Ainsi, on a
+		\begin{align*}
+			&\big((n,m,A',b'),(n,m,A'',b'')\big) \in (\textsc{SysLinIneg}^+)^2\\
+			\iff& \exists X',X'',\: A'X' \le b' \text{ et } A''X'' \le b''  \\
+			\iff& \exists X,\: AX \bowtie b \\
+			\iff& (n,m,A,b) \in \textsc{SysLinGénéralisé}^+. \\
+		\end{align*}
+		D'où, $\textsc{SysLinGénéralisé} \equiv_\mathrm{p} \textsc{SysLinIneg}$.
+	\item On pose $\mathcal{C}$\/ l'ensemble des matrices $n \times m$\/ encodées lignes par lignes sous forme de chaînes de caractères.
+		Une définition précise du polynôme $P$\/ est complexe à donner mais, on trouve aisément que la relation entre la taille d'une entrée du problème \textsc{SysLin} et la taille d'un mot de $\mathcal{C}$\/ est polynomiale.
+		Ainsi, on a la relation \[
+			\forall (A,b) \in \textsc{SysLin},\:\exists X \in \mathcal{C},\: |X| \le P(|\texttt{serialise}(A,b)|), \text{ et } AX = b
+		.\]
+		Le problème de vérification, étant donné $A \in \mathcal{M}_{n,m}$, $X \in \mathcal{M}_{m,1}$\/ et $b \in \mathcal{M}_{n,1}$, vérifier que $A\cdot X = b$\/ est vérifiable en temps polynômial.
+		Ainsi, on a montré que $\textsc{SysLin} \in \text{\textbf{NP}}$.
+		On procède de même pour montrer que les autres problèmes sont \textbf{NP}.
+	\item 
+\end{enumerate}
+\end{comment}
+

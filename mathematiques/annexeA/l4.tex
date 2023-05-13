@@ -1,0 +1,106 @@
+\begin{prop}
+	Dans l'anneau commutatif $(A, +, \times)$, la somme de deux idéaux et l'intersection de deux sont encore un idéal. En particulier, dans l'anneau $(\Z, +, \times)$ des entiers relatifs, \[
+		\forall (p,q) \in \Z^2,\quad p \Z + q \Z = \mathrm{pgcd}(p,q)\:\Z \quad\quad \text{ et } \quad\quad p \Z \cap q \N = \mathrm{ppcm}(p,q)\:\Z
+	\]
+	car $d  \mid p \iff p \Z \subset d \Z$ (\textit{i.e.} tout multiple de $p$ est un multiple de $d$).\footnotemark
+\end{prop}
+\footnotetext{Rappel : $d  \mid p$ si, et seulement si, $d$ divise $p$ si, et seulement si, $p$ est un multiple de $d$ si, et seulement si, il existe $k \in \Z$ tel que $p = k \times d$.}
+
+\begin{prv}
+	Soient $I$ et $J$ deux idéaux. L'intersection de deux sous-groupes est un sous-groupe. De plus, pour tout élément $i$ de $I \cap J$, pour tout élément $a$ de $A$, on a $a \times i \in I$ car $I$ est un idéal, et $a \times i \in J$ car $J$ est un idéal. D'où, $I \cap J$ est un idéal.
+	De plus, pour tout élément $i + j$ de $I + J$, on a $(i + j) \times a = i a + j a \in I + J$.
+
+	Montrons $p\Z + q \Z = \mathrm{pgcd}(p,q)\:\Z$. On pourra montrer, d'une manière similaire, $p \Z \cap q\Z = \mathrm{ppcm}(p,q)\:\Z$.
+	On sait que $p \Z + q \Z$ est un idéal de $\Z$, il existe $d \in \Z$ tel que $p\Z + q\Z = d \Z\quad(\heartsuit)$.
+	Montrons que $d = \mathrm{pgcd}(p,q) = p \wedge q$.
+	D'après $(\heartsuit)$, il en résulte que $p \Z \subset d \Z$, d'où $p  \mid d$ ; et, $q \Z \subset d \Z$, d'où $d  \mid q$.
+	Ainsi, $d$ est un diviseur commun à $p$ et $q$. Montrons que c'est le plus grand.
+	On suppose que $\delta$ est un diviseur commun à $p$ et $q$. On veut montrer que $\delta  \mid d$.
+	Ainsi, $\delta  \mid p$ et $\delta  \mid q$, alors $\delta$ est un diviseur de tout élément de $p\Z + q\Z$ et en particulier de $d$.
+	D'où, $\delta  \mid  d$.
+\end{prv}
+
+\begin{crlr}~\\[-2\baselineskip]
+	\begin{description}
+		\item[Lemme de Bézout.] Deux entiers relatifs $a$ et $b$ sont premiers entre eux si, et seulement si, il existe $(u,v) \in \Z^2$ tels que $a \times u + b \times v = 1$.
+		\item[Lemme de Gau\ss.] Si $a  \mid bc$ et $a$ est premier avec $b$, alors $a  \mid c$.
+	\end{description}
+\end{crlr}
+
+\begin{prv}~\\[-2\baselineskip]
+	\begin{description}
+		\item[Lemme de Bézout.] D'une part, si $a \wedge b = 1$, alors $a\Z + b\Z = 1\Z$ et en particulier $1 \in 1 \Z$. D'autre part, si $a u + bv = 1$, alors $a \Z + b\Z = \Z$ d'où $a \wedge b = 1$.
+		\item[Lemme de Gau\ss.] On a $a \wedge b$ d'où, d'après le théorème de Bézout, il existe $(u,v) \in \Z^2$, tels que $au + bv = 1$. Ainsi, $ac u + bc v = c$.
+			Or, $a  \mid  bc$, et $a  \mid ac$ d'où $a  \mid c$.
+	\end{description}
+\end{prv}
+
+\begin{exo}
+	\begin{slshape}
+		Montrer que, si $b$ et $c$ sont premiers entre eux et divisent $a$, alors $bc$ divise $a$.
+	\end{slshape}
+
+	Comme $b \mid a$, il existe $k \in \Z$ tel que $a = kb$.
+	De plus, $b \wedge c = 1$, et $c  \mid a = kb$, d'où $c  \mid k$.
+	Il existe donc $k' \in \Z$ tel que $k = k'\:c$.
+	Ainsi, $a = kk'bc$, d'où $bc  \mid  a$.
+\end{exo}
+
+\section{L'anneau $\sfrac\Z{n\Z}$}
+
+\begin{defn}
+	Soit $n \in \N^*$. La relation $x \equiv a \mod n$ (\guillemotleft~$x$ est congru à $a$ modulo $n$~\guillemotright) définie par $n  \mid (x-a)$ est une relation d'équivalence sur $\Z$. L'ensemble $\bar{a} = \{x \in \Z \mid x \equiv a \mod n\}$ est la \textit{classe d'équivalence} de $a$. L'ensemble $\{\bar 1, \bar 2, \ldots, \bar{n} \}$ des classes d'équivalences est noté $\sfrac\Z{n\Z}$.
+\end{defn}
+
+Ainsi, $\bar{x} = \bar{y} \iff x \equiv y \mod n$.
+De plus, si $x \equiv a \mod n$ et $y \equiv b \mod n$, on a $(x + y) \equiv (a + b) \mod n$, on note donc $\bar{x} + \bar{y} = \overline{x+y}$.
+De même pour le produit.
+
+\begin{prop}
+	Un entier $x \in \Z$ est premier avec $n \in \N^*$ si, et seulement si, $\bar{x} \in \sfrac\Z{n\Z}$ est inversible. Par suite, l'ensemble $\sfrac \Z {n\Z}$ est un corps (aussi noté $\mathds{F}_n$) si, et seulement si, $n \in \N^*$ est un nombre premier.
+\end{prop}
+\marginpar{\tiny Contre-exemple : avec le corps nul $\mathds{O} = \{\bar 0\} $, ce théorème est faux.}
+
+\begin{prv}
+	\begin{align*}
+		\bar{x} \in \sfrac \Z {n\Z} \text{ est inversible}
+		\iff& \exists u \in \Z,\: \bar{u} \times \bar{x} = \bar 1 \\
+		\iff& \exists u \in \Z,\: \overline{u \times x} = \bar 1 \\
+		\iff& \exists u \in \Z,\: u \times x \equiv 1 \mod n \\
+		\iff& \exists u \in \Z,\:\exists k \in \Z,\: u \times x = 1 + k \times n \\
+		\iff& \exists (u,k) \in \Z^2,\: u \times x - k \times n = 1 \\
+		\iff& x \land n = 1 \\
+	\end{align*}
+	En particulier, tous les éléments non nuls de $\sfrac \Z{n\Z}$ sont inversibles.
+\end{prv}
+
+\begin{thm}[Théorème chinois]
+	Si $a$ et $b$ sont premiers entre eux, alors deux congruences modulo $a$ et modulo $b$ équivalent à une congruence modulo $ab$ car les anneaux $\sfrac\Z{ab\,\Z}$ et $\sfrac\Z{a\Z} \times \sfrac\Z{b\Z}$ sont isomorphes.
+\end{thm}
+
+\begin{prv}
+	Pour tout $x \in \Z$, on note $\pi_a(x) \in \sfrac \Z{a\Z}$ la classe d'équivalence de $x$ dans $\sfrac\Z{a\Z}$ ; de même, on note $\pi_b(x) \in \sfrac \Z{b\Z}$\/ et $\pi_{ab}(x) \in \sfrac \Z{(ab)\Z}$.
+	On construit la fonction \begin{align*}
+		f: \sfrac\Z_{a\Z} \times \sfrac \Z{b\Z} &\longrightarrow \sfrac\Z{(ab)\Z} \\
+		\big(\pi_a(x), \pi_b(x)\big) &\longmapsto \pi_{ab}(x).
+	\end{align*}
+	Elle est bien définie car : si $\pi_a(y) = \pi_a(x)$ et $\pi_b(y) = \pi_b(x)$, alors $y \equiv x \mod a$ et $y \equiv x \mod b$, d'où il existe $k \in \Z$ tel que $y = x + ka$ et il existe $\ell \in \Z$ tel que $y = x + \ell b$, donc $ka = \ell a$ et donc $b  \mid ka$ ; et, $a \wedge b$, par le théorème de Gauss, on a $b  \mid k$, il existe donc $m \in \Z$ tel que $k = mb$ donc $y = x + m \cdot ab$, d'où $\pi_{ab}(y) = \pi_{ab}(x)$.
+	L'application $f$ est un morphisme d'anneaux par les propriétés des classes d'équivalences vues précédemment ($\bar{x} + \bar{y} = \overline{x + y}$ et $\bar{x} \times \bar{y} = \overline{x \times y}$), et par construction.
+	De plus, $f$ est injective car $\Ker f = \{(0,0)\}$ ($x \equiv 0 \mod {ab}$ implique $x \equiv 0 \mod a$ et $x \equiv 0 \mod b$).
+	De plus, $\Card(\sfrac\Z{a\Z} \times \sfrac\Z{b\Z}) = a \times b = \Card(\sfrac\Z{(ab)\Z})$.
+	D'où, $f$ est bijective.
+\end{prv}
+
+\begin{exo}
+	\begin{slshape}
+		Déterminer tous les entiers relatifs tels que $x \equiv 2 \mod 4$ et $x \equiv 3 \mod 5$.
+	\end{slshape}
+
+	On note $(S)$ le système $x \equiv 2 \mod 4$ et $x \equiv 3 \mod 5$, $(S_1)$ et $(S_2)$ les deux équations.
+	Comme $4 \wedge 5 = 1$, d'après le théorème chinois, le système $(S)$ est équivalent à $x \equiv {?} \mod {4 \times 5}$.
+	\begin{description}
+		\item[1ère méthode.] (On devine \guillemotleft~$?$~\guillemotright.) Avec 18 est une solution car $18 \equiv 2 \mod 4$ (car $4  \mid (18 - 2)$) et $18 \equiv 3 \mod 5$ (car $5  \mid (18 - 3)$).
+		\item [2nde méthode.] Analyse. L'équation $(S_1)$ est équivalente à $\exists t \in \Z,\: x = 2 + 4 t$. On choisit ce $t$. D'où, d'après l'équation $(S_2)$, on a $2 + 4t \equiv 3 \mod 5$, d'où $4t \equiv 1 \mod 5$. Or, $\bar 4$ est inversible dans $\sfrac\Z{5\Z}$, car $4 \wedge 5 = 1$. On trouve cet inverse : $4$. Ainsi, $t \equiv 4 \mod 5$. Synthèse : \textit{c.f.} 1ère méthode.
+	\end{description}
+\end{exo}
+

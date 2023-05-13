@@ -1,0 +1,124 @@
+On rappelle qu'il existe des séries numériques $\sum u_n$, des séries de fonctions $\sum f_n$\/ (à ne pas confondre avec la série numérique $\sum f_n(x)$). Dans ce chapitre, on s'intéresse à un cas particulier de séries de fonctions, celles de la forme $\sum a_n x^n$\/ (qui est un abus de langage, il ne s'agit pas d'une série numérique malgré son apparence). Ainsi, la somme des termes de cette série est de la forme \[
+	\sum_{k=0}^\infty a_n x^n = a_0 x^0 + a_1 x + a_2 x^2 + a_3x^3 + a_4 x^4 + \cdots
+.\]
+Si, à partir d'un certain rang, la suite $(a_n)_{n\in\N}$\/ est nulle, alors il s'agit d'un polynôme. Une série entière est une généralisation des polynômes. Toute troncature de la somme des termes d'une série entière est un développement limité.
+
+\begin{defn}
+	Une série de fonctions $\sum f_n$\/ est appelée \textit{série entière} s'il existe une suite de réels $(a_n)_{n\in\N}$\/ tels que  \[
+		\forall n \in \N,\:\forall x \in \R,\quad f_n(x) = a_n\:x^n
+	.\]
+\end{defn}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|}\hline
+		\textbf{Somme} & \textbf{Rayon de convergence}\\ \hline \hline
+		$\ds\frac{1}{1-x} = \sum_{k=0}^\infty x^k$\/ & 1\\
+		$\ds\frac{1}{1+x} = \sum_{k=0}^\infty (-1)^k\:x^k$\/ & 1\\
+		$\ds\frac{1}{1+x^2} = \sum_{k=0}^\infty {(-x^2)}^k$\/ & 1\\
+		$\ds\ln(1+x) = \sum_{k=1}^\infty (-1)^k \frac{x^k}{k}$\/ & 1\\
+		$\ds \Arctan x = \sum_{k=0}^\infty (-1)^k \frac{x^{2k+1}}{2k+1}$\/ & 1\\
+		$\ds \mathrm{e}^{x} = \sum_{k=0}^\infty \frac{x^k}{k!}$\/ & $\infty$\/ \\
+		$\ds \ch x = \sum_{k=0}^\infty \frac{x^{2k}}{(2k)!}$\/ & $\infty$\/ \\
+		$\ds \sh x = \sum_{k=0}^\infty \frac{x^{2k+1}}{(2k+1)!}$\/ & $\infty$\/ \\
+		$\ds \cos x = \sum_{k=0}^\infty (-1)^k \frac{x^{2k}}{(2k)!}$\/ & $\infty$\/ \\
+		$\ds \sin x = \sum_{k=0}^\infty (-1)^k \frac{x^{2k+1}}{(2k+1)!}$\/ & $\infty$\/ \\
+		$\ds(1+x)^{\alpha} = 1 + \sum_{k=1}^\infty \big(\alpha (\alpha-1)\cdots (\alpha - k + 1)\big) \frac{x^k}{k!}$\/ & 1\\ \hline
+	\end{tabular}
+	\caption{Séries entières usuelles}
+\end{table}
+
+\begin{exo}
+	On admet les formules de la table précédente. On applique la formule de la dernière ligne dans le cas $\alpha = - 1 / 2$ :
+	\begin{align*}
+		\forall x \in {]-1,1[},\: &\mathrel{\phantom=}\frac{1}{\sqrt{1-x}}\\
+		&= 1 + \alpha (-x) + \frac{\alpha (\alpha - 1)}{2!}(-x)^2 + \cdots + \frac{\alpha (\alpha-1) \cdots \big(\alpha - (n-1)\big)}{n!} (-x)^n + \cdots \\
+		&= 1 + \frac{1}{2} \sum_{n=1}^\infty \frac{\left( \frac{1}{2} + 1 \right) \cdots (\frac{1}{2} + n - 1)}{n!} x^n  \\
+		&= 1 + \frac{1}{2} \sum_{n=1}^\infty\frac{3 \times \cdots \times (2n - 1)}{2^n \times n!} x^n \\
+		&= 1 + \frac{1}{2} \sum_{n=1}^\infty \frac{1 \times 2 \times 3 \times \cdots \times (2n-1)\times 2n}{2^n \times n! \times 2 \times 4 \times \cdots \times (2n-2) \times 2n} x^n \\
+		&= 1 + \frac{1}{2} \sum_{n=1}^\infty \frac{(2n)!}{n! \times 2^n \times 2^n(n!)} x^n \\
+		&= 1 + \frac{1}{2} \sum_{n=1}^\infty {2n \choose n} \frac{x^n}{4^n}.
+	\end{align*}
+\end{exo}
+
+\section{Rayon de convergence}
+
+\begin{lem}[d'\textsc{Abel}]
+	Soit un réel $x_0 > 0$. Si la suite $(a_n x_0^n)_{n\in\N}$\/ est bornée, alors la série $\sum a_n x^n$\/ converge absolument pour tout réel $x \in {]-x_0,x_0[}$.
+\end{lem}
+
+\begin{prv}
+	On veut montrer que si la suite $(a_n x_0^n)_{n\in\N}$\/ est bornée, alors, pour $x \in {]-x_0,x_0[}$, la série numérique $\sum a_n x^n$\/ converge absolument.
+	On suppose la suite $(a_nx_0^n)_{n \in \N}$\/ bornée.
+	Ainsi, il existe $M \in \R^+$\/ tel que pour tout $n \in \N$, $|a_n x_0^n| \le M$.
+	Ce lemme est vrai si $x_0 = 0$\/ ; on suppose à présent $x_0 \neq 0$.
+	Alors,
+	\[
+		|a_n x^n| = \left| a_n x^n_0\:\frac{x^n}{x_0^n} \right|
+		\le M \times \left| \frac{x}{x_0} \right|^n
+	.\]
+	Or, la série $\sum M \left| \frac{x}{x_0} \right|^n = M \sum \left| \frac{x}{x_0} \right|^n$\/ converge si $\left| \frac{x}{x_0} \right| < 1$. Donc, si $\left| \frac{x}{x_0} \right| < 1$, alors la série $\sum\:|a_n x^n|$\/ converge.
+\end{prv}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+		draw((-5, 0)--(5, 0), dashed, Arrow(TeXHead));
+		draw((-2, 0)--(2, 0));
+		draw((-2,-0.25)--(-2,0.25));
+		draw((2,-0.25)--(2,0.25));
+		label("$-R$", (-2,-0.25), align=S);
+		label("$R$", (2,-0.25), align=S);
+		label("?", (-2,0.25), align=N);
+		label("?", (2,0.25), align=N);
+		label("divergence grossière", (-4, 0), align=N);
+		label("divergence grossière", (4, 0), align=N);
+		label("convergence absolue", (0, 0), align=N);
+		label("$x$", (5, 0), align=SE);
+	\end{asy}
+	\caption{Rayon de convergence -- convergence absolue et divergence grossière}
+\end{figure}
+
+\begin{prop-defn}
+	Soit $\sum a_n x^n$\/ une série entière. Il existe un unique $R \in \bar{\R}_+ = \R_+ \cup \{+\infty\}$\/ tel que
+	\begin{itemize}
+		\item si $|x| < R$, alors la série $\sum a_n x^n$\/ converge absolument ;
+		\item si $|x| > R$, alors la série $\sum a_n x^n$\/ diverge grossièrement ;
+	\end{itemize}
+	Le réel $R$\/ est appelé \textit{rayon de convergence} de la série entière. Il vaut \[
+		R = \sup \{\:r \in \R^+  \mid (a_nr^n) \text{ bornée}\:\} 
+	.\]
+\end{prop-defn}
+
+\begin{prv}
+	Soit $x \in \R$.
+	\begin{description}
+		\item[1\tsup{er} cas] $|x| < R$. Soit $x_0 = (|x| + R)/2 < R$. Alors, la suite $(a_n x_0^n)_{n \in \N}$\/ est bornée. D'où, d'après le lemme d'\textsc{Abel}, la série numérique $\sum a_n x^n$\/ converge absolument.
+		\item[2\tsup{nd} cas] $|x| > R$. Alors, la suite $(a_n x^n)_{n \in \N}$\/ n'est plus bornée. D'où la suite $(a_n x^n)_{n \in \N}$\/ n'est pas convergente, et ne tend pas vers 0. On en déduit que la série numérique $\sum a_n x^n$\/ diverge grossièrement.
+	\end{description}
+\end{prv}
+
+\begin{rmk}
+	On a
+	\begin{align*}
+		R &= \sup \{\:r \in \R^+  \mid (a_n r^n)_{n \in \N} \text{ bornée}\:\} \text{ par définition}\\
+		&= \sup \{\:r \in \R^+  \mid {\ts\sum a_n r^n} \text{ converge}\:\} \text{ par le théorème 4} \\
+		&= \sup \{\:r \in \R^+  \mid {\ts\sum \:|a_n r^n|}\: \text{ converge}\:\} \text{ par le théorème 4} \\
+		&= \sup \{\:r \in \R^+  \mid (a_n r^n)_{n \in \N} \text{ tend vers }0\:\} \\
+	\end{align*}
+\end{rmk}
+
+\begin{exm}[$R= +\infty$]
+	On considère la série $\sum \frac{x^n}{n!}$. \textsl{Calculons son rayon de convergence.}
+	Soit $u_n = \left| \frac{x^n}{n!} \right|$.
+	Si $x = 0$, la série $\sum u_n$\/ converge vers 1.
+	On suppose $x \neq 0$. On calcule  \[
+		\frac{u_{n+1}}{u_n} = \frac{|x|}{n+1} \tendsto{n\to \infty} 0
+	.\] D'où, d'après le critère de \textsc{D'Alembert}, la série $\sum u_n$ converge.
+	On en déduit que, pour tout $x \in \R$, la série $\sum a_n x^n$\/ converge, \textit{i.e.}\ son rayon de convergence vaut $R = +\infty$.
+\end{exm}
+
+\begin{exm}[$R=0$]
+	On considère la série $\sum n^n x^n$. \textsl{Calculons son rayon de convergence}. Si $x = 0$, la série converge vers 1. On suppose maintenant $x \neq 0$. Alors, à partir d'un certain rang, $|nx| \ge 7$. Or, la somme $\sum 7^n$\/ diverge grossièrement. D'où, la série $\sum |nx|^n$\/ diverge aussi. Comme la série $\sum (nx)^n$\/ ne converge pas absolument, on en déduit que la série $\sum n^n x^n$\/ ne converge absolument que si $x = 0$. On en déduit que $R = 0$.
+\end{exm}

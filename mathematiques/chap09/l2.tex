@@ -1,0 +1,235 @@
+\begin{exo}
+	\textsl{Soit $n \in \N$.
+	\begin{enumerate}
+		\item Montrer que les applications \[
+				\varphi(P, Q) = \int_{-1}^{1} P(t)\:Q(t)~\mathrm{d}t \qquad \text{ et } \qquad \psi(P,Q) = \sum_{k=0}^n P(k)\:Q(k)
+			\] sont deux produits scalaires sur l'espace vectoriel $\R_n[X]$, et écrire la norme associé à chaque produit scalaire.
+		\item Montrer que $\varphi$\/ est encore un produit scalaire sur l'espace vectoriel $\R[X]$\/ mais que $\psi$\/ ne l'est plus.
+	\end{enumerate}}
+	\begin{enumerate}
+		\item On a $E = \R_n[X] \subset \mathcal{C}([-1,1])$. Or, $\varphi$\/ est déjà un produit scalaire donc c'est encore un produit scalaire sur le sous-espace vectoriel $\R_n[X]$. Sinon, on remontre les conditions pour que $\varphi$\/ soit un produit scalaire. On voit clairement que $\varphi$\/ est bilinéaire (par linéarité de l'intégrale), symétrique (par commutativité du produit), et positive (par croissance de l'intégrale). Montrons que l'application  $\varphi$\/ est définie : si $\left<P \mid P \right> = 0$, alors $\smash{\int_{-1}^{1} P^2(t)~\mathrm{d}t = 0}$ ; ainsi, la fonction $[-1,1] \to \R, t \mapsto P(t)$\/ est nulle car $P^2$\/ est continue et ne change pas de signe. On en déduit que le polynôme $P$\/ a une infinité de racines, c'est donc le polynôme nul.
+
+			On voit clairement que l'application $\psi$\/ est bilinéaire (par linéarité de la somme), symétrique (par commutativité du produit), positive (par croissance de la somme). Montrons que la fonction $\psi$\/ est définie : soit $P \in \R_n[X]$\/ tel que $\psi(P,P) = 0$, alors $\sum_{k=0}^n P^2(k) = 0$, d'où $\forall k \in \left\llbracket 0,n \right\rrbracket$, $P(k) = 0$, le polynôme $P$\/ a donc au moins $n+1$\/ racines. Or, comme $P$\/ pour degré au plus $n$, on en déduit que $P$\/ est le polynôme nul. La fonction $\psi$\/ est donc un produit scalaire.
+
+			La norme associée au produit scalaire $\varphi$\/ est \[
+				\|\cdot\|_\varphi : P \mapsto \|P\|_\varphi = \sqrt{\int_{-1}^{b} P^2(t)~\mathrm{d}t}
+			.\] Et, la norme associée au produit scalaire $\psi$\/ est \[
+				\|\cdot\|_\psi : P \mapsto \|P\|_\psi = \sqrt{\sum_{k=0}^n P^2(k)}
+			.\]
+		\item On a $\R[X] \subset \mathcal{C}([-1,1])$, le produit scalaire $\varphi$\/ en est toujours un sur l'espace vectoriel $\R[X]$. Mais, $\psi$\/ n'est plus un produit scalaire sur $\R[X]$. En effet, on considère le polynôme $P(X) = X \cdot (X-1) \cdots (X-n) \neq 0$ de $\R_n[X]$, et $\psi(P,P) = \sum_{k=0}^n P^2(k) = \sum_{k=0}^n 0 = 0$.
+	\end{enumerate}
+\end{exo}
+
+\section{(In)égalités}
+
+\begin{thm}[Inégalité de \textsc{Cauchy}-\textsc{Schwarz}]
+	Soit $\left<\:\cdot\mid\cdot\:\right>$\/ un produit scalaire sur un espace vectoriel $E$. Alors, \[
+		\forall (\vec{x},\vec{y}) \in E^2,\quad\big|\left<\vec{x} \mid \vec{y} \right>\big| \le \|\vec{x}\|\cdot \|\vec{y}\|
+	.\]
+	Et, il y a égalité si et seulement si les vecteurs $\vec{x}$\/ et $\vec{y}$\/ sont colinéaires.
+\end{thm}
+
+L'inégalité ci-dessous est toujours vrai si l'on n'a pas un produit scalaire mais une application bilinéaire, symétrique et positive (\textit{i.e.}\ on n'utilise pas le caractère défini de l'application). \textsc{Mais}, le cas de l'égalité n'est pas toujours vrai si l'application n'est pas définie.
+
+\begin{prv}
+	On suppose $\vec{y}\neq \vec{0}$. En effet, si $\vec{x} = \vec{0}$, l'inégalité est clairement vérifiée.
+	Posons la fonction $f$\/ définie comme \begin{align*}
+		f: \R &\longrightarrow \R \\
+		\lambda &\longmapsto  \left<\vec{x} + \lambda \vec{y}  \mid \vec{x}+\lambda \vec{y} \right>
+	\end{align*}
+	Par bilinéarité, on a \[
+		\forall \lambda \in \R,\quad f(\lambda) = \lambda^2 \left<\vec{y}  \mid \vec{y} \right> + \lambda\big(\left<\vec{x}  \mid \vec{y} \right> + \left<\vec{y}  \mid \vec{x} \right>\big) + \left<\vec{x}  \mid \vec{x} \right>
+	.\] Et, par symétrie, on en déduit que \[
+		\forall \lambda \in \R,\quad f(\lambda) = \lambda^2 \left<\vec{y} \mid \vec{y} \right> + 2\lambda \left<\vec{x} \mid \vec{y} \right> + \left<\vec{x} \mid \vec{x} \right>,
+	\] qui est un polynôme de degré 2 (car $\left<y \mid y \right> \neq 0$) Or, pour $\lambda \in \R$, on a $f(\lambda) \ge 0$\/ par positivité du produit scalaire. Donc le discriminant du polynôme $f(\lambda)$\/ en $\lambda$\/ est négatif ou nul (pour ne pas que $f(\lambda)$\/ ne change de signe). Or, le discriminant $\Delta$\/ est \[
+		\Delta = \big(2\left<\vec{x} \mid \vec{y} \right>\big)^2 - 4 \cdot  \|\vec{x}\|^2\cdot \|\vec{y}\|^2 \le 0.
+	\]
+
+	\begin{itemize}
+		\item[``$\impliedby$''] Si $\vec{x}$\/ et $\vec{y}$\/ sont colinéaires, alors il existe $\lambda \in \R$\/ tel que $\vec{y} = \lambda \vec{x}$\/ ou $\vec{x} = \lambda \vec{y}$. Quite à utiliser le caractère symétrique du produit scalaire, on suppose, sans perdre de généralités, que $\vec{x} = \lambda \vec{y}$. On a donc $\left<\vec{x}  \mid \vec{y} \right> = \left<\vec{x}  \mid \lambda \vec{y} \right> = \lambda \cdot \|\vec{x}\|^2$. Et, $\|\vec{x}\|\cdot \|\vec{y}\| = \|\vec{x}\| \cdot \|\lambda \vec{x}\| = \|x\|\cdot |y|\cdot \|\vec{x}\|$, d'où l'égalité.
+		\item[``$\implies$''] On suppose $|\left<\vec{x} \mid \vec{y} \right>| = \|\vec{x}\| \cdot \|\vec{y}\|$. Alors, $\Delta = 0$\/ et donc il existe $\lambda \in \R$\/ tel que $f(\lambda) = 0$, \textit{i.e.}\ $\left<\vec{x} + \lambda \vec{y}  \mid \vec{x} + \lambda \vec{y} \right> = 0$. Ainsi, par le caractère défini du produit scalaire, alors $x + \lambda \vec{y} = \vec{0}$, \textit{i.e.}\ $\vec{x}$\/ et $\vec{y}$\/ sont colinéaires.
+	\end{itemize}
+\end{prv}
+
+\begin{exm}
+	\begin{enumerate}
+		\item On munit $\R^n$\/ de son produit scalaire canonique : \[
+			\left<\vec{x} \mid \vec{y} \right> = \sum_{i=1}^n x_i y_i
+		.\] Ainsi, par inégalité de \textsc{Cauchy}-\textsc{Schwarz} ($|\langle \vec{x}  \mid \vec{y}\rangle| \le \|\vec{x}\| \cdot \|\vec{y}\|$), \[
+					\Big|\sum_{i=1}^n x_i y_i \Big| \le \sqrt{\sum_{i=1}^n x_i^2}  \cdot \sqrt{\sum_{i=1}^n y_i^2} 
+				.\] Mieux, en appliquant l'inégalité de \textsc{Cauchy}-\textsc{Schwarz} aux vecteurs $(|x_1|,\ldots,|x_n|)$\/ et $(|y_1|, \ldots, |y_n|)$, on a donc \[
+					\Big|\sum_{i=1}^n x_i y_i \Big| \le \sum_{i=1}^n |x_i y_i| \le \sqrt{\sum_{i=1}^n x_i^2}  \cdot \sqrt{\sum_{i=1}^n y_i^2} 
+				.\] 
+			\item On munit $\mathcal{C}([a,b])$\/ de son produit scalaire canonique $\left<f  \mid y \right> = \int_{a}^{b} f(t)\:g(t)~\mathrm{d}t$. Ainsi, \[
+				\Big| \int_{a}^{b} f(t)\:g(t)~\mathrm{d}t \Big| \le \int_{a}^{b} |f(t)\:g(t)|~\mathrm{d}t \le \sqrt{\int_{a}^{b} f^2(t)~\mathrm{d}t} \cdot \sqrt{\int_{a}^{b} g^2(t)~\mathrm{d}t}
+			\] en appliquant \textsc{Cauchy}-\textsc{Schwarz} aux fonctions $f$\/ et $g$, puis aux fonctions $|f|$\/ et $|g|$.
+		\item On munit l'espace vectoriel $L_2(I)$\/ de la fonction (``pseudo-produit scalaire'') $\langle f  \mid g \rangle = \int_{I} f(t)\:g(t)~\mathrm{d}t$. Cette formule vérifie les hypothèses de bilinéarité, de symétrie et de positivité. Et, avec ces hypothèses, l'inégalité de \textsc{Cauchy}-\textsc{Schwarz} : \[
+				\Big| \int_{a}^{b} f(t)\:g(t)~\mathrm{d}t \Big| \le \int_{a}^{b} |f(t)\:g(t)|~\mathrm{d}t \le \sqrt{\int_{a}^{b} f^2(t)~\mathrm{d}t} \cdot \sqrt{\int_{a}^{b} g^2(t)~\mathrm{d}t}
+			.\]
+	\end{enumerate}
+\end{exm}
+
+\begin{crlr}
+	Soit $\left<\:\cdot  \mid \cdot \: \right>$\/ un produit scalaire sur un $\R$-espace vectoriel $E$. La norme \begin{align*}
+		\|\cdot \|: E &\longrightarrow \R^+ \\
+		x &\longmapsto \sqrt{\langle x  \mid x \rangle} 
+	\end{align*}
+	vérifie
+	\begin{enumerate}
+		\item $\forall x \in E$, si $\|x\| = 0$, alors $x = 0$ ;
+		\item $\forall x \in E$, $\forall \lambda \in \R$, on a $\|\lambda\cdot x\| = |\lambda| \cdot \|x\|$\/ ;
+		\item $\forall (x,y) \in E^2$, on a $\|x + y\|\le \|x\| + \|y\|$. \hfill (inégalité triangulaire)
+	\end{enumerate}
+\end{crlr}
+
+\begin{crlr}
+	Si $x$\/ et $y$\/ sont deux vecteurs non nuls, alors il existe un unique $\theta \in [0,\pi]$\/ tel que \[
+		\left<x  \mid y \right> = \|x\|\:\|y\|\: \cos \theta
+	.\] On appelle $\theta$\/ l'\textit{écart angulaire} des deux vecteurs. Également, \[
+		x \text{ et } y \text{ sont colinéaires } \iff \theta = 0 \text{ ou } \theta = \pi
+	.\]
+\end{crlr}
+
+\begin{rmk}
+	On munit un espace vectoriel $E$\/ d'un produit scalaire $\left<\:\cdot  \mid \cdot \: \right>$, et on calcule \[
+		\begin{cases}
+			\|x + y\|^2 = \left<x + y  \mid x + y \right> = \|x\|^2 + 2\left<x  \mid y \right> + \|y\|^2\\
+			\|x - y\|^2 = \left<x + y  \mid x + y \right> = \|x\|^2 + 2\left<x  \mid y \right> + \|y\|^2.
+		\end{cases}
+	\]
+	Par somme et produit, il en résulte l'égalité \[
+			2\|x\|^2 + 2\|y\|^2 = \|x + y\|^2 + \|x - y\|^2
+	.\]
+	Et, en isolant les termes du premier système, on trouve \[
+		\begin{cases}
+			2\left<x \mid y \right> = \|x + y\|^2 - \|x\|^2 - \|y\|^2\\
+			2\left<x \mid y \right> =  \|x\|^2 + \|y\|^2 - \|x - y\|^2
+		\end{cases}
+	.\] Par somme, on trouve aussi \[
+		4\left<x \mid y \right> = \|x+y\|^2 - \|x - y\|^2
+	.\]
+\end{rmk}
+
+\section{Orthogonalité}
+
+\begin{defn}
+	%Soit $\left<\:\cdot  \mid \cdot \: \right>$\/ un produit scalaire sur un espace vectoriel $E$.
+	$\O$
+\end{defn}
+
+\begin{exm}
+	On munit l'espace vectoriel $E = \mathcal{C}([-1,1])$\/ de son produit scalaire canonique.
+	\begin{enumerate}
+		\item Montrons que les fonctions $u : x\mapsto 1 + x^2$\/ et $v : x \mapsto 2 - 5x^2$\/ sont orthogonales (\textit{i.e.}\ $u \perp v$) : \[
+				\left<u \mid v \right> = \int_{-1}^{1} (1+x^2)(2-5x^2)~\mathrm{d}x = 0
+			\] en développant l'intégrande.
+		\item Montrons que les sous-espaces vectoriel $\mathcal{P}$\/ des fonctions paires et $\mathcal{I}$ des fonctions impaires sont orthogonales (\textit{i.e.}\ $\mathcal{P} \perp \mathcal{I}$). Soit $f \in \mathcal{P}$\/ et $g \in \mathcal{I}$.
+			\begin{align*}
+				\left<f  \mid g \right> &= \int_{-1}^{1} f(t)\:g(t)~\mathrm{d}t\\
+				&= \int_{1}^{-1} f(-u)\:g(-u)\:~-\mathrm{d}u \text{ avec le \textit{cdv} $u = -t$\/ qui est $\mathcal{C}^1$\/}  \\
+				&= \int_{-1}^{1}  f(u) \cdot \big(-g(u)\big)~\mathrm{d}u \\
+				&= 0. \\
+			\end{align*}
+	\end{enumerate}
+\end{exm}
+
+\begin{prop}
+	Si $n$\/ vecteurs $v_1,\ldots,v_n$\/ sont orthogonaux deux à deux\footnote{\textit{i.e.}\ $\forall i \neq j$, $v_i \perp v_j$}, alors \[
+		\Big\|\sum_{i=1}^n v_i\Big\|^2 \!= \sum_{i=1}^n \|v_i\|^2
+	.\]
+\end{prop}
+
+\begin{prv}
+	Par définition,
+	\begin{align*}
+		\Big\| \sum_{i=1}^n \vec{v}_i \Big\|^2 &= \Big< \sum_{i=1}^n \vec{v}_i\:\Big|\sum_{j=1}^n \vec{v}_i \Big> \\
+		&= \sum_{i=1}^n \sum_{j=1}^n \left<\vec{v}_i  \mid \vec{v}_j \right> \text{ par bilinéarité } \\
+		&= \sum_{(i,j) \in \llbracket 1,n\rrbracket^2} \left<\vec{v}_i  \mid \vec{v}_j\right> \\
+		&= \sum_{(i,j) \in \llbracket 1,n\rrbracket^2} \delta_{i,j} \left<\vec{v}_i  \mid \vec{v}_j\right> \\
+		&= \sum_{i=1}^n \left<\vec{v}_i  \mid \vec{v}_i \right> \\
+		&= \sum_{i=1}^n \|\vec{v}_i\|^2 \\
+	\end{align*}
+\end{prv}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item On a, \textbf{pour deux vecteurs} $u$\/ et $v$ \[
+				u \perp v \iff \|u+v\|^2 = \|u\|^2 + \|v\|^2
+			.\]
+		\item Mais, ce résultat est \textbf{faux} en général pour plus de deux vecteurs. Contre-exemple : soit $\vec{u} \in E$\/ un vecteur non nul d'un espace vectoriel $E$ ; on pose $\vec{v} = \vec{w} = -\vec{2u}$. D'une part, $\|\vec{u}\|^2 + \|\vec{v}\|^2 + \|\vec{w}\|^2 = (1 + 4 + 4)\:\|\vec{u}\|^2 = 9\|\vec{u}\|^2$. D'autre part $\|\vec{u} + \vec{v} + \vec{w}\|^2 = \|-\vec{3u}\|^2 = 9\|\vec{u}\|^2$. Mais, $\vec{u}$, $\vec{v}$\/ et $\vec{w}$\/ sont colinéaires.
+	\end{enumerate}
+\end{rmk}
+
+\begin{prop}
+	Si $n$\/ vecteurs non nuls sont orthogonaux deux à deux, alors ils sont linéairement indépendants. \textsl{Autrement dit}, une famille orthogonale de vecteurs non nuls est libre.
+\end{prop}
+
+\begin{prv}
+	Soit $(v_1, \ldots, v_n)$\/ une famille de vecteurs non nuls, orthogonaux deux à deux.
+	On suppose que $\alpha_1 \vec{v}_1 + \cdots + \alpha_n \vec{v}_n = \vec{0}$. D'où,
+	\[
+		0 = \left<\alpha_1 \vec{v}_1 + \cdots + \alpha_n \vec{v}_n  \mid \vec{v_1} \right> = \alpha_1 \left<\vec{v}_1  \mid \vec{v}_1 \right>
+	.\] Or, $\left<\vec{v}_1  \mid \vec{v}_1 \right> \neq 0$\/ car $\vec{v}_1 \neq \vec{0}$, donc $\alpha_1 = 0$. De même pour $\vec{v}_2, \ldots, \vec{v}_n$. On en déduit que $\alpha_1 = \cdots = \alpha_n = 0$, la famille est donc libre.
+\end{prv}
+
+\begin{defn}
+	Soit $A$\/ un sous-espace vectoriel d'un espace préhilbertien $E$.
+	L'ensemble des vecteurs orthogonaux à $A$\/ est appelé l'\textit{orthogonal} de $A$ et est noté $A^\perp$\/ : \[
+		A^\perp = \{ \vec{x} \in E  \mid \vec{x} \perp A\}
+		= \{\vec{x} \in E  \mid \forall \vec{y} \in A,\: \vec{x} \perp \vec{y}\}
+	.\]
+\end{defn}
+
+\begin{exo}
+	\textsl{\begin{enumerate}
+		\item Montrer que $\{0_E\}^\perp = E$\/ et que $E^\perp = \{0_E\} $.
+		\item Soit l'espace vectoriel $\R^3$\/ muni du produit scalaire canonique. Soit $\vec{u} = (1, 2,3)$. Déterminer une base de $\Vect(\vec{u})^\perp$.
+		\item Soit le produit scalaire $\left<P \mid Q \right> = \int_{-1}^1 P(t)\:Q(t)~\mathrm{d}t$ sur l'espace vectoriel $E =\R_2[X]$. Soit le polynôme $U = 1 + X^2$. Déterminer une base de $(\Vect U)^\perp$.
+\end{enumerate}}
+	\begin{enumerate}
+		\item
+		\item Soit $\vec{x} = (a,b,c) \in \R^3$.
+			\begin{align*}
+				\vec{x} \in (\Vect u)^\perp \iff& \vec{x} \perp \Vect(\vec{u})\\
+				\iff& \forall \vec{y} \in \Vect(\vec{u}),\: \vec{x} \perp \vec{y}\\
+				\iff& \vec{x} \perp \vec{u}\\
+				\iff& 1a + 2b + 3c = 0\\
+				\iff& a = -2b - 3c\\
+				\iff& \begin{pmatrix}
+					a\\b\\c
+				\end{pmatrix} = \begin{pmatrix}
+					-2b - 3c\\
+					b\\
+					c
+				\end{pmatrix} = b\begin{pmatrix}
+					-2\\ 1\\ 0
+				\end{pmatrix} + c \begin{pmatrix}
+					-3\\ 0 \\ 1
+				\end{pmatrix}
+			\end{align*}
+			Donc $(\Vect \vec{u})^\perp = \Vect(\vec{v}, \vec{w})$\/ où $\vec{v} = (-2, 1, 0)$\/ et $\vec{w} = (-3, 0, 1)$.
+		\item Soit $P = a + bX + cX^2 \in \R_2[X]$.
+			\begin{align*}
+				P \in (\Vect U)^\perp \iff& P \perp \Vect(U)\\
+				\iff& \forall Q \in \Vect(U),\: P \perp Q\\
+				\iff& P \perp U\\
+				\iff& \left<a + bX + cX^2  \mid 1 + X^2 \right> = 0\\
+				\iff& \int_{-1}^1 (a+bt + ct^2)(1+t^2)~\mathrm{d}t = 0\\
+				\iff& \int_{-1}^1 \big(ct^4 + bt^3 + (a+c)t^2 + bt + a\big)~\mathrm{d}t = 0\\
+				\iff& \frac{2}{5} c + \frac{2}{3}(a+c) + 2a = 0\\
+				\iff& \frac{8}{3} a + \frac{16}{5} c = 0\\
+				\iff& 5a + 2c = 0\\
+				\iff& b = b \text{ et } c = -\frac{5}{2} a\\
+				\iff& \begin{pmatrix}
+					a\\ b\\ c
+				\end{pmatrix} = \begin{pmatrix}
+					a\\ b\\ -\frac{5}{2}a
+				\end{pmatrix} = a \begin{pmatrix}
+					1\\ 0\\ -\frac{5}{2}
+				\end{pmatrix} + b \begin{pmatrix}
+					0\\ 1 \\ 0
+				\end{pmatrix}
+			\end{align*}
+			Ainsi, $(\Vect U)^\perp = \Vect(P,Q)$\/ où $P = 1 - \frac{5}{2}X^2$\/ et $Q = X$.
+	\end{enumerate}
+\end{exo}

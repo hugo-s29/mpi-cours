@@ -1,0 +1,49 @@
+\section{Suites récurrentes de complexité}
+
+\begin{enumerate}[label=(\textit{\alph*})]
+	\item On considère la suite $u_0 = 1$ et $u_n = u_{n-1} + a$ pour $a > 0$.
+		Montrons que $u_n = \Theta(n)$.
+	\item On considère la suite $u_0 = 1$ et $u_n = u_{n-1} + an$ pour $a > 0$.
+	\item On considère la suite $u_0 = 1$ et $u_n = a u_{n-1} + b$ pour $a > 2$ et $b \in \R_+^*$.
+		\begin{align*}
+			u_n &= a u_{n-1} + b\\
+			&= a(a u_{n-2} + b) + b \\
+			&= a^2 u_{n-2} + ab + b \\
+			&= a^3 u_{n-3} + a^2b + ab + b\\
+			&\quad\vdots \\
+			&= a_n + \sum_{k=0}^{n-1} a^k b \\
+			&= a^n + b \frac{1-a^n}{1-a} \\
+			&= a^n \cdot \left( 1 - \frac{b}{1-a} \right) + \frac{b}{1-a} \\
+			&= \Theta(a^n) \\
+		\end{align*}
+	\item On considère la suite $u_0 = 1$ et $u_n = u_{n / 2} + b$ avec $b > 0$.
+		Soit $(v_p)_{p\in\N}$\/ la suite définie par $v_p = u_{2^p}$.
+		Donc
+		\[
+			v_p = u_{2^p} = u_{2^p / 2} + b = u_{2^{p-1} / 2} + 2b = \cdots = v_0 + bp = 1 + (p+1) b
+		.\]
+		La suite $(u_n)_{n\in\N}$\/ est croissante donc, pour $n \in \N$,
+		Alors,
+		\begin{align*}
+			v_{\left\lfloor \log_2 n \right\rfloor} \le u_n \le v_{\left\lceil \log_2 n \right\rceil}
+			& \text{ d'où }\ 
+			b(\left\lfloor \log_2 n \right\rfloor + 1) + 1 \le u_n \le b\\
+			& \text{ d'où }\ 
+			b \log_2 n + 1 \le u_n \le b(\log_2 n + 2) + 1\\
+		\end{align*}
+		On en déduit que $u_n = \Theta(\log_2 n)$.
+	\item On considère la suite $u_0 = 1$ et $u_n = u_{n / 2} + bn$ avec $b > 0$. On pose $(v_p)_{p\in\N}$ la suite définie par $v_p = u_{2^p}$.
+		\begin{align*}
+			v_p &= v_{p-1} + 2^p b\\
+			&= v_{p-2} + 2^{p-1} b + 2^p b \\
+			&= b\sum_{k=1}^p 2^k + v_0 \\
+			&= b \sum_{k=0}^p 2^k + u_1 \\
+			&= b \sum_{k=0}^p 2^k + 1 + b \\
+			&= b \sum_{k=0}^p 2^k + 1 \\
+			&= b (2^{p+1} - 1) + 1. \\
+		\end{align*}
+		D'où, par croissance de la suite $(u_n)_{n\in\N}$, \[
+			b (2^{\log_2 n} - 1) + 1 \le u_n \le b(2^{\log_2 n + 2} - 1) + 1
+			\quad \text{ d'où } \quad bn - b + 1 \le u_n \le 4bn - b + 1
+		.\]Ainsi, $u_n = \Theta(n)$.
+\end{enumerate}

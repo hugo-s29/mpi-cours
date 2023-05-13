@@ -1,0 +1,90 @@
+\section{Un problème proche de \textsc{Knapsack}}
+
+\begin{enumerate}
+	\item
+		\[
+			\textsc{SommeMax} : \begin{cases}
+				\text{\textbf{Entrée}}&: \text{ Un entier $n\in \N$, une suite finie $(a_i)_{i\in\llbracket 1,n \rrbracket} \in \N^n$,}\\
+															&\phantom{:}\:\text{ un entier $B \in \N$\/ et un seuil $K \in \N$,}\\
+				\text{\textbf{Sortie}}&: \text{ Existe-t-il $I \subseteq \llbracket 1,n \rrbracket$\/ avec $K \ge \sum_{i \in I} a_i \ge B$\/ ?}
+			\end{cases}
+		\]
+	\item On a $\textsc{SommeMax} \preceq_\mathrm{p} \textsc{Knapsack}$, mais on ne peut pas faire une réduction.
+	\item Soit $(w_1, \ldots, w_n)$\/ les entrées du problème \textsc{Partition}.
+		On pose $K = B = \sum_{i=1}^n a_i$. On construit l'entrée $(n, (2w_i)_{i \in \llbracket 1,n \rrbracket}, B, K)$\/ de \textsc{SommeMax}.
+		\begin{align*}
+			(n, (2w_i)_{i \in \llbracket 1,n \rrbracket}, K, B) \in \textsc{SommeMax}^+
+			\iff&\ts\exists I \subseteq \llbracket 1,n \rrbracket,\: B \le \sum_{i \in I} 2a_i \le K \\
+			\iff&\ts\exists I \subseteq \llbracket 1,n \rrbracket,\: \sum_{i=1}^n a_i \le \sum_{i \in I} 2a_i \le \sum_{i = 1}^n a_i \\
+			\iff&\ts\exists I \subseteq \llbracket 1,n \rrbracket,\: \sum_{i \in I} 2a_i = \sum_{i=1}^n a_i  \\
+			\iff&\ts \exists I \subseteq \llbracket 1,n \rrbracket,\: \sum_{i \in I} a_i = \sum_{i \in \llbracket 1,n \rrbracket \setminus I} a_i \\
+			\iff& (w_1,\ldots,w_n) \in \textsc{Partition}^+ \\
+		\end{align*}
+		Or, comme \textsc{Partition} est \textbf{NP}-difficile (\textit{c.f.} \textsc{td} 8), on en déduit que \textsc{SommeMax} est \textbf{NP}-difficile.
+	\item~\\[-1.5\baselineskip]
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\State $\mathrm{somme} \gets 0$\/
+				\For{$i\in \llbracket 1,n \rrbracket$}
+				\If{$\mathrm{somme} + a_i \le B$}
+				\State $\mathrm{somme} \gets \mathrm{somme} + a_i$\/
+				\EndIf
+				\EndFor
+				\State\Return $\mathrm{somme}$\/
+			\end{algorithmic}
+			\caption{Algorithme glouton pour résoudre le problème \textsc{SommeMax}$_\mathrm{O}$ en $\mathcal{O}(n)$\/}
+		\end{algorithm}
+	\item L'algorithme n'est pas optimal : avec l'entrée $(1, B)$, l'algorithme renvoie $1$, mais la valeur optimale est $B$.
+		Cet algorithme n'est pas une $\rho$-approximation, pour $\rho \in \R$.
+	\item~\\[-1.5\baselineskip]
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\State On trie, par ordre décroissant, les entrées $(a_1, \ldots, a_n)$\/ avec un tri rapide.
+				\State $\mathrm{somme} \gets 0$\/
+				\For{$i \in \llbracket 1,n \rrbracket$}
+				\If{$\mathrm{somme} + a_i\le B$}
+				\State $\mathrm{somme} \gets \mathrm{somme} + a_i$\/
+				\EndIf
+				\EndFor
+				\State\Return $\mathrm{somme}$\/
+			\end{algorithmic}
+			\caption{Algorithme glouton pour résoudre le problème \textsc{SommeMax}$_\mathrm{O}$ en $\mathcal{O}(n \ln n)$\/}
+		\end{algorithm}
+	\item Soit $e$\/ une entrée.
+		Soit $S$\/ la solution, \textit{non nécessairement optimale}, de l'algorithme.
+		Soit $S^\star $\/ la solution optimale. On a $S^\star \le B$.
+		\begin{itemize}
+			\item Si $S \ge \frac{B}{2}$, alors $\frac{S}{S^\star} \ge \frac{B / 2}{B} = \frac{1}{2}$.
+			\item Si $S < \frac{B}{2}$, alors, en supposant que $(a_1,\ldots,a_n)$\/ est trié par ordre décroissant, on a, pour $i \in \llbracket 1,n \rrbracket$, $a_i > B$\/ ou $a_i < \frac{B}{2}$.
+				\begin{itemize}
+					\item Si $\forall i \in \llbracket 1,n \rrbracket$, $a_i > B$, alors  $S = 0 = S^\star$.
+					\item Soit $i = \argmin_{i \in \llbracket 1,n \rrbracket} (a_i < B / 2)$.
+						On pose $I_\mathrm{algo}$\/ les valeurs de $i$\/ telles que $a_i$\/ ait été ajoutée à $\mathrm{somme}$.
+						On pose $i' = \max I_\mathrm{algo}$.
+
+						Si $i' < n$, alors par l'algorithme, l'objet d'indice $n$\/ ne rentre pas dans le sac. Or, la valeur du sac est inférieure stricte à $B / 2$, et $a_n < B / 2$, ce qui est absurde (l'objet rentre dans le sac).
+
+						Ainsi, $i' = n$, et l'algorithme a mis dans le sac tous les objets de poids inférieurs ou égal à $B / 2$, donc tous les objets ont un poids inférieur ou égal à $B$. Donc $S^\star = S$.
+				\end{itemize}
+		\end{itemize}
+	\item~\\[-1.5\baselineskip]
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\Entree $(a_i)_{i \in \llbracket 1,n \rrbracket }$ une suite finie
+				\State $\mathrm{somme} \gets 0$\/
+				\State $\mathrm{maxi} \gets 0$\/
+				\For{$i\in \llbracket 1,n \rrbracket$}
+				\If{$a_i \ge B / 2$ et $a_i \le B$}
+				\State $\mathrm{maxi} \gets a_i$\/
+				\ElsIf{$a_i + \mathrm{somme} \le B$}
+				\State $\mathrm{somme} \gets \mathrm{somme} + a_i$\/
+				\EndIf
+				\EndFor
+				\State\Return $\max(\mathrm{somme}, a_i)$\/
+			\end{algorithmic}
+			\caption{Algorithme glouton pour résoudre le problème \textsc{SommeMax}$_\mathrm{O}$ en $\mathcal{O}(n)$\/}
+		\end{algorithm}
+\end{enumerate}

@@ -1,0 +1,300 @@
+\documentclass[a4paper]{article}
+
+\input{../preamble.tex}
+\usepackage{tgschola}
+
+\fancyhead[L]{Hugo \textsc{Salou} \textit{MPI$^\star$}}
+\fancyhead[R]{DM\textsubscript 3 Mathématiques}
+
+\begin{document}
+	\begin{center}
+		\Huge \textbf{DM\textsubscript3 Mathématiques}
+	\end{center}
+
+	\begin{center}
+		\LARGE ---\quad\textsc{Exercice}\quad---
+	\end{center}
+
+	\begin{enumerate}
+		\item
+			\begin{enumerate}
+				\item Soit $(a_n)_{n\in\N}$\/ une suite complexe vérifiant $(P_1)$. Soit $(u_n)_{n\in\N}$\/ une suite complexe. On suppose que la série $\sum u_n$\/ est convergente. Ainsi, $u_n$\/ tend vers 0 (quand $n \to \infty$), et donc la suite $(u_n)_{n\in\N}$\/ est bornée. D'où, d'après $(P_1)$, la série $\sum a_n u_n$\/ converge.
+				\item Soit $(a_n)_{n\in\N}$\/ une suite complexe telle que la série $\sum\:|a_n|$\/ converge. Montrons que la suite vérifie la propriété $(P_1)$. Soit $(u_n)_{n\in\N}$\/ une suite complexe bornée. Soit $M \in \R^+$\/ tel que, pour tout $n \in \N$, $|u_n| \le M$. On a donc $\forall n \in \N$, $0 \le |a_n\:u_n| \le M\:|a_n|$. Comme la série $\sum M\:|a_n| = M \cdot \sum |a_n|$\/ converge, alors la série $\sum |a_n\:u_n|$\/ converge. On en déduit que la série $\sum a_n\:u_n$\/ converge.
+			\end{enumerate}
+		\item
+			\begin{enumerate}
+				\item Non. On pose, pour $n \in \N$, $u_n = (-1)^n$. La suite $(u_n)_{n\in\N}$\/ est bornée (par $-1$\/ et $1$). Mais, la série $\sum a_n\:u_n$\/ ne converge pas. En effet, pour $n \in \N$, $a_n\:v_n = (-1)^{2n} \cdot \frac{1}{n} = \frac{1}{n}$, et la série $\sum \frac{1}{n}$\/ diverge par critère de \textsc{Riemann}.
+				\item La fonction $x\mapsto x \ln x$\/ est croissante, d'où, par composition avec la fonction inverse, la fonction $\frac{1}{x \ln x}$\/ est décroissante. On compare série et intégrale : \[
+						\int_{2}^{N+1} \frac{1}{x \ln x}~\mathrm{d}x \le \sum_{k=2}^N \frac{1}{k \ln k}
+					.\] Or, à l'aide du changement de variable $u = \ln x$, on a \[
+						\int_{2}^{N+1} \frac{1}{x \ln x}~\mathrm{d}x = \int^{\ln(N+1)}_{\ln 2} \frac{1}{u}~\mathrm{d}u = \ln(\ln(N+1)) - \ln(\ln 2),
+					\] qui diverge vers $+\infty$\/ quand $N \to \infty$. On en déduit que la série $\sum \frac{1}{n \ln n}$\/ diverge.
+				\item Non. On pose, pour $n \in \N$, $u_n = \frac{(-1)^n}{\ln n}$. La série alternée $\sum u_n$\/ converge ; en effet, la fonction $x \mapsto \frac{1}{\ln x}$\/ est positive et décroissante. On a, pour $n \in \N$, $u_n\:a_n = \frac{1}{n \ln n}$. Et, on a vu dans la question précédente que la série $\sum \frac{1}{n \ln n} = \sum a_n\:u_n$\/ diverge.
+			\end{enumerate}
+		\item
+			\begin{enumerate}
+				\item La série $\sum (a_{n+1} - a_n)$\/ converge absolument, donc elle converge simplement. On pose, pour $n \in \N$, $S_n = \sum_{k=1}^{n-1} (a_{k+1} - a_k)$. Or, comme la somme est télescopique, on a, pour tout $n \in \N$, \[
+						S_n = \sum_{k=1}^{n-1} (a_{k+1} -a_k) = a_n - a_0
+					.\] Or, comme $\sum (a_{n+1} - a_n)$\/ converge, $S_n$\/ admet une limite finie $\ell$. Ainsi, on a $a_n = S_n + a_0 \tendsto{n\to +\infty} \ell + a_0 \in \C$. La suite $(a_n)_{n\in\N}$\/ admet donc une limite finie.
+				\item On procède par récurrence.
+					\begin{itemize}
+						\item On a d'une part $\sum_{n=0}^1 a_n u_n = a_0 u_0 + a_1 u 1$, et d'autre part
+							\begin{align*}
+								\smash{\sum_{n=0}^0} (a_n- a_{n+1}) U_n + a_1 U_1 &= (a_0 - a_1) U_0 + a_1 U_1\\
+								&= a_0\,u_0 - \cancel{a_1\,u_0} + a_1\,u_1 + \cancel{a_1\,u_0} \\
+								&= a_0 u_0 + a_1 u_1 \\
+							\end{align*}
+						\item Soit $N \in \N$. On suppose que \[
+								\sum_{n=0}^N a_n u_n = \sum_{n=0}^{N-1}(a_n - a_{n+1}) U_n + a_N U_N
+							.\] Ainsi,
+							\begin{align*}
+								\sum_{n=0}^{N+1} a_n u_n &= \sum_{n=0}^N a_n u_n + a_{N+1}u_{N+1}\\
+								&= \sum_{n=0}^{N-1}(a_n - a_{n+1}) U_n + a_N U_N + a_{N+1} (U_{N+1} - U_N)\\
+								&= \sum_{n=0}^{N-1}(a_n - a_{n+1}) U_n + (a_N - a_{N+1}) U_N + a_{N+1} U_{N+1}\\
+								&= \sum_{n=0}^N (a_n - a_{n+1}) U_n + a_{N+1} U_{N+1}\\
+							\end{align*}
+					\end{itemize}
+					Si $\sum u_n$\/ converge, alors $(U_n)_{n\in\N}$\/ converge, et donc la série $\sum a_n u_n$\/ converge.
+			\end{enumerate}
+		\item
+			\begin{enumerate}
+				\item On pose, pour tout $n \in \N$, $r_n = |a_n|$\/ et $\theta_n = \arg(a_n)$. Ainsi, $\forall n \in \N,\: a_n = r_n \mathrm{e}^{i \theta_n}$. On pose, pour tout $n \in \N$, $u_n = \mathrm{e}^{-i\theta_n}$. La suite $(u_n)_{n\in\N}$\/ est composée de complexes de module 1. On a, pour tout $n \in \N$, $a_n\:u_n = r_n\:\mathrm{e}^{i\theta_n}\: \mathrm{e}^{-i\theta_n} = r_n$. Or, comme la série $\sum|a_n| = \sum r_n$\/ diverge, alors la série $\sum a_n u_n$\/ diverge également.
+				\item On a montré dans la question (1b) que si la série $\sum |a_n|$\/ converge, alors elle vérifie $(P_1)$. Puis, on a montré en question (4a) que si la série $\sum |a_n|$\/ diverge, alors elle ne vérifie pas $(P_2)$. On en déduit que la suite $(a_n)_{n\in\N}$\/ vérifie $(P_1)$\/ si, et seulement si la série $\sum |a_n|$\/ converge (\textit{i.e.}\ la série $\sum a_n$\/ est absolument convergente).
+			\end{enumerate}
+	\end{enumerate}
+
+	\begin{center}
+		\LARGE ---\quad\textsc{Problème}\quad---
+	\end{center}
+	\begin{enumerate}
+		\item
+			\begin{enumerate}
+				\item On trouve $\chi_{M(\alpha)}(X) = (X - 2)(X - 1)(X + \alpha - 2)$. En effet, soit $\lambda \in \R$. On calcule
+					\begin{align*}
+						\det\big(\lambda I_3 - M(\alpha)\big)
+						&= 
+						\begin{vmatrix}
+							\lambda - 1 & 1 & -\alpha\\
+							0 & \lambda - 2 & \alpha\\
+							-1 & -1 & \lambda - 2 + \alpha\\
+						\end{vmatrix}\\
+						&= 
+						\begin{vmatrix}
+							\lambda - 1 & 1 & -\alpha\\
+							\lambda - 1 & \lambda-1 & 0\\
+							-1 & -1 & \lambda - 2 + \alpha
+						\end{vmatrix} \text{ avec } L_2 \gets L_1 + L_2\\
+						&= 
+						\begin{vmatrix}
+							\lambda-2 & 1 & -\alpha\\
+							0 & \lambda - 1 & 0\\
+							0 & -1 & \lambda - 2 + \alpha
+						\end{vmatrix} \text{ avec } C_1 \gets C_1 - C_2\\
+						&= (\lambda - 2)
+						\begin{vmatrix}
+							\lambda - 1 & 0\\
+							-1 & \lambda - 2 + \alpha
+						\end{vmatrix}\\
+						&= (\lambda - 2)(\lambda - 1)(\lambda - 2 + \alpha).
+					\end{align*}
+				\item On a bien $\prod_{i=1}^3 (X-a_{i,i}) = (X-1)(X-2)(X+\alpha-2) = \chi_{M(\alpha)}(X)$, donc $M(\alpha)$\/ est bien une matrice à diagonale propre.
+				\item Comme $\chi_{M(\alpha)}$\/ est scindé, on voit que ses racines sont $1$, $2$\/ et $2-\alpha$. Donc
+					\begin{align*}
+						M(\alpha) \text{ est diagonalisable }
+						\iff& \chi_{M(\alpha)} \text{ est scindé à racines simples }\\
+						\iff& 2 - \alpha \neq 1 \text{ et } 2 - \alpha \neq  2\\
+						\iff& \alpha \neq 1 \text{ et } \alpha \neq 0\\
+						\iff& \alpha \not\in  \{0,1\}.
+					\end{align*}
+			\end{enumerate}
+		\item Soit $\lambda \in \R$. On a
+			\begin{align*}
+				\det(\lambda I_3 - A) &= 
+				\begin{vmatrix}
+					\lambda & 0 & 1\\
+					0 & \lambda & 0\\
+					-1 & 0 & \lambda
+				\end{vmatrix}\\
+				&= -\lambda
+				\begin{vmatrix}
+					\lambda & 1\\
+					-1 & \lambda
+				\end{vmatrix}\\
+				&= -\lambda(\lambda^2 + 1) \\
+			\end{align*}
+			Son polynôme caractéristique est $\chi_A(X) = -X(X^2 + 1)$. Il n'est pas scindé sur $\R$, la matrice $A$\/ n'est donc pas à diagonale propre.
+		\item Soit $A = {a\:b\choose c\:d} \in \mathcal{M}_2(\R)$. On a $\chi_A(X) = \det{X - a\quad-b\choose-c\quad X - d} = (X - a)(X-d) - bc$. Ainsi, \[
+				A \text{ est à diagonale propre} \iff \chi_A(X) = (X-a)(X-b) \iff b = 0 \text{ ou } c = 0
+			.\] On en déduit que $\mathcal{E}_2 = \big\{ {a\:b\choose0\:d}  \mid (a,b,d) \in \R^3 \big\} \cup \big\{ {a\:0\choose c\:d}  \mid (a,c,d) \in \R^3 \big\}$. Autrement dit, $\mathcal{E}_2$\/ est l'ensemble des matrices $2\times 2$\/ triangulaires.
+		\item Une matrice est inversible si, et seulement si elle ne possède aucun `\,0\,' sur sa diagonale. En effet, une matrice $A$\/ est inversible $A$\/ si, et seulement si $\det A \neq 0$. Or, $\det A = \prod_{\lambda \in \Sp(A)} \lambda^{m_\lambda}$\/ (où $m_\lambda$\/ correspond à la multiplicité de la racine $\lambda$\/ du polynôme caractéristique). On en déduit que $A$ est inversible si et seulement s'il exist pas $\lambda \in \Sp(A)$\/ avec $\lambda^{m_\lambda} = 0$, donc $\lambda = 0$.
+
+			Par exemple, on pose \[
+				A = \begin{pmatrix}
+					1&0&0\\
+					1&1&0\\
+					1&1&1
+				\end{pmatrix},
+			\]une matrice non diagonale. On a $\chi_A(X) = (X-1)^3$, car c'est un déterminant triangulaire. C'est donc bien une matrice à diagonale propre. Et, comme `\,0\,' n'est pas racine du polynôme caractéristique, on en déduit que $A$\/ est inversible. On a, par méthode du pivot de \textsc{Gauss}, \[
+				A^{-1} = \begin{pmatrix}
+					1&0&0\\
+					-1&1&0\\
+					0&-1&1
+				\end{pmatrix}
+			\] qui est aussi une matrice à diagonale propre. En effet, on a $\chi_{A^{-1}}(X) = (X - 1)^3$, comme c'est un déterminant triangulaire.
+		\item On pose \[
+				A = \begin{pmatrix}
+					a_{11}&a_{12}&a_{13}\\
+					a_{21}&a_{22}&a_{23}\\
+					a_{31}&a_{32}&a_{33}
+				\end{pmatrix} \in \mathcal{M}_3(\R)
+			.\] On calcule le polynôme caractéristique : soit $\lambda \in \R$, on a
+			\begin{align*}
+				\det(\lambda I_3 - A) &=
+				\begin{vmatrix}
+					\lambda-a_{11}&-a_{12}&-a_{13}\\
+					-a_{21}&\lambda-a_{22}&-a_{23}\\
+					-a_{31}&-a_{32}&\lambda-a_{33}
+				\end{vmatrix}\\
+				&= (\lambda - a_{11}) 
+				\begin{vmatrix}
+					\lambda - a_{22} & -a_{23}\\
+					-a_{32}&\lambda-a_{33}
+				\end{vmatrix}\\
+				&\mathrel{\phantom{=}}{}+ a_{21}
+				\begin{vmatrix}
+					-a_{12}&-a_{13}\\
+					-a_{32}&\lambda-a_{33}
+				\end{vmatrix}\\
+				&\mathrel{\phantom{=}}{}- a_{31}
+				\begin{vmatrix}
+					-a_{12} & -a_{13}\\
+					\lambda - a_{22} & -a_{23}
+				\end{vmatrix}\\
+				&= (\lambda - a_{11})\big((\lambda - a_{22})(\lambda-a_{33})-a_{23}a_{32}\big)\\
+				&\mathrel{\phantom{=}}{}+ a_{21}\big(a_{12}(a_{33}-\lambda) - a_{13}a_{32} \big) \\
+				&\mathrel{\phantom{=}}{}- a_{31}\big(a_{12}a_{23} + a_{13}(\lambda-a_{22})\big)\\
+				&= (\lambda-a_{11})(\lambda-a_{22})(\lambda-a_{33}) - a_{23}a_{32}(\lambda - a_{11})\\
+				&\mathrel{\phantom{=}}{}+ a_{21}a_{12}(a_{33}-\lambda) - a_{13}a_{32}a_{21} - a_{31}a_{12}a_{23}\\
+				&\mathrel{\phantom{=}}{}- a_{31}a_{13}(\lambda-a_{22}) \\
+				&= \lambda^3 - \lambda^2(a_{11}+a_{22}+a_{33})\\
+				&\mathrel{\phantom{=}}{}+ \lambda(a_{22}a_{33} + a_{11}a_{22} + a_{11}a_{33} - a_{23}a_{32} - a_{21}a_{12} - a_{31}a_{13})\\
+				&\mathrel{\phantom{=}}{}-a_{11}a_{22}a_{33} + a_{23}a_{32}a_{11} + a_{21}a_{12}a_{33}\\
+				&\mathrel{\phantom{=}}{}- a_{13}a_{32}a_{21}-a_{31}a_{12}a_{23} - a_{31}a_{13}a_{22}
+			\end{align*}
+			Or, $\prod_{i=1}^3(\lambda-a_{i,i}) = (\lambda-a_{11})(\lambda-a_{22})(\lambda-a_{33}) = \lambda^3 - \lambda^2(a_{11} + a_{22} + a_{33}) + \lambda(a_{11}a_{22} + a_{22}a_{33} + a_{11}a_{33}) - a_{11}a_{22}a_{33}$. Or, deux polynômes (ici d'inconnue $\lambda$) sont égaux si et seulement si leurs coefficients sont égaux. On en déduit que $A$\/ est à diagonale propre si et seulement si $a_{23}a_{32} + a_{21}a_{12}+a_{31}a_{13} = 0$, et $\det A = a_{11}a_{22}a_{33}$\/ (car le coefficient constant vaut $(-1)^3 \det A = - \det A$).
+		\item On utilise le résultat trouvé à la question précédente : on a $\det A' = 3 + 4 - 1 = 6$ en développant selon la première ligne, ce qui correspond à $1 \times 1 \times 6$. De plus, on a $3 - 1 - 2 = 0$. On en déduit que $A'$\/ est une matrice à diagonale propre.
+		\item On pose $p$\/ la largeur de la matrice $A$, et $q$\/ la largeur de la matrice $C$. On a
+			\begin{align*}
+				\chi_M(\lambda) &= \det(\lambda I_n - M) =
+				\begin{vmatrix}
+					\lambda I_p - A & -B\\
+					0 & \lambda I_q - C
+				\end{vmatrix}\\
+				&= \det(\lambda I_p - A) \times \det(\lambda I_q - C) = \chi_A(\lambda) - \chi_C(\lambda)
+			\end{align*}
+			car le déterminant est triangulaire par blocs. On en déduit que $\chi_M = \chi_A \times \chi_C$.
+		\item
+			\begin{enumerate}
+				\item On pose \[
+						M = \left(\begin{array}{ccc|c}
+							1&1&1&1\\
+							-1&1&1&1\\
+							-2&3&6&1\\ \hline
+							0&0&0&1
+						\end{array}\right)
+					.\] D'après les questions précédentes, cette matrice (qui a bien treize coefficients non-nuls) est bien à diagonale propre.
+				\item On a
+					\begin{align*}
+						M \text{ est à diagonale propre } \iff& \chi_M(X) = (X-a)(X-c)(X-e)(X-h)\\
+						\iff& \chi_A(X) \times \chi_C(X) = (X-a)(X-c)(X-e)(X-h)\\
+						\iff& \begin{cases}
+							\chi_A(X) = (X-e)(X-h)\\
+							\chi_C(X) = (X-a)(X-c)
+						\end{cases}
+					\end{align*}
+					En effet, s'il y avait un facteur $(X-\beta)$\/ dans la forme factorisée du polynôme caractéristique de $A$\/ (ou respectivement $C$), alors la matrice $A$\/ (ou respectivement $C$) serait diagonale, ce qui est impossible car les coefficients de $A$\/ (respectivement $C$) sont tous non-nuls.
+
+					On pose \[
+						M = \left(\begin{array}{cc|cc}
+							3&-1&1&1\\
+							1&1&1&1\\ \hline
+							0&0&2&1\\
+							0&0&1&2\\
+						\end{array}\right)
+					.\]
+					En effet, $\chi_{{2\:1\choose1\:2}}(X) = (X-2)^2 - 1 = X^2 -4X + 3 = (X-3)(X-1)$, et $\chi_{{3\:-1\choose 1\:\mathbin{\phantom-}1}}(X) = (X-3)(X-1) - 1 = X^2 - 4X + 2 = (X - 2)^2$. La matrice $M$\/ est donc à diagonale propre.
+			\end{enumerate}
+		\item Soient $a,b \in \R$. On sait que, si $C$\/ est à diagonale propre, alors $\t C$\/ l'est aussi. (En effet, les coefficients diagonaux sont invariants par transposée, et le polynôme caractéristique aussi.) Or, $\t C = \t(a A) + \t (b I_n) = a \t A + b I_n = C'$. Montrons à présent que $C$\/ est à diagonale propre.
+			\begin{itemize}
+				\item Si $A$\/ est une matrice à diagonale propre, alors $a A$\/ l'est aussi. En effet, soit $\lambda \in \R$, on a $\chi_{aA}(X) = \det(X I_n - a A) = \det\big(a(\frac{X}{a} I_n - A)\big) = a^n \det(\frac{X}{a} - A) = a^n \chi_A(\frac{X}{a})$, et $\prod_{i=1}^n (X - a a_{i,i}) = \prod_{i=1}^n \big(a (\frac{X}{a} - a_{i,i})\big) = a^n \prod_{i=1}^n (\frac{X}{a} - a_{i,i}) = a^n \chi_A(\frac{X}{a})$. Ainsi, $aA$\/ est une matrice à diagonale propre.
+				\item Si $A$\/ est une matrice à diagonale propre, alors $A + I_n$\/ l'est aussi. En effet, $\chi_{A + I_n}(X) = \det(X I_n - A - I_n) = \det\big((X-1) I_n - A\big)$, et $\prod_{i=1}^n \big(X-(a_{i,i}+1)\big) = \prod_{i=1}^n \big((X-1)-a_{i,i}\big)$. Ainsi, $A + I_n$\/ est une matrice à diagonale propre.
+			\end{itemize}
+			On suppose $b \neq 0$. (On a déjà procédé au cas $b = 0$\/ au premier tiret.) On sait que $C = b\big((\frac{a}{b}A) + I_n\big)$. Si $A$\/ est à diagonale propre, alors $\frac{a}{b}A$\/ l'est aussi, et donc $\frac{a}{b}A + I_n$\/ est aussi une matrice à diagonale propre. On en déduit que $C = b(\frac{a}{b}A + I_n)$\/ est une matrice à diagonale propre.
+		\item Soit $A \in \mathcal{E}_n$. Soit $p \in \N$. On pose $C_p = A + \frac{1}{p} I_n$. C'est une matrice à diagonale propre d'après la question (9). La matrice $C_p$\/ est inversible si et seulement si $\det C_p = \det(A - (-\frac{1}{p})I_n \neq 0$, donc si et seulement si $-\frac{1}{p}$\/ n'est pas une valeur propre de $A$. Or, toute matrice à un nombre de valeurs propres fini. Si, pour $p \in \N^*$, $-\frac{1}{p} \not\in \Sp(A)$, alors on pose $p_0 = 1$. Sinon, on pose l'ensemble $P = \{p \in \N^*  \mid -\frac{1}{p} \in \Sp(A)\}$ ; c'est une partie de $\N$\/ non vide, elle admet un maximum. On pose $p_0 = \max(p) + 1$. Par construction, on a bien $p \ge p_0 \implies \det C_p \neq 0$\/ \textit{i.e.} $C_p \in G_n$.
+		\item
+			\begin{enumerate}
+				\item Non. D'après le \textit{théorème spectral}, la matrice $M = {0\:2\choose 2\:0} \in \mathcal{S}_2$\/ est diagonalisable, donc trigonalisable. Mais, $\chi_M(X) = X^2 - 4 \neq (X-0)(X-0)$.
+				\item Toute matrice à diagonale propre admet un polynôme caractéristique scindé sur $\R$, elle est donc trigonalisable.
+				\item
+					\begin{itemize}
+						\item Soit $A \in \mathcal{M}_{n}(\R)$. On sait que le polynôme caractéristique est un invariant de similitude. Ainsi, si $A$\/ est semblable à une matrice $B$\/ à diagonale propre, alors $\chi_B = \chi_A$, qui est un polynôme scindé par définition de matrice à diagonale propre.
+						\item Soit $A \in \mathcal{M}_n(\R)$\/ une matrice dont le polynôme caractéristique est scindé. Ainsi, elle est trigonalisable : soit $B \in \mathcal{M}_n(\R)$\/ une matrice triangulaire semblable à $A$. Or, une matrice triangulaire est à diagonale propre. En effet, le déterminant $\det(XI_n - B)$\/ est triangulaire, donc égale aux produit des coefficients diagonaux $X - b_{i,i}$.
+					\end{itemize}
+					On en déduit de cette \textsc{Analyse-Synthèse} qu'une matrice $A$\/ est semblable à une matrice à diagonale propre si et seulement si le polynôme caractéristique de $A$\/ est scindé.
+			\end{enumerate}
+		\item Soit $A \in \mathcal{M}_n(\R)$. On pose \[
+				U = \begin{pNiceMatrix}
+					\frac{a_{11}}{2} & 0 & \ldots & 0 \\
+					a_{21} & \ddots & \ddots & \vdots\\
+					\vdots & \ddots &\ddots & 0\\
+					a_{n1}&\ldots&a_{n,n-1}& \frac{a_{nn}}{2}
+				\end{pNiceMatrix} \quad\text{ et }\quad
+				V = \begin{pNiceMatrix}
+					\frac{a_{11}}{2} & a_{12} & \ldots & a_{1n} \\
+					0 & \ddots & \ddots & \vdots\\
+					\vdots & \ddots &\ddots & a_{n-1,n}\\
+					0&\ldots&0& \frac{a_{nn}}{2}
+				\end{pNiceMatrix}
+			.\] Par construction, on a bien $A = U + V$, et les matrices $U$\/ et $V$\/ sont triangulaires, donc à diagonales propres (\textit{c.f.} question précédente). Ainsi, toute matrice est la somme de deux matrices à diagonales propres.
+
+			Non, $\mathcal{E}_n$\/ n'est pas un sous-espace vectoriel de $\mathcal{M}_n(\R)$. En effet, on a prouvé que toute matrice de $\mathcal{M}_n(\R)$\/ peut être décomposée en somme de deux matrices $U$\/ et $V$\/ de $\mathcal{E}_n$. Or, si $\mathcal{E}_n$\/ est un sous-espace vectoriel, alors $U + V \in \mathcal{E}_n$. Mais, ce n'est pas le cas : il existe des matrices qui ne sont pas à diagonale propre (par exemple ${0\:2\choose 2\:0} \not\in \mathcal{E}_2$).
+		\item Soit $A = (a_{i,j})_{i,j \in \left\llbracket 1,n \right\rrbracket} \in \mathcal{M}_n(\R)$. On pose $\t A = (b_{j,k})_{j,k\in\left\llbracket 1,n \right\rrbracket}$, et $\t A A = (c_{i,k})_{i,k\in\left\llbracket 1,n \right\rrbracket}$. On a, pour $i,k \in \left\llbracket 1n \right\rrbracket$, $c_{i,k} = \sum_{j=1}^n a_{i,j}b_{j,k} = \sum_{j=1}^n a_{i,j}a_{k,j}$. Ainsi, \[
+				\tr (\t AA) = \sum_{i=1}^n c_{i,i} = \sum_{i=1}^n \sum_{j=1}^n a_{i,j}^2
+			.\]
+		\item
+			\begin{enumerate}
+				\item La matrice $A$\/ est semblable à $\mathrm{diag}(\lambda_1, \ldots, \lambda_n)$. De même, la matrice $\t A$\/ est aussi semblable à $\mathrm{diag}(\lambda_1, \ldots, \lambda_n)$\/ (comme c'est sa propre transposée). En effet, soit $P \in \mathrm{GL}_n(\R)$\/ telle que $P^{-1} \cdot A \cdot P = D$\/ où $D = \mathrm{diag}(\lambda_1, \ldots, \lambda_n)$, alors $\t A = \t (P^{-1} \cdot D \cdot P) = (\t P) \cdot {\t D} \cdot (\t P)^{-1}$, donc $\t A$\/ est aussi semblable à $D$. Ainsi, par produit ($P^{-1} \cdot A \cdot P \cdot (\t P) \cdot {\t A} \cdot (\t P) ^{-1} = P^{-1} \cdot A \t A \cdot P = D^2$), la matrice $\t A A$\/ est semblable à $D^2$. D'où, comme la transposée est un invariant de similitude, \[
+						\sum_{i=1}^n\sum_{j=1}^n a_{i,j}^2 = \tr(\t AA) = \tr(D^2) = \sum_{i=1}^n \lambda_i^2
+					.\]
+				\item Si $A$\/ est à diagonale propre, alors, pour $i \in \left\llbracket 1,n \right\rrbracket$, $\lambda_i = a_{i,i}$. D'où \[
+					\sum_{i=1}^n \sum_{j=1}^n a_{i,j}^2 = \sum_{i=1}^n a_{i,i}^2 \text{ donc } \sum_{i=1}^n \sum_{\substack{j=1\\j\neq i}}^n a_{i,j}^2 = 0
+				.\] Or, il s'agit d'une somme de termes positifs ou nuls, qui est nulle. On en déduit que tous les termes de la sommes sont nuls, \textit{i.e.} $\forall i$, $\forall j \neq i$, $a_{i,j} = 0$. La matrice $A$\/ est donc diagonale. L'inclusion réciproque est vraie comme toute matrice diagonale est une matrice à diagonale propre.
+			\end{enumerate}
+		\item
+			\begin{enumerate}
+				\item Comme la matrice $A$\/ est anti-symétrique, sa diagonale est nulle. On en déduit que toutes ses valeurs propres sont nulles. Ainsi, $\chi_A(X) = X^n$. Or, d'après le théorème de \textsc{Cayley} \& \textsc{Hamilton}, le polynôme caractéristique est annulateur de la matrice $A$. D'où $\chi_A(A) = 0$. On en déduit que $A^n = 0$.
+
+					Comme $A$\/ est anti-symétrique, $\t A = -A$, et donc $(\t A A)^n = (- A^2)^n = (-1)^n \cdot A^n \cdot A^n = 0$.
+				\item La matrice $\t A A$\/ est symétrique. En effet, $\t(\t A A) = \t A \cdot \t(\t A) = \t A A$. Ainsi, d'après le \textit{théorème spectral}, elle est diagonalisable en $D = \mathrm{diag}(\lambda_1, \ldots, \lambda_n)$. Or, $(\t A A)^n = 0$, donc les valeurs propres sont toutes nulles. On en déduit que $\t A A$\/ est semblable à la matrice nulle, \textit{i.e.} $\t A A = 0$.
+				\item On applique la trace : $\tr (\t A A) = \sum_{i=1}^n \sum_{j=1}^n a_{i,j}^2 = 0$. Or, comme c'est une somme de termes positifs ou nuls, ils sont tous nuls, la matrice $A$\/ est donc la matrice nulle.
+			\end{enumerate}
+		\item On a $\dim \mathcal{A}_n = \frac{n(n-1)}{2}$.
+		\item D'après les questions (15abc), $\mathcal{E}_n \cap \mathcal{A}_n = \{0\}$, donc $F \cap \mathcal{A}_n = \{0\}$\/ (car $0 \in F$, car c'est un espace vectoriel). La somme est donc directe. Ainsi, $\dim F + \dim \mathcal{A}_n = \dim(F \oplus \mathcal{A}_n) \le \dim \mathcal{M}_n(\R) = n^2$. Ainsi, $\dim F \le n^2 - \frac{n(n-1)}{2} = \frac{n(n+1)}{2}$. L'espace des matrices triangulaires inférieures ($\mathcal{T}^I_n$) est un sous-espace vectoriel de $\mathcal{M}_n(\R)$. On a bien $\mathcal{T}^I_n \subset \mathcal{E}_n$. En effet, toute matrice triangulaire inférieure est à diagonale propre. Et, on a $\dim \mathcal{T}^I_n = \frac{n(n+1)}{2}$.
+		\item Soit $m < n$. On considère l'ensemble $\mathcal{Z}_m$\/ des matrices de la forme $M = {A\:B\choose 0\:D}$ où $A$\/ et $D$\/ sont triangulaires inférieures de tailles respectives $m \times m$\/ et $(n-m)\times (n-m)$\/. Ainsi,  $A$\/ et $D$\/ sont à diagonale propre, donc $M$\/ aussi. L'ensemble $\mathcal{Z}_m$\/ est bien un sous-espace vectoriel, car l'ensemble des matrices triangulaires en forme un. On a $\dim \mathcal{Z}_m = \dim\mathcal{T}^I_m + \dim\mathcal{T}^I_{n-m} +\dim \mathcal{M}_{m,n-m}(\R)$, car la somme est directe. Ainsi,
+			\begin{align*}
+				2\dim \mathcal{Z}_m &= 2 \dim \mathcal{T}^I_m + 2\dim \mathcal{T}^I_{n-m} + 2\dim \mathcal{M}_{m,n-m}(\R)\\
+				&= m(m+1) + (n-m)(n-m+1) + 2m(n-m) \\
+				&= \cancel{m^2} + \cancel{m} + n^2 -\cancel{2nm} + \cancel{m^2} + n - \cancel{m} + \cancel{2nm} - \cancel{2m^2}  \\
+				&= n^2 + n \\
+				&= n(n+1) \\
+			\end{align*}
+			On en déduit que, pour tout $m \in \left\llbracket 1,n-1 \right\rrbracket$, l'espace $\mathcal{Z}_m$\/ est de dimension $\frac{n(n+1)}{2}$, est composé de matrices à diagonales propres, mais n'est pas composé uniquement de matrices triangulaires : la matrice $M$, ci-dessous, n'est pas triangulaire mais \[
+				M = \begin{pmatrix}
+					0 & \cdots & \cdots & 0 & 1\\
+					\vdots & \ddots & & \vdots & 0\\
+					\vdots & & \ddots & \vdots & \vdots\\
+					0 & \cdots & \cdots & 0 & 0
+				\end{pmatrix} \in \mathcal{Z}_1
+			.\]
+	\end{enumerate}
+\end{document}

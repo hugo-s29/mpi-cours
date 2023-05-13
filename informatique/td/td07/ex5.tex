@@ -1,0 +1,94 @@
+\section{Réduction}
+
+\begin{enumerate}
+	\item Soit $\texttt{m},w$\/ les entrées du problème de l'\textsc{Arrêt}. On fabrique la sérialisation de machine \[
+			\text{``} \texttt{fun}\ \texttt{s} \to \texttt{execute}\ \{\!\{\texttt{m}\}\!\}\ \{\!\{w\}\!\}. \text{''}
+		\] Notons $M'_{\texttt{m},w}$\/ cette machine. On a
+		\begin{align*}
+			M'_{\texttt{m},w} \in \textsc{ArrêtUniv}^+ \iff& \forall x \in \Sigma^*,\: \texttt{execute}\ \texttt{m}\ w \text{ se termine}\\
+			\iff& \texttt{execute}\ \texttt{m}\ w \text{ se termine}\\
+			\iff& (\texttt{m},w) \in \textsc{Arrêt}^+
+		\end{align*}
+		Ainsi, on crée la réduction.
+		\begin{lstlisting}[language=caml,caption=Réduction de \textsc{ArrêtUniv} au problème de l'\textsc{Arrêt}]
+	let reduction (s: string): string =
+		let (m, %*$w$*)) = deserialise_couple s in
+		"fun x -> execute " ^ m ^ " " ^ %*$w$*)
+		\end{lstlisting}
+		Ainsi, \textsc{ArrêtUniv} est indécidable par réduction.
+	\item Réduisons le problème \textsc{Arrêt} à \textsc{ArrêtSimult}. Soit $\texttt{m}, w$\/ les données du problème de l'\textsc{Arrêt}. Posons les machines $M_{\texttt{m},w} = \text{``}\texttt{fun}\ x \to \texttt{execute}\ \{\!\{\texttt{m}\}\!\}\ \{\!\{w\}\!\}\text{''}$, et $N : \text{``}\texttt{fun}\ x\ \to 3. \text{''}$ On a
+		\begin{align*}
+			&\texttt{serialise\_couple} (M_{\texttt{m},w}, N) \in \textsc{Arrêt}^+\\
+			\iff& \big(\forall x \in \Sigma^*,\qquad \texttt{execute}\ M_{\texttt{m},w}\ x \text{ termine}\quad\iff\quad \texttt{execute}\ N\ x \text{ termine}\big)\\
+			\iff& \big(\texttt{execute}\ \{\!\{\texttt{m}\}\!\}\ \{\!\{w\}\!\} \text{ termine} \iff \mathbf{V}\big)\\
+			\iff& \texttt{execute}\ \{\!\{\texttt{m}\}\!\}\ \{\!\{w\}\!\} \text{ termine}\\
+			\iff& (\texttt{m},w) \in \textsc{Arrêt}^+.
+		\end{align*}
+		
+		Autre possibilité : réduisons \textsc{ArrêtUniv} à \textsc{ArrêtSimult}. On pose $N : \text{``}\texttt{fun}\ x \to 2\text{,''}$ et on a 
+		\begin{align*}
+			&\texttt{serialise\_couple} (M, N) \in \textsc{ArrêtSimult}^+\\
+			\iff& \big(\forall x \in \Sigma^*, \qquad \texttt{execute}\ M\ x \text{ termine} \iff \texttt{execute}\ N\ x \text{ termine}\big)\\
+			\iff& \forall x \in \Sigma^*,\:\texttt{execute}\ M\ x \text{ termine}\\
+			\iff& M \in \textsc{ArrêtUniv}^+.
+		\end{align*}
+	\item Réduisons \textsc{Arrêt} à \textsc{Régulier}. Soit $(\texttt{m}, w)$ une entrée du problème de l'\textsc{Arrêt}.
+		\begin{lstlisting}[language=caml,caption={Machine reconnaissant le langage $\{a^n \cdot b^n \mid n \in \N\}$}]
+let reconnait_an_bn (w: string): bool =
+	let n = String.length w in
+	if n mod 2 = 1 then false
+	else begin
+			let ok = ref true in
+			for i = 1 to n / 2 do
+				if w.[i] = `a' then ok := false
+			done;
+			for i = (n / 2) + 1 to n do
+				if w.[i] = `b' then ok := false
+			done;
+			!ok
+		end
+		\end{lstlisting}
+		On considère la fonction de réduction ci-dessous.
+		\begin{lstlisting}[language=caml]
+let %*$f$*) (e: string): string =
+	let (m, w) = deserialise_couple e in
+	"fun %*$s$*) -> execute {{m}} {{w}}; reconnait_an_bn {{w}}"
+		\end{lstlisting}
+		En notant $(\texttt{m},\texttt{w}) = \texttt{deserialise\_couple}(\texttt{e})$, \[
+			(f\ \texttt{e}) \in \textsc{Régulier}^+ \iff \text{``}\texttt{fun}\ s \to \texttt{execute} \{\!\{\texttt{m}\}\!\} \{\!\{\texttt{w}\}\!\}\text{''}
+		.\]
+		Or,
+		\begin{itemize}
+			\item si $w \xrightarrow[\texttt{m}]{} {\circlearrowleft}$, alors $\forall s \in \Sigma^*$, $s \xrightarrow[\texttt{m}]{} {\circlearrowleft}$, donc $\mathcal{L}(\texttt{m}) = \O$.
+			\item si $w \xrightarrow[\texttt{m}]{} w'$, avec $w' \in \Sigma^*$, alors
+				\begin{itemize}
+					\item si $s \xrightarrow[\texttt{m}]{} \texttt{true} \iff s \in \{a^n \cdot b^n  \mid n \in \N\}$,
+					\item si $s \xrightarrow[\texttt{m}]{} \texttt{false} \iff s \not\in \{a^n \cdot b^n  \mid n \in \N\}$,
+				\end{itemize}
+				Et donc, $\mathcal{L}(\texttt{m}) = \{a^n \cdot b^n  \mid n \in \N\}$.
+		\end{itemize}
+		On a donc
+		\begin{align*}
+			(f\ \texttt{e}) \in \textsc{Régulier}^+ \iff& w \xrightarrow[\texttt{m}]{} {\circlearrowleft}\\
+			\iff& (\texttt{m}, w) \in \textsc{Arrêt}^-\\
+			\iff& (\texttt{m},w) \in \textsc{CoArrêt}^+
+		\end{align*}
+		où le problème \textsc{CoArrêt} est défini comme \[
+			\textsc{CoArrêt} : \begin{cases}
+				\text{\textbf{Entrée}} &: (\texttt{m},w)\\
+				\text{\textbf{Sortie}}&: \text{A-t-on } w \xrightarrow[\texttt{m}]{}{\circlearrowleft}
+			\end{cases}
+		.\]
+		On a $\textsc{CoArrêt}^- = \textsc{Arrêt}^+$, et $\textsc{CoArrêt}^+ = \textsc{Arrêt}^-$. Le problème \textsc{CoArrêt} est indécidable par stabilité des problèmes décidables par complémentaire. On conclut par réduction de \textsc{CoArrêt} à \textsc{Régulier}.
+	\item Réduisons \textsc{Arrêt} à \textsc{Arrêt}$_w$. Soit $(w, M)$ une entrée du problème \textsc{Arrêt}.
+		Fabriquons la machine $M_w : \text{``}\texttt{fun}\ s \to \texttt{execute}\ M\ w .\text{''}$\@
+		On a
+		\begin{align*}
+			M_w \in {\textsc{Arrêt}_w}^+ \iff& (\forall x \in \Sigma^*,\:\texttt{execute}\ M\ w \text{ se termine})\\
+			\iff& \texttt{execute}\ M\ w \text{ se termine}\\
+			\iff& (M, w) \in \textsc{Arrêt}^+
+		\end{align*}
+		Par réduction, le problème \textsc{Arrêt}$_w$ est indécidable.
+	\item Réduisons \textsc{ArrêtUniv} à \textsc{ArrêtExiste}. Soit $M$\/ une entrée du problème \textsc{ArrêtExiste}.
+\end{enumerate}
+

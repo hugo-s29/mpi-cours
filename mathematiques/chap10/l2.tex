@@ -1,0 +1,71 @@
+\begin{exm}[{$R \in {]0,+\infty[}$}, et diverge aux deux bords]
+	On considère la série $\sum x^n$.
+	\textsl{Calculons son rayon de convergence}. Il s'agit d'une série géométrique, mais il s'agit aussi d'une série entière, où $\forall n \in \N$, $a_n = 1$. Or, on sait que \[
+		\sum_{k=0}^n x^k = \begin{cases}
+			\frac{1-x^{n+1}}{1-x} & \quad \text{ si } x \neq 1 \quad \text{ qui converge si et seulement si } |x| < 1\\
+			n + 1 & \quad \text{ si } x = 1 \quad \text{ qui diverge}.
+		\end{cases}
+	\] Donc, la série $\sum x^n$\/ converge si et seulement si $|x| < 1$.
+	On en déduit que $R = 1$.
+\end{exm}
+
+\begin{exm}[{$R \in {]0,+\infty[}$}, et diverge d'un bord, converge de l'autre]
+	On considère la série $\sum \frac{x^n}{n}$.
+	Si~$x = 1$, alors la série $\sum \frac{1}{n}$\/ diverge par critère de \textsc{Riemann}. Si $x \neq -1$, alors la série $\sum \frac{(-1)^n}{n}$\/ converge d'après le théorème des séries alternées car $\big(\frac{1}{n}\big)_{n\in\N}^*$\/ tend vers 0 en décroissant.
+	Cette situation dissymétrique nous montre que $R = 1$.
+\end{exm}
+
+\begin{exm}[{$R \in {]0,+\infty[}$}, et converge aux deux bords]
+	On considère la série $\sum \frac{x^n}{n^2}$. \textsl{Calculons son rayon de convergence}.
+	\begin{itemize}
+		\item Si $x = 1$, la série $\sum \frac{1}{n^2}$\/ converge par critère de \textsc{Riemann}. D'où $R \ge 1$.
+		\item Si $|x| > 1$, alors \[
+				\frac{\left| \frac{x^{n+1}}{(n+1)^2} \right|}{\left| \frac{x^n}{n^2} \right|} = \left( \frac{n}{n+1} \right)^2  \times |x| \tendsto{n\to \infty} |x|
+		.\] D'où, d'après le critère de \textsc{d'Alembert}, la série $\sum \frac{|x|^n}{n}$\/ diverge. D'où $R \le 1$.
+	\end{itemize}
+	On en déduit que $R = 1$.
+
+	Autre méthode :
+	\begin{itemize}
+		\item Si $|x| > 1$, alors $\frac{x^n}{n^2}\tendsto{n\to \infty} +\infty$\/ par croissances comparées. D'où $R \le 1$.
+		\item Si $|x| < 1$, alors $\frac{|x|^n}{n^2} \tendsto{n\to \infty} 0$. D'où $R \ge 1$.
+	\end{itemize}
+\end{exm}
+
+\begin{prop}
+	Soient $R_a$\/ et $R_b$\/ les rayons de convergence des séries entières $\sum a_n x^n$\/ et $\sum b_n x^n$\/ respectivement.
+	\begin{enumerate}
+		\item Si, à partir d'un certain rang, $|a_n| \le |b_n|$, alors $R_a \ge R_b$.
+		\item Si $a_n = \gO_{n\to \infty}(b_n)$, alors $R_a \ge R_b$.
+		\item Si $a_n \simi_{n\to \infty} b_n$, alors $R_a = R_b$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item Ainsi, à partir d'un certain rang, $|a_n x^n| \le |b_n x^n|$.
+			D'où, si la série~$\sum |b_n x^n|$\/ converge, alors la série $\sum |a_n x^n|$\/ converge.
+			On a donc $R_b \le R_a$.
+		\item Ainsi, $a_n = b_n \times u_n$\/ où $(u_n)_{n\in\N}$\/ est une suite bornée. Il existe donc $M \in \R^+$\/ tel que~$|u_n| \le M$.
+			D'où, $|a_n| = |b_n| \times |u_n| \le M\:|b_n|$.
+			Donc, $R_a \ge R'$ où $R'$\/ est le rayon de convergence de la série $\sum M b_n x^n = M \sum b_n x^n$. On en déduit que $R_a \ge R_b$.
+		\item Ainsi, $a_n = \gO(b_n)$\/ et $b_n = \gO(a_n)$, d'où d'après le cas précédent, $R_a \ge R_b$, et $R_b \ge R_a$. On en déduit que $R_a = R_b$.
+	\end{enumerate}
+\end{prv}
+
+\begin{exo}
+	\begin{enumerate}
+		\item On considère la série entière $\sum \mathrm{e}^{\cos n} x^n$.
+			Or, pour tout $n \in \N$, $0 \le \mathrm{e}^{-1} \le a_n = \mathrm{e}^{\cos n} \le \mathrm{e}^{1}$\/ car $-1 \le \cos n \le 1$\/ et $\exp$\/ est croissante.
+			D'une part, $|a_n| \le |\mathrm{e}^{1}|$, d'où $R_a$\/ est supérieur ou égal au rayon de convergence de la série $\sum \mathrm{e}^{1} x^n = \mathrm{e}\sum x^n$. D'où $R_a \ge 1$.
+			D'autre part, $R_a \le 1$\/ de même. On en déduit que $R_a = 1$.
+		\item On considère la série entière $\sum \frac{n!}{2^{2n} \sqrt{(2n)!}} x^n$, de terme général $u_n$.
+			\begin{enumerate}
+				\item \textsc{Méthode 1 (d'Alembert}).
+					\[
+						\frac{|u_{n+1}|}{|u_n|} = |x| \times \frac{n+1}{4\sqrt{(2n+2)(2n+1)}} \tendsto{n\to \infty} \frac{1}{8} |x|
+					.\] Alors, la série $\sum u_n$\/ diverge si $|x| / 8 > 1$\/ ; et, la série $\sum u_n$\/ converge si $|x| < 1$, par le critère de \textsc{d'Alembert}. On en déduit que $R = 8$.
+				\item \textsc{Méthode 2 (Stirling)}\ldots\ à tenter
+			\end{enumerate}
+	\end{enumerate}
+\end{exo}

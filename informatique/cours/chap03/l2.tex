@@ -11,30 +11,33 @@ Ce qu'on aimerai avoir, c'est des \textit{bordures} entre les différentes class
 		draw(box((-1,-1),(1,1)));
 		draw((-1,0)--(1,0));
 		draw((0,-1)--(0,1));
-		void s(string t, pair v, real r, int k) {
+		void s(string t, pair v, real r, real r0, int k) {
 			real a = v.x;
 			real b = v.y;
-			for(int i = 0; i < k; ++i) {
-				pair off = unitrand() * r * expi(unitrand() * 2pi);
-				label(t, off + (a,b));
+			int n = floor(sqrt(k));
+			for(real i = 0.5; i < n; ++i) {
+				for(real j = 0.5; j < n; ++j) {
+					pair off = unitrand() * r0 * expi(unitrand() * 2pi);
+					pair pos = (a,b) + (i-n/2,j-n/2)*2r/n + off;
+					label(t,pos);
+				}
 			}
 		}
 		srand(0);
-		s("$\circ$", (-0.5, 0.5), 0.5, 20);
-		s("$\diamond$", (0.5, 0.5), 0.5, 10);
-		s("$\star$", (-0.5, -0.5), 0.5, 40);
-		s("$\times$", (0.5, -0.5), 0.5, 50);
+		s("$\odot$", (-0.5, 0.5), 0.5, 0.05, 20);
+		s("$\diamond$", (0.5, 0.5), 0.5, 0.05, 10);
+		s("$\star$", (-0.5, -0.5), 0.5, 0.05, 40);
+		s("$\times$", (0.5, -0.5), 0.5, 0.05, 50);
 	\end{asy}
 	\caption{Représentation de \textit{bordures} entre les différentes classes}
 \end{figure}
 
-De ces zones, on peut construire un algorithme qui classifie les données, que l'on représente sous forme d'arbre. Ce type d'arbre est un \textit{arbre de décision}. Dans l'exemple précédent, on peut donc créer l'arbre ci-dessous.
+De ces zones, on peut construire un algorithme qui classifie les données, que l'on représente sous forme d'arbre. Ce type d'arbre est un \textit{arbre de décision}. Dans l'exemple précédent, on peut donc créer l'arbre ci-dessous.\footnote{Dans cet arbre, si un nœud représente une condition, son fils gauche représente si cette condition est vraie, et le fils droit sinon.}
 
 \begin{figure}[H]
 	\centering
-	\Tree[.$x<\frac12$ [.$y<\frac12$ $\diamond$ $\times$ ] [.$y<\frac12$ $\circ$ $\star$ ]]
+	\Tree[.$x<\frac12$ [.$y<\frac12$ $\star$ $\odot$ ] [.$y<\frac12$ $\times$ $\diamond$ ]]
 	\caption{Arbre de décision pour la classification}
-	\todo{Refaire l'arbre plus proprement}
 \end{figure}
 
 Dans le reste de cette section, on s'intéresse uniquement à des données de $\mathds{B}^n$\/ (une liste de $n$\/ booléens) pour un certain $n \in \N$.
@@ -60,10 +63,11 @@ On considère l'exemple dont les données ci-dessous.
 	Étant donné un variable aléatoire finie $X$\/ à valeurs dans $E$. On note $p_X : E \to [0,1]$\/ sa loi de probabilité : \[
 		\forall x \in E,\quad p_X(x) = P(X = x)
 	.\]
-	On définit l'\textit{entropie} $H(X)$\/ de cette variable aléatoire comme \[
+	On définit l'\textit{entropie} $\mathrm{H}(X)$\/ de cette variable aléatoire comme \[
 		\mathrm{H}(X) = -\sum_{x \in E} p_X(x)\:\ln\big(p_X(x)\big)
 	.\]
 	On prolonge $p_X(x) \ln(p_X(x))$\/ par continuité à la valeur $0$\/ lorsque $p_X(x) = 0$.
+	\index{entropie!variable aléatoire}
 \end{defn}
 
 \begin{exm}
@@ -90,7 +94,7 @@ On considère l'exemple dont les données ci-dessous.
 			else return - p * log(p) - (1-p) * log(1-p);
 		}
 		draw(graph(f, 0, 1), magenta);
-		draw((-0.2, 0.5) -- (1.2, 0.5), dashed+grey);
+		draw((0.5, -0.2) -- (0.5, 1.2), dashed+grey);
 	\end{asy}
 	\caption{Représentation graphique de $\mathrm{H}(X)$\/ en fonction de $p$}
 \end{figure}
@@ -104,7 +108,7 @@ On considère l'exemple dont les données ci-dessous.
 \begin{prv}
 	On a \[
 		\sum_{i=1}^n p_i \ln(q_i) - \sum_{i=1}^n p_i \ln(p_i) =
-		\sum_{i=1}^n p_i \ln\left( \frac{p_i}{q_i} \right) \le \ln\left( \sum_{i=1}^n p_i \frac{q_i}{p_i} \right) = 0
+		\sum_{i=1}^n p_i \ln\left( \frac{q_i}{p_i} \right) \le \ln\left( \sum_{i=1}^n p_i \frac{q_i}{p_i} \right) = 0
 	.\]
 \end{prv}
 
@@ -115,7 +119,7 @@ On considère l'exemple dont les données ci-dessous.
 \end{prop}
 
 \begin{prv}
-	On conclut, d'après le lemme précédent, que \ldots
+	On conclut, d'après le lemme précédent.
 \end{prv}
 
 \begin{defn}
@@ -123,12 +127,14 @@ On considère l'exemple dont les données ci-dessous.
 	On a donc \[
 		\mathrm{H}\big((S,c)\big) = -\sum_{e \in E} \frac{\Card\:c^{-1}\big(\{e\}\big)}{\Card S} \ln\left( \frac{\Card\:c^{-1}\big(\{e\}\big)}{\Card S} \right) 
 	.\]
+	\index{entropie!jeu de données classifié}
 \end{defn}
 
 \begin{defn}
 	Étant donné un jeu de données une partition $\{S_1, S_2, \ldots, S_p\}$\/ d'un jeu de données classifié $(S, c)$, l'\textit{entropie} de cette partition est la moyenne (pondérée par les cardinaux et renormalisée) : \[
 		\mathrm{H}\big(\big(\{S_1,\ldots,S_p\}, c\big)\big) = \sum_{i=1}^p \frac{\Card S_i}{\Card S}\:\mathrm{H}\big((S_i,c)\big)
 	.\]
+	\index{entropie!partition}
 \end{defn}
 
 L'entropie de $\{w,a,t,d,r,m\}$\/ est $\mathrm{H} = -\frac{3}{6}\ln\left( \frac{3}{6} \right) - \frac{3}{6} \ln\left(\frac{3}{6}\right) = \ln 2 \simeq 0{,}69$.
@@ -218,11 +224,40 @@ Les données que l'on a utilisées sont pour l'apprentissage. On teste notre arb
 	\caption{Test de l'arbre de décision créé}
 \end{table}
 
-Attention : il ne faut pas faire du \textit{sur-apprentissage}, comme montré sur la figure ci-dessus.
-\todo{Figure sur-apprentissage}
-Aussi, il faut faire attention aux critères : par exemple, lors de la classification de photos de chats et de chiens, les photos de chiens sont en général prises en extérieur et l'algorithme ID3 aurait donc pu choisir de baser sa décision sur l'emplacement de la photo, même si elle n'importe pas dans la différenciation chat/chiens.
+\textsc{Attention} : il ne faut pas faire du \textit{sur-apprentissage}, comme montré sur la figure ci-dessus, où la modélisation correspond trop aux données utilisées pour la classification.
 
-Autre exemple : on considère la table de données ci-dessous. Utilisons l'algorithme ID3 sur ces données, et trouvons l'arbre de décision.
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import graph;
+		size(08cm);
+
+		draw((-16,0)--(16,0), Arrow(TeXHead));
+		draw((0,-9)--(0,9), Arrow(TeXHead));
+
+		real[] coeffs = {-2.1478891855446504e-8,1.698131547946309e-8,0.0000074313013241384006,-0.000003993863337418278,-0.0009015297524130196,0.00018265546001029425,0.04505147646994326,0.00560676021680851,-0.8089518993665817,-0.10979931813390773,2.2896534407766604};
+		real f(real x) {
+			real y = 0;
+			for(int i = 0; i < coeffs.length; ++i) {
+				y -= x^i * coeffs[coeffs.length-i-1];
+			}
+			return y;
+		}
+
+		bool3 fcheck(real x) { return abs(f(x)) <= 9; }
+
+		draw(graph(f, -16, 16, 500, fcheck), magenta);
+		for(int i = -16; i <= 16; i += 2) {
+			if(fcheck(i))
+				dot((i, f(i)), magenta);
+		}
+	\end{asy}
+	\caption{Représentation graphique du problème de \textit{sur-apprentissage}}
+\end{figure}
+
+Aussi, il faut faire attention aux critères : par exemple, lors de la classification de photos de chats et de chiens, les photos de chiens sont en général prises en extérieur et l'algorithme \textsc{id3} aurait donc pu choisir de baser sa décision sur l'emplacement de la photo, même si elle n'importe pas dans la différenciation chat/chiens.
+
+Autre exemple : on considère la table de données ci-dessous. Utilisons l'algorithme \textsc{id3} sur ces données, et trouvons l'arbre de décision.
 
 \begin{table}[H]
 	\centering
@@ -247,4 +282,6 @@ Pour les conditions $A$, $B$\/ et $C$, on a $\mathrm{H} \simeq 0{,}63$\/ et, pou
 	\Tree[.$A$ [.$B$ \textsc{oui} \textsc{non} ] [.$B$ \textsc{non} [.$C$ \textsc{oui} \textsc{non} ]]]
 	\caption{Arbre de décision pour la table de données précédente}
 \end{figure}
+
+Le nom de \textsc{id3} vient de \textit{iterative dichotomizer}.
 

@@ -1,0 +1,237 @@
+\section{Rotations et réflexions}
+
+\begin{defn}
+	Soit $E$\/ un $\R$-espace vectoriel de dimension finie.
+	On dit que deux bases $\mathcal{B}_0$\/ et $\mathcal{B}$\/ de $E$\/ ont la même \textit{orientation} si le déterminant de la matrice $P$\/ de passage de $\mathcal{B}_0$\/ à $\mathcal{B}$\/ est positif : \[
+		\det P = \det_{\mathcal{B}_0}(\mathcal{B}) > 0
+	.\]
+\end{defn}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(13cm);
+		draw((-5, 0)--(-2, 0), Arrow(TeXHead));
+		draw((-4, -0.5)--(-4, 1.5), Arrow(TeXHead));
+		draw((0, 0)--(3, 0), Arrow(TeXHead));
+		draw((1, -0.5)--(1, 1.5), Arrow(TeXHead));
+		draw((5, 0)--(8, 0), Arrow(TeXHead));
+		draw((6, -0.5)--(6, 1.5), Arrow(TeXHead));
+		pair u = (1.5, 1);
+		pair v = (0.5, 0.8);
+		draw((-4,0)--(-4,0)+u--(-4,0)+u+v--(-4,0)+v--cycle);
+		draw((-4, 0)--(-4, 0) + u, deepcyan, Arrow(TeXHead));
+		label("$\vec u$", (-4,0) + u/2, deepcyan, align=W);
+		draw((-4, 0)--(-4, 0) + v, deepcyan, Arrow(TeXHead));
+		label("$\vec v$", (-4,0) + v/2, deepcyan, align=S);
+		pair w = (u.x*v.y - v.x*u.y, 0);
+		draw((1, 0)--(1,0)+w--(1,0)+v+w--(1,0)+v--cycle);
+		draw((6,0)--(6,0)+w--(6,v.y)+w--(6,v.y)--cycle);
+	\end{asy}
+	\caption{Aire d'un parallélogramme}
+\end{figure}
+
+\begin{exm}
+	On oriente le plan $\R^2$\/ en décidant que la base canonique $\mathcal{B}_0 = (\vec{\imath}, \vec{\jmath})$\/ est directe, puis on munit $\R^2$\/ du produit canonique : $\mathcal{B}_0$\/ est alors une base orthonormée directe de $\R^2$. Soient deux vecteurs $\vec{u} = a\,\vec{i} + b\,\vec{\jmath}$\/ et $\vec{v} = c\, \vec{\imath} + b\, \vec{\jmath}$.
+	Le déterminant \[
+		\det(\vec{u}, \vec{v}) = \begin{vmatrix}
+			a & c\\
+			b & d
+		\end{vmatrix} = ad - bc
+	\] possède 
+	\begin{itemize}
+		\item  un signe (s'il est strictement positif, alors $(\vec{u}, \vec{v})$\/ est une base directe, s'il est strictement négatif, alors $(\vec{u}, \vec{v})$\/ est une base indirecte, s'il est nul alors $(\vec{u}, \vec{v})$\/ n'est pas une base car $\vec{u}$\/ et $\vec{v}$\/ sont liés) ;
+		\item une valeur absolue, égale à l'aire du parallélogramme construit sur les vecteurs $\vec{u}$\/ et $\vec{v}$. Les trois parallélogrammes de la figure précédente ont la même aire : \[
+				\big|{\det (\vec{u}, \vec{v})}\big| = |ad - bc|
+		.\]
+	\end{itemize}
+\end{exm}
+
+\begin{exm}
+	On oriente l'espace $\R^3$\/ en décidant que la base canonique $\mathcal{B}_0 = (\vec{\imath}, \vec{\jmath}, \vec{k})$\/ est directe.
+\end{exm}
+
+\begin{defn}
+	Soit $E$\/ un espace euclidien de dimension $n$. Soit $\mathcal{B}$\/ une base orthonormée de $E$. On dit que
+	\begin{itemize}
+		\item $f$\/ est une \textit{rotation} si $f$\/ est une isométrie de déterminant $+1$, autrement dit, si~$\big[\:f\:\big]_\mathcal{B} \in \mathrm{SO}_n(\R)$\/ ;
+		\item $f$\/ est une \textit{réflexion} si $f$\/ est une symétrie orthogonale par rapport à un hyperplan de $E$.
+	\end{itemize}
+\end{defn}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item D'après la définition et les théorèmes précédents, on a les équivalences :
+			\begin{align*}
+				f \text{ est une rotation } \iff& f \text{ est une isométrie et } \det f = +1 \\
+				\iff& f \in \mathrm{O}(E) \text{ et } \det f = +1 \\
+				\iff& f \text{ conserve } \begin{cases}
+					\text{ le produit scalaire}\\
+					\text{ et l'orientation}
+				\end{cases} \\
+					\iff& f \text{ transforme une base orthonormée directe} \\[-2mm]
+						&\quad\quad\text{en une base orthonormée directe}.
+			\end{align*}
+		\item Les rotations de $E$\/ forment un groupe, noté $\mathrm{SO}(E)$\/ ; c'est un sous-groupe de $\mathrm{O}(E)$\/ des isométries de $E$.
+		\item Si $f$\/ est une réflexion par rapport à un hyperplan $H$\/ de $E$, alors sa matrice dans une base adaptée à la somme directe $H \oplus H^\perp$\/ s'écrit \[
+			\begin{pmatrix}
+				1 & 0 & \ldots & 0\\
+				0 & \ddots & \ddots & \vdots\\
+				\vdots & \ddots & 1 & 0\\
+				0 & \ldots & 0 & -1
+			\end{pmatrix} 
+		.\] Ainsi, le déterminant d'une réflexion est donc toujours égal à $-1$. Et, la composée de deux réflexions est donc une rotation.
+	\end{enumerate}
+\end{rmk}
+
+\begin{thm}
+	Une matrice appartient à $\mathrm{O}_2(\R)$\/ si, et seulement si elle est de la forme \[
+		R_\theta = \begin{pmatrix}
+			\cos \theta & -\sin \theta\\
+			\sin \theta & \cos \theta
+		\end{pmatrix} \quad\quad\text{ ou }\quad\quad S_\theta = \begin{pmatrix}
+			\cos \theta & \sin \theta\\
+			\sin \theta & -\cos \theta
+		\end{pmatrix}
+	.\]
+	Son déterminant vaut $+1$\/ dans le premier cas, $-1$\/ dans le second.
+\end{thm}
+
+La première matrice représente une rotation d'angle $\theta$\/ ; la seconde représente une symétrie par rapport à la droite d'angle $\theta / 2$.
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\implies$''] Les colonnes des deux matrices forment une base de $\R^2$. D'où, $R_\theta \in \mathrm{O}_2(\R)$\/ et $S_\theta  \in \mathrm{O}_2(\R)$.
+		\item[```$\impliedby$'']
+			La matrice $A$\/ est dans le groupe $\mathrm{O}_2(\R)$, d'où \[
+				\begin{cases}
+					a^2 + b^2 = 1 \quad\quad\quad&(1)\\
+					c^2 + d^2 = 1 \quad\quad\quad&(2)\\
+					ac + bd = 0. \quad\quad\quad& (3)
+				\end{cases}
+			\] Il existe donc $\theta \in \R$\/ tel que $(a,b) = (\cos \theta, \sin \theta)$, d'après $(1)$.
+			De même, il existe $\varphi \in \R$, tel que $(c,d) = (\cos \varphi, \sin \varphi)$, d'après $(2)$.
+			\begin{align*}
+				(3) & \text{ d'où } ab + cd = 0\\
+						& \text{ d'où } \cos\theta\cos\varphi + \sin\theta\sin\varphi = 0\\
+						& \text{ d'où } \cos (\theta - \varphi) = 0\\
+						& \text{ d'où } \theta - \varphi \equiv \frac{\pi}{2}\mod \pi\\
+						& \text{ d'où } \begin{cases}
+							\exists k \in \Z,\: \theta - \varphi =2 k \pi + \frac{\pi}{2}\\
+							\text{ ou bien }\\
+							\exists k \in \Z,\: \theta- \varphi = 2k\pi - \frac{\pi}{2}\\
+						\end{cases}\\
+						& \text{ d'où } \begin{cases}
+							\exists k \in \Z,\: \theta = \varphi + \frac{\pi}{2} + 2k\pi\\
+							\text{ ou bien }\\
+							\exists k \in \Z,\: \theta = \varphi - \frac{\pi}{2} + 2k\pi.\\
+						\end{cases}\\
+						& \text{ d'où } \begin{cases}
+							A = R_\theta\\
+							\text{ ou bien }\\
+							A = S_\theta
+						\end{cases}
+			\end{align*}
+	\end{itemize}
+\end{prv}
+
+\begin{crlr}
+	Les isométries du plan sont les rotations (autour de l'origine) et les réflexions (par rapport à une droite passant par l'origine).
+\end{crlr}
+
+\begin{rmk}
+	Pour tout $(\theta, \varphi) \in \R^2$, $R_\theta \cdot R_\varphi = R_{\theta + \varphi} = R_\varphi \cdot R_\theta$.
+	Le groupe $\mathrm{SO}_2(\R)$\/ est donc commutatif.
+	De plus, l'application \begin{align*}
+		\Phi: \R &\longrightarrow \mathrm{SO}_2(\R) \\
+		\theta &\longmapsto R_\theta\\
+		\varphi &\longmapsto R_\varphi\\
+		\theta + \varphi &\longmapsto R_{\theta + \varphi}
+	\end{align*}
+	est un morphisme du groupe $(\R, +)$\/ vers le groupe $(\mathrm{SO}_2(\R),\:\cdot\:)$.
+	Ce morphisme est surjectif, mais pas injectif (car son noyau est $2\pi\:\Z$) : $\Phi(0) = \Phi(2\pi) = I_2$.
+
+	De plus, au lieu de repérer un point du plan par ses coordonnées $(x,y) \in \R^2$, on peut le repérer par son affixe $z = x + iy \in \C$.
+	\begin{enumerate}[label=(\alph*)]
+		\item Après une rotation, la position du point $M'$\/ sera repérée par les coordonnées \[
+					\begin{pmatrix}
+						x'\\
+						y'
+					\end{pmatrix} = S_\theta \cdot \begin{pmatrix}
+						x\\ y
+					\end{pmatrix} \quad\quad \iff \quad\quad z' = \mathrm{e}^{i\theta} \cdot z
+			.\] En effet, $z' = \mathrm{e}^{i\theta} \cdot z \iff x' + iy' = (\cos \theta + i \sin \theta)(x+iy) = (x \cos \theta - y \sin \theta) + i (x\sin \theta + y \cos \theta)$, et \[
+				\begin{pmatrix}
+					x'\\y'
+				\end{pmatrix} = R_\theta \cdot \begin{pmatrix}
+					x\\ y
+				\end{pmatrix} = \begin{pmatrix}
+					\cos \theta & -\sin \theta\\
+					\sin \theta & \cos \theta
+				\end{pmatrix} \cdot \begin{pmatrix}
+					x\\y
+				\end{pmatrix} = \begin{pmatrix}
+					x \cos \theta - y \sin \theta\\
+					x \sin \theta + y \cos \theta
+				\end{pmatrix}
+			.\]
+			Ainsi, l'application \begin{align*}
+				\Psi: \mathds{U} &\longrightarrow \mathrm{SO}_2(\R) \\
+				\mathrm{e}^{i\theta} &\longmapsto R_\theta
+			\end{align*} est un isomorphisme de groupes (\textit{i.e.}\ un morphisme de groupe bijectif).
+		\item Après une symétrie, la position du point $M'$\/ sera repérée par les coordonnées \[
+					\begin{pmatrix}
+						x'\\
+						y'
+					\end{pmatrix} = R_\theta \cdot \begin{pmatrix}
+						x\\ y
+					\end{pmatrix} \quad\quad \iff \quad\quad z' = \mathrm{e}^{i\theta} \cdot \bar{z}
+			.\] En effet, $z' = \mathrm{e}^{i\theta} \cdot \bar{z} \iff x' + iy' = (\cos \theta + i \sin \theta)(x-iy) = (x \cos \theta + y \sin \theta) + i (x\sin \theta - y \cos \theta)$, et \[
+				\begin{pmatrix}
+					x'\\y'
+				\end{pmatrix} = S_\theta \cdot \begin{pmatrix}
+					x\\ y
+				\end{pmatrix} = \begin{pmatrix}
+					\cos \theta & \sin \theta\\
+					\sin \theta & -\cos \theta
+				\end{pmatrix} \cdot \begin{pmatrix}
+					x\\y
+				\end{pmatrix} = \begin{pmatrix}
+					x \cos \theta + y \sin \theta\\
+					x \sin \theta - y \cos \theta
+				\end{pmatrix}
+			.\]
+			D'où, \[
+				S_\theta = \underbrace{\begin{pmatrix}
+						\cos \theta & -\sin \theta\\
+						\sin \theta & \cos \theta
+					\end{pmatrix}}_{R_\theta} \cdot 
+					\underbrace{\begin{pmatrix}
+							1 & 0\\
+							0 & -1
+					\end{pmatrix}}_{S_0}
+			.\]
+	\end{enumerate}
+\end{rmk}
+
+\begin{thm}
+	Une application $f$\/ est une isométrie de l'espace si, et seulement s'il existe un angle $\theta \in \R$\/ et une base orthonormée directe $\mathcal{B} = (\vec{u}, \vec{v}, \vec{w})$ tels que
+	\begin{gather*}
+		\big[\:f\:\big]_\mathcal{B} =
+		\begin{pNiceMatrix}[last-row,last-col]
+			\cos \theta & -\sin \theta & 0 & \vec{u}\\
+			\sin \theta & \cos \theta & 0 & \vec{v}\\
+			0 & 0 & 1 & \vec{w}\\
+			f(\vec{u}) & f(\vec{v}) & f(\vec{w})
+		\end{pNiceMatrix}\\
+		\text{ ou }\\
+		\big[\:f\:\big]_\mathcal{B} =
+		\begin{pNiceMatrix}[last-row,last-col]
+			\cos \theta & -\sin \theta & 0 & \vec{u}\\
+			\sin \theta & \cos \theta & 0 & \vec{v}\\
+			0 & 0 & -1 & \vec{w}\\
+			f(\vec{u}) & f(\vec{v}) & f(\vec{w})
+		\end{pNiceMatrix}.
+	\end{gather*}
+\end{thm}
+

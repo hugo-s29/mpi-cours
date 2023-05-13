@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=new style 0] (0) at (-4, 3) {$a$};
+		\node [style=new style 0] (1) at (0, 3) {$e$};
+		\node [style=new style 0] (2) at (-4, 0) {$b$};
+		\node [style=new style 0] (3) at (0, 0) {$c$};
+		\node [style=new style 0] (4) at (4, 0) {$d$};
+		\node [style=none] (5) at (-2, 3.5) {1};
+		\node [style=none] (6) at (-2.25, 1.75) {5};
+		\node [style=none] (7) at (-4.5, 1.5) {6};
+		\node [style=none] (8) at (-0.5, 1.5) {2};
+		\node [style=none] (9) at (-2, -0.5) {6};
+		\node [style=none] (10) at (2, -0.5) {2};
+		\node [style=none] (11) at (2.25, 1.75) {4};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (1) to (3);
+		\draw (3) to (2);
+		\draw (2) to (1);
+		\draw (1) to (0);
+		\draw (0) to (2);
+		\draw (3) to (4);
+		\draw (4) to (1);
+	\end{pgfonlayer}
+\end{tikzpicture}

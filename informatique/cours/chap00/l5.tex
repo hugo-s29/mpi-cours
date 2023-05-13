@@ -1,0 +1,206 @@
+\begin{prv}[par induction sur les formules]
+	\begin{itemize}
+		\item Si $H = p$, avec $p \in \mathcal{P}$, alors \[
+				{\Big\llbracket H[p \mapsto \top] \Big\rrbracket^\rho} = \llbracket \top \rrbracket^\rho = \mathbf{V} = \llbracket H \rrbracket^\rho.
+			\]
+		\item Si $H = \top$, alors $H[p \mapsto \top] = H$.
+		\item Si $H = \lnot H_1$\/ tel que $\Big\llbracket H_1[p\mapsto \top] \Big\rrbracket^\rho = \llbracket H_1 \rrbracket^\rho$, alors,
+			\begin{align*}
+				\Big\llbracket H[p \mapsto \top] \Big\rrbracket^\rho &= \Big\llbracket \lnot \big(H_1[p\mapsto \top]\big) \Big\rrbracket^\rho \\
+				&= \overline{\Big\llbracket H_1[p\mapsto \top] \Big\rrbracket^\rho} \\
+				&= \overline{\llbracket H_1 \rrbracket^\rho} \\
+				&= \llbracket \lnot H_1 \rrbracket^\rho \\
+				&= \llbracket H \rrbracket^\rho.
+			\end{align*}
+		\item Si $H = H_1 \land H_2$\/ avec $H_1$\/ et $H_2$\/ vérifiant l'hypothèse d'induction, alors
+			\begin{align*}
+				\Big\llbracket H[p\mapsto \top ] \Big\rrbracket^\rho &=
+				\Big\llbracket \big(H_1[p \mapsto \top]\big) \land \big(H_2[p \mapsto \top]\big) \Big\rrbracket^\rho\\
+				&= \Big\llbracket H_1[p\mapsto \top \Big\rrbracket^\rho \cdot \Big\llbracket H_2[p\mapsto \top] \Big\rrbracket^\rho  \\
+				&= \llbracket H_1 \rrbracket^\rho \cdot \llbracket H_2 \rrbracket^\rho \\
+				&= \llbracket H_1 \land H_2 \rrbracket^\rho.
+			\end{align*}
+	\end{itemize}
+\end{prv}
+
+\begin{rmk}
+	Le résultat reste vrai en remplaçant $\mathbf{V}$\/ par $\mathbf{F}$\/ et $\top$\/ par $\bot$.
+\end{rmk}
+
+\begin{lem}
+	Pour toute formule $H$, et pour toute variable propositionnelle $p$, $H$\/ est satisfiable si, et seulement si $H[p\mapsto \top]$\/ est satisfiable ou $H[p\mapsto \bot]$\/ est satisfiable.
+\end{lem}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\implies$''] Soit $H \in \mathcal{F}$\/ une formule satisfiable. Il existe donc  un environnement propositionnel $\rho$\/ défini sur $\mathrm{vars}(H)$\/ tel que $\llbracket H \rrbracket^\rho = \mathbf{V}$.
+			\begin{itemize}
+				\item Si $\rho(p) = \mathbf{V}$, alors $\Big\llbracket H[p\mapsto \top] \Big\rrbracket^\rho = \mathbf{V}$, d'après le lemme précédent. Donc, $H[p\mapsto \top ]$\/ est satisfiable.
+				\item Sinon, $\rho(p) = \mathbf{F}$\/ et donc, d'après le lemme précédent, $\Big\llbracket H[p\mapsto \bot] \Big\rrbracket^\rho = \mathbf{V}$. La formule $H[p\mapsto \bot]$\/ est satisfiable.
+			\end{itemize}
+		\item[``$\impliedby$''] Supposons $H[p\mapsto \top]$\/ satisfiable. Il existe donc un environnement propositionnel~$\mu$\/ défini sur $\mathrm{vars}(H[p\mapsto \top])$ tel que $\llbracket H[p\mapsto \top] \rrbracket^\mu = \mathbf{V}$. Or, $\mathrm{vars}(H[p\mapsto \top]) = \mathrm{vars}(H) \setminus \{p\}$. On peut donc étendre $\mu$\/ en
+			\begin{align*}
+				\rho: \mathrm{vars}(H) &\longrightarrow \mathds{B} \\
+				x &\longmapsto \begin{cases}
+					\mu(x) &\quad \text{ si } x \neq p\\
+					\mathbf{V} &\quad \text{ sinon}.
+				\end{cases}
+			\end{align*}
+			Ainsi, $\llbracket H \rrbracket^\mu = \llbracket H[p \mapsto \top] \rrbracket^\rho = \llbracket H \rrbracket^\rho$ car $p\not\in \mathrm{vars}(H[p \mapsto \top])$.
+	\end{itemize}
+\end{prv}
+
+\begin{lem}
+	Une formule sans variables est
+	\begin{itemize}
+		\item satisfiable si et seulement si elle est équivalente à $\top$ ;
+		\item insatisfiable si et seulement si elle est équivalente à $\bot$ ;
+	\end{itemize}
+\end{lem}
+
+\begin{comment}
+\begin{prv}
+	Soit $H$\/ une telle formule.
+	\begin{align*}
+		H \equiv \top \iff& 
+		\forall \rho \in \mathds{B}^\O,\: \llbracket H \rrbracket^\rho = \llbracket \top \rrbracket^\rho\\
+		\iff& \llbracket H \rrbracket{}^{(\:)} = \llbracket \top  \rrbracket{}^{(\:)}
+	\end{align*}
+
+	Si $H$\/ est satisfiable, il existe un environnement propositionnel $\rho \in \mathds{B}^{\O}$\/ tel que $\llbracket H \rrbracket^\rho = \mathbf{V} = \llbracket H \rrbracket^{(\:)}$. On conclut que $H \equiv \top$.
+	De même si $H$\/ est insatisfiable.
+\end{prv}
+\end{comment}
+
+
+\begin{lstlisting}[language=caml,caption=Algorithme de \textsc{Quine} \textit{version zéro}]
+type formule =
+	| Top | Bot
+	| Var   of string
+	| Not   of formule
+	| And   of formule * formule
+	| Or    of formule * formule
+	| Imply of formule * formule
+	| Equiv of formule * formule
+
+let substitution (f: formule) (x: string) (g: string): formule =
+	%*\textrm{$\langle$code déjà fait en \textsc{tp}}$\rangle$*)
+
+exception Found of string (* arret de la boucle *)
+let get_var (f: formule): string option =
+	let rec aux (f: formule): unit =
+		match f with
+		| Top | Bot      -> ()
+		| Var(y)         -> raise(Found(y))
+		| Not(f1)        -> aux f1
+		| And(f1, f2)
+		| Or(f1, f2)
+		| Imply(f1, f2)
+		| Equiv(f1, f2)  -> (aux f1; aux f2)
+	in try
+		aux f;
+		None
+	with
+	| Found(y) -> Some(y)
+
+let rec test_equiv (f: formule): bool option =
+	match f with
+	| Var(_) -> None
+	| Top    -> Some(true)
+	| Bot    -> Some(false)
+	| Not(h) ->
+						begin
+							match test_equiv h with
+							| None    -> None
+							| Some(b) -> Some(not b)
+						end
+	| And(h1, h2) ->
+						begin
+							match test_equiv h1, test_equiv h2 with
+							| Some(false), _ | _, Some(false) -> Some(false)
+							| Some(true), Some(true)          -> Some(true)
+							| _                               -> None
+						end
+	| Or(h1, h2) ->
+						begin
+							match test_equiv h1, test_equiv h2 with
+							| Some(true), _ | _, Some(true) -> Some(true)
+							| Some(false), Some(false)      -> Some(true)
+							| _                             -> None
+						end
+	| Imply(h1, h2) ->
+						begin
+							match test_equiv h1, test_equiv h2 with
+							| Some(false), _
+							| Some(true), Some(true)       -> Some(true)
+							| Some(true), Some(false)      -> Some(false)
+							| _                            -> None
+						end
+	| Equiv(h1, h2) ->
+						begin
+							match test_equiv h1, test_equiv h2 with
+							| Some(true), Some(true)
+							| Some(false), Some(false)     -> Some(true)
+							| Some(true), Some(false)
+							| Some(false), Some(true)      -> Some(false)
+							| _                            -> None
+						end
+
+let rec quine (f: formule): bool = 
+	match get_var f, test_equiv f with
+	| _, Some(b)    -> b
+	| None, _       -> failswith "cas impossible"
+	| Some(p), None -> ?
+\end{lstlisting}
+
+
+\begin{rmk}
+	Dans la suite, on s'intéresse aux formules sous forme \textsc{cnf}.
+	Une \textsc{cnf} (ou même une \textsc{dnf}) peut être représentée au moyen d'un ensemble d'ensemble de littéraux.
+	Ces ensembles sont finis. Par exemple, la formule $(p \lor \lnot q) \land (r \lor p \lor p)$\/ est représenté par \[
+		\big\{ \{p,\lnot q\}, \{r,p\} \big\} 
+	.\]
+\end{rmk}
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree $G$\/ une \textsc{cnf}, $p$\/ une variable propositionnelle, et $b \in \mathds{B}$.
+		\Sortie Une \textsc{cnf} équivalente à $G[p\mapsto b]$.
+		\State Soit $\ell_{\mathbf{V}}$\/ le littéral $p$\/ si $b = \mathbf{V}$, $\lnot p$\/ sinon.
+		\State Soit $\ell_{\mathbf{F}}$\/ le littéral $\lnot p$\/ si $b = \mathbf{V}$, $p$\/ sinon.
+		\For{$C \in G$}
+			\If{$\ell_{\mathbf{V}} \in C$}
+				\State On retire $C$\/ de $G$.
+			\Else\If{$\ell_{\mathbf{F}} \in C$}
+				\State On retire $\ell_{\mathbf{F}}$\/ de $C$.
+			\EndIf\EndIf
+		\EndFor
+	\end{algorithmic}
+	\caption{Algorithme \textit{Assume}}
+\end{algorithm}
+
+On peut donc donner l'algorithme de \textsc{Quine} final :
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree Une \textsc{cnf} $G$\/ 
+		\If{$G = \O$}\State\Return \textsc{Oui}
+		\Else
+			\If{$\O \in G$}\State\Return \textsc{Non}
+			\ElsIf{$\exists \{\ell\} \in G$}
+				\If{$\ell = p$, avec $p \in \mathrm{vars}(G)$}
+					\State $\textsc{Quine}(\textit{Assume}(G,p,\mathbf{V}))$\/
+				\ElsIf{$\ell = \lnot p$, avec $p \in \mathrm{vars}(G)$ }
+					\State $\textsc{Quine}(\textit{Assume}(G,p,\mathbf{F}))$\/
+				\EndIf
+			\Else
+				\State $p \gets h(G)$\/ 
+				\State On essaie $\textsc{Quine}(\textit{Assume}(G, p, \mathbf{V}))$\/
+				\State On essaie $\textsc{Quine}(\textit{Assume}(G, p, \mathbf{F}))$\/
+			\EndIf
+		\EndIf
+	\end{algorithmic}
+	\caption{Algorithme de \textsc{Quine}}
+\end{algorithm}

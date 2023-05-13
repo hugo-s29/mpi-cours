@@ -1,0 +1,89 @@
+
+\begin{prop}
+	Soient $A$\/ et $B$\/ deux sous-espaces vectoriels d'un espace préhilbertien $E$. On a
+	\begin{enumerate}
+		\item $A^\perp$\/ est un sous-espace vectoriel de $E$\/ ;
+		\item $A \cap  A^\perp = \{0_E\}$\/ ;
+		\item $A \perp B \iff A \subset B^\perp \iff B \subset A^\perp$\/ ;
+		\item $A \subset (A^\perp)^\perp$.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}[start=2]
+		\item Tout d'abord, $\{0_E\} \subset A \cap A^\perp$\/ ; en effet, $0_E \in A$\/ et $0_E \in A^\perp$\/ car $A$\/ et $A^\perp$ sont des sous-espaces vectoriels de $E$.
+			Réciproquement, soit $\vec{x} \in A \cap A^\perp$. Alors, $\vec{x} \in A$\/ et $\vec{x} \in A^\perp$, d'où $\vec{x} \perp A$. Ainsi, pour tout vecteur $\vec{y} \in A$, $\vec{x} \perp \vec{y}$. En particulier, on a $\vec{x} \perp \vec{x}$. Ainsi, $\left<\vec{x}  \mid \vec{x} \right> = 0$\/ et donc $\vec{x} = 0_E$\/ par le caractère défini du produit scalaire.
+		\item
+			\begin{align*}
+				A \perp B \iff& \forall \vec{x} \in A,\:\vec{x} \perp B\\
+				\iff& \forall \vec{x} \in A,\: \vec{x} \in B^\perp\\
+				\iff& A \subset B^\perp
+			\end{align*}
+			De même, par symétrique de la relation $\perp$, \[
+				A \perp B \iff B \perp A \iff B \subset A^\perp
+			.\]
+		\item On $A \perp A^\perp$, et d'après 3., $A \subset (A^\perp)^\perp$.
+	\end{enumerate}
+\end{prv}
+
+\section{Bases orthonormées}
+
+\begin{defn}
+	\begin{enumerate}
+		\item Un vecteur $\vec{x}$\/ est \textit{normé} si $\|\vec{x}\| = 1$.
+		\item Une famille $(\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_n)$\/ est \textit{orthonormée} si \[
+			\forall i \neq j \in \llbracket 1,n \rrbracket,\:\quad \left<\vec{\varepsilon}_i | \vec{\varepsilon}_j \right> = \delta_{i,j} = \begin{cases}
+				1 &\quad\text{ si } i = j\\
+				0 &\quad \text{ sinon}.
+			\end{cases}
+		\]
+	\end{enumerate}
+\end{defn}
+
+\begin{rmkn}
+	Soit $\mathcal{C} = (\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_n)$\/ une base orthonormée d'un espace vectoriel $E$. Soient $E \owns \vec{x} = x_1 \vec{\varepsilon}_1 + \cdots + x_n \vec{\varepsilon}_n$, et $E \owns \vec{y} = y_1 \vec{\varepsilon}_1 + \cdots + y_n \vec{\varepsilon}_n$.
+	\begin{enumerate}
+		\item Pour $i \in \llbracket 1,n \rrbracket$, $\left<\vec{x}  \mid \varepsilon_i \right> = x_i$ par bilinéarité du produit scalaire et car la famille est orthonormée.
+		\item $\left<\vec{x}  \mid \vec{y} \right> = x_1y_1 + \cdots + x_n y_n$\/ par bilinéarité du produit scalaire et la propriété précédente.
+		\item $\|\vec{x}\|^2 = x_1^2 + \cdots + x_n^2$, avec la propriété précédente et $\vec{x} = \vec{y}$.
+		\item Soit $f \in \mathcal{L}(E)$, et soit $A = (a_{i,j})_{i,j \in \llbracket 1,n \rrbracket} = \big[f\big]_\mathcal{C}$.
+			Alors, $\left<\vec{\varepsilon}_i  \mid f(\vec{\varepsilon}_j) \right> = a_{i,j}$.
+			En effet, $f(\vec{\varepsilon}_j) = a_{1,j} \vec{\varepsilon}_1 + \cdots  + a_{n,j} \vec{\varepsilon}_n$.
+			Ainsi, \[
+				\left< \vec{\varepsilon}_i \mid f(\vec{\varepsilon}_j) \right> = \left< \vec{\varepsilon}_i \mid a_{1,j}\vec{\varepsilon}_1 + \cdots a_{n,j} \vec{\varepsilon}_n\right> = a_{i,j} \left<\varepsilon_i  \mid \varepsilon_i \right> = a_{i,j}
+			.\]
+	\end{enumerate}
+\end{rmkn}
+
+
+\section{L’algorithme de \textsc{Gram}-\textsc{Schmidt}}
+
+\begin{rmk}
+	$\O$
+\end{rmk}
+
+\begin{exo}
+	\textsl{Déterminer une base orthonormée de l'espace euclidien $\R_2[X]$ muni du produit scalaire} \[
+		\left<P \mid Q \right> = \int_{-1}^1 P(t)\:Q(t)~\mathrm{d}t
+	.\]
+	On pose la base canonique $\mathcal{B} = (1, X, X^2)$\/ et on construit, à l'aide de l'algorithme de \textsc{Gram}-\textsc{Schmidt}, une base orthonormée $\mathcal{C} = (\varepsilon_1, \varepsilon_2, \varepsilon_3)$.
+	\begin{enumerate}
+		\item On a $\varepsilon_1 = \frac{1}{\|1\|}$. Or, $\|1\| = \sqrt{\left<1 \mid 1 \right>}$, et $\left<1 \mid 1 \right> = \int_{-1}^{1} 1~\mathrm{d}t = 2$, donc $\|1\| = \sqrt{2}$. On a donc \[
+				\varepsilon_1=1 / \sqrt{2}.
+			\]
+		\item On pose $\hat\varepsilon_2 = X - a\varepsilon_1$. \[
+			\hat\varepsilon_2 \perp \varepsilon_1 \iff \left<X - a \varepsilon_1  \mid \varepsilon_1 \right> = 0
+			\iff \left<X  \mid \varepsilon_1 \right> = a \left<\varepsilon_1  \mid \varepsilon_1 \right> = a
+		.\]
+		Calculons $a = \left<X  \mid \varepsilon_1 \right>$ : $\left<X  \mid \varepsilon_1 \right> = \int_{-1}^{1} \frac{t}{\sqrt{2}}~\mathrm{d}t = 0$. D'où, $\hat\varepsilon_2 = X$. On pose $\varepsilon_2 = X / \|X\|$. Or, $\|X\| = \sqrt{\int_{-1}^{1} t^2~\mathrm{d}t} = \sqrt{\frac{2}{3}}$. On en déduit que \[
+				\varepsilon_2 = \sqrt{\frac{3}{2}} X
+			.\]
+		\item On pose $\hat\varepsilon_3 = X^2 - a \varepsilon_1 - b\varepsilon_2$.
+			\begin{gather*}
+				\hat\varepsilon_3\perp \varepsilon_1 \iff \left<X^2 - a \varepsilon_1 - b \varepsilon_2  \mid \varepsilon_1 \right> = 0 \iff \left<X^2  \mid \varepsilon_1 \right> - a = 0
+				\hat\varepsilon_3\perp \varepsilon_2 \iff \left<X^2 - a \varepsilon_1 - b \varepsilon_2  \mid \varepsilon_2 \right> = 0 \iff \left<X^2  \mid \varepsilon_2 \right> - b = 0
+			\end{gather*}
+			On calcule $a$\/ et $b$, et on trouve $\hat\varepsilon_3 = X^2 - \frac{1}{3}$. Or, $\|\hat \varepsilon_3\| = \sqrt{\int_{-1}^{1} \left( t^2 - \frac{1}{3} \right)^2~\mathrm{d}t} = \frac{2\sqrt{3}}{3\sqrt{5}}$.
+	\end{enumerate}
+\end{exo}
+

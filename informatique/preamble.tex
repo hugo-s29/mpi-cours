@@ -1,11 +1,10 @@
 \usepackage[utf8]{inputenc}
-\newcommand\hmmax{0}
-\newcommand\bmmax{0}
-\usepackage[OT2,OT1,T1]{fontenc}
 \usepackage{textcomp}
-\usepackage[bookmarks]{hyperref}
+\usepackage[hyperindex]{hyperref}
 \usepackage[french]{babel}
 \usepackage[fontsize=8pt]{fontsize}
+\usepackage{scholax}
+\usepackage{wrapfig}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -28,7 +27,6 @@
 \usepackage{setspace}
 \usepackage{cancel}
 \usepackage[f]{esvect}
-\usepackage{wrapfig}
 \usepackage{floatflt}
 \usepackage{dsfont}
 \usepackage{subcaption}
@@ -38,18 +36,28 @@
 \usepackage{listings}
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{graphicx}
-\usepackage{qtree}
+\usepackage{tikz-qtree}
 \usepackage{adjustbox}
+\usepackage{multirow}
 \usepackage[thinlines]{easytable}
-\usepackage{hep-math-font}
+%\usepackage{hep-math-font}
+\usepackage{dutchcal}
+\let\mathscr\mathcal
+\usepackage{BOONDOX-calo}
 \usepackage{algorithm}
 \usepackage[rightComments=false,beginComment=$\qquad\triangleright$~]{algpseudocodex}
 \usepackage{yhmath}
 \usepackage{calligra}
 \usepackage{enumitem}
-\usepackage{tgschola}
-\usepackage{dutchcal}
-\usepackage{BOONDOX-calo}
+\usepackage{imakeidx}
+\usepackage{lettrine}
+\usepackage{ebproof}
+\usepackage{cellspace}
+\usepackage{bbding}
+
+\input Zallman.fd
+\newcommand\zallman{\usefont{U}{Zallman}{xl}{n}}
+\let\LettrineFontHook\zallman
 
 \frenchspacing
 \reversemarginpar
@@ -59,6 +67,9 @@
 \setuldepth{a}
 
 \usetikzlibrary{babel}
+\usetikzlibrary{shadows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
 \theoremstyle{definition}
 
 \definecolor{green}{HTML}{60A917}
@@ -91,12 +102,12 @@
 \let\preceq\preccurlyeq
 \let\succeq\succcurlyeq
 
-\renewcommand{\C}{\mathds{C}}
-\newcommand{\R}{\mathds{R}}
-\newcommand{\Z}{\mathds{Z}}
-\newcommand{\N}{\mathds{N}}
-\newcommand{\Q}{\mathds{Q}}
-\renewcommand{\O}{\emptyset}
+\def\C{\mathds{C}}
+\def\R{\mathds{R}}
+\def\Z{\mathds{Z}}
+\def\N{\mathds{N}}
+\def\Q{\mathds{Q}}
+\def\O{\emptyset}
 
 \renewcommand\Re{\mathop{\expandafter\mathfrak{Re}}}
 \renewcommand\Im{\mathop{\expandafter\mathfrak{Im}}}
@@ -121,8 +132,8 @@
 \DeclareMathOperator{\rg}{rg}
 \DeclareMathOperator{\PPCM}{PPCM}
 \DeclareMathOperator{\PGCD}{PGCD}
-\DeclareMathOperator{\argmax}{argmax}
-\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator{\Vect}{Vect}
 \DeclareMathOperator{\cotan}{cotan}
 \DeclareMathOperator{\Mat}{Mat}
@@ -130,7 +141,8 @@
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\Supp}{Supp}
-\DeclareMathOperator{\Cl}{\mathcal{C}\!\ell}
+%\DeclareMathOperator{\Cl}{\mathcal{C}\!\ell}
+\DeclareMathOperator{\Cl}{\mathcal{C\!\!\,l}}
 \DeclareMathOperator*{\po}{\text{\cursive o}}
 \DeclareMathOperator*{\gO}{\mathcal{O}}
 \DeclareMathOperator*{\dom}{dom}
@@ -148,53 +160,119 @@
 		\vspace{-16pt}
 		#1
 		\vspace{16pt}
-		\expandafter\noindent\comment
+		\expandafter\noindent\begingroup\comment
 	}{
-		\expandafter\noindent\endcomment
+		\expandafter\noindent\endcomment\endgroup
 	}
 }
 
 \mdfsetup{skipabove=1em,skipbelow=1em, innertopmargin=1.1em, innerbottommargin=6pt,}
 
-\newmdenv[frametitlerule=true,roundcorner=5pt,subtitlebelowline=true,subtitleaboveline=true]{recap-box}
-
 \declaretheoremstyle[
-	mdframed={ },
-	headpunct={:},
+	headpunct={\::},
 	numbered=no,
-	headfont=\normalfont\bfseries,
+	headfont=\normalfont\bfseries\color{mainblue},
 	bodyfont=\normalfont,
+	preheadhook=\color{black},
+	mdframed={
+		middlelinecolor=mainblue,
+		middlelinewidth=1.5pt,
+		%backgroundcolor=backblue,
+		shadow=true,
+		shadowcolor=backblue,
+		%roundcorner=5pt,
+	},
 	postheadspace=1em]{defnstyle}
 
 \declaretheoremstyle[
-	mdframed={
-		rightline=false, topline=false, bottomline=false,
-		innerlinewidth=0.4pt,outerlinewidth=0.4pt,
-		middlelinewidth=2pt,
-		linecolor=black,middlelinecolor=white,
-	},
-	headpunct={:},
 	numbered=no,
-	headfont=\normalfont\bfseries,
+	headfont=\normalfont\bfseries\color{mainorange},
 	bodyfont=\normalfont,
+	preheadhook=\color{black},
+	mdframed={
+		middlelinecolor=mainorange,
+		topline=true, bottomline=true,
+		leftline=true, rightline=true,
+		middlelinewidth=1.5pt,
+		shadow=true,
+		shadowcolor=backorange,
+	},
+	headpunct={\::},
+	postheadspace=1em]{algostyle}
+
+\makeatletter
+\renewcommand\fs@ruled{\def\@fs@cfont{\bfseries}\let\@fs@capt\floatc@ruled
+  \def\@fs@pre{{\color{mainorange}\hrule height.8pt depth0pt \kern2pt}}%
+  \def\@fs@post{{\color{mainorange}\kern2pt\hrule\relax}}%
+  \def\@fs@mid{{\kern2pt\color{mainorange}\hrule\kern2pt}}%
+  \let\@fs@iftopcapt\iftrue}
+\makeatother
+
+\declaretheoremstyle[
+	mdframed={
+		topline=false, bottomline=false,
+		middlelinewidth=1.5pt,
+		linecolor=mainred,
+	},
+	headpunct={\::},
+	numbered=no,
+	headfont=\normalfont\bfseries\color{mainred},
+	bodyfont=\normalfont,
+	preheadhook=\color{black},
 	postheadspace=1em]{thmstyle}
 
 \declaretheoremstyle[
-	headpunct={:},
+	mdframed={
+		topline=false, bottomline=false,
+		middlelinewidth=1.5pt,
+		linecolor=mainred,
+	},
+	headpunct={\::},
+	numbered=yes,
+	headfont=\normalfont\bfseries\color{mainred},
+	bodyfont=\normalfont,
+	preheadhook=\color{black},
+	postheadspace=1em]{numthmstyle}
+
+\declaretheoremstyle[
+	headpunct={\::},
 	postheadspace=\newline,
+	bodyfont=\normalfont,
+	preheadhook=\color{black},
 	numbered=no,
-	headfont=\normalfont\scshape]{rmkstyle}
+	mdframed={
+		bottomline=false, topline=false,
+		middlelinecolor=mainpurple,
+		middlelinewidth=1pt,
+	},
+	headfont=\normalfont\scshape\color{mainpurple}]{rmkstyle}
+
+\declaretheoremstyle[
+	headpunct={\::},
+	postheadspace=\newline,
+	bodyfont=\normalfont,
+	preheadhook=\color{black},
+	numbered=no,
+	mdframed={
+		bottomline=false, topline=false,
+		middlelinecolor=maingreen,
+		middlelinewidth=1pt,
+	},
+	headfont=\normalfont\scshape\color{maingreen}]{exmstyle}
 
 \declaretheoremstyle[
 	headfont=\normalfont\itshape,
 	numbered=no,
 	postheadspace=\newline,
-	mdframed={ rightline=false, topline=false, bottomline=false },
-	headpunct={:},
+	mdframed={ rightline=false, topline=false, bottomline=false, middlelinecolor=gray},
+	headpunct={\::},
+	bodyfont=\normalfont,
+	preheadhook=\footnotesize\color{gray},
 	qed=\qedsymbol]{prvstyle}
 
 \declaretheorem[style=defnstyle, name=Définition]{defn}
-\declaretheorem[style=defnstyle, name=Algorithme]{algo}
+\declaretheorem[style=algostyle, name=Algorithme]{algo}
+\declaretheorem[style=defnstyle, name=Méthode]{met}
 \declaretheorem[style=defnstyle, name=Propriété -- Définition]{prop-defn}
 
 \declaretheorem[style=thmstyle, name=Théorème]{thm}
@@ -202,9 +280,17 @@
 \declaretheorem[style=thmstyle, name=Propriété]{prop}
 \declaretheorem[style=thmstyle, name=Corollaire]{crlr}
 \declaretheorem[style=thmstyle, name=Lemme]{lem}
+\declaretheorem[style=numthmstyle, name=Lemme]{numlem}
 
 \declaretheorem[style=rmkstyle, name=Remarque]{rmk}
 \declaretheorem[style=rmkstyle, name=Rappel]{rap}
+
+% When using proofs in proofs, LaTeX gets confused and crashes
+% Theses environments should be used in Inception-style LaTeX environment
+\declaretheorem[style=exmstyle, name=Exemple]{exmk}
+\declaretheorem[style=exmstyle, name=Contre-exemple]{cexmk}
+\declaretheorem[style=exmstyle, name=Exercice]{exok}
+\declaretheorem[style=prvstyle, name=Preuve]{prvk}
 
 
 \AtBeginDocument{
@@ -214,9 +300,9 @@
 		\emptyenv{exo}
 		\emptyenv[\hfill$\blacksquare$]{prv}
 	\else
-		\declaretheorem[style=rmkstyle, name=Exemple]{exm}
-		\declaretheorem[style=rmkstyle, name=Contre-exemple]{cexm}
-		\declaretheorem[style=rmkstyle, name=Exercice]{exo}
+		\declaretheorem[style=exmstyle, name=Exemple]{exm}
+		\declaretheorem[style=exmstyle, name=Contre-exemple]{cexm}
+		\declaretheorem[style=exmstyle, name=Exercice]{exo}
 		\declaretheorem[style=prvstyle, name=Preuve]{prv}
 	\fi
 }
@@ -224,6 +310,7 @@
 \makeatother
 \usepackage{fancyhdr}
 \pagestyle{fancy}
+\def\parttitle{}
 
 \fancyhead[R]{}
 \fancyhead[L]{\thepart}
@@ -232,19 +319,6 @@
 \fancyfoot[C]{\thepage}
 \fancyfoot[L]{}
 \fancyfoot[R]{}
-
-\newcommand*\parttitle{}
-\let\origpart\part
-\renewcommand*{\part}[2][]{%
-   \ifx\\#1\\% optional argument not present?
-      \origpart{#2}%
-      \renewcommand*\parttitle{#2}%
-   \else
-      \origpart[#1]{#2}%
-      \renewcommand*\parttitle{#1}%
-   \fi
-}
-
 \makeatletter
 
 \newcommand{\tendsto}[1]{\xrightarrow[#1]{}}
@@ -255,7 +329,7 @@
 \newcommand{\vrt}[1]{\rotatebox{-90}{$#1$}}
 \newcommand{\avrt}[1]{\rotatebox{90}{$#1$}}
 \newcommand{\tsup}[1]{\textsuperscript{\underline{#1}}}
-\newcommand{\revs}[1]{\rotatebox{180}{$#1$}}
+\newcommand{\revs}[1]{\mathrel{\reflectbox{$#1$}}}
 
 \DeclareMathOperator{\ou}{\text{ ou }}
 \DeclareMathOperator{\et}{\text{ et }}
@@ -277,6 +351,23 @@
 				{\ssmall Dernière mise à jour le \@date }
 			\end{center}
 		\end{titlepage}
+		\tableofcontents\clearpage
+	}
+}
+
+\newcommand{\titleanx}[2]{
+	\AtBeginDocument{
+		\begin{titlepage}
+			\begin{center}
+				\vspace{10cm}
+				{\Large \sc Annexe #1}\\
+				\vspace{1cm}
+				{\HUGE \calligra #2}\\
+				\vfill
+				Hugo {\sc Salou} MPI${}^{\star}$\\
+				{\ssmall Dernière mise à jour le \@date }
+			\end{center}
+		\end{titlepage}
 	}
 }
 
@@ -286,6 +377,22 @@
 			\begin{center}
 				\vspace{10cm}
 				{\Large \sc Td \rm n${}^{\mathrm{o}}$ #1}\\
+				\vspace{1cm}
+				{\HUGE \calligra #2}\\
+				\vfill
+				Hugo {\sc Salou} MPI${}^{\star}$\\
+				{\ssmall Dernière mise à jour le \@date }
+			\end{center}
+		\end{titlepage}
+	}
+}
+
+\newcommand{\titletp}[2]{
+	\AtBeginDocument{
+		\begin{titlepage}
+			\begin{center}
+				\vspace{10cm}
+				{\Large \sc Tp \rm n${}^{\mathrm{o}}$ #1}\\
 				\vspace{1cm}
 				{\HUGE \calligra #2}\\
 				\vfill
@@ -322,8 +429,12 @@
 \makeatother
 
 \newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\cdot}}
-%\newcommand{\bigcupdot}{\charfusion[\mathop]{\bigcup}{\cdot}}
+\newcommand{\bigcupdot}{\charfusion[\mathop]{\bigcup}{\cdot}}
 \newcommand{\plusbar}{\charfusion[\mathbin]{+}{\color{blue}/}}
+\newcommand{\bigdot}{\charfusion[\mathop]{\phantom{\prod}}{\bullet}}
+\newcommand{\bigplus}{\charfusion[\mathop]{\phantom{\prod}}{\mbox{\huge$\mathbf{+}$}}}
+\newcommand{\sbigdot}{\charfusion[\mathop]{\phantom{\prod}}{\bullet}}
+\newcommand{\sbigplus}{\charfusion[\mathop]{\phantom{\prod}}{\mbox{\large$\mathbf{+}$}}}
 \let\olddiamond\diamond
 \renewcommand{\diamond}{\ensuremath{\,\olddiamond\,}}
 \newcommand{\missingpart}{\centered{\color{red} \Large Il manque une partie du cours ici}}
@@ -334,25 +445,26 @@
 \newcommand{\mathunderline}[1]{\text{\underline{$#1$}}}
 \let\oldboxtimes\boxtimes
 \renewcommand{\boxtimes}{\raisebox{-0.2mm}{$\;\oldboxtimes\;$}}
-\newcommand{\addrecap}{\ifsimple\else\startrecap\input{\cwd/recap.tex}\fi}
 \newcommand{\indep}{\perp\!\!\!\!\!\:\perp}
-\newcommand{\startrecap}{
-	\part{Bilan}
-	\setlength{\abovedisplayskip}{0pt}
-	\setlength{\belowdisplayskip}{0pt}
-	\setlength{\abovedisplayshortskip}{0pt}
-	\setlength{\belowdisplayshortskip}{0pt}
-}
-
 
 \definecolor{white}{HTML}{faf4ed}
 \definecolor{black}{HTML}{575279}
+%\definecolor{white}{HTML}{ffffff}
+%\definecolor{black}{HTML}{000000}
 \definecolor{mauve}{HTML}{907aa9}
 \definecolor{blue}{HTML}{286983}
 \definecolor{red}{HTML}{d7827e}
 \definecolor{yellow}{HTML}{ea9d34}
 \definecolor{gray}{HTML}{9893a5}
 \definecolor{grey}{HTML}{9893a5}
+\definecolor{mainblue}{HTML}{6699CC}
+\definecolor{maingreen}{HTML}{7CB342}
+\definecolor{mainpurple}{HTML}{9C27B0}
+\definecolor{mainred}{HTML}{EE6055}
+\definecolor{mainorange}{HTML}{FB8C00}
+\definecolor{backblue}{HTML}{bfd2da}
+\definecolor{backgrey}{HTML}{F8F5EC}
+\definecolor{backorange}{HTML}{FFCC80}
 
 \setlength{\parskip}{7pt}
 
@@ -366,17 +478,27 @@
 % code syntax highlighting
 \lstset{ %
 	basicstyle=\ttfamily\footnotesize,
-	backgroundcolor=\color{white},    % choose the background color
-	commentstyle=\color{blue},        % comment style
-	keywordstyle=\bfseries\color{mauve},       % keyword style
-	stringstyle=\color{pink},         % string literal style
-	captionpos=b,                    % sets the caption-position to bottom
-	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-	breaklines=true,                 % automatic line breaking only at whitespace
+	commentstyle=\color{gray},
+	stringstyle=\color{mainpurple},
+	captionpos=b,
+	escapeinside={\%*}{*)},
+	breaklines=true,
+	postbreak={\hbox{\textcolor{gray}{$\hookrightarrow$}}\space},
 	numbers=left,                    
-	numbersep=5pt,
+	numbersep=9pt,
 	tabsize=2,
-	xleftmargin=.2\textwidth, xrightmargin=.2\textwidth
+	frame=shadowbox,
+	rulesepcolor=\color{black},
+	backgroundcolor=\color{white},
+	xleftmargin=.1\textwidth, xrightmargin=.1\textwidth,
+	numberstyle=\tiny\color{gray},
+	emph={Some,None,bool},
+	emphstyle=\bfseries\color{mainblue},
+	classoffset=1,
+	emph={false,true,NULL},
+	emphstyle=\bfseries\color{mainpurple},
+	keywordstyle=\bfseries\color{mainblue},
+	extendedchars=true
 }
 
 \renewcommand{\lstlistingname}{{\sc Code}}
@@ -389,6 +511,10 @@
 
 	white = rgb("faf4ed");
 	black = rgb("575279");
+
+	//white = rgb("ffffff");
+	//black = rgb("000000");
+
 	blue = rgb("286983");
 	red = rgb("d7827e");
 	yellow = rgb("f6c177");
@@ -406,10 +532,6 @@
 	import three;
 	currentlight = nolight;
 \end{asydef}
-
-%\let\sc\scshape
-%\let\bf\bfseries
-%\let\it\itshape
 
 \makeatletter
 \g@addto@macro\bfseries{\boldmath}
@@ -429,6 +551,8 @@
 \def\algorithmicelsif{\algorithmicelse\ \algorithmicif}
 \def\algorithmicendif{\algorithmicend\ \algorithmicif}
 \def\algorithmicfor{\textbf{pour}}
+\def\algorithmicprocedure{\textbf{Procédure}}
+\def\algorithmicfunction{\textbf{Fonction}}
 \def\algorithmicforall{\textbf{pour tout}}
 \def\algorithmicdo{\textbf{faire}}
 \def\algorithmicendfor{\algorithmicend\ \algorithmicfor}
@@ -445,9 +569,11 @@
 
 \let\Sortie\Ensure
 \let\Entree\Require
-\floatname{algorithm}{Algorithme}
+\floatname{algorithm}{\color{mainorange}Algorithme}
 
-\let\mathscr\mathcal
+\let\addmacros\relax
+
+%\let\mathscr\mathcal
 
 \newcommand{\snput}[1]{
 	\begin{center}
@@ -456,8 +582,106 @@
 	\input{#1}
 }
 
-\newbox\tmpbox
-
 %red cross, green tick
-\def\rcs{\ensuremath{{\color{red}\times}}}
-\def\gtk{\ensuremath{{\color{green}\vee}}}
+\def\rcs{\hbox{{\color{red}\XSolidBrush}}}
+\def\gtk{\hbox{{\color{green}\Checkmark}}}
+
+\def\ptree#1{\ensuremath{\begin{prooftree} #1 \end{prooftree}}}
+
+\setlength\cellspacetoplimit{4pt}
+\setlength\cellspacebottomlimit{4pt}
+
+\makeatletter
+% borrowed from `hep-math-font'
+\newcommand\hep@font@sf{lmr}
+\newcommand\hep@font@text{lmss}
+\newcommand\hep@font@math{cmssm}
+\newcommand\hep@font@symbol{cmsssy}
+\newcommand\hep@font@extra{cmssex}
+
+\DeclareFontSubstitution{OML}{\hep@font@math}{m}{it}
+
+\DeclareSymbolFont{operators}{OT1}{\hep@font@text}{m}{n}
+\DeclareSymbolFont{letters}{OML}{\hep@font@math}{m}{it}
+
+\SetSymbolFont{operators}{bold}{OT1}{\hep@font@text}{b}{n}
+\SetSymbolFont{letters}{bold}{OML}{\hep@font@math}{b}{it}
+
+\DeclareSymbolFont{AMSa}{U}{ssmsa}{m}{n}
+\DeclareSymbolFont{AMSb}{U}{ssmsb}{m}{n}
+
+\DeclareSymbolFontAlphabet{\mathrm}{operators}
+\DeclareSymbolFontAlphabet{\mathnormal}{letters}
+
+\DeclareMathAlphabet{\mathit}{OML}{\hep@font@text}{m}{it}
+\SetMathAlphabet\mathit{bold}{OML}{\hep@font@text}{bx}{it}
+
+\DeclareMathAlphabet{\mathsf}{OML}{\hep@font@sf}{m}{it}
+\SetMathAlphabet{\mathsf}{bold}{OML}{\hep@font@sf}{bx}{it}
+
+\DeclareMathAlphabet{\mathtt}{OT1}{lmtt}{m}{n}
+\SetMathAlphabet{\mathtt}{bold}{OT1}{lmtt}{bx}{n}
+
+\usepackage{lmodern}
+\usepackage{bm}
+\AtBeginDocument{\let\mathbf\bm}
+\g@addto@macro\bfseries{\boldmath}
+
+\let\Gamma\varGamma
+\let\Delta\varDelta
+%\let\Theta\varTheta
+\let\Lambda\varLambda
+\let\Xi\varXi
+\let\Pi\varPi
+\let\Sigma\varSigma
+\let\Upsilon\varUpsilon
+\let\Phi\varPhi
+\let\Psi\varPsi
+\let\Omega\varOmega
+
+\makeatother
+\usepackage{montserrat}
+
+
+% Synthèse des chapitres
+\newmdenv[frametitlerule=true,roundcorner=5pt,subtitlebelowline=true,subtitleaboveline=true]{recap-box}
+\newcommand{\addrecap}{\startrecap\input{\cwd/recap.tex}}
+\newcommand{\startrecap}{
+	%\setlength{\abovedisplayskip}{0pt}
+	%\setlength{\belowdisplayskip}{0pt}
+	\setlength{\abovedisplayshortskip}{0pt}
+	\setlength{\belowdisplayshortskip}{0pt}
+	\clearpage
+	\section{Synthèse du chapitre}
+}
+\newcommand{\recapsep}[1]{\centerline{\large\textbf{\textsc{---\quad#1\quad---}}}}
+
+
+\newcommand{\incirc}[1]{\charfusion[\mathbin]{\bigcirc}{#1}}
+\usepackage{newunicodechar}
+\newunicodechar{œ}{\oe}
+\DeclareMathSymbol{*}{\mathord}{letters}{"3F}
+\def\guillemotleft{{\font\larm=larm1000\larm\char190}}
+\def\guillemotright{{\font\larm=larm1000\larm\char191}}
+
+% =>*
+\def\Rst{\mathrel{\overset*\Rightarrow}}
+\def\circle{\raise 1pt\hbox{\scalebox{0.7}{$\bigcirc$}}}
+
+\makeatletter
+\newcommand{\gettikzxy}[3]{%
+  \tikz@scan@one@point\pgfutil@firstofone#1\relax
+  \edef#2{\the\pgf@x}%
+  \edef#3{\the\pgf@y}%
+}
+\makeatother
+
+% Showing more execution lines (concurrent programming)
+\def\Mark#1#2{\tikz[overlay, remember picture]\fill[#2] (0,0) node (#1){} circle (2.5pt);}
+\def\MarkedState#1#2{\State\Mark{#1}{#2}}
+\newcommand\ConnectStates[4][rounded corners]{
+	\tikz[overlay, remember picture]
+	\gettikzxy{(#2)}{\ax}{\ay}
+	\gettikzxy{(#3)}{\bx}{\by}
+	\draw[thick,#1,#4] (\ax,\ay) -- (\ax, \by) -- (\bx,\by);
+}

@@ -1,0 +1,236 @@
+\documentclass[a4paper,twocolumn,10pt,margin=0.5in]{extreport}
+
+%\usepackage{concmath}
+\usepackage{tgschola}
+\usepackage{pstricks}
+\input{../../preamble.tex}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{comment}
+\usepackage{pgfornament}
+\usepackage{graphicx}
+\usepackage{pst-labo}
+\usepackage{pgfplots}
+\usepackage{multirow}
+\usepackage{rotating}
+
+%\begin{comment}
+
+\definecolor{black}{HTML}{000000}
+\definecolor{white}{HTML}{ffffff}
+\color{black}
+\pagecolor{white}
+
+\begin{asydef}
+	white = rgb("ffffff");
+	black = rgb("000000");
+	defaultpen(black + fontsize(8pt));
+\end{asydef}
+%\end{comment}
+
+\definecolor{BleuClair}{HTML}{286983}
+\definecolor{LightBlue}{cmyk}{0.22,0.05,0,0.1}
+\definecolor{GrisClair}{HTML}{9893a5}
+\def\res#1{{\color{black}#1}}
+
+\makeatletter
+\def\pst@dosage@pHmetre{%
+% boitier
+\psframe[framearc=0.25](-1,0)(1,3)%
+\psframe[fillcolor=GrisClair,fillstyle=solid](-0.75,2)(0.75,2.75)%
+\rput(0,2.375){\white\footnotesize$\mathrm{pH}$}%
+\pscircle(0,1.25){0.3}%
+\psline{->}(0,1.25)(0,1.5)%
+%\rput(0.65,1.5){$^\circ$C}%
+\pscircle(-0.5,0.5){0.2}%
+\pscircle(0.5,0.5){0.2}%
+% électrode
+\psframe[framearc=0.5](2.25,2.5)(2.75,4.5)%
+\psframe[fillstyle=solid,fillcolor=GrisClair](2.25,4)(2.75,4.5)%
+\pscircle(2.5,2.25){0.25}
+% fil
+\psline[linearc=0.4,linewidth=0.1,linecolor=LightBlue]%
+(2.5,4.5)(2.5,5)(1.25,4.75)(0,5)(0,3)}
+\makeatother
+
+\titletp{c\:1}{Dosages acido-basiques}{\begin{tabular}{c}Hugo \textsc{Salou}\\Noémie \textsc{Combey}\end{tabular}}{Hugo \textsc{Salou} \& Noémie \textsc{Combey}}
+
+\def\thesection{\Roman{section}.}
+\def\thesubsection{\Roman{section}.\Alph{subsection}.}
+
+\begin{document}
+	L'objectif de ce \textsc{tp} est de réaliser des titrages acido-basique, par colorimétrie et suivi $\mathrm{pH}$-métrique. Ces dosages permettent de déterminer la concentration d'acide acétique dans un vinaigre, et déterminer s'il a été frelaté.
+
+	\section{Étude théorique}
+
+	Lors de l'ajout de soude dans un vinaigre frelaté avec de l'acide chlorhydrique, deux réactions peuvent se produire :
+	\begin{align}
+		&\mathrm{CH_3COOH + HO^- = CH_3COO^- + H_2O},\\
+		&\mathrm{H_3O^+ + HO^- = H_2O + H_2O}.
+	\end{align}
+	Mais, la réaction (2) se réalisera avant la réaction (1) : le couple acido-basique $\mathrm{H_3O^+/H_2O}$\/ possède un $\mathrm{p}K_\mathrm{a}$\/ plus important que celui du couple $\mathrm{CH_3COOH/CH_3COO^-}$, comme le montre la figure ci-dessous.
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			\draw[->,thick] (0,0) -- (0, 4);
+			\draw (-0.1,0)--(0.1,0);
+			\node[left] at (0,0) {$\mathrm{H_2O}$};
+			\node[right] at (0,0) {$\mathrm{HO^-}$};
+			\node[right] at (2, 0) {$0$};
+			\draw (-0.1,3.5)--(0.1,3.5);
+			\node[left] at (0,3.5) {$\mathrm{H_3O^+}$};
+			\node[right] at (0,3.5) {$\mathrm{H_2O}$};
+			\node[right] at (2, 3.5) {$14$};
+			\draw (-0.1,1.2)--(0.1,1.2);
+			\node[left] at (0,1.2) {$\mathrm{CH_3COOH}$};
+			\node[right] at (0,1.2) {$\mathrm{CH_3COO^-}$};
+			\node[right] at (2, 1.2) {$4{,}8$};
+			\node at (0, 4.2) {$\mathrm{p}K_\mathrm{a}$};
+		\end{tikzpicture}
+		\caption{$\mathrm{p}K_\mathrm{a}$\/ des différents couples acido-basiques $\mathrm{H_3O^+ / H_2O}$, $\mathrm{CH_3 COOH}$\/ et $\mathrm{H_2O / HO^-}$.}
+	\end{figure}
+	\noindent On dosera donc en premier l'acide chlorhydrique.
+	Le suivi $\mathrm{pH}$-métrique est donc bien adapté : l'acide chlorhydrique réagissant avec l'eau fait diminuer le $\mathrm{pH}$.
+	Mais, un titrage calorimétrique est également possible en choisissant un indicateur coloré adapté, afin de voir le changement du $\mathrm{pH}$ lors de l'ajout de soude.
+	Dans cette situation, on cherche à détecter le moment où les réactions (1) et (2) ne se produisent plus. Autrement dit, on cherche l'instant où la solution titrée devient basique.
+	Par exemple, la \textit{phénolphtaléine} a pour zone de virage $8{,}2$--$10$, ce qui en fait un bon indicateur pour cette réaction.
+	Le \textit{jaune d’alizarine jaune} peut également fonctionner, mais il faudra changer davantage le $\mathrm{pH}$\/ avant qu'il s'active.
+	Le titrage du vinaigre se réalisera selon le protocole suivant.
+	\begin{itemize}
+		\item On dilue d'un facteur 10 la solution de vinaigre. À l'aide d'une pipette jaugée, on mesure $5\:\mathrm{mL}$\/ de vinaigre, que l'on place dans une fiole jaugée de $50\:\mathrm{mL}$. On ajoute, jusqu'au trait de jauge, de l'eau distillée en secouant régulièrement.
+		\item On réalise un titrage rapide, avec suivi colorimétrique. On place dans un bêcher $10\:\mathrm{mL}$ de la solution diluée, à laquelle on ajoute la phténolphtaléine. On remplit une burette graduée de $50\:\mathrm{mL}$\/ de solution de soude. Tout en agitant le contenu du bêcher, on verse progressivement la solution de soude dans le bêcher. Lors du changement de couleur, on note le volume versé.
+		\item On réalise un titrage, avec suivi $\mathrm{pH}$-métrique.
+			On prélève $10\:\mathrm{mL}$\/ de la solution diluée, que l'on place dans un bêcher.
+			On ajoute $90\:\mathrm{mL}$ d'eau distillée afin que la sonde $\mathrm{pH}$-métrique soit bien immergée.
+			On reremplit la burette avec la solution de soude.
+			On place la sonde $\mathrm{pH}$-métrique (on étalonne préalablement le $\mathrm{pH}$-mètre). On verse progressivement la solution de soude, et on note le $\mathrm{pH}$\/ de la solution dans \textit{Regressi}. On augment le nombre de mesures près du volume trouvé par titrage rapide.
+		\item On trace la courbe dérivée, et on determine l'abscisse du ``pic'' de la dérivée : le volume à l'équivalence $V_\mathrm{\acute{e}q}$.
+	\end{itemize}
+
+
+	\begin{figure}[H]
+		\centering
+			\begin{pspicture}(0,0)(1,4)
+				\psset{unit=0.3cm,glassType=becher}
+				\pstDosage[phmetre,couleurReactifBurette=red]
+			\end{pspicture}
+		\caption{Protocole de titrage $\mathrm{pH}$-métrique du vinaigre}
+	\end{figure}
+
+	\section{Étude expérimentale}
+	\subsection{Titrage colorimétrique}
+
+	On réalise le titrage rapide du vinaigre A, comme décrit dans le protocole ci-avant, et on trouve un volume à l'équivalence \[
+		V_\mathrm{\acute{e}q}' \simeq 20\:\mathrm{mL}
+	.\] À l'équivalence, l'égalité suivante est vérifiée : \[
+		\underbrace{[\mathrm{HO^-}]}_{c_\mathrm{s}} \cdot V_\mathrm{\acute{e}q}'  = [\mathrm{acides}] \cdot V_0
+	.\] On en déduit le nombre de moles d'acide $n$ pour $100\:\mathrm{g}$ de vinaigre : \[
+		n = \frac{100\:\mathrm{g}}{m_0} \cdot V_0 \cdot [\mathrm{acides}] \cdot 10
+	\] où $m_0$ est la masse de la solution. Le facteur $10$ apparaît due à la dilution au $1/10$\:\tsup{ème} du vinaigre.
+	Or, $m_0 / V_0 = \rho_0$\/ la masse volumique de la solution. Et, la densité du vinaigre $\mathrm{A}$ est connu, d'où $\rho_0 = d_\mathrm{A} \cdot \rho_\mathrm{eau}$.
+	Ainsi, on a \[
+		n = \frac{100\:\mathrm{g}}{\rho_\mathrm{eau} \cdot d_\mathrm{A}} \cdot \frac{c_\mathrm{s} \cdot V_\mathrm{\acute{e}q}'}{V_0} \cdot 10
+	.\] La masse de $n$ moles d'acides acétique est donnée par {\small\[
+		m = n \cdot M_{\mathrm{CH_3COOH}} = n \cdot \big(2M_\mathrm{C} + 4M_\mathrm{H} + 2 M_\mathrm{O}\big)
+	.\]}%
+	On réalise l'application numérique, et on trouve $\res{m = 12\:\mathrm{g}}$.
+	Le vinaigre {A} est donc à $12\:^\circ$.
+
+	\subsection{Titrage par suivi $\mathrm{pH}$-métrique}
+
+	On réalise le titrage $\mathrm{pH}$-métrique, comme décrit dans le protocole ci-avant.
+	On représente sur la figure ci-dessous la courbe $\mathrm{pH}$ en fonction du volume $V_\mathrm{vers\acute{e}}$ versé.
+
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[scale=0.80]
+			\begin{axis}[xlabel=$V_\mathrm{vers\acute{e}}$, axis lines = left, grid style=dashed, ymajorgrids=true, xmajorgrids=true,legend pos=north west]
+				\addplot table [x=V, y=pH, col sep=comma] {data/vin_a.csv};
+				\addlegendentry{$\mathrm{pH}$}
+				\addplot[mark=none,color=red] table [x=V, y=d, col sep=comma] {data/vin_a.csv};
+				\addlegendentry{$\frac{\mathrm{d}\,\mathrm{pH}}{\mathrm{d}V_\mathrm{vers\acute{e}}}$}
+			\end{axis}
+		\end{tikzpicture}
+		\caption{Courbe de titrage du vinaigre A}
+	\end{figure}
+
+	\noindent Un autre groupe réalise un titrage sur le vinaigre B, la courbe obtenue est représentée sur la figure ci-dessous.
+
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[scale=0.80]
+			\begin{axis}[xlabel=$V_\mathrm{vers\acute{e}}$, axis lines = left, grid style=dashed, ymajorgrids=true, xmajorgrids=true,legend pos=north west]
+				\addplot table [x=V, y=pH, col sep=comma] {data/vin_b.csv};
+				\addlegendentry{$\mathrm{pH}$}
+				\addplot[mark=none,color=red] table [x=V, y=d, col sep=comma] {data/vin_b.csv};
+				\addlegendentry{$\frac{\mathrm{d}\,\mathrm{pH}}{\mathrm{d}V_\mathrm{vers\acute{e}}}$}
+			\end{axis}
+		\end{tikzpicture}
+		\caption{Courbe de titrage du vinaigre B}
+	\end{figure}
+
+	Comparons ces deux courbes. Pour le vinaigre A, on ne remarque qu'une seule équivalence. Cependant, pour le vinaigre B, il semble y en avoir deux : une pour l'acide acétique, vers $20{,}8\:\mathrm{mL}$, et une pour l'acide chlorhydrique, vers $9\:\mathrm{mL}$.
+	On en conclut que le vinaigre B est frelaté.
+
+	À l'équivalence $1$ (équivalence de l'acide acétique), l'égalité suivante est vérifiée : \[
+		c_\mathrm{s} \cdot (V_\mathrm{\acute{e}q, 1} - V_\mathrm{\acute{e}q, 2}) = [\mathrm{CH_3 COOH}] \cdot V_0 \cdot 10
+	,\]avec la dilution de facteur $10$. Après application numérique, on détermine la concentration en acide acétique
+	\begin{align*}
+		[\mathrm{CH_3COOH}] &= 10\cdot  c_\mathrm{s} \cdot \frac{V_\mathrm{\acute{e}q,1} - V_\mathrm{\acute{e}q,2}}{V_0}\\
+		&= 1{,}18 \: \mathrm{mol}/\mathrm{L}. \\
+	\end{align*}
+	Et, à l'équivalence $2$ (équivalence de l'acide chlorhydrique), l'égalité suivante est vérifiée \[
+		c_\mathrm{s} \cdot V_\mathrm{\acute{e}q,2} = [\mathrm{H_3O^+}] \cdot V_0 \cdot 10
+	.\] On en déduit la concentration en acide chlorhydrique du vinaigre : \[
+		[\mathrm{H_3O^+}] = 10c_\mathrm{s} \cdot \frac{V_\mathrm{\acute{e}q,2}}{V_0} = 0{,}90\:\mathrm{mol}/\mathrm{L}
+	.\]
+	De la figure \textsc{3}, on peut en déduire la valeur du $\mathrm{p}K_\mathrm{a}$\/ de l'acide acétique : c'est la valeur du $\mathrm{pH}$\/ pour $V_\mathrm{vers\acute{e}} = V_\mathrm{\acute{e}q,1} / 2$.
+	Ainsi, on trouve \[
+		\mathrm{p}K_\mathrm{a} = 4{,}7
+	.\]
+
+	\subsection{Incertitudes de mesure}
+
+	On résume les grandeurs, et leurs sources d'erreurs et incertitudes associées, dans la table ci-après.
+	On a \[
+		c_\mathrm{a} = \frac{V_\mathrm{\acute{e}q}}{V_0} \cdot c_\mathrm{s} \cdot 10
+	.\] 
+	D'après la formule des incertitudes composées, on a
+	\[
+		\frac{u(c_\mathrm{a})}{c_\mathrm{a}} = \sqrt{\left( \frac{u(V_\mathrm{\acute{e}q})}{V_\mathrm{\acute{e}q}} \right)^{\!\!2} + \left( \frac{u(V_0)}{V_0} \right)^{\!\!2}}
+	.\]
+	Ainsi, pour le titrage colorimétrique, on trouve $u(c_\mathrm{a}) / c_\mathrm{a} = 0{,}03$.
+	Et, pour le titrage $\mathrm{pH}$-métrique, on trouve $u(c_\mathrm{a}) / c_\mathrm{a} = 0{,}01$.
+	On en déduit les résultats des mesurages :
+	\begin{itemize}
+		\item pour le titrage colorimétrique \[
+				c_\mathrm{a} = 2{,}00 \pm 0{,}06 \: \mathrm{mol}/\mathrm{L}
+			,\]
+		\item pour le titrage $\mathrm{pH}$-métrique : \[
+				c_\mathrm{a}  = 2{,}08 \pm 0{,}03\:\mathrm{mol}/\mathrm{L}
+			.\]
+	\end{itemize}
+	Pour la suite, on utilise la mesure du titrage $\mathrm{pH}$-métrique pour déterminer le degré d'acidité.
+	On a
+	\begin{align*}
+		m &= n \cdot M_\mathrm{CH_3 COOH} \\
+		&= c_\mathrm{a} \cdot \underbrace{\frac{100\:\mathrm{g}}{\rho_\mathrm{eau} \cdot d_\mathrm{A}}}_{V_\mathrm{100\:g}} \cdot 60  \\
+	\end{align*}
+	Les incertitude relative associée à $m$ est $u(m) / m = u(c_\mathrm{a}) / c_\mathrm{a}$. Ainsi, on en déduit le degré d'acidité du vinaigre A : \[
+		m = 12{,}2 \pm 0{,}1\: \mathrm{g}
+	.\]
+
+	\def\arraystretch{1.5}
+	\begin{sidewaystable}
+		\centering
+		\begin{tabular}{r|c|c|l|c}
+		\hfill\textsc{Grandeur}\hfill\null & \textsc{Valeur mesurée} & \textsc{Type} &\hfill \textsc{Source d'erreur} \hfill\null & \textsc{Incertitude} $u(x)$\\ \hline \hline
+		Volume équivalent & \multirow{2}{*}{$V_\mathrm{\acute{e}q}'$} & \multirow{2}{*}B & $\bullet$\quad Jugement de l'expérimentateur & \multirow{2}{*}{$u(V_\mathrm{\acute{e}q}') = 0{,}6\:\mathrm{mL}$} \\[-2mm]
+		colorimétrique & & & $\bullet$\quad Fréquence des mesures ($1\:\mathrm{mL}$)\hfill\null &  \\ \hline
+		Volume équivalent & \multirow{2}{*}{$V_\mathrm{\acute{e}q,2}$} & \multirow{2}{*}A & $\bullet$\quad Précision du $\mathrm{pH}$-mètre & \multirow2*{$u(V_\mathrm{\acute{e}q,2}) = 0{,}2\:\mathrm{mL}$} \\[-2mm]
+		avec suivi $\mathrm{pH}$-métrique & & & $\bullet$\quad Précision de la verrerie & \\ \hline
+		Volume prélevé & $V_0$ & B & $\bullet$\quad Précision de la verrerie & $u(V_0) = 0{,}01\:\mathrm{mL}$ \\ \hline
+		\end{tabular}
+		\caption{Sources d'incertitudes sur les différentes grandeurs}
+	\end{sidewaystable}
+\end{document}

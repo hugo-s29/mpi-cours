@@ -1,0 +1,157 @@
+Ce chapitre se rattache à la branche de l'informatique des langages formels. On l'a étudié au chapitre 1 avec les automates, et au chapitre 4 avec les machines.
+Pour le moment, nous avons 5 classes de langages : (1) les langages finis, (2) les langages locaux, (3) les langages réguliers, (4) les langages décidables en temps polynomial, (5) les langages décidables.
+L'objectif de ce chapitre se situe entre les points (3) et (4).
+
+Intéressons-nous à un langage particulier, le langage des programmes \textsc{OCaml} avec une syntaxe valide.
+Ce langage est il régulier ? Non. On peut considérer l'expression\[
+	e_n = \:\: \text{\guillemotleft~}\underbrace{((\cdots (}_n 0 \underbrace{)\cdots ))}_n\text{~\guillemotright}
+\]qui est une expression \textsc{OCaml} valide. Par application du lemme de l'étoile, il n'est pas reconnaissable par un automate à $N$ états en considérant $e_{N+1}$.
+
+L'ensemble $\mathcal{B}$ des mots bien parenthésés est le plus petit ensemble tel que
+\begin{itemize}
+	\item $\varepsilon \in \mathcal{B}$
+	\item si $u \in \mathcal{B}$ et $v \in \mathcal{B}$, alors $u \cdot v \in \mathcal{B}$
+	\item si $u \in \mathcal{B}$, alors $\red( \cdot u \cdot \red) \in \mathcal{B}$.
+\end{itemize}
+Une telle définition de langage est appelée une grammaire. Un autre exemple de langage est la grammaire de la langue française :
+\begin{itemize}
+	\item $\text{phrase} : \text{sujet} + \text{verbe} + \text{complément}$,
+	\item $\text{complément} : \text{COD} + \text{complément}$,
+	\item $\text{complément} : \text{CCL} + \text{complément}$,
+	\item $\text{complément} : \varepsilon$.
+\end{itemize}
+Avec cette définition\footnote{On néglige les règles manquantes à cette définition de la grammaire française.}, on peut reconnaître des phrases simples comme \[
+	\text{\guillemotleft}~\underbrace{\text{Matthieu}}_{\text{sujet}}\ \underbrace{\text{aime}}_{\text{verbe}}\ \underbrace{\text{les trains}}_{\text{complément}}.\text{~\guillemotright}
+\]
+
+\section{Définition, vocabulaire, propriétés}
+\subsection{Grammaires non contextuelles}
+
+\begin{defn}
+	On se munit d'un alphabet $\Sigma$ qu'on appelle \textit{terminaux}. On se munit d'un ensemble de symboles $\mathcal{V}$ qu'on appelle \textit{non-terminaux}.
+	On suppose $\mathcal{V} \cap \Sigma$.
+\end{defn}
+
+\begin{exm}
+	Dans la suite, on pose $\Sigma = \{\mathord{\red(},\mathord{\red)}\}$ et $\mathcal{V} = \{\mathrm{B}\}$.
+\end{exm}
+
+\begin{defn}
+	On appelle \textit{règle de production} la donnée
+	\begin{itemize}
+		\item d'un symbole $V \in \mathcal{V}$,
+		\item d'un mot $w_1 w_2 \ldots w_n$ sur l'alphabet $\mathcal{V} \cup \Sigma$,
+	\end{itemize}
+	que l'on note $V \to w_1w_2\ldots w_n$.
+\end{defn}
+
+\begin{exm}
+	L'ensemble $\mathcal{B}$ est décrit par les règles
+	\begin{itemize}
+		\item $\mathrm{B} \to \varepsilon$,
+		\item $\mathrm{B} \to \mathrm{BB}$,
+		\item $\mathrm{B} \to \mathord{\red(} \mathrm{B} \mathord{\red)}$.
+	\end{itemize}
+\end{exm}
+
+\begin{defn}[Grammaire non contextuelle]
+	Une \textit{grammaire non contextuelle} est la donnée de
+	\begin{itemize}
+		\item un alphabet de non-terminaux $\mathcal{V}$,
+		\item un alphabet de terminaux $\Sigma$,\footnotemark
+		\item un ensemble fini de règles de production $P$,
+		\item un symbole initial $S \in \mathcal{V}$,
+	\end{itemize}
+	que l'on note $(\mathcal{V}, \Sigma, P, S)$.
+\end{defn}
+\footnotetext{avec ``terminaux/non-terminaux'' vient l'implication que $\mathcal{V} \cap \Sigma = \O$}
+
+\begin{exm}
+	On note dans la suite \[
+		\mathcal{G} = \big(\{\mathrm{B}\}, \{\mathord{\red(},\mathord{\red)}\}, \{\mathrm{B}\to \varepsilon,\mathrm{B}\to \mathrm{BB},\mathrm{B}\to \mathord{\red(} \mathrm{B}\mathord{\red)}\}, \mathrm{B}\big)
+	.\]
+\end{exm}
+
+\paragraph{Interlude.}
+Avec cette définition, on espère pouvoir appliquer ces règles pour définir des mots valides. Par exemple,
+\[
+	\mathrm{B} \overset?\leadsto \mathrm{BB} \overset?\leadsto \red(\mathrm{B}\red) \mathrm{B} \overset?\leadsto \red(\mathrm{B}\red)\red(\mathrm{B}\red) \overset?\leadsto \red(\mathrm{BB}\red) \red(\mathrm{B}\red) \overset?\leadsto \red(\mathrm{BB}\red)\red(\red) \overset?\leadsto
+	\red(\mathrm{B}\red)\red(\red) \overset?\leadsto \red(\red(\mathrm{B}\red)\red)\red(\red) \overset?\leadsto\red{(())()}
+.\]
+C'est l'objectif de la sous-section suivante.
+
+\subsection{Dérivation}
+
+\begin{defn}[Dérivation immédiate]
+	Soit $\mathcal{G} = (\mathcal{V}, \Sigma, P, S)$ une grammaire. Soient $u$ et $v$ deux mots de $(\Sigma \cup \mathcal{V})^*$.
+	On dit que $v$ \textit{dérive immédiatement} de $u$ dans la grammaire~$\mathcal{G}$, que l'on note $u \Rightarrow v$, si
+	\begin{itemize}
+		\item il existe $x$ et $y$ deux mots de $(\Sigma \cup \mathcal{V})^*$
+		\item il existe $(V \to w_1 w_2 \ldots w_n) \in P$
+	\end{itemize}
+	tels que $u = x \cdot V \cdot y$ et $v = x \cdot w_1 w_2 \ldots w_n \cdot y$.
+\end{defn}
+
+\begin{exm}
+	%Dans l'exemple de l'interlude, on pose $u = \overbrace{\red(}^x\ \mathrm{B}\ \overbrace{\red)\red(\mathrm{B}\red)}^y$ et $v = \underbrace{\red(}_x\ \overline{\mathrm{BB}}}\ \underbrace{\red)\red(\mathrm{B}\red)}_y$.
+	Ainsi, $u \Rightarrow v$.
+\end{exm}
+
+\begin{lem}[de composition]
+	Soit $\mathcal{G} = (\mathcal{V}, \Sigma, P, S)$ une grammaire.
+	Soient $u, v \in (\Sigma \cup \mathcal{V})^*$ tels que $u \Rightarrow v$.
+	Soit $w \in (\Sigma \cup \mathcal{V})^*$.
+	On a $u\cdot w \Rightarrow v \cdot w$ et $w\cdot u\Rightarrow w \cdot v$.
+\end{lem}
+
+\begin{prv}
+	À faire à la maison.
+\end{prv}
+
+On propose trois définitions différentes mais équivalentes pour la dérivation $\Rst$.
+
+\begin{defn}
+	Étant donné une grammaire $\mathcal{G} = (\mathcal{V}, \Sigma, P, S)$, on étend $\Rightarrow$ en sa cloture réflexive et transitive, que l'on note $\Rst$, appelé \textit{dérivation}.
+	
+\end{defn}
+
+\begin{defn}
+	On définit $\Rst$ comme $u \Rst v {\ds\iffdef} \exists n \in \N,\:\exists (u_0,u_1,\ldots,u_n) \in \big((\mathcal{V} \cup \Sigma)^*)^{n+1}$ tels que $u_0 = u$, $u_n = v$ et $\forall i \in \llbracket 0,n-1 \rrbracket,\: u_i \Rightarrow u_{i+1}$.
+\end{defn}
+
+
+\begin{defn}
+	Soit la suite $(\Rightarrow^n)_{n\in\N}$ définie inductivement par
+	\begin{itemize}
+		\item $\ds u \Rightarrow^0 v \iffdef u = v$,
+		\item $\ds u \Rightarrow^{n+1} v \iffdef u\Rightarrow^n v \text{ ou } \exists w \in (\Sigma \cup \mathcal{V})^*,\: u \Rightarrow w \text{ et } w \Rightarrow^n v$.
+	\end{itemize}
+	On pose alors $\mathord{\Rst} = \bigcup_{n \in \N} \mathord{\Rightarrow^n}$.
+\end{defn}
+
+\begin{lem}[de composition$^*$]
+	Soit $\mathcal{G} = (\mathcal{V}, \Sigma, P, S)$ une grammaire, et soient $u, v \in (\Sigma \cup \mathcal{V})^*$ tels que $u \Rightarrow^p v$, pour $p \in \N$.
+	Et, soient $(w,t) \in (\Sigma \cup \mathcal{V})^2$ tels que $w \Rightarrow^q t$, pour $q \in \N$.
+	Alors, $uw \Rightarrow^{p+q} vt$.
+\end{lem}
+
+\begin{prv}
+	Soit $u_0u_1\ldots u_p$ tels que $u_0 = u$, $u_p = v$ et $\forall i \in \llbracket 0,p-1 \rrbracket$, $u_i \Rightarrow u_{i+1}$.
+	Soit $w_0w_1\ldots w_n$ tels que $w_0 = w$, $w_q = t$ et $\forall i \in \llbracket 0,q-1 \rrbracket$, $w_i \Rightarrow w_{i+1}$.
+	Soit alors la dérivation \[
+		uw = u_0 w \Rightarrow u_1 w \Rightarrow u_2 w \Rightarrow \cdots \Rightarrow u_p w \Rightarrow u_p w_1 \Rightarrow u_p w_2 \Rightarrow \cdots \Rightarrow u_p w_q = vt
+	.\]
+	On a donc $uw \Rightarrow^{p+q} vt$.
+\end{prv}
+
+\begin{defn}
+	Soit $\mathcal{G} = (\mathcal{V}, \Sigma, P, S)$ une grammaire. Son langage est défini par \[
+		\mathcal{L}(\mathcal{G}) = \{u \in \Sigma^*  \mid S \Rst u\}
+	.\]
+\end{defn}
+
+\begin{exm}
+	Dans l'exemple précédent, on a \[
+		\mathcal{L}(\mathcal{G}) = \mathcal{B}
+	.\] 
+\end{exm}

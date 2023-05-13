@@ -1,0 +1,58 @@
+\begin{prop}
+	Soient $E_1, E_2, \ldots, E_n$\/ et $F$\/ des espaces vectoriels normés. Soit $f : E_1 \times E_2 \times \cdots \times E_n \to F$\/ une application multilinéaire.
+	Alors, $f$\/ est continue si, et seulement s'il existe une réel $K$\/ tel que \[
+		\forall \vec{v}_1 \in E_1, \forall \vec{v}_2 \in E_2, \ldots, \forall \vec{v}_n \in E_n,
+		\quad\quad \|f(\vec{v}_1, \vec{v}_2, \ldots, \vec{v}_n)\| \le K\:\|\vec{v}_1\|\: \|\vec{v}_2\| \cdots \|\vec{v}_n\|
+	.\]
+	C'est le cas si les espaces vectoriels $E_1$, \ldots, $E_n$ sont de dimensions finies.
+\end{prop}
+
+\begin{exm}
+	\begin{enumerate}
+		\item Si $E$\/ est un $\R$-espace vectoriel muni d'un produit scalaire, alors ce produit scalaire est continu de $E^2$\/ vers $\R$\/ car il est bilinéaire : $|{\left<\vec{x} \mid \vec{y} \right>}| \le \|\vec{x}\|\: \|\vec{y}\|$\/ pour tous vecteurs $\vec{x}$\/ et $\vec{y}$\/ d'après l'inégalité de Cauchy-Schwarz.
+		\item La multiplication matricielle, vue comme une application de $\mathcal{M}_{n,p}(\R) \times \mathcal{M}_{p,n} \to \mathcal{M}_{n,n}(\R)$, est bilinéaire et donc continue, car les espaces sont de dimensions finies.
+		\item Si $\mathcal{B}$\/ est une base d'un $\mathds{K}$-espace vectoriel $E$ de dimension $n$, alors le déterminant $\det_\mathcal{B}$\/ est continu par sa multilinéarité, car $E$\/ est de dimension finie.
+	\end{enumerate}
+\end{exm}
+
+\section{Norme subordonnée}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item L'ensemble des applications linéaires d'un espace vectoriel $E$\/ vers un espace vectoriel $F$, est noté $\mathcal{L}(E, F)$. Cet ensemble est un espace vectoriel ; mieux, c'est aussi un anneau (pour les lois $+$\/ et $\circ$) ; encore mieux, c'est une algèbre.
+		\item Si on munit chacun des espaces vectoriels $E$\/ et $F$\/ d'une norme, alors une application linéaire $f \in \mathcal{L}(E, F)$\/ peut être ou ne pas être continue. On note $\mathcal{L}_\mathrm{c}(E, F)$\/ l'ensemble des applications linéaires continues de $E$ vers $F$. C'est une sous-algèbre de $\mathcal{L}(E, F)$.
+		\item Si $E$ est de dimension finie, les ensembles $\mathcal{L}(E, F)$\/ et $\mathcal{L}_\mathrm{c}(E, F)$\/ sont égaux (théorème 39).
+	\end{enumerate}
+\end{rmk}
+
+\begin{prop-defn}
+	Soient $E$ et $F$ deux espaces vectoriels normés. Soit $f \in \mathcal{L}_\mathrm{c}(E, F)$\/ une application linéaire de $E$ vers $F$.
+	\begin{enumerate}
+		\item On appelle \textit{norme subordonnée} (ou norme d'opérateur) de $f$, notée $\sub f$, le plus petit réel $K$ tel que \[
+				\forall \vec{x} \in E, \quad\quad \|f(\vec{x})\| \le \|\vec{x}\|
+			.\] Ainsi, il vaut donc \[
+				\sub f = \sup_{\vec{x} \neq \vec{0}} \frac{\|f(\vec{x})\|}{\|\vec{x}\|} = \sup_{\|\vec{x}\| = 1} \|f(\vec{x})\|
+			.\]
+		\item La norme subordonnée est une norme sur l'espace vectoriel $\mathcal{L}_\mathrm{c}(E, F)$. Et, cette norme est \textit{sous-multiplicative} : \[
+				\forall f, g \in \mathcal{L}_\mathrm{c}(E, F), \quad\quad \sub {f \circ g} \le \sub f \cdot \sub g
+			.\] (Cette propriété est vraie si l'on peut composer, \textit{i.e.} $F \subset E$.)
+	\end{enumerate}
+\end{prop-defn}
+
+\begin{prv}
+	\begin{enumerate}
+		\item Comme $f$\/ est continue, on sait que $\forall \vec{x} \in E$, $\|f(\vec{x})\| \le K\cdot \|\vec{x}\|$. Et, ce réel est minoré par $0$. L'ensemble des valeurs de $K$ forment une partie de $\R$ minorée, elle a donc une borne inférieure : $\sub f$. Et, pour tout vecteur $\vec{x} \neq \vec{0}$, $\|f(\vec{x})\| / \|\vec{x}\| \le K$. D'où, le ``meilleur'' $K$ est $\sup_{\vec{x} \neq \vec{0}} \|f(\vec{x})\| / \|\vec{x}\|$ car c'est le plus petit majorant.
+			Finalement, pour tout vecteur $\vec{x} \neq 0$, $\|f(\vec{x})\| / \|\vec{x}\| = \big\|f(\vec{x}) / \|\vec{x}\|\big\| = \big\|f(\vec{x} / \|\vec{x}\|) \big\|$, et le vecteur $\vec{x} / \|\vec{x}\|$ a pour norme 1. D'où $\sub f = \sup_{\|\vec{x}\| \neq 1} \|f(\vec{x})\|$.
+		\item Montrons que l'application $\sub \cdot : f \mapsto \sub f$\/ est une norme.
+			\begin{itemize}
+				\item Si $\sub f = 0_\R$, alors, pour tout vecteur $\vec{x} \in E$, $\|f(\vec{x})\| \le 0 \cdot \|\vec{x}\|$, d'où $\|f(\vec{x})\| = 0_\R$, pour tout vecteur $\vec{x} \in E$. Ainsi, pour tout vecteur $\vec{x} \in E$, $f(\vec{x}) = \vec{0}$. On en déduit $f = 0$.
+				\item Soit $\alpha \in \mathds{K}$. Ainsi, $\sub {\alpha f} = \sup_{\|\vec{x}\| = 1} \|\alpha f(\vec{x})\| = |\alpha| \: \sup_{\|\vec{x}\| = 1} \|f(\vec{x})\| = |\alpha|\: \sub f$.
+				\item On sait que $\sub {f + g} = \sup_{\|\vec{x}\| = 1} \|(f + g)(\vec{x})\|$. Or, $\forall \vec{x} \in B(\vec{0}, 1)$, $\|(f+g)(\vec{x})\| = \|f(\vec{x}) + g(\vec{x})\| \le \|f(\vec{x})\| + \|g(\vec{x})\| \le \sub f + \sub g$, qui est un majorant.
+					Et, le plus petit majorant est $\sub {f + g}$. D'où, $\sub{f + g} \le \sub f + \sub g$.
+			\end{itemize}
+			Mieux, montrons qu'elle est sous-multiplicative : $\sub {f \circ g} \le \sub f \cdot \sub g$, \textit{i.e.} $\sup_{\|\vec{x}\| = 1} \|f  \circ g(\vec{x})\| \le \sub f \cdot \sub g$.
+			Pour tout vecteur $\vec{x}$, $\|f  \circ g(\vec{x})\| = \big\|f\big(g(\vec{x})\big)\big\| \le \sub f \cdot \|g(\vec{x})\| \le \sub f \cdot \sub g \cdot \|\vec{x}\|$.
+			D'où, pour tout vecteur $\vec{x}$, $\|f \circ g(\vec{x})\| \le \underbrace{\sub f \cdot \sub g}_K \cdot \|\vec{x}\|$. Or, le plus petit $K$ possible est $\sub {f \circ g}$. Ainsi, $\sub {f  \circ g} \le \sub f \cdot \sub g$.
+	\end{enumerate}
+\end{prv}
+

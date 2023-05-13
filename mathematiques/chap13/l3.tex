@@ -1,0 +1,212 @@
+\begin{prv}
+	On suppose $\vec{u} \tendsto{n\to \infty} \vec{\ell}$. D'où, $\|\vec{u}_n - \vec{\ell}\| \tendsto{n\to \infty} 0$, et donc \[
+		\forall \varepsilon > 0,\: \exists N \in \N,\: \forall n \ge N, \quad \|\vec{u}_n - \vec{\ell}\| \le \varepsilon
+	.\] Soit $(\vec{v}_n) = (\vec{u}_{\varphi(n)})$\/ une suite extraite. On veut montrer que $\vec{v}_n \tendsto{n\to \infty} \vec{\ell}$.
+	Or, $\varphi(n) \ge n$, pour tout $n \in \N$, d'où $\varphi(n) \ge N$\/ pour $n \ge N$. D'où, $\|\vec{u}_{\varphi(n)} - \vec{\ell}\| \le \varepsilon$\/ et donc $\|\vec{v}_n - \vec{\ell}\| \le \varepsilon$.
+\end{prv}
+
+\section{Comparer des normes}
+
+\begin{defn}
+	Soient $N$\/ et $\|\cdot\|$\/ deux normes sur un espace vectoriel $E$.
+	On dit que ces deux normes sont \textit{équivalentes} s'il existe deux réels $\alpha$\/ et $\beta$\/ tels que \[
+		\forall \vec{x} \in E,\quad\quad N(\vec{x}) \le \alpha\cdot \|\vec{x}\|\quad \text{ et }\quad \|\vec{x}\| \le \beta \cdot N(\vec{x})
+	.\]
+\end{defn}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item Cette relation entre deux normes est une relation d'équivalence. En effet, elle est réflexive, symétrique et transitive.
+		\item Si deux normes sont équivalentes, alors ce qui converge pour l'une, converge aussi pour l'autre : \[
+				N(\vec{x} - \vec{a}) \to 0 \quad \iff \quad \|\vec{x} - \vec{a}\| \to 0
+			.\] En effet, si $N(\vec{x} - \vec{a})$\/ tend vers 0, alors $\|\vec{x}-\vec{a}\|$\/ aussi : $\|\vec{x} - \vec{a}\| \le \beta\cdot N(\vec{x}-\vec{a})$.
+		\item De même, être ou ne pas être borné est indépendant du choix de la norme, si les normes sont équivalentes.
+		\item Les trois normes classiques sur $\R^n$\/ sont équivalentes. En effet, on a \[
+			\forall \vec{x} \in \R^n, \quad\quad \|\vec{x}\|_\infty \le \|\vec{x}\|_1 \le n \cdot \|\vec{x}\|_\infty \quad \text{et}\quad \|\vec{x}\|_\infty \le \|\vec{x}\|_2 \le \sqrt{n} \|\vec{x}\|_\infty,
+		\] d'après l'exercice 7. Mais, ceci est faux dans l'espace $\mathcal{C}([0,1])$, d'après l'exercice 11.
+	\end{enumerate}
+
+	Pour des normes équivalentes,
+	\begin{itemize}
+		\item la nature d'une suite ne dépend pas de la norme,
+		\item la limite d'une suite ne dépend pas de la norme,
+		\item le caractère borné d'une suite ne dépend pas de la norme.
+	\end{itemize}
+\end{rmk}
+
+\begin{thm}
+	Sur un espace vectoriel de dimension \textbf{finie}, toutes les normes sont équivalentes.
+\end{thm}
+
+\begin{prv}
+	Voir l'annexe B.
+\end{prv}
+
+\begin{exo}
+	\textsl{
+		\begin{enumerate}
+			\item Soit $E$\/ l'espace vectoriel de fonctions de $[0,1]$\/ vers $\R$\/ continues : $E = \mathcal{C}([0,1], \R)$. Déterminer un réel $\alpha$\/ tel que \[
+					\forall f \in E,\quad\quad \|f\|_1 \le \alpha \|f\|_\infty
+				.\]
+			\item Pour tout $n \in \N$, on considère les fonctions $f_n$\/ et $g_n$\/ définies sur $[0,1]$\/ et représentées sur le poly. Étudier $\|f_n\|_1$\/ et $\|f_n\|_\infty$\/ ainsi que $\|g_n\|_1$\/ et $\|g_n\|_\infty$. Conclure.
+		\end{enumerate}
+	}
+
+	\begin{enumerate}
+		\item On sait que $\|f\|_1 = \int_{0}^{1} |f(t)|~\mathrm{d}t$. Et, $\forall t \in [0,1]$, $|f(t)| \le \sup_{t \in [0,1]}\: |f(t)| = \|f\|_\infty$. D'où,
+			\begin{align*}
+				\|f\|_1 = \int_{0}^{1} |f(t)|~\mathrm{d}t &\le \int_{0}^{1} \|f\|_\infty~\mathrm{d}t\\
+				&\le (1-0) \times \|f\|_\infty\\
+			\end{align*}
+		\item On a $\|f_n\|_\infty = 1$\/ et $\|f_n\|_1 = \frac{1}{2n+2}$.
+			De même, on a $\|g_n\|_\infty = 2n + 2$, et $\|g_n\|_1 = 1$.
+			On a déjà montré que $\|\cdot\|_1 \le 1 \times \|\cdot \|_\infty$.
+			On veut savoir s'il existe un réel $\beta$, tel que $\|\cdot\|_\infty \le \beta \times \|\cdot \|_1$.
+			Par l'absurde, supposons qu'il existe un réel $\beta$\/ tel que $\|\cdot\|_\infty \le \beta \times \|\cdot \|_1$.
+			En particulier, $\|f_n\|_\infty \le \beta \cdot \|f_n\|_1$, d'où $1 \le \beta \times \frac{1}{2n + 2}$.
+			Les inégalités larges passent à la limite, d'où $1 \le 0$, ce qui est absurde.
+	\end{enumerate}
+\end{exo}
+
+\begin{crlr}[coordonnée par coordonnée]
+	Soit $E$\/ un espace vectoriel de dimension \textbf{finie}, et soient $(\vec{u}_n)$\/ une suite de vecteurs de $E$\/ et $\vec{\ell} $\/ un vecteur.
+	La suite $(\vec{u}_n)$\/ tend vers $\vec{\ell}$\/ si, et seulement si, chaque coordonnée de $\vec{u}_n$\/ tend vers chaque coordonnée de $\vec{\ell}$.
+\end{crlr}
+
+\begin{prv}
+	Soit $\mathcal{B} = (\vec{e}_1, \ldots, \vec{e}_d)$\/ une base de $E$. Soit $N$\/ la norme de $E$\/ définie comme \begin{align*}
+		N: E &\longrightarrow \R^+ \\
+		x_1 \vec{e}_1 + \cdots + x_d \vec{e}_d &\longmapsto \max(|x_1|, \ldots, |x_d|)
+	\end{align*}
+	On veut montrer que $\vec{u}_n \to \vec{\ell}$\/ si, et seulement si, pour $i \in \llbracket 1,d \rrbracket$, $x_i \to \ell_i$.
+	\begin{align*}
+		\vec{u}_n \tendsto{n \to +\infty} \vec{\ell} \iff& N(\vec{u}_n - \vec{\ell}) \tendsto{n\to \infty} 0 \\
+		\iff& \max(|u_{n,1} - \ell_1|, \ldots,{|u_{n,d} - \ell_d|}) \tendsto{n\to \infty} 0 \\
+		\iff& \forall i \in \llbracket 1,d \rrbracket, \quad |u_{n,i} - \ell| \tendsto{n\to \infty} 0 \\
+	\end{align*}
+\end{prv}
+
+\begin{exo}
+	On a $E = \mathcal{M}_{2,2}(\R)$, espace de dimension finie.
+	D'où, toutes les normes sur $E$\/ sont équivalentes.
+	En particulier, $A_n \to L$\/ si, et seulement si chaque élément de matrice de $A_n$\/ tend vers chaque élément de matrice de $L$.
+	Ici, \[
+		A_n = \begin{pmatrix}
+			1 & -a / n\\
+			a / n & 1
+		\end{pmatrix}^n
+	.\]
+	On a \[
+		\begin{pmatrix}
+			1 & - \frac{a}{n}\\
+			\frac{a}{n} & 1
+		\end{pmatrix} = \sqrt{1 + \frac{a^2}{n^2}}  \cdot \underbrace{\begin{pmatrix}
+			\frac{1}{\sqrt{1 + a^2 / n^2}} & \frac{- a / n}{\sqrt{1 + a^2 / n^2}}\\
+			\frac{a / n}{\sqrt{1 + a^2 / n^2}} & \frac{1}{\sqrt{1 + a^2 / n^2}}
+		\end{pmatrix}}_{(C_1, C_2) \text{ b.o.n}} = \sqrt{1 + \frac{a^2}{n^2}} \begin{pmatrix}
+			\cos \theta_n & -\sin \theta_n\\
+			\sin \theta_n & \cos \theta_n
+		\end{pmatrix} 
+	.\] D'où,
+	\begin{align*}
+		A_n = \begin{pmatrix}
+			1 & - \frac{a}{n}\\
+			\frac{a}{n} & 1
+		\end{pmatrix}^n &= \left( \sqrt{1 + \frac{a^2}{n^2}} \right)^n \cdot \begin{pmatrix}
+			\cos \theta_n & -\sin\theta_n\\
+			\sin \theta_n & \cos \theta_n
+		\end{pmatrix}^n\\
+		&= \left( \sqrt{1 + \frac{a^2}{n^2}} \right)^n \cdot \begin{pmatrix}
+			\cos (n\theta_n) & -\sin(n\theta_n)\\
+			\sin (n\theta_n) & \cos (n\theta_n)
+		\end{pmatrix}\\
+	\end{align*}
+	On veut montrer que \[
+		\begin{cases}
+			\left(\sqrt{1 + \frac{a^2}{n^2}}\right)^n \; \cos(n \theta_n) \tendsto{n\to \infty} \cos a,\\
+			\left(\sqrt{1 + \frac{a^2}{n^2}}\right)^n \; \sin(n\theta_n) \tendsto{n\to \infty} \sin a.
+		\end{cases}
+	\]
+	On a $\left( \sqrt{1 + \frac{a^2}{n^2}} \right)^n = \exp\left( n \ln \sqrt{1 + \frac{a^2}{n^2}} \right)$.
+	Or, \[
+		n \ln \sqrt{1 + \frac{a^2}{n^2}}  = \frac{1}{2} n \ln \left(1 + \frac{a^2}{n^2}\right) = \frac{1}{2}n\left( \frac{a^2}{n^2} + \po\left( \frac{a^2}{n^2} \right)\right) = \frac{a^2}{2n} + \po\left( \frac{1}{n} \right) \tendsto{n\to \infty} 0
+	.\] D'où, $\left( \sqrt{1 + \frac{a^2}{n^2}}\right)^n \tendsto{n\to \infty} 1$\/ par continuité de l'exponentielle.
+	Il nous reste à montrer que $n \theta_n \tendsto{n\to \infty} a$, car, ensuite par continuité du cosinus et du sinus : \[
+		\begin{cases}
+			\sin(n \theta_n) \tendsto{n\to \infty} \sin a\\
+			\cos (n \theta_n) \tendsto{n\to \infty} \cos a
+		\end{cases}
+	.\]
+	On a $\cos \theta_n = 1 / \sqrt{1 + a^2 / n^2}$\/ et $\sin \theta_n = (a / n) / \sqrt{1 + a^2 / n^2}$. On a donc $\sin \theta_n \to 0$, d'où $\sin \theta_n \to 0$\/ par continuité de $\Arcsin$, d'où $\sin \theta_n \sim \theta_n$.
+	Et, donc \[
+		\theta_n \simi_{n\to \infty} \frac{a/n}{\sqrt{1 + \frac{a^2}{n^2}}}
+	.\] D'où, $n \theta_n \sim a / \sqrt{1 + a^2 / n^2} \tendsto{n\to \infty} a$.
+\end{exo}
+
+\section{Adhérence}
+
+\begin{defn}
+	Soit $A$\/ une partie de $E$, un espace vectoriel. On dit qu'un vecteur $\vec{\ell} \in E$\/ est \textit{adhérent} à $A$, si toute boule centrée en $\vec{\ell}$\/ rencontre $A$\/ : \[
+		\forall \varepsilon > 0,\quad\quad B(\vec{\ell},\varepsilon) \cap A \neq \O
+	.\] L'\textit{adhérence} de $A$, notée $\bar{A}$, est l'ensemble des vecteurs adhérents à $A$.
+\end{defn}
+
+\begin{figure}[H]
+	\centering
+	\incfig{point-adhérent}
+	\caption{Point adhérent}
+\end{figure}
+
+On a toujours $A\subset \bar{A}$, mais pas forcément $\bar{A} \subset  A$ (\textit{c.f.}\ exemple ci-après).
+
+\begin{exm}
+	\begin{itemize}
+		\item Soient $I = [0, 1]$, $J = {]0,1]}$\/ et $K = {]0,+\infty[}$\/ trois intervalles de $\R$.
+			On a $\bar{I} = I$, $\bar{J} = I$\/ et $\bar{K} = [0, +\infty[$.
+		\item L'adhérence $\overline{B(\vec{a},r)}$\/ d'une boule ouverte $B(\vec{a}, r)$\/ est la boule fermée de même centre $\vec{a}$\/ et de même rayon $r$ : $\bar{B}(\vec{a}, r)$.
+	\end{itemize}
+\end{exm}
+
+\begin{prop}[Caractérisation séquentielle de l'adhérence]
+	Un vecteur $\vec{\ell} \in E$\/ est adhérent à $A \subset E$ si, et seulement si $\vec{\ell}$\/ est la limite d'une suite $(\vec{u}_n)_{n\in\N}$\/ d'éléments de $A$.
+\end{prop}
+
+\begin{prv}~\\[-\baselineskip]
+	\begin{itemize}
+		\item[``$\implies$''] On suppose qu'il existe une suite $(\vec{u}_n)_{n\in\N}$\/ de $A$ telle que $\vec{u}_n \to \vec{a}$. Soit $\varepsilon > 0$.
+			Comme $\vec{u}_n \to \vec{a}$ (par hypothèse), il existe un rang $N \in \N$\/ tel que, pour tout $n \ge N$, $\|\vec{u}_, - \vec{a}\| < \varepsilon$.
+			D'où, $\vec{u}_n \in B(\vec{a}, \varepsilon)$. Or, par hypothèse, $\vec{u}_n \in A$. On en déduit que \[
+				B(\vec{a}, \varepsilon) \cap A \neq \O
+			.\]
+		\item[``$\impliedby$'']
+			Réciproquement, on suppose que, pour tout $\varepsilon > 0$, $B(\vec{a}, \varepsilon) \cap A \neq \O$.
+			Soit $n \in \N^*$\/ et soit $\varepsilon = \frac{1}{n}$.
+			D'où, par hypothèse, $B(\vec{a}, \varepsilon) \cap A \neq \O$.
+			On choisit un élément $\vec{u}_n \in B(\vec{a}, \varepsilon) \cap A$, qui est non vide.
+			D'où, $\vec{u}_n \in A$\/ et $\|\vec{u}_n - \vec{a}\| < \frac{1}{n}$.
+			Ainsi, pour tout $n \in \N$, $\vec{u}_n \in A$\/ et $\vec{u}_n \to \vec{a}$.
+	\end{itemize}
+\end{prv}
+
+\begin{defn}
+	Soit $A$\/ une partie d'un espace vectoriel $E$. On dit que $A$\/ est \textit{dense} dans $E$\/ si $\bar{A} = E$. Autrement dit, tout vecteur de $E$\/ est adhérent à $A$. Ou encore, tout vecteur de $E$\/ est la limite d'une suite de vecteurs de $A$.
+\end{defn}
+
+\begin{rap}[Caractère archimédien de $\R$]
+	Pour tout $\varepsilon \in \R^+_*$, il existe un entier $n \in \N$\/ tel que $n \cdot \varepsilon > 1$.
+\end{rap}
+
+\begin{rap}[Théorème d'approximation de Weierstrass]
+	Si $f \in \mathcal{C}([a,b])$, il existe une suite $(P_n)_{n\in\N}$\/ de polynômes convergent uniformément vers $f$\/ sur $[a,b]$\/ :  \[
+		0 \xleftarrow[\infty \gets n]{} \|P_n-f\|_\infty = \sup_{t \in [a,b]}\ \big|P_n(t) - f(t)\big| \tendsto{n\to \infty} 0
+	.\]
+\end{rap}
+
+
+\marginpar{\color{cyan}Tartes à la crème}
+\begin{exm}
+	\begin{enumerate}
+		\item $\Q$\/ est dense dans $\R$, et $\R \setminus \Q$\/ est dense dans $\R$.
+		\item D'après le théorème d'approximation de Weierstrass, l'ensemble des fonctions polynomiales est dense dans l'espace vectoriel $\mathcal{C}([a,b])$\/ des fonctions continues sur un segment muni de la {\color{red}norme infinie} (par la caractérisation séquentielle de l'adhérence).
+	\end{enumerate}
+\end{exm}

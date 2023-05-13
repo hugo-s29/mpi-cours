@@ -1,0 +1,181 @@
+\lettrine{D}{ans ce chapitre}, on s'intéresse aux graphes. Nous rappellerons les notions et algorithmes de graphes vus l'année dernière.
+On considère 3 exemples d'algorithmes de graphes.
+
+Par exemple, l'année dernière, nous avons vu comment décomposer un graphe non-orienté en composantes connexes : on choisit un sommet au hasard, puis on parcours les voisins de ce sommets, et on répète.
+Mais, dans un graphe orienté, la notion de \guillemotleft~composante connexe~\guillemotright\ n'est plus la même dans un graphe orienté. C'est l'algorithme décrit dans la section 1.
+
+\section{Composantes fortement connexes (\textsc{cfc})}
+
+Dans la suite de cette section, $G = (S, A)$\/ est un graphe orienté.
+
+\begin{defn}
+	On dit que $v \in S$\/ est \textit{accessible} depuis $u \in S$\/ s'il existe un chemin de $u$\/ à $v$, que l'on note $u \xrightarrow{*} v$.
+	De même, on dit que $v \in S$\/ est \textit{co-accessible} depuis $u \in S$\/ s'il existe un chemin de $v$\/ à $u$, que l'on note $v \xrightarrow{*} u$.
+	\index{graphe!accessibilité}
+	\index{graphe!co-accessibilité}
+\end{defn}
+
+\begin{defn}[$u \sim_G v$]
+	On note $u \sim_G v$\/ si $u \xrightarrow{*} v$\/ et $v \xrightarrow{*} u$.
+	\index{graphe!notation $u \sim_G v$}
+\end{defn}
+
+\begin{rmk}
+	La relation $\sim_G$\/ est une relation d'équivalence.
+\end{rmk}
+
+\paragraph{Digression}
+L'année dernière, dans un graphe non orienté, on peut noter $\sim$\/ la relation d'équivalence induite par, si $\{u,v\} \in A$, alors $u \sim v$. Dans ce cas, le même chemin permet d'aller de $u$\/ à $v$, puis de $v$\/ à $u$, et ce chemin est le même. Mais, dans un graphe orienté, si $u \sim_G v$, les chemins de $u$\/ à $v$\/ puis de $v$\/ à $u$\/ ne sont pas forcément les mêmes.
+
+\begin{defn}[\textsc{cfc}]
+	On appelle \textit{composantes fortement connexes} (\textsc{cfc}) d'un graphe $G$, les classes d'équivalences de la relation $\sim_G$.
+	\index{graphe!composante fortement connexe}
+	\index{graphe!\textsc{cfc}}
+\end{defn}
+
+\begin{defn}
+	On dit d'un graphe ayant une unique composante fortement connexe qu'il est \textit{fortement connexe}.
+	\index{graphe!fortement connexe}
+\end{defn}
+
+\begin{exm}
+	Le graphe ci-dessous a deux composantes fortement connexes, il n'est donc pas fortement connexe.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{ex-cfc}
+		\caption{Graphe non fortement connexe}
+	\end{figure}
+\end{exm}
+
+\begin{defn}
+	On appelle \textit{ensemble fortement connexe} un ensemble $V \subseteq S$\/ tel que $G_V$\/ est fortement connexe où $G_V$\/ est le \textit{graphe induit} par $V$\/ : $G_V = (V, A \cap V^2)$.
+	\index{graphe!induit}
+	\index{graphe!ensemble fortement connexe}
+\end{defn}
+
+\begin{exm}
+	Avec le graphe précédent, l'ensemble $\{a,b\}$\/ est un ensemble fortement connexe.
+\end{exm}
+
+\begin{lem}
+	Si $W$\/ est une composante fortement connexe de $G$, alors $W$\/ est un ensemble fortement connexe.
+\end{lem}
+
+\begin{prv}
+	Soit $W$\/ une composante fortement connexe. On doit montrer que $W$\/ est un ensemble fortement connexe, \textit{i.e.}\ le graphe $G_W$\/ est fortement connexe, \textit{i.e.}\ pour tout couple de sommets $(u,v) \in W^2$, $u \sim_{G_W} v$.
+	Étant donné que $W$\/ est une composante connexe, $u \sim_G v$, donc il existe $(n,m) \in \N^2$\/ et deux chemins \[
+		u \to v_1 \to v_2 \to \cdots \to v_n = v \quad \text{ et }\quad 
+		v \to u_1 \to u_2 \to \cdots \to u_m = u
+	.\]
+	Soit alors $i \in \llbracket 1,n \rrbracket$. On a donc deux chemins
+	\[
+		v \to u_1 \to u_2 \to \cdots \to u_m = u \to v_1 \to \cdots \to v_i
+	\] et \[
+		v_i \to v_{i+1} \to \cdots \to v_n = v
+	.\] Ainsi, $v \sim_G v_i$\/ et $v_i \in W$.
+	De même, pour tout $j \in \llbracket 1,m \rrbracket$, $u_j \in W$.
+	Ainsi, $u \sim_{G_w} v$\/ (en utilisant les mêmes chemins). Donc, $G_W$\/ est fortement connexe puisque toute paire de sommets est équivalent)
+\end{prv}
+
+\begin{prop}
+	Les composantes fortement connexes sont les ensembles fortement connexes qui sont maximaux pour l'inclusion.
+\end{prop}
+
+\begin{prv}
+	\begin{itemize}
+		\item[``$\impliedby$'']
+			Soit $V$\/ un ensemble fortement connexe maximal pour l'inclusion.\\
+			\textbf{Remarque} : on a $V \neq \O$. En effet, un singleton est un ensemble fortement connexe, et donc $V$\/ ne sera pas maximal pour l'inclusion.\\
+			Soit $(u,v) \in V^2$. Par définition de fortement connexe, $u \sim_{G_V} v$\/ donc $u \sim_G v$.
+			Soit alors $W$\/ la classe des éléments de $V \subseteq W$.
+			L'ensemble $W$\/ est fortement connexe (d'après le lemme précédent).
+			Ainsi, $W = V$, $W$\/ est donc une composante fortement connexe.
+		\item[``$\implies$''] Soit $V$\/ une composante fortement connexe.
+			L'ensemble $V$\/ est fortement connexe, d'après le lemme précédent.
+			Soit $W\supseteq V$\/ tel que $W$\/ est fortement connexe. Montrons que $V = W$.
+			\begin{itemize}
+				\item Si $W \setminus V = \O$, alors \textsc{ok}.
+				\item Si $W \setminus V \neq \O$, alors soit $z \in W \setminus V$.
+					L'ensemble $W$\/ est fortement connexe. Soit $u \in V$. On a $u \sim_{G_W} z$, donc $u \sim_G z$, donc $z \in V$\/ ce qui est absurde.
+			\end{itemize}
+	\end{itemize}
+\end{prv}
+
+\begin{defn}
+	On appelle \textit{graphe réduit} de $G$\/ le graphe orienté $\hat G = (\hat S, \hat A)$\/ où \[
+		\hat{S} = \{\bar{x}  \mid x \in S\}  \quad \text{ et } \quad \hat{A} = \big\{(\bar{x},\bar{y})  \mid (x,y) \in A \text{ et } \bar{x} \neq \bar{y}\big\}
+	.\]
+	\index{graphe!réduit}
+\end{defn}
+
+\begin{exm}
+	\todo{Figure}
+\end{exm}
+
+\begin{rmk}
+	\begin{itemize}
+		\item $\hat{G}$\/ est acyclique.
+		\item Pour tout couple $(\bar{x}, \bar{y}) \in \hat{S}^2$, si $\bar{x} \xrightarrow{*}_{\hat{G}} \bar{y}$, alors $\forall u \in \bar{x}$, $\forall v \in \bar{y}$, $x\xrightarrow{*}_G v$.
+	\end{itemize}
+\end{rmk}
+
+\subsection{Rappels}
+
+\begin{defn}
+	La \textit{bordure} d'un ensemble de sommets $V \subseteq S$, noté $\mathcal{B}(V)$, est l'ensemble des successeurs de $V$\/ non dans $V$ : \[
+		\mathcal{B}(V) = \{s \in S \setminus V   \mid \exists u \in V,\: (u,s) \in A\}
+	.\]
+	\index{graphe!bordure}
+\end{defn}
+
+\begin{defn}[parcours]
+	Un \textit{parcours} est une permutation des sommets $(L_1, L_2, \ldots, L_n)$\/ telle que, pour $i \in \llbracket 1,n -1\rrbracket$, \[
+		L_i \in \mathcal{B}(\{L_1, \ldots, L_{i-1}\})\quad\text{ ou } \quad\mathcal{B}(\{L_1,\ldots,L_{i-1}\}) = \O
+	.\]
+	\index{graphe!parcours}
+	On dit d'un $L_i$\/ avec $i \in \llbracket 1,n \rrbracket$\/ tel que $\mathcal{B}(\{L_1,\ldots,L_{i-1}\}) = \O$, que c'est un \textit{point de régénération} du parcours.
+	\index{graphe!parcours!point de régénération}
+\end{defn}
+
+\begin{lem}
+	Si $V \subseteq S$\/ est tel que $\mathcal{B}(V) = \O$, il n'existe aucun chemin d'un sommet de $V$\/ à un chemin de $S \setminus V$.
+\end{lem}
+
+\begin{prv}[par l'absurde]
+	Soit un chemin $V \owns u_0 \to u_1 \to \cdots \to u_k \in S \setminus V$\/ avec $k \in \N$. Soit $I = \{i \in \llbracket 0,k \rrbracket  \mid u_i \in S \setminus V\}$. L'ensemble $I$\/ est non vide, car $u_k \in S \setminus V$, et $I \subseteq N$. Il admet donc un plus petit élément ; nommons le $i_0 \in \llbracket 0,k \rrbracket$. On a $i_0 \neq 0$\/ car $u_0 \in V$. Ainsi, $u_{i_0 - 1} \in V$, $u_{i_0} \in S \setminus V$, et $(u_{i_0 - 1}, u_{i_0}) \in A$. Donc, $u_{i_0} \in \mathcal{B}(V)$, ce qui est absurde.
+\end{prv}
+
+\begin{defn}
+	Soit $(L_1, L_2, \ldots, L_n)$\/ un parcours de $G$. On note $K$\/ le nombre de ses points de régénération. On note $(r_k)_{k \in \llbracket 1,k \rrbracket}$\/ l'extractrice des points de régénération. En notant de plus $r_{K+1} = n+1$.
+	Le \textit{partitionnement associé au parcours} est alors \[
+		\Big\{\{L_{r_i}, L_{r_i + 1}, \ldots, L_{r_{i+1} - 1}\} \:\Big|\: i \in \llbracket 1,K \rrbracket\Big\}.
+	.\]
+	\index{graphe!parcours!partitionnement associé}
+\end{defn}
+
+\begin{exm}
+	Si  $n = 10$\/ et les points de régénération sont d'indices $1$, $4$, $7$\/ et $8$, alors le partitionnement associé est donc \[
+		\Big\{ \{1,2,3\}, \{4,5,6\}, \{7\}, \{8,9, 10\} \Big\}
+	.\]
+\end{exm}
+
+\begin{defn}
+	Un partitionnement $P_1$\/ est un \textit{raffinement} d'un partitionnement $P_2$\/ dès lors que \[
+		\forall C_1 \in P_1,\: \exists C_2 \in P_2,\: C_1 \subseteq C_2
+	.\]
+	\index{raffinement!classe d'équivalence}
+\end{defn}
+
+\begin{prop}
+	Les composantes fortement connexes sont un raffinement des partitionnement des parcours.
+\end{prop}
+
+\begin{prv}
+	Soient $u$\/ et $v$\/ deux sommets de la même composante fortement connexes.
+	Supposons que $u$\/ et $v$\/ ne sont pas dans la même partie du partitionnement pour un parcours $(L_1, \ldots, L_n)$\/ du graphe.
+	Soit $i_u$\/ et $i_v$\/ tels que $u = L_{i_u}$\/ et $v = L_{i_v}$. Sans perdre en généralité, on peut supposer $i_u \le i_v$.
+	Il existe alors $i_0 \in {\rrbracket i_u, i_v \rrbracket}$\/ tels que $L_{i_0}$\/ est un point de régénération. Alors, \[
+		\mathcal{B}\big(\{L_1, L_2, \ldots, L_{i_0 - 1}\}\big) = \O
+	.\]
+	D'après le lemme précédent, il n'existe pas de chemin de $u$\/ à $v$, ce qui est absurde car $u$\/ et $v$\/ sont dans la même composante fortement connexe.
+\end{prv}

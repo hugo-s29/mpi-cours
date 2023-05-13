@@ -1,0 +1,248 @@
+\begin{exm}
+	Dans le plan $\R^2$, soit $\mathcal{C}$ le cercle de centre $(0, 0)$ et de rayon $1$ : \[
+		(x,y) \in \mathcal{C} \iff \underbrace{x^2 + y^2 = 1}_{\text{équation implicite}} \iff \overbrace{\exists t \in \R, \begin{cases}
+			x = \cos t\\
+			y = \sin t.
+		\end{cases}}^{\text{équations paramétrées}}
+	\]
+	Plus généralement, soient deux réels $a > 0$ et $b> 0$. La courbe $\mathcal{E}$ d'équation implicite \[
+		\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1
+	\] est appelée \textit{ellipse}. Elle est représentée sur la figure ci-dessous. C'est aussi une \textit{courbe paramétrée} : \[
+		(x,y) \in \mathcal{E} \iff \exists  t \in \R, \begin{cases}
+			x = a \cos t\\
+			y = b \sin t.
+		\end{cases}
+	\]
+	Les deux courbes sont \textit{bornées}.
+	On peut passer de $\mathcal{C}$ à $\mathcal{E}$ au moyen des changements de variables $X = x / a$ et $Y = y / b$.
+	On nomme $a$ le \guillemotleft~demi grand axe~\guillemotright\ et $b$ le \guillemotleft~demi petit axe~\guillemotright\ de l'ellipse $\mathcal{E}$.
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[scale=1.2]
+		\draw[->] (-2,0) -- (2, 0);
+		\draw[->] (0,-2) -- (0, 2);
+		\draw[red] (0,0) circle (1);
+		\foreach \x in {-1,1}{
+			\node at (\x-0.3,-0.3) {$\x$};
+			\node at (-0.3,\x-0.3) {$\x$};
+			\draw (\x,-0.2) -- (\x,0.2);
+			\draw (-0.2,\x) -- (0.2,\x);
+		}
+		\node at (0, -3) {$x^2 + y^2 = 1$};
+	\end{tikzpicture}
+	\begin{tikzpicture}[scale=1.2]
+		\draw[->] (-2,0) -- (2, 0);
+		\draw[->] (0,-2) -- (0, 2);
+		\draw[red] (0,0) ellipse [x radius=1.5, y radius=1];
+		\foreach \x in {-1,1}{
+			\draw (1.5*\x,-0.2) -- (1.5*\x,0.2);
+			\draw (-0.2,\x) -- (0.2,\x);
+		}
+		\node at (-1.5-0.3,-0.3) {$-a$};
+		\node at ( 1.5-0.3,-0.3) {$a$};
+		\node at (-0.3,-1-0.3) {$-b$};
+		\node at (-0.3, 1-0.3) {$b$};
+		\node at (0, -3) {$\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$};
+	\end{tikzpicture}
+	\caption{Cercle $\mathcal{C}$ et ellipse $\mathcal{E}$}
+\end{figure}
+
+\begin{exm}
+	Soient deux réels $a > 0$ et $b > 0$. La courbe $\mathcal{H}$ d'équation implicite \[
+		\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1
+	\] est appelée \textit{hyperbole}. Elle est représentée sur la figure ci-dessous.
+	Cette hyperbole est la réunion de deux branches $\mathcal{H}_+ = \{(x,y) \in \mathcal{H}  \mid x \ge 0\}$ et $\mathcal{H}_- = \{(x,y) \in \mathcal{H}  \mid x \le 0\}$. La courbe $\mathcal{H}_+$ est une courbe paramétrée \[
+		(x,y) \in \mathcal{H}_+ \quad\quad\iff\quad\quad \exists t \in \R,\: \begin{cases}
+			x = a \ch t\\
+			y = b \sh t.
+		\end{cases}
+	\]L'hyperbole $\mathcal{H}$ possède deux asymptotes $\frac{y}{b} =  \frac{x}{a}$ et $\frac{y}{b} = -\frac{x}{a}$.
+	\begin{align*}
+		\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1 \iff& X^2 - Y^2 = 1 && \text{ où } \begin{cases}
+			X = x / a\\
+			Y = y / b
+		\end{cases}\\
+		\iff& U \cdot V = 1 && \text{ où } \begin{cases}
+			U = X + Y\\
+			V = X - Y
+		\end{cases} \\
+		\iff& V = \frac{1}{U} \\
+	\end{align*}
+	L'hyperbole $\mathcal{H}$ a une \textit{zone interdite} entre $-1$ et $1$. En effet \[
+		X^2 - Y^2 = 1 \iff X^2 = 1 + Y^2 \implies X^2 \ge 1
+	.\]
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\begin{tabular}{ccc}
+		\begin{asy}
+			import graph;
+
+			size(3cm);
+			axes(EndArrow);
+			real f(real x) { return 1 / x; }
+			draw(graph(f, -4, -1/4), red);
+			draw(graph(f,  1/4,  4), red);
+		\end{asy}
+		&
+		\begin{asy}
+			import graph;
+
+			size(3cm);
+			axes(EndArrow);
+			pair F(real x) { return (cosh(x), sinh(x)); }
+			pair G(real x) { return (-cosh(x), sinh(x)); }
+			draw(graph(F, -2, 2), red);
+			draw(graph(G, -2, 2), red);
+		\end{asy}
+		&
+		\begin{asy}
+			import graph;
+
+			size(5cm);
+			axes(EndArrow);
+			pair F(real x) { return (1.5*cosh(x), sinh(x)); }
+			pair G(real x) { return (-1.5*cosh(x), sinh(x)); }
+			draw(graph(F, -2, 2), red);
+			draw(graph(G, -2, 2), red);
+		\end{asy}
+		\\
+		$\ds V = \frac{1}{U}$ & $\ds X^2 - Y^2 = 1$ & $\ds\frac{x^2}{a^2}- \frac{y^2}{b^2} = 1$
+	\end{tabular}
+	\caption{Hyperboles}
+\end{figure}
+
+\begin{defn}
+	Soit $D \subset \R^2$ une partie du plan et soit $f: D \to \R$ une fonction définie sur $D$.
+	Pour chaque réel $K$, la \textit{courbe de niveau} $K$ de la fonction $f$ est l'ensemble $C_K$ des points $(x,y) \in D$ tels que \[
+		f(x,y) = K
+	.\]
+\end{defn}
+
+\begin{figure}[H]
+	\centering
+	\begin{tabular}{cc}
+		\begin{asy}
+			import graph;
+
+			size(4cm);
+			axes(EndArrow);
+			for (int i = 0; i < 5; ++i) {
+				draw(circle((0,0), sqrt(i+1)), red);
+			}
+		\end{asy}
+		&
+		\begin{asy}
+			import graph;
+
+			size(3cm);
+			axes(EndArrow);
+			for (int i = -2; i <= 2; ++i) {
+				pair F(real x) { return (i*cosh(x), i*sinh(x)); }
+				pair G(real x) { return (-i*cosh(x), i*sinh(x)); }
+				draw(graph(F, -2, 2), red);
+				draw(graph(G, -2, 2), red);
+			}
+		\end{asy}
+		\\
+		$\ds f(x,y) = x^2 + y^2$ & $\ds f(x,y) = x^2 - y^2$ 
+	\end{tabular}
+	\caption{Courbes de niveaux}
+\end{figure}
+
+Faire varier le niveau $K$ sur la figure ci-dessus revient à faire varier la hauteur $K$ du plan de la figure ci-dessous.
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		import solids;
+		import graph;
+		size(4cm);
+
+		settings.render = 0;
+		settings.prc = false;
+
+		path3 par = graph(
+			new real(real x) { return x; },
+			new real(real x) { return 0; },
+			new real(real x) { return x^2; },
+			0,3);
+		revolution r = revolution(par, axis=Z);
+
+		draw(r,1,longitudinalpen=nullpen,red);
+		draw(r.silhouette());
+
+		dot(O, red);
+
+		draw((3X+3Y+4.25Z)--(3X-3Y+4.25Z)--(-3X-3Y+4.25Z)--(3Y-3X+4.25Z)--cycle, red);
+	\end{asy}
+	\begin{asy}
+		import solids;
+		import graph;
+		size(4cm);
+
+		settings.render = 0;
+		settings.prc = false;
+		currentprojection = obliqueZ;
+
+		draw(graph(
+			new real(real x) { return x; },
+			new real(real x) { return -x^2 / 3; },
+			new real(real x) { return 3; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return x; },
+			new real(real x) { return -x^2 / 3; },
+			new real(real x) { return -3; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return x; },
+			new real(real x) { return -x^2 / 3 - 1; },
+			new real(real x) { return 0; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return 0; },
+			new real(real x) { return x^2 / 9 - 1; },
+			new real(real x) { return x; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return -3; },
+			new real(real x) { return x^2 / 9 - 4; },
+			new real(real x) { return x; },
+			-3, 3
+		));
+
+		draw(graph(
+			new real(real x) { return 3; },
+			new real(real x) { return x^2 / 9 - 4; },
+			new real(real x) { return x; },
+			-3, 3
+		));
+
+		draw((3X+3Z-0.3Y)--(3X-3Z-0.3Y)--(-3X-3Z-0.3Y)--(3Z-3X-0.3Y)--cycle, red);
+
+		/*
+		draw(graph(
+			new real(real x) { return sinh(x); },
+			new real(real x) { return -0.3; },
+			new real(real x) { return cosh(x); },
+			-0.3, 0.3
+		));
+		*/
+	\end{asy}
+	\caption{L'intersection d'un paraboloïde et d'un plan (à gauche), d'une selle de cheval et d'un plan (à droite)}
+\end{figure}
+
+\section{Dérivées partielles}
+

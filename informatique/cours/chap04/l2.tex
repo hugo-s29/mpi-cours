@@ -1,0 +1,234 @@
+%On peut maintenant considérer différents exemples de chaînes de caractères, par exemple, un programme \textsc{OCaml}.
+
+\begin{prop}
+	Tout langage régulier est décidable.
+\end{prop}
+
+\begin{prv}
+	Soit $L$\/ un langage régulier. Montrons que $L$\/ est décidable. On utilise alors la fonction~\textsc{OCaml} suivante de reconnaissance d'un mot dans un automate (que l'on a déjà codé en~\textsc{tp}).
+\end{prv}
+
+\begin{prop}[stabilité des langages décidables]
+	Un langage décidable est stable par
+	\begin{enumerate}
+		\item union ;
+		\item intersection ;
+		\item complémentaire.
+	\end{enumerate}
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item Soient $L_1$\/ et $L_2$\/ deux langages décidables. Montrons que $L_1 \cup L_2$\/ est décidable. Soit $\texttt{decide}_1 : \texttt{string} \to \texttt{bool}$\/ la fonction décidant le langage $L_1$.\footnotemark\@ Soit $\texttt{decide}_2 : \texttt{string} \to \texttt{bool}$\/ la fonction décidant du langage $L_2$. On construit alors la fonction
+			\begin{lstlisting}[language=caml,caption=Fonction \textsc{OCaml}reconnaissant l'union de deux langages décidables]
+let decide (w : string) : bool =
+	(decide%*$_1$*) w) || (decide%*$_2$*) w)
+			\end{lstlisting}
+	\end{enumerate}
+\end{prv}
+\footnotetext{\textit{i.e.} $\forall w \in \Sigma^*$, $w \in L_1 \iff \texttt{decide}_1(w) = \texttt{true}$}
+
+\begin{rmk}
+	$\O$\/ est décidable (par \verb|fun s -> false|) ; $\Sigma^*$\/ est décidable (par \verb|fun s -> true|).
+\end{rmk}
+
+\subsection{Sérialisation}
+
+\begin{defn}
+	Étant donné un type \textsc{OCaml} \texttt{t}, on appelle \textit{sérialisation calculable} de ce type \texttt{t}, la donnée d'une fonction \texttt{f} \textsc{OCaml} de type $\texttt{t}\to \texttt{string}$\/ qui soit telle que
+	\begin{itemize}
+		\item pour tout $e : \texttt{t}$, $(\texttt{f}\ e)$\/ est bien parenthésée ;
+		\item \texttt{f} est injective ;
+		\item la réciproque de \texttt{f} (définie sur $\mathrm{Im}(\mathtt{f})$) est définissable en \textsc{OCaml}.
+	\end{itemize}
+	\index{sérialisation}
+\end{defn}
+
+\begin{exm}
+	Le type \texttt{int} est sérialisable par la fonction \verb|string_of_int|.
+\end{exm}
+
+\begin{prop}
+	Soit $\texttt{t}_\texttt{a}$\/ et $\texttt{t}_\texttt{b}$\/ deux types \textsc{OCaml} sérialisables, alors le type $\texttt{t}_\texttt{a} * \texttt{t}_\texttt{b}$ est sérialisable.
+\end{prop}
+
+\begin{prv}
+	Soit $\varphi_\texttt{a}$\/ et $\varphi_\texttt{b}$\/ les fonctions de sérialisation des types $\texttt{t}_\texttt{a}$\/ et $\texttt{t}_\texttt{b}$. On définit alors la fonction
+		\begin{lstlisting}[language=caml,caption=Fonction \textsc{OCaml} sérialisant le produit cartésien de deux types sérialisables]
+let %*$\varphi$*) ((%*$a$*),%*$b$*)): %*$\texttt{t}_\texttt{a}$*) * %*$\texttt{t}_\texttt{b}$*)) =
+	"(" ^ (%*$\varphi_\texttt{a}$*) %*$a$*)) ^ "),(" ^ (%*$\varphi_\texttt{b}$*) %*$b$*)) ^ ")"
+	\end{lstlisting}
+	On remarque que
+	\begin{itemize}
+		\item $\varphi$\/ est à valeur dans les chaînes de caractères bien parenthésées ;
+		\item $\varphi$\/ est injective (par identification de parenthèses et injectivité de $\varphi_\texttt{a}$\/ et $\varphi_\texttt{b}$) ;
+		\item la réciproque de $\varphi$\/ est décidable en \textsc{OCaml} (preuve à faire en \textsc{OCaml}).
+	\end{itemize}
+\end{prv}
+
+\begin{rmk}
+	Une programme \textsc{OCaml} est trivialement sérialisable : c'est déjà une chaîne de caractères.
+\end{rmk}
+
+\begin{exm}
+	La sérialisation de la fonction
+	\begin{lstlisting}[language=caml,caption=Fonction factorielle en \textsc{OCaml}]
+let rec fact (n : int) : int = 
+	if n = 0 then 1
+	else n * (fact (n-1))
+	\end{lstlisting}
+	est la chaîne de caractère 
+	\begin{lstlisting}[language=caml]
+"let rec fact (n : int) : int = 
+	if n = 0 then 1
+	else n * (fact (n-1))"%*.*)
+	\end{lstlisting}
+\end{exm}
+
+\subsection{Machine universelle}
+
+Soit l'ensemble $\mathscr{O}$ des chaînes de caractères qui sont des sérialisations de programme \textsc{OCaml} valide.
+
+\begin{exm}
+	La sérialisation de la fonction \texttt{fact} trouvée précédemment est un élément de $\mathscr{O}$. Mais, $\text{``}\texttt{let}\text{''}\not\in \mathscr{O}$.
+\end{exm}
+
+\begin{defn}
+	Soit la fonction $\texttt{interprète} : \mathscr{O} \times \Sigma^* \to \Sigma^*$ définie par \[
+		\texttt{interprète}(\mathcal{M}, w) = \begin{cases}
+			w' \text{ tel que } w \xrightarrow[\mathcal{M}]{} w'\\
+			\text{non défini sinon}.
+		\end{cases}
+	\]
+	\index{fonction \texttt{interprète}}
+\end{defn}
+
+\begin{thm}
+	La fonction \texttt{interprète} est calculable. On appelle \textit{machine universelle} un programme \textsc{OCaml} la calculant.
+	\index{machine universelle}
+\end{thm}
+
+\begin{prv}
+	On considère \texttt{utop} ou \texttt{WinCaml}.
+\end{prv}
+
+De même, considérons le problème suivant \[
+	\begin{cases}
+		\text{\textbf{Entrée}} &: M \in \mathscr{O}, w \in \Sigma^*, n \in \N\\
+		\text{\textbf{Sortie}} &: M \text{ se termine-t-elle sur $w$\/ en moins de $n$\/ étapes élémentaires ?}
+	\end{cases}
+\] Ce problème est décidable.
+
+\subsection{Théorème de l'\textsc{Arrêt}}
+
+Dans cette sous-section, on considère le problème \[
+	\text{\textsc{Arrêt}} : \begin{cases}
+		\text{\textbf{Entrée}}&: M \in \mathscr{O}, w \in \Sigma^*\\
+		\text{\textbf{Sortie}} &: M \text{ s'arrête-t-elle sur } w.\text{\footnotemark}
+	\end{cases}
+\] \footnotetext{\textit{i.e.} $\exists ? w' \in \Sigma^*,\:w \xrightarrow[M]{} w'$}
+
+\begin{thm}
+	Le problème \textsc{Arrêt} est indécidable.
+\end{thm}
+
+\begin{prv}
+	Par l'absurde : supposons \textsc{Arrêt} décidable.
+	Soit $\texttt{arret} : \texttt{string} \to \texttt{bool}$\/ prenant en argument une chaîne de caractères qui est la sérialisation d'un couple $M$\/ code d'une machine ($M \subseteq \Sigma^*$), et $w \in \Sigma^*$, et retournant \texttt{true} si et seulement si $M$\/ s'arrête sur l'entrée $w$. Si l'entrée n'est pas une sérialisation convenable, on retourne \texttt{false}. On crée le programme suivant
+	\begin{lstlisting}[language=caml,caption=Programme paradoxe prouvant que le problème \textsc{Arrêt} est indécidable]
+let paradoxe (w : string) : bool =
+	if arret (serialise_couple w w) then
+		(while true do () done; true)
+	else false
+	\end{lstlisting}
+	où \texttt{serialise\_couple} est une fonction sérialisant un couple avec l'algorithme trouvé précédemment. Soit $S_\texttt{paradoxe}$\/ la sérialisation de la fonction \texttt{paradoxe}.
+
+	Quid de $(\texttt{paradoxe}\ S_{\texttt{paradoxe}})$ : soit $c = (\texttt{serialise\_couple}\ S_{\texttt{paradoxe}}\ S_{\texttt{paradoxe}})$. La chaîne $c$\/ est donc la sérialisation d'un couple dont la première composante est le code de la fonction \texttt{paradoxe}. De plus, \texttt{arret} se termine sur toute entrée.
+	\begin{itemize}
+		\item Si $(\texttt{arret}\ c) = \texttt{false}$, alors on va dans la branche \texttt{else} et l'exécution de \texttt{paradoxe} sur $S_{\texttt{paradoxe}}$ termine. Mais, comme $(\texttt{arret}\ c) = \texttt{false}$, \texttt{paradoxe} ne se termine pas sur $S_{\texttt{paradoxe}}$.
+		\item Si $(\texttt{arret}\ c) = \texttt{true}$, alors on va dans la branche \texttt{then}, et donc $(\texttt{paradoxe}\ S_\texttt{paradoxe})$\/ ne se termine pas. Mais, comme $(\texttt{arret}\ c) = \texttt{true}$, alors $(\texttt{paradoxe}\ S_\texttt{paradoxe})$\/ se termine.
+	\end{itemize}
+	On en conclut que le problème \textsc{Arrêt} est indécidable.
+\end{prv}
+
+\begin{crlr}
+	Il existe des problèmes indécidables.
+\end{crlr}
+
+\subsection{Réduction}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+		import roundedpath;
+		label("$\Sigma^* \owns w$", (-3, 0), align=W);
+		draw(roundedpath(box((-2, -1), (3.5, 1)), 0.25));
+		fill(roundedpath(box((-1.5,-0.25),(-0.5,0.25)), 0.1), magenta);
+		draw(roundedpath(box((0.5,-0.25),(1.5,0.25)), 0.1), deepcyan);
+		label("$f$", (-1, 0), white);
+		label("\LARGE$Q$", (-2, 1), align=2*SE);
+		label("$R$", (0.5, 0.25), deepcyan, align=2*SE);
+		draw((-3, 0)--(-1.5, 0), Arrow(TeXHead));
+		draw((-0.5, 0)--(0.5, 0), Arrow(TeXHead));
+		draw((1.5, 0)--(4.5, 0), Arrow(TeXHead));
+		label("$f(w)$", (0, 0), magenta, align=N);
+		label("$\quad f(w)\in R^+\iff w\in Q^+$", (1.55, 0), align=NE);
+	\end{asy}
+	\caption{Structure d'un sous-problème}
+\end{figure}
+
+\begin{defn}
+	Soit $Q$\/ et $R$\/ deux problèmes de décision. On dit que $Q$\/ \textit{se réduit au problème} $R$ s'il existe $f : \mathcal{E}_Q \to \mathcal{E}_R$\/ totale et calculable, telle que \[
+		w \in Q^+ \iff f(w) \in R^+
+	.\] On note alors $Q \preceq R$.
+	\index{réduction}
+\end{defn}
+
+\begin{prop}
+	Si $Q \preceq R$, et que $R$\/ est décidable, alors $Q$\/ est décidable.
+\end{prop}
+
+\begin{prv}
+	Soit $\texttt{decide}_R : \texttt{string} \to \texttt{bool}$\/ décidant $R$ \textit{i.e.} $(\texttt{decide}_R\ w) = \texttt{true} \iff w \in R^+$. Soit~$f : \mathcal{E}_Q \to \mathcal{E}_R$\/ totale calculable, telle que $w \in Q^+ \iff f(w) \in R^+$. On doit coder la fonction suivante.
+	\begin{lstlisting}[language=caml,caption=Fonction décidant un sous-problème]
+let %*$\texttt{decide}_Q$*) (w: string) : bool =
+	(%*$\texttt{decide}_R$*) (%*$f$*) w))
+	\end{lstlisting}
+	La fonction $\texttt{decide}_Q$\/ décide bien le problème $Q$. En effet,
+	\begin{align*}
+		(\texttt{decide}_Q\ \texttt{w}) = \texttt{true} \iff& (\texttt{decide}_R\ (f\ \texttt{w}))\\
+		\iff& (f\ \texttt{w}) \in R^+\\
+		\iff& w \in Q^+.
+	\end{align*}
+\end{prv}
+
+\begin{crlr}
+	Si $Q \preceq R$, et $Q$\/ non décidable, alors $R$\/ non décidable.
+\end{crlr}
+
+\begin{exm}
+	On considère le problème \[
+		\text{\textsc{NonVide}} : \begin{cases}
+			\text{\textbf{Entrée}} &: M \in \mathscr{O}\\
+			\text{\textbf{Sortie}} &: \mathcal{L}(M) \neq \O\ ?\:.
+		\end{cases}
+	\] Le problème \textsc{NonVide} est indécidable.
+\end{exm}
+
+\begin{exm}
+	Les problèmes \[
+		\begin{cases}
+			\text{\textbf{Entrée}} &: M_1 \text{ et } M_2 \text{ deux machines}\\
+			\text{\textbf{Sortie}} &: \mathcal{L}(M_1) \cup \mathcal{L}(M_2) = \Sigma^*
+		\end{cases}
+	\] et \[
+		\begin{cases}
+			\text{\textbf{Entrée}} &: M_1 \text{ et } M_2 \text{ deux machines}\\
+			\text{\textbf{Sortie}} &: \mathcal{L}(M_1) \cap \mathcal{L}(M_2) = \O
+		\end{cases}
+	\] sont indécidables.
+\end{exm}
+
+
+

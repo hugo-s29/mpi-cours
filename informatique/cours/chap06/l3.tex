@@ -1,0 +1,241 @@
+À ce stade, nous avons définis le système de preuves que l'on appellera \textit{déduction naturelle intuitionniste}.
+Dans le chapitre 0, on a donné une notion de vérité. On a maintenant donné une notion de preuve.
+On souhaite maintenant montrer le séquent $\O \vdash p \lor \lnot p$, nommé \textit{tiers exclu} : la variable $p$\/ est, soit vrai, soit fausse. Avec le système de preuve actuel, on ne peut pas le montrer.
+Mais, on a bien~$\O \models p \lor \lnot p$, car pour tout environment propositionnel $\rho$, $\llbracket p \lor\lnot p \rrbracket^\rho = \mathbf{V}$. D'où la remarque suivante.
+
+\begin{rmk}
+	Ce système de preuve n'est pas complet vis à vis de la sémantique de la logique propositionnelle : on ne peut pas prouver le séquent $\O \vdash p \lor \lnot p$\/ malgré son caractère tautologique.
+\end{rmk}
+
+\begin{exm}
+	De plus, montrons le résultat : il existe deux irrationnels $x$\/ et $y$\/ tels que $x^y$\/ soit rationnel.
+	On considère le réel \smash{$\sqrt{2}^{\sqrt{2}}$}. S'il est rationnel, la preuve est terminée.
+	S'il ne l'est pas, notons \smash{$x = \sqrt{2}^{\sqrt{2}}$}, et on remarque que \smash{$x^{\sqrt{2}} = 2$}.
+	Dans cette preuve, on utilise le tiers exclu : $x$\/ est soit rationnel, soit irrationnel.
+\end{exm}
+
+Ainsi, la \textit{déduction naturelle classique} est le système de preuve obtenue en ajoutant la règle suivante : \[
+	\begin{prooftree}
+		\infer 0[TE]{\Gamma \vdash G \lor \lnot G} % NOCHECK
+	\end{prooftree}
+.\]
+La déduction naturelle classique est un système de preuve complet.
+
+\begin{exm}[preuve en déduction naturelle classique]
+	Montrons le séquent $\O \vdash \lnot \lnot p \to p$. Une preuve de ce séquent n'était pas possible en déduction naturelle intuitionniste, mais elle est possible en déduction naturelle classique à l'aide de la règle du tiers exclu TE.
+	\[
+		\begin{prooftree}
+			\infer 0[TE]{\lnot \lnot p \vdash p \lor \lnot p} % NOCHECK
+			\infer 0[Ax]{\lnot \lnot p,p \vdash p}
+			\infer 0[Ax]{\lnot \lnot p,\lnot p \vdash \lnot p}
+			\infer 0[Ax]{\lnot \lnot p,\lnot p \vdash p}
+			\infer 2[$\lnot$e]{\lnot \lnot p,\lnot p \vdash \bot}
+			\infer 1[$\bot$e]{\lnot \lnot p,\lnot p \vdash p}
+			\infer 3[$\lor$e]{\lnot \lnot p \vdash p}
+			\infer 1[$\to$i]{\O\vdash \lnot \lnot p \to p}
+		\end{prooftree}
+	\]
+\end{exm}
+
+\begin{exm}[preuve en dédution naturelle intuitionniste]
+	On montre maintenant l'implication inverse. S'il existe une preuve en déduction naturelle intuitionniste, elle reste valide dans le système de preuve de la déduction naturelle classique.
+	\[
+		\begin{prooftree}
+			\infer 0[Ax]{p, \lnot p \vdash p}
+			\infer 0[Ax]{p, \lnot p \vdash \lnot p}
+			\infer 2[$\lnot$e]{p,\lnot p \vdash \bot} % p 123
+			\infer 1[$\lnot$i]{p \vdash \lnot \lnot p} % B
+			\infer 1[$\to$i]{\vdash p \to (\lnot \lnot  p)} % A
+		\end{prooftree}
+	\]
+\end{exm}
+
+\begin{exm}
+	On prouve le séquent introductif $\O \vdash \big((p \to q) \land (q \to r)\big) \to (p \to r)$, à l'aide le la déduction naturelle intuitionniste.
+	On nomme $\Gamma$\/ l'ensemble $p,(p\to q) \land (q \to r)$.
+	\[
+		\begin{prooftree}
+			\infer 0[Ax]{\Gamma \vdash (p \to q) \land (q \to r)}
+			\infer 1[$\land$e,d]{\Gamma \vdash q \to r} % A U V
+			\infer 0[Ax]{\Gamma \vdash (p \to q) \land (q \to r)}
+			\infer 1[$\land$e,g]{\Gamma \vdash p \to q} % A U V
+			\infer 0[Ax]{\Gamma \vdash p}
+			\infer 2[$\to$e]{\Gamma \vdash q} % p
+			\infer 2[$\to$e]{p,(p\to q) \land (q \to r) \vdash r} % q 123
+			\infer 1[$\to$i]{(p\to q) \land(q \to r) \vdash p \to r} % B
+			\infer 1[$\to$i]{\O \vdash \big((p \to q) \land (q \to r)\big) \to (p \to r)} % A
+		\end{prooftree}
+	.\] 
+\end{exm}
+
+\begin{exm}
+	Toujours en déduction naturelle intuitionniste, on prouve le séquent \[
+		\O \vdash (p \to q) \to (\lnot q \to \lnot p)
+	.\]
+	\[
+		\begin{prooftree}
+			\infer 0[Ax]{p,\lnot q,p\to q \vdash \lnot q}
+			\infer 0[Ax]{p,\lnot q,p\to q \vdash p \to q}
+			\infer 0[Ax]{p,\lnot q,p\to q \vdash p}
+			\infer 2[$\to$e]{p,\lnot q,p\to q \vdash q} % p
+			\infer 2[$\lnot$e]{p,\lnot q,p\to q \vdash \bot} % q
+			\infer 1[$\lnot$i]{\lnot q, p \to q \vdash \lnot p}
+			\infer 1[$\to$i]{p \to q \vdash \lnot q \to \lnot p}
+			\infer 1[$\to$i]{\vdash (p \to q) \to (\lnot q \to \lnot p)}
+		\end{prooftree}
+	.\]
+\end{exm}
+
+
+\begin{thm}
+	La déduction naturelle classique (respectivement intuitionniste) est correcte.
+\end{thm}
+
+\begin{prv}
+	Par induction (longue) sur l'arbre de preuves (\textit{c.f.}\ plus haut).
+\end{prv}
+
+\begin{crlr}
+	Pour prouver $\Gamma \models G$, il suffit de construire un arbre de preuve de $\Gamma \vdash G$.
+\end{crlr}
+
+\begin{rmk}
+	On aurait pu définir la déduction naturelle classique en ajoutant une des deux règles suivantes plutôt que le tiers exclus :
+	\[
+		\begin{prooftree}
+			\hypo{\Gamma \vdash \lnot \lnot G}
+			\infer 1[$\lnot\lnot$e]{\Gamma \vdash G} % NOCHECK
+		\end{prooftree}
+		\quad\quad\quad
+		\begin{prooftree}
+			\hypo{\Gamma, \lnot G \vdash \bot}
+			\infer 1[Abs\footnotemark]{\Gamma \vdash G} % NOCHECK
+		\end{prooftree}
+	.\]
+\end{rmk}
+\footnotetext{Abs correspond à absurde}
+
+\begin{exo}
+	Refaire les preuves du séquent $\O \vdash \lnot \lnot p \to p$\/ avec les règles $\lnot \lnot$e, et Abs.
+\end{exo}
+
+\section{La logique du premier ordre}
+
+On veut rajouter à la déduction naturelle des quantificateurs, tels que $\forall$\/ ou $\exists$. On considère la formule \[
+	G = \forall x,\:\Big(\big((x > 0) \land (\exists y,\: x = y + 1)\big) \lor (x = 0)\Big)
+.\] Cette formule peut être représentée sous forme d'arbre syntaxique, comme celui ci-dessous.
+
+\begin{figure}[H]
+	\centering
+	\Tree[.$\forall x$ [.$\lor$ [.$=$ $x$ $\mathbf{0}$ ] [.$\land$ [.$>$ $x$ $\mathbf{0}$ ] [.$\exists y$ [.$=$ $x$ [.$+$ $y$ $\mathbf{1}$ ] ] ] ] ] ]
+	\caption{Arbre syntaxique de la formule $G = \forall x,\:\Big(\big((x > 0) \land (\exists y,\: x = y + 1)\big) \lor (x = 0)\Big)$}
+\end{figure}
+
+\subsection{Syntaxe de la logique du premier ordre}
+
+\begin{defn}
+	On appelle \textit{signature du premier ordre} la donnée de deux ensembles $\mathcal{S}$\/ et~$\mathcal{P}$.\footnotemark\ Ces symboles viennent avec une notion d'arité \[
+		\mathfrak{a} : \mathcal{S} \cup \mathcal{P} \longrightarrow \N
+	.\] On appelle l'ensemble des \textit{constantes} la sous-partie des éléments $c$\/ de $\mathcal{S}$\/ telle que $\mathfrak{a}(c) = 0$. Les autres symboles, non constantes, sont appelés \textit{fonctions}.
+	On appelle $\mathcal{P}$\/ l'ensemble des prédicats.
+	On a toujours $\mathcal{S} \cap \mathcal{P} = \O$.
+	\index{logique!signature du premier ordre}
+	\index{logique!constante}
+	\index{logique!fonction}
+\end{defn}
+\footnotetext{$\mathcal{S}$\/ est l'ensemble des symboles utilisés pour construire des termes ; $\mathcal{P}$\/ est l'ensemble des symboles utilisés pour passer du monde des termes pour passer au monde des formules.}
+
+\begin{defn}
+	Étant donné un ensemble $\mathcal{S}$\/ de symboles de fonctions et de constantes, et un ensemble $\mathcal{V}$ de variables, on définit inductivement l'ensemble des \textit{termes} sur $\mathcal{S}$\/ et $\mathcal{V}$, typographié $\mathcal{T}(\mathcal{S}, \mathcal{V})$, par
+	\begin{itemize}
+		\item $\mathcal{V} \subseteq \mathcal{T}(\mathcal{S}, \mathcal{V})$\/ ;
+		\item si $f \in \mathcal{S}$, et $t_1, t_2, \ldots, t_{\mathfrak{a}(f)} \in \big(\mathcal{T}(\mathcal{S}, \mathcal{V})\big)^{\mathfrak{a}(f)}$, alors $f\big(t_1, t_2, \ldots, f_{\mathfrak{a}(f)}\big) \in \mathcal{T}(\mathcal{S}, \mathcal{V})$.
+	\end{itemize}
+\end{defn}
+
+\begin{exm}
+	Si $\mathcal{S} = \{\mathbf{+}, \mathbf{-},\mathbf{0}\}$, avec $\mathfrak{a}(\mathbf{+}) = 2$, $\mathfrak{a}(\mathbf{-}) = 1$\footnotemark\ et $\mathfrak{a}(\mathbf{0}) = 0$ ; si $\mathcal{V} \supseteq \{x,y,z\}$, alors
+	\begin{itemize}
+		\item $\mathbf{+}(x,y)$\/
+		\item $\mathbf{-}(x)$\/ 
+		\item $\mathbf{0}$
+		\item $\mathbf{+}\Big(x, \mathbf{-}\big(\mathbf{+}(z, \mathbf{0})\big)\Big)$\/
+	\end{itemize}
+	sont des termes.
+\end{exm}
+\footnotetext{il s'agit du `$-$' dans l'expression $-x$.}
+
+\begin{defn}[Logique du premier ordre]
+	Étant donné une signature du premier ordre $(\mathcal{S}, \mathcal{P})$, et un ensemble $\mathcal{V}$\/ de variables, on définit l'ensemble des formules des \textit{formules de la logique du premier ordre} typographié $\mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})$, par induction 
+	\begin{itemize}
+		\item si $P \in \mathcal{P}$, et $t_1, \ldots, t_{\mathfrak{a}(P)} \in \big(\mathcal{T}(\mathcal{S}, \mathcal{V})\big)^{\mathfrak{a}(P)}$, alors $P\big(t_1, \ldots, t_{\mathfrak{a}(P)}\big) \in  \mathcal{F}(\mathcal{S}, \mathcal{P},\mathcal{V})$ ;
+		\item $\bot,\top \in \mathcal{F}(\mathcal{S},\mathcal{P},\mathcal{V})$\/ ;
+		\item si $(G, H) \in \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})^2$, alors
+			\begin{multicols}{3}
+				$G \land H \in \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})$,\\
+				$G \lor H \in \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})$,\\
+				$G \to H \in \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})$,\\
+				$G \leftrightarrow H \in \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})$,\\
+				$\lnot G \in \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})$ ;
+			\end{multicols}
+		\item Si $x \in \mathcal{V}$\/ et $G \in \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})$, alors  \[
+				(\forall x,\: G) \in \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})
+				\quad\quad\quad
+				(\exists x,\: G) \in \mathcal{F}(\mathcal{S}, \mathcal{P}, \mathcal{V})
+			.\]
+	\end{itemize}
+	\index{logique!premier ordre!formules}
+\end{defn}
+
+On note un symbole $\mathbf{+}$\/ avec son arité $\mathfrak{a}(\mathbf{+}) = 2$\/ comme $\mathbf{+}(2)$.
+
+\begin{exm}
+	En choisissant $\mathcal{P} = \{{\mathbf{>}}(2), {\mathbf{=}}(2)\}$, $\mathcal{S} = \{{\mathbf{+}}(2), \mathbf{0}(0), \mathbf{1}(0)\}$\/ et $\mathcal{V} \supseteq \{x,y\}$, on peut alors construire la formule de l'exemple précédent : \[
+		G = \forall x,\:\Big(\big((x > 0) \land (\exists y,\: x = y + 1)\big) \lor (x = 0)\Big)
+	.\] 
+\end{exm}
+
+Codons le en \textsc{OCaml}, comme montré ci-dessous.
+
+\begin{lstlisting}[language=caml,caption=Définition des formules de premier ordre en \textsc{OCaml}]
+type symbole_arite = string * int
+
+type signature = {
+	symbole_terme: symbole_arite list;
+	symbole_predicat: symbole_arite list
+}
+
+type var = string
+
+type terme =
+	| V of var
+	| T of symbole_arite * (terme list)
+
+(* Quelques exemples *)
+
+let ex0 = T(("0", 0), []);
+let ex1 = T(("1", 0), []);
+let ex2 =
+	T(("+", 2), [
+		V("x"),
+		T(("-", 1), [
+			T(("+", 2), [
+				V("z"),
+				T(("0", 0), [])
+			])
+		])
+	])
+
+(* Definissons la logique du 1er ordre *)
+
+type po_logique =
+	| Pred    of symbole_arite * (terme list)
+	| Top | Bottom
+	| And     of po_logique * po_logique
+	| Or      of po_logique * po_logique
+	| Imp     of po_logique * po_logique
+	| Equiv   of po_logique * po_logique
+	| Not     of po_logique
+	| Forall  of var * po_logique
+	| Exists  of var * po_logique
+\end{lstlisting}

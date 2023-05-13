@@ -96,6 +96,7 @@ Pour cela, on procède par induction sur $\big((\N^*)^2, {\preceq_\times}\big)$ 
 	Soit $(A, \preceq_A)$\/ et $(B, \preceq_B)$\/ deux ensembles ordonnés, on définit alors sur $A\times B$\/ l'ordre \[
 		(a,b) \preceq_{\ell} (a',b') \iffdef (a \prec_A a') \mathrel{\text{ou}} (a = a' \mathrel{\text{et}} b \preceq_B b')
 	.\]
+	\index{relation d'ordre!lexicographique ($\preceq_\ell$)}
 \end{defn}
 
 \begin{exm}
@@ -223,6 +224,7 @@ L'ordre lexicographique est, comme son nom l'indique, l'ordre utilisé dans le d
 				\mathrel{\text{et}} (i = n + 1 \mathrel{\text{ou}} u_i \prec_A v_i).
 			\end{array}
 	\]
+	\index{relation d'ordre!lexicographique ($\preceq_\ell$)}
 \end{defn}
 
 \begin{prop}
@@ -301,7 +303,7 @@ Les preuves de correction et de terminaison sont basées sur la supposition qu'u
 \section{Induction nommée}
 
 \begin{defn}[Règle de Construction nommée]
-	On appelle {\it Règle de Construction nommée}\/ la donnée de
+	On appelle {\it règle de construction nommée}\/ la donnée de
 	\begin{itemize}
 		\item un symbole $S$,
 		\item un entier $r \in \N$,
@@ -310,6 +312,7 @@ Les preuves de correction et de terminaison sont basées sur la supposition qu'u
 	On écrira alors cette règle \[
 		``\:S \Big|_C^r\,\/"\qquad \text{ou encore} \qquad ``S(y, \underbrace{\square,\square,\ldots,\square}_{r}) \text{ pour } y \in C."
 	\]
+	\index{règle!de construction nommée}
 \end{defn}
 
 \begin{rmk}
@@ -331,6 +334,8 @@ Les preuves de correction et de terminaison sont basées sur la supposition qu'u
 		\item On appelle {\it règle de base}\/ une règle de la forme $S\big|_C^0$.
 		\item On appelle {\it règle d'induction}\/ une règle de la forme $S\big|_C^n$.
 	\end{itemize}
+	\index{règle!de base}
+	\index{règle!d'induction}
 \end{defn}
 
 \begin{defn}
@@ -341,6 +346,7 @@ Les preuves de correction et de terminaison sont basées sur la supposition qu'u
 		X_{n+1} = X_n \cup \Big\{(S, a, t_1, t_2, \ldots, t_r)\:\Big|\: S\big|_C^r \in \underbrace{R}_C,\,a \in C,\,t_1 \in X_n,\,t_2 \in X_n,\ldots,t_r \in X_n \Big\}
 	.\]
 	On appelle alors $\bigcup_{n \in \N} X_n$\/ l'ensemble défini par induction nommée à partir des règles de $R$.
+	\index{ensemble défini par induction nommée}
 \end{defn}
 
 \begin{rmk}[Notation]
@@ -367,6 +373,7 @@ Les preuves de correction et de terminaison sont basées sur la supposition qu'u
 	On définit alors \[
 		x \preceq y \iffdef \exists p \in \N,\,\exists (a_1, \ldots, a_p) \in A^p,\,x \mathrel{\diamond} a_1 \mathrel{\text{et}} a_1 \mathrel{\diamond} a_2 \mathrel{\text{et}} \ldots \mathrel{\text{et}} a_p \mathrel{\diamond} y \mathrel{\text{ou}} x = y
 	.\]
+	\index{relation d'ordre!(ensemble défini par induction nommée)}
 \end{defn}
 
 \begin{defn}[hauteur]
@@ -374,6 +381,7 @@ Les preuves de correction et de terminaison sont basées sur la supposition qu'u
 		h: A &\longrightarrow \N \\
 		x &\longmapsto \min \{n \in \N \mid x \in X_n\}.
 	\end{align*}
+	\index{hauteur (ensemble défini par induction nommée)}
 \end{defn}
 
 \begin{rmk}

@@ -1,0 +1,42 @@
+\section{Distributivités entre $\land$\/ et $\lor$}
+
+\begin{enumerate}
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p \land (q \lor r) \vdash p \land (q \lor r)}
+				\infer 1[$\land$e,d]{p \land (q \lor r) \vdash  q \lor r} % H1 U V
+				\infer 0[Ax]{q,p \land (q \lor r) \vdash p \land (q \lor r)}
+				\infer 1[$\land$e,g]{p,p \land (q \lor r) \vdash p} % H1 U V
+				\infer 0[Ax]{p, q \land (q \lor r) \vdash q}
+				\infer 2[$\land$i]{q, p \land(q \lor r) \vdash p \lor q}
+				\infer 1[$\lor$i,g]{q,p \land(q \lor r) \vdash (q \lor r) \land (p \land r)}
+				\infer 0[Ax]{r,p \land (q \lor r) \vdash p \land (q \lor r)}
+				\infer 1[$\land$e,g]{r,p \land (q \lor r) \vdash p} % H1 U V
+				\infer 0[Ax]{r, q \land (q \lor r) \vdash r}
+				\infer 2[$\land$i]{r, p \land(q \lor r) \vdash p \land r}
+				\infer 1[$\lor$i,d]{r, p \land (q \lor r) \vdash (p \land q) \lor (p \land r)}
+				\infer 3[$\lor$e]{p \land (q \lor r) \vdash (p \land q) \lor (p \land r)} % q\/r A B
+			\end{prooftree}
+		.\] 
+	\item On nomme $\varphi = (p \land q) \lor (p \land r)$.
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\varphi \vdash (p \land q) \lor (p \land r)}
+				\infer 0[Ax]{\varphi,p\land q \vdash p \land q}
+				\infer 1[$\land$e,g]{\varphi, p \land q \vdash p} % A M N
+				\infer 0[Ax]{\varphi,p \land r \vdash p \land r}
+				\infer 1[$\land$e,g]{\varphi, p \land r \vdash p} % B M N
+				\infer 3[$\lor$e]{\varphi \vdash p} % (p/\q)\/(p/\r) A B
+				\infer 0[Ax]{\varphi \vdash (p \land q) \lor (p \land r)}
+				\infer 0[Ax]{\varphi, p \land q \vdash p \land q}
+				\infer 1[$\land$e,d]{\varphi, p \land q \vdash q} % A U V
+				\infer 1[$\lor$i,g]{\varphi, p \land q \vdash q \lor r}
+				\infer 0[Ax]{\varphi, p \land r \vdash p \land r}
+				\infer 1[$\land$e,d]{\varphi, p \land r \vdash r} % B U V
+				\infer 1[$\lor$i,d]{\varphi, p \land r \vdash q \lor r}
+				\infer 3[$\lor$e]{\varphi \vdash q \lor r} % (p/\q)\/(p/\r) A B
+				\infer 2[$\land$i]{(p \land q) \lor (p \land r) \vdash p \land (q \lor r)}
+			\end{prooftree}
+		.\] 
+\end{enumerate}

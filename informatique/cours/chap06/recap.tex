@@ -1,0 +1,45 @@
+\begin{table}[H]
+	\centering
+	\begin{tabular}{Sc|Sc|Sc}
+		\hline
+		\textsc{Symbole} & \textsc{Règle d'introduction} & \textsc{Règle d'élimination}\\ \hline \hline 
+		$\top$\/&$\ptree{\infer0[$\top$i]{\Gamma \vdash \top}}$&\\ \hline
+		$\bot$\/ &&$\ptree{\hypo{\Gamma\vdash\bot}\infer1[$\bot$e]{\Gamma \vdash G}}$\\ \hline
+		$\lnot$\/ &$\ptree{\hypo{\Gamma,G\vdash \bot}\infer1[$\lnot$i]{\Gamma\vdash\lnot G}}$&$\ptree{\hypo{\Gamma\vdash G}\hypo{\Gamma\vdash \lnot G}\infer2[$\lnot$e]{\Gamma\vdash \bot}}$ \\ \hline
+		$\to$ & $\ptree{\hypo{\Gamma,G \vdash H}\infer1[$\to$i]{\Gamma \vdash G \to H}}$ & $\ptree{\hypo{\Gamma \vdash H \to G}\hypo{\Gamma \vdash H}\infer2[$\to$e]{\Gamma \vdash G}}$\\ \hline
+		$\land$\/ & $\ptree{\hypo{\Gamma \vdash G}\hypo{\Gamma \vdash H}\infer2[$\land$i]{\Gamma \vdash G \land H}}$\/ & $\ptree{\hypo{\Gamma \vdash G \land H}\infer1[$\land$e,g]{\Gamma \vdash G}}$ \quad\quad $\ptree{\hypo{\Gamma \vdash G \land H}\infer1[$\land$e,d]{\Gamma \vdash H}}$ \\ \hline
+		$\lor$&$\ptree{\hypo{\Gamma\vdash G}\infer1[$\lor$i,g]{\Gamma\vdash G \lor H}}$\quad\quad$\ptree{\hypo{\Gamma\vdash H}\infer1[$\lor$i,d]{\Gamma\vdash G \lor H}}$&$\ptree{\hypo{\Gamma \vdash A \lor B}\hypo{\Gamma,A\vdash G}\hypo{\Gamma,B\vdash G}\infer3[$\lor$e]{\Gamma \vdash G}}$\\ \hline
+		\multicolumn{3}{c}{}\\
+		\multicolumn{3}{c}{$\ptree{\infer 0[Ax]{\Gamma, \varphi\vdash \varphi}}$}\\
+		\multicolumn{3}{c}{}\\ \hline
+	\end{tabular}
+	\caption{Règles d'introduction et d'élimination}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{c|c|c}
+		\hline
+		$\ptree{\infer 0[TE]{\Gamma \vdash G \lor \lnot G}}$ & 
+		$\ptree{\hypo{\Gamma \vdash \lnot \lnot G} \infer 1[$\lnot\lnot$e]{\Gamma \vdash G}}$&
+		$\ptree{ \hypo{\Gamma, \lnot G \vdash \bot} \infer 1[Abs]{\Gamma \vdash G}}$
+		\\ \hline
+	\end{tabular}
+	\caption{Déduction naturelle classique}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{Sc|Sc|Sc}
+		\hline
+		\textsc{Symbole} & \textsc{Règle d'introduction} & \textsc{Règle d'élimination}\\ \hline \hline 
+		\multirow{2}{*}{$\forall$}&$\ptree{\hypo{\Gamma \vdash G}\infer 1[$\forall$i]{\Gamma \vdash \forall x,\: G}}$
+		&$\ptree{\hypo{\Gamma \vdash \forall x,\: G}\infer 1[$\forall$e]{\Gamma \vdash G\big[(x \mapsto t)\big]}}$\\
+		&$x \not\in \textsf{FV}(\Gamma)$&$\mathrm{vars}(t) \cap \textsf{BV}(G) = \O$\\ \hline
+		\multirow{2}{*}{$\exists$}&\multirow{2}{*}{$\ptree{\hypo{\Gamma \vdash G\big[(x \mapsto t)\big]}\infer 1[$\exists$i]{\Gamma \vdash \exists x,\: G}}$}
+		&$\ptree{\hypo{\Gamma \vdash \exists x,\: H}\hypo{\Gamma, H \vdash G}\infer 2[$\exists$e]{\Gamma \vdash G}}$\\
+		&& $x \not\in \textsf{FV}(\Gamma) \cup \textsf{FV}(G)$\/
+		\\ \hline
+	\end{tabular}
+	\caption{Extension au premier ordre de la déduction naturelle}
+\end{table}

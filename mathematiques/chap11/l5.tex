@@ -1,0 +1,87 @@
+Cette série génératrice permet de calculer l'espérance et la variance de $X$. Si $R > 1$, alors $1 \in {]-R,R[}$, d'où \[
+  \mathrm{G}_X'(1) = \sum_{n=1}^\infty n a_n \quad\quad \text{ et }\quad\quad
+  \mathrm{G}_X''(1) = \sum_{n=2}^\infty n(n-1)\,a_n
+,\] car on peut dériver terme à terme sans changer de convergence.
+On en déduit que $X^2$\/ est d'espérance finie et que \[
+  \mathrm{E}(X) = \mathrm{G}_X'(1) \quad\quad \text{ et }\quad\quad
+  \mathrm{V}(X) = G''_X(1) + G'_X(1) - \big[G'_X(1)\big]^2
+.\]
+Également, même si inintéressant du point de vue théorique, ceci peut être utile pour vérifier les résultats en exercice \[
+  \mathrm{G}_X(1) = \sum_{n=0}^\infty a_n = \sum_{n=0}^\infty P(X = n) = 1
+.\]
+
+\begin{prop}
+  Soit $X$\/ une \textit{vard} telle que $X(\Omega) \subset \N$, et soit $\mathrm{G}_X$\/ sa fonction génératrice.
+  \begin{enumerate}
+    \item $X$\/ est d'espérance finie si, et seulement si la fonction $\mathrm{G}_X$\/ est dérivable en 1. Dans ce cas, \[
+        \mathrm{E}(X) = \mathrm{G}'_X(1)
+      .\]
+    \item $X^2$\/ est d'espérance finie si, et seulement si la fonction $\mathrm{G}_X$\/ est deux fois dérivable en 1. Dans ce cas, \[
+        \mathrm{V}(X) = \mathrm{G}''_X(1) + \mathrm{G}'_X(1) - \big[\mathrm{G}'_X(1)\big]^2
+      .\] 
+  \end{enumerate}
+\end{prop}
+
+\begin{prv}
+  On remarque que $\mathrm{G}''_X(1) = \sum_{n=2}^\infty n(n-1)\,a_n = \mathrm{E}\big(X(X-1)\big) = \mathrm{E}(X^2) - \mathrm{E}(X)$.
+  Ainsi,
+  \begin{align*}
+    \mathrm{V}(X) &= \mathrm{E}\Big[\big(X - \mathrm{E}(X)\big)^2\Big] \\
+    &= \mathrm{E}(X^2) - \big(\mathrm{E}(X)\big)^2 \\
+    &= \mathrm{E}(X^2) - \mathrm{E}(X) + \mathrm{E}(X) - \big(\mathrm{E}(X)\big)^2 \\
+    &= \mathrm{G}''_X(1) + \mathrm{G}'_X(1) - \big(\mathrm{G}'_X(1)\big)^2 \\
+  \end{align*}
+  Mais, la fonction $\mathrm{G}_X$\/ est elle,
+  \begin{itemize}
+    \item dérivable en 1 ? Oui, si la variable $X$\/ est d'espérance finie.
+    \item dérivable deux fois en 1 ? Oui, si la variable $X^2$\/ est d'espérance finie.
+  \end{itemize}
+\end{prv}
+
+\begin{exo}
+  \marginpar{Le programme dit que l'on doit être capable de le retrouver rapidement.}
+  \textsl{Soient $p \in {]0,1[}$, et $\lambda > 0$. On pose $q = 1 - p$. Soit $X$\/ une variable aléatoire. Montrer que 
+  \begin{enumerate}
+    \item si $X \sim \mathcal{B}(n,p)$, alors
+      \hfill $\forall t \in \R,\quad \mathrm{G}_X(t) = (pt + q)^n$ ; \hfill\null
+    \item si $T \sim \mathcal{G}(p)$, alors \hfill $\forall t \in \left] -\frac{1}{q}, \frac{1}{q} \right[ \quad \mathrm{G}_T(t) = \frac{pt}{1-qt}$\/ ; \hfill \null
+    \item si $X \sim \mathcal{P}(\lambda)$, alors \hfill $\forall t \in \R, \quad \mathrm{G}_X(t) = \mathrm{e}^{-\lambda}\cdot \mathrm{e}^{\lambda t}$. \hfill \null
+  \end{enumerate}En déduire l'espérance et la variance de chacune de ces \textit{vard}.}
+
+  \begin{enumerate}
+    \item La série génératrice est $\sum P(X = k)\, t^k$, et la fonction génératrice est $\sum_{k \in X(\Omega)} P(X = k)\,t^k$.
+      Comme $X \sim \mathcal{B}(n,p)$, on a $X(\Omega) = \llbracket 0,n \rrbracket$, et $\forall k \in X(\Omega)$, $P(X = k) = {n\choose k} p^k\:q^{n-k}$.
+      La série ne peut pas diverger, car il y a un nombre fini de termes. D'où,
+      \begin{align*}
+        \forall t \in {]-\infty,+\infty[},\quad \mathrm{G}_X(t) &= \sum_{k=0}^n {n\choose k} q^{n-k}\: t^{k} \\
+        &= (pt + q)^n \\
+      \end{align*}
+      La fonction $\mathrm{G}_X$\/ est dérivable en 1, donc la variable aléatoire $X$\/ est d'espérance finie, et $\mathrm{E}(X) = \mathrm{G}'_X(1)$.
+      Or, $\forall t \in \R$, $\mathrm{G}'_X(t) = n\,p\:(pt + q)^{n-1}$.
+      D'où, $\mathrm{E}(X) = \mathrm{G}'_X(1) = n\,p$.
+      Mieux : $\mathrm{G}_X$\/ est deux fois dérivable en 1. Ainsi, $X^2$\/ est d'espérance finie, et
+      \begin{align*}
+        \mathrm{V}(X) &= \mathrm{G}''_X(1) + \mathrm{G}'_X(1) - \big[\mathrm{G}_X'(1)\big]^2\\
+        &= n\cdot (n-1)\cdot p^2 + n\cdot p - (n\cdot p)^2 \\
+        &= n\cdot p - n\cdot p^2 = n\cdot p\cdot (1-p)\\
+        &= n\cdot p\cdot q \\
+      \end{align*}
+    \item Si $T \sim \mathcal{G}(p)$, alors $T(\Omega) = \N^*$, et $\forall k \in T(\Omega)$, $P(T = k) = p \times q^{k-1}$.
+      La série génératrice de la variable $T$\/ est \[
+        \ts \sum P(T = k) t^k = \sum p\,q^{k-1}\,t^k = p\,t \sum (qt)^{k-1}
+      ,\] c'est une série géométrique de raison $qt$. Elle converge si, et seulement si $|qt| < 1$. D'où, le rayon de convergence de la série génératrice vaut $R = \frac{1}{q}$.
+      Et,
+      \begin{align*}
+        \forall t \in \left]-\frac{1}{q}, \frac{1}{q} \right[,\quad
+        \mathrm{G}_T(t) &= p\,t \sum_{k=1}^\infty (qt)^{k-1}\\
+        &= pt \sum_{k=0}^\infty (qt)^k \\
+        &= pt \cdot \frac{1}{1-qt} \text{ car } |qt| < 1 \\
+      \end{align*}
+      $\mathrm{G}_X$\/ est dérivable en 1, d'où, la variable aléatoire $T$\/ est d'espérance finie, et $\mathrm{E}(T) = \mathrm{G}'_T(1)$.
+      \[
+        \forall t \in \left]-\frac{1}{q}, \frac{1}{q} \right[,\quad
+        \mathrm{G}'_T(t) =\frac{p(1-qt) - pt (-q)}{(1-qt)^2}
+        = \frac{p}{(1-qt)^2}
+      .\] D'où, $\mathrm{E}(t) = \frac{p}{(1-q)^2} = \frac{1}{p}$.
+  \end{enumerate}
+\end{exo}

@@ -1,0 +1,119 @@
+\section{Implications (partie 1 : simplifications)}
+
+\begin{enumerate}
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p, p \to \lnot p \vdash p}
+				\infer 0[Ax]{p, p \to \lnot p \vdash p \to \lnot p}
+				\infer 0[Ax]{p, p \to \lnot p \vdash p}
+				\infer 2[$\to$e]{p, p \to \lnot p \vdash \lnot p}
+				\infer 2[$\lnot$e]{p,p \to \lnot p \vdash \bot}
+				\infer 1[$\lnot$i]{p\to\lnot p\vdash\lnot p}
+			\end{prooftree}
+		\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p, p\to q, \lnot q \vdash p \to q}
+				\infer 0[Ax]{p, p\to q, \lnot q \vdash p}
+				\infer 2[$\to$e]{p, p\to q, \lnot q \vdash q}
+				\infer 0[Ax]{p, p \to q, \lnot q \vdash \lnot q}
+				\infer 2[$\lnot$e]{p, p\to q, \lnot q \vdash \bot}
+				\infer 1[$\lnot$i]{p \to q, \lnot q \vdash \lnot p}
+			\end{prooftree}
+		\] 
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p \to q, p \lor q}
+				\infer 0[Ax]{p \to q, p \lor q, p \vdash p \to q}
+				\infer 0[Ax]{p \to q, p \lor q, p \vdash p}
+				\infer 2[$\to$e]{p \to q, p \lor q, p \vdash q}
+				\infer 0[Ax]{p \to  q, p \lor q, q \vdash q}
+				\infer 3[$\lor$e]{p\to q,p \lor q \vdash q}
+			\end{prooftree}
+		\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p, p \to q, p \to \lnot q \vdash p \to }
+				\infer 0[Ax]{p, p \to q, p \to \lnot q \vdash p}
+				\infer 2[$\to$e]{p, p \to q, p \to \lnot q \vdash q}
+				\infer 0[Ax]{p, p \to q, p \to \lnot q \vdash p \to \lnot q}
+				\infer 0[Ax]{p, p \to q, p \to \lnot q \vdash p}
+				\infer 2[$\to$e]{p, p \to q, p \to \lnot q \vdash \lnot q}
+				\infer 2[$\lnot$e]{p, p \to q, p \to \lnot q \vdash\bot }
+				\infer 1[$\lnot$i]{p \to q, p \to \lnot q \vdash \lnot p}
+			\end{prooftree}
+		\]
+	\item On pose $\Gamma = p,p \to  (q \lor r), \lnot q, \lnot r, q \lor r$.
+		\[
+			\hspace{-3cm}
+			\begin{prooftree}
+				\infer 0[Ax]{p,p \to  (q \lor r), \lnot q, \lnot r  \vdash p \to (q \lor r)}
+				\infer 0[Ax]{p,p \to  (q \lor r), \lnot q, \lnot r \vdash p}
+				\infer 2[$\to$e]{p,p \to  (q \lor r), \lnot q, \lnot r \vdash q \lor r}
+				\infer 0[Ax]{\Gamma \vdash q \lor r}
+				\infer 0[Ax]{\Gamma,q \vdash q}
+				\infer 0[Ax]{\Gamma,q \vdash \lnot q}
+				\infer 2[$\lnot$e]{\Gamma, q \vdash \bot}
+				\infer 0[Ax]{\Gamma, r \vdash r}
+				\infer 0[Ax]{\Gamma, r \vdash \lnot r}
+				\infer 2[$\lnot$e]{\Gamma, r \vdash \bot}
+				\infer 3[$\lor$e]{p,p \to  (q \lor r), \lnot q, \lnot r, q \lor r \vdash \bot}
+				\infer 1[$\lnot$i]{p,p \to  (q \lor r), \lnot q, \lnot r\vdash \lnot (q \lor r)}
+				\infer 2[$\lnot$e]{p,p \to  (q \lor r), \lnot q, \lnot r \vdash \bot}
+				\infer 1[$\lnot$i]{p \to  (q \lor r), \lnot q, \lnot r \vdash \lnot p}
+			\end{prooftree}
+		\]
+	\item On pose $\Gamma = p \to (q \to r), p, \lnot r, q$.
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\Gamma \vdash p \to (q \to r)}
+				\infer 0[Ax]{\Gamma \vdash p}
+				\infer 2[$\to$e]{\Gamma \vdash q \to r}
+				\infer 0[Ax]{\Gamma \vdash q}
+				\infer 2[$\to$e]{\Gamma \vdash r}
+				\infer 0[Ax]{\Gamma \vdash \lnot r}
+				\infer 2[$\lnot$e]{\Gamma \vdash \bot}
+				\infer 1[$\lnot$i]{p \to (q\to r),p \lnot r \vdash \lnot q}
+			\end{prooftree}
+		\]
+	\item On pose $\Gamma = p \to (q \to r), p, \lnot r, q$.
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\Gamma \vdash p \to (q \to r)}
+				\infer 0[Ax]{\Gamma \vdash p}
+				\infer 2[$\to$e]{\Gamma \vdash q \to r}
+				\infer 0[Ax]{\Gamma \vdash q}
+				\infer 2[$\to$e]{\Gamma \vdash r}
+				\infer 0[Ax]{\Gamma \vdash \lnot r}
+				\infer 2[$\lnot$e]{\Gamma \vdash \bot}
+				\infer 1[$\to$i]{p \to (q \to r), p, \lnot r \vdash \lnot q}
+			\end{prooftree}
+		\]
+	\item On pose $\Gamma = q, p \to (q \to r), q \to p$.
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{\Gamma \vdash p \to (q \to r)}
+				\infer 0[Ax]{\Gamma \vdash q \to p}
+				\infer 0[Ax]{\Gamma \vdash q}
+				\infer 2[$\to$e]{\Gamma \vdash p}
+				\infer 2[$\to$e]{\Gamma \vdash q \to r}
+				\infer 0[Ax]{\Gamma \vdash q}
+				\infer 2[$\to$e]{\Gamma \vdash r}
+				\infer 1[$\to$i]{p \to (q \to r), q \to p, \vdash q \to r}
+			\end{prooftree}
+		\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p \to (p \to q),p \vdash p \to (p \to q)}
+				\infer 0[Ax]{p \to (p \to q),p \vdash p}
+				\infer 2[$\to$e]{p \to (p\to q),p \vdash p \to q}
+				\infer 0[Ax]{p \to (p \to q),p \vdash p}
+				\infer 2[$\to$e]{p \to (p \to q),p \vdash q}
+			\end{prooftree}
+		.\]
+\end{enumerate}

@@ -1,0 +1,51 @@
+On se place dans un contexte dans l'idée de coder des algorithmes avec la stratégie \guillemotleft~diviser pour régner.~\guillemotright\@ Par exemple, on considère un algorithme de calcul de maximum divisant le tableau en deux à chaque itération.\footnote{C'est le principe des tournois sportifs.} Le calcul usuel de maximum est en $\mathcal{O}(n)$. On peut espérer que cet algorithme divisant le tableau ait une complexité logarithmique. Calculons cette complexité.
+
+Soit $(C_n)_{n\in\N}$ la suite donnant le nombre de comparaisons entre éléments du tableau\footnote{\textit{i.e.}\ le nombre d'appels à la fonction \texttt{max}.} effectuées par l'algorithme \texttt{aux\_max} sur un intervalle de taille $|j - i + 1| = n$.
+On a $C_0 = 0$, $C_1 = 0$, et pour tout $n \ge 2$, $C_n = C_{\left\lfloor \frac{n}{2} \right\rfloor} + C_{\left\lceil \frac{n}{2} \right\rceil} + 1$.
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		int[] r = {0,0};
+		size(5cm);
+		for (int i = 0; i < 100; ++i) {
+			r[i] = r[floor(i/2)] + r[i - floor(i/2)] + 1;
+			dot((i,r[i]));
+		}
+	\end{asy}
+	\caption{}
+\end{figure}
+
+Soit $(v_p)_{p\in\N}$ la suite définie par $v_p = C_{2^p}$.
+Ainsi, $v_0 = 0$ et \[
+	v_{p+1} = C_{2^{p+1}} = C_{\left\lfloor \frac{2^{p+1}}{2} \right\rfloor} + C_{\left\lceil \frac{2^{p+1}}{2} \right\rceil} + 1 = 2 v_p + 1
+.\]
+Calculons $v_p$ :
+\begin{align*}
+	v_p &= 2 v_{p-1} + 1\\
+	&= 2(2v_{p-2} + 1) + 1 \\
+	&= 2^2 v_{p-2} + 2^1 + 2^0 \\
+	&\:\vdots \\
+	&= 2^p v_0 + \sum_{i=1}^{p-1} 2^i \\
+	&= 2^p - 1 \\
+\end{align*}
+Ce résultat ne s'applique que pour les puissances de 2, mais, par un argument de croissance, on peut en déduire un résultat pour tout entier $n$.
+Montrons que la suite $(C_n)_{n\in\N}$ est croissante. En effet, par récurrence forte, soit $n \ge 2$.
+\begin{itemize}
+	\item Si $n$ est pair, alors $C_n = 2 \times C_{\frac{n}{2}} + 1$ et $C_{n-1} = C_{\frac{n-2}{2}} + C_{\frac{n-2}{2} + 1} + 1 = C_{\frac{n}{2} - 1} + C_{\frac{n}{2}} + 1$. Et, $C_{\frac{n}{2} - 1 \le C_{\frac{n}{2}}}$ par hypothèse de récurrence. D'où, $C_n \ge C_{n+1}$.
+	\item De même si $n$ est impair.
+\end{itemize}
+Ainsi, soit $n \in \N^*$. On pose alors $p = \left\lfloor \log_2 n \right\rfloor$ donc $p \le \log_2 n$.
+Par croissance de $C$, on a $C_{2^p} \le C_n \le C_{2^{p+1}}$ donc $v_p \le c_n \le v_{p+1}$.
+Ainsi,
+\begin{gather*}
+	2^p - 1 \le C_n \le 2^{p+1} - 1\\
+	2^{\left\lfloor \log_2 n \right\rfloor} - 1 \le C_n \le 2^{\left\lfloor \log_2 n \right\rfloor + 1} - 1\\
+	2^{\log_2(n) - 1} - 1 \le C_n \le 2^{\log_2(n) + 1}\\
+	\frac{1}{2} n - 1 \le C_n \le 2n - 1
+\end{gather*}
+Ceci étant vrai pour tout $n \in \N^*$, on a $C_n = \Theta(n)$.
+On peut remarquer que cet algorithme a une complexité équivalente à un algorithme itératif.
+Mais,\footnote{et c'est tout l'intérêt pour les tournois sportifs} la complexité de cet algorithme s'améliore si les calculs se font en parallèles.
+
+Autre exemple, le tri fusion a une complexité en $C_n = C_{\left\lfloor \frac{n}{2} \right\rfloor} + C_{\left\lceil \frac{n}{2} \right\rceil} + n$, ce qui donne une complexité en $\mathcal{O}(n \log n)$.

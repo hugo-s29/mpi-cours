@@ -1,0 +1,91 @@
+\begin{exo}
+	\begin{slshape}
+		Montrer que l'ensemble $\mathrm{GL}_n(\mathds{K})$\/ des matrices inversibles est dense dans $\mathcal{M}_{n,n}(\mathds{K})$.
+	\end{slshape}
+
+	\noindent
+	Montrons que toute matrice est la limite d'une suite de matrices inversibles.
+	Soit $A \in \mathcal{M}_{n,n}(\mathds{K})$\/ une matrice carrée.
+	Soit $(B_p)_{p \in \N^*}$\/ la suite matrice définie comme \[
+		\forall p \in \N^*, \quad\quad B_p = A - \frac{1}{p} I_n
+	.\]
+	D'une part, $B_p \tendsto{p\to \infty} A$, car $\|B_p - A\| \to 0_\R$\/ en choisissant une norme (peu importe laquelle car l'espace vectoriel $\mathcal{M}_{n,n}(\mathds{K})$\/ est de dimension finie) ; en particulier, $B_p \to A$\/ si, et seulement si chaque élément de $B_p$\/ tend vers $A$.
+	D'autre part, à partir d'un certain rang, toutes les matrices $B_p$\/ sont inversibles, car $\det B_p \neq 0$, car $\det\left(A - \frac{1}{p} I_n\right) \neq 0$, car $\chi_A\left(\frac{1}{p}\right) \neq 0$, car le polynôme $\chi_A$\/ n'a pas infinité de racines.
+\end{exo}
+
+\section{Limite d'une fonction}
+
+\begin{defn}
+	Soient $E$\/ et $F$\/ deux espaces vectoriels normés. Soit $f$\/ la fonction définie comme \begin{align*}
+		f: D &\longrightarrow F \\
+		\vec{x} &\longmapsto f(\vec{x})
+	\end{align*}
+	où $D \subset E$\/ est une partie de $E$. Soit $\vec{a}$\/ un point adhérent à $D$\/ et $\vec{\ell} \in F$.
+	On dit que $f(\vec{x})$\/ \textit{tend vers $\vec{\ell}$\/ quand $\vec{x}$\/ tend vers $\vec{a}$}, et on note $f(\vec{x}) \tendsto{\vec{x} \to \vec{a}} \vec{\ell}$\/ si \[
+		\big\|f(\vec{x}) - \vec{\ell}\big\| \tendsto{\|\vec{x} - \vec{a}\| \to 0}0
+	.\]
+	Autrement dit, \[
+		\forall \varepsilon > 0,\: \exists \delta > 0,\: \forall \vec{x} \in D, \quad \|\vec{x} - \vec{a}\| \le \delta \implies \|f(\vec{x}) - \vec{\ell}\| \le \varepsilon
+	.\]
+\end{defn}
+
+Avec cette définition, on a l'équivalence :
+\begin{align*}
+	f(\vec{x}) \tendsto{\vec{x}\to \vec{a}} \vec{\ell} \iff& f(\vec{x}) - \vec{\ell} \tendsto{\vec{x} - \vec{a}\to \vec{0}} \vec{0} \\
+	\iff& \|f(\vec{x}) - \vec{\ell}\| \tendsto{\|\vec{x} - \vec{a}\| \to 0} 0 \\
+\end{align*}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item Il y a un abus de notation, la norme $\|\vec{x} - \vec{a}\|$\/ est une norme sur $E$\/ tandis que $\|f(\vec{x}) - \vec{\ell}\|$\/ est une norme sur $F$.
+		\item Il 'existe pas toujours de limite $\vec{\ell}$, mais, quand elle existe, elle est unique. On peut donc parler de \textbf{la} limite de $f$\/ en $\vec{a}$\/ et écrire $\vec{\ell} = \lim_{\vec{x}\to \vec{a}} f(\vec{x})$\/ ou $\vec{\ell} = \lim_{\vec{a}} f$.
+	\end{enumerate}
+\end{rmk}
+
+\begin{prop}[Caractérisation séquentielle de la limite]
+	Le vecteur $f(\vec{x})$\/ tend vers $\vec{\ell}$\/ quand $\vec{x}$\/ tend vers $\vec{a}$\/ si, et seulement si, pour toute suite $(\vec{u}_n)_{n\in\N}$\/ convergent vers $\vec{a}$, la suite $f(\vec{u}_n)$\/ tend vers $\vec{\ell}$.
+\end{prop}
+
+\begin{exo}
+	\begin{slshape}
+		Soient les fonctions définies de $\R^2 \setminus \{(0,0)\}$\/ vers $\R$\/ par \[
+			f(x,y) = \frac{xy}{x^2 + y^2} \quad\quad \text{ et }\quad\quad g(x, y) = \frac{xy}{\sqrt{x^2 + 2y^2}}
+		\]possèdent-elles une limite quand $(x,y)$\/ tend vers $(0, 0)$ ?
+	\end{slshape}
+
+	\begin{description}
+		\item[Étude de \textit{f}.] On a $f(x,x) = \frac{x x}{x^2 + x^2} = \frac{1}{2}\tendsto{x\to 0} \frac{1}{2}$, et $f(x, 0) = \frac{x \times 0}{x^2 + 0^2} = 0 \tendsto{x\to 0}$. Or $0 \neq \frac{1}{2}$. D'où, par unicité de la limite, il n'y a pas de limite.
+
+			Autre rédaction, on a $f\left( \frac{1}{n}, \frac{1}{n} \right) = \frac{1}{2} \tendsto{n\to \infty} \frac{1}{2}$\/ et $f\left( \frac{1}{n}, 0 \right) = 0 \tendsto{n\to \infty} 0$.
+		\item[Étude de \textit{g}.] Pour tout couple $(x,y) \in \R^2 \setminus \{(0,0)\}$, \[
+				0 \le |f(x,y)| = \frac{|x|\:|y|}{\sqrt{x^2 + y^2}} \le \frac{\|(x,y)\|_2^2}{\|(x,y)\|_2} = \|(x,y)\|_2 \tendsto{(x,y) \to (0,0)} 0
+			\]car $\sqrt{x^2 + y^2} \ge \sqrt{x^2+y^2} = \|(x,y)\|_2$, et $|x|\:|y| \le \|(x,y)\|^2_2$ ; en effet, $|x| = \sqrt{x^2} \le \sqrt{x^2+y^2} = \|(x,y)\|_2$, et de même $|y| \le \|(x,y)\|_2$.
+			Par le théorème des gendarmes, on a $|f(x,y)| \to 0$.
+	\end{description}
+\end{exo}
+
+\section{Continuité d'une fonction}
+
+\begin{defn}
+	Soient $E$\/ et $F$\/ deux espaces vectoriels normés. Soit $f : D \to F$\/ une fonction définie sur une partie $D \subset E$ de $E$.
+	\begin{itemize}
+		\item Soit $\vec{a} \in D$. On dit que $f$\/ est \textit{continue} en $\vec{a}$\/ su $f(\vec{x})\tendsto{\vec{x} \to \vec{a}} f(\vec{a})$.
+		\item Soit $A \subset D$. On dit que $f$\/ est \textit{continue} sur $A$\/ si $f$\/ est continue en tout point de $A$.
+	\end{itemize}
+\end{defn}
+
+
+\marginpar{\color{cyan}Tarte à la crème}
+\begin{exo}
+	\begin{slshape}
+		Soient $f$\/ et $g$\/ deux applications continues sur un espace vectoriel normé $E$. Soit $A$\/ une partie de $E$\/ dense dans $E$. Montrer que, si $\forall \vec{x} \in A$, $f(\vec{x}) = g(\vec{x})$, alors $\forall \vec{x} \in E$, $f(\vec{x}) = g(\vec{x})$.
+		Autrement dit, deux applications continues qui coïncident sur une partie dense sont égales.
+	\end{slshape}
+
+	Soit $\vec{y} \in E$. Comme $A$\/ est dense dans $E$, il existe une suite $(\vec{a}_n)_{n\in\N}$\/ de $A$\/ convergent vers $\vec{y}$.
+	Or, pour tout $n \in \N$, $f(\vec{a}_n) = g(\vec{a}_n)$. De plus, $f(\vec{a}_n) \tendsto{n\to \infty} f(\vec{y})$\/ car $f$\/ est continue, et $\vec{a}_n\tendsto{n\to \infty} \vec{y}$.
+	De même, $g(\vec{a}_n) \tendsto{n\to \infty} f(\vec{y})$.
+	Par unicité de la même limite, on en déduit que $f(\vec{y}) = g(\vec{y})$.
+\end{exo}
+
+

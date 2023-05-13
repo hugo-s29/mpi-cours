@@ -1,0 +1,152 @@
+\section{Dérivées partielles}
+
+\begin{defn}
+	Soit $D \subset \R^2$ un ouvert, et soit $f : D \to \R, (x,y) \mapsto f(x,y)$ une fonction.
+	Soit un point $(a,b) \in D$.
+	\begin{enumerate}
+		\item Si \[
+				\lim_{h\to 0} \frac{f(a+h,b) - f(a,b)}{h}
+			\] existe et est finie, alors ce nombre réel est noté $\partial_1 f(a,b)$ ou $\frac{\partial f}{\partial x}$ et est appelé la première \textit{dérivée partielle} de $f$ en $(a,b)$.
+		\item Si \[
+				\lim_{h\to 0} \frac{f(a,b+h) - f(a,b)}{h}
+			\] existe et est finie, alors ce nombre réel est noté $\partial_2 f(a,b)$ ou $\frac{\partial f}{\partial y}$ et est appelé la seconde \textit{dérivée partielle} de $f$ en $(a,b)$.
+		\item Pour $i \in \llbracket 1,2 \rrbracket$, si $\partial_i f(a,b)$ existe pour tout $(a,b) \in D$, alors al fonction $\partial_i f : D \to \R$ est appelée la $i$-ème \textit{dérivée partielle} de $f$.
+		\item On dit que la fonction $f$ est de classe $\mathcal{C}^1$ sur $D$ si les deux dérivées partielles $\partial_1 f$ et $\partial_2 f$ existent et sont continues sur $D$.
+	\end{enumerate}
+\end{defn}
+
+\begin{exo}[Une fonction qui possède des dérivées partielles non continues]
+	\begin{slshape}
+		Soit $f : \R^2 \to \R$ la fonction définie par \[
+			f(x,y) = x^2 \cdot \sin \left( \frac{y}{x} \right) \quad \text{ si } x \neq 0 \quad \text{ et }\quad f(0, y) = 0 \text{ sinon}.
+		.\]
+		\begin{enumerate}
+			\item Montrer que $f$ est continue sur $\R^2$.
+			\item Montrer que les dérivées partielles $\partial_1 f(x,y)$ et $\partial_2 f(x,y)$ existent si $x \neq 0$, et les calculer.
+			\item Montrer que les dérivées partielles $\partial_1 f(0,y)$ et $\partial_2 f(0,y)$ existent et les calculer.
+			\item Montrer que la fonction $f$ n'est pas de classe $\mathcal{C}^1$.
+		\end{enumerate}
+	\end{slshape}
+
+	\begin{enumerate}
+		\item La fonction $f$ est continue sur $\R^* \times \R$ d'après les théorèmes généraux (par produit et par composition).
+			Montrons que \smash{$f(0 + h, y + k) \tendsto{(h,k) \to (0,0)} f(0,y)$}, \textit{i.e.}\ $|f(0+h,y+k) - f(0,y)| \to 0$.
+			On a
+			\begin{align*}
+				0 \le |f(0+h,y+k) - f(0,y)| &= \left|h^2 \sin \left( \frac{y + k}{h} \right) - 0 \right|\\
+				&= h^2 \left| \sin\left( \frac{y+k}{h} \right) \right| \\
+				&\le h^2 \le \sqrt{h^2 + k^2}^2 \le \|(h,k)\|^2_2
+			\end{align*}
+			D'après le théorème des gendarmes, $f$ est continue en $(0, y)$, $f$ est donc continue sur $\R^2$.
+		\item En tout point de $\R^2 \times \R$, $\partial_1 f$ et $\partial_2 f$ existent par composition et par produit. Et,
+			\begin{multicols}{2}
+				\begin{align*}
+					\partial_1f(x,y) &= \frac{\partial f}{\partial x}(x,y) \\
+					&= 2x \sin\left( \frac{y}{x} \right) + x^2 \times \frac{-y}{x^2} \cos \left( \frac{y}{x} \right) \\
+					&= 2x \sin\left( \frac{y}{x} \right) - y \cos\left( \frac{y}{x} \right) \\
+				\end{align*}
+				\begin{align*}
+					\partial_2 f(x,y) &= \frac{\partial f}{\partial y}(x,y) \\
+					&= x^2 \cdot \frac{1}{x} \cdot \cos\left( \frac{y}{x} \right) \\
+					&= x \cos\left( \frac{y}{x} \right) \\
+				\end{align*}
+			\end{multicols}
+		\item Calculons
+			\[
+				\frac{f(0+h,y) - f(0,y)}{h} = \frac{h^2 \sin\left( \frac{y}{h} \right) - 0}{h} = h \sin\left( \frac{y}{h} \right) \tendsto{h\to 0} 0
+			\] car $h \to 0$ et $\sin$ est borné.
+			D'où, $\partial_1 f(0,y)$ existe et $\partial_1 f(0,y) = 0$.
+			De plus, $\big[f(0,y+h) - f(0,y)\big] / k = (0-0) / k = 0 \tendsto{k\to 0} 0$. D'où $\partial_2 f(0,y)$ existe et $\partial_2f(0,y) = 0$.
+		\item On a $\partial_1 f(x,1) \centernot{\tendsto{x\to 0}} \partial_1 f(0, 1)$ car $1 \times \cos \left( \frac{1}{x} \right)$ n'a pas de limite.
+	\end{enumerate}
+\end{exo}
+
+\begin{thm}[Formule de Taylor \& Young à l'ordre 1]
+	Soit $D \subset \R^2$ un ouvert, et soit $f : D \to \R$ une fonction. Si $f$ est de classe $\mathcal{C}^1$, alors, pour tout $(a,b) \in D$, \[
+		f(a+h,b+k) = f(a,b) + h \:\partial_1 f(a,b) + k\: \partial_2 f(a,b) + \underbrace{\|(h,k)\| \cdot  \varepsilon(h,k)}_{\po(h,k)}
+	\]où $\varepsilon(h,k) \tendsto{(h,k) \to (0,0)} 0$.
+\end{thm}
+
+\begin{rap}[Accroissements finis]
+	Si $\varphi$ est une fonction continue sur un segment $[\alpha, \beta]$, et qu'elle est dérivable sur $]\alpha,\beta[$, alors il existe $c \in {]\alpha,\beta[}$ tel que \[
+		\varphi(\beta) - \varphi(\alpha) = \varphi'(c) \cdot (\beta - \alpha)
+	.\]
+\end{rap}
+
+\begin{prv}
+	On a $f(a+h, b + k) - f(a,b) = \big[f(a+h,b+k) - f(a,b+k)\big] + \big[f(a,b+k) - f(a + k,b+k)\big]$.
+	Soit $\varphi(\vec{x})  = f(x,b+k)$. Alors, d'après le théorème des accroissements finis, il existe $c \in {]a,a+h[}$ tel que $\varphi(a+h) - \varphi(a) = \varphi'(c) \cdot \big((a+h) - a\big)$.
+	D'où, $f(a+h, b+k) - f(a,b+k) = \partial_1 f(c,b+k) \times h$.
+	De même, soit $\psi(y) = f(a,y)$ ; alors, il existe $d \in {]b,b+k[}$ tel que $f(a,b+k) - f(a,b) = \partial_2 f(a,d) \times k$.
+	Or, $f$ est de classe $\mathcal{C}^1$, d'où $\partial_1 f(c,b+k) \to \partial_1 f(a, b)$ quand $(h,k) \to (0,0)$, car $(c,b+k) \to (a,b)$ et $\partial_1 f$ est continue.
+	De même, $\partial_2 f(a,d) \to \partial_2 f(a,b)$ quand $(h,k) \to (0,0)$.
+	Ainsi, $\partial_1 f(c,b+k) = \partial_1 f(a,b) + \varepsilon_1(h,k)$ où $\varepsilon_1(h,k) \to 0$ quand $(h,k) \to (0,0)$.
+	De même, $\partial_2 f(a,d) = \partial_2 f(a,b) + \varepsilon_2(h,k)$ avec $\varepsilon(h,k) \to 0$ quand $(h,k) \to (0,0)$.
+	On a donc $f(a+h,b+k) - f(a,b) = h\, \partial_1 f(a,b) + h\, \varepsilon_1(h,k) + k\, \partial_2 f(a,b) + k\, \varepsilon_2(h,k)$.
+	On pose $R(h,k)$ le reste.
+	\begin{align*}
+		0 \le |R(h,k)| \le& |h| \cdot |\varepsilon_1(h,k)| + |k|\cdot |\varepsilon_2(h,k)|\\
+		\le& \sqrt{h^2 + k^2} \times \underbrace{\big[ |\varepsilon_1(h,k)| + |\varepsilon_2(h,k)| \big]}_{\varepsilon(h,k)}\\
+		=& \|(h,k)\| \cdot \varepsilon(h,k) = \po(h,k)
+	\end{align*}
+\end{prv}
+
+\begin{rmk}
+	\begin{enumerate}
+		\item (fonctions de $\R^p$ vers $\R$) Soit $p \in \N^*$. De même que les fonctions de $\R^2$ vers $\R$, on peut étudier une fonction de $\R^p$ vers $\R$, définir ses $p$ dérivées partielles $\partial_1 f,\ldots, \partial_p f$ si elles existent, et dire que la fonction $f$ est de classe $\mathcal{C}^1$ sur un ouvert $U \subset \R^p$ si ses $p$ dérivées partielles sont continues.
+			
+			D'après la formule de Taylor \& Young, si la fonction $f$ est de classe $\mathcal{C}^1$ sur $U$, alors : en tout point $\vec{a} = (a_1, \ldots, a_p) \in U$, \[
+				f(\vec{a}+\vec{h}) = f(\vec{a}) + h_1\: \partial_1 f(\vec{a}) + \cdots + h_p \: \partial_p f(\vec{a}) + \po(\vec{h})
+			\] où $\vec{h} = (h_1, \ldots, h_p)$.
+		\item (fonctions de $\R^p$ vers $\R^n$) Soient $p \in \N^*$ et $n \in \N^*$, un ouvert $U \subset \R^p$ et une fonction \begin{align*}
+				f: U &\longrightarrow \R^n \\
+				\vec{x} = \begin{pmatrix}
+					x_1\\
+					\vdots\\
+					x_p
+				\end{pmatrix} &\longmapsto \begin{pmatrix}
+					f_1(\vec{x})\\
+					\vdots\\
+					f_n(\vec{x})
+				\end{pmatrix}
+			\end{align*}
+			Soit $\vec{a} \in U$. Si chacune des $n$ fonctions $f_i : U \to \R$ est de classe $\mathcal{C}^1$ sur $U$, alors \[
+				\forall i \in \llbracket 1,n \rrbracket,\quad\quad f_i(\vec{a} + \vec{h}) = f_i(\vec{a}) + h_1\,\partial_1 f_i(\vec{a}) + \cdots + h_p\,\partial_p f_i(\vec{a}) + \po(\vec{h})
+			.\]
+			Matriciellement, cette égalité s'écrit \[
+				\underbrace{\begin{pmatrix}
+					 f_1(\vec{a} + \vec{h})\\
+					 \vdots\\
+					 f_n(\vec{a} + \vec{h})\\
+				\end{pmatrix}}_{f(\vec{a} + \vec{h})}
+				=
+				\underbrace{
+				\begin{pmatrix}
+					f_1(\vec{a})\\
+					\vdots\\
+					f_n(\vec{a})
+				\end{pmatrix}}_{f(\vec{a})}
+				+
+				\underbrace{\begin{pNiceMatrix}[first-row]
+					\substack{\ds\partial_1 f(\vec{a})\\ \downarrow} & \substack{\ds\cdots\\\phantom{\downarrow}} & \substack{\ds\partial_p f(\vec{a})\\ \downarrow}\\
+					\partial_1 f_1(\vec{a}) & \cdots & \partial_p f_1(\vec{a})\\
+					\vdots & \ddots & \vdots\\
+					\partial_1 f_n(\vec{a}) & \cdots & \partial_p f_n(\vec{a})
+				\end{pNiceMatrix}}_{\mathrm{J}_f(\vec{a})}
+				\cdot
+				\underbrace{
+				\begin{pmatrix}
+					h_1\\
+					\vdots\\
+					h_p
+				\end{pmatrix}}_{\vec{h}}
+				+ \|\vec{h}\| \cdot \underbrace{
+				\begin{pmatrix}
+					\varepsilon_1(\vec{h})\\
+					\vdots\\
+					\varepsilon_n(\vec{h})
+				\end{pmatrix}}_{\varepsilon(\vec{h})}
+			.\]
+	\end{enumerate}
+\end{rmk}
+

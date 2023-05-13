@@ -1,0 +1,206 @@
+\begin{prop}
+	La composée de deux fonctions totales calculables en temps polynômial est une fonction totale calculable en temps polynômial.
+\end{prop}
+
+\begin{prv}
+	Soient $f_1$\/ et $f_2$\/ deux telles fonctions. Soit donc $\texttt{calcule}_1 : \texttt{string} \to \texttt{string}$\/ et $\texttt{calcule}_2 : \texttt{string}\to \texttt{string}$\/ calculant respectivement $f_1$\/ et $f_2$. On pose la fonction ci-dessous
+	\begin{lstlisting}[language=caml,caption=Machine calculant la composée en temps polynômial]
+let calcul s = calcule%*$_1$*) (calcule%*$_2$*) s)
+	\end{lstlisting}
+	dont le nombre d'opérations élémentaires est \[
+		C({\texttt{s}}) = \underbrace{C^2(\texttt{s})}_{\text{\clap{calcul de $f_2(\texttt{s})$}}} + \overbrace{C^1(f_2(\texttt{s}))}^{\text{\clap{calcul de $f_1(\texttt{s})$}}} + \underbrace{1}_{\text{\clap{composée}}}
+	.\]
+	Or, la fabrication d'une chaîne de caractères de taille $n$\/ nécessite au moins $n$\/ opérations élémentaires. Soit $p_1 \in \N$\/ et $p_2 \in \N$\/ tels que la complexité de $\texttt{calcule}_1$\/ est $\mathcal{O}(n^{p_1})$\/ et la complexité de $\texttt{calcule}_2$\/ est $\mathcal{O}(n^{p_2})$. On a donc, pour tout $w \in \Sigma^*$\/ avec $|w| = n$, que $|f_2(w)| = \mathcal{O}(n^{p_2})$
+	Par composition des $\mathcal{O}$, on a que \[
+		C(\texttt{s}) = \mathcal{O}(|\texttt{s}|^{p_1\cdot p_2})
+	.\] 
+\end{prv}
+
+\begin{rmk}
+	Dans la preuve précédente, l'ordre du polynôme change. En effet, la composée de deux programmes en $\mathcal{O}(n^2)$\/ est un $\mathcal{O}(n^4)$. L'espace des fonctions calculables en $\mathcal{O}(n^p)$, pour un $p$\/ fixé, n'est pas stable par composition.
+\end{rmk}
+
+\begin{defn}[Classe \textbf{P}]
+	On dit qu'un problème est dans \textbf{P} dès lors qu'il est décidable en temps polynômial.
+	\index{problème!\textbf{P}}
+\end{defn}
+
+\begin{prop}[Stabilité de la classe \textbf{P}]
+	La classe \textbf{P} est stable par
+	\vspace{-2\baselineskip}
+	\begin{multicols}{3}
+		\begin{itemize}
+			\item union ;
+			\item intersection ;
+			\item complémentaire.
+		\end{itemize}
+	\end{multicols}
+\end{prop}
+
+\begin{prv}
+	à faire
+\end{prv}
+
+\subsection{Classe \textbf{NP}}
+
+\begin{defn}[Classe \textbf{NP}]
+	On dit qu'un problème de décision $Q$\/ est dans \textbf{NP} si et seulement si
+	\begin{itemize}
+		\item il existe un polynôme $A$ ;
+		\item un problème $\textsc{Verif} \in \text{\textbf{P}}$ ;
+		\item un ensemble $\mathcal{C}$\/ (certificats),
+	\end{itemize}
+	tels que \[
+		\forall w \in \Sigma^*,\quad\Big(w \in Q^+ \iff \exists u \in \mathcal{C},\:|u| \le A(|w|) \text{ et } (w,u) \in \textsc{Verif}^+\Big)
+	.\] 
+	\index{problème!\textbf{NP}}
+\end{defn}
+
+La classe \textbf{NP} est la classe de problèmes tels qu'ils sont vérifiables en temps polynômial. Par exemple, si on a une formule logique, trouver un environnement propositionnel est coûteux en temps, \textsc{mais} vérifier la solution est très simple. Nous verrons ce résultat plus tard dans cette sous-section.
+
+Le ``\textbf{NP}'' {\color{red}ne vient pas} de \textbf{N}on \textbf{P}olynômial, mais vient de \textbf{N}on-déterministe \textbf{P}olynômial.
+
+\begin{prop}
+	\[
+		\text{\textbf{P}} \subseteq \text{\textbf{NP}}
+	.\]
+\end{prop}
+
+\begin{prv} \todo{Modifier la définition de \textsc{Verif} avec la nouvelle définition d'un problème \textbf{NP}}
+	Soit $Q$\/ un problème de décision dans \textbf{P}. On pose $\mathcal{C} = \mathcal{E}_Q$, $A(X) = X$, et $\textsc{Verif} = Q$. En effet, pour tout $w \in \Sigma^*$, \[
+		w \in Q^+ \iff \exists u {\color{gray}{} = w},\: |u| \le A(|w|) \text{ et } u \in \textsc{Verif}^+
+	.\]
+\end{prv}
+
+\begin{prop}
+	\[
+		\textsc{Sat} \in \text{\textbf{NP}}
+	.\]
+\end{prop}
+
+\begin{rap}
+	On rappelle la définition du problème \textsc{Sat}. \[
+		\textsc{Sat} : \begin{cases}
+			\text{\textbf{Entrée}} &: \text{Une formule } G\\
+			\text{\textbf{Sortie}} &: \text{Existe-t-il $\rho \in \mathds{B}^{\mathrm{vars}(G)}$ tel que $\left\llbracket G \right\rrbracket^\rho = \mathbf{V}$ ?}
+		\end{cases}
+	\]
+\end{rap}
+
+\begin{prv}
+	Soit alors le problème suivant. \[
+		\textsc{VerifSat} : \begin{cases}
+			\text{\textbf{Entrée}} &: \left(\begin{array}{l}
+				\text{Une formule $G$,}\\
+				\text{un environnement propositionnel $\rho \in \mathds{B}^{\mathrm{vars}(G)}$,}
+			\end{array}\right.\\
+			\text{\textbf{Sortie}} &: \left\llbracket G \right\rrbracket^\rho =^? \mathbf{V}
+		\end{cases}
+	\]
+	En \textsc{tp}, on a codé une solution polynômial à \textsc{VerifSat} donc $\textsc{VerifSat} \in \text{\textbf{P}}$. On définit l'ensemble $\mathcal{C}$\/ des certificats comme \[
+		\mathcal{C} = \big\{(G, \rho) \:\big|\: G \in \mathcal{F} \text{ et } \rho \in \mathds{B}^{\mathrm{vars}(G)}\big\}
+	.\]
+	On a alors \[
+		G \in \textsc{Sat}^+ \iff \exists \rho \in \mathds{B}^{\mathrm{vars}(G)},\:\left\llbracket G \right\rrbracket^\rho = \mathbf{V}\\
+	.\]
+	Il suffit alors de choisir $A(X) = 2X$.
+\end{prv}
+
+\subsection{\textbf{NP}-difficile}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(10cm);
+		import roundedpath;
+		label("$\Sigma^* \owns w$", (-3, 0), align=W);
+		draw(roundedpath(box((-2, -1), (3.5, 1)), 0.25));
+		fill(roundedpath(box((-1.5,-0.25),(-0.5,0.25)), 0.1), magenta);
+		draw(roundedpath(box((0.5,-0.25),(1.5,0.25)), 0.1), deepcyan);
+		label("$f$", (-1, 0), white);
+		label("\LARGE$Q$", (-2, 1), align=2*SE);
+		label("$R$", (0.5, 0.25), deepcyan, align=2*SE);
+		draw((-3, 0)--(-1.5, 0), Arrow(TeXHead));
+		draw((-0.5, 0)--(0.5, 0), Arrow(TeXHead));
+		draw((1.5, 0)--(4.5, 0), Arrow(TeXHead));
+		label("$f(w)$", (0, 0), magenta, align=N);
+		label("$\quad f(w)\in R^+\iff w\in Q^+$", (1.55, 0), align=NE);
+	\end{asy}
+	\caption{Structure d'un sous-problème}
+\end{figure}
+
+\begin{defn}[Réduction polynômiale]
+	Soit $Q$\/ et $R$\/ deux problèmes de décision, on appelle \textit{réduction polynômiale} de $Q$\/ à $R$\/ la donnée d'une fonction $f$\/ totale, calculable en temps polynômial de $\mathcal{E}_Q$\/ dans $\mathcal{E}_R$\/ telle que \[
+		\forall w \in \mathcal{E}_Q,\quad w \in Q^+ \iff f(w) \in R^+
+	.\]
+	On note alors $Q \preceq_{\mathrm{p}} R$.
+	\index{réduction!polynômiale}
+\end{defn}
+
+\begin{prop}
+	La relation $\preceq_{\mathrm{p}}$\/ est transitive et reflective : c'est un pré-ordre.
+\end{prop}
+
+\begin{prv}
+	La réflectivité est assurée car $\id$\/ est totale et calculable en temps polynômial.
+	La transitivité est assurée par les propriétés précédentes (composée de deux fonctions polynômiales ?).
+\end{prv}
+
+\begin{prop}
+	Si $R \preceq_{\mathrm{p}} Q$, et $R \in \text{\textbf{P}}$, alors $Q \in \text{\textbf{P}}$.
+	\qed
+\end{prop}
+
+\begin{defn}[\textbf{NP}-difficile]
+	Un problème $Q$\/ est \textbf{NP}-difficile si \[
+		\forall R \in \text{\textbf{NP}},\:R \preceq_{\mathrm{p}} Q
+	.\]
+	\index{problème!\textbf{NP}-difficile}
+\end{defn}
+
+\begin{prop}
+	Si $Q$\/ est \textbf{NP}-difficile, et $Q \preceq_{\mathrm{p}} R$, alors $R$\/ est \textbf{NP}-difficile.
+\end{prop}
+
+\begin{prv}
+	Soit $S \in \text{\textbf{NP}}$, donc $S \preceq_{\mathrm{p}} Q$. De plus, $Q \preceq_\mathrm{p} R$, donc $S \preceq_\mathrm{p} R$, par transitivité. Ceci étant vrai pour tout $S \in \text{\textbf{NP}}$, on en déduit que $R$\/ est \textbf{NP}-difficile.
+\end{prv}
+
+On admet le théorème suivant.
+
+\begin{thm}[\textsc{Cook}-\textsc{Levin}]
+	Le problème \textsc{Sat} est \textbf{NP}-difficile.
+\end{thm}
+
+\begin{prv}
+	Admis
+\end{prv}
+
+\begin{defn}[$n$-\textsc{fnc}]
+	Soit $n \in \N$. Une formule $G$\/ est sous forme $n$-\textsc{fnc} dès lors que $G$\/ est sous forme \textsc{fnc} et chaque clause de $G$\/ contient au plus $n$\/ littéraux.
+	\index{forme!$n$-\textsc{fnc}}
+	\index{forme!$n$-\textsc{cnf}}
+\end{defn}
+
+On parle aussi de forme \textsc{cnf} traduction anglaise de \textsc{fnc}. De même, on parle de forme $n$-\textsc{cnf} au lieu de $n$-\textsc{fnc}.
+
+\begin{exm}
+	La formule $(p \lor q) \land r $\/ est une $2$-\textsc{cnf}.
+	La formule $(p \lor q \lor p) \land (r \lor p \lor q \lor q)$\/ est une $4$-\textsc{cnf}.
+\end{exm}
+
+\begin{defn}
+	On définit le problème ci-dessous. \[
+		\text{$n$-\textsc{cnf}-\textsc{Sat}} : \begin{cases}
+			\text{\textbf{Entrée}} &: G \text{ une $n$-\textsc{cnf}}\\
+			\text{\textbf{Sortie}} &: \text{Existe-t-il $\rho$\/ tel que $\left\llbracket G \right\rrbracket^\rho = \mathbf{V}$\/ ?}
+		\end{cases}
+	\]
+	\index{problème!$n$-\textsc{cnf}-\textsc{sat}}
+\end{defn}
+
+\begin{prop}
+	Soit $\text{3\textsc{sat}} = \text{3-\textsc{cnf}-\textsc{Sat}}$.
+	\index{problème!$3$\textsc{sat}}
+	Le problème 3\textsc{sat} est \textbf{NP}-difficile.
+\end{prop}

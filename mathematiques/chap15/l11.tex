@@ -1,0 +1,33 @@
+\begin{prop}[Théorème des extrema liés : c'est une condition nécessaire]
+	Soient $f$ et $g$ deux foncions de classe $\mathcal{C}^1$ de $E$ vers $\R$. Si $f$ est constante sur une partie $C \subset E$, et si la restriction de $g$ à $C$ admet un extremum local en $\vec{x} \in C$, et si $\vec{x}$ n'est pas un point critique de $f$, alors \[
+		\exists \lambda \in \R,\quad\quad \nabla g(\vec{x}) = \lambda\:\nabla f(\vec{x})
+	.\] 
+\end{prop}
+
+\begin{prv}
+	La fonction $g$ est extrémale sous la contrainte $f(x_1, \ldots, x_n) = \Cte$.
+	Le gradient est orthogonal aux lignes de niveaux de la fonction.
+	En particulier, $\nabla f(\vec{a})$ est orthogonal à $C$ en tout point $\vec{a} \in C$.
+	On considère un point $M(t) \in C$.
+	À un instant $t_0$, on aura $M(t_0) = \vec{a}$.
+	Si $g\big|_C$ possède un extremum local en $\vec{a}$, alors, à la date $t_0$, $\frac{\mathrm{d}}{\mathrm{d}t} g \circ M(t_0) = 0$.
+	Or, d'après la règle de la chaîne, $\frac{\mathrm{d}}{\mathrm{d}t} g \circ M (t_0) = \langle \:\nabla g(M(t_0))  \mid M'(t_0)\:\rangle = 0$.
+\end{prv}
+
+\begin{exm}
+	Soit $C$ une courbe de niveau d'une fonction $f : \R^2 \to \R$ de classe $\mathcal{C}^1$. Soit $A$ un point du plan. Si la distance $AM$ du point $A$ à un point non critique $M \in C$ possède un extremum local, alors le vecteur~$\vv{AM}$ est orthogonal à la courbe $C$.
+
+	En effet, s'il y a un extremum local de $g$ en $(x,y)$ sous la contrainte $f(x,y) = \Cte$, alors $\nabla g(x,y) \mathbin{/\!/} \nabla f(a,b)$.
+\end{exm}
+
+\begin{exo}
+	\begin{slshape}
+		Déterminer les points du cercle d'équation $x^2 + y^2 = 5$ qui rendent extrémale la valeur $2x + y$.
+	\end{slshape}
+
+	Soient $f$ et $g$ deux fonctions de classe $\mathcal{C}^1$ définies par $f(x,y) = x^2 + y^2$ et $g(x,y) = 2x + y$.
+	On applique le théorème des extrema liés : s'il existe un extremum en $(a,b)$, alors $\nabla g(a,b) \mathbin{/\!/} \nabla f(a,b)$, \textit{i.e.} $(2,1) \mathbin{/\!/} (2a,2b)$.
+	D'où, ${2\ 2a\atopwithdelims||1\ 2b} = 0$, d'où $2b - a = 0$.
+	De plus, $a^2 + b^2 = 5$.
+\end{exo}
+

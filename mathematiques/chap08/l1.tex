@@ -1,0 +1,98 @@
+Il ne pas confondre les deux intégrales $\int_{7}^{x} f(t)~\mathrm{d}t = F(x)$\/ (la fonction $F : x \mapsto F(x)$\/ une primitive\footnote{$F$\/ est dérivable et sa dérivée est $F' = f$, autrement dit : $\forall x$, $F'(x) = f(x)$.} de la fonction $f$, si $f$\/ est continue) et $\int_{7}^{+\infty} g(x,t)~\mathrm{d}t = G(x)$\/ si l'intégrale converge~(c'est une \textit{intégrale à paramètre}, où le paramètre est $x$\/ et la variable est $t$).
+
+\section{Continuité}
+
+\begin{thm}
+	Soient $X$\/ et $T$\/ deux intervalles de $\R$, et soit $f : X \times T \to \R$. Si
+	\begin{enumerate}
+		\item pour chaque $t \in T$, la fonction $x \mapsto f(x,t)$\/ est \underline{continue} sur $X$\/ ;
+		\item pour chaque $x \in X$, la fonction $x \mapsto f(x,t)$\/ est \underline{continue par morceaux} sur $T$\/ ;
+		\item il existe une fonction $\varphi$\/ continue par morceaux et intégrable\footnote{\textit{i.e.}\ l'intégrale $\int_{T} \varphi(t)~\mathrm{d}t$\/ converge.}\ sur $T$\/ telle que\\
+			\null\hfill$\forall (x,t) \in X \times T$, $|f(x,t)| \le \varphi(t)$,\hfill\null
+	\end{enumerate}
+	alors la fonction $\smash{\ds \int_{T} f(x,t) ~\mathrm{d}t}$\/ est continue sur $X$.
+\end{thm}
+
+\begin{prv}[théorème de la convergence dominée \& caractérisation séquentielle de la limite]
+	Soit $(u_n)_{n\in\N}$\/ une suite à valeurs dans $X$\/ quelconque tendant, quand $n\to \infty$, vers un réel $a \in X$.
+	Soit alors la fonction \begin{align*}
+		h_n: T &\longrightarrow \R \\
+		t &\longmapsto f(u_n, t).
+	\end{align*}
+	Soit $t \in T$, on a $h_n(t) = f(u_n, t) \longrightarrow f(a, t)$\/ quand $n \to \infty$, car la fonction $x \mapsto f(x, t)$\/ est continue sur $X$ (1.). Donc, la suite de fonctions $(h_n)_{n\in\N}$\/ converge simplement vers une fonction $h$\/ définie comme \begin{align*}
+		h: T &\longrightarrow \R \\
+		t &\longmapsto f(a,t).
+	\end{align*}
+	On a $\left| h_n(t) \right| = \left| f(u_n, t) \right| \le \varphi(t)$, et $\varphi$\/ est intégrable (3.). Ainsi, d'après le théorème de la convergence dominée, \[
+		\lim_{n\to \infty} \overbrace{\int_{T} h_n(t) ~\mathrm{d}t}^{g(u_n)}  = \int_{T} \underbrace{\lim_{n\to \infty} h_n(t)}_{f(a,t)}~\mathrm{d}x = \int_{T} f(a,t)~\mathrm{d}t = g(a)
+	.\]
+	D'où, $g(u_n) \longrightarrow a$, quand $n \to \infty$. Ceci est vrai quelle que soit la suite $(u_n)_{n\in\N}$\/ tendant vers $a$, donc par caractérisation de la limite, $\lim_{x\to a} g(x) = g(a)$. Ainsi, $g$\/ est continue en $a$. Ceci étant vrai pour tout $a \in X$, on en déduit que $g$\/ est continue sur $X$.
+\end{prv}
+
+\bigskip
+
+\begin{exo}[La fonction Gamma]
+	\begingroup\slshape
+	\begin{enumerate}
+		\item Pour quelles valeurs du paramètre réel $x$, les intégrales impropres \[
+				\Gamma_1(x) = \int_{0}^{1} t^{x - 1} \times \mathrm{e}^{-t}~\mathrm{d}t\qquad \text{et}\qquad \Gamma_2(x) = \int_{1}^{+\infty} t^{x-1} \times \mathrm{e}^{-t}~\mathrm{d}t
+			\] convergent-elles ?
+		\item Montrer que l'intégrale impropre \[
+				\Gamma(x) = \int_{0}^{+\infty} t^{x-1}\times \mathrm{e}^{-t}~\mathrm{d}t
+			\] converge si, et seulement si $x > 0$.
+		\item Monter que, pour tout $x > 0$, $\Gamma(x + 1) = x \cdot \Gamma(x)$.
+		\item En déduire que $\Gamma(n+1) = n!$\/ pour tout $n \in \N$.
+		\item En étudiant les fonctions $\Gamma_1$\/ et $\Gamma_2$, montrer que la fonction $\Gamma$\/ est continue sur $]0,+\infty[$.
+		\item En déduire que, $\Gamma(x) \simi_{x\to 0^+} \frac{1}{x}$.
+	\end{enumerate}
+	\endgroup
+
+	\begin{enumerate}
+		\item L'intégrale $\Gamma_1(x)$\/ est impropre en 0. On a \[
+				t^{x-1} \times \underbrace{\mathrm{e}^{-t}}_{\mathclap{\longrightarrow 1}} \simi_{t\to 0} t^{x-1} = \frac{1}{t^{1-x}}
+			\] qui ne change pas de signe. Or, $\int_{0}^{1} \frac{1}{t^{1-x}}~\mathrm{d}t$\/ converge si et seulement si $1-x < 1$\/ d'après le critère de \textsc{Riemann}, \textit{i.e.}\ $x > 0$.
+
+			L'intégrale $\Gamma_2(x)$\/ est impropre en $+\infty$. Or, $t^{x-1} \times \mathrm{e}^{-t} = (t^{x-1} \mathrm{e}^{-t / 2}) \times \mathrm{e}^{-t / 2} = \po_{t\to +\infty}(\mathrm{e}^{-t / 2})$, et $\mathrm{e}^{-t / 2}$\/ ne change pas de signe. Or, l'intégrale $\int_{1}^{+\infty}  \mathrm{e}^{-t / 2}~\mathrm{d}x$. Donc, l'intégrale $\Gamma_2(x)$\/ converge pour tout $x \in \R$.
+
+		\item L'intégrale $\Gamma(x)$\/ converge si et seulement si les deux intégrales $\Gamma_1(x)$\/ et $\Gamma_2(x)$\/ convergent, donc si et seulement si $x > 0$.
+		\item Soit $x > 0$. On a $\Gamma(x+1) = \int_{0}^{+\infty} t^{x}\mathrm{e}^{-t}~\mathrm{d}t$. Ainsi, soient $y \in {]0,1]}$, et 
+			\begin{align*}
+				f(y) = \int_{y}^{1} t^x \mathrm{e}^{-t}~\mathrm{d}t
+				&= \left[ -t^x\cdot \mathrm{e}^{-t} \right]_y^1  + x\int_{y}^{1} t^{x-1}\mathrm{e}^{-t}~\mathrm{d}x
+			\end{align*}
+			par intégration par parties car $t \mapsto t^x  \text{ est } \mathcal{C}^1$ et $t\mapsto -\mathrm{e}^{-t} \text{ est } \mathcal{C}^1$.
+			Or, $y^x \cdot \mathrm{e}^{-y}$\/ tend vers 0 quand $y \to 0$, et $\int_{y}^{1} t^{x-1}\mathrm{e}^{-t}~\mathrm{d}t$\/ tend vers $\Gamma_1(x)$, quand $y \to 0$. Donc, \[
+				\Gamma_1(x + 1) = -\mathrm{e}^{-1} + x \Gamma_1(x)
+			.\] De même, $\Gamma_2(x + 1) = \mathrm{e}^{-1} + x \Gamma_2(x)$. On en déduit que \[
+				\forall x > 0,\quad\Gamma(x+1) = x \Gamma(x) 
+			.\]
+		\item On a $\Gamma(1) = \int_{0}^{+\infty} t^{1-1}\mathrm{e}^{-t}~\mathrm{d}t = \int_{0}^{+\infty} \mathrm{e}^{-t}~\mathrm{d}t = 1$. D'où, $\forall n \in \N^*,\quad \Gamma(n+1) = n \Gamma(n)$.
+			Par récurrence, on en déduit que $\Gamma(n+1) = n!$, pour $n \in \N$.
+		\item On veut montrer que $\Gamma_1 : x \mapsto \Gamma_1(x)$, et $\Gamma_2 : x \mapsto \Gamma_2(x)$ sont continues. Soit $a>0$. Soient $T = {]0,1]}$, $X = {[a,+\infty[}$, et \begin{align*}
+				f: X \times T &\longrightarrow \R \\
+				(x,t) &\longmapsto t^{x-1} \cdot \mathrm{e}^{-t}
+			\end{align*} Ainsi, on a bien $\Gamma_1(x) = \int_{T} f(x,t) ~\mathrm{d}t$.
+			\begin{itemize}
+				\item Pour tout $t \in T$, la fonction $x \mapsto f(x,t)$\/ est continue sur $X$. En effet, soit $t \in T$, on a~$f(x,t) = t^{x-1}\cdot \mathrm{e}^{-t} = \mathrm{e}^{(x-1)\ln t}\cdot \mathrm{e}^{-t}$\/ qui est continue par continuité de l'exponentielle.
+				\item[\llap(---\rlap)] Pour tout $x \in X$, la fonction $t \mapsto f(x,t)$\/ est continue par morceaux sur $T$.
+				\item Pour tout $t \in T$, et pour $x \in X$, $|f(x,t)| \le t^{a-1} \cdot \mathrm{e}^{-t} = \varphi(t)$, et l'intégrale $\int_{T}\varphi(t)~\mathrm{d}t$\/ converge. En effet, pour $x \in X$, et $t \in  T$, $|f(x,t)| = t^{x-1} \cdot \mathrm{e}^{-t} \le t^{a-1} \cdot \mathrm{e}^{-t}$, et l'intégrale $\int_T t^{a-1} \cdot \mathrm{e}^{-t} ~\mathrm{d}t$\/ (car il s'agit de $\Gamma_1(a)$, et $a >0$).
+			\end{itemize}
+			Donc, $\Gamma_1$\/ est continue sur $X = [a, +\infty[$. Ceci est vrai pour tout $a > 0$. On en déduit que $\Gamma_1$\/ est continue sur $]0,+\infty[$.
+
+			On procède de même pour montrer que $\Gamma_2 : x \mapsto \Gamma_2(x)$\/ est continue. Soit $b > 0$. Soient $T = {[1, +\infty[}$, $X = {]0,b]}$, et \begin{align*}
+				f: X \times T &\longrightarrow \R \\
+				(x,t) &\longmapsto t^{x-1} \cdot \mathrm{e}^{-t}
+			\end{align*} Ainsi, on a bien $\Gamma_2(x) = \int_{T} f(x,t) ~\mathrm{d}t$.
+			\begin{itemize}
+				\item Pour tout $t \in T$, la fonction $x \mapsto f(x,t)$\/ est continue sur $X$. En effet, soit $t \in T$, on a~$f(x,t) = t^{x-1}\cdot \mathrm{e}^{-t} = \mathrm{e}^{(x-1)\ln t}\cdot \mathrm{e}^{-t}$\/ qui est continue par continuité de l'exponentielle. (De même que pour $\Gamma_1$.)
+				\item[\llap(---\rlap)] Pour tout $x \in X$, la fonction $t \mapsto f(x,t)$\/ est continue par morceaux sur $T$.
+				\item Pour tout $t \in T$, et pour $x \in X$, $|f(x,t)| \le t^{b-1} \cdot \mathrm{e}^{-t} = \psi(t)$, et l'intégrale $\int_{T}\psi(t)~\mathrm{d}t$\/ converge (car il s'agit de $\Gamma_2(b)$\/ avec $b > 0$).
+			\end{itemize}
+			Donc, $\Gamma_2$\/ est continue sur $X = {]0,b]}$. Ceci est vrai pour tout $b > 0$. On en déduit que $\Gamma_2$\/ est continue sur $]0,+\infty[$.
+			On en déduit que $\Gamma = \Gamma_1 + \Gamma_2$\/ est continue sur $]0,+\infty[$, comme somme de deux fonctions continue sur $]0,+\infty[$.
+		\item On veut montrer que $x \Gamma(x) = \frac{\Gamma(x)}{1 / x}\longrightarrow 1$\/ quand $x \to 0^+$. Or, $x \Gamma(x) = \Gamma(x+1)$\/ d'après la question 3. Et, $x + 1 \longrightarrow 1$\/ quand $x \to 0^+$. Or, d'après la question 5., la fonction $\Gamma$ est continue en 1. Donc, $\Gamma(x + 1) \longrightarrow \Gamma(1)$. De plus, $\Gamma(1) = 0! = 1$\/ d'après la question~4. On en déduit que \[
+			x \Gamma(x) \tendsto{x\to 0^+} 1
+		.\]
+	\end{enumerate}
+\end{exo}
+

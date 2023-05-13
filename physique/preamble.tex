@@ -13,7 +13,7 @@
 \usepackage[european,straightvoltages,europeanresistors]{circuitikz}
 \usepackage{tikz-cd}
 \usepackage{tkz-tab}
-\usepackage[b]{esvect}
+\usepackage[e]{esvect}
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{centernot}
 \usepackage{diagbox}
@@ -31,7 +31,6 @@
 \usepackage{amsthm}
 \usepackage{thmtools}
 \usepackage{indentfirst}
-\usepackage[framemethod=TikZ]{mdframed}
 \usepackage{accents}
 \usepackage{soulutf8}
 \usepackage{mathtools}
@@ -39,7 +38,7 @@
 \usepackage{slashbox}
 \usepackage{enumitem}
 \usepackage{calligra}
-\usepackage{cinzel}
+\usepackage{esint}
 \usepackage{BOONDOX-calo}
 
 % Tikz
@@ -87,7 +86,7 @@
 \renewcommand\Im{\expandafter\mathfrak{Im}}
 
 \let\slantedpartial\partial
-\DeclareRobustCommand{\partial}{\text{\rotatebox[origin=t]{20}{\scalebox{0.95}[1]{$\slantedpartial$}}}\hspace{-1pt}}
+\DeclareRobustCommand{\partial}{\text{\rotatebox[origin=t]{15}{\scalebox{0.95}[1]{$\slantedpartial$}}}\hspace{-1pt}}
 
 % merging two maths characters w/ \charfusion
 \makeatletter
@@ -135,6 +134,7 @@
 % custom math operators
 \let\th\relax
 \let\det\relax
+\let\div\relax
 \DeclareMathOperator*{\codim}{codim}
 \DeclareMathOperator*{\dom}{dom}
 \DeclareMathOperator*{\gO}{O}
@@ -168,6 +168,9 @@
 \DeclareMathOperator{\sh}{sh}
 \DeclareMathOperator{\th}{th}
 \DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\div}{div}
+\DeclareMathOperator{\rot}{\vv{\mathrm{rot}}\,}
+\DeclareMathOperator{\grad}{\vv{\mathrm{gra}\smash{\mathrm{d}}}\,}
 
 % colors and page style
 \definecolor{truewhite}{HTML}{ffffff}
@@ -241,14 +244,16 @@
 	}
 }
 
-\newcommand{\titletp}[4]{
+\makeatletter
+\def\titletp{\@ifstar\titletp@star\titletp@nostar}
+\def\titletp@nostar#1#2#3#4{
 	\AtBeginDocument{
 		\begin{titlepage}
 			\begin{center}
 				\vspace{10cm}
-				{\Large \sc tp #1}\\
+				{\Large \scshape tp #1}\\
 				\vspace{1cm}
-				{\Huge \textsc{\textit{#2}}}\\
+				{\Huge\textsc{\textit{#2}}}\\
 				\vfill
 				{#3}\textit{MPI}${}^{\star}$\\
 			\end{center}
@@ -256,9 +261,18 @@
 	}
 	\fancyfoot{}\fancyhead{}
 	\fancyfoot[R]{#4 \textit{MPI}${}^{\star}$}
-	\fancyhead[C]{{\sc tp #1} : #2}
+	\fancyhead[L]{{\scshape tp #1}}
+	\fancyhead[C]{#2}
 	\fancyhead[R]{\thepage}
 }
+\def\titletp@star#1#2#3#4{
+	\fancyfoot{}\fancyhead{}
+	\fancyfoot[R]{#4 \textit{MPI}${}^{\star}$}
+	\fancyhead[L]{{\scshape tp #1}}
+	\fancyhead[C]{#2}
+	\fancyhead[R]{\thepage}
+}
+\makeatother
 
 \newcommand{\titletd}[2]{
 	\AtBeginDocument{
@@ -295,7 +309,7 @@
 % figure support
 \usepackage{import}
 \usepackage{xifthen}
-\pdfminorversion=7
+%\pdfminorversion=7
 \usepackage{pdfpages}
 \usepackage{transparent}
 \newcommand{\incfig}[1]{%
@@ -303,7 +317,16 @@
 	\import{./figures/}{#1.pdf_tex}
 }
 
-\pdfsuppresswarningpagegroup=1
+%\pdfsuppresswarningpagegroup=1
 \ctikzset{tripoles/european not symbol=circle}
 
 \newcommand{\missingpart}{{\large\color{red} Il manque quelque chose ici\ldots}}
+\def\guillemotleft{{\font\larm=larm1000\larm\char190}}
+\def\guillemotright{{\font\larm=larm1000\larm\char191}}
+
+\def\todonote#1{
+	\begin{mdframed}
+		\centering\Large\calligra
+		#1
+	\end{mdframed}
+}

@@ -1,0 +1,62 @@
+\section{Tri topologique}
+
+\begin{figure}[H]
+	\centering
+	\tikzfig{ex2-q1}
+	\caption{Exemple de graphe}
+\end{figure}
+
+\begin{enumerate}
+	\item Dans le graphe ci-dessus, $a \to c \to b$\/ est un tri topologique mais pas un parcours.
+	\item Dans le même graphe, $b \to a \to c$\/ est un parcours mais pas un tri topologique.
+	\item Supposons que $L_1$\/ possède un prédécesseur, on le note $L_i$\/ où $i > 1$. Ainsi, $(L_i, L_1) \in A$\/ et donc $i < 1$, ce qui est absurde. De même pour le dernier.
+	\item Il existe un tri topologique si, et seulement si le graphe est acyclique.
+		\begin{itemize}
+			\item[``$\implies$'']
+				Soit $L_1,\ldots,L_n$\/ un tri topologique. Montrons que le graphe est acyclique.
+				Par l'absurde, on suppose le graphe non acyclique : il existe $(i,j) \in \llbracket 1,n \rrbracket^2$\/ avec $i \neq j$\/ tels que $T_i \to \cdots \to T_j$\/ et $T_j \to \cdots \to T_i$ soient deux chemins valides. Ainsi, comme le tri est topologique et par récurrence, $i \le j$\/ et $j \le i$\/ et donc $i = j$, ce qui est absurde car $i$\/ et $j$\/ sont supposés différents. Le graphe est donc acyclique.
+			\item[``$\impliedby$'']
+				Soit $G$\/ un graphe tel que tous les sommets possèdent une arrête entrante. On suppose par l'absurde ce graphe acyclique.
+				Soit $x_0$\/ un sommet du graphe.
+				On construit par récurrence $x_0,x_1,\ldots,x_n,x_{n+1},\ldots$ les successeurs successifs. Il y a un nombre fini de sommets donc deux sommets sont identiques. Donc, il y a nécessairement un cycle, ce qui est absurde.
+				\begin{algorithm}[H]
+					\centering
+					\begin{algorithmic}[1]
+						\Entree $G = (S, A)$\/ un graphe acyclique
+						\Sortie $\mathrm{Res}$\/ un tri topologique.
+						\State $\mathrm{Res} \gets [\quad]$\/
+						\While{$G \neq \O$}
+							\State Soit $x$\/ un sommet de $G$\/ sans prédécesseur
+							\State $G \gets \big(S \setminus \{x\}, A \cap (S \setminus \{x\})^2\big)$\/ 
+							\State $\mathrm{Res} \gets \mathrm{Res} \cdot [x]$\/
+						\EndWhile
+						\State\Return $\mathrm{Res}$\/
+					\end{algorithmic}
+					\caption{Génération d'un tri topologique d'un graphe acyclique}
+				\end{algorithm}
+		\end{itemize}
+	\item~
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\Entree $G = (S, A)$\/ un graphe
+				\Sortie $\mathrm{Res}$\/ un tri topologique, ou un cycle
+				\State $\mathrm{Res} \gets [\quad]$\/
+				\While{$G \neq \O$}
+					\If{il existe $x$ sans prédécesseurs}
+						\State Soit $x$\/ un sommet de $G$\/ sans prédécesseur
+						\State $G \gets \big(S \setminus \{x\}, A \cap (S \setminus \{x\})^2\big)$\/ 
+						\State $\mathrm{Res} \gets \mathrm{Res} \cdot [x]$\/
+					\Else
+						\State Soit $x \in S$\/ 
+						\State Soit $x \gets x_1 \gets x_2 \gets \cdots \gets x_i$\/ la suite des prédécesseurs
+						\State\Return $x_i,x_{i+1},\ldots,x_i$, un cycle
+					\EndIf
+				\EndWhile
+				\State\Return $\mathrm{Res}$\/
+			\end{algorithmic}
+			\caption{Génération d'un tri topologique d'un graphe}
+		\end{algorithm}
+	\item On utilise la représentation par liste d'adjacence, et on stocke le nombre de prédécesseurs que l'on décroit à chaque choix de sommet.
+	\item On essaie de trouver un tri topologique, et on voit si l'on trouve un cycle.
+\end{enumerate}

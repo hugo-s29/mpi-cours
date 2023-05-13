@@ -1,0 +1,186 @@
+\documentclass[a4paper]{article}
+
+\input{../preamble.tex}
+
+\begin{document}
+	\begin{center}
+		\Huge $\mathbf{DM_1}$\/ Mathématiques
+	\end{center}
+	
+	\begin{enumerate}
+		\item
+			\begin{enumerate}
+				\item Soit $n \ge 2$. On a \[
+						I_n = \int_{0}^{\frac{\pi}{2}} \sin \theta \times \sin^{n-1}\theta ~\mathrm{d}\theta
+					\] et donc, par intégration par parties, on obtient
+					\begin{align*}
+						I_n &= \big[-\cos\theta \times \sin^{n-1}\theta\big]_{0}^{\frac{\pi}{2}} - \int_{0}^{\frac{\pi}{2}} (-\cos\theta) \times (n-1)\sin^{n-2}\theta ~\mathrm{d}\theta\\
+						&= \boxed{(n-1)\int_{0}^{\frac{\pi}{2}} \cos^2\thetaù\sin^{n-2}\theta ~\mathrm{d}\theta.} \\
+					\end{align*}
+				\item Soit $n \ge 2$. D'après le théorème de {\sc Pythagore}, on sait que, pour tout $\theta \in \left[ 0, \frac{\pi}{2} \right]$, on a $\cos^2\theta = 1 - \sin^2\theta$. Ainsi, avec l'expression de $I_n$\/ démontrée dans la question précédente, on obtient
+					\begin{align*}
+						I_n &= (n-1) \int_{0}^{\frac{\pi}{2}} (1 - \sin^2\theta)\sin^{n-2}\theta~\mathrm{d}\theta\\
+						&= (n-1) \bigg(\int_{0}^{\frac{\pi}{2}} \sin^{n-2}\theta ~\mathrm{d}\theta - \int_{0}^{\frac{\pi}{2}} \sin^{n}\theta~\mathrm{d}\theta \bigg) \\
+						&= (n-1)(I_{n-2}- I_n). \\
+					\end{align*}
+					On en déduit que \[
+						(n-1)I_{n-2} = (n-1+1) I_n \quad \text{d'où} \quad \boxed{I_n = \frac{n-1}{n}I_{n-2}.}
+					\]
+				\item Soit~$n \ge 2$ et soit~$\theta \in \left[ 0, \frac{\pi}{2} \right]$. On sait donc que $\sin \theta \in [0, 1]$. Ainsi, \[
+						\sin^{n-1}\theta \le \sin^{n}\theta
+					\] et, donc \[
+						\boxed{I_{n-1} = \int_{0}^{\frac{\pi}{2}} \sin^{n-1}\theta~\mathrm{d}\theta \le \int_{0}^{\frac{\pi}{2}}  \sin^n\theta~\mathrm{d}\theta = I_n.}
+					\]
+				\item Comme la suite $(I_n)$\/ est décroissante, on a, pour tout $n \in \N^*$, $I_{n-1} \le I_n$\/ et, en composant avec la fonction inverse, et et multipliant par $I_n$, on obtient \[
+						\boxed{\frac{I_n}{I_{n-1}} \le \frac{I_n}{I_n} = 1}
+					.\]
+					Également, d'après la question précédente, pour tout $n \ge 2$, on a \[
+						\frac{n-1}{n} = \frac{I_n}{I_{n-2}} \le \frac{I_{n-1}}{I_{n-2}}
+					.\] car la suite $(I_n)$\/ est décroissante. On effectue un changement le variables $n\to n+1$\/ et on obtient, pour tout $n \in \N^*$, \[
+						\boxed{\frac{n}{n+1} \le \frac{I_n}{I_{n-1}}.}
+					\]
+				\item Soit $n \ge 2$. On a, d'après la question~(c), \[
+						n\,I_n = (n-1)I_{n-2}
+					.\] Or, en multipliant des deux côtés par~$I_{n-1}$, on obtient \[
+						n\,I_n\,I_{n-1} = (n-1)I_{n-1}I_{n-2}
+					.\] Comme ce résultat est vrai pour toute valeur de~$n$\/ supérieure à~2, la suite~$(n I_n I_{n-1})$\/ est constante. Nommons cette constante $\alpha$.
+
+					On pose $n = 2$, ainsi on a $2\,I_2\,I_1 = \alpha$.
+					On calcule donc $I_1$\/ : \[
+						I_1 = \int_{0}^{\frac{\pi}{2}} \sin \theta ~\mathrm{d}\theta = \big[-\cos\theta\big]_0^{\frac{\pi}{2}} = 1
+					.\] Puis, $I_2$\/ : \[
+						I_2 = \int_{0}^{\frac{\pi}{2}} \sin^2\theta~\mathrm{d}\theta = \int_{0}^{\frac{\pi}{2}} \frac{1 - \cos(2\theta)}{2}~\mathrm{d}\theta = \frac{1}{2} \bigg(\big[\theta\big]_0^{\frac{\pi}{2}} - \frac{1}{2} \big[\sin 2\theta\big]_0^{\frac{\pi}{2}}\bigg) = \frac{\pi}{4} + 0
+					.\]
+					On en déduit donc que \[
+						\boxed{\alpha = \frac{\pi}{2}.}
+					\]
+				\item On sait, d'après la question~(d), que, pour tout $n \ge 2$, on a \[
+						\frac{n}{n+1} \le \frac{I_n}{I_{n-1}} \le \frac{I_n}{I_n} = 1
+					.\] Or, en passant à la limite, pour $n$\/ tendant vers $+\infty$, on obtient, par le théorème des gendarmes \[
+						\frac{I_n}{I_{n-1}} \tendsto{n\to +\infty} 1 \quad \text{et donc} \quad I_n \simi_{n\to +\infty} I_{n-1}.
+					\] Or, comme la suite $(n\,I_n\,I_{n-1})$\/ est constante et vaut $\frac{\pi}{2}$, on a \[
+						\frac{\pi}{2} = n\,I_n\,I_{n-1} \sim n\:{I_n}^2
+						\quad\text{d'où}\quad
+						{I_n}^2 \sim \frac{\pi}{2n}.
+					\]
+					On en déduit que \[
+						\boxed{I_n \sim \sqrt{\frac{\pi}{2n}}.}
+					\]
+				\item Soit $k \in \N^*$. D'après la question~(b), on a \[
+						I_{2k} = \frac{2k-1}{2k} I_{2k-2} = \frac{2k-1}{2k} \times \frac{2k-3}{2k-2} I_{2k - 4}
+					.\] En itérant ce procédé, on obtient
+					\begin{align*}
+						I_{2k} &= \frac{(2k-1)(2k-3)(2k-5)\cdots3}{(2k)(2k-2)\cdots4} I_2\\
+						&= \frac{\prod_{i=1}^{k} (2i+1)}{\prod_{i=2}^k (2i)} I_2 \\
+						&= \frac{\prod_{i=1}^{k} (2i+1)}{\prod_{i=1}^k (2i)} 2I_2 \\
+						&= \frac{(2k)!}{\Big(\prod_{i=1}^k (2i)\Big)^{\!\!2}} 2I_2 \\
+						&= \frac{(2k)!}{(2^k)^2\,(k!)^2} 2I_2\\
+						&\!\!\,\boxed{= \frac{(2k)!}{4^k\,(k!)^2} \frac{\pi}{2}.} \\
+					\end{align*}
+				\item Soit $k \in \N^*$, on a, d'après la question~(f),  \[
+						I_{2k} \simi_{k\to +\infty} \sqrt{\frac{\pi}{4k}}
+				.\] Or, dans la question~(g), on a également montré que \[
+					I_{2k} = \frac{(2k)!}{4^k\,(k!)^2} \cdot \frac{\pi}{2}
+				.\] On en déduit, donc que
+				\[
+					\frac{(2k)!}{(k!)^2} \sim 4^k \frac{2}{\pi} \sqrt{\frac{\pi}{4k\pi}} = 4^k \sqrt{\frac{4\pi}{4k\pi^2}}
+				.\] On en conclut que \[
+					\boxed{ \frac{(2k)!}{(k!)^2} \simi_{k\to +\infty} \frac{4^k}{\sqrt{k\pi}}.}
+				\]
+			\end{enumerate}
+		\item
+			\begin{enumerate}
+				\item Soit $n \in \N^*$. On sait, tout d'abord, que $\ln(n!) = \ln 2 + \ln 3 + \cdots + \ln n$\/ et donc, en procédant à l'aide d'une comparaison série-intégrale, on obtient l'inéquation suivante : \[
+					\int_{2}^{n+1} \ln x~\mathrm{d}x \ge \sum_{k=1}^n \ln k \ge \int_{1}^{n} \ln x~\mathrm{d}x
+				.\] Or, une primitive de $\ln x$\/ est $x \ln x - x$. On en conclut donc l'inéquation devient \[
+					(n+1) \ln(n+1) - n - 2 \ln 2 + 1 \ge \ln(n!) \ge n \ln n - n+ 1
+				.\] On divise cette inéquation par $n \ln n$\/ (qui ne s'annule pas) et on étudie la limite du membre de droite et celui de gauche :
+					\begin{align*}
+						&\frac{(n+1) \ln (n+1) - n - 2 \ln 2 + 1}{n \ln n} \ge \frac{\ln(n!)}{n \ln n} \ge  \frac{n \ln n - n + 1}{n \ln n}\\
+						\iff& \underbrace{\frac{n+1}{n}}_{\to 1} \times \underbrace{\frac{\ln(n+1)}{\ln n}}_{\to 1} - \underbrace{\frac{n}{n \ln n}}_{\to 0} + \underbrace{\frac{1 - 2\ln 2}{n \ln n}}_{\to 0} \ge \frac{\ln(n!)}{n \ln n} \ge 1 + \underbrace{\frac{1 - n}{n \ln n}}_{\to 0}\\
+					\end{align*}
+					En passant à la limite, pour $n \to +\infty$, on obtient donc 1 de chaque côtés de l'inéquation. On conclut, par le théorème des gendarmes que, \[
+						\frac{\ln(n!)}{n \ln n} \tendsto{n\to +\infty} 1\quad\text{i.e.}\quad\ln(n!) \sim n \ln n\quad\text{i.e.}\quad\boxed{\ln(n!) = n \ln n + \po(n \ln n).}
+					\]
+				\item Soit $n \ge 3$. On reprend l'inéquation de la question (a) : \[
+						(n+1) \ln(n+1) - n - 2 \ln 2 + 1 \ge \ln(n!) \ge n \ln n - n+ 1
+					.\]
+					On la divise, cette fois, par $n \ln n - n$\/ (qui ne s'annule pas car $n \ge 3$), et on étudie, encore une fois, sa limite :
+					\[
+						\underbrace{\frac{(n+1) \ln(n+1) - (n + 1)}{n \ln n - n}}_{\to 1} + \underbrace{\frac{2 - 2 \ln 2}{n \ln n - n}}_{\to 0} \ge \frac{\ln (n!)}{n \ln n - n} \ge \underbrace{\frac{n \ln n - n}{n \ln n - n}}_{\to 1} + \underbrace{\frac{1}{n \ln n - n}}_{\to 0}
+					.\] Le membre de droite ainsi que le membre de gauche convergent tous deux vers 1. On conclut, à l'aide du théorème des gendarmes, que \[
+						\frac{\ln(n!)}{n \ln n - n} \tendsto{n\to +\infty} 1\quad\text{i.e.}\quad \boxed{\ln (n!) = n \ln n - n + \po(n).}
+					\]
+				\item On définit la suite $(u_n)_{n\in\N}$, pour tout $n \in \N$, $u_n = \ln (n!) - n \ln n + n$. On veut montrer que $u_n \simi_{n\to +\infty} \frac{1}{2} \ln n$. Soit $n \ge 3$. On compare $u_{n+1}$\/ et $u_n$\/ :
+					\begin{align*}
+						u_{n+1} - u_n &= \ln\big((n+1)!\big) - (n+1)\ln(n+1) + (n+1) - \ln(n!) + n \ln n - n \\
+						&= \cancel{\ln(n!)} + \cancel{\ln(n+1)} - (n+\cancel1)\ln(n+1) + 1 - \cancel{\ln(n!)} + n \ln n \\
+						&= -n \ln (n+1) + 1 + n \ln n \\
+						&= -\cancel{n \ln n} + \cancel{n \ln n} - n \ln\left( 1 + \frac{1}{n} \right) + 1 \\
+						&= 1 - 1 + \frac{1}{2n} + \po\left( \frac{1}{n} \right) \\
+						&= \frac{1}{2n} + \po\left( \frac{1}{n} \right). \\
+					\end{align*}
+					Ainsi, en sommant ces termes, on obtient une somme télescopique :
+					\begin{align*}
+						u_n - u_1 = \sum_{k=1}^{n-1} (u_{k+1} - u_k) &= \sum_{k=1}^{n-1} \left( \frac{1}{2k} + \po\left( \frac{1}{n} \right) \right)\\
+						&= \frac{1}{2} \sum_{k=1}^{n-1} \left(\frac{1}{k} + \po\left( \frac{1}{n} \right)\right)\\
+						\simi_{n\to +\infty}\!\!\!\!\!\!\!\!&\mathrel{\phantom{=}} \frac{1}{2} \ln n.
+					\end{align*}
+					On en conclut que \[
+						\boxed{\ln (n!) = n \ln n - n + \frac{1}{2} \ln n + \po(\ln n).}
+					\]
+				\item On pose la suite $(v_n)_{n\in\N^*}$\/ définie, pour tout $n \in \N^*$, comme $v_n = \ln(n!) - n \ln n + n - \frac{1}{2} \ln n$. On veut montrer que la série télescopique $\sum (v_{n+1} - v_n)$\/ converge. Soit $n \in \N^*$.
+					\begin{align*}
+						v_{n+1} - v_n &= \ln\big((n+1)!\big) - \ln(n!) -(n+1) \ln(n+1) + n \ln n + (n+1) - n - \frac{1}{2} \ln(n+1) - \ln n \\
+						&= \ln\left( \frac{(n+1)!}{n!} \right) - (n+1) \ln(n+1) + n \ln n + 1 - \frac{1}{2} \ln\left( 1+ \frac{1}{n} \right) \\
+						&= \ln(n+1) - (n+1) \ln(n+1) + n \ln n + 1 - \frac{1}{2} \ln\left(1+\frac{1}{n}\right) \\
+						&= -n \ln(n+1) + n \ln n + 1 - \frac{1}{2} \ln\left( 1+ \frac{1}{n} \right)\\
+						&= -n \ln\left( 1 + \frac{1}{n} \right) + 1 - \frac{1}{2}\ln\left( 1+ \frac{1}{n} \right) \\
+						&= -\left( \frac{1}{2} + n \right) \ln\left( 1+ \frac{1}{n} \right) + 1 \\
+						&= -\left( \frac{1}{2} + n \right)\times\left( \frac{1}{n} - \frac{1}{2n^2} + \frac{1}{3n^3} + \po\left( \frac{1}{n^3} \right)  \right) + 1\\
+						&= -\frac{1}{2n} - 1 + \frac{1}{4n^2} + \frac{1}{2n} - \frac{1}{3n^2} + \po\left( \frac{1}{n^2} \right) + 1 \\
+						&= \frac{1}{3n^2}- \frac{1}{4n^2} + \po\left( \frac{1}{n^2} \right) \\
+						&= -\frac{1}{12n^2} + \po\left( \frac{1}{n^2} \right) \\
+					\end{align*}
+					On remarque que $\sum (v_{n+1} - v_n) \sim \sum -\frac{1}{12n^2} \sim \sum \frac{1}{n^2}$\/ et, comme la série $\sum \frac{1}{n^2}$\/ converge par critère de {\sc Riemann}, alors la série $\sum (v_{n+1} - v_n)$\/ converge également. Or, cette série est télescopique : \[
+						\forall n \ge 2,\quad \sum_{k=1}^{n-1} (v_{n+1}- v_n) = v_n - v_1
+					.\]
+					Le terme $v_1$\/ étant constant, on a démontré que la suite $(v_n)_{n\in\N}$\/ converge. En nommant sa limite $-K$, on a donc l'égalité suivante \[
+						v_n = K + \po(1)\qquad\text{i.e.}\qquad \boxed{\ln(n!) = n\ln n - n + \frac{1}{2} \ln n + K + \po(1).}
+					\]
+				\item
+					On pose, pour tout $n \in \N^*$, $w_n = \ln(n!) - n \ln n + n - \frac{1}{2} \ln n - K$. Soit $n \ge 2$. On calcule
+					\begin{align*}
+						w_{n+1} - w_n &= v_{n+1} - v_n + K - K \\
+						&= - \frac{1}{12n^2} + \po\left( \frac{1}{n^2} \right) \\
+					\end{align*}
+					On en déduit, comme à la question précédente, que la série $\sum (w_{n+1} - w_n)$\/ converge. Or, on a
+					\begin{align*}
+						\forall n \ge 2,\quad w_n - w_1 = \sum_{k=1}^{n-1} (w_{k+1} - w_k) &= \sum_{k=1}^{n-1} \left( -\frac{1}{12k^2} + \po\left( \frac{1}{n^2} \right) \right)\\
+						&= \sum_{k=1}^{n-1} \left( -\frac{1}{12n^2} + \po\left( \frac{1}{n^2} \right) \right)\\
+						&= n \times \left( -\frac{1}{12n^2} + \po\left( \frac{1}{n^2} \right) \right)\\
+						&= -\frac{1}{12n} + \po\left( \frac{1}{n} \right) \\
+					\end{align*}
+					On en déduit donc que \[
+						\ln(n!) - n \ln n + n - \frac{1}{2} \ln n - K = \frac{1}{12n} + \po\left( \frac{1}{n} \right)
+					\] d'où \[
+					\boxed{\ln(n!) = n \ln n - n + \frac{1}{2} \ln n + K + \frac{1}{12n} + \po\left( \frac{1}{n} \right).}
+					\] 
+			\end{enumerate}
+		\item En prenant le résultat de la question (2e) et lui appliquant la fonction exponentielle, on obtient \[
+			n! = n^n \times \mathrm{e}^{-n} \times \sqrt{n} \times \mathrm{e}^K \times \mathrm{e}^{\po(1)}
+		.\] Le terme en $\mathrm{e}^{\po(1)}$\/ tend vers 1 quand $n$\/ tend vers $+\infty$. En factorisant les exposants et en passant à un équivalent, cette expression peut se réécrire sous la forme \[
+			n! \simi_{n\to +\infty} \left( \frac{n}{\mathrm{e}} \right)^n \mathrm{e}^K \sqrt{n}
+		.\] On s'intéresse maintenant à déterminer $\mathrm{e}^K$. On connaît, d'après la question (1h), un équivalent de $(2n)! / (n!)^2$. On utilise l'équivalent de $n!$\/ trouvé précédemment et on détermine la valeur de $\mathrm{e}^K$.
+		\begin{align*}
+			\frac{4^n}{\sqrt{n\pi}} \sim \frac{(2n)!}{(n!)^2} \sim& \frac{\left( \frac{2n}{\mathrm{e}} \right)^{2n} \sqrt{2n} \times \mathrm{e}^K}{\left( \frac{n}{\mathrm{e}} \right)^{2n} \times n \times \mathrm{e}^K \times \mathrm{e}^K}\\
+			\sim& \left( \frac{2n}{n} \right)^{2n} \frac{\sqrt{2}}{\sqrt{n}\times \mathrm{e}^K}\\
+			\sim&\:2^{2n} \times \sqrt{2} \times \frac{1}{\sqrt{n} \times \mathrm{e}^K}
+		\end{align*}
+		On multiplie par $4^{-n} \times \sqrt{n}$\/ de chaque côtés de l'équivalence pour obtenir \[
+			\frac{1}{\sqrt{\pi}} \sim \frac{\sqrt{2}}{\mathrm{e}^K}\qquad\text{i.e.}\qquad \mathrm{e}^K \sim \sqrt{2\pi}
+		.\] Or, comme l'équivalent de $\mathrm{e}^K$\/ ne dépend plus de $n$, on en déduit que $\mathrm{e}^K = \sqrt{2\pi}$. On peut donc en déduire la formule de {\sc Stirling}\/ : \[
+			\boxed{n! \simi_{n\to +\infty} \left( \frac{n}{\mathrm{e}} \right)^n \sqrt{2\pi\,n}.}
+		\]
+	\end{enumerate}
+\end{document}

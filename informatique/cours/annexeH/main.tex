@@ -1,0 +1,47 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\titleanx{H}{Complexité moyenne}
+
+\begin{document} %% EXACT
+	Dans les annexes et cours précédents, on a vu la complexité \guillemotleft~pire cas~\guillemotright\ et la complexité amortie.
+	On considère les nombres d'opérations possibles pour toute entrée de taille $n$.
+	La complexité \guillemotleft~pire cas~\guillemotright\ est la complexité obtenue en prenant le $\max$ d'opération possibilité.
+	Pour la complexité moyenne, on suppose que chaque ensemble d'entrée de taille $n$ est munit d'une probabilité $P_n$.
+	Par exemple, on considère qu'une entrée est une permutation de $n$ éléments, \textit{i.e.}\ un élément de $\mathfrak{S}_n$.
+	On suppose que chaque entrée arrive avec équiprobabilité. Ainsi, $\forall \sigma \in \mathfrak{S}_n$, $P_n(\sigma) = 1/n!$.
+	Ainsi, on a \[
+		C_{\max}(n) = \max_{\sigma \in \mathfrak{S}_n} C(s) \text{ et } C_{\mathrm{moy}} = \sum_{\sigma \in \mathfrak{S}_n} P(\sigma) \cdot C(\sigma)
+	.\]
+	La complexité moyenne est la moyenne des complexité pondérées par les probabilités.
+
+	\begin{exm}
+		On considère l'algorithme ci-dessous.
+		\begin{algorithm}[H]
+			\centering
+			\begin{algorithmic}[1]
+				\Entree $\sigma \in \mathfrak{S}_n$ et $i \in \llbracket 1,n \rrbracket$
+				\Sortie $j \in \llbracket 1,n \rrbracket$ tel que $\sigma(j) = i$.
+				\For{$j \in \llbracket 1,n \rrbracket$}
+				\If{$\sigma(j) = i$} \Return $j$
+				\EndIf
+				\EndFor
+			\end{algorithmic}
+			\caption{Calcul d'inverse d'une permutation}
+		\end{algorithm}
+		\noindent
+		On munit $\mathfrak{S}_n$ de la probabilité uniforme.
+		Soit $i \in \llbracket 1,n \rrbracket$.
+		Notons, pour tout $j \in \llbracket 1,n \rrbracket$, $\mathfrak{S}_n^j = \{\sigma \in \mathfrak{S}_n  \mid \sigma(j) = i\}$.
+		Remarquons que $\mathfrak{S}_n = \bigcupdot_{j=1}^n \mathfrak{S}_n^j$.
+		Ainsi,
+		\begin{align*}
+			C_{\mathrm{moy}} &= \sum_{j=1}^n \sum_{\sigma \in \mathfrak{S}_n^j}P_n(\sigma) C(\sigma)\\
+			&= \sum_{j=1}^n j \times \frac{|\mathfrak{S}_n^j|}{n!}\\
+			&= \sum_{j=1}^n j \times \frac{(n+1)!}{n!}\\
+			&= \frac{1}{n} \cdot \frac{n(n+1)}{2}\\
+			&= \frac{n+1}{2}
+		\end{align*}
+	\end{exm}
+\end{document}

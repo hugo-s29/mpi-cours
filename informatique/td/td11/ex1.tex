@@ -1,0 +1,14 @@
+\section{Formalisation}
+
+\begin{enumerate}
+	\item
+		\begin{enumerate}[label=(\arabic*)]
+			\item $\forall e,\:\big(\textsf{etudiant}(e) \to \textsf{raison}(e)\big)$ ;
+			\item $\forall e,\:\big(\textsf{raison}(e) \to \textsf{humain}(e)\big)$ ;
+			\item $\forall e,\: \textsf{raison}(e) \to \lnot \textsf{elephant}(e)$ ;
+			\item $\forall e,\: \big(\big(\textsf{animal}(e) \land\lnot \textsf{chien}(e)\big)\to \forall \ell,\:\big(\textsf{logicien}(\ell) \to \textsf{gentil\_avec}(e, \ell)\big)$\/
+			\item $\forall h,\:\exists e,\: \textsf{elephant}(e) \to \textsf{cherche}(h, e)$\/ ;
+			\item $\forall e,\:\big[\big(\exists a,\: \textsf{aime}(x,y)\big) \land \big(\exists a,\: \lnot \textsf{aime}(e,a)\big)\big]$ ;
+		\end{enumerate}
+	\item $\forall x,\: \textsf{entier}(x) \to\big[\exists y,\:\textsf{entier}(y) \to \big(\textsf{successeur}(x,y) \to  (\forall z,\: \textsf{entier}(z) \to \lnot \textsf{inf}(z,x) \to \textsf{inf}(y, z))\big)\big]$.
+\end{enumerate}

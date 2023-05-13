@@ -1,0 +1,286 @@
+\lettrine{A}{u chapitre 1}, on s'est intéressé aux langages réguliers, et aux automates qui est un modèle de calcul relativement simple. Dans ce chapitre, on s'intéresse à un modèle plus puissant : un \textit{ordinateur}, on va notamment re-définir la notion de \textit{problème}. Le choix classique de définition d'un ordinateur n'est pas celui qui a été choisi au programme : un programme \textsc{OCaml}.
+
+\section{Remarques mathématiques}
+
+\begin{defn}
+	Étant donné une relation $\mathcal{R}$\/ sur $\mathcal{E} \times \mathcal{F}$, on dit que $\mathcal{R}$\/ est
+	\begin{itemize}
+		\item \textit{totale à gauche} dès lors que $\forall e \in \mathcal{E},\:\exists f \in \mathcal{F},\:(e,f) \in \mathcal{R}$\/ ;
+		\item \textit{déterministe} dès lors que $\forall e \in \mathcal{E},\:\forall (f, f') \in \mathcal{F}^2$, si $(e,f) \in \mathcal{R}$\/ et $(e, f') \in \mathcal{R}$, alors~$f = f'$.
+	\end{itemize}
+	\index{relation!totale à gauche}
+	\index{relation!déterministe}
+\end{defn}
+
+\begin{defn}
+	On appelle \textit{fonction totale} de $\mathcal{E}$\/ dans $\mathcal{F}$\/ une relation sur $\mathcal{E} \times \mathcal{F}$\/ déterministe et totale à gauche.
+	\index{fonction!totale}
+\end{defn}
+
+\begin{defn}
+	On appelle \textit{fonction partielle} de $\mathcal{E}$\/ dans $\mathcal{F}$\/ une relation sur $\mathcal{E} \times \mathcal{F}$\/ déterministe. On note alors \[
+		\mathrm{def}(f) = \{x \in \mathcal{E}  \mid \exists y \in \mathcal{F},\:(x,y) \in f\}
+	.\]
+	\index{fonction!partielle}
+\end{defn}
+
+\begin{rmk}
+	Soit $f$\/ une fonction partielle de $\mathcal{E}$\/ dans $\mathcal{F}$\/ tel que $\square \not\in \mathcal{F}$, alors on peut completer $f$\/ en une fonction totale de $\mathcal{E}$\/ dans $\mathcal{F} \cup \{\square\}$\/ de la manière suivante : \begin{align*}
+		f : \mathcal{E}  &\longrightarrow \mathcal{F} \cup \{\square\} \\
+		x &\longmapsto  \begin{cases}
+			f(x) &\text{ si } x \in \mathrm{def}(f)\\
+			\square &\text{ sinon}.
+		\end{cases}
+	\end{align*}
+\end{rmk}
+
+\section{Problèmes}
+
+\begin{defn}
+	Étant donnés un ensemble d'\ul{entrée} $\mathcal{E}$, un ensemble de \ul{sortie} $\mathcal{S}$, on appelle \textit{problème} sur $\mathcal{E} \times \mathcal{S}$\/ une relation $\mathcal{R}$\/\:\footnotemark sur $\mathcal{E} \times \mathcal{S}$\/ totale à gauche.
+	\index{problème}
+\end{defn}
+\footnotetext{C'est l'ensemble des liens entrées/sorties}
+
+\begin{exm}
+	Le problème \[
+		\text{\textsc{Prime}} : \begin{cases}
+			\text{\textbf{Entrée}} &: n \in \N\\
+			\text{\textbf{Sortie}} &: n\text{ est-il premier ?}
+		\end{cases}
+	\] est donc défini comme \[
+		\text{\textsc{Prime}} = \big\{(0, \mathbf{F}), (1, \mathbf{F}), (2, \mathbf{V}), (3, \mathbf{V}), (4, \mathbf{F}), (5, \mathbf{V}), \ldots\big\} \subseteq \N\times \mathds{B}
+	.\]
+\end{exm}
+
+\begin{exm}
+	Le problème \[
+		\text{\textsc{Find}\textsubscript0} : \begin{cases}
+			\text{\textbf{Entrée}} &: \text{un tableau } T \text{ contenant au moins un } 0\\
+			\text{\textbf{Sortie}} &: i \in \N \text{ tel que } T[i] = 0
+		\end{cases}
+	\] est donc défini comme \[
+		\text{\textsc{Find}\textsubscript0} = \Big\{\big([|0,1,1|],0\big), \big([|0, 1, 0|], 0\big), \big([|0,1,0|], 2\big),\ldots\Big\}
+	.\]~
+\end{exm}
+
+\begin{rmk}
+	De la même manière qu'en mathématiques, on n'écrit pas $\big\{(0,1),(1,2),(2,3),\ldots\big\}$\/ mais $x \mapsto x+1$, en informatique, on préfère la notation sous forme de problème.
+\end{rmk}
+
+\begin{rmk}
+	On précisera, en cas d'ambigüité la représentation choisie pour les entrées.
+\end{rmk}
+
+\begin{exm}
+	Les deux problèmes \[
+		\begin{cases}
+			\text{\textbf{Entrée}} &: n \text{ sous forme décomposée en facteurs premiers}\\
+			\text{\textbf{Sortie}} &: n \text{ est-il premier ?}
+		\end{cases}
+	\] et \[
+		\begin{cases}
+			\text{\textbf{Entrée}} &: n \text{ en base 2}\\
+			\text{\textbf{Sortie}} &: n \text{ est-il premier ?}
+		\end{cases}
+	\] sont différents.
+\end{exm}
+
+\begin{rmk}
+	Lorsque ce n'est pas précisé, dans la suite du cours, les entiers sont représentés en base 2.
+\end{rmk}
+
+\begin{exm}
+	Dans le problème \[
+		\begin{cases}
+			\text{\textbf{Entrée}} &: L_1 \text{ et } L_2 \text{ deux langages réguliers}\\
+			\text{\textbf{Sortie}} &: L_1 = L_2,
+		\end{cases}
+	\] on \ul{doit} préciser la représentation de $L_1$\/ et $L_2$.
+\end{exm}
+
+\begin{defn}
+	On appelle \textit{problème de décision} un problème à valeurs dans $\mathds{B}$\/ déterministe.
+	\index{problème!de décision}
+\end{defn}
+
+\begin{exm}
+	Par exemple, le problème \textsc{Prime} est un problème de décision.
+\end{exm}
+
+\begin{rmk}[Notation]
+	Lorsque $Q$\/ est un problème, on note $\mathcal{E}_Q$\/ son espace d'entrée, et $\mathcal{S}_Q$\/ son espace de sortie.
+	De plus, si $Q$\/ est un problème de décision, on note $Q^+ = \{e \in \mathcal{E}_Q  \mid (e, \mathbf{V}) \in Q\}$\/ et $Q^- = \{e \in \mathcal{E}_Q  \mid (e, \mathbf{F}) \in Q\}$. $\{Q^+,Q^-\}$\/ est une partition de $\mathcal{E}_Q$.
+\end{rmk}
+
+\section{Décidabilité}
+
+La définition d'un algorithme comme une suite finie d'instruction élémentaire, nous montre que l'ensemble d'algorithmes est dénombrable.\footnote{en bijection avec $\N$}\@ Mais, l'ensemble de problèmes est indénombrable. En effet, pour $x \in [0,1[$, on définit le problème \[
+	\text{\textsc{Bit}}_x : \begin{cases}
+		\text{\textbf{Entrée}} &: n \in \N\\
+		\text{\textbf{Sortie}} &: \text{le $n$-ième bit de } x.
+	\end{cases}
+\]
+Et, comme $[0,1[$\/ n'est pas dénombrable, l'ensemble des problèmes ne l'est pas non plus.
+
+\subsection{Modèles de calcul}
+
+\begin{defn}
+	On appellera \textit{modèle de calcul} la donnée d'un ensemble de \ul{machines}
+	\begin{itemize}
+		\item qu'il est possible d'exécuter sur des \ul{entrées} ;
+		\item qui peuvent \ul{ou pas} retourner une réponse.
+	\end{itemize}
+	\index{modèle de calcul}
+	\index{machine}
+\end{defn}
+
+\begin{exm}
+	Les automates déterministes qu'il est possible d'exécution sur une entrée $w \in \Sigma^*$, obtenant ainsi un booléen $b \in \mathds{B}$, est un modèle de calcul. 
+\end{exm}
+
+Dans ce chapitre, notre modèle de calcul sera l'ensemble des fonction \textsc{OCaml} ayant pour type~$\texttt{string} \to \texttt{string}$ qu'il est possible d'exécuter, qui peuvent donner un réponse ou non (boucle infinie, erreur).
+
+\begin{rmk}
+	On se place dans un monde d'exécution idéal : \textit{mémoire infinie}.
+\end{rmk}
+
+\begin{exm}
+	On reprend le problème \textsc{Prime}. On code, sous forme de fonction \textsc{OCaml}, la machine ci-dessous. Elle répond au problème \textsc{Prime}.
+	\begin{lstlisting}[language=caml,caption={Machine décidant le problème \textsc{Prime}}]
+let est_premier (s: string) : string =
+	let n = int_of_string s in
+	if n <= 1 then "false"
+	else
+		let i = ref 2 in
+		let i_sq = ref 4 in
+		let compose = ref false in
+		while not !compose && !i_sq <= n do
+			if n mod !i = 0 then compose := true
+			else i_sq := !i_sq + 2 * !i + 1;
+				i := !i + 1;
+		done;
+		string_of_bool(not !compose)
+	\end{lstlisting}
+\end{exm}
+
+\begin{rmk}[Notation]
+	Dans la suite, lorsque $\mathcal{M}$\/ est une machine, et $w \in \texttt{string}$, on notera
+	\begin{itemize}
+		\item $w \xrightarrow[\mathcal{M}]{} w'$ si l'exécution de $\mathcal{M}$\/ sur $w$\/ conduit à $w' \in \texttt{string}$.
+		\item $w \xrightarrow[\mathcal{M}]{} {\circlearrowleft}$\/
+			si l'exécution de $\mathcal{M}$\/ sur $w$\/ conduit à une erreur.
+	\end{itemize}
+	Dans la suite de ce chapitre, on fixe $\Sigma = \texttt{char}$\/ et donc $\Sigma^* = \texttt{string}$.
+\end{rmk}
+
+\begin{rmk}
+	On pourra, dans la suite, généraliser la signature de nos machines à un type $\mathcal{E} \to \mathcal{F}$\/ dès lors qu'on exhibe une fonction de sérialisation $\varphi : \mathcal{E} \to \Sigma^*$\/ inversible (sur son espace image) injective : avec $\varphi_\mathcal{E} : \mathcal{E} \to \Sigma^*$\/ et $\varphi_\mathcal{F} : \mathcal{F} \to \Sigma^*$, on a 
+	\begin{lstlisting}[language=caml,caption=Généralisation des machines ayant pour entrée un ensemble $\mathcal{E}$\/ et sortie $\mathcal{F}$]
+let ma_super_fonction (e: %*$\mathcal{E}$*)) : %*$\mathcal{F}$*) = ...
+
+let ma_fonction (s: string) : string =
+	%*$\varphi_\mathcal{F}$*)(ma_super_fonction(%*$\varphi_\mathcal{E}^{-1}$*)(s)))
+	\end{lstlisting}
+\end{rmk}
+
+
+\subsection{Décidabilité}
+
+\begin{defn}
+	Une fonction partielle $f : \mathcal{E} \to \mathcal{S}$\/ est dite \textit{calculée} par une machine $\mathcal{M}$\/ dès lors que \[
+		\forall e \in \mathrm{def}(f),\quad e \xrightarrow[\mathcal{M}]{} f(e)
+	.\] On dit alors d'une telle fonction qu'elle est \textit{calculable}.
+	\index{fonction!calculable}
+\end{defn}
+
+\begin{rmk}
+	Cette définition ne spécifie aucunement le comportement de $\mathcal{M}$\/ sur une entrée $e \not\in \mathrm{def}(f)$.
+\end{rmk}
+
+\begin{exm}
+	Considérons la fonction partielle $\sqrt{\phantom{x}} : \Z \to \Z$\/ telle que $\mathrm{def}(\sqrt{\phantom{x}}) = \{p^2  \mid p \in \N\}$, et $\sqrt{x}$\/ est l'unique $y \in \N$\/ tel que $y^2 = x$.
+	\begin{lstlisting}[language=caml,caption=Machine calculant la fonction $\sqrt{\phantom{x}}$]
+let sqrt (n: int): int =
+	if m < 0 then -1
+	else
+		begin
+			let i = ref 0 in
+			let i_sq = ref 0 in
+			while !i_sq <> n do
+				i_sq := !i_sq + 2 * !i + 1;
+				i := !i + 1;
+			done;
+			!i
+		end
+	\end{lstlisting}
+	\begin{itemize}
+		\item Pour $\mathtt{n} < 0$, on a $\mathtt{n} \xrightarrow[\mathcal{M}]{} -1$.
+		\item Pour $\mathtt{n} \ge 0$\/ qui n'est pas un carré, $\mathtt{n} \xrightarrow[\mathcal{M}]{} {\circlearrowleft}$.
+		\item Pour $\mathtt{n} \ge 0$\/ qui est un carré, $\mathtt{n} \xrightarrow[\mathcal{M}]{} \sqrt{\mathtt{n}}$.
+	\end{itemize}
+	Ainsi, $\sqrt{\phantom{x}}$\/ est calculable.
+\end{exm}
+
+\begin{defn}
+	Étant donné qu'un problème de décision $Q$\/ est un cas particulier de fonction totale $\mathcal{E}_Q \to \mathds{B}$, on dit que $Q$\/ est \textit{décidé} par une machine $\mathcal{M}$\/ dès lors que \[
+		\forall e \in \mathcal{E}_Q,\qquad\Big(e \in Q^+ \iff e \xrightarrow[\mathcal{M}]{} \mathbf{V}\quad\text{ et }\quad e \in Q^- \iff e \xrightarrow[\mathcal{M}]{} \mathbf{F}\Big)
+	.\] On dit alors que ce problème $Q$\/ est \textit{décidable}.
+	\index{problème!décidable}
+\end{defn}
+
+\begin{exm}
+	On considère le problème \[
+		\text{\textsc{Existe}\textsubscript0} :\begin{cases}
+			\text{\textbf{Entrée}} &: \text{un tableau } T\\
+			\text{\textbf{Sortie}} &: \exists i \in \N,\: T[i] = 0 ?.
+		\end{cases}
+	\]
+	La machine ci-dessous décide le problème \textsc{Existe}\textsubscript0.
+	\begin{lstlisting}[language=caml,caption=Machine décide le problème \textsc{Existe}\textsubscript0]
+exception OK
+
+let existe (t: int array) : bool =
+	try
+		for i = 0 to (Array.length t) - 1 do
+			if t.(i) = 0 then
+				raise OK
+		done;
+		false
+	with
+	| OK -> true
+	\end{lstlisting}
+\end{exm}
+
+\subsection{Langages et problèmes de décision}
+
+Les notions de langages et problèmes de décision d'entrée $\Sigma^*$\/ coïncident. En effet, à un langage $L \subseteq \Sigma^*$, on associe le problème de décision \[
+	\text{\textsc{Appartient}}_L : \begin{cases}
+		\text{\textbf{Entrée}}&: w \in \Sigma^*\\
+		\text{\textbf{Sortie}}&: w \in L\;?.
+	\end{cases}
+\]
+On a alors $(\text{\textsc{Appartient}}_L)^+ = L$. Réciproquement, à un problème de décision $Q$\/ d'entrées $\Sigma^*$, on associe le langage $Q^+$.
+
+\begin{defn}
+	Un langage $L$\/ est dit \textit{décidable} lorsque le problème $\text{\textsc{Appartient}}_L$ est décidable.
+	\index{langage!décidable}
+\end{defn}
+
+\begin{defn}
+	Étant donné une machine $\mathcal{M}$\/ de type $\texttt{string} \to \texttt{bool}$, on appelle \textit{langage} de $\mathcal{M}$, que l'on note $\mathcal{L}(\mathcal{M})$, l'ensemble \[
+		\big\{w \in \Sigma^*  \mid w \xrightarrow[\mathcal{M}]{} \mathbf{V}\big\}
+	.\]
+	\index{machine!langage}
+\end{defn}
+
+\begin{rmk}
+	$\mathcal{L}(\mathcal{M})$\/ {\color{red}n'est pas} le complémentaire de $\big\{w \in \Sigma^*  \mid w \xrightarrow[\mathcal{M}]{} \mathbf{F}\big\}$. En effet, il peut exister $w \in \Sigma^*$\/ tel que $w \xrightarrow[\mathcal{M}]{} {\circlearrowleft}$.
+\end{rmk}
+
+\begin{prop}
+	Un langage $L$\/ est décidable si, et seulement si $L$\/ est le langage d'une machine $\mathcal{M}$\/ telle que $\forall w \in \Sigma^*$, $w \xrightarrow[\mathcal{M}]{} \mathbf{V}$\/ ou $w \xrightarrow[\mathcal{M}]{} \mathbf{F}$.
+\end{prop}
+
+
+

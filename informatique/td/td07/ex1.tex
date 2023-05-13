@@ -1,0 +1,30 @@
+\section{Quelques problèmes décidables}
+
+\begin{enumerate}
+	\item Soit $f : \R \to \R$.
+		\begin{itemize}
+			\item Si $f$\/ admet un zéro, on pose $\mathcal{M} = \texttt{fun}\ \texttt{s}\ \to \texttt{true}$.
+			\item Si $f$\/ n'admet pas un zéro, on pose $\mathcal{M} = \texttt{fun}\ \texttt{s}\ \to \texttt{false}$.
+		\end{itemize}
+		Alors, $\mathcal{M}$\/ décide \textsc{Zero}$_f$.
+	\item Soit $\mathcal{M}$\/ une machine, et soit $w \in \Sigma^*$.
+		\begin{itemize}
+			\item Si $\mathcal{M}$\/ se termine sur l'entrée $w$, alors on pose $\mathcal{M}' = \texttt{fun}\ \texttt{s} \to \texttt{true}$.
+			\item Si $\mathcal{M}$\/ ne se termine pas sur l'entrée $w$, alors on pose $\mathcal{M}' = \texttt{fun}\ \texttt{s} \to \texttt{false}$.
+		\end{itemize}
+		Alors, $\mathcal{M}'$\/ décide \textsc{Arrêt}$_{\mathcal{M},w}$.
+	\item Le problème est trivialement vrai. En effet, soit $M \in \mathcal{O}$, de la forme
+		\begin{lstlisting}[language=caml]
+let m (s: string): string =
+	%*$\langle$\textrm{code}$\rangle$*) 
+		\end{lstlisting}
+		On crée la machine $\mathcal{N}$\/ ci-dessous.
+		\begin{lstlisting}[language=caml]
+let n (s: string): string =
+	if true then
+		%*$\langle$\textrm{code}$\rangle$*) 
+	else
+		%*$\langle$\textrm{code}$\rangle$*) 
+		\end{lstlisting}
+		On a $\texttt{m} \neq \texttt{n}$, mais $\mathcal{L}(\texttt{m}) = \mathcal{L}(\texttt{n})$, donc le problème est vrai sur toute entrée et la fonction $\texttt{fun}\ \texttt{s} \to \texttt{true}$\/ répond au problème.
+\end{enumerate}

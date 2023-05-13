@@ -1,0 +1,102 @@
+\begin{prv}
+	Soit $f$\/ l'endomorphisme représenté par $A$\/ dans une base orthonormée $\mathcal{B}$.
+	La matrice $A$\/ étant symétrique, d'où l'endomorphisme $f$\/ est autoadjoint.
+	On applique le théorème précédent à $f$ : soit $\mathcal{B}'$\/ une base orthonormée dans laquelle $f$\/ est diagonal. Soit alors $P$\/ la matrice de passage de $\mathcal{B}$\/ à $\mathcal{B}'$ : la matrice $D = P^{-1} \cdot A \cdot P$\/ est diagonale, et la matrice $P$\/ est orthogonale car c'est la matrice de passage d'une base orthonormée $\mathcal{B}$\/ vers une autre base orthonormée $\mathcal{B}'$.
+\end{prv}
+
+\begin{defn}
+	On dit d'un endomorphisme autoadjoint $f \in \mathcal{S}(E)$\/ qu'il est :
+	\begin{enumerate}
+		\item \textit{positif} si $\forall \vec{x} \in E$, $\left<\vec{x} \mid f(\vec{x}) \right> \ge 0$\/ ;
+		\item \textit{défini positif} s'il est positif, et que $\forall \vec{x} \in E$, si $\left<\vec{x}  \mid f(\vec{x}) \right> = 0$, alors $\vec{x} = \vec{0}$.
+			Autrement dit, si  \[
+				\forall \vec{x} \in E\setminus \{\vec{0}\}, \quad\left<\vec{x}  \mid f(\vec{x}) \right> > 0
+			.\]
+	\end{enumerate}
+	De même, on dit d'une matrice $A \in \mathcal{S}_n(\R)$, qu'elle est :
+	\begin{enumerate}
+		\item \textit{positive} si $\forall X \in \mathcal{M}_{n,1}(\R)$, $X^\top \cdot M \cdot X \ge 0$\/ ;
+		\item \textit{définie positive} si elle est positive, et que $\forall X \in \mathcal{M}_{n,1}(\R)$, si $X^\top \cdot M\cdot X = 0$, alors $X = 0$.
+			Autrement dit, si \[
+				\forall X \in \mathcal{M}_{n,1}(\R) \setminus \{0_{\mathcal{M}_{n,1}(\R)}\}, \quad X^\top \cdot M \cdot X > 0
+			.\]
+	\end{enumerate}
+
+	On note $\mathcal{S}^+(E)$\/ l'ensemble des endomorphismes autoadjoints positifs, et $\mathcal{S}^{++}(E)$\/ l'ensemble des endomorphismes autoadjoints définis positifs
+	De même, on note $\mathcal{S}^+_n(\R)$\/ l'ensemble des matrices symétriques positives,
+	et $\mathcal{S}_n^{++}(\R)$\/ l'ensemble des matrices symétriques définies positives.
+\end{defn}
+
+\begin{thm}
+	Un endomorphisme autoadjoint est :
+	\begin{enumerate}
+		\item positif, si, et seulement si toutes ses valeurs propres sont positives ;
+		\item défini positif si, et seulement si toutes ses valeurs propres sont strictement positives.
+	\end{enumerate}
+\end{thm}
+
+Ainsi, on a \[
+	\begin{array}{ccccc}
+		f \in \mathcal{S}^+(E)&\iff&f \in \mathcal{S}(E)&\text{ et }& \Sp(f) \subset \R^+,\\
+		f \in \mathcal{S}^{++}(E)&\iff&f \in \mathcal{S}(E)&\text{ et }& \Sp(f) \subset \R^+_*,\\
+		M \in \mathcal{S}_n^+(\R)&\iff&M \in \mathcal{S}_n(\R)&\text{ et }& \Sp(M) \subset \R^+,\\
+		M \in \mathcal{S}_n^{++}(\R)&\iff&M \in \mathcal{S}_n(\R)&\text{ et }& \Sp(M) \subset \R^+_*.\\
+	\end{array}
+\]
+
+
+\marginpar{\color{cyan} Tarte à la \textit{double} crème}
+\begin{prv}
+	\begin{enumerate}
+		\item
+			\begin{itemize}
+				\item[``$\implies$'']
+					On suppose $f \in \mathcal{S}^+$, \textit{i.e.}\ pour tout vecteur $\vec{x}$, $\left<\vec{x}  \mid f(\vec{x}) \right> \ge  0$.
+					Soit $\lambda \in \mathrm{Sp}(f)$ : il existe un vecteur $\vec{u}$\/ non nul tel que $f(\vec{u}) = \lambda \vec{u}$.
+					D'où, par hypothèse, \[
+						0 \le \left< \vec{u}  \mid f(\vec{u}) \right> = \left<\vec{u}  \mid \lambda \vec{u} \right> = \lambda \left<\vec{u} \mid \vec{u} \right>
+					.\]
+					Or, $\left<\vec{u}  \mid \vec{u} \right> > 0$.
+					D'où, $\lambda \ge 0$.
+				\item[``$\impliedby$'']
+					Supposons $\Sp(f) \subset \R_+$\/ et $f \in \mathcal{S}(E)$.
+					On veut montrer que $f \in \mathcal{S}^+(E)$, \textit{i.e.}\ pour tout vecteur $\vec{x}$, $\left<\vec{x}  \mid f(\vec{x}) \right> \ge 0$.
+					On se place dans une base adaptée, grâce à la seconde hypothèse.
+					En effet, d'après le théorème spectral, il existe une base orthonormée $\mathcal{B}$\/ de $E$\/ formée de vecteurs propres de $f$.
+					On pose $\mathcal{B} = (\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_n)$, cette base.
+					Soit $\vec{x} \in E$ : on pose $\vec{x} = x_1 \vec{\varepsilon}_1 + x_n \vec{\varepsilon}_2 + \cdots + x_n \vec{\varepsilon}_n$.
+					Ainsi, \[
+						f(\vec{x}) = x_1 f(\vec{\varepsilon}_1) + x_2 f(\vec{\varepsilon}_2) + \cdots + x_n f(\vec{\varepsilon}_n)
+						= x_1 \lambda_1 \vec{\varepsilon}_1 + x_2 \lambda_2 \vec{\varepsilon}_2 + \cdots + x_n \lambda_n \vec{\varepsilon}_n
+					.\]
+					D'où,$\left<\vec{x}  \mid f(\vec{x}) \right> = \lambda_1x_1^2 + \lambda_2 x_2^2 + \cdots + \lambda_n x_n^2$.
+					Or, $\forall i \in \llbracket 1,n \rrbracket$, $\lambda_i \ge 0$\/ par hypothèse.
+					D'où  $\left<\vec{x}  \mid f(\vec{x}) \right> \ge 0$.
+			\end{itemize}
+		\item
+			\begin{itemize}
+				\item[``$\implies$'']
+					On suppose $f \in \mathcal{S}^{++}$, \textit{i.e.}\ pour tout vecteur $\vec{x}$, $\left<\vec{x}  \mid f(\vec{x}) \right> > 0$.
+					Soit $\lambda \in \mathrm{Sp}(f)$ : il existe un vecteur $\vec{u}$\/ non nul tel que $f(\vec{u}) = \lambda \vec{u}$.
+					D'où, par hypothèse, \[
+						0 < \left< \vec{u}  \mid f(\vec{u}) \right> = \left<\vec{u}  \mid \lambda \vec{u} \right> = \lambda \left<\vec{u} \mid \vec{u} \right>
+					.\]
+					Or, $\left<\vec{u}  \mid \vec{u} \right> > 0$.
+					D'où, $\lambda > 0$.
+				\item[``$\impliedby$'']
+					Supposons $\Sp(f) \subset \R^*_+$\/ et $f \in \mathcal{S}(E)$.
+					On veut montrer que $f \in \mathcal{S}^{++}(E)$, \textit{i.e.}\ pour tout vecteur $\vec{x}$ non nul, $\left<\vec{x}  \mid f(\vec{x}) \right> > 0$.
+					On se place dans une base adaptée, grâce à la seconde hypothèse.
+					En effet, d'après le théorème spectral, il existe une base orthonormée $\mathcal{B}$\/ de $E$\/ formée de vecteurs propres de $f$.
+					On pose $\mathcal{B} = (\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_n)$, cette base.
+					Soit $\vec{x} \in E$ un vecteur non nul : on pose $\vec{x} = x_1 \vec{\varepsilon}_1 + x_n \vec{\varepsilon}_2 + \cdots + x_n \vec{\varepsilon}_n$.
+					Ainsi, \[
+						f(\vec{x}) = x_1 f(\vec{\varepsilon}_1) + x_2 f(\vec{\varepsilon}_2) + \cdots + x_n f(\vec{\varepsilon}_n)
+						= x_1 \lambda_1 \vec{\varepsilon}_1 + x_2 \lambda_2 \vec{\varepsilon}_2 + \cdots + x_n \lambda_n \vec{\varepsilon}_n
+					.\]
+					D'où,$\left<\vec{x}  \mid f(\vec{x}) \right> = \lambda_1x_1^2 + \lambda_2 x_2^2 + \cdots + \lambda_n x_n^2$.
+					Or, $\forall i \in \llbracket 1,n \rrbracket$, $\lambda_i > 0$\/ par hypothèse, et il existe $i \in \llbracket 1,n \rrbracket$, tel que $x_i \neq 0$\/ car $\vec{x} \neq \vec{0}$.
+					D'où  $\left<\vec{x}  \mid f(\vec{x}) \right> > 0$.
+			\end{itemize}
+	\end{enumerate}
+\end{prv}

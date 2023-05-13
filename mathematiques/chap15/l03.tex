@@ -1,0 +1,121 @@
+\begin{defn}
+	Soit $f$ une fonction définie sur un ouvert $U \subset \R^p$ comme
+	\begin{align*}
+		f: U &\longrightarrow \R^n \\
+		\vec{x} = (x_1,\ldots,x_p) &\longmapsto \big(f_1(\vec{x}),\ldots,f_n(\vec{x})\big).
+	\end{align*}
+	Si chaque fonction $f_i$ admet $p$ dérivées partielles en $\vec{a}$, alors la matrice $\mathrm{J}_f(\vec{a}) \in \mathcal{M}_{n,p}(\R)$ définie par $\big(\mathrm{J}_f(\vec{a})\big)_{i,j} = \frac{\partial f_i}{\partial x_j}(\vec{a})$, pour tout $i \in \llbracket 1,n \rrbracket$ et $j \in \llbracket 1,p \rrbracket$, est appelée \textit{jacobienne} de $f$ en $\vec{a}$.
+\end{defn}
+
+\[
+	\begin{pNiceMatrix}[first-row,first-col]
+		& \substack{\ds\partial_1 f(\vec{a})\\ \ds\downarrow} & \substack{\ds\cdots\\\phantom{\ds\downarrow}} & \substack{\ds\partial_p f(\vec{a})\\ \ds\downarrow}\\
+		\nabla f_1 \to & \partial_1 f_1(\vec{a}) & \cdots & \partial_p f_1(\vec{a})\\
+		\vdots \mathrel{\phantom{\to}} &\vdots & \ddots & \vdots\\
+		\nabla f_n \to & \partial_1 f_n(\vec{a}) & \cdots & \partial_p f_n(\vec{a})
+	\end{pNiceMatrix} = \mathrm{J}_f(\vec{a})
+.\]
+
+\begin{exm}
+	La fonction \begin{align*}
+		M: \R^+_* \times \R &\longrightarrow \R^2 \\
+		(r,\varphi) &\longmapsto (x,y) = (r \cos \varphi, r \sin \varphi)
+	\end{align*}
+	change les coordonnées polaires $(r, \varphi)$ en coordonnées cartésiennes $(x,y)$. La fonction $M$ possède des dérivées partielles et sa matrice jacobienne est \[
+		\mathrm{J}_M(r, \varphi) = \begin{pmatrix}
+			 \frac{\partial x}{\partial r}(r, \varphi) &  \frac{\partial x}{\partial \varphi}(r,\varphi)\\
+			 \frac{\partial y}{\partial r}(r,\varphi) &  \frac{\partial y}{\partial \varphi}(r,\varphi)
+		\end{pmatrix} =
+		\begin{pNiceMatrix}[first-row]
+			\substack{\frac{\partial M}{\partial r}\\ \downarrow} & \substack{\frac{\partial M}{\partial \varphi}\\ \downarrow}\\
+			\cos \varphi & -r \sin \varphi\\
+			\sin \varphi & r \cos \varphi
+		\end{pNiceMatrix}
+	.\]
+	Ses vecteurs colonnes sont représentés sur la figure ci-dessous. Le vecteur $\frac{\partial M}{\partial r}$ est tangent à la droite paramétrée par $r \mapsto M(r, \varphi)$ ; le vecteur $\frac{\partial M}{\partial \varphi}$ est tangent au cercle paramétré par $\varphi \mapsto M(r,\varphi)$.
+\end{exm}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(7cm);
+		draw(unitcircle, red);
+		draw((-1.5,0)--(1.5,0), Arrow(TeXHead));
+		draw((0,-1.5)--(0,1.5), Arrow(TeXHead));
+		label("$r$", (1, 0), align=SE);
+		real t = pi/6;
+		pair m = expi(t);
+		pair er = m / 3;
+		pair et = (-sin(t),cos(t)) / 3;
+		draw((0,0)--m, dashed);
+		draw(m--m+er, deepcyan, Arrow(TeXHead));
+		draw(m--m+et, magenta, Arrow(TeXHead));
+		draw(arc((0,0), 0.5, 0, 30), Arrow(TeXHead));
+		dot("$M(r,\varphi)$", m, align=SE);
+		label("$\varphi$", expi(t/2) * 0.6);
+		label("$\dfrac{\partial M}{\partial r}(r,\varphi)$", m + er, deepcyan, align=2*E);
+		label("$\dfrac{\partial M}{\partial\varphi}(r,\varphi)$", m + et, magenta, align=2*N);
+	\end{asy}
+	\caption{Coordonnées polaires}
+\end{figure}
+
+\section{La différentielle d'une fonction}
+
+Dans toute la suite, $E$ et $F$ sont des espaces vectoriels normés de dimensions finies $p = \dim E$ et $n = \dim F$. Si l'on choisit une base de $E$ et une base de $F$, alors on pourra confondre $\vec{x} \in E$ et $(x_1, \ldots, x_p) \in \R^p$ d'une part, et $f(\vec{x}) \in F$ et $\big((f_1(\vec{x}),\ldots,f_n(\vec{x})\big) \in \R^n$ d'autre part.
+
+\begin{prop-defn}
+	Soient $U$ un ouvert de $E$, un point $\vec{a} \in U$, et une fonction $f : U \to F$. On dit que $f$ est \textit{différentiable} en $\vec{a}$ s'il existe une application linéaire $\ell_{\vec{a}} : E \to F$ telle que \[
+		f(\vec{a} + \vec{h}) = f(\vec{a}) + \ell_{\vec{a}}(\vec{h}) + \po(\vec{h})
+	.\]
+	Si $f$ est différentiable en $\vec{a}$, alors
+	\begin{enumerate}
+		\item l'application $\ell_{\vec{a}}$ est unique, on l'appelle \textit{la différentielle} de $f$ en $\vec{a}$, et on note
+			\begin{align*}
+				\ell_{\vec{a}} = \mathrm{d}f(\vec{a}): E &\longrightarrow F \\
+				\vec{h} &\longmapsto \ell_{\vec{a}}(\vec{h}) = \mathrm{d}f(\vec{a}) \cdot \vec{h} \;;
+			\end{align*}
+		\item les dérivées partielles de $f$ en $\vec{a}$ existent et \[
+				\forall \vec{h} \in E,\quad\quad \mathrm{d}f(\vec{a}) \cdot \vec{h} = h_1\,\partial_1 f(\vec{a}) + \cdot + h_p\, \partial_p f(\vec{a}) = \sum_{i = 1}^p h_i\, \partial_i f(\vec{a})
+			.\]
+	\end{enumerate}
+\end{prop-defn}
+
+\begin{prv}~\\
+	\begin{description}
+		\item[1ère preuve de l'unicité.] Supposons qu'il existe $L_1$ et $L_2$ deux applications linéaires telles que, pour tout vecteur $\vec{h}$, $f(\vec{a}+\vec{h}) = f(\vec{a}) + L_1(\vec{h}) + \po(\vec{h})$ et $f(\vec{a}+\vec{h}) = f(\vec{a}) + L_2(\vec{h}) + \po(\vec{h})$.
+			Montrons que $L_1 = L_2$. On soustrait les deux expressions de $f(\vec{a} + \vec{h})$ et on trouve $\vec{0} = \vec{0} + L_1(\vec{h}) - L_2(\vec{h}) + \po(\vec{h})$.
+			On fixe $\vec{h} \in E$, et soit $t \in \R^*$ : $L_1(t\vec{h}) - L_2(t \vec{h}) = \po(t\vec{h}) = \|t \vec{h}\| \varepsilon(t \vec{h})$. Ainsi, par homogénéité de la norme et par linéarité de $L_1$ et $L_2$, on a $t\:L_1(\vec{h}) - t\:L_2(\vec{h}) = |t|\cdot \|\vec{h}\|\cdot \varepsilon(t\vec{h})$.
+			Ainsi, $L_1(\vec{h}) - L_2(\vec{h}) = \|\vec{h}\|\cdot \hat{\varepsilon}(t \vec{h})$ où $\hat{\varepsilon}(t \vec{h}) = \pm \varepsilon(t \vec{h})$.
+			On fait tendre $t$ vers 0, et donc $L_1(\vec{h}) - L_2(\vec{h}) \to 0$. D'où, $L_1(\vec{h}) - L_2(\vec{h}) = \vec{0}$ pour tout vecteur $\vec{h} \in E$. On en déduit $L_1 = L_2$.
+		\item[2nde preuve de l'unicité \& formule.]
+			Soit $\ell_{\vec{a}}$ une application linéaire telle que $f(\vec{a}+\vec{h}) = f(\vec{a}) + \ell_{\vec{a}}(\vec{h}) + \|\vec{h}\|\,\varepsilon(\vec{h})$, pour tout vecteur $\vec{h} \in E$.
+			En particulier, on pose $\vec{h} = t\,\vec{e}_i$, où $\vec{e}_i$ est l'un des vecteurs d'une base de $E$, et $t \in \R^*$.
+			Ainsi, $f(\vec{a}+t \vec{e}_i) = f(\vec{a}) + \ell_{\vec{a}}(t \vec{e}_i) + \|t \vec{e}_i\|\, \varepsilon(t \vec{e}_i)$.
+			En développant, on trouve $f(a_1, \ldots, a_{i-1}, a_i + t, a_{i+1}, \ldots, a_p) - f(a_1, a_2, \ldots, a_{i-1},a_i,a_{i+1},\ldots,a_p) = t \ell_{\vec{a}}(\vec{e}_i) + |t|\, \|\vec{e}_i\|\,\varepsilon(t \vec{e}_i)$, par linéarité de $\ell_{\vec{a}}$ et par homogénéité de la norme.
+			On divise par $t$ et on trouve \[
+				\frac{f(a_1, \ldots, a_{i-1}, a_i + t, a_{i+1}, \ldots, a_p) - f(a_1, a_2, \ldots, a_{i-1},a_i,a_{i+1},\ldots,a_p)}{t} = \ell_{\vec{a}}(\vec{e}_i) + \|\vec{e}_i\|\, \hat{\varepsilon}(t \vec{e}_i) \tendsto{t \to 0} \ell_{\vec{a}}(\vec{e}_i)
+			.\] D'où, $\partial_i f(\vec{a})$ existe et vaut $\ell_{\vec{a}}(\vec{e}_i)$.
+			
+			Si $\vec{h}$ est quelconque, alors on pose $\vec{h} = h_1 \vec{e}_1 + \cdots + h_p \vec{e}_p$. Par linéarité de $\ell_{\vec{a}}$, on a \[
+				\mathrm{d}f(\vec{a}) \cdot \vec{h} = \ell_{\vec{a}}(\vec{h}) = h_1 \ell_{\vec{a}}(\vec{e}_1) + \cdots + h_p \ell_{\vec{a}}(\vec{e}_p) = h_1\:\partial_1f(\vec{a}) + \cdots + h_p\,\partial_p f(\vec{a})
+			.\]
+	\end{description}
+\end{prv}
+
+\begin{exm}
+	\begin{enumerate}
+		\item La fonction
+			\begin{align*}
+				f: \mathcal{M}_n(\R) &\longrightarrow \mathcal{M}_n(\R) \\
+				A &\longmapsto A^2
+			\end{align*}
+			est différentiable en chaque point $A \in \mathcal{M}_n(\R)$ et $\mathrm{d}f(A) \cdot H = AH + HA$.
+			En effet, $f(A + H) = (A+H)^2 = A^2 + AH + HA + H^2 = f(A) + [AH + HA] + H^2$. La formule entre crochets est linéaire en $H$, et dépend de $A$, on la note $\ell_A(H)$.
+			Et, montrons que $H^2 = \po(H)$ \textit{i.e.} $H^2 = \|H\| \varepsilon(H)$, avec $\varepsilon(H) \to 0$ quand $H \to 0$.
+			Montrons alors que $H^2 / \|H\| \to 0$ quand $H \to 0$, \textit{i.e.}\ montrons que $\|H^2\| / \|H\| \to 0$ quand $\|H\|\to 0$.\footnotemark\ On choisit une norme sous-multiplicative. Alors, $\|H^2\| \le \|H\| \times \|H\|$. D'où, $0 \le \|H^2\| / \|H\| \le \|H\|^2 / \|H\| \le \|H\|$. Par le théorème des gendarmes, on a bien $\|H^2\|/ \|H\| \to 0$ quand $H \to 0$.
+	\end{enumerate}
+\end{exm}
+
+\footnotetext{L'enjeu est de choisir une norme adaptée à la question : toutes les normes sont équivalentes en dimension finie.}
+
+

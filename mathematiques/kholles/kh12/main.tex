@@ -1,0 +1,131 @@
+\documentclass[a4paper]{article}
+
+\input{../../preamble.tex}
+
+\def\khollenum{12}
+
+\fancyhead[L]{Hugo {\sc Salou}\/ MPI$^\star$}
+\fancyhead[R]{\scshape Khôlle n\tsup{o} \khollenum}
+
+\begin{document}
+	\begin{center}
+		\bfseries\scshape\Huge Khôlle n\tsup{o} \khollenum
+	\end{center}
+
+	\paragraph{Exercice 2.}
+	Posons les événements $P_n$\/ \guillemotleft~le 1\tsup{er} \textsc{Pile} apparaît au $n$-ième lancer,~\guillemotright\ et $B$\/ \guillemotleft~tirer une boule blanche.~\guillemotright\@ Les événements $(P_n)_{n \in \N}$\/ forment un système quasi-complet d'événements, d'où, d'après la formule des probabilités totales,
+	\begin{align*}
+		P(B) &= \sum_{k=1}^\infty P(B \cap P_n) \\
+		&= \sum_{k=1}^\infty P(B  \mid P_n) \times P(P_n)\\
+	\end{align*}
+	Or, par équiprobabilité, pour tout $n \in \N$, $P(P_n) = \left(\frac{1}{2}\right)^n$.
+	De plus et aussi par équiprobabilité, pour tout $n \in \N$, $P(B  \mid P_n) = \frac{1}{n}$ car il y a une seule boule blanche, et $n - 1$\/ boules noires.
+	On en déduit donc que \[
+		P(B) = \sum_{k=1}^\infty \frac{1}{n 2^n}
+	.\] On reconnaît le développement en série entière de $-\ln(1 - x)$, dans le cas $x = \frac{1}{2}$. Or, le rayon de convergence de cette série est de 1, et $\frac{1}{2} \in {]{-1},1[}$, la série numérique $\sum \frac{1}{n 2^n}$\/ converge donc. On en déduit que \[
+		\boxed{P(B) = -\ln\left(1 - \frac{1}{2}\right) = -\ln \frac{1}{2} = \ln 2.}
+	\]
+
+	\paragraph{Exercice 3.}
+	\begin{enumerate}
+		\item Soit $x \in {]-R,R[}$. On calcule :
+			\begin{align*}
+				(1 - x - x^2) \cdot f(x) &= (1 - x - x^2) \sum_{n=0}^\infty u_n x^n \\
+				&= \sum_{n = 0}^\infty u_n x^n - \sum_{n=0}^\infty u_n x^{n+1} -\sum_{n=0}^\infty u_n x^{n+2} \\
+				&= \sum_{n=0}^\infty u_n x^n - \sum_{n=1}^\infty u_{n-1} x^n - \sum_{n=2}^\infty u_{n-2} x^n \\
+				&= \sum_{n=2}^\infty (u_n - u_{n-1} - u_{n-2})x^n + u_0 - u_1 + u_1 x \\
+				&= \sum_{n=0}^\infty 0\cdot x^n + u_0 - u_1 + u_1x \\
+				&= u_0 + u_1(x - 1) \\
+			\end{align*}
+			On en déduit que \[
+				\boxed{(1 - x - x^2) \cdot f(x) = x - 1.}
+			\]
+		\item Prouvons le par récurrence forte : posons $P_n$\/ le prédicat \guillemotleft~$u_n \le 2^n$.~\guillemotright\ 
+			\begin{itemize}
+				\item On a bien $u_0 = 0 \le 2^0 = 1$, d'où $P_0$.
+				\item On a bien $u_1 = 1 \le 2^1 = 1$, d'où $P_0$.
+				\item Soit $n \in \N$, avec $n \ge 1$. Supposons, pour $k \le n$, $P_k$ vrai. Montrons $P_{n+1}$.
+					Par définition de la suite, on a \[
+						u_{n+1} = u_n + u_{n-1} \le 2^n + 2^{n-1} \le 2^n + 2^n \le 2^{n+1}
+					,\] d'où $P_{n+1}$.
+			\end{itemize}
+			Par récurrence forte, on en déduit que, \ul{pour tout $n \in \N$, $u_n \le 2^n$}.
+			Or, la série entière $\sum 2^n x^n = \sum (2x)^n$ est une série géométrique, dont le rayon de convergence vaut $\frac{1}{2}$. On en déduit que \[
+				\boxed{R \ge \frac{1}{2}.}
+			\]
+		\item Résolvons l'équation caractéristique de la suite $(u_n)$\/ : \[
+					(C) : \quad\quad z^2 - z - 1 = 0
+			.\] Le discriminant du polynôme $X^2 - X - 1$\/ vaut $\Delta = 5 > 0$ ; les solutions $\varphi$\/ et $\psi$\/ sont donc \[
+				\varphi = \frac{1 + \sqrt{5}}{2} \quad\quad \quad \psi = \frac{1 - \sqrt{5}}{2}
+			.\] Ainsi, il existe $A$\/ et $B$\/ deux réels tels que, pour $n \in \N$, \[
+				u_n = A \varphi^n + B \psi^n
+			.\]  Or, $u_0 = A + B = 0$, et \[
+				u_1 = A\varphi + B \psi = \frac{A + B + \sqrt{5} (A - B)}{2} = (A-B) \cdot \frac{\sqrt{5}}{2} = 1
+			.\] D'où $B = -A$, et donc $A - B = 2A = 2 / \sqrt{5}$. Ainsi, on en déduit que  \[
+				A = \frac{1}{\sqrt{5}} \quad\quad \text{ et } \quad\quad B = -\frac{1}{\sqrt{5}}
+			.\] On en déduit le terme général de la suite $(u_n)_{n\in\N}$\/ : \[
+				\forall n \in \N,\quad u_n = \frac{1}{\sqrt{5}} \cdot (\varphi^n - \psi^n)
+			.\]
+			D'où, $\sum u_n x^n = \frac{1}{\sqrt{5}} \sum \varphi^n\,x^n - \frac{1}{\sqrt{5}} \sum \psi^n\,x^n = \frac{1}{\sqrt{5}}\big(\sum (\varphi x)^n - \sum (\psi x)^n\big)$. La série entière $\sum (\varphi x)^n$\/ est géométrique, et a pour rayon de convergence $\frac{1}{\varphi}$\/ ; de même, la série entière $\sum (\psi x)^n$\/ a pour rayon de convergence $\frac{1}{\psi}$.
+			Comme $\frac{1}{\varphi} \neq \frac{1}{\psi}$, on en déduit que le rayon de convergence de la série entière $\sum u_n x^n$\/ vaut  \[
+				\boxed{R = \min\left(\frac{1}{\varphi}, \frac{1}{\psi}\right) = -\frac{1 - \sqrt{5}}{2}.}
+			\]
+	\end{enumerate}
+
+	\paragraph{Exercice 1.}
+	\begin{enumerate}
+		\item Soit $S \in \mathcal{S}_n(\R)$, et soit $M \in \mathcal{M}_n(\R)$.
+			On sait que $\mathcal{S}_n(\R) \perp \mathcal{A}_n(\R)$, et $\mathcal{S}_n(\R) \oplus \mathcal{A}_n(\R)$.
+			Et, nous avons l'égalité \[
+			(\star)\quad\quad M = \underbrace{\frac{M - M^\top}{2}}_{\in \mathcal{A}_n(\R)} + \underbrace{\frac{M+M^\top}{2}}_{\in \mathcal{S}_n(\R)}
+			.\] D'après le théorème de \textsc{Pythagore}, \[
+				\|M - S\|^2 = \left\| \frac{M-M^\top}{2}\right\|^2 + \left\|\frac{M+M^\top}{2} - S\right\|^2 \le \left\| \frac{M-M^\top}{2}\right\|^2
+			.\] Ainsi, comme la norme est positive ou nulle, et par croissance de la fonction racine carrée, on en déduit que \[
+				\boxed{\|M - S\| \le \left\| \frac{M-M^\top}{2}\right\|.}
+			\]
+		\item L'inéquation ci-dessus est vraie pour toute matrice symétrique $S$. En particulier, si $S = \frac{M - M^\top}{2} \in \mathcal{S}_n(\R)$, alors \[
+			M - S = \frac{M - M^\top}{2} \quad\quad \text{ d'où } \quad\quad \|M - S\| = \left\|\frac{M - M^\top}{2}\right\|,
+		\] d'après $(\star)$. Or, par définition $d\big(M, \mathcal{S}_n(\R)\big)$ est le minimum des normes $\|M - S\|$, d'où \[
+			\boxed{d\big(M, \mathcal{S}_n(\R)\big) = \left\|\frac{M - M^\top}{2}\right\|.}
+		\] 
+	\end{enumerate}
+
+	\begin{comment}
+	\paragraph{Exercice 4.}
+	\def\N{\ensuremath{\mathds{N} \setminus \{0,1\}}} % douteux, mais ça marche
+	\begin{enumerate}
+		\item Soit $(u_n)_{n\in\N}$\/ le terme général de la série $\sum \frac{1}{n^a + (-1)^n}$. On a, si $a > 1$, \[
+				\frac{1}{n^a}\simi_{n\to +\infty} \frac{1}{n^a + 1} \ge u_n \ge \frac{1}{n^a - 1} \simi_{n\to +\infty} \frac{1}{n^a}
+			.\] La série de \textsc{Riemann} $\sum \frac{1}{n^a}$\/ converge si, et seulement si $a > 1$. Ainsi, si $a > 1$, la série $\sum u_n$\/ converge, car, à partir d'un certain rang $N$, la suite $(u_n)_{n \ge N}$\/ est positive.
+
+			Si $a = 1$, alors $u_n = \frac{1}{n + (-1)^n} \sim \frac{1}{n}$, et la série $\sum \frac{1}{n}$\/ ne converge pas. On en déduit que la série $\sum u_n$\/ diverge.
+
+			Si $a < 1$, alors la série $\sum u_n$\/ diverge grossièrement. En effet, on considère les deux sous-suites $(u_{2n})_{n \in \N}$\/ et $(u_{2n + 1})_{n \in \N}$ : 
+			\[
+				u_{2n} = \frac{1}{(2n)^a + 1} \tendsto{n\to +\infty} 1
+				\quad\quad \text{ et }\quad\quad
+				u_{2n+1} = \frac{1}{(2n+1)^a - 1} \tendsto{n\to +\infty} -1
+			.\] Par unicité de la limite, la suite $(u_n)_{n\in\N}$\/ ne converge pas vers 0, la série $\sum u_n$\/ diverge grossièrement.
+		\item Soit $(v_n)_{n \in \N}$\/ le terme général de la série $\sum \frac{(-1)^n}{n^a + (-1)^n}$.
+
+			Si $a = 1$, alors $v_n = (-1)^n\frac{1}{n + (-1)^n} \sim \frac{(-1)^n}{n}$, et la série $\sum \frac{(-1)^n}{n}$\/ converge (vers $\ln 2$). On en déduit que la série $\sum v_n$\/ converge.
+
+			Si $a > 1$, on considère le rang $N$\/ (défini à la question précédente, tel que la série $(u_n)_{n \ge N}$\/ soit positive.
+			Ainsi, $(|v_n|)_{n \ge N} = (u_n)_{n \ge N}$, d'où la série $\sum\:|v_n|$\/ converge d'après la question précédente, la série $\sum v_n$\/ converge donc.
+
+			Si $a < 1$, alors on considère les sous-suites $(v_{2n})_{n\in\N}$\/ et $(v_{2n + 1})_{n\in\N}$ : \[
+				v_{2n} = \frac{1}{(2n)^a + 1} \tendsto{n \to +\infty} 1
+				\quad\quad \text{ et } \quad\quad
+				v_{2n+1} = \frac{-1}{(2n+1)^a - 1} \tendsto{n \to +\infty} 1
+			.\] Par unicité de la limite, la suite $(v_n)_{n \in \N}$\/ converge vers $1 \neq 0$. La série $\sum v_n$\/ diverge donc grossièrement.
+		\item Soit $R$\/ le rayon de convergence de la série $\sum u_n x^n$.
+			Soit $x \neq 0$. On calcule :
+			\[
+				\frac{|u_{n+1}\:x^{n+1}|}{|u_n\:x^n|} \sim \left(\frac{n}{n+1}\right)^\alpha\:|x|
+				= \left(\frac{1}{1 + \frac{1}{n}}\right)^\alpha\:|x| \tendsto{n\to +\infty} |x|
+			.\]
+	\end{enumerate}
+	\end{comment}
+\end{document}
+
+

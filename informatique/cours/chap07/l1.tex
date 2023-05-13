@@ -1,0 +1,15 @@
+\setcounter{section}{-1}\relax
+\section{Motivation}
+
+On considère le problème \textbf{NP}-complet du \textit{voyageur de commerce} : étant donné un graphe pondéré $G$\/ quel est le tour de longueur\footnote{poids des arrêtes total} minimale \textit{i.e.}\ quelle est la permutation de sommets telle que la longueur totale est minimale.
+
+On se ramène à un problème de décision : étant donné une constante $K \in \R$, existe-t-il un chemin de longueur inférieure à $K$.
+
+Un algorithme glouton, allant d'un sommet à son voisin le plus proche, ne permet pas de résoudre ce problème en complexité polynômiale.
+
+On ne cherche plus le \guillemotleft~tour optimal~\guillemotright\ mais on cherche une solution proche : on veut trouver une constante $\rho$\/ telle que, quelque soit l'entrée, le chemin obtenu est de longueur inférieure à $\rho$\/ fois la longueur optimale.
+
+\section{Problèmes d'optimisation}
+
+Dans un premier temps, on s'intéresse à un problème où l'on cherche à minimiser quelque chose. On réalise la transformation réalisée dans la partie précédente : étant donné un seuil $K$, on est ce que la valeur est inférieure à $K$.
+On se ramène donc à un problème de décision.

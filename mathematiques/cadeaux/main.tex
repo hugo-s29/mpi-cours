@@ -2,6 +2,7 @@
 
 \input{../preamble.tex}
 \usepackage{pgfornament}
+\usepackage{slantsc}
 
 \begin{document}
 	\clearpage
@@ -563,4 +564,1185 @@
 			\end{align*}
 			Ce polynôme interpole les $n+1$\/ points et $\deg P \le n$.
 	\end{itemize}
+	\clearpage
+	\centerline{\LARGE Cadeau du 08/11/22}
+
+	\centerline{\textit{Dénombrement}}
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{
+	\begin{enumerate}
+		\item Calculer, de deux manières, $\sum_{k=0}^n {n\choose k}$. {\color{gray}(binôme et dénombrement)}
+		\item (Petite formule de \textsc{Pascal}) Calculer $p {n \choose p} = n {n-1\choose p-1}$.
+		\item (Formule de \textsc{Vandermonde}) Montrer, de deux manières, que $\sum_{k=0}^n {a\choose p}{b \choose n-p} = {a+b\choose n}$. {\color{gray}(développement de $(1+x)^{a+b}$\/ et dénombrement)}
+		\item Montrer, de deux manières, que $\sum_{k=p}^n {k\choose p} = {n+1\choose p+1}$\/ {\color{gray}(télescope et dénombrement)}
+	\end{enumerate}
+	}
+	\bigskip
+	\bigskip
+
+	\textbf{Réponse du cadeau} :
+	\begin{enumerate}
+		\item On développe, à l'aide du binôme de \textsc{Newton}, $2^n = (1+1)^n = \sum_{k=0}^n {n \choose k}\cdot 1^k\cdot 1^{n-k} = \sum_{k=0}^n {n\choose k}$.
+
+			Autre méthode : $\sum_{k=0}^n {n\choose k}$\/ est le nombre de parties d'un ensemble à $n$\/ éléments. Construire une partie à $n$\/ éléments, c'est : choisir ou non le premier élément (2 manières), choisir ou non le second élément (2 manière), \ldots, etc jusqu'au $n$-ième élément. Il y a donc $2^n$\/ manières.
+		\item Soit $E$\/ un ensemble à $n$\/ éléments. Soit $A$\/ une partie de $E$ à $p$\/ éléments, et soit $B$\/ sont complémentaire dans $E$. L'application \begin{align*}
+				f: \{X \subset A  \mid |X| = a + b\} &\longrightarrow \bigcupdot_{k=0}^n \{X \subset A  \mid |X| = k\} \cup \{ X \subset B  \mid |X| = n - k\} \\
+				X &\longmapsto (X \cap A, X \cap B)
+			\end{align*}
+			est bijective. (L'application $(X,Y) \mapsto X \cup Y$\/ est sa réciproque.)
+			Ainsi, \[|\{X \subset A  \mid |X| = a + b\}| = \sum_{k=0}^n |\{X \subset A  \mid |X| = k\}| \cdot |\{X \subset A  \mid |X| = n - k\}|,\] d'où ${a+b\choose n} = \sum_{k=0}^n {a\choose k}{b \choose n - k}$.
+
+			Moins rigoureusement, choisir $n$\/ éléments de $E$, c'est choisir $0$\/ éléments de $A$\/ et $n$\/ éléments de $B$ (il y en a ${a\choose 0}{b\choose n}$), ou $1$\/ élément de $A$\/ et $n-1$\/ éléments de $B$\/ (il y en a ${a\choose 1}{b\choose n-1}$), ou\ldots\@ On en conclut qu'il y a $\sum_{p=0}^n {a\choose p}{b\choose n-p}$\/ manières de choisir $n$\/ éléments dans $E$. Mais, c'est aussi ${a+b\choose n}$.
+
+			Autre méthode : on a d'une part $(1+X)^{a+b} = \sum_{k=0}^{a+b} {a+b\choose k} X^k$. Et, d'autre part,
+			\[
+				(1+X)^{a+b} = (1+X)^a \times (1+X)^b = \Big(\sum_{p=0}^a {a\choose p} X^p \Big)\Big(\sum_{q = 0}^b {b\choose q} X^q \Big)
+			.\] Or, deux polynômes sont égaux si et seulement si leurs coefficients sont égaux deux-à-deux. D'où \[
+				{a+b\choose n} = \sum_{p+q=n} {a\choose p}{b\choose q} = \sum_{p=0}^n {a\choose p}{b\choose n- p}
+			.\]
+		\item On a \[
+				\sum_{k=p}^n {k\choose p} = \sum_{k=p}^n \left({k+1\choose p+1} - {k\choose p+1}\right) = {n+1\choose p+1} - {p\choose p+1} = {n+1\choose p+1}
+			.\]
+			Autre méthode : dénombrement. Je choisis $p+1$\/ éléments parmi $n+1$. On pose $k+1$\/ le plus grand éléments de ces éléments choisis : $p + 1 \le k+1 \le n+1$, d'où $p \le k \le n$.
+			Ainsi, on doit donc choisir encore $p$\/ autres éléments dans $\llbracket 1, k\rrbracket$\/ (car ces éléments sont plus petits que $n$).
+	\end{enumerate}
+	\clearpage
+	\centerline{\LARGE Cadeau du 01/12/22}
+
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{Soit $A \in \mathcal{M}_n(\R)$. Montrer que $\Ker(A^\top \cdot A) = \Ker A$.}
+	\bigskip
+	\bigskip
+
+	\textbf{Réponse du cadeau} :\\
+	On procède par double-inclusion.
+	\begin{itemize}
+		\item[``$\supset$''] Soit $X \in \Ker A$. Alors, $A\cdot X = 0$. Ainsi, $A^\top \cdot A\cdot X = A^\top \cdot 0 = 0$. On a bien $\Ker (A^\top \cdot A) \supset A$.
+		\item[``$\subset$''] Soit $X \in \Ker(A^\top \cdot A)$. Alors $A^\top \cdot A \cdot X = 0$, d'où $X^\top \cdot  (A^\top \cdot A \cdot X) = 0$. Ainsi, $(X^\top \cdot A^\top)\cdot (A\cdot X) = 0$, donc $(A\cdot X)^\top \cdot (A\cdot X) = 0$. Mais, avec le produit scalaire canonique sur $\mathcal{M}_{n,1}(\R)$, on a donc $\|A\cdot X\|^2 = 0$. Par le caractère défini du produit scalaire, on a bien $A\cdot X = 0$\/ et donc $X \in \Ker A$. D'où $\Ker(A^\top \cdot A) \subset \Ker A$.
+	\end{itemize}
+	\clearpage
+	\centerline{\LARGE Cadeau du 02/12/22}
+	\centerline{\textit{Lemme de \textsc{Borel}-\textsc{Cantelli}}}
+
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{Soit $(\Omega, \mathcal{A}, P)$\/ un espace probabilisé, et soit $(E_n)_{n \in \N}$\/ une suite d'événements. On pose $F = \bigcap_{n \in \N} \big(\bigcup_{k\ge n} E_k\big)$.
+		\begin{enumerate}
+			\item On suppose que la série $\sum P(E_n)$\/ converge. En encadrement judicieusement $P(F)$, montrer que $P(F) = 0$.
+			\item On suppose à présent que les événements $E_n$\/ sont indépendants et que la série $\sum P(E_n)$\/ diverge.
+				\begin{enumerate}
+					\item Soit $n \in \N$. Montrer que, pour tout $N \ge n$, $\ln P\big( \bigcap_{p=n}^N \bar{E}_p \big) \le -\sum_{p=n}^N P(E_p)$.
+					\item En déduire $\lim_{N\to \infty} P\big(\bigcap_{p=n}^N \bar{E}_p\big)$.
+					\item Montrer que, pour tout $n \in \N$, $P\big(\bigcap_{p \ge n} \bar{E}_p\big) = 0$.
+					\item Conclure que $P(F) = 1$.
+				\end{enumerate}
+	\end{enumerate}}
+	\bigskip
+	\bigskip
+
+	\textbf{Réponse du cadeau} :\\
+	\begin{enumerate}
+		\item On pose, pour $k \in \N$, l'événement $A_n = \bigcup_{k \ge n} E_k$.
+		On a $A_n = A_{n+1} \cup E_n \supset A_{n+1}$, la suite d'événements $(A_n)_{n \in \N}$\/ est décroissante (pour l'inclusion). Ainsi, par continuité décroissante, \[
+			P\Big(\bigcap_{n\in \N} A_n\Big) = \lim_{n\to \infty} P(A_n)
+		.\] Or, comme la série $\sum P(E_n)$\/ converge, on a, pour tout $n \in \N$, par $\sigma$-sous-additivité, \[
+			0 \le P(A_n) = P\Big( \bigcup_{k \ge n} E_k \Big) \le \sum_{k \ge n} P(E_k),
+		\] et il s'agit du reste de la série convergente $\sum P(E_n)$, qui tends vers 0. D'où, par le théorème des gendarmes, $P(A_n)$\/ tend vers 0 quand $n \to \infty$. On en déduit que \[
+			\boxed{P(F) = 0.}
+		\]
+		\item
+			\begin{enumerate}
+				\item Comme les événements $E_p$\/ sont indépendants, les événements $\bar{E}_p$\/ le sont aussi. Ainsi, $P\big(\bigcap_{p=n}^N \bar{E}_p\big) = \prod_{p=n}^N P(\bar{E}_p)$, et donc
+					\begin{align*}
+						\ln P\Big(\bigcap_{p=n}^N \bar{E}_p\Big) &= \sum_{p=n}^N \ln P(\bar{E}_p)\\
+						&= \sum_{p=n}^N \ln\big(1 - P(E_p)\big)\\
+						&\le \sum_{p=n}^N \big(-P(E_p)\big) \text{ car } \ln (1+x) \le x \\
+						&\le -\sum_{p=n}^N P(E_p).
+					\end{align*}
+			\end{enumerate}
+			\begin{figure}[H]
+				\centering
+				\begin{asy}
+					import graph;
+					size(7cm);
+					draw((-1,0)--(4,0), Arrow(TeXHead));
+					draw((0,-3)--(0,5), Arrow(TeXHead));
+					real f(real x) { return log(x); }
+					bool3 checkf(real x) { return x > 0 && -3 <= f(x) && 5 >= f(x); }
+					draw(graph(f, 0, 5, checkf), red);
+					draw((-1, -2)--(5, 4), magenta, Arrows(TeXHead));
+					dot("1", (1, 0), align=SE);
+				\end{asy}
+				\caption{Concavité de la fonction $\ln$\/ }
+			\end{figure}
+			\begin{enumerate}[start=2]
+				\item Comme, pour tout $p \in \N$, $P(E_p)\ge 0$, donc la suite $(S_N)_{N \in \N} = \big(\sum_{p=n}^N P(E_p)\big)_{N \in \N}$\/ est croissante, elle admet donc une limite. De plus, par hypothèse, la série $\sum P(E_p)$\/ diverge donc $\lim_{N\to \infty} {-S_n} = -\infty$. Par composition des limites, $\lim_{N\to \infty} \ln P\big(\bigcap_{p=n}^N \bar{E}_p\big) = -\infty$. Enfin, comme l'exponentielle est croissante, \[
+						0 \le P\Big(\bigcap_{p=n}^N \bar{E}_p\Big) \le \exp\Big(-\sum_{p=n}^N P(E_p) \Big)
+					.\] Comme $\lim_{x\to -\infty} \mathrm{e}^{x} = 0$, on en déduit par le théorème des gendarmes, que \[
+						\lim_{N\to \infty} P\Big(\bigcap_{p=n}^N \bar{E}_p\Big) = 0
+					.\]
+				\item Par continuité décroissante, on a donc \[
+						P\Big(\bigcap_{n \ge p} \bar{E}_p\Big) = \lim_{N\to \infty} P\Big(\bigcap_{p=n}^N \bar{E}_p\Big) = 0
+					.\]
+				\item On rappelle que $F = \bigcap_{n \in \N} \bigcup_{p \ge n} E_p$. Or, on sait que $\bigcap_{p \ge n} \bar{E}_p = \overline{\bigcup_{p \ge n} E_p}$. On a doc $P\big(\bigcup_{p\ge N}\big) = 1 - P\big(\bigcap_{p \ge n} \bar{E}_p\big) = 1$. Do,c les événements $\bigcup_{p \ge n} E_p$\/ sont presque certains. Or, l'intersection d'événements presque certains est presque certaine. D'où $P(F) = 1$.
+			\end{enumerate}
+	\end{enumerate}
+	\clearpage
+	\centerline{\LARGE Cadeau du 05/12/22}
+	\centerline{\textit{Oral CCP PSI 2018}}
+
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{Soit $(A_k)_{k \in \llbracket 1,n \rrbracket}$\/ une famille d'événements d'un espace probabilisé $(\Omega, \mathcal{A}, P)$. Montrer que \[
+		\sum_{k=1}^n P(A_k) \le P\Big(\bigcap_{k=1} ^n A_k\Big) + n - 1
+	.\]}
+	\bigskip
+	\bigskip
+
+	\textbf{Réponse du cadeau} :\\
+	On a
+	\begin{align*}
+		n - \sum_{k=1}^n P(\bar{A}_k) &= \sum_{k=1}^n \big(1 - P(A_k)\big)\\
+		&= \sum_{k=1}^n P(\bar{A}_k) \\
+		&\ge P\Big(\bigcup_{k=1}^n \bar{A}_k\Big) \\
+		&= 1 - P\Big(\bigcap_{k=1}^n A_k\Big) \\
+	\end{align*}
+	D'où, \[
+		\sum_{k=1}^n P(\bar{A}_k) \le P\Big(\bigcap_{k=1}^n A_k\Big) + n - 1
+	.\]
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 08/12/22}
+
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{La forme \begin{align*}
+		\varphi: \R[X] \times \R[X] &\longrightarrow \R \\
+		(P,Q) &\longmapsto \int_{0}^{\pi} P(\cos t) Q(\cos t)~\mathrm{d}t
+	\end{align*}
+	est un produit scalaire ?}
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 13/12/22}
+
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{\begin{enumerate}
+		\item Soit $n \in \N$. En remarquant que $(1+X)^n \cdot (1+X)^n = (1+X)^{2n}$, montrer que \[
+				\sum_{k=0}^n {n\choose k}^2 = {2n\choose n}
+			.\]
+		\item Montrer que \[
+				\Big(\sum_{n=0}^\infty  \frac{1}{(n!)^2}\Big)^2 = \sum_{n=0}^\infty \frac{1}{(2n)!} \: {2n\choose n}^2
+			.\]
+	\end{enumerate}}
+
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau} :\\
+	\begin{enumerate}
+		\item Soit $n \in \N$. On sait que
+			\begin{align*}
+				(1+X)^n \cdot (1+X)^n &= \Big(\sum_{k=0}^n {n\choose k} X^k\Big)\Big(\sum_{k=0}^n {n\choose k} X^k\Big)\\
+				&= \sum_{k=0}^{2n} \sum_{p+q=k} {n\choose p}{n\choose q} X^k \\
+			\end{align*}
+			D'autre part, on sait que \[
+				(1+X)^{2n} = \sum_{k=0}^{2n} {2n\choose k} X^k
+			.\] Or, deux polynômes sont égaux si, et seulement s'ils ont les mêmes coefficients. On regarde le coefficient $X^n$\/ en posant $k = n$\/ : \[
+				{2n\choose n} = \sum_{p+q = n} {n\choose p}{n\choose q} = \sum_{p=0}^n {n\choose p}{n\choose n-p} = \sum_{k=0}^n {n\choose k}^2
+			.\]
+		\item La série $\sum \frac{1}{(n!)}$\/ converge absolument car $\frac{1}{(n!)^2} = \po\left( \frac{1}{n^2} \right)$. Ainsi, par produit de \textsc{Cauchy},
+			\begin{align*}
+				\Big(\sum_{n=0}^\infty \frac{1}{(n!)^2}\Big) \Big(\sum_{n=0}^\infty \frac{1}{(n!)^2}\Big)
+				&= \sum_{n=0}^\infty \sum_{p+q = n} \frac{1}{(p!)^2}\frac{1}{(q!)^2} \\
+				&= \sum_{n=0}^\infty \sum_{p=0}^n \frac{1}{(p!)^2} \frac{1}{(n-p)!^2} \\
+				&= \sum_{n=0}^\infty \sum_{p=0}^n {n\choose p}^2 \frac{1}{(n!)^2}\\
+				&= \sum_{n=0}^\infty \frac{1}{(n!)^2} \times \Big(\sum_{p=0}^n {n\choose p}^2\Big) \\
+				&= \sum_{n=0}^\infty \frac{1}{(n!)^2} \times {2n\choose n} \\
+				&= \sum_{n=0}^\infty \frac{1}{(n!)^2} \times \frac{(2n)!}{n! \times n!} \\
+				&= \sum_{n=0}^\infty \frac{1}{(2n!)} {2n\choose n}^2.
+			\end{align*}
+	\end{enumerate}
+	\clearpage
+	\centerline{\LARGE Cadeaux du 14/12/22}
+	\centerline{\textit{CCP PSI 2010, Centrale PSI 2014 \& TPE PSI 2014}}
+
+	\bigskip
+	\bigskip
+	\textbf{Cadeau 1} :\\
+	\textsl{Soient $n \ge 2$\/ et \begin{align*}
+		\Phi: \mathcal{M}_n(\R) &\longrightarrow \mathcal{M}_n(\R) \\
+		M &\longmapsto M^\top.
+	\end{align*}
+	Déterminer les éléments propres, la trace et le déterminant de $\Phi$.}
+
+	\bigskip
+	\bigskip
+	\begin{comment}
+		\textbf{Réponse du cadeau 1} :\\
+		On a $-1,1 \in \Sp(\Phi)$.
+		Montrons qu'il n'y a pas d'autres valeurs propres. Soit $\lambda \in \R$\/ et soit $M \in \mathcal{M}_n(\R)$\/ non nulle telle que $\Phi(M) = \lambda M$, alors, comme $(M^\top)^\top = M$, alors $\Phi^2 = \id_{\mathcal{M}_n(\R)}$\/ et donc $\Phi^2(M) = \lambda^2 M$, d'où $\lambda = -1$\/ ou $\lambda = 1$.
+		Les sous-espaces propres de $\Phi$\/ sont $\mathrm{SEP}(1) = \mathcal{S}_n(\R)$\/ et $\mathrm{SEP}(-1) = \mathcal{A}_n(\R)$, où $\mathcal{S}_n$\/ est l'ensemble des matrices symétriques, et $\mathcal{A}_n$\/ est l'ensemble des matrices antisymétriques.
+	\end{comment}
+	\textbf{Correction du cadeau 1} :\\
+	On a $\Phi^2 = \id$\/ donc $X^2 - 1$\/ annule $\Phi$.
+	D'où, $\Sp (\Phi) \subset \{-1,1\}$.
+	Et, $\forall M \in \mathcal{S}_n(\R)$, $\Phi(M) = M^\top = M = 1 \times M$. De plus, $\forall M \in \mathcal{A}_n(\R)$, $\Phi(M) = M^\top  = -M = -1 \times M$. D'où $\mathcal{S}_n(\R) \subset \mathrm{SEP}(1)$\/ et $\mathcal{A}_n(\R) \subset  \mathrm{SEP}(-1)$.
+	Mais, $\dim \mathcal{S}_n(\R) = n(n+1) / 2$\/ et $\dim \mathcal{A}_n(\R) = n(n-1) / 2$. Donc $\mathrm{SEP}(1) = \mathcal{S}_n(\R)$\/ et $\mathrm{SEP}(-1) = \mathcal{A}_n(\R)$.
+	L'endomorphisme $\Phi$\/ possède un polynôme annulateur scindé à racines simples, il est donc diagonalisable.
+	En se plaçant dans une base $\mathcal{B}$\/ adaptée : la concaténation d'une base de $\mathcal{S}_n$\/ et d'une base de $\mathcal{A}_n$, on a 
+	\[
+		\big[\Phi\big]_\mathcal{B} =
+		\begin{pNiceMatrix}[last-col]
+			\begin{array}{ccc}
+				1 & & \\
+				& \ddots &\\
+				& & 1
+			\end{array} & 0 & \frac{n(n+1)}{2}\\
+			0 & \begin{array}{ccc}
+				-1 & & \\
+				& \ddots &\\
+				& & -1
+			\end{array} & \frac{n(n-1)}{2}
+		\end{pNiceMatrix}
+	.\]
+	On a donc $\tr \Phi = \frac{n(n+1)}{2} - \frac{n(n-1)}{2} = \frac{2}{2}n = n$, et $\det \Phi = (-1)^{\frac{n(n-1)}{2}}$.
+
+	\bigskip
+	\bigskip
+
+	\centerline{\pgfornament[width=3cm]{88}}
+
+	\bigskip
+	\bigskip
+	
+	\textbf{Cadeau 2} :\\
+	\textsl{Soit $V = \big\{u \in \mathcal{L}\big(\mathcal{M}_n(\R)\big)  \mid \forall M \in \mathcal{M}_n(\R),\: u(M^\top) = \big[u(M)\big]^\top\big\}$. Montrer que $V$\/ est un sous-espace vectoriel de $\mathcal{L}\big(\mathcal{M}_n(\R)\big)$\/ et déterminer sa dimension.}
+
+	\bigskip
+	\bigskip
+	\begin{comment}
+		\textbf{Réponse du cadeau 2} :\\
+		Soit $M \in \mathcal{M}_n(\R)$. On considère l'application nulle notée $\tilde 0$\/ : $\tilde 0(M^\top) = 0_{\mathcal{M}_n(\R)} = (0_{\mathcal{M}_n(\R)})^\top = [\tilde 0(M)]^\top$. On a donc bien $\tilde 0 \in V$.
+		Soient $\lambda,\mu \in \R$, et $u,v \in V$. Soit $M \in \mathcal{M}_n(\R)$. On a $(\lambda u + \mu v)(M^\top) = \lambda u (M^\top) + \mu v(M^\top) = \lambda (u(M))^\top + \mu (v(M))^\top = \big[(\lambda u + \mu v)(M)\big]^\top$, d'où $\lambda u + \mu v \in V$.
+		L'ensemble $V$\/ est bien un sous-espace vectoriel de $\mathcal{L}\big(\mathcal{M}_n(\R)\big)$.
+		%On se place dans une base adaptée : on considère le sous-espace vectoriel $\mathcal{S}$\/ des endomorphismes de $\mathcal{M}_n(\R)$\/ symétriques, et $\mathcal{A}$\/ le sous-espace vectoriel des endomorphismes de $\mathcal{M}_n(\R)$\/ antisymétriques.
+		Soit $u \in V$. Les endomorphismes $u$\/ et $\Phi$\/ commutent.
+	\end{comment}
+	\textbf{Correction du cadeau 2} :\\
+	On a bien $\tilde 0 \in V$\/ donc $V \neq \O$.
+	Soient $u,v \in V$\/ et $\lambda, \mu \in \R$. Pour toute matrice $M \in \mathcal{M}_n(\R)$,
+	\begin{align*}
+		(\lambda u + \mu v)(M^\top)
+		&= \lambda u(M^\top) + \mu v(M^\top) \\
+		&= \lambda \big(u(M)\big)^\top + \mu \big(v(M)\big)^\top \\
+		&= (\lambda u + \mu v)(M)^\top  \\
+	\end{align*}
+	donc $\lambda u + \mu v \in V$. Ainsi, $V$\/ est un sous-espace vectoriel de $\mathcal{L}\big(\mathcal{M}_n(\R)\big)$.
+	\begin{itemize}
+		\item Soit $u \in V$. Pour toute matrice antisymétrique $A \in \mathcal{A}_n$, $u(A^\top) = u(A^\top) = -u(A)$, d'où $u(A) \in \mathcal{A}_n$.
+			De même, pour toute matrice symétrique $S \in \mathcal{S}_n$, $u(S^\top) = u(S) = u(S)^\top$\/ donc $u(S) \in \mathcal{S}_n$.
+		\item Soit $u \in \mathcal{L}\big(\mathcal{M}_n(\R)\big)$\/ un endomorphisme tel que $u(\mathcal{A}_n) \subset \mathcal{A}_n$\/ et $u(\mathcal{S}_n) \subset \mathcal{S}_n$.
+			Soit $M \in \mathcal{M}_n(\R)$. On décompose $M$\/ en $M = A + S$\/ avec $A \in \mathcal{A}_n$\/ et $S \in \mathcal{S}_n$.
+			\begin{align*}
+				u(M^\top) &= u(A^\top + S^\top)\\
+				&= u(A^\top) + u(S^\top) \\
+				&= -u(A) + u(S) \\
+				&= u(A)^\top + u(S)^\top \\
+				&= u(M)^\top \\
+			\end{align*}
+			donc
+			\begin{align*}
+				\dim V &= \dim^2 \mathcal{A}_n + \dim^2 \mathcal{S}_n\\
+				&= \left( \frac{n(n-1)}{2} \right)^2 + \left( \frac{n(n+1)}{2} \right)^2 \\
+				&= \frac{n^2}{4}(n^2 - 2n + 1 + n^2 + 2n + 1) \\
+				&= \frac{1}{2}n^2(n^2 + 1). \\
+			\end{align*}
+			En effet, soit $\mathcal{B}$\/ une base adaptée à la somme $\mathcal{A}_n \oplus \mathcal{S}_n = \mathcal{M}_n(\R)$, \[
+				[u]_\mathcal{B} = \begin{pmatrix}
+					* & 0\\
+					0 & *
+				\end{pmatrix}
+			.\]
+	\end{itemize}
+
+
+	\bigskip
+	\bigskip
+
+	\centerline{\pgfornament[width=3cm]{88}}
+
+	\bigskip
+	\bigskip
+	\textbf{Cadeau 3} :\\
+	\textsl{\begin{enumerate}[label=(\alph*)]
+		\item Soit $d \in \N^*$, $a \in \C$\/ et \begin{align*}
+				u: \C_d[X] &\longrightarrow \C_d[X] \\
+				P &\longmapsto (X-a)P'.
+			\end{align*}
+			Déterminer les éléments propres de $u$.
+		\item En déduire l'ensemble des polynômes de $\C[X]$\/ divisibles par leur dérivée.
+	\end{enumerate}}
+
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau 3} :\\
+	\begin{enumerate}[label=(\alph*)]
+		\item On a $u(k) = 0 = 0 \times k$\/ avec $k \in \C$.
+			De même, on remarque que, \[
+				\forall k \in \llbracket 1,d \rrbracket,\: u\big((X-a)^k\big) = k (X-a)^{k-1} \cdot (X-a) = k \times (X-a)^{k}
+			.\] Ainsi, $(X-a)^k \in \Ker(k \id - u)$.
+			L'endomorphisme $u$\/ possède $d+1$\/ valeurs propres distinctes deux à deux. Or, $\dim \C_d[X] = d + 1$, donc $u$\/ est diagonalisable.
+			Et, $\forall k \in \llbracket 0,d \rrbracket$, $\Ker(k \id - u) = \Vect\big[(X-a)^k\big]$. Donc $\Sp(u) = \llbracket 0,d \rrbracket$.
+
+			\textsc{Autre solution} : la base $\mathcal{B} = \big((X-a)^0,(X-a)^1,\ldots,(X-a)^d\big)$\/ est adaptée. En effet, dans cette base \[
+				[u]_{\mathcal{B}} = \begin{pmatrix}
+					0 & & & & \\
+					& 1 & & & \\
+					& & 2 & & \\
+					& & & \ddots & \\
+					& & & & d \\
+				\end{pmatrix}
+			.\]
+		\item
+			\begin{itemize}
+				\item \textsc{Analyse}. Soit $P$\/ un polynôme de degré $d \ge 1$, tel que $P'  \mid P$.
+					Alors, $P = \frac{1}{d} (X-a) \times P'$.
+					D'où, $u(P) = (X-a) P' = d P$.
+				\item \textsc{Synthèse}. \textsc{ok}.
+			\end{itemize}
+	\end{enumerate}
+	\clearpage
+	\centerline{\LARGE Cadeaux du 15/12/22}
+	\centerline{\textit{Centrale PC 2016, X ESPCI PC 2013 \& X ESPCI PC 2014, 2015}}
+
+	\bigskip
+	\bigskip
+	\textbf{Cadeau 1} :\\
+	\textsl{ Soit $\mathcal{D}_n$\/ l'espace des matrices diagonales et $D = \mathrm{diag}(d_1, \ldots, d_n)$.
+	Montrer que $(I_n, D, \ldots, D^{n-1})$\/ est une base de $\mathcal{D}_n$\/ si, et seulement si les réels $d_i$\/ sont distincts deux à deux.}
+
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau 1} :\\
+	\begin{align*}
+		&(I_n, D, \ldots, D^{n-1}) \text{ est une base de } \mathcal{D}_n\\
+		\iff& \forall (a_0,\ldots,a_{n-1}),\quad a_0 I_n + a_1 D + \cdots + a_{n-1} D^{n-1} = 0 \implies a_0 = a_1 = \cdots = a_{n-1}\\
+		\iff& \forall (a_0,\ldots,a_{n-1}),\quad \begin{cases}
+			a_0 + a_1 d_1 + \cdots + a_{n-1} d_1^{n-1} &= 0\\
+			\quad\quad\vdots & \ddots \vdots\\
+			a_0 + a_1 d_n + \cdots + a_{n-1}d^{n-1} &= 0
+		\end{cases} \implies a_0 = \cdots = a_{n-1} = 0 \\
+		\iff& \forall (a_0,\ldots, a_{n-1}), \begin{pmatrix}
+			1 & d_1 & \ldots & d_1^{n-1}\\
+			\vdots & \vdots & \ddots & \vdots\\
+			1 & d_n & \ldots & d_n^{n-1}
+		\end{pmatrix} \begin{pmatrix}
+			a_0\\
+			\vdots\\
+			a_{n-1}
+		\end{pmatrix} = 0 \implies a_0 = \cdots = a_{n-1} = 0 \\
+		\iff& \text{ les réels $d_i$\/ sont distincts deux à deux}. \\
+	\end{align*}
+	car on reconnaît le déterminant de \textsc{Vandermonde}.
+
+	\bigskip
+	\bigskip
+
+	\centerline{\pgfornament[width=3cm]{88}}
+
+	\bigskip
+	\bigskip
+	\textbf{Cadeau 2} :\\
+	\textsl{Soit $X \in \mathcal{M}_{n,1}(\R)$\/ non nul.
+	\begin{enumerate}[label=(\alph*)]
+		\item Montrer que $V = \{M \in \mathcal{M}_{n}(\R)  \mid  M\cdot X = 0\}$\/ est un sous-espace vectoriel de $\mathcal{M}_n(\R)$, et déterminer la dimension.
+		\item Montrer que l'ensemble $W$\/ des matrices de $\mathcal{M}_n(\R)$\/ dont $X$\/ est un vecteur propre, est un sous-espace vectoriel de $\mathcal{M}_n(\R)$\/ et que $\dim W = ?$.
+	\end{enumerate}}
+
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau 2} :\\
+	\begin{enumerate}[label=(\alph*)]
+		\item Soit $M = 0_{\mathcal{M}_n(\R)}$\/ la matrice nulle. On a $M \cdot X = 0$, donc $0_{\mathcal{M}_n(\R)} \in V$.
+			Soient $M,N \in V$\/ et $\lambda, \mu \in \R$. On a $(\lambda M + \mu N)\cdot X = \lambda M \cdot X + \mu N \cdot X = 0$, donc $\lambda M + \mu N \in V$.
+			On en déduit que $V$\/ est un sous-espace vectoriel de $\mathcal{M}_n(\R)$.
+
+			On se place dans une base adaptée $\mathcal{B} = (X, X_2, \ldots, X_n)$\/  où on a complété la famille $X$\/ par des vecteurs $X_2,\ldots,X_n$.
+			Soit $f$\/ l'endomorphisme représenté, dans une base, par $M$.
+			Ainsi,
+			\begin{align*}
+				M \in V \iff& M \cdot X = 0 \\
+				\iff&  f(x) = 0 \text{ où $X$ est la matrice de $x$ dans la même base} \\
+				\iff& \exists P \in \mathrm{GL}_n(\R),\: P^{-1}\cdot M\cdot P = \begin{pmatrix}
+					0 & * & \ldots & *\\
+					\vdots & \vdots & \ddots & \vdots\\
+					0 & * & \ldots & *
+				\end{pmatrix} \\
+			\end{align*}
+			Ainsi, \[
+				\boxed{\dim V = n^2 - n.}
+			\]
+		\item Soit $M = 0_{\mathcal{M}_n(\R)}$\/ la matrice nulle. On a $M \cdot X = 0_{\mathcal{M}_n(\R)} = 0_\R \cdot X$, donc $0_{\mathcal{M}_n(\R)} \in W$.
+			Soient $M,N \in W$\/ et $\lambda, \mu \in \R$.
+			Soit $\alpha$\/ la valeur propre associée au vecteur propre $X$\/ pour la matrice $M$.
+			Soit $\beta$\/ la valeur propre associée au vecteur propre $X$\/ pour la matrice $N$.
+			Ainsi, $(\lambda M + \mu N)\cdot X = \lambda M\cdot X + \mu N \cdot X = \lambda \alpha X + \mu \beta X = (\lambda \alpha + \mu \beta) \cdot X$. On en déduit que $\lambda M + \mu N \in W$.
+			Ainsi, $W$\/ est un sous-espace vectoriel de $\mathcal{M}_n(\R)$.
+
+			De même, dans la même base adaptée
+			\begin{align*}
+				M \in W \iff& \exists P \in \mathrm{GL}_n(\R),\: P^{-1}\cdot A\cdot P = \begin{pmatrix}
+					* & * & \ldots & \ldots & *\\
+					0 & \vdots & \ddots & & \vdots\\
+					\vdots & \vdots & & \ddots & \vdots\\
+					0 & * & \ldots & \ldots & *
+				\end{pmatrix} \\
+			\end{align*}
+			D'où, \[
+				\boxed{\dim W = n^2 - n + 1.}
+			\]
+	\end{enumerate}
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 10/01/23}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{Déterminer le rayon de convergence de la série entière $\sum x^{(n^2)}$.}
+
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau} :\\
+	On pose $(u_n)$\/ le terme général de la série.
+	Son rayon de convergence vaut 1. En effet, si $x = 1$, la série $\sum 1$\/ diverge, d'où $R \le 1$.
+	De plus, si $|x| < 1$, alors $\forall n \in \N$, $|u_n| \le |x|^n$.
+	Or, la série $\sum |x|^n$\/ converge, donc $\sum |u_n|$\/ aussi, d'où $R \ge 1$\/ et donc $R = 1$.
+	\clearpage
+	\centerline{\LARGE Cadeau du 13/01/23}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{Soient $F$\/ et $G$\/ deux espaces d'un espace préhilbertien\footnote{il n'y a donc aucune hypothèses sur la dimension de $E$.} Montrer que, si $F \oplus G = E$\/ et $F \bot G$, alors $G = F^\top$\/ et $F = G^\top$.}
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 18/01/23}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{Soient $\sum a_n z^n$\/ une série entière, et $R$\/ son rayon de convergence. On considère la série entière $\sum {a_n}^n\: z^n$\/ de rayon de convergence $R'$.
+	\begin{enumerate}
+		\item Montrer que,
+			\begin{enumerate}
+				\item si $R > 1$, alors $R' = +\infty$\/ ;
+				\item si $R < 1$, alors $R' = 0$.
+			\end{enumerate}
+		\item Que se passe-t-il si $R = 1$\/ ?
+	\end{enumerate}}
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau} :\\
+	\begin{enumerate}
+		\item
+			\begin{enumerate}
+				\item Soit $x \in {]-R,R[}$. On a $R > 1$, d'où $\sum |a_n| 1^n$\/ converge, d'où $a_n \tendsto{n\to \infty}0$. Ainsi, à partir d'un certain rang, $|a_n x| \le \lambda$, où $0 < \lambda < 1$\/ et donc $|a_n x|^n \le \lambda^n$.
+					Or, la série $\sum \lambda^n$\/ converge, d'où $\sum a_n x^n$\/ converge.
+					On en déduit $R' = +\infty$.
+				\item 
+			\end{enumerate}
+		\item On considère la série géométrique $\sum x^n$\/ : on pose $a_n = 1$\/ pour tout $n \in \N$. Le rayon de convergence de cette série est $R = 1$. Mais, $\sum {a_n}^n x^n = \sum x^n$, et donc $R' = 1$.\\
+			On considère la série $\sum \frac{x^n}{n}$. On pose, pour $n \in \N^*$, $a_n = \frac{1}{n}$. Soit $x \in R$. On pose $u_n = |{a_n}^n x^n|$\/ pour  $n \in \N$.
+			Pour tout entier $n \in \N^*$,
+			\begin{align*}
+				\frac{u_{n+1}}{u_n} &= \left| \frac{a_{n+1}}{a_n} \right|^n \: |a_{n+1}|\:|x| \\
+														&= \left( \frac{n}{n+1} \right)^n \cdot \frac{1}{n+1} |x| \tendsto{n\to +\infty} 0 \\
+			\end{align*}
+			D'où $\sum u_n$\/ converge, et donc $R' = +\infty$.
+	\end{enumerate}
+	\clearpage
+	\centerline{\LARGE Cadeau du 18/01/23}
+
+	\centerline{\textit{Banque PT 2006 Maths C}}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\textsl{Trouver les solutions développables en séries entières de l'équation différentielle \[
+		16\,(x^2 - x)\,y'' + (16x - 8)\, y' - y = 0
+	.\]
+	Indication : Il faut montrer que \[
+		f : x \mapsto \sum_{n=0}^\infty  a_n x^n \text{ est une solution} \iff \forall n,\: a_{n+1} = \frac{(4n  +1)(4n - 1)}{8(n+1)(2n+1)}\: a_n
+	.\]Trouver le rayon de convergence de la série, et calculer $a_n$\/ en fonction de $n$.}
+
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau} :\\
+	Soit $R$\/ le rayon de convergence d'une série entière $\sum a_n x^n$.
+	Soit, pour tout $x \in {]-R,R[}$, $f(x) = \sum_{n=0}^\infty a_n x^n$.
+On peut dériver terme à terme une série entière sans changer son rayon de convergence, d'où
+	\[
+		\forall x \in {]-R,R[},\quad \begin{cases}
+			f'(x) = \ds\sum_{n=1}^\infty n a_n x^{n-1}\\
+			f''(x) = \ds\sum_{n=2}^\infty n(n-1) a_n x^{n-2}\\
+		\end{cases}
+	.\]
+		\begin{align*}
+			f \text{ est une solution}
+			\iff& \forall x \in {]-R,R[},\: 16 (x^2 - x) \sum_{n=2}^\infty n(n-1) a_n x^{n-2} + (16x - 8) \sum_{n=1}^\infty n a_n x^{n-1} - \sum_{n=0}^\infty a_n x^n = 0\\
+			\iff& \forall x \in {]-R,R[},\: \sum_{n=2}^\infty 16n(n-1)a_n x^n - \sum_{n=2}^\infty 16n(n-1)a_n x^{n-1}\\
+			&\quad\quad\quad\quad\quad+ \sum_{n=2}^\infty 16na_n x^n + 16x a_1 - \sum_{n=2}^\infty 8n a_n x^{n-1} - \sum_{n=0}^\infty a_n x^n = 0 \\
+			\iff& \forall x \in {]-R,R[},\: \sum_{n=2}^\infty 16n(n-1)a_n x^n - \sum_{n=1}^\infty 16n(n+1)a_{n+1} x^n\\
+			&\quad\quad\quad\quad\quad+ \sum_{n=2}^\infty 16na_n x^n + 16x a_1 - \sum_{n=1}^\infty 8(n+1) a_{n+1} x^n - \sum_{n=0}^\infty a_n x^n = 0 \\
+			\iff& \forall x \in {]-R,R[},\: \sum_{n=2}^\infty \Big(16n(n-1)a_n - 16 n(n+1)a_{n+1} + 16na_n - 8(n+1)a_{n+1} - a_n \Big) x^n\\
+			&\quad\quad\quad\quad\quad+ 16a_1x - 32a_2x - 16a_2x - a_1x = 0\\
+			\mathllap{\text{(par unicité du DSE)}}\iff& \begin{cases}
+				\forall n \ge 2,\quad \big(-16n(n+1) - 8(n+1)\big)a_{n+1} - \big(16n(n-1) + 16n - 1\big)a_n = 0\\
+				15 a_1 - 48 a_2 = 0
+			\end{cases} \\
+			\iff& \begin{cases}
+				\ds\forall n \ge 2,\: a_{n+1} = a_n \times \frac{16n(n-1) + 16n - 1}{16n(n+1) + 8(n+1)}\\
+				\ds a_2 = \frac{15}{48} a_1
+			\end{cases} \\
+			\iff& \begin{cases}
+				\ds \forall n \ge 2,\: a_{n+1} = a_n \times \frac{16n^2 - 16n + 16n - 1}{16n^2 + 16n + 8n + 8}\\
+				\ds a_{2} = \frac{15}{48} a_1
+			\end{cases} \\
+			\iff& \begin{cases}
+				\ds \forall n \ge 2,\: a_{n+1} = a_n \times \frac{(4n - 1)(4n+1)}{8(2n^2 + 3n + 1)}\\
+				\ds a_2 = \frac{15}{48} a_1
+			\end{cases} \\
+			\iff& \begin{cases}
+				\ds \forall n \ge 2,\: a_{n+1} = a_n \times \frac{(4n - 1)(4n+1)}{8(n + 1)(2n+1)}\\
+				\ds a_2 = \frac{15}{48} a_1
+			\end{cases} \\
+		\end{align*}
+
+	Soit $x \neq 0$. On a
+	\begin{align*}
+		\left| \frac{a_{n+1} x^{n+1}}{a_n x^n} \right| = \frac{a_{n+1}}{a_n} |x| = \frac{(4n - 1)(4n+1)}{8(n+1)(2n+1)} \sim \frac{16n^2}{16n^2} |x| \tendsto{n\to \infty} |x|
+	\end{align*}
+	D'où, par le critère de \textsc{d'Alembert}, $R = 1$.
+	On a $a_1 = \frac{1 \times (-1)}{4 \times  2} a_0$, $a_2 = \frac{5 \times  3}{4 \times  4 \times  3} a_1$, et $a_3 = \frac{9 \times 7}{4 \times 6 \times 5} a_2$.
+	On devine la formule \[
+		\forall n \in \N, \quad a_n = -\frac{(4n -3) \times \cdots \times 9 \times 7 \times 5 \times 3 \times 1}{4^n \times 2n \times \cdots \times 6 \times  5 \times  4 \times  3 \times 2} a_0
+	.\] 
+	Montrons par récurrence la formule \[
+		\forall n \in \N,\quad\quad a_n = - \frac{(4n -2)!}{4^n \times (2n)! \times 2^{2n - 1} \times (2n-1)!}
+	.\]
+	\clearpage
+	\centerline{\LARGE Cadeaux du 31/01/23}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau 1} :\\
+	\begin{slshape}
+		Soit $A$\/ la matrice \[
+			A = \frac{1}{4} \begin{pmatrix}
+				-2 & -\sqrt{6} & \sqrt{6} \\
+				\sqrt{6} & 1 & 3\\
+				-\sqrt{6} & 3 & 1
+			\end{pmatrix}
+		.\]
+		Interpréter géométriquement l'endomorphisme $f$\/ représenté par $A$\/ dans la base orthonormée $(\vec{\imath}, \vec{\jmath}, \vec{k})$.
+
+	\end{slshape}
+
+	\bigskip
+
+	\textbf{Cadeau 2} (Exercice 6 du \textsc{td}) :\\
+	\begin{slshape}
+		Écrire la matrice, dans la base orthonormée directe $(\vec{\imath}, \vec{\jmath}, \vec{k})$ de $\R^3$, de la rotation d'angle $\frac{\pi}{6}$\/ autour de l'axe dirigé et orienté $\vec{\imath} + \vec{\jmath}$.
+	\end{slshape}
+
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau 2} :\\
+	\begin{figure}[H]
+		\centering
+		\begin{asy}
+			import three;
+			draw(O--X, Arrow3(TeXHead2));
+			draw(O--Y, Arrow3(TeXHead2));
+			draw(O--Z, red, Arrow3(TeXHead2));
+			
+			label("$\vec\imath$", 1.1X);
+			label("$\vec\jmath$", 1.1Y);
+			label("$\vec k$", 1.1Z, red);
+
+			triple nz(real x, real y, real z) { triple v = (x,y,z); return v/length(v); }
+
+			pair A = expi(pi/6);
+			pair B = expi(pi/2 + pi/6);
+			triple U = nz(A.x, A.y, 0);
+			triple V = nz(B.x, B.y, 0);
+
+			draw(O--U, red, Arrow3(TeXHead2));
+			draw(O--V, red, Arrow3(TeXHead2));
+
+			label("$\vec u$", 1.1U, red);
+			label("$\vec v$", 1.1V, red);
+
+			size(8cm);
+		\end{asy}
+		\caption{Rotation d'angle $\frac{\pi}{6}$\/ autour de l'axe dirigé orienté $\vec{\imath} + \vec{\jmath}$.}
+	\end{figure}
+	On cherche $\mathcal{B}' = (\vec{k}, \vec{u}, \vec{v})$\/ une base orthonormée directe. On pose $\vec{v} = (\vec{\imath} + \vec{\jmath}) / \sqrt{2}$, et $\vec{u} = \vec{v} \wedge \vec{k}$.
+	On a \[
+		\vec{u} = \vec{v} \wedge \vec{k} = \begin{pmatrix}
+			1 / \sqrt{2}\\ 1 / \sqrt{2}\\ 0
+		\end{pmatrix} \wedge \begin{pmatrix}
+			0 \\ 0 \\ 1
+		\end{pmatrix} = \begin{pmatrix}
+			1 / \sqrt{2} \\ - 1 / \sqrt{2} \\ 0
+		\end{pmatrix}
+	.\] 
+	Soit $f$\/ la rotation d'angle $\frac{\pi}{6}$\/ autour de l'axe dirigé et orienté par $(\vec{\imath} + \vec{\jmath}) / \sqrt{2}$.
+	Ainsi, \[
+		\big[\:f\:\big] =
+		\begin{pNiceMatrix}[last-row,last-col]
+			\cos \frac{\pi}{6} & - \sin \frac{\pi}{6} & 0 & \vec{k}\\
+			\sin \frac{\pi}{6} & \cos \frac{\pi}{6} & 0 & \vec{u}\\
+			0 & 0 & 1 & \vec{v}\\
+			f(\vec{k}) & f(\vec{u}) & f(\vec{v})
+		\end{pNiceMatrix} = A'
+	.\] Ainsi, par un changement de base $\mathcal{B} = (\vec{\imath}, \vec{\jmath}, \vec{k})$\/ vers $\mathcal{B}' = (\vec{k}, \vec{u}, \vec{v})$. Ainsi, $A' = P^{-1} \cdot A \cdot P$\/ d'où $A = P \cdot A' \cdot P^{-1}$, et \[
+		P =
+		\begin{pNiceMatrix}[last-col,last-row]
+			0 & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} & \vec{\imath}\\
+			0 & -\frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} & \vec{\jmath}\\
+			1 & 0 & 0 & \vec{k}\\
+			\vec{k} & \vec{u} & \vec{v}
+		\end{pNiceMatrix}
+	.\]
+	De plus, $P^{-1} = P^\top$\/ car les bases $\mathcal{B}$\/ et $\mathcal{B}'$\/ sont orthonormées.
+
+	\bigskip
+
+	\textbf{Réponse du cadeau 1} :\\
+	Les colonnes de cette matrice forment une base orthonormée : $\left<C_1  \mid C_2 \right> = \left<C_2  \mid C_3 \right> = \left<C_3  \mid C_1 \right> = 0$, et $\|C_1\|^2 = \|C_2\|^2 = \|C_3\|^2 = \sqrt{(4 + 6 + 6) / 16} = 1$.
+	Cette base est directe car $C_1 \land C_2 = C_3$\/ en calculant le produit vectoriel.
+	(Ou, on peut aussi calculer $\det A$, et on trouve 1.)
+	Ainsi, on a $A \in \mathrm{SO}_3(\R)$. C'est la matrice d'une rotation, d'où, dans une base adaptée, l'endomorphisme est représenté par la matrice \[
+		\begin{pmatrix}
+			\cos \theta & -\sin \theta & 0\\
+			\sin \theta & \cos \theta & 0\\
+			0 & 0 & 1
+		\end{pmatrix} 
+	.\] Comme la trace est un invariant de similitude, $\tr A = 0 = 2\cos \theta + 1$.
+	Ainsi, $\cos \theta = -\frac{1}{2}$, donc $\theta \equiv \pm \frac{2\pi}{3}\mod{2\pi}$.
+	On résout donc $AX = 1X$\/ avec $X^3$ :
+	\begin{align*}
+		A\cdot X = 1X \iff& \begin{cases}
+			-2x - \sqrt{6}y + \sqrt{6} z = 4x\\
+			\sqrt{6}x + y + 3z = 4y\\
+			-\sqrt{6}x + 3y + z = 4z
+		\end{cases} \\
+		\vdots\quad& \\
+		\iff& X \in \Vect(\vec{\jmath} + \vec{k}) \\
+	\end{align*}
+	\begin{itemize}
+		\item Soit $\vec{w} = (\vec{\jmath}+\vec{k}) / \sqrt{2}$. Cherchons le signe de $\theta$, modulo $2\pi$.
+			Calculons $f(\vec{\imath}) = -\frac{1}{2} \vec{\imath} + \frac{\sqrt{6}}{4} \vec{\jmath} - \frac{\sqrt 6}{4} \vec{k}$.
+			Et, on calcule $\vec{\imath} \land f(\vec{\imath})$\/ : \[
+				\vec{\imath} \land f(\vec{\imath}) = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \land \frac{1}{4} \begin{pmatrix} -2 \\ \sqrt{6} \\ -\sqrt{6} \end{pmatrix} = \frac{1}{4}\begin{pmatrix} 0\\ \sqrt{6}\\ -\sqrt{6} \end{pmatrix} = \frac{\sqrt{6}}{4} (\vec{\jmath} + \vec{k})
+			,\] qui a le même sens que $\vec{w}$, d'où $\theta = +\frac{2\pi}{3}$.
+		\item Si $\vec{w} = -(\vec{\jmath} + \vec{k}) / \sqrt{2}$. De la même manière, on a $\theta = - \frac{2\pi}{3}$.
+	\end{itemize}
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 01/02/23}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\begin{slshape}
+		Soit $A$\/ la matrice \[
+			A = \frac{1}{4} \begin{pmatrix}
+				-2 & \sqrt{6} & -\sqrt{6} \\
+				\sqrt{6} & 3 & 1\\
+				-\sqrt{6} & 1 & 3
+			\end{pmatrix}
+		.\]
+		Interpréter géométriquement l'endomorphisme $f$\/ représenté par $A$\/ dans la base orthonormée $(\vec{\imath}, \vec{\jmath}, \vec{k})$.
+
+	\end{slshape}
+
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau} :\\
+	On remarque que, \[
+		B = A \times \underbrace{\begin{pmatrix}
+			1 & 0 & 0\\
+			0 & 0 & 1\\
+			0 & 1 & 0
+		\end{pmatrix}}_S.
+	\] On pose $s$, $a$ et $b$ les endomorphismes représentés par $S$, $A$\/ et $B$.
+	Ainsi $b = a \circ s$.
+	Et, $s$\/ est la reflection par rapport au plan $\Vect(\vec{\imath}, \vec{\jmath} + \vec{k})$.
+
+	\textbf{Autre méthode} :\\
+	On diagonalise la matrice, et on conclut. Les valeurs propres sont \textit{sympathiques}.
+	\clearpage
+	\centerline{\LARGE Cadeau du 02/02/23}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\begin{slshape}
+		Soit $E$\/ un espace euclidien, et soit $\vec{a} \in E$\/ un vecteur non-nul.
+		Montrer que l'application \begin{align*}
+			\s: E &\longrightarrow E \\
+			\vec{x} &\longmapsto \vec{x} - 2 \frac{\left<\vec{a}  \mid \vec{x} \right>}{\|\vec{a}\|^2} \vec{a}
+		\end{align*}
+		est une réflexion.
+	\end{slshape}
+	
+	\bigskip
+	\bigskip
+	\textbf{Réponse du cadeau} :\\
+	Soit $\mathcal{B} = (\vec{e}_1, \ldots, \vec{e}_{n-1}, \vec{a})$, où $(\vec{e}_1, \ldots, \vec{e}_n)$\/ est une base de $H = [\Vect \vec{a}]^\perp$.
+	Ainsi, dans cette base, \[
+		\big[\:\s\:\big]_\mathcal{B} = \begin{pNiceMatrix}[last-row, last-col]
+			1 & & & & \vec{e}_1\\
+			& \ddots & & & \vdots\\
+			& & 1 & & \vec{e}_{n-1}\\
+			& & & -1 & \vec{a}\\
+			\s(\vec{e}_1) & \ldots & \s(\vec{e}_{n-1}) & \s(\vec{a})
+		\end{pNiceMatrix} 
+	.\] Donc, $\s$\/ est la symétrie orthogonale par rapport à l'hyperplan $H$, (\textit{i.e.}\ c'est une réflexion).
+	
+	\bigskip
+	\bigskip
+	\textbf{Corrigé (partiel) de l'exercice 3 du \textsc{td} 13} :\\
+	\begin{itemize}
+		\item $\ds\|\vec{u}\| = 0 \implies \sup_{n \in \N} |u_n| = 0 \implies u = 0_E$\/ ;
+		\item Soit $\alpha \in \R$. $\ds\|\alpha u\| = \sup_{n \in \N} |\alpha u_n| = |\alpha| \sup_{n \in \N} |u_n| = |\alpha|\:\|\vec{u}\|$\/ ;
+		\item Soient $u,v \in E$. $\|u + v\| = \sup_{n \in \N} |u_n + v_n|$.
+			Or, $\forall n \in \N$, $|u_n + v_n| \le |u_n| + |v_n|$\/ par inégalité triangulaire.
+			Et, $\forall n \in \N$, $|u_n| \le \sup_{n \in \N} |u_n|$\/ car le $\sup$\/ est un majorant.
+			De même, $\forall n \in \N$, $|v_n| \le \sup_{n \in \N} |v_n|$\/ car le $\sup$\/ est un majorant.
+			D'où, $|u_n + v_n| \le \sup_{n \in \N} |u_n| + \sup_{n \in \N} |v_n|$\/ qui est un majorant.
+			Or, $\sup_{n \in \N} |u_n + v_n|$\/ est le plus petit majorant.
+			On a donc $\sup_{n \in \N} |u_n + v_n| \le \sup_{n \in \N} |u_n| + \sup_{n \in \N} |v_n|$\/ donc $\|u + v\| \le \|u\| + \|v\|$.
+	\end{itemize}
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 03/02/23}
+	\centerline{\textit{Suite du cadeau du 02/02/2023}}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\begin{slshape}
+		Soient $\vec{u}$\/ et $\vec{v}$\/ deux vecteurs distincts et de même norme. Montrer qu'il existe une unique réflexion $\s$ telle que $\s(\vec{u}) = \vec{v}$.
+	\end{slshape}
+
+	\bigskip\bigskip
+	\textbf{Réponse du cadeau} :\\
+	On procède par Analyse-Synthèse.
+	\begin{description}
+		\item[Analyse]  On suppose que $\s$ est une réflexion par rapport à un hyperplan $H$, et que $\s(\vec{u}) = \vec{v}$.
+			Alors, $\s(\vec{x}) - \vec{x} \perp H$, démontré plus tard.
+			En particulier, $\s(\vec{u}) - \vec{u} = \vec{v} - \vec{u} \perp H$, d'où l'unicité de $H$.
+		\item[Synthèse] Soient $\vec{a} = \vec{v} - \vec{u}$ et $H \perp \vec{a}$.
+			Alors $\s : \vec{x} \mapsto \vec{x} - 2 \left<\vec{a}  \mid \vec{x} \right>\: \vec{a} / \|\vec{a}\|^2$ est une réflexion.
+			Il reste à montrer que $\s (\vec{u}) = \vec{v}$ : \[
+				\s(\vec{u}) = \vec{u} - \frac{\left<\vec{v} -2 \vec{u}  \mid \vec{u} \right>}{\|\vec{v} - \vec{u}\|} (\vec{v} - \vec{u})
+			.\] On veut montrer que $\left<\vec{v}-\vec{u}  \mid \vec{u} \right> / \|\vec{v} - \vec{u}\|^2 = -\frac{1}{2}$.
+			On calcule $\left<\vec{u} - \vec{v}  \mid \vec{v} \right> = \left<\vec{u}  \mid \vec{u} \right> - \left<\vec{v}  \mid \vec{u} \right>$. Par ailleurs, $\frac{1}{2} \|\vec{v} - \vec{u}\| = \frac{1}{2} \left<\vec{v} - \vec{u}  \mid \vec{v}- \vec{u} \right> = \frac{1}{2}(\|\vec{v}\|^2 - 2 \left<\vec{u} \mid \vec{v} \right> + \|\vec{u}\|^2) = \|\vec{u}\|^2 - \left<\vec{u} \mid \vec{v} \right>$. Or, par hypothèse $\|\vec{u}\| = \|\vec{v}\|$.
+	\end{description}
+	Montrons que $\s(\vec{x}) - \vec{x} \perp H$.
+	On sait que $H \oplus H^\perp = E$. Pour tout vecteur $\vec{x}$, il existe un unique couple de vecteurs $(a, b) \in H \times H^\perp$\/ tel que $\vec{x} = \vec{a} + \vec{b}$.
+	Ainsi, $\s(\vec{x}) = \s(\vec{a}) + \s(\vec{b}) = \vec{a} - \vec{b}$.
+	Et, donc $\s(\vec{x}) - \vec{x} = \vec{a} - \vec{b} - \vec{a}- \vec{b} =-2\vec{b} \in H^\perp$.
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 03/03/23}
+	\centerline{\textit{Cadeau de Corentin en khôlle avec \textsc{JJ.\ Mallet}}}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\begin{slshape}
+		On considère sur $E = \R[X]$ les normes $N_1$ et $N_2$ ainsi que l'application $\varphi$ définie par \[
+			\forall P \in E, \quad N_1(P) = \sup_{t \in [0,1]} |P(t)| \quad\quad N_2 = \sup_{t \in [1,2]} |P(t)| \quad\quad \varphi(P) = P(0)
+		.\]
+		\begin{enumerate}
+			\item Montrer que $\varphi$ définit une application de $(E, N_1)$ vers $\R$, mais discontinue de $(E, N_2)$ vers $\R$. \textit{(On pourra utiliser la suite définie par $P_n(t) = (1 - t/2)^n$.)}
+			\item Monter que $\Ker \varphi$ est fermé dans $(E, N_1)$. L'est-il dans $(E, N_2)$ ?
+		\end{enumerate}
+	\end{slshape}
+
+	\bigskip\bigskip
+	\textbf{Réponse du cadeau} :\\
+	\begin{enumerate}
+		\item L'application $\varphi$ est linéaire. Montrons qu'il existe $M \in \R^+$ tel que, pour tout polynôme $P$, $|\varphi(P)| \le M\, N_1(P)$.
+			On a $|\varphi(P)| = |P(0)| \le \sup_{t \in [0,1]}\:|P(t)| = N_1(P)$, car c'est un majorant. D'où, $|\varphi(P)| \le N_1(P)$ pour tout polynôme $P$.
+
+			On pose la suite de polynômes définie comme $P_n(t) = (1 - t / 2)^n$.
+			On a $N_2(P_n) = \sup_{t \in [1,2]}\: |(1-t/2)^n| = (1/2)^n$ car la fonction $t \mapsto (1 - t / 2)^n$ est décroissante et positive.
+			Et, $|\varphi(P_n)| = 1$.
+			Par l'absurde, supposons qu'il existe $K \in \R$ tel que, pour tout polynôme $P$, $|\varphi(P)| \le K \cdot N_2(P)$.
+			Ainsi, pour tout $n \in \N$, $1 \le K \left( \frac{1}{2} \right)^n$. Les inégalités larges passent à la limite, d'où $1 \le 0$, ce qui est absurde.
+		\item L'ensemble $\{0\}$ est un fermé, $\varphi$ est continue sur $(E, N_1)$, et, par définition de $\Ker$, $\varphi^{-1}(\{0\}) = \Ker \varphi$.
+			Ainsi, $\Ker \varphi$ est un fermé (l'image réciproque d'un fermé est un fermé).
+
+			{\color{gray}
+			On a $\varphi(P_n) = 1$, donc $P_n \in E \setminus \Ker \varphi$.
+			Or, $N_2(P_n) = \frac{1}{2^n} \to 0$, quand $n \to \infty$.
+			Et, $0 \in \Ker \varphi$ car $\varphi$ est linéaire.
+			Ainsi, $E \setminus \Ker \varphi$ n'est pas un fermé.
+			On en déduit que $\Ker \varphi$ n'est pas un ouvert pour $N_2$. }
+
+			Posons $Q_n = P_n - 1$ et alors $\varphi(Q_n) = 0$.
+			On a $N_2(Q_n + 1) = N_2(P_n) = \left( \frac{1}{2} \right)^n \to 0$ quand $n\to \infty$.
+			Donc, $Q_n \to -1$.
+			Donc, pour tout $n \in \N$, $Q_n \in \Ker \varphi$ mais $\lim_{n\to \infty} Q_n \not\in \Ker \varphi$.
+			Par caractérisation séquentielle d'un fermé, on en déduit que $\Ker \varphi$ n'est pas un fermé.
+	\end{enumerate}
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 27/03/23}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\begin{slshape}
+		On considère la matrice $A$ définie comme \[
+			A = \begin{pmatrix}
+				3 & 1 & -1\\
+				2 & 2 & -1\\
+				2 & 2 & 0
+			\end{pmatrix}
+		.\]
+		\begin{enumerate}
+			\item Déterminer le polynôme minimal $\mu_A$ de la matrice $A$.
+			\item En déduire, pour tout entier $n \in \N$, $A^n$ en fonction de $I_3$, $A$ et $A^2$.
+			\item Calculer $\exp A$.
+		\end{enumerate}
+	\end{slshape}
+
+	\bigskip\bigskip
+	\textbf{Réponse du cadeau} :\\
+	\begin{enumerate}
+		\item On calcule le polynôme caractéristique $\chi_A$, et on trouve $\chi_A = (X - 1) \cdot (X-2)^2$.
+			(Vérification : pour un polynôme scindé, $\tr A = \sum_{\lambda \in \Sp A} m_\lambda \cdot \lambda$, et $\det A = \prod_{\lambda \in \Sp A} \lambda^{m_\lambda}$.)
+			Le polynôme minimal, $\mu_A$, divise tous les polynômes annulateurs de $A$.
+			En particulier, il divise $\chi_A$, d'après le théorème de Cayley \& Hamilton.
+			En plus, le spectre de $A$ est l'ensemble des racines de $\chi_A$, mais c'est aussi l'ensemble des racines de $\mu_A$.
+			On peut donc calculer $(A-I_3) \cdot (A - 2I_3)$, qui n'est pas nul.
+			D'où, $\chi_A = \mu_A$.
+
+			Autre méthode : on trouve $\dim \mathrm{SEP}(2) = 1$, d'où $A$ n'est pas diagonalisable, elle ne possède donc pas de polynôme annulateur scindé à racines simples.
+			Ainsi, $\mu_A$ n'est pas scindé à racines simples.
+			On en déduit donc que $\mu_A = \chi_A$.
+
+			Autre autre méthode : la famille $(I_3, A, A^2)$ est libre, il n'existe donc pas de polynôme annulateur de degré inférieur ou égal à $2$.
+		\item On réalise la division euclidienne $X^n \div \mu_A(X)$, pour obtenir un quotient $Q_n(X)$ et un reste $R_n(X)$.
+			Ainsi, $X^n = \mu_A(X) \cdot Q_n(X) + R_n(X)$, et $\deg R_n < \deg \mu_A$.
+			Et donc, $A^n = R_n(A)$.
+			Or, $R_n(X) = a_n X^2 + b_n X + c_n$.
+			Il y a 3 inconnues, on cherche 3 équations.
+			On a $1^n = 0 \times Q_n(1) + R_n(1) = a_n + b_n + c_n$.
+			De plus, $2^n = 0 \times Q_n(2) + R_n(2) = 4a_n + 2b_n + c_n$.
+			Finalement, en dérivant, on trouve $n X^{n-1} + \mu_A' \cdot Q_n  + \mu_A \cdot Q_n' + R'_n$, et donc, pour $X = 2$, on trouve $n 2^{n-1} = 0 \cdot Q_n(2) + 0 \cdot Q'_n(2) + R_n'(2) = 4a_n + b_n$.
+			On résout donc le système
+			\[
+				\begin{cases}
+					a_n + b_n + c_n = 1\\
+					4a_n + 2b_n + c_n = 2^n\\
+					4a_n + b_n = n 2^{n-1}
+				\end{cases}
+			.\]
+			On trouve donc que $a_n = n 2^{n-1} - 2^n + 1$, $b_n = -3n \cdot 2^{n-1} + 2^{n+2} - 4$ et $c_n = n 2^n - 3\cdot 2^n + 4$.
+			On en déduit que $A^n = a_n A^2 + b_n A + c_n I_3$.
+			Vérification : pour $n = 0$, on a $(a_n, b_n, c_n) = (0, 0, 1)$ ; pour $n = 1$, on a $(a_n, b_n, c_n) = (0, 1, 0)$ ; pour $n = 2$, on a $(a_n, b_n, c_n) = (1, 0, 0)$.
+		\item Enfin, on calcule \[
+				\exp A = \sum_{n=0}^\infty \frac{A^n}{n!} = \sum_{n=0}^\infty \frac{a_n A^2 + b_n A + c_n I_3}{n!} = \alpha A^2 + \beta A + \gamma I_3
+			.\] On calcule $\gamma$, et on procèdera de même pour les autres coefficients.
+			\begin{align*}
+				\alpha &= \sum_{n=0}^\infty \frac{c_n}{n!} = \sum_{n=0}^\infty \frac{n 2^n - 3 \cdot 2^n + 4}{n!}\\
+				&= \sum_{n=1}^\infty \frac{n_2^{n}}{n!} - 3 \sum_{n=0}^\infty \frac{2^n}{n!} + 4 \sum_{n=0 }^\infty \frac{1}{n!} \\
+				&= 2\: \mathrm{e}^2 - 3\:\mathrm{e}^2  + 4 \mathrm{e} \\
+			\end{align*}
+			En effet, $x \sum_{n=1}^\infty n x^{n-1} / n! = x \mathrm{d}\,\mathrm{e}^x/\mathrm{d}x = x \mathrm{e}^x$, car on peut dériver terme à terme une série entière sans changer son rayon de convergence.
+	\end{enumerate}
+	\clearpage
+	\centerline{\LARGE Cadeau du 28/03/23}
+	\centerline{\itshape Comment utiliser la trigonalisation pour calculer l'exponentielle d'une matrice ?}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\begin{slshape}
+		La matrice $B$ est-elle diagonalisable et calculer $\exp B$, où $B$ est la matrice $2 \times 2$ définie comme \[
+			B = \begin{pmatrix}
+				1 & 2\\
+				0 & 1
+			\end{pmatrix}
+		.\]
+	\end{slshape}
+
+	\bigskip\bigskip
+	\textbf{Réponse du cadeau} :\\
+	\begin{enumerate}
+		\item Non. En effet, son unique valeur propre sont $1$, et, si $B$ serait diagonalisable, alors $B$ serait semblable à $I_2$, ce qui est absurde car $B \neq I_2$.
+		\item On remarque que $B^2 = {1\:4\choose 0\:1}$. On peut montrer par récurrence que \[
+			B^n = \begin{pmatrix}
+				1 & 2n\\
+				0 & 1
+			\end{pmatrix}
+		.\]
+		Ainsi, pour calculer $\exp B$, on procède pour chaque coefficient de la matrice.
+		En effet, \[
+			\mathrm{e}^B = \begin{pmatrix}
+				\sum_{n=0}^\infty 1/n! & \sum_{n=0}^\infty 2n/n!\\
+				0 &\sum_{n=0}^\infty 1/n!\\
+			\end{pmatrix} = \begin{pmatrix}
+				\mathrm{e} & 2 \mathrm{e}\\
+				0 & \mathrm{e}
+			\end{pmatrix}
+		\] car \[
+			\sum_{n=0}^\infty \frac{2n}{n!} = 2 \sum_{n=1}^\infty \frac{1}{(n-1)!} = 2 \mathrm{e}
+		.\]
+	\end{enumerate}
+
+	\textbf{Autre réponse du cadeau} :\\
+	On remarque que $B = I_2 + { 0 \: 2 \choose 0 \: 0 } = I_2 + A$.
+	Et, comme $I_2$ et $A$ commutent, alors \[
+		\mathrm{e}^B = \mathrm{e}^{I_2} \cdot \mathrm{e}^A = \sum_{n=0}^\infty \frac{I_n^n}{n!} \times \sum_{n=0}^\infty \frac{A^n}{n!} = \sum_{n=0}^\infty \frac{I_n}{n!} \cdot (I_n + A) = \mathrm{e} \cdot B
+	\] car la matrice $A$ est nilpotente : $A^2$ est la matrice nulle.
+	\clearpage
+	\centerline{\LARGE Cadeau du 29/03/23}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\begin{slshape}
+		Soit $A \in \mathcal{M}_{n,n}(\R)$.
+		\begin{enumerate}
+			\item Montrer que $A$ est antisymétrique si, et seulement si, $\forall X \in \mathcal{M}_{n,1}(\R)$, $X^\T \cdot A \cdot X = 0$.
+			\item Que peut-on dire de $\mathrm{e}^A$ si $A$ est antisymétrique ?
+		\end{enumerate}
+	\end{slshape}
+
+	\bigskip\bigskip
+	\textbf{Réponse du cadeau} :\\
+	\begin{enumerate}
+		\item Le sens direct a déjà été démontré. Montrons la réciproque.
+			On suppose $\forall X \in \mathcal{M}_{n,1}(\R)$, $X^\T AX = 0$.
+			Soient $X$ et $Y$ deux vecteurs colonnes de $\mathcal{M}_{n,1}(\R)$.
+			On a
+			\begin{align*}
+				0 &= (X+Y)^\T A (X+Y)\\
+					&= X^\T A X + Y^\T A Y + X^\T A Y + Y^\T A X\\
+					&= X^\T A Y + Y^\T A Y\\
+					&= X^\T A Y + X^\T A^\T Y \text{ car } X^\T A^\T Y \in \R\\
+					&= X^\T (A + A^\T) Y \\
+			\end{align*}
+			Ainsi, en notant $M = A + A^\T$, $\langle X  \mid MY\rangle = X^\T \cdot (MY) = 0$, pour tout $X$.
+			D'où, $MY = 0$, et ce, quel que soit $Y$. D'où, $M = 0$.
+			La matrice $A$ est donc antisymétrique : $A = - A^\T$.
+		\item On sait que $(\exp A)^\T = \exp(A^T) = \exp(-A) = (\exp A)^{-1}$, d'où $\mathrm{e}^A \in \mathrm{O}_n(\R)$.
+			De plus, $\det(\exp A) = \exp(\tr A) = 1$ et donc $\mathrm{e}^A \in \mathrm{SO}_n(\R)$.
+	\end{enumerate}
+
+	\bigskip\bigskip
+	\textbf{Autre réponse du cadeau} :\\
+	\begin{enumerate}
+		\item On suppose que, pour tout $X \in \mathcal{M}_{n,1}(\R)$, $X^\T A X = 0 \in \R$.
+			Donc $X^\T A^\T X = 0$, par application de la transposée.
+			D'où, $\forall X \in \mathcal{M}_{n,1}(\R)$, $X^\T (A + A^\T) X = 0$ et donc $A + A^\T \in \mathcal{S}_n(\R)$.
+			D'après le théorème spectral, il existe $P \in \mathrm{O}_n(\R)$ tel que $P^\T (A + A^\T) P = D$, où $D$ est diagonale.
+			Ainsi, pour tout vecteur $X$, $X^\T P D P^\T = (P^\T X)^\T D (P^\T X) = 0$.
+			D'où, par changement de base, pour tout vecteur $U$, $U^\T D U = 0$.
+			Ainsi, $D = 0$ et donc $A + A^\T = 0$.
+			On en déduit que $A^\T = -A$, la matrice $A$ est antisymétrique.
+	\end{enumerate}
+	\clearpage
+	\centerline{\LARGE Cadeau du 30/03/23}
+	\centerline{\itshape polynômes interpolateurs de \textsc{Lagrange}.}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	\begin{slshape}
+		Soit $p \in \N$. Pour tout entier non nul $n \in \N^*$\!, notons $P_n$ l'unique polynôme de $\R_p[X]$ vérifiant, pour tout $i \in \llbracket 0,p \rrbracket$, $P_n(i) = (-1)^n / (n + i)$.
+		Montrer que la série de ``vecteurs'' $\sum_{n \ge 1} P_n$ est convergente.
+	\end{slshape}
+
+	\bigskip\bigskip
+	\textbf{Réponse du cadeau} :\\
+	Posons, pour tout $i \in \llbracket 1,p \rrbracket$, $L_i(X)$ le $i$-ème polynôme interpolateur de \textsc{Lagrange} : \[
+		L_i(X) = \prod_{\substack{j = 0\\ j \neq i}}^p \frac{X-j}{i-j}
+	.\]
+	Ainsi, pour tout entier $n$, $P_n(X) = \sum_{i=1}^p (-1)^n L_i(X) / (n +i)$.
+	Or, les polynômes interpolateurs de \textsc{Lagrange} forment une base de $\R_p[X]$. Ainsi, $\mathcal{B} = (L_0, \ldots, L_p)$ est une base de $\R_p[X]$.
+	Or, $\R_p[X]$ est de dimension finie.
+	Et, dans un espace vectoriel normé de dimension finie, une série de vecteurs converge si, et seulement si, les sommes partielles de chaque coefficients convergent.
+	Pour tout $i \in \llbracket 1,p \rrbracket$, la série $\sum (-1)^k / (k + 1)$ converge.
+	On en déduit que la série de polynômes $\sum P_n$ converge.
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 31/03/23}
+	\centerline{\itshape (Khôlle 21 \textinterrobang)}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau A} :\\
+	\begin{slshape}
+		Soit, pour tout réel $x \in {]0,+\infty[}$, pour tout entier $n \in \N^*$, $f_n(x) = 1 / (n + n^2 x)$.
+		\begin{enumerate}
+			\item Montrer que la série de fonctions $\sum f_n$ converge simplement sur $]0,+\infty[$.
+			\item Soit, pour $x \in {]0,+\infty[}$, $f(x) = \sum_{n=1}^\infty f_n(x)$.
+				Montrer que $f$ est continue sur $]0,+\infty[$.
+			\item[2{,}5.] Montrer que la convergence de la série $\sum f_n$ n'est pas normale.
+			\item La convergence de la série de fonctions $\sum f_n$ est-elle uniforme sur $]0,+\infty[$ ?
+			\item Déterminer un équivalent de $f(x)$ quand $x$ tend vers $+\infty$.
+		\end{enumerate}
+	\end{slshape}
+
+	\bigskip
+
+	\centerline{\pgfornament[width=3cm]{88}}
+
+	\textbf{Cadeau B} :\\
+	\begin{slshape}
+		Soient $\alpha$ et $\beta$ deux scalaires d'un espace vectoriel $\mathds{K}$ de dimension finie.
+		Soient $f$, $u$ et $v$ trois endomorphismes de $\mathds{K}$ tels que
+		\[
+			\begin{cases}
+				f = \alpha u + \beta v,\\
+				f^2 = \alpha^2 u + \beta^2 v,\\
+				f^3 = \alpha^3 u + \beta^3 v.
+			\end{cases}
+		\]
+		\begin{enumerate}
+			\item Déterminer un polynôme annulateur de $f$.
+			\item Montrer que $f$ est diagonalisable.
+		\end{enumerate}
+	\end{slshape}
+
+	\bigskip
+
+	\centerline{\pgfornament[width=3cm]{88}}
+
+	\textbf{Cadeau C} :\\
+	\begin{slshape}
+		Soit $z \in \C$ tel que $|z| < 1$.
+		Montrer que \[
+			\sum_{n=1}^\infty \frac{z^{2n-1}}{1-z^{2n-1}} = \sum_{k=1}^\infty \frac{z^k}{1-z^{2k}}
+		.\]
+	\end{slshape}
+
+
+	\bigskip\bigskip
+	\textbf{Réponse du cadeau A} :\\
+	\begin{enumerate}
+		\item Soit $x \in {]0,+\infty[}$ : $1 / (n + n^2 x) \sim 1 / n^2 x$, qui ne change pas de signe.
+			Or, la série numérique $\sum 1 / n^2 x = (1/x) \sum 1 / n^2$ converge par le critère de \textsc{Riemann}.
+			D'où, la série de fonctions $\sum f_n$\/ converge simplement sur $]0,+\infty[$.
+		\item Soit $a > 0$. Pour tout entier $n \in \N^*$, pour tout réel $x \in [a, +\infty[$, \[
+				\big|f_n(x)\big| = \frac{1}{n + n^2 x} \le \frac{1}{n^2 a}
+			,\] et $\sum 1/n^2 a$\/ converge par critère de \textsc{Riemann}.
+			Ainsi, la série de fonctions $\sum f_n$\/ converge normalement sur $[a,+\infty[$, donc uniformément sur $[a,+\infty[$.
+			Chaque fonction $f_n$ est continue sur $[a,+\infty[$, la fonction $f$ est donc continue sur $[a,+\infty[$.
+			Ceci étant vrai pour tout $a$, et la continuité étant une propriété \textit{locale}, on en déduit que la fonction $f$ est continue sur $]0,+\infty[$.
+		\item[2{,}5.] Pour tout entier $n \in \N$, $\sup_{x \in {]0,+\infty[}}\:|f_n(x)| = 1 / n$.
+			Or, la série numérique $\sum 1 / n$ diverge, donc la série de fonctions $\sum f_n$ ne converge pas normalement sur $]0,+\infty[$.
+		\item Supposons, par l'absurde, que la série de fonctions $\sum f_n$ converge uniformément sur $]0,+\infty[$.
+			Pour tout $n \in \N^*$, $f_n(x) \to 1 / n$ quand $x \to 0$.
+			D'après le théorème de la double limite, on en déduit que la série $\sum 1 / n$ converge, ce qui est absurde.
+			D'où, $\sum f_n$ ne converge pas uniformément sur $]0,+\infty[$.
+		\item Soit $n \in \N^*$, et $x > 1$. On encadre $f_n(x)$ : \[
+				\frac{1}{n^2(x+1)} \le f_n(x) = \frac{1}{n + n^2 x} \le \frac{1}{n^2x}
+			.\]D'où, par somme, pour tout entier $N \in \N^*$, \[
+				\frac{1}{(x+1)}\sum_{n = 1}^N \frac{1}{n^2} \le \sum_{n=1}^N f_n(x) \le \frac{1}{x}\sum_{n = 1}^N \frac{1}{n^2}
+			.\]Or, les inégalités larges passent à la limite, d'où \[
+				\frac{\pi^2}{6(x+1)} \le \sum_{n=1}^\infty f_n(x) = f(x) \le \frac{\pi^2}{6x}
+			.\]D'où, en divisant par $x + 1$, \[
+				\frac{x}{x+1} \le \frac{6x}{\pi^2} f(x) \le 1
+			.\]D'après le théorème des gendarmes, on en déduit que $\frac{6x}{\pi^2} f(x) \to 1$ quand $x \to \infty$ car $x / (x+1) \to 1$.
+			D'où, $f(x) \sim_{x \to \infty} \pi^2 / 6x$.
+	\end{enumerate}
+
+	\bigskip\bigskip
+	\textbf{Réponse du cadeau B} :\\
+	\begin{enumerate}
+		\item On calcule
+			\[
+				(\alpha + \beta) f^2 = \alpha^3 u + \beta^3 v + \alpha^2 \beta u + \alpha \beta^2 v = f^3 + \alpha \beta f
+			.\]
+			On en déduit que le polynôme $\mu(X) = X^3 - (\alpha + \beta) X^2 + \alpha \beta X$ annule $f$.
+		\item On procède par disjonction de cas.
+			\begin{enumerate}
+				\item Si $\alpha \neq 0$, $\beta \neq 0$ et $\alpha \neq \beta$, alors $\mu$ est un polynôme scindé à racines simples annulateur de $f$. L'endomorphisme $f$ est donc diagonalisable.
+				\item Si $\alpha = 0$ et $\beta = 0$, alors $f = 0$ qui est diagonal.
+				\item Si $\alpha = 0$ et $\beta \neq 0$, alors $f = \beta v$ et $f^2 = \beta^2 v$.
+					Ainsi, $f^2 - \beta f = 0$ et donc $X^2 - \beta X = X(X-\beta)$ est un polynôme scindé à racines simple annulateur de $f$. D'où, $f$ est diagonalisable.
+				\item Si $\alpha \neq 0$ et $\beta = 0$, on procède comme le cas (c).
+				\item Si $\alpha \neq 0$, $\beta \neq 0$, et $\alpha = \beta$, alors $f = \alpha (u+v)$ et $f^2 = \alpha^2 (u + v)$. D'où, $f^2 = \alpha f$.
+					Ainsi, $X^2 - \alpha X = X(X - \alpha)$ est un polynôme annulateur de $f$, il est scindé à racines simples et donc $f$ est diagonalisable.
+			\end{enumerate}
+	\end{enumerate}
+
+	\bigskip\bigskip
+	\textbf{Réponse \textmd{(partielle)} du cadeau C} :\\
+	\begin{align*}
+		\sum_{n=1}^\infty \frac{z^{2n-1}}{1-z^{2n-1}}
+		&= \sum_{n=1}^\infty z^{2n-1} \Big(\sum_{k=0}^\infty (z^{2n-1})^k\Big) && \text{ car } |z^{2n-1}| = |z|^{2n-1} < 1\\
+		&= \sum_{n=1}^\infty \Big( \sum_{k=0}^\infty z^{2n-1} \cdot (z^{2n-1})^k\Big) \\
+		&= \sum_{k=0}^\infty \Big(\sum_{n=1}^\infty z^{2n-1}(z^{2n-1})^k\Big) && \text{ car } (\heartsuit) \\
+		&= \sum_{k=0}^\infty \sum_{n=1}^\infty (z^{2n-1})^{k+1} \\
+		&= \sum_{k=0}^\infty \sum_{n=1}^\infty (z^{k+1})^{2n-1} \\
+		&= \ldots \\
+	\end{align*}
+	$(\heartsuit)$ : la série converge absolument, c'est donc une famille sommable et on applique le théorème de Fubini.
+
+	\clearpage
+	\centerline{\LARGE Cadeau du 01/30423}
+	\centerline{\itshape (Cadeau ultime)}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\textbf{Cadeau} :\\
+	On considère l'ensemble $\mathcal{S}$ défini comme $\mathcal{S} = \{(x,y,z) \in \R^3  \mid \sqrt{x} + \sqrt{y} + \sqrt{z} = 1\}$.
+	\begin{enumerate}
+		\item Déterminer trois plans de symétries de la surface $\mathcal{S}$.
+			Déterminer une rotation par laquelle $\mathcal{S}$ est stable.
+		\item Montrer que, pour tout $(x,y,z) \in \mathcal{S}$, $x + y + z \le 1$.
+			En déduire que la surface $\mathcal{S}$ est incluse dans un tétraèdre.
+	\end{enumerate}
+
+	\bigskip\bigskip
+	\textbf{Réponse au cadeau} :\\
+	Rotation de $2\pi / 3$ autour de l'axe orienté par $\vec{u} = (1, 1, 1)$, d'où les plans de symétries.
+	Comme $0 \le x \le 1$, $0\le y \le 1$ et $0 \le z \le 1$ donc $x \le \sqrt{x}$, $y \le \sqrt{y}$ et $z \le \sqrt{z}$.
+	D'où, par somme, $x + y + z \le 1$. Ainsi, pour tout vecteur $(x,y,z) \in \mathcal{S}$, $x \ge 0$, $y \ge 0$, $z \ge 0$ et $x + y + z \le 1$.
+	On en déduit que $\mathcal{S}$ est incluse dans un tétraèdre.
 \end{document}

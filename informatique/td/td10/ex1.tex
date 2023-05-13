@@ -1,0 +1,54 @@
+\section{Premiers arbres de preuves}
+
+\begin{enumerate}
+	\item \[
+			\begin{prooftree}
+				\infer 0[Ax]{p \vdash p}
+				\infer 1[$\to$i]{\O \vdash p \to p} % A
+			\end{prooftree}
+		.\]
+	\item \[
+			\begin{prooftree}
+				\infer 0[Ax]{p,\lnot p \vdash p}
+				\infer 0[Ax]{p,\lnot p \vdash \lnot p}
+				\infer 2[$\lnot$e]{p,\lnot p \vdash \bot} % p
+			\end{prooftree}
+		.\] 
+	\item \[
+			\begin{prooftree}
+				\infer 0[Ax]{p,q \vdash p}
+				\infer 0[Ax]{p,q \vdash q}
+				\infer 2[$\land$i]{p,q\vdash p \land q}
+			\end{prooftree}
+		.\]
+	\item \[
+			\begin{prooftree}
+				\infer 0[Ax]{p \land q \vdash p \land q}
+				\infer 1[$\land$e,g]{p \land q \vdash q} % H1 A B
+				\infer 0[Ax]{p \land q \vdash p \land q}
+				\infer 1[$\land$e,d]{p \land q \vdash p} % H1 A B
+				\infer 2[$\land$i]{p \land q \vdash q \land p}
+			\end{prooftree}
+		.\]
+	\item \[
+			\begin{prooftree}
+				\infer 0[Ax]{p \lor q \vdash p \lor q}
+				\infer 0[Ax]{p \lor q, p \vdash p}
+				\infer 1[$\lor$i,d]{p \lor q,p \vdash q \lor p}
+				\infer 0[Ax]{p \lor q, q \vdash q}
+				\infer 1[$\lor$i,g]{p \lor q,q \vdash q \lor p}
+				\infer 3[$\lor$e]{p \lor q \vdash q \lor p} % p\/q A B
+			\end{prooftree}
+		.\]
+	\item \[
+			\begin{prooftree}
+				\infer 0[Ax]{p \land \lnot p \vdash p \land \lnot p}
+				\infer 1[$\land$e,g]{p \land \lnot p \vdash p} % A M N
+				\infer 0[Ax]{p \land \lnot p \vdash p \land \lnot p}
+				\infer 1[$\land$e,d]{p \land \lnot p \vdash \lnot p} % A M N 
+				\infer 2[$\lnot$e]{p \land q \vdash \bot} % p
+				\infer 1[$\lnot$i]{\vdash \lnot (p \land \lnot p)} % A
+			\end{prooftree}
+		.\]
+\end{enumerate}
+

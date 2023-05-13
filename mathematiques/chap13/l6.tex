@@ -1,0 +1,97 @@
+\begin{prv}
+	D'après la proposition 35, on a $\text{5}\implies \text{6} \implies \text{1}$, et $\text{1} \implies \text{2}$.
+	Montrons ces équivalences avec un \guillemotleft~cycle.~\guillemotright\@ 
+	\begin{itemize}
+		\item[``$\text{2}\implies \text{3}$''] Supposons $f \in \mathcal{L}(E, F)$\/ et $f(\vec{x}) \tendsto{\vec{x} \to \vec{0}} f(\vec{0}) = \vec{0}$.
+			En particulier, \[
+				\big\|f(\vec{x}) - \vec{0} \big\| \tendsto{\|\vec{x} - \vec{0}\|} 0
+			.\]
+			Montrons que $f$\/ est bornée sur la boule unité $B(\vec{0}, 1)$, \textit{i.e.} montrons qu'il existe $M \in \R$\/ tel que, pour tout vecteur $\vec{x} \in B(\vec{0}, 1)$, $\|f(\vec{x})\| \le M$.
+			Or, par hypothèse, \[
+				\forall \varepsilon > 0,\: \exists \delta > 0,\forall \vec{x} \in E, \quad\quad \|f(\vec{x})\| \le \delta \implies \|f(\vec{x})\| \le \varepsilon
+			.\] On pose $\varepsilon = 1$, il existe donc $\delta > 0$\/ tel que $\forall \vec{x} \in E$, $\|\vec{x}\| \le \delta \implies \|f(\vec{x})\| \le 1$.
+			D'où, par linéarité de $f$, \[
+				\left\|f\left( \frac{\vec{x}}{\delta} \right)\right\| = \left\|f\left(\frac{1}{\delta} \cdot \vec{x}\right)\right\| = \left\|\frac{1}{\delta} f(\vec{x})\right\| = \frac{1}{\delta} \cdot \|f(\vec{x})\|
+			.\] Ainsi, pour tout vecteur $\vec{y} \in B(\vec{0}, 1)$, on a $\|f(\vec{y})\| \le 1 / \delta$.
+		\item[``$\text{3}\implies \text{4}$'']
+			On suppose $f \in \mathcal{L}(E, F)$, et que $f$\/ est bornée sur $B(\vec{0}, 1)$.
+			On veut montrer qu'il existe un réel $K \in \R$\/ tel que, pour tout vecteur $\vec{x} \in E$, $\|f(\vec{x})\| \le K \|\vec{x}\|$.
+			Par hypothèse, il existe un réel $M$\/ tel que, pour tout vecteur $\vec{y} \in B(\vec{0},1)$, $\|f(\vec{y})\| \le M$.
+			Soit $\vec{x} \in E$.
+			\begin{itemize}
+				\item Si $\vec{x} \neq  \vec{0}$, soit alors $\vec{y} = \vec{x} / 7\|\vec{x}\| \in B(\vec{0},1)$. D'où, $\|f(\vec{y})\| \le M$.
+					Or, $f(\vec{x} / 7\|\vec{x}\|) = f(\vec{x}) / 7\|\vec{x}\|$, car $f$\/ est linéaire.
+					D'où, $\|f(\vec{x}) / 7\|\vec{x}\|\| \le M$, et donc $\|f(\vec{x})\| / 7\|\vec{x}\| \le M$. On en déduit que \[
+						\|f(\vec{x})\| \le 7M \times \|\vec{x}\|
+					.\]
+				\item Si $\vec{x} = \vec{0}$, alors $\|f(\vec{0})\| = \|\vec{0}\| \le K \cdot \|\vec{0}\|$, par linéarité.
+			\end{itemize}
+		\item[``$\text{4}\implies \text{5}$'']
+			On suppose $f \in \mathcal{L}(E, F)$, et qu'il existe un réel $K$\/ tel que, pour tout vecteur $\vec{x} \in E$, $\|f(\vec{x})\| \le K \cdot \|\vec{x}\|$.
+			On veut montrer qu'il existe un réel $K$\/ tel que, pour tous vecteurs $\vec{x}$\/ et $\vec{y} \in E$, $\|f(\vec{x}) - f(\vec{y})\| \le K \cdot \|\vec{x} - \vec{y}\|$.
+			Par linéarité, $f(\vec{x}) - f(\vec{y}) = f(\vec{x} - \vec{y})$. Et, par hypothèse, $\|f(\vec{x} - \vec{y})\| \le K \|\vec{x} - \vec{y}\|$. Ainsi, \[
+				\|f(\vec{x}) - f(\vec{y})\| \le K \|\vec{x} - \vec{y}\|
+			.\]
+	\end{itemize}
+\end{prv}
+
+\begin{exo}
+	\begin{slshape}
+		Soit $d$\/ l'application linéaire définie par \begin{align*}
+			d: \mathds{K}[X] &\longrightarrow \mathds{K}[X] \\
+			P &\longmapsto P'.
+		\end{align*}
+		\begin{enumerate}
+			\item On munit l'espace vectoriel $\mathds{K}[X]$\/ des polynômes de la norme $N$\/ définie par \begin{align*}
+					N: \mathds{K}[X] &\longrightarrow \R \\
+					a_0 + a_1 X + \cdots + a_n X^n &\longmapsto \max_{i \in \llbracket 0,n \rrbracket} |a_i|.
+				\end{align*}
+				Montrer que $d$\/ n'est pas continue.
+			\item On munit le même espace vectoriel de la norme $\|\cdot\|$\/ définie par $\|P\| = \max_{i \in \llbracket 0,n \rrbracket} |a_i| / (i+1)$. Montrer que $d$\/ est continue.
+		\end{enumerate}
+	\end{slshape}
+
+	\begin{enumerate}
+		\item On utilise le théorème précédent. On a, pour tout $n \in \N^*$, $\|X^n\| = 1$, et $d(X^n) = n X^{n-1}$. Ainsi, \[
+				\|d(X^n)\| = n \tendsto{n\to \infty} +\infty
+			.\] Donc $d$\/ n'est pas bornée sur la boule unité $B(0, 1)$.
+			Cette démonstration est \textbf{fausse} en dimension finie dans l'espace vectoriel $\mathds{K}_n[X]$.
+		\item Soit $P \in B(0_{\R[X]}, 1)$.
+			On pose $P = a_0 + a_1 X + a_2 X^2 + \cdots + a_n X^n$. Ainsi, $1 \ge \max_{i \in \llbracket 1,n \rrbracket} |a_i| / (i+1)$.
+			On a $P' = a_1 + 2a_2 X + \cdots + na_n X^{n-1} = \sum_{i=1}^n i a_i X^{i-1}$.
+			D'où, $\|P'\| = \max_{i \in \llbracket 0,n \rrbracket} \frac{|i a_i|}{i}$. ????
+			{\color{red}Non, cette question est fausse, la fonction $d$\/ n'est pas continue même pour cette nouvelle norme.}
+	\end{enumerate}
+\end{exo}
+
+\begin{thm}
+	Soient $E$\/ et $F$\/ deux espaces vectoriels normées, et soit $f : E \to F$\/ une application linéaire. Si $E$\/ est de dimension \textbf{finie}, alors $f$\/ est lipschitzienne, donc continue sur $E$.
+\end{thm}
+
+\begin{prv}
+	Soit $f \in \mathcal{L}(E, F)$. On suppose $E$\/ de dimension finie $n$.
+	On veut montrer qu'il existe un réel $k$\/ tel que $\|f(\vec{x})\| \le k\:N(\vec{x})$.
+	Par hypothèse, on peut se placer dans une base $(\vec{\varepsilon}_1, \ldots, \vec{\varepsilon}_n)$\/ de $E$.
+	On peut munir $E$\/ de la norme $N : x_1\vec{\varepsilon}_1 + \cdots + x_n \vec{\varepsilon}_n = \max_{i \in \llbracket 1,n \rrbracket} |x_i|$.
+	On réalise la démonstration avec cette norme car toutes les normes sur $E$\/ sont équivalentes, comme $\dim E = n$.
+	Soit $\vec{x} \in E$. On pose $\vec{x} = x_1 \vec{\varepsilon}_1 + \cdots + x_n \vec{\varepsilon}_n$.
+	On calcule
+	\begin{align*}
+		\|f(\vec{x})\| &= \|f(x_1 \vec{\varepsilon}_1) + \cdots + x_n \vec{\varepsilon}_n\|\\
+		&= \|x_1 f(\vec{\varepsilon}_1) + \cdots + x_n f(\vec{\varepsilon}_n)\| \\
+		&\le \|x_1 f(\vec{\varepsilon}_1)\| + \cdots + \|x_n f(\vec{\varepsilon}_n)\|\\
+		&\le |x_1|\cdot  \|f(\vec{\varepsilon}_1)\| + \cdots + |x_n|\cdot \|f(\vec{\varepsilon}_n)\|\\
+		&\le N(\vec{x}) \big(\underbrace{\|f(\vec{\varepsilon}_1)\| + \cdots + \|f(\vec{\varepsilon}_n)\|}_k\big).
+	\end{align*}
+	Ainsi, on a bien $\|f(\vec{x})\| \le k \cdot \|\vec{x}\|$.
+\end{prv}
+
+\begin{exm}
+	L'espace vectoriel $\mathcal{M}_n(\mathds{K})$\/ est de dimension finie, les applications sont continues car linéaires :
+	\begin{enumerate}
+		\item la trace $\tr : \mathcal{M}_{n}(\mathds{K}) \to \mathds{K}, A \mapsto \tr A$\/ ;
+		\item la transposée $\square ^\top : \mathcal{M}_n(\mathds{K}) \to \mathcal{M}_n(\mathds{K}),\: A \mapsto A^\top$\/ ;
+		\item une changement de base $\mathcal{M}_n(\mathds{K}) \to \mathcal{M}_n(\mathds{K}),\: A \mapsto P^{-1} \cdot A \cdot P$\/ où $P \in \mathrm{GL}_n(\mathds{K})$.
+	\end{enumerate}
+\end{exm}
+

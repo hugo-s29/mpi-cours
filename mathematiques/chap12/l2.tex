@@ -1,0 +1,221 @@
+\begin{met}
+	En particulier, soit $A$\/ une matrice $3 \times 3$\/ de colonnes $C_1$, $C_2$, et $C_3$.
+	Il suffit de vérifier que
+	\begin{itemize}
+		\item $(C_1, C_2)$\/ est une famille orthonormée, et $C_1 \wedge C_2 = \pm C_3$\/ pour montrer $A \in \mathrm{O}_3(\R)$ ;
+		\item $(C_1, C_2)$\/ est une famille orthonormée, et $C_1 \wedge C_2 = + C_3$\/ pour montrer $A \in \mathrm{SO}_3(\R)$.
+	\end{itemize}
+\end{met}
+
+\begin{exo}
+	\textsl{Soit $\theta \in \R$. Étudier les matrices
+	\begin{align*}
+		A &= \begin{pNiceMatrix}[last-row, last-col]
+			\cos \theta & - \sin \theta & \vec{\imath}\\
+			\sin \theta & \cos \theta & \vec{\jmath}\\
+			f(\vec{\imath}) & f(\vec{\jmath})
+		\end{pNiceMatrix} \quad\quad = \big[\:f\:\big]_{(\vec{\imath},\vec{\jmath})} \in \mathrm{SO}_2(\R),\\
+		B &= \begin{pNiceMatrix}[last-row, last-col]
+			\cos \theta & \sin \theta & \vec{\imath}\\
+			\sin \theta & -\cos \theta & \vec{\jmath}\\
+			g(\vec{\imath}) & g(\vec{\jmath})
+		\end{pNiceMatrix} \quad\quad = \big[\:g\:\big]_{(\vec{\imath},\vec{\jmath})} \in \mathrm{O}_2(\R),\\
+			C &= \begin{pNiceMatrix}[last-row,last-col]
+			\cos \theta & - \sin \theta & 0 & \vec{\imath} \\
+			\sin \theta & \cos \theta & 0 & \vec{\jmath}\\
+			0 & 0 & 1 & \vec{k}\\
+			\substack{h(\vec{\imath})\\C_1} & \substack{h(\vec{\jmath})\\C_2} & \substack{h(\vec{k})\\C_3}
+		\end{pNiceMatrix} \quad = \big[\:h\:\big]_{(\vec{\imath},\vec{\jmath},\vec{k})}\\
+			D &= \begin{pNiceMatrix}[last-row,last-col]
+				0 & 0 & 1 & \vec{\imath} \\
+				0 & 1 & 0 & \vec{\jmath}\\
+				1 & 0 & 0 & \vec{k}\\
+				u(\vec{\imath}) & u(\vec{\jmath}) & u(\vec{k})
+			\end{pNiceMatrix} \quad = \big[\:u\:\big]_{(\vec{\imath},\vec{\jmath},\vec{k})}\\
+	\end{align*}}
+
+	La matrice $A$\/ est la rotation d'angle $\theta$.
+	La matrice $B$\/ est la symétrie orthogonale par rapport à $\Vect(\vec{a})$. De plus, $B^\top = B^{-1} = B$, et, dans une base adaptée $(\vec{a}, \vec{b})$, l'endomorphisme $g$\/ devient \[
+		\big[\:g\:\big]_{(\vec{a}, \vec{b})} =
+		\begin{pNiceMatrix}[last-row,last-col]
+			1 & 0 & \vec{a}\\
+			0 & -1 & \vec{b}\\
+			g(\vec{a}) & g(\vec{b})
+		\end{pNiceMatrix} \quad = B'
+	.\]
+	La matrice $C$\/ est diagonale par blocs, donc triangulaire par blocs, donc $\det C = \det A \times 1 = +1$.
+	Les colonnes $C_1$, $C_2$\/ et $C_3$\/ de la matrice $C$\/ forment une base orthonormée, d'où $C \in \mathrm{O}_3(\R)$. De plus, $\det C = +1$, donc $C \in \mathrm{SO}_3(\R)$. On remarque que $h(\vec{k}) = \vec{k}$.
+	La matrice $C$\/ est donc la rotation d'angle $\theta$\/ de l'axe $(O, \vec{k})$.
+	On remarque que $u(\vec{\jmath}) = \vec{\jmath}$, $u(\vec{\imath} + \vec{\jmath} + \vec{k}) = \vec{\imath} + \vec{\jmath} + \vec{k}$, $u(\vec{\imath}, \vec{k}) = \vec{\imath} + \vec{k}$\/ et $g(\vec{\imath} - \vec{k}) = \vec{k} - \vec{\imath}$.
+	Ainsi, $\mathrm{SEP}(1) = \Vect(\vec{\jmath}, \vec{\imath}+\vec{k})$, et $\mathrm{SEP}(-1) = \Vect(\vec{\imath} - \vec{k})$.
+	Les colonnes de $D$\/ forment une base orthonormée, d'où $D \in \mathrm{O}_3(\R)$.
+	Or, $\det D = -1$\/ en développant, d'où $D \not\in \mathrm{SO}_3(\R)$.
+	Enfin, $\vec{u}$\/ est la symétrie de orthogonale par rapport à $\mathrm{SEP}(1) = \Vect(\vec{\jmath}, \vec{\imath} + \vec{k})$.
+	Ainsi, \[
+		\big[\:u\:\big]_{(\vec{\jmath},\vec{\imath} +\vec{k},\vec{\imath}-\vec{k})} =
+		\begin{pNiceMatrix}[last-col]
+			1 & 0 & 0 & \vec{\jmath}\\
+			0 & 1 & 0 & \vec{\imath}+\vec{k}\\
+			0 & 0 & -1 & \vec{\imath} - \vec{k}
+		\end{pNiceMatrix}
+	.\]
+\end{exo}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(5cm);
+		draw(unitcircle, red+dashed);
+		real theta = pi/3;
+		pair del(real theta) { return expi(theta) * 0.1; }
+		draw((0,0)--(1,0), Arrow(TeXHead));
+		draw((0,0)--(0,1), Arrow(TeXHead));
+		label("$\vec\imath$", (1, 0),align=E);
+		label("$\vec\jmath$", (0, 1), align=N);
+		draw((-1,1)*0.01--expi(theta) + (-1,1)*0.01, orange, Arrow(TeXHead));
+		draw((0,0)--expi(theta+pi/2), orange, Arrow(TeXHead));
+		label("$f(\vec\imath)$", expi(theta), orange, align=NE);
+		label("$f(\vec\jmath)$", expi(theta + pi/2), orange, align=NW);
+		draw((0,0)--expi(theta), deepcyan, Arrow(TeXHead));
+		draw((0,0)--expi(theta-pi/2), deepcyan, Arrow(TeXHead));
+		label("$g(\vec\imath)$", expi(theta), deepcyan, align=N);
+		label("$g(\vec\jmath)$", expi(theta - pi/2), deepcyan, align=SE);
+	\end{asy}
+	\caption{Représentation des endomorphismes représentés par les matrices $A$ et $B$\/ de l'exercice précédent}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{asy}
+		size(5cm);
+		import three;
+		real theta = pi/6;
+		pair del(real theta) { return expi(theta) * 0.1; }
+		draw((0,0,0)--(1,0,0), Arrow3(TeXHead2));
+		draw((0,0,0)--(0,1,0), Arrow3(TeXHead2));
+		draw((0,0,0)--(0,0,1), Arrow3(TeXHead2));
+		label("$\vec\imath$", (1.1, 0, 0));
+		label("$\vec\jmath$", (0, 1.1, 0));
+		label("$\vec k$", (0, 0, 1.1));
+		real c = cos(theta);
+		real s = sin(theta);
+		draw(O--(c, s, 0), orange, Arrow3(TeXHead2));
+		draw(O--(-s, c, 0), orange, Arrow3(TeXHead2));
+		draw(O--Z, orange, Arrow3(TeXHead2));
+		label("$h(\vec\imath)$", 1.1*(c, s, 0), orange);
+		label("$h(\vec\jmath)$", 1.1*(-s, c, 0), orange);
+		label("$h(\vec k)$", 1.1*Z, orange);
+	\end{asy}
+	\caption{Représentation de l'endomorphisme représenté par la matrices $C$ de l'exercice précédent}
+\end{figure}
+
+\section{Isométries vectorielles}
+
+\begin{defn}
+	Soit un espace euclidien $E$, et soit $f : E \to E$. On dit que $f$\/ est une \textit{isométrie vectorielle} si $f$\/ conserve le produit scalaire \[
+		\forall (u,v) \in E^2,\quad \big< f(u)  \mid f(v)\big> = \langle u  \mid v \rangle
+	.\]
+\end{defn}
+
+L'ensemble des isométries vectorielles de $E$\/ est noté $\mathrm{O}(E)$. Une isométrie vectorielle est aussi appelé un \textit{automorphisme orthogonal} d'après les propositions suivantes.
+
+\begin{prop}
+	Toute isométrie vectorielle de $E$\/ est linéaire et bijective.
+	Autrement dit, toute symétrie vectorielle de $E$\/ est un automorphisme de $E$.
+	Mieux : l'ensemble $\mathrm{O}(E)$\/ des isométries de $E$\/ est un sous-groupe de $\mathrm{GL}(E)$\/ des automorphismes de $E$.
+\end{prop}
+
+\begin{prv}
+	Soit $f \in \mathrm{O}(E)$\/ une isométrie de $E$.
+	Soient $(a, b) \in \R$\/ et soient $(\vec{u}, \vec{v}) \in E^2$. On veut montrer que :
+	\begin{align*}
+		&f(a\,\vec{u} + b\,\vec{v}) = a\,f(\vec{u}) + b\,f(\vec{v})\\
+		\iff& f(a\,\vec{u} + b\, \vec{v}) = \vec{0} \\
+		\iff& \big\|f(a\,\vec{u} + b\, \vec{v})\big\| = \|\vec{0}\| = 0_\R \\
+		\iff& \big< f(a\,\vec{u} + b\, \vec{v} - a\,f(\vec{u}) + b\,f(\vec{v}) \:\big|\: f(a\,\vec{u} + b\, \vec{v} - a\,f(\vec{u}) + b\,f(\vec{v})\big> = 0 \\
+	\end{align*}
+	Par bilinéarité du produit scalaire, ce grand produit scalaire peut-être décomposé en 9 facteurs, et on n'en traitera qu'un : \[
+		\big< -a\,f(\vec{u}) \:\big|\: -b\,f(\vec{v})\big> = (-a)(-b) \big<f(\vec{u})\:\big|\: f(\vec{v})\big> = (-a)(-b) \langle \vec{u}  \mid \vec{v} \rangle  = \langle {-a} \vec{u}  \mid {-b}\vec{v}\rangle
+	.\] En répétant 9 fois ce calcul, on arrive à l'équivalence \[
+		\iff \| \underbrace{a\,\vec{u} + b\,\vec{v} - a\, \vec{u} - b\, \vec{v}}_{\vec{0}} \| = 0,
+	\] ce qui est vrai.
+
+	Montrons la bijectivité de $f$. Mais, comme $f : E \to E$, avec $E$\/ de dimension finie, et $f$\/ est linéaire, on a donc \[
+		f \text{ bijective } \iff f \text{ injective } \iff f \text{ surjective}
+	,\] d'après le théorème du rang.
+	Soit $\vec{x} \in E$ :
+	\begin{align*}
+		\vec{x} \in \Ker f \iff& f(\vec{x}) = \vec{0} \\
+		\implies& \big\| f(\vec{x})\big\| = 0\\
+		\implies& \big<f(\vec{x})\:\big|\: f(\vec{x})\big> = 0\\
+		\implies& \langle \vec{x} \mid \vec{x}\rangle = 0 \text{ car } f \text{ est une isométrie}\\
+		\implies& \vec{x} = \vec{0} \text{ par le caractère défini du produit scalaire}.
+	\end{align*}
+	Réciproquement, on a bien $f(\vec{0}) = \vec{0}$, et donc $\Ker f = \{\vec{0}\}$, d'où $f$\/ injective, et donc bijective.
+
+	La suite de la preuve se trouve sur le poly.
+\end{prv}
+
+\begin{thm}[3/4 caractérisations d'une isométrie]
+	Soit $E$\/ un espace euclidien, et soit $f : E \to E$.
+	\textsl{Il existe 4 manières de caractériser une isométrie, dont 3 sont prouvés ici.}
+	\begin{gather*}
+		f \text{ conserve le produit scalaire}\\[-2.5mm]
+		\vrt\iff\\
+		f \text{ est linéaire et conserve la norme :}\\
+		\forall \vec{u} \in E, \quad \|f(\vec{u})\| = \|\vec{u}\|\\[-2.5mm]
+		\vrt\iff\\
+		f \text{ est linéaire et transforme une base orthonormée de $E$}\\
+		\text{ en une base orthonormée de $E$.}
+	\end{gather*}
+\end{thm}
+
+\begin{prv}
+	Cette preuve se déroule en trois étapes : \[
+		\begin{array}{ccccc}
+			&&(2)&&\\[2mm]
+			&\rotatebox{60}{$\impliedby$}&&&\\[-10mm]
+			&&&\rotatebox{-60}{$\impliedby$}&\\
+			&&&&\\
+			\mathrlap{(1)}&&\implies&&\mathllap{(3)}
+		\end{array}
+	\]
+	\begin{itemize}
+		\item On suppose $f$\/ linéaire, et $\forall \vec{u} \in E$, $\|f(\vec{u})\| = \|\vec{u}\|$.
+			On veut montrer que $\forall (\vec{u},\vec{v}) \in E^2$, $\langle f(\vec{u})  \mid f(\vec{v})\rangle = \langle u  \mid v \rangle$.
+			On se rappelle que $\langle \vec{a}\mid  \vec{b}\rangle = \frac{1}{2}\big(\|\vec{a} + \vec{b}\|^2 - \|\vec{a}\| - \|\vec{b}\|^2\big)$.
+			D'où,
+			\begin{align*}
+				\left<f(\vec{u})  \mid f(\vec{v}) \right>
+				&= \frac{1}{2} \big(\|f(\vec{u}) + f(\vec{v})\|^2 - \|f(\vec{u})\|^2 - \|f(v)\|^2\big) \\
+				&= \frac{1}{2} \big(\|f(\vec{u}+\vec{v})\|^2 - \|f(\vec{u})\|^2 - \|f(v)\|^2\big) \\
+				&= \frac{1}{2} \big(\|\vec{u}+\vec{v}\|^2 - \|\vec{u}\|^2 - \|v\|^2\big) \\
+				&= \langle u  \mid  v \rangle
+			\end{align*}
+		\item On suppose $f$\/ une isométrie. Alors $f$\/ est linéaire d'après la proposition 8, et l'application $f$\/ transforme une base orthonormée en une autre base orthonormée.
+		\item \textsc{\color{cyan}\danger\: Tarte à la crème.} On suppose $f$\/ linéaire, et qu'elle transforme une base orthonormée en une autre base orthonormée.	
+			On veut montrer $f$\/ linéaire (vrai par hypothèse), et que $\forall \vec{u} \in E$, $\|f(\vec{u})\| = \|\vec{u}\|$.
+			Soit $\vec{u} \in E$. On le décompose dans la base orthonormée $\mathcal{B} = (\vec{\varepsilon}_1, \vec{\varepsilon}_2, \ldots, \vec{\varepsilon}_n)$ : \[
+				\vec{u} = x_1 \vec{\varepsilon}_1 + x_2 \vec{\varepsilon}_2 + \cdots + x_n \vec{\varepsilon}_n
+			.\] Par linéarité de $f$, on a $f(\vec{u}) = x_1\, f(\vec{\varepsilon}_1) + x_2\, f(\vec{\varepsilon}_2) + \cdots + x_n\, f(\vec{\varepsilon}_n)$.
+			Ainsi, comme la base $\mathcal{B}$\/ est une famille orthogonale, d'après le théorème de \textsc{Pythagore}, on a
+			\begin{align*}
+				\|\vec{u}\|^2 &= \|x_1\,\vec{\varepsilon}_1\|^2 + \|x_1\,\vec{\varepsilon}_2\|^2 + \cdots + \|x_1\,\vec{\varepsilon}_n\|^2\\
+				&= x_1^2\, \|\vec{\varepsilon}_1\|^2 + x_2^2\, \|\vec{\varepsilon}_2\|^2 + \cdots + x_n^2\, \|\vec{\varepsilon}_n\|^2 \\
+				&= x_1^2 + x_2^2 + \cdots + x_n^2 \\
+			\end{align*}
+			La base $\mathcal{B}' = \big(f(\vec{\varepsilon}_1), f(\vec{\varepsilon}_2), \ldots, f(\vec{\varepsilon}_n)\big)$\/ est orthonormée, on a de même, \[
+				\|f(\vec{u})\|^2 = x_1^2 + \cdots + x_n^2
+			.\]
+	\end{itemize}
+\end{prv}
+
+\begin{prop}
+	Soit $E$\/ un espace euclidien de dimension $n$. \[
+		f \text{ est une isométrie de } E \iff \substack{\ds\text{la matrice de } f,\, \text{dans}\hfill\\\ds\text{une \ul{base orthonormée},}\hfill\\\ds\text{est orthogonale.}\hfill}
+	\]
+	Autrement dit, \[
+		f \in \mathrm{O}(E) \iff \big[\:f\:\big]_{\mathcal{B}} \in \mathrm{O}_n(\R),
+	\] où $\mathcal{B}$\/ est une base \ul{orthonormée}.
+\end{prop}
+

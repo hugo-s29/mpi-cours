@@ -1,0 +1,35 @@
+\section{Construction d'une formule à partir d'une fonction}
+
+\begin{enumerate}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Déterminaison d'une formule dont l'interprétation est \texttt{f} sous forme \textsc{fnd}]
+let formule_of_fct_bool (vars: string list) (f: fct_bool): formule =
+  let envs = all_envs vars in
+  let envs_valides = List.filter f envs in
+  let rec gen_conj (rho: env_prop): formule =
+    match rho with
+    | [] -> Top
+    | (p,b)::q -> if b then And(Var(p), gen_conj q)
+                  else And(Not(Var(p)), gen_conj q)
+  in
+  let conjs = List.map gen_conj envs_valides in
+  List.fold_left (fun x a -> Or(x, a)) Bot conjs
+		\end{lstlisting}
+	\item~
+		\begin{lstlisting}[language=caml,caption=Déterminaison d'une formule dont l'interprétation est \texttt{f} sous forme \textsc{fnc}]
+let formule_of_fct_bool2 (vars: string list) (f: fct_bool): formule =
+  let f' rho = not (f rho) in
+  let h = formule_of_fct_bool vars f' in
+  let rec convert_not (h: formule) =
+    match h with
+    | Or(a, b) -> And(convert_not a, convert_not b)
+    | And(a, b) -> Or(convert_not a, convert_not b)
+    | Not(a) -> convert_not a
+    | Var(p) -> Not(Var(p))
+    | Imply(a,b) -> convert_not (Or(b, Not(a)))
+    | Equiv(a,b) -> convert_not (And(Imply(a, b), Imply(b, a)))
+    | Top -> Bot
+    | Bot -> Top
+  in convert_not h
+		\end{lstlisting}
+\end{enumerate}

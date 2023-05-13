@@ -1,0 +1,60 @@
+\section{Exercice 6}
+
+\textsl{Trouver les solutions développables en séries entières de l'équation différentielle $(E)$\/ :  \[
+	(E) : \quad 4x\:y''(x) + 2\:y'(x) - 1\:y(x) = 0
+.\] }
+
+Cette équation est homogène. Comme les coefficients ne sont pas constants, on \red{ne} peut \red{pas} utiliser la méthode de l'équation caractéristique.
+
+Soit $R$\/ le rayon de convergence d'une série entière $\sum a_n x^n$, et soit, pour $x \in {]-R,R[}$, $f(x) = \sum_{n=0}^\infty a_n x^n$.
+On peut dériver terme à terme une série entière sans changer son rayon de convergence, d'où \[
+	\forall x \in {]-R,R[}, \quad \begin{cases}
+		\ds f'(x) = \sum_{n=1}^\infty n\, a_n\, x^{n-1} ;\\
+		\ds f''(x) = \sum_{n=2}^\infty n\,(n-1)\,a_n\,x^{n - 2}.
+	\end{cases}
+\]
+\begin{align*}
+	&f \text{ est une solution de } (E) \\
+	\iff& 4x \sum_{n=2}^\infty n\,(n-1)\, a_n x^{n-2} + 2 \sum_{n=1}^\infty n\,a_n\,x^{n-1} - \sum_{n=0}^\infty a_n x^n = 0 \\
+	\iff& 4 \sum_{n=2}^\infty n\,(n-1)\, a_n x^{n-1} + 2 \sum_{n=1}^\infty n\,a_n\,x^{n-1} - \sum_{n=0}^\infty a_n x^n = 0 \\
+	\iff& 2a_1 - a_0 + \sum_{n=1}^\infty \Big( 4n\,(n+1)\,a_{n+1} + 2n\,(n+1)\,a_{n+1} -a_n \Big) x^n = 0 \\
+	\iff&\begin{cases}
+		\ds 2a_1 - a_0 = 0\\
+		\ds\forall n \ge 1,\: (2n+1)\,(2n+2)\,a_{n+1} -a_n = 0
+	\end{cases}\\
+	&\text{par unicité du développement en série entière }\\
+	\iff& \forall n \in \N,\: a_n = \frac{a_0}{(2n)!} \text{ par récurrence}\\
+\end{align*}
+Donc, $f$\/ est une solution de $(E)$\/ sur $]-R,R[$ si, et seulement si \[
+	\forall x \in {]-R,R[},\:f(x) = a_0 \sum_{n=0}^\infty \frac{x^n}{(2n)!}
+.\]
+On détermine maintenant $R$\/ grâce à la règle de \textsc{d'Alembert}.
+\begin{itemize}
+	\item si $x = 0$, alors la série converge.
+	\item si $x \neq 0$, soit alors $u_n = \left| \frac{x^n}{(2n)!} \right|$ ; d'où,
+		\begin{align*}
+			\frac{u_{n+1}}{u_n} &= \frac{(2n)!}{(2n+2)!} \times |x|\\
+			&= \frac{|x|}{(2n+2)\,(2n+1)} \tendsto{n\to \infty} 0 < 1. \\
+		\end{align*}
+\end{itemize}
+D'où, la série converge pour tout $x \in {]-\infty,+\infty[}$. On en déduit donc que $R = +\infty$.
+
+On distingue deux cas, en fonction du signe de $x$.
+\begin{description}
+	\item[1\tsup{er} cas] si $x \ge 0$, alors $x = \left( \sqrt{x} \right)^2$, d'où \[
+			\sum_{n=0}^\infty \frac{x^n}{(2n)!} = \sum_{n=0}^\infty \frac{\left( \sqrt{x} \right)^{2n}}{(2n)!} = \ch\left( \sqrt{x} \right)
+		.\]
+	\item[2\tsup{nd} cas] si $x \le 0$, alors $-x = \left( \sqrt{-x} \right)^2$, d'où \[
+			\sum_{n=0}^\infty \frac{x^n}{(2n)!} = \sum_{n=0}^\infty \Big[-\left( \sqrt{-x} \right)^2 \Big]^n = \sum_{n=0}^\infty (-1)^n\: \frac{\left(\sqrt{-x}\right)^{2n}}{(2n)!} = \cos\left( \sqrt{x} \right) 
+		.\]
+\end{description}
+On conclut : $f$\/ est une solution développable en série entière sur $]-\infty,+\infty[$ si, et seulement si : \[
+	\exists K \in \R,\: \forall x \in {]-\infty,+\infty[},
+	\quad f(x) = \begin{cases}
+		K \ch\left( \sqrt{x} \right) &\text{ si } x \ge 0\\
+		K \cos\left( \sqrt{-x} \right) &\text{ si } x \le 0
+	\end{cases}
+.\] 
+
+
+

@@ -1,0 +1,32 @@
+\section{Variables libres et liées, clôture universelle}
+
+\begin{enumerate}
+	\item ~\\
+		\begin{figure}[H]
+			\centering
+			\Tree[.$\lor$ [.$p$ [.$f$ $x$ $y$ ]] [.$\forall z$ [.$r$ $z$ $z$ ]]]
+			\caption{Arbre de syntaxe de la formule $p\big(f(x,y)\big) \lor \forall z,\: r(z,z)$\/}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\Tree[.$\forall x$ [.$\exists y$ [.$\to$ [.$r$ $x$ $y$ ] [.$\forall z$ [.$q$ $x$ $y$ $z$ ]]]]]
+			\caption{Arbre de syntaxe de la formule $\forall x,\: \exists y,\: \big(r(x,y) \to \forall z,\: q(x,y,z)\big)$}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\Tree[.$\land$ [.$\forall x$ [.$q$ $x$ $y$ $z$ ]] [.$\forall z$ [.$\to$ [.$q$ $z$ $y$ $x$ ] [.$r$ $z$ $z$ ]]]]
+			\caption{Arbre de syntaxe de la formule $\forall x,\: (x,y,z) \land \forall z,\:\big(q(z,y,x) \to r(z,z)\big)$}
+		\end{figure}
+	\item
+		Pour la formule $(F_1)$, l'ensemble des constantes est $\mathcal{S}_0 = \O$, l'ensemble des fonctions est~$\mathcal{S} = \big\{f(2)\big\}$.
+		Pour la formule $(F_2)$, l'ensemble des constantes est $\mathcal{S}_0 = \O$, l'ensemble des fonctions est~$\mathcal{S} = \O$.
+		Pour la formule $(F_3)$, l'ensemble des constantes est $\mathcal{S}_0 = \O$, l'ensemble des fonctions est~$\mathcal{S} = \O$.
+	\item
+		Pour la formule $(F_1)$, l'ensemble des symboles de prédicats est $\mathcal{P} = \big\{p(1), r(2)\big\}$.
+		Pour la formule $(F_2)$, l'ensemble des symboles de prédicats est $\mathcal{P} = \big\{r(2), q(3)\big\}$.
+		Pour la formule $(F_3)$, l'ensemble des symboles de prédicats est $\mathcal{P} = \big\{ q(3), r(2) \big\}$.
+	\item Pour la formule $(F_1)$, $\textsf{FV} = \{x,y\}$\/ et $\textsf{BF} = \{z\}$.
+		Pour la formule $(F_2)$, $\textsf{FV} = \O$\/ et $\textsf{BF} = \{x,y,z\}$.
+		Pour la formule $(F_3)$, $\textsf{FV} = \{x,y,z\}$\/ et $\textsf{BF} = \{x,z\}$.
+\end{enumerate}
+

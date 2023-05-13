@@ -1,0 +1,142 @@
+On vérifie bien que $\sum_{k \in \N^*} P(X=k) = 1$. En effet, elle vaut
+\begin{align*}
+  \sum_{k \in \N^*} p q^{k-1} &= p \sum_{k=1}^\infty q^{k-1}\\
+  &= p \sum_{k=0}^\infty q^k \\
+  &= p \times \frac{1}{1-q} \\
+  &= \frac{1-q}{1-q} = 1 \\
+\end{align*}
+
+\begin{prop}
+  Soit $p \in {]0,1[}$. Soit $T$\/ la \textit{vad} égale au temps d'attente du 1\tsup{er} succès lors d'une suite d'épreuve de Bernoulli de paramètre $p$. Si ces épreuves sont indépendantes, alors $T \sim\mathcal{G}(p)$.
+\end{prop}
+
+\begin{prv}
+  L'événement $(X = k)$\/ vaut $E_1 \cap E_2 \cap \cdots \cap E_{k-1} \cap S_k$, où $S_i$\/ est l'événement \guillemotleft~obtenir un succès au $i$-ème essai,~\guillemotright\ et $E_i$\/ est l'événement \guillemotleft~obtenir un échec au $i$-ème essai.\footnotemark~\guillemotright\@ Par hypothèse d'indépendance, on a \[
+    P(E_1 \cap E_2 \cap \cdots \cap E_{k-1} \cap S_k) = P(E_1) \times P(E_2) \times \cdots \times P(E_{k-1}) \times P(S_k)
+  .\]
+\end{prv}
+\footnotetext{Ainsi, on a $S_i = \bar{E}_i$.}
+
+\begin{exo}[\guillemotleft~Remettre le compteur à zéro~\guillemotright]
+  \slshape
+  Soit $X$\/ une \textup{vad} à valeurs dans $\N^*$\/ telle que \[
+    \forall k \in \N,\: P(X > k) > 0
+  .\] On dit que $X$\/ est \textit{sans mémoire} si \[
+    \forall k \in \N,\: \forall n \in \N,\quad P(X >n + k  \mid X > k) = P(X > n)
+  .\] On veut montrer que la loi géométrique est une loi sans mémoire, et que c'est la seule.
+  
+  \begin{enumerate}
+    \item Montrer que, $X$\/ est sans mémoire
+      \begin{enumerate}
+        \item si, et seulement si $\forall k \in \N$, $\forall n \in \N$, $P(X > n + k) = P(X > n) \cdot P(X > k)$.
+        \item si, et seulement si $\forall k \in \N$, $\forall n \in \N$, $P(X = n + k  \mid X > k) = P(X = n)$.
+      \end{enumerate}
+    \item On suppose que $X$\/ suit une loi géométrique de paramètre $p \in {]0,1[}$.
+      \begin{enumerate}
+        \item Calculer la probabilité $P(X > k)$\/ pour chaque $k \in \N$.
+        \item Montrer que $X$\/ est sans mémoire.
+      \end{enumerate}
+    \item Réciproquement, montrer que si $X$ est sans mémoire, alors $X$\/ suit une loi géométrique.
+  \end{enumerate}
+  \upshape
+
+  \begin{enumerate}
+    \item
+      \begin{enumerate}
+        \item
+          \begin{align*}
+            X \text{ est sans mémoire } &\iffdef \forall k,\:\forall n,\: P_{(X > k)}(X > n + k) = P(X > n)\\
+            &\iff P(X > n + k) = P(X > n) \cdot P(X > k)
+          \end{align*}
+          car \[
+            P(X > n + k  \mid X > k) = \frac{P\big((X > n + k) \cap (X > k)\big)}{P(X > k)} = \frac{P(X > n + k)}{P(X> k)}
+          \] comme $\big((X > n + k) \cap (X > k)\big) = (X > n+k)$\/ (par inclusion).
+        \item On a $(X > n + k - 1) = (X = n + k) \cup (X > n + k)$\/ et cette union est disjointe, d'où \[
+          P_{(X > k)}(X > n + k - 1) = P_{(X > k)}(X = n+k) + P_{(X > k)}(X > n + k)
+        .\] D'où,
+        \begin{align*}
+          P_{(X > k)}(X = n+k) &= P_{(X > k)}(X > n + k - 1) - P(X > n + k) \\
+          &= P(X > n - 1) - P(X > n) \text{ par définition} \\
+          &= P(X = n) \text{ de même}. \\
+        \end{align*}
+        Réciproque à faire.
+      \end{enumerate}
+    \item On suppose $X \sim \mathcal{G}(p)$. Ainsi, $X(\Omega) = \N^*$\/ et $\forall k \in X(\Omega)$, $P(X = k) = p \times q^{k-1}$.
+      \begin{enumerate}
+        \item On a $(X > k) = \bigcup_{\ell=k+1}^\infty (X = \ell)$, et cette union est disjointe. D'où,
+          \begin{align*}
+            P(X > k) &= \sum_{\ell = k + 1}^\infty P(X = \ell) \\
+            &= \sum_{\ell = k + 1}^\infty p \times q^{\ell - 1} \\
+            &= p \times q^k \sum_{\ell=0}^\infty q^\ell \\
+            &= p \times q^k \times \frac{1}{1-q} \text{ car } |q| < 1 \\
+            &= q^k \\
+          \end{align*}
+          On en déduit que \[
+            \forall k \in \N,\:P(X > k) = q^k
+          .\] 
+        \item On utilise le 1.(a) et la question précédente :
+          \[
+            P(X > n + k) = q^{n + k} = q^n \cdot q^k = P(X > n) \cdot P(X > k)
+          .\]
+      \end{enumerate}
+    \item On suppose $X$\/ sans mémoire. On utilise 1.(a) : \[
+        \forall k,\: \forall n,\: P(X > n + k) = P(X > n) \cdot P(X > k)
+      .\] On cherche une relation de récurrence, on pose donc $k = 1$. Soit $(u_n)_{n\in\N}$\/ la suite définie par $u_n = P(X > n)$. Ainsi, \[
+        u_{n+1} = u_n \cdot \underbrace{P(X > 1)}_{\heartsuit}
+      .\]
+      D'où, par récurrence, $\forall n \in \N$, $u_n = \heartsuit^n \cdot u_0$, et $u_0 = P(X > 0) = 1$\/ comme $(X > 0) = \Omega$. Ainsi, \[
+        \forall n \in \N,\: u_n = \heartsuit^n  = P(X > n)
+      .\] On a, pour $n \in \N^*$, $(X > n - 1) = (X = 1) \cup (X > n) = (X = n) \cup P(X > n)$, et cette union est disjointe.
+      D'où, $\heartsuit^{n-1} = P(X = n) / \heartsuit^{n - 1} - \heartsuit^n$.
+  \end{enumerate}
+\end{exo}
+
+\section{La loi  de Poisson}
+
+\begin{defn}
+  Soit un réel $\lambda > 0$. On dit qu'une variable aléaroire discrète $X$\/ suit \textit{une loi de Poisson} de paramètre $\lambda$, et on note $X \sim \mathcal{P}(\lambda)$\/ si \[
+    X(\Omega) = \N \quad \text{ et } \quad \forall k \in X(\Omega),\: P(X = k) = \mathrm{e}^{-\lambda} \cdot \frac{\lambda^k}{k!}
+  .\]
+\end{defn}
+
+On vérifie que $\sum_{k \in X(\Omega)} P(X = k) = 1$. En effet,
+\begin{align*}
+  \sum_{k \in X(\Omega)} P(X = k) &= \sum_{k=0}^\infty \mathrm{e}^{-\lambda} \frac{\lambda^k}{k!} \\
+  &= \mathrm{e}^{-\lambda} \sum_{k=0}^\infty \frac{\lambda^k}{k!} \\
+  &= \mathrm{e}^{-\lambda} \cdot \mathrm{e}^\lambda = 1 \\
+\end{align*}
+
+\begin{prop}
+  Soit un réel $\lambda > 0$, et pour $n \in \N^*$, soit $X_n$\/ une variable aléatoire suivant la loi binomiale $\mathcal{B}(n, p_n)$\/ avec $p_n \in {]0,1[}$. Si $n \cdot p_n \tendsto{n\to \infty} \lambda$, alors \[
+    \forall k \in \N,\: P(X_n = k) \tendsto{n\to \infty} \mathrm{e}^{-\lambda} \cdot \frac{\lambda^k}{k!}
+  .\]
+\end{prop}
+
+\begin{prv}
+  On pose, $q_n = 1 - p_n$. On a 
+  \[
+    {n\choose k}\:p_n^k\:(1-p_n)^{n-k} = \frac{n!}{k!\cdot (n-k)!} \cdot  p_n^k \cdot (1-p_n)^{n-k}.
+  .\] 
+  Or,
+  \begin{align*}
+    p_n^k \cdot \frac{n!}{(n-k)!} &= p_n^k\cdot n \times (n-1) \times \cdots \times (n-k+1)\\
+    &= p_n^k\cdot n \times n\left( 1 - \frac{1}{n} \right)\cdots n\left( 1 - \frac{k-1}{n} \right) \\
+    &= (p_n n)^k \cdot \underbrace{\left( 1 - \frac{1}{k} \right) \times \cdots \times \left( 1 - \frac{k-1}{n} \right)}_{\tendsto{n\to \infty} 1} \\[-0.7cm]
+    &\to \lambda^k.
+  \end{align*}
+  De plus, $(1-p_n)^{n-k} = \mathrm{e}^{(n-k) \ln(1 - p_n)}$, et
+  \begin{align*}
+    (n-k) \ln(1 - p_n) &= (n-k) \big(-p_n + \po(p_n)\big) \\
+    &= -np_n + \po(n p_n) \\
+    &\to -\lambda.
+  \end{align*}
+  Par continuité de l'exponentielle, on a $(1-p_n)^{n-k} \tendsto{n\to \infty} \mathrm{e}^{-\lambda}$. Ainsi, \[
+    \forall k \in \N,\: P(X_n = k) \tendsto{n\to \infty} \mathrm{e}^{-\lambda} \cdot \frac{\lambda^k}{k!}
+  .\] 
+\end{prv}
+
+\begin{rmk}
+  \textit{c.f.}\ polycopié
+\end{rmk}
+
+

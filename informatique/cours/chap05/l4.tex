@@ -1,0 +1,128 @@
+\section{Arbres couvrants de poids minimum}
+
+\begin{exm}
+	On considère le graphe ci-dessous.
+	\begin{figure}[H]
+		\centering
+		\tikzfig{ex-graphe-pondere}
+		\caption{Arbre pondéré}
+	\end{figure}
+	On cherche à \guillemotleft~supprimer~\guillemotright\ des arrêtes de ce graphe afin d'avoir un poids total minimum, tout en conservant la connexité du graphe.
+	Une structure assurant cette condition est un arbre.
+
+	Pour résoudre ce problème, on part du graphe vide, et on ajoute les arrêtes les moins coûteuses en premier.
+\end{exm}
+
+\begin{defn}[Arbre]
+	Soit $G = (S,A)$\/ un graphe non-orienté. On dit que $G$\/ est un \textit{arbre} si $G$\/ est connexe et acyclique.
+	\index{arbre}
+\end{defn}
+
+\begin{defn}[Arbre couvrant]
+	Étant donné un graphe non orienté pondéré par poids positifs $G = (S, A, c)$,\footnotemark\ on dit de $G' = (S', A')$\/ que c'est un \textit{arbre couvrant} de $G$\/ si $S' = S$\/ et $A' \subseteq A$, et $G'$\/ est un arbre.
+	\index{arbre!couvrant}
+\end{defn}
+\footnotetext{on dit que $c$\/ est la fonction de pondération de ce graphe}
+
+\begin{defn}[Arbre couvrant de poids minimum]
+	Étant donné un graphe non orienté pondéré $G = (S, A, c)$\/ et un arbre couvrant $T = (S', A')$, on appelle \textit{poids} de l'arbre $T$\/ la valeur $\sum_{a \in A'} c(a)$.
+	\index{arbre!couvrant!poids}
+
+	Si $G$\/ est connexe, il admet au moins un arbre couvrant, on peut définir l'\textit{arbre couvrant de poids minimum} (\textit{\textsc{acpm}}).
+	\index{arbre!couvrant!de poids minimum}
+\end{defn}
+
+On définir alors le problème \[
+	\textsc{acpm}\text{\footnotemark}
+	\begin{cases}
+		\text{\textbf{Entrée}}&: G = (S, A, c) \text{ connexe}\\
+		\text{\textbf{Sortie}}&: \text{ le poids de l'arbre couvrant de poids minimum}.
+	\end{cases}
+\]
+\footnotetext{Arbre Couvrant de Poids Minimum}
+
+\begin{algorithm}[H]
+	\centering
+	\begin{algorithmic}[1]
+		\Entree $G = (S, A, c)$\/ un graphe connexe
+		\Sortie Un arbre couvrant de poids minimum
+		\State $B \gets \O$\/ 
+		\State $U \gets \O$\/
+		\While{il existe $u$\/ et $v$\/ tels que $u \nsim_B v$}
+			\State Soit $\{x,y\} \in A \setminus U$\/ de poids minimal
+			\If{$x \sim_B y$}
+				\State $U \gets \big\{\!\{x,y\}\!\big\} \cup U$
+			\Else
+				\State $U \gets \big\{\!\{x,y\}\!\big\} \cup U$
+				\State $B \gets \big\{\!\{x,y\}\!\big\} \cup B$
+			\EndIf
+		\EndWhile
+		\State\Return $T = (S,B)$\/
+	\end{algorithmic}
+	\caption{Algorithme de \textsc{Kruskal}}
+\end{algorithm}
+
+\begin{prop}
+	L'algorithme de \textsc{Kruskal} est correct.
+\end{prop}
+
+\begin{prv}
+	\begin{enumerate}
+		\item Il existe un arbre couvrant de poids minimum utilisant les arrêtes de $B$ ;
+		\item $B \subseteq U \subseteq A$\/ ;
+		\item $\forall \{u,v\} \in U$, $u \sim_B v$.
+	\end{enumerate}
+	Ces trois propriétés sont invariantes.
+	\begin{description}
+		\item[Initialement] $B = \O = U$, donc \textsc{ok}.
+		\item[Propagation] Soient $\ubar{B}$\/ et $\ubar{U}$\/ (resp.\ $\bar{B}, \bar{U}$) les valeurs de $B$\/ et $U$\/ avant (resp.\ après) une itération de boucle. Supposons que $\ubar{B}$\/ et $\ubar{U}$\/ satisfont les propriétés 1, 2 et 3. Montrons que $\bar{B}$\/ et $\bar{U}$\/ les satisfont aussi.
+			\begin{enumerate}
+				\item[2.] On a $\{x,y\} \in A$\/ et $\ubar{B} \subseteq \ubar{U} \subseteq A$, donc \[
+						\bar{B} \subseteq \ubar{B} \cup \{\!\{x,y\}\!\} \subseteq \ubar{U} \cup \{\!\{x,y\}\!\} \subseteq A
+					.\]
+				\item[3.] Soit $\{u,v\} \in \bar{U}$.
+					\begin{itemize}
+						\item Si $\{u,v\} \in \ubar{U}$, alors de 3, $u \sim_{\ubar{B}} v$. Or, $\ubar{B} \subseteq \bar{B}$\/ et donc $u \sim_{\bar{B}} v$.
+						\item Sinon, $\{ u,v\} = \{x,y\}$, alors $x = u$\/ et $v = y$.
+							\begin{itemize}
+								\item Sous-cas 1 : $\bar{B} = \ubar{B} \cup \{\!\{x,y\}\!\}$, alors $x \sim_{\bar{B}} y$.
+								\item Sous-cas 2 : $\bar{B} = \ubar{B}$, alors par condition du \textbf{si}, $x \sim_{\ubar{B}} y$\/ et donc $x \sim_{\bar{B}} y$.
+							\end{itemize}
+					\end{itemize}
+				\item[1.]
+					Soit $\mathcal{T}$\/ un \textsc{acpm} contenant $\ubar{B}$.
+					\begin{itemize}
+						\item Cas 1 : $\bar{B} = \ubar{B}$, \textsc{ok}
+						\item Cas 2 : $\bar{B} = \ubar{B} \cup \{\!\{x,y\}\!\}$.
+							\begin{itemize}
+								\item Sous-cas 1 : $\{x,y\} \in \mathcal{T}$, alors $\mathcal{T}$\/ est un \textsc{acpm} qui contient $\bar{B}$.
+								\item Sous-cas 2 : $\{x,y\}  \not\in \mathcal{T}$, $\mathcal{T}$\/ est un arbre couvrant, donc il contient une chaîne de $x$\/ à $y$\/ : \[
+											\{\overset{\substack{x\\[-1mm]\vrt=}}{x_0},x_1\},\{x_1,x_2\},\ldots,\{x_{n-1},\underset{\substack{\vrt=\\y}}{x_n}\}
+									.\]
+									Or, $\forall i \in \llbracket 1,n-1 \rrbracket$, $x_i \sim_{\ubar{B}} x_{i+1}$. Par transitivité, on a donc $x = x_0 \sim_{\ubar{B}} x_n = y$, ce qui n'est pas le cas.
+									Il existe donc $i_0 \in \llbracket 0,n-1 \rrbracket$, tel que $x_{i_0} \nsim_{\ubar{B}} x_{i_0 + 1}$\/ et donc $\{x_{i_0}, x_{i_0 + 1}\} \not\in \ubar{U}$. D'où, d'après 3, on a $\{x_{i_0}, x_{i_0 + 1}\}  \not\in \ubar{B}$
+									Considérons alors $\mathcal{T}' = \big(\mathcal{T} \setminus \{\!\{x_{i_0},x_{i_0+1}\}\!\}\big)  \cup \{\!\{x,y\}\!\}$. Montrons que $\mathcal{T}'$\/ est un \textsc{acpm} contenant $B$, en commençant par montrer que c'est un arbre couvrant. L'arbre $\mathcal{T}'$\/ a $n-1$\/ arrêtes (autant que $\mathcal{T}$). Montrons que $\mathcal{T}'$\/ est connexe.
+									Soit $(a,b) \in S^2$. $\mathcal{T}$\/ est connexe, soit donc une chaîne \[
+										C : \quad a = u_0, u_1, \ldots, u_n = b
+									\] de $\mathcal{T}$. Si la chaîne $C$\/ n'utilise pas l'arrête $\{x_{i_0},x_{i_0+1}\}$, alors $C$\/ est une chaîne de $\mathcal{T}'$. Sinon, on pose $\mu$\/ et $\tau$\/ tels que \[
+									\underbrace{a,\ldots,x_{i_0}}_{\mu},\underbrace{x_{i_0+1},\ldots,b}_{\tau}
+									.\]
+									Soit alors la chaîne
+									\begin{align*}
+										\overbrace{a,\ldots,x_{i_0}}^{\mu},x_{i_0-1},x_{i_0-2},\ldots,x_0 = x,&\\
+										\underbrace{b,\ldots,x_{i_0 + 1}}_{\tau},x_{i_0+2},\ldots,x_{n-1},x_n=y&
+									\end{align*}
+									qui est dans $\mathcal{T}'$.
+									Montrons que le poids est minimum. Notons $P(\mathcal{T})$\/ le poids de l'arbre. On a donc \[
+										P(\mathcal{T}') = P(\mathcal{T}) + c(\{x,y\}) - c(\{x_{i_0},x_{i_0+1}\})
+									.\] Par choix glouton, ($\{x_{i_0}, x_{i_0+1} \not\in \ubar{U}\}$), $c(\{x,y\}) \le c(\{x_{i_0},x_{i_0+1}\})$\/ donc $P(\mathcal{T}') \le P(\mathcal{T})$, et $\mathcal{T}$\/ étant de poids min, $P(\mathcal{T}') = P(\mathcal{T})$\/ et $\mathcal{T}'$\/ est un \textsc{acpm} contenant $\bar{B}$.
+							\end{itemize}
+					\end{itemize}
+			\end{enumerate}
+	\end{description}
+
+	Les invariants le sont.
+\end{prv}
+
+À la fin, $B$\/ induit un graphe connexe et $B$\/ est contenu dans un \textsc{acpm}, c'en est donc un.
+

@@ -1,0 +1,54 @@
+\section{Divers arbres de preuves}
+
+\begin{enumerate}
+	\item
+		{\footnotesize\[
+			\begin{prooftree}
+				\infer 0[Ax]{p \lor (p \land q) \vdash p \lor (p \land q)}
+				\infer 0[Ax]{p \lor (p \land q), p \vdash p}
+				\infer 0[Ax]{p \lor (p \land q), p \lor q \vdash p \land q}
+				\infer 1[$\land$e,g]{p \lor (p \land q), p \lor q \vdash p} % B U V
+				\infer 3[$\lor$e]{p \lor (p \land q) \vdash p} % p\/(p/\q) A B
+			\end{prooftree}
+		.\]}
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p \land q,r \land s \vdash p \land q}
+				\infer 1[$\land$e,g]{p \land q, r \land s \vdash p} % H1 U V
+				\infer 0[Ax]{p \land q,r \land s \vdash r \land s}
+				\infer 1[$\land$e,d]{p \land q, r \land s \vdash r} % H2 U V
+				\infer 2[$\land$i]{p \land q, r \land s \vdash p \land r}
+			\end{prooftree}
+		.\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p, q \land r \vdash p}
+				\infer 0[Ax]{p,q \land r \vdash q \land r}
+				\infer 1[$\land$e,g]{p,q \land r \vdash q} % H2 U V
+				\infer 2[$\land$i]{p,q \land r \vdash p \land q}
+			\end{prooftree}
+		.\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p,\lnot p \vdash p}
+				\infer 0[Ax]{p,\lnot p \vdash \lnot p}
+				\infer 2[$\lnot$e]{p,\lnot p \vdash \bot} % p NOREVERSE
+				\infer 1[$\lnot$i]{p \vdash \lnot \lnot p}
+			\end{prooftree}
+		.\]
+	\item
+		\[
+			\begin{prooftree}
+				\infer 0[Ax]{p,\lnot \lnot \lnot p,\lnot p \vdash p}
+				\infer 0[Ax]{p,\lnot \lnot \lnot p,\lnot p \vdash \lnot p}
+				\infer 2[$\lnot$e]{\lnot \lnot \lnot p,p,\lnot p \vdash \bot} % p
+				\infer 1[$\lnot$i]{\lnot \lnot \lnot p,p \vdash \lnot \lnot p}
+				\infer 0[Ax]{\lnot \lnot \lnot p,p \vdash\lnot \lnot \lnot p}
+				\infer 2[$\lnot$e]{\lnot \lnot \lnot p \vdash \bot} % ~~p
+				\infer 1[$\lnot$i]{\lnot \lnot \lnot p \vdash \lnot p}
+			\end{prooftree}
+		.\] 
+\end{enumerate}

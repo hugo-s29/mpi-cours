@@ -1,0 +1,142 @@
+\documentclass[a4paper]{article}
+
+\input{../preamble.tex}
+
+\let\thesection\relax
+
+\makeatletter
+\newcommand*\longline[1][.4\p@]{%
+	\leavevmode
+	\leaders \hrule \@height #1\relax \hfill
+	\null
+}
+\makeatother
+
+\begin{document}
+	\begin{center}
+		\bfseries
+		\Huge \textbf{DM\textsubscript5 Mathématiques}
+	\end{center}
+
+	{ \noindent
+		\longline\quad
+		\smash{\LARGE \textsc{Exercice}}
+		\quad\longline
+	}
+
+	\begin{enumerate}
+		\item Soit $n \in \N^*$. Soit $x \in \left]-\frac{\pi}{2}, \frac{\pi}{2} \right[$.
+			La fonction tangente est $\mathcal{C}^\infty$ sur cet intervalle.
+			On peut donc utiliser la formule de \textsc{Leibniz} : \[
+				\forall x \in \left]-\frac{\pi}{2}, \frac{\pi}{2} \right[,\quad
+				(\tan^2)^{(n)}(x) = \sum_{k=0}^n {n\choose k} \tan^{(k)}(x) \times \tan^{(n-k)}(x)
+			.\]
+			Or, on sait que, pour tout $x \in \left]-\frac{\pi}{2}, \frac{\pi}{2} \right[$, $\tan^{(n+1)}(x) = (\tan')^{(n)}(x) = (\tan^2)^{(n)}(x)$\/ car $\tan'x = 1 + \tan^2 x$.
+			D'où, \[
+				\boxed{\forall x \in \left]-\frac{\pi}{2}, \frac{\pi}{2} \right[,\quad
+				\tan^{(n+1)}(x) = \sum_{k=0}^n {n\choose k} \tan^{(k)}(x) \times \tan^{(n-k)}(x).}
+			\]
+		\item On procède par récurrence forte.
+			\begin{itemize}
+				\item On a, pour $x \in \left[0, \frac{\pi}{2}\right[$, $\tan^{(0)} x = \tan x \ge 0$.
+				\item D'après la question 1, pour $x \in \left[0, \frac{\pi}{2} \right[$, $\tan^{(n+1)} x$\/ est positif, car somme de $n$\/ termes positifs, par hypothèse de récurrence.
+			\end{itemize}
+			D'où, \[
+				\boxed{\forall n \in \N,\:\forall x \in \left[0,\frac{\pi}{2} \right[,\quad \tan^{(n)} x \ge 0.}
+			\]
+		\item Soit $n \in \N$. Si $I$\/ est un intervalle, et $f : I \to \R$\/ est une fonction de classe $\mathcal{C}^{n+1}$, et $a \in I$, alors \[
+				\boxed{\forall x \in I,\quad f(x) = \sum_{k=0}^n \frac{f^{(k)}(a)}{k!}(x-a)^k + \int_{a}^{x} \frac{f^{(n+1)}(x)}{n!}(x-t)^n~\mathrm{d}t.}
+			\]
+		\item
+		\item On a $a_0 = \tan(0) = 0$, et $a_1 = \tan'(0) = 1+\tan^20 = 1$.
+			Pour tout $n \in \N^*$,
+			\begin{align*}
+				(n+1) a_{n+1} &= \frac{(n+1)\: \tan^{(n+1)} 0}{(n+1)!}\\
+				&= \frac{1}{n!} \sum_{k=0}^n {n\choose k} \times  \tan^{(k)}0 \times \tan^{(n-k)} 0 \\
+				&= \sum_{k=0}^n \frac{n!}{k!\:(n-k)!} \times \frac{1}{n!} \tan^{(k)} 0 \times \tan^{(n-k)} 0  \\
+				&= \sum_{k=0}^n \frac{\tan^{(k)} 0}{k!} \times \frac{\tan^{(n-k)} 0}{(n-k)!} \\
+				&= \sum_{k=0}^n a_k\:a_{n-k} \\
+			\end{align*}
+		\item D'après la question 4, la série $\sum a_n x^n$\/ converge pour $x \in \left[0,\frac{\pi}{2}\right[$. Or, la série $\sum a_n x^n$\/ est une série entière, son rayon de convergence $R$ est donc supérieur ou égal à $\frac{\pi}{2}$ : \[
+				\ts\forall x \in {]{-R},R[}, \quad \sum a_n x^n \text{ converge}
+			.\] D'où, $\forall x \in \left] {-\frac{\pi}{2}}, \frac{\pi}{2} \right[ \subset {]{-R},R[}$, la série $\sum a_n x^n$ converge. La fonction $S$\/ est donc bien définie sur $\left] {-\frac{\pi}{2}}, \frac{\pi}{2} \right[$.
+		\item On peut dériver terme à terme la série entière $\sum a_n x^n$\/ sans changer son rayon de convergence. Ainsi, pour $x \in \left]{-\frac{\pi}{2}}, \frac{\pi}{2}\right[$,
+			\begin{align*}
+				S'(x) = \sum_{n=1}^\infty a_n n x^{n-1} &= \sum_{n=0}^\infty a_{n+1}(n+1) x^n\\
+				&= 1+ \sum_{n=1}^\infty x^n\sum_{k=0}^n a_k a_{n-k} \\
+				&= 1+\sum_{n=1}^\infty \sum_{k=0}^n (a_k x^k) \cdot(a_{n-k} x^{n-k}) \\
+				&= 1+\Big(\!\sum_{n=1}^\infty a_n x^n \Big) \cdot \Big(\!\sum_{n=1}^\infty a_n x^n\Big) \\
+				&= 1+\Big(\!\sum_{n=0}^\infty a_n x^n \Big) \cdot \Big(\!\sum_{n=1}^\infty a_n x^n\Big) \\
+				&= 1+S^2(x).
+			\end{align*}
+	\end{enumerate}
+
+	\bigskip
+	\bigskip
+	\bigskip
+	\bigskip
+
+	{ \noindent
+		\longline\quad
+		\smash{\LARGE \textsc{Problème}}
+		\quad\longline
+	}
+
+	\section{Partie 1.}
+
+	\begin{enumerate}
+		\item Soit $\vec{v} \in E \setminus F$, donc $\vec{v} \neq \vec{0}$.
+			Soit $p$\/ l'application $p : \vec{x} \mapsto \vec{x} - p(\vec{x})$, la projection sur $F^\perp$, car $E$\/ est de dimension finie.
+			On procède par \textsc{Analyse-Synthèse}, ce qui démontre l'existence et l'unicité.
+			\begin{description}
+				\item[Analyse] Soient $\vec{u} \in F$\/ et $\lambda \in \R$\/ tels que $\vec{u} + \lambda \vec{v} \in F^\perp$, $\|\vec{u} + \lambda \vec{v}\| = \alpha$\/ et $\left<\vec{u} + \lambda \vec{v}  \mid \vec{v} \right> > 0$. On a
+					\begin{align*}
+						\vec{u} + \lambda \vec{v} \in F^\perp \quad~&\text{ donc }\quad \left<\vec{u} + \lambda \vec{v}  \mid \vec{u} \right> = 0\\
+						& \text{ donc }\quad \left<\vec{u} + \lambda\pi(\vec{v}) \mid \vec{u} \right> + \lambda \left<p(\vec{v})  \mid \vec{u} \right> = 0\\
+						&\text{ donc }\quad \left<\vec{u} + \lambda \pi(\vec{v})  \mid \vec{u} \right> = 0\\
+						& \text{ donc }\quad \vec{u} + \lambda \pi(\vec{v}) \in F^\perp\\
+						& \text{ donc }\quad \vec{u} + \lambda \pi(\vec{v}) = \vec{0}\\
+					\end{align*}
+					On en déduit $\vec{u} = -\lambda \pi(\vec{v})$.
+					On a
+					\begin{align*}
+						\|\vec{u} + \lambda \vec{v}\| = \alpha &\text{ donc } \|-\lambda \pi(\vec{v}) + \lambda \vec{v}\| = \alpha\\
+						&\text{ donc } \|\lambda p(\vec{v})\| = \alpha\\
+						& \text{ donc } |\lambda| = \frac{\alpha}{\|p(\vec{v})\|}
+					\end{align*}
+					car $p(\vec{v}) \neq \vec{0}$ (sinon, $\vec{v} \in F$, ce qui est faux par hypothèse).
+					On en déduit $\lambda \in \{\alpha/\|p(\vec{v})\|, -\alpha/\|p(\vec{v})\|\}$.
+					Et, on a,
+					\begin{align*}
+						\left<\vec{u} + \lambda \vec{v}  \mid \vec{v} \right> > 0 \quad~& \text{ si, et seulement si } \quad
+						\left< \lambda p(\vec{v})  \mid \vec{v}\right> > 0\\
+						&\text{ si, et seulement si }\quad \lambda \left<p(\vec{v}) \mid \vec{v} \right> > 0\\
+						& \text{ si, et seulement si }\quad \lambda \left< p(\vec{v})  \mid p(\vec{v}) \right> + \left<p(\vec{v})  \mid \pi(\vec{v}) \right> > 0\\
+						&\text{ si, et seulement si }\quad \lambda\:\|p(\vec{v})\|^2 > 0\\
+						&\text{ si, et seulement si }\quad \lambda > 0\\
+					\end{align*}
+					On en déduit $\lambda > 0$.
+				\item[Synthèse] On pose $\lambda = \alpha / \|p(\vec{v})\|$, et $\vec{u} = -\lambda \pi(\vec{v})$.
+				On a $\vec{u} + \lambda \vec{v} = -\lambda \pi(\vec{v})  + \lambda \vec{v} = \lambda p(\vec{v}) \in F^\perp$. Par l'équivalence de l'analyse, on a $\left<\vec{u} + \lambda \vec{v}  \mid \vec{v} \right> > 0$\/ car $\lambda > 0$.
+					Finalement, on a \[
+						\left\| \vec{u} + \lambda \vec{v} \right\| = \|\lambda p(\vec{v})\| = \lambda \| p(\vec{v})\| = \alpha
+					.\]
+			\end{description}
+			D'où l'existence et l'unicité.
+			De plus, $\vec{u} + \lambda \vec{v} = \lambda p(\vec{v})$\/ où $p$\/ est la projection orthogonale sur $F^\perp$\/ (car $(F^\perp)^\perp = F$, car $E$\/ est de dimension finie).
+		\item
+			On procède par \textsc{Analyse-Synthèse}.
+			\begin{description}
+				\item[Analyse] Supposons construit la famille $(\vec{w}_1, \ldots, \vec{w}_n)$ vérifiant les conditions de l'énoncé.
+					Ainsi, pour tout $p \in \llbracket 1,n \rrbracket$, $\vec{w}_p \in E_p$.
+					Soit alors les réels $x_1, \ldots, x_p$ tels que $\vec{w}_p = x_1 \vec{w}_1 + \cdots + x_{p-1} \vec{w}_{p-1} + x_p \vec{v}_p$.
+					De plus, $\vec{w}_p \in E_{p-1}^\perp$, d'où, $\forall q \in \llbracket 1, p - 1 \rrbracket$,
+					\begin{align*}
+						0 &= \left<\vec{w}_p  \mid \vec{v}_q \right>\\
+						&= \left<x_1 \vec{w}_1 + \cdots + x_{p-1}\vec{w}_{p-1} + x_p \vec{w}_p \mid \vec{v}_q \right> \\
+						&= x_1 \left<\vec{w}_1  \mid \vec{v}_q \right> + \cdots + x_{p-1} \left< \vec{w}_{p-1}  \mid \vec{v}_q\right> + x_p\left<\vec{v}_p  \mid \vec{v}_q \right>\\
+						&= x_q \left<\vec{w}_q  \mid \vec{v}_q \right> + \cdots + x_{p-1} \left<\vec{w}_{p-1}  \mid \vec{v}_q \right> + x_p \|\vec{v}_p\| \\
+					\end{align*}
+			\end{description}
+	\end{enumerate}
+\end{document}

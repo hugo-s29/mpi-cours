@@ -1,0 +1,39 @@
+\section{Langage de \textsc{Dyck}}
+
+\begin{enumerate}
+	\item On suppose ce langage reconnaissable par un automate à $n$ états. On considère le mot $w = {\red(}^n \cdot {\red)}^n$, donc $|w| \ge n$.
+		Ainsi, il existe $x$, $y$ et $z$ trois mots tels que $w = xyz$, $|xy| \le n$, $y \neq \varepsilon$ et $\forall p \in \N,\: x y^p z \in \mathcal{L}(\mathcal{G})$.
+		Soit alors $p \in \llbracket 1,n-1 \rrbracket$ et $q \in \llbracket 1,n -p \rrbracket$ tels que $x = {\red(}^p$, $y = {\red(}^q$ et $z = {\red(}^{n-q-p} \cdot {\red)}^n$.
+		Ainsi, $xy \in \mathcal{L}(\mathcal{G})$, ce qui est absurde. On en déduit que $\mathcal{L}(\mathcal{G})$ n'est pas reconnaissable, il n'est donc pas régulier.
+	\item On pose $\mathcal{G} = (\Sigma, \{\mathrm{S}\}, \{\mathrm{S} \to \red( \mathrm{S}\red)  \mid \mathrm{SS}  \mid \varepsilon\}, \mathrm{S})$.
+	\item
+		\begin{itemize}
+			\item On le montre par induction.
+				\begin{itemize}
+					\item \textbf{Cas $\mathrm{S} \to \varepsilon$.}
+						On a $|\varepsilon|_{\red(} = 0 = |\varepsilon|_{\red)}$.
+					\item \textbf{Cas $\mathrm{S} \to \red( \mathrm{S}\red)$.}
+						Soit $u \in \mathcal{L}(\mathcal{G})$ avec $|u|_{\red(} = |u|_{\red)} = n$. Ainsi, $|\red(u\red)|_{\red(} = |\red(u\red)|_{\red)} = n + 1$.
+					\item \textbf{Cas $\mathrm{S}\to \mathrm{SS}$.}
+						Soient $u$ et $v$ deux mots de $\mathcal{L}(\mathcal{G})$ tels que $|u|_{\red(} = |u|_{\red)} = n$ et $|v|_{\red(} = |v|_{\red)} = m$.
+						Alors, $|u\cdot v|_{\red(} = |v\cdot u|_{\red)} = n + m$.
+				\end{itemize}
+			\item Montrons par induction $\mathcal{P}_{u}$ : \guillemotleft~pour tout $v$ préfixe de $u$, $|v|_{\red(} \ge |v|_{\red)}$.~\guillemotright\@ 
+				\begin{itemize}
+					\item \textbf{Cas $\mathrm{S} \to \varepsilon$.}
+						Le seul préfixe de $\varepsilon$ est $\varepsilon$, et on a bien $|\varepsilon|_{\red(} = 0 \ge 0 = |\varepsilon|_{\red)}$.
+					\item \textbf{Cas $\mathrm{S}\to \red( \mathrm{S} \red)$.}
+						Soit $u$ un mot de $\mathcal{L}(\mathcal{G})$ vérifiant $\mathcal{P}_u$.
+						Soit $v$ un préfixe de $\red(u\red)$.
+						On procède par induction sur $v$.
+						\begin{itemize}
+							\item \textbf{Cas $v = \varepsilon$ ou $\red($.} \textsc{ok}.
+							\item \textbf{Cas $\red(\tilde{u}$,} où $\tilde{u}$ est un préfixe de $u$.
+								Par hypothèse d'induction, $|\tilde{u}|_{\red(} \ge |\tilde{u}|_{\red)}$ donc $|\red(\tilde{u}|_{\red(} = |\red(\tilde{u}|_{\red)}$.
+							\item \textbf{Cas $\red(u\red)$.} Par hypothèse d'induction, $|u|_{\red(} \ge |u|_{\red)}$ donc $|\red(u\red)|_{\red(}\ge |\red(u\red)|_{\red)}$.
+						\end{itemize}
+				\end{itemize}
+		\end{itemize}
+	\item On note $\overline w^j= \big| w_{\llbracket 0,j \rrbracket} \big|_{\red(} - \big| w_{\llbracket 0,j \rrbracket} \big|_{\red)}$.
+		Alors les deux conditions se traduisent par $\overline w^{|w|} = 0$ et $\forall i \in \llbracket 0,|w|-1 \rrbracket$, $\overline w^i \ge 0$.
+\end{enumerate}
