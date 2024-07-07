@@ -1,0 +1,46 @@
+\section{Résolution d'une double étoile}
+
+\begin{enumerate}
+	\item Les deux ondes (provenant de É\textsubscript{1} et É\textsubscript{2} respectivement) dont cohérentes ; en effet, les deux sources sont de même pulsation, et il y a, \textit{a priori} une différence de phase entre ces deux étoiles, car elles émettent chacune des trains d'ondes différents.
+	\item On a $\mathrm{\acute{E}_1 T_1}{}^2 = \mathrm{T_1H}^2 + \mathrm{H\acute{E}_1}{}^2$, et $\mathrm{H\acute{E}_1} = D$, tandis que $\mathrm{T_1H} = (a / 2) - x_1$ et $\mathrm{T_2H} = (a / 2) + x_1$.
+		D'où, \[
+			\delta_1 = \sqrt{D^2 + \left( \frac{a}{2} + x_1 \right)^2} - \sqrt{D^2 + \left( \frac{a}{2} - x_1 \right)^2}
+		.\]
+		À l'aide d'un développement limité, d'après l'approximation $D \gg (a / 2) \pm x_1$, on a donc \[
+			\delta_1 = a x_1 / D
+		.\]
+		Par symétrie, on a $\delta_2 = \mathrm{\acute{E}_2T_2 - \mathrm{\acute{E}_2T_1}} = -\delta_1$.
+		De plus, $x_1 = D \cdot \tan(\theta / 2) \sim D \theta / 2$.
+		On peut en conclure que \[
+			\boxed{\delta_2 = -\delta_1 = a \theta / 2.}
+		\]
+		\begin{figure}[H]
+			\centering
+			\includesvg[width=\linewidth]{figures/etoiles.svg}
+			\caption{Représentation de la situation}
+		\end{figure}
+	\item On a $I_\mathrm{f}  = 2 \times 2 I_0 (1 + \cos(2\pi \delta_1 / \lambda_0)) = 2I_1$. En effet, en appliquant la formule de \textsc{Fresnel} à chacune des sources $\mathrm{\acute{E}_1}$ et $\mathrm{\acute{E}_2}$, on a \[
+			\begin{cases}
+				I_1 = 2 I_0 \cdot \left( 1 + \cos\left( \frac{2\pi}{\lambda_0} \cdot \delta_1 \right) \right),\\
+				I_2 = 2 I_0 \cdot \left( 1 + \cos\left( \frac{2\pi}{\lambda_0} \cdot \delta_2 \right) \right) = I_1.\\
+			\end{cases}
+		\]
+	\item On ajoute un retard à l'onde arrivant en $\mathrm{T_1}$, et on trouve que
+		\[
+			\begin{cases}
+				I_1 = 2I_0 \cdot \left( 1 + \cos\left( \frac{2\pi}{\lambda_0} \cdot (\delta_1 + L) \right) \right),\\
+				I_2 = 2I_0 \cdot \left( 1 + \cos\left( \frac{2\pi}{\lambda_0} \cdot (L - \delta_1) \right) \right).
+			\end{cases}
+		\]
+		Ainsi, on en déduit que \[
+			I_\mathrm{f}(L) = 4I_0 \cdot \left( 1 + \cos\left( \frac{\pi}{\lambda} \cdot a\theta \right) \cdot \cos\left( \frac{2\pi}{\lambda} \cdot L \right)  \right) 
+		.\]
+		Afin de mesurer $\theta$, on calcule \[
+			\frac{I_\mathrm{max} - I_\mathrm{min}}{\left<I \right>} = 2 \cdot \cos (\pi a \theta / 2)
+		.\]
+		\begin{figure}[H]
+			\centering
+			\includesvg[width=\linewidth]{figures/intensite.svg}
+			\caption{Intensité $I(L)$ en fonction du retard $L$}
+		\end{figure}
+\end{enumerate}

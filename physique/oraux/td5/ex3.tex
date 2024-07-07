@@ -1,0 +1,48 @@
+\section{Chaîne de pendules}
+
+\begin{enumerate}
+	\item On considère le système \{ $n$-ième pendule \}, et on réalise un bilan des forces.
+		\begin{itemize}
+			\item Poids $\vec{P} = m g (\cos \theta_n \vec{e}_r - \sin \theta_n \vec{e}_\theta)$
+			\item Tension $\vec{T} = - T \vec{e}_r$
+			\item Force de rappel du ressort précédent : \[
+					F_1 = -k \cdot L (\sin \theta_n - \sin \theta_{n-1}) \vec{e}_x
+				.\]
+			\item Force de rappel du ressort suivant : \[
+				F_2 = k \cdot L (\sin \theta_{n+1} - \sin \theta_n) \vec{e}_x
+			.\]
+		\end{itemize}
+		Et, $\vec{e}_x = \sin \theta_n \vec{e}_r + \cos \theta_n \vec{e}_\theta$.
+		D'où, en appliquant le \textsc{pfd} selon $\vec{e}_\theta$, on a donc
+		\begin{align*}
+			m L \ddot{\theta}_n = -mg \sin \theta_n &- kL (\sin \theta_n - \sin \theta_{n-1})\\
+			&+ kL (\sin \theta_{n-1} - \sin \theta_n) \\
+		\end{align*}
+		On en déduit l'équation différentielle (E) vérifiée par $\theta_n$ : \[
+			\ddot{\theta}_n + \theta_n \cdot \left( \frac{g}{L} + \frac{2k}{m} \right) = \frac{k}{m}(\theta_{n-1} + \theta_{n+1})
+		\] dans l'hypothèse des petits angles.
+	\item En appliquant la formule de \textsc{Taylor-Young}, on a \[
+			\theta(x = na - a) = \theta(x = na) - a \left.\frac{\partial \theta}{\partial x}\right|_{x = na} + \frac{a^2}{2} \left.\frac{\partial^2 \theta}{\partial x^2}\right|_{x = na}
+		\] et \[
+			\theta(x = na + a) = \theta(x = na) + a \left.\frac{\partial \theta}{\partial x}\right|_{x = na} + \frac{a^2}{2} \left.\frac{\partial^2 \theta}{\partial x^2}\right|_{x = na}
+		.\]
+		Ainsi, en calculant le terme de droite de l'équation (E), on a \[
+			\theta(x = (n-1)a) + \theta(x = (n+1)a) = 2 \theta(x = na) + a^2 \left.\frac{\partial^2 \theta}{\partial x^2}\right|_{x = na}
+		.\] 
+		L'équation (E) devient donc \[
+			\frac{\partial^2 \theta}{\partial t^2}(x,t) + \theta(x,t) \cdot \frac{g}{L} = \frac{k_\mathrm{r}}{m} a^2 \left. \frac{\partial^2 \theta}{\partial x^2}\right|_{x = na}
+		.\]
+	\item D'après (E), on a donc \[
+			(\mathrm{j} \omega)^2 \theta + \frac{g}{L} \theta = \frac{k_\mathrm{r} a^2}{m} (-\mathrm{j} \ubar{k})^2 \theta
+		,\] quel que soit l'instant $t$, et la position $x$.
+		Ainsi, \[
+			-\ubar{k}^2 \cdot \frac{k_\mathrm{r} a^2}{m} = \frac{g}{L} - \omega^2
+		,\] d'où, \[
+			\ubar{k}^2 = \frac{m}{k_\mathrm{r} a^2} (\omega^2 - \omega_0^2)
+		.\]
+	\item Si $\omega > \omega_0$, alors $k \in \R$ et donc il y a propagation sans absorption. Et, \[
+			v_{\phi} = \frac{\omega}{k} = \frac{w}{\sqrt{\frac{m}{k_\mathrm{r} a^2}} \cdot \sqrt{\omega^2 - \omega_0	^2} }
+		,\]  le milieu est dispersif.
+		
+		Si $\omega < \omega_0$, alors $k \in i\R$ ; il n'y a donc pas de propagation.
+\end{enumerate}

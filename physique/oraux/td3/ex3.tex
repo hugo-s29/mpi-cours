@@ -1,0 +1,30 @@
+\section{Orbitales $\pi$ de la molécule de benzène}
+
+\begin{enumerate}
+	\item On a \[
+			\ubar{\Psi}(x,t) = A \cdot \mathrm{e}^{\mathrm{i}(kx - Et / \hbar)}
+		.\]
+		On applique l'équation de Schrödinger : \[
+			\mathrm{i} \hbar  \frac{\partial \ubar{\Psi}}{\partial t} = -\frac{\hbar^2}{2m} \frac{\partial^2 \ubar{\Psi}}{\partial x^2} + V(x) \: \ubar{\Psi}
+		.\]
+		D'où, en substituant $\ubar{\Psi}$, on a donc \[
+			E \cdot \varphi(x) = - \frac{\hbar^2}{2m} \cdot \frac{\mathrm{d}^2 \varphi}{\mathrm{d}x^2} + V(x) \cdot \varphi(x)
+		.\]
+		Dans le cas où $V(x) = 0$, pour tout $x$ de $0$ à $2\pi a$, on a donc \[
+			\varphi(x) + \frac{2mE}{\hbar^2} \varphi(x) = 0
+		,\] et donc $k = \sqrt{2m E / \hbar^2}$.
+		On en déduit donc la forme de la fonction d'onde des particules : \[
+			\ubar{\Psi}(x,t) = A \mathrm{e}^{\mathrm{i}(kx - E t /\hbar)}
+		.\]
+		On normalise cette fonction d'onde pour trouver que $A = 1 / 2\pi a$.
+	\item 
+		\begin{enumerate}
+			\item Ce choix représente le fait que la particule est sur un cercle de rayon $a$.
+			\item On a $\mathrm{e}^{\mathrm{i} k 2\pi a} = \mathrm{e}^{\mathrm{i} k 0}$ donc $k 2\pi a \equiv 0 \mod {2\pi}$ et donc \[
+					k_m = \frac{m \cdot 2\pi}{2\pi \cdot a} = \frac{m}{a}
+				,\] avec $m \in \N^*$.
+				Avec l'équation de la question 1, on a donc \[
+					E_m = \frac{\hbar^2}{2m_\mathrm{p} } \cdot \left( \frac{m}{a} \right)^2
+				.\] 
+		\end{enumerate}
+\end{enumerate}

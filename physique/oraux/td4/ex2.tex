@@ -1,0 +1,34 @@
+\section{Congélateur}
+
+\begin{enumerate}
+	\item D'après le théorème de \textsc{Carnot}, on a \[
+			e_\mathrm{Carnot} = \frac{T_\mathrm{F}}{T_\mathrm{C} - T_\mathrm{F}}
+		.\]
+		En effet, d'après le premier principe appliqué à la machine thermique \guillemotleft~congélateur~\guillemotright, on a \[
+			\upDelta U = 0 = W + Q \text{ d'où } W = - Q_\mathrm{C} - Q_\mathrm{F}
+		.\]
+		Ainsi, l'efficacité est donc \[
+			e_\mathrm{Carnot} = \frac{Q_\mathrm{F}}{W} = \frac{Q_\mathrm{F}}{-Q_\mathrm{C} - Q_\mathrm{F}} = \frac{-1}{\ds\frac{Q_\mathrm{C}}{Q_\mathrm{F}} - 1}
+		.\]
+		Et, d'après l'inégalité de \textsc{Clausius}, on a \[
+			\frac{Q_\mathrm{C}}{T_\mathrm{C}} + \frac{Q_\mathrm{F}}{T_\mathrm{F}} \le 0 \text{ d'où } \frac{Q_\mathrm{C}}{Q_\mathrm{F}} \le -\frac{T_\mathrm{C}}{T_\mathrm{F}}
+		,\] on en conclut que \[
+			e \le \frac{1}{\ds\frac{T_\mathrm{C}}{T_\mathrm{F}} - 1}
+		.\]
+		\underline{AN.} $e_\mathrm{Carnot}  = 6{,}7$, d'où $e = 3{,}4$.
+	\item On sait que $\upDelta T = R_\mathrm{th} \cdot \Phi$.
+		On pose $\alpha = 8 / 60$ (c'est le \guillemotleft~ratio de fonctionnement~\guillemotright), et donc $\Phi = \alpha P e$.
+		On a donc \[
+			R_\mathrm{th} = \frac{\upDelta T}{\alpha P e}
+		\] où $\upDelta T = T_\mathrm{C} - T_\mathrm{F}$.
+
+		\underline{AN.} $R_\mathrm{th} = 0{,}53\:\mathrm{K / W}$.
+	\item On place, en parallèle, les résistances thermiques de chacune des parois. On suppose l'épaisseur $\varepsilon$ identique sur chacune des faces du congélateur.
+		Chaque paroi $i$ a une résistance $R_{\mathrm{th}, i} = \varepsilon / \lambda S_i$.
+		Et, ces resistances étant en parallèle, on a donc \[
+			R_\mathrm{th,tot} = \Big(\sum_{i=1}^6 \frac{1}{R_{\mathrm{th},i}}\Big)^{-1} = \frac{\upDelta T}{\alpha P e}
+		.\] D'où, \[
+			R_\mathrm{tot}  = \frac{\varepsilon}{2 \lambda (L\cdot H + H\cdot P + L\cdot P)}
+		.\]
+		\underline{AN.} $R_\mathrm{tot} = 40\:\mathrm{cm}$. C'est beaucoup trop !
+\end{enumerate}

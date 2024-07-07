@@ -1,0 +1,23 @@
+\section{Le grand dauphin}
+
+\begin{figure}[H]
+	\centering
+	\includesvg[width=0.85\linewidth]{figures/dauphin.svg}
+	\caption{Système étudiée : dauphin}
+\end{figure}
+
+On peut supposer que le dauphin ne se déplace pas, et donc l'entièreté de son apport énergétique est consacré à réguler sa température. D'où, le flux est donc de \[
+	\Phi = 150 \times 100 \times 4{,}18 \times 10^3 \:\mathrm{J} / 24 \: \mathrm{h}.
+\]
+Ainsi, après application numérique, on trouve $\Phi = 7{,}3 \times 10^3 \: \mathrm{J / s}$.
+Dans l'ARQS, on a donc \[
+	\Phi = \mathrm{cte} = j_Q \cdot S = -\lambda_\mathrm{g} \frac{\mathrm{d}T}{\mathrm{d}r} \cdot 2\pi r L
+,\] d'après la loi de \textsc{Fourier}.
+D'où, par intégration, on a donc \[
+	\Phi \cdot \int_{R_1}^{R_2} \frac{\mathrm{d}r}{r} = -\lambda_\mathrm{g} \cdot  2\pi L \int_{T_1}^{T_2}	\mathrm{d}T
+\] ce qui donne ainsi \[
+	\Phi \cdot \ln\left( \frac{R_2}{R_1} \right) = -\lambda_\mathrm{g} \cdot 2\pi L \cdot (T_2 - T_1).
+\]
+On en déduit que $R_2 / R_1 = \exp(\lambda_\mathrm{g} \cdot 2\pi L \cdot (T_2 - T_1) / \Phi)$.
+Après application numérique, on trouve que $R_2 / R_1 \simeq 1{,}1$ avec $T_2 \simeq 18\:^\circ\mathrm{C}$.
+On en déduit que $e = R_2 - R_1 = 2\:\mathrm{cm}$.

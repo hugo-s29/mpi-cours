@@ -1,0 +1,62 @@
+\section{Montage intégrateur}
+
+\begin{enumerate}
+	\item D'après la loi des mailles, on a
+		\begin{align*}
+			e &= u_R + u_C + s\\
+			&= R \frac{\mathrm{d} u_C}{\mathrm{d}t} + u_\mathrm{C} + s. \\
+		\end{align*}
+		Or, $s + u_C = 0$, d'où, \[
+			\boxed{e = -RC \cdot \frac{\mathrm{d}s}{\mathrm{d}t}.}
+		\]
+		Ainsi, on obtient que \[
+			\ubar{H}(\mathrm{j}\omega) = \mathrm{j} \frac{\omega_0}{\omega}
+		,\] où $\omega_0 = 1 / RC$.
+		On représente le diagramme de \textsc{Bode} sur la figure~\ref{fig:bode-ali}.
+	\item
+		\begin{enumerate}
+			\item Le diagramme a donc un comportement intégrateur. Mais, si le signal $s$ diverge, alors l'\textsc{ali} va saturer. Et, pour $\omega = 0$, on a $s \to +\infty$.
+			\item On change donc le circuit en ajoutant une résistance en parallèle du condensateur, comme montré dans la figure ci-dessous. On note $u$ la tension aux bornes de cette nouvelle résistance.
+				\begin{figure}[H]
+					\centering
+					\begin{adjustbox}{center}
+						\begin{circuitikz}
+							\draw (0,0)node[en amp](E){};
+							\draw (E.out) -- (4, 0);
+							\draw (E.-) -- (-3, 0.3) to [R=$R$] (-5, 0.3);
+							\draw (E.+) -- (-2, -0.3) node[ground]{};
+							\draw (-2, 0.3) -- (-2, 1.5) to[R=$R'$] (2, 1.5) -- (2, 0);
+							\draw (-2, 0.3) -- (-2, 3) to[C=$C$] (2, 3) -- (2, 0);
+							\draw(-1.6, 0.32) to[short, i=$i_-$] (E.-);
+							\draw(-1.6, -0.32) to[short, i=$i_+$] (E.+);
+							\draw[<-] (-5, 0.1) -- (-5, -1.8);
+							\draw[<-] (4, -0.2) -- (4, -1.8);
+							\draw (4, -2) node[ground]{};
+							\draw (-5, -2) node[ground]{};
+							\node at (-5.4, -1){$e(t)$};
+							\node at (4.4, -1){$s(t)$};
+						\end{circuitikz}
+					\end{adjustbox}
+					\caption{Circuit pseudo-intégrateur}
+				\end{figure}
+				On trouve, par loi des mailles, la relation $\ubar{e} = \ubar{s} \cdot (- R / R' - \mathrm{j} \omega RC)$. On en déduit donc l'expression canonique de la fonction de transfert \[
+					\ubar{H}'(\mathrm{j}\omega) = \frac{-R' / R}{1 + \mathrm{j}\omega R'C}
+				.\]
+				Dans le cas $\omega \gg \omega_0' = 1 / R' C$, on simplifie en $\ubar{H}'(\mathrm{j}\omega) = - \frac{1}{\mathrm{j} \omega} \cdot  \frac{1}{RC}$.
+				On représente le diagramme de \textsc{Bode} obtenu sur la figure~\ref{fig:bode-ali}.
+			\item Lorsque $\omega R' C \gg 1$, la fonction de transfert devient $\ubar{H}'(\mathrm{j}\omega) \simeq 1 / RC \omega$, ainsi le gain est donc de $G(\omega) \simeq 1 / RC\omega$.
+				On peut en déduire \[
+					s(t) = v_0 \cdot \left( \frac{-R'}{R} \right) + \frac{1}{RC\omega} v_1 \cos(\omega t + \pi/2)
+				.\]
+				On vérifie bien \[
+					|s(t)| \le  \frac{R'}{R} v_0 + \frac{v_1}{RC\omega} \ll V_\mathrm{sat}
+				,\] l'\textsc{ali} ne sature pas.
+		\end{enumerate}
+		\begin{figure}[H]
+			\centering
+			\includesvg[width=\linewidth]{figures/bode-3.svg}
+			\caption{Diagramme de \textsc{Bode} du circuit intégrateur (en violet), et pseudo-intégrateur (en cyan)}
+			\label{fig:bode-ali}
+		\end{figure}
+\end{enumerate}
+

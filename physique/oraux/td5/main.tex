@@ -1,0 +1,28 @@
+\documentclass[a4paper,twocolumn]{article}
+
+\input{../../preamble.tex}
+
+\usepackage{hep-math-font}
+
+\definecolor{black}{HTML}{000000}
+\definecolor{white}{HTML}{ffffff}
+\color{black}
+\pagecolor{white}
+
+\begin{asydef}
+	white = rgb("ffffff");
+	black = rgb("000000");
+	defaultpen(black + fontsize(8pt));
+\end{asydef}
+
+\fancyfoot{}\fancyhead{}
+\fancyfoot[R]{\textsc{hugo salou mpi}}
+\fancyhead[L]{{\scshape td--oraux 5}}
+\fancyhead[R]{\thepage}
+
+\begin{document}
+	\input{ex1.tex}
+	\input{ex2.tex}
+	\input{ex3.tex}
+	\input{ex4.tex}
+\end{document}

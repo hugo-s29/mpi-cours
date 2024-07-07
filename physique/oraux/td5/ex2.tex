@@ -1,0 +1,46 @@
+\section{Diode à vide}
+
+\begin{figure}[H]
+	\centering
+	\includesvg[width=0.8\linewidth]{figures/diode.svg}
+	\caption{Diode à vide}
+\end{figure}
+
+\begin{enumerate}
+	\item Le vecteur densité de courant s'écrit $\vec{\jmath} = n q v\: \vec{e}_x$. D'où, par intégration sur la surface, on a donc \[
+			I =  -nq\, v\, S = -\rho(x) \cdot v(x) \cdot S
+		.\]
+	\item Dans l'\textsc{arqs}, le potentiel $V(x)$ vérifie l'équation de \textsc{Poisson} : \[
+			\upDelta V = \frac{\rho(x)}{\varepsilon_0} = \frac{I}{\varepsilon_0\, v(x)\, S}.\quad\quad(1)
+		\] L'énergie cinétique et l'énergie potentielle électrostatique sont données respectivement par \[
+			\mathcal{E}_\mathrm{c}  = \frac{1}{2} m \,v^2(x) \quad \text{ et } \quad \mathcal{E}_\mathrm{p} = q V(x)	
+		.\]
+		De plus, pour simplifier, on peut considérer que la cathode est à un potentiel nul, et l'anode à un potentiel $U$. Ainsi $V(0) = 0$ et $V(h) = U$.
+		D'après le théorème de l'énergie mécanique appliqué à un électron, on a $\upDelta \mathcal{E}_\mathrm{m} = 0$.
+		Or, avec les hypothèses considérées, on a $\mathcal{E}_\mathrm{c}(0) = \mathcal{E}_\mathrm{p} (0) = 0$.
+		D'où, \[
+			\frac{1}{2} m\,v^2(x) + q\,V(x) = 0
+		,\] que l'on peut réécrire en \[
+			v(x) = \sqrt{\frac{-2q\:V(x)}{m}}
+		.\] On peut en conclure que \[
+			\boxed{\upDelta V = \frac{\beta}{\sqrt{V}}} \text{ où } \beta = \frac{I}{S \varepsilon_0 \sqrt{ - 2q / m}}
+		.\]
+	\item On calcule \[
+			\frac{\partial^2 V}{\partial x^2} = \upDelta V = A \cdot \alpha(\alpha-1) \cdot x^{\alpha-2}
+		\] et \[
+			\frac{\beta}{\sqrt{V(x)}} = \frac{\beta}{\sqrt{A}} x^{-\alpha / 2}
+		.\]
+		Ainsi, par identification, on a donc \[
+			\begin{rcases*}
+				-\alpha / 2 = \alpha - 2\\
+				A \cdot \alpha(\alpha-1) = \beta / \sqrt{A}
+			\end{rcases*} \iff \begin{cases}
+				\alpha = 4 / 3\\
+				A = (9 \beta / 4)^{2 / 3}.
+			\end{cases}
+		\]On applique ensuite la condition limite sur l'anode : \[
+			V(h) = U = \left( \frac{9 \beta}{4} \right)^{2 / 3} \cdot h^{4 / 3}
+		.\]
+		On en déduit $I$ avec la formule précédente.
+	\item Des effets relativistes apparaissent, ce qui change le théorème de l'énergie mécanique.
+\end{enumerate}

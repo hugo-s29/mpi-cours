@@ -1,0 +1,51 @@
+\section{Glissade d'une règle}
+
+\begin{figure}[H]
+	\centering
+	\includesvg[width=0.7\linewidth]{figures/ex2.svg}
+	\caption{Système étudié}
+\end{figure}
+
+On applique le théorème du moment cinétique :
+\begin{align*}
+	J \cdot \ddot{\theta} &= \mathcal{M}_{(\mathrm{O}y)}(\vec{P})\\
+	&= \frac{1}{2}mgL \sin \theta, \\
+\end{align*}
+par bras de levier.
+D'où, en remplaçant $J$ par $m L^2 / 3$, on obtient donc l'équation \[
+	(1) \ : \quad\quad \ddot{\theta} = \frac{3g}{2L} \sin \theta
+.\]
+On calcule $\dot{\theta} \cdot (1)$ pour trouver \[
+	\frac{\mathrm{d}}{\mathrm{d}t} \left( \frac{\dot{\theta}^2}{2} \right) = \frac{3g}{2L} (\sin \theta) \dot{\theta}
+.\]
+Ainsi, par intégration, on trouve donc
+\begin{align*}
+	\frac{1}{2} \left( \dot{\theta}^2(t) - \dot{\theta}^2(0) \right) &= \frac{3g}{2L} \cdot \int_{0}^{\theta} \sin \alpha~\mathrm{d}\alpha\\
+	&= \frac{3g}{2L} [-\cos \alpha]_0^\theta .
+\end{align*}
+Et, comme $\dot{\theta}(0) = 0$, on en déduit que \[
+	(2)\ : \quad\quad\dot{\theta}^2(t) = \frac{3g}{L} \left( 1 - \cos \theta \right)
+.\]
+On peut retrouver ce résultat à l'aide du théorème de l'énergie mécanique.
+
+De plus, d'après le PFD selon l'axe $(\mathrm{O}z)$, on a \[
+	m \ddot{z} = N - mg
+,\] où $N$ est la composante normale de la réaction du support.
+De plus, $z = L \cos \theta / 2$ et donc \[
+	\ddot{z} = - \frac{L}{2} \left( \ddot{\theta} \sin \theta - \dot{\theta}^2 \cos \theta \right)
+.\]
+On a donc, \[
+	- \frac{Lm}{2} \left( \frac{3g}{2} \sin^2 \theta - \frac{3g}{L} (1 - \cos \theta) \cos \theta \right) = N - mg
+.\]
+
+Et, en appliquant le PFD selon l'axe $(\mathrm{O}x)$, on trouve \[
+	m \ddot{x} = T = \frac{mL}{2} \cdot \left( \ddot{\theta} \cos \theta - \dot{\theta}^2 \sin \theta \right)
+.\]
+D'où, en appliquant l'équation $(2)$, on trouve que \[
+	\frac{mL}{2} \cdot \left( \frac{3g}{2L} \cdot \frac{\sin(2\theta)}{2} - \frac{3g}{2L}\sin \theta  \cdot (1 - \cos \theta) \right) = T
+.\]
+
+Or, d'après les lois de \textsc{Coulomb}, on a \[
+	f = \frac{T(\theta_\mathrm{c})}{N(\theta_\mathrm{c})}
+.\]
+On peut calculer les valeurs de $T(\theta_\mathrm{c})$ et de $N(\theta_\mathrm{c})$, et en déduire la valeur du coefficient de frottements~$f$.

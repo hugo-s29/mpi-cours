@@ -1,0 +1,54 @@
+\section{Systèmes optique à deux lentilles}
+
+\begin{enumerate}
+	\item
+		\begin{enumerate}
+			\item~\\
+				\begin{figure}[H]
+					\centering
+					\includesvg[width=\linewidth]{figures/l2-a.svg}
+					\caption{Image par $\mathcal{L}_2$ d'un objet réel}
+				\end{figure}
+			\item ~\\
+				\begin{figure}[H]
+					\centering
+					\includesvg[width=\linewidth]{figures/l2-b.svg}
+					\caption{Image par $\mathcal{L}_2$ d'un objet virtuel entre la lentille et le plan focale objet}
+				\end{figure}
+			\item ~\\
+				\begin{figure}[H]
+					\centering
+					\includesvg[width=\linewidth]{figures/l2-c.svg}
+					\caption{Image par $\mathcal{L}_2$ d'un objet virtuel au delà du plan focal objet}
+				\end{figure}
+		\end{enumerate}
+	\item On considère le schéma synoptique suivant : \[
+			\begin{array}{ccccc}
+				\mathrm{A}&\xrightarrow{\mathcal{L}_1}&\mathrm{A}_1 & \xrightarrow{\mathcal{L}_2} & \mathrm{A}'\\
+				-\infty&\xrightarrow{\mathcal{L}_1}&\mathrm{F}'_1 & \xrightarrow{\mathcal{L}_2} & \mathrm{A}'\\
+			\end{array}
+		.\]
+		Un critère est donc $\mathrm{F}_1' \in \left]\mathrm{O_2}, \mathrm{F}_2\right[$. Autrement dit, avec les formules algébriques, \[
+			\overline{\mathrm{O_2F_2}} > \overline{\mathrm{O_2F_1'}} > 0
+		.\]
+		D'où, \[
+			-f'_2 > \overline{\mathrm{O_2O_1}} + \overline{\mathrm{O_1F'_1}} > 0
+		,\] ce qui donne le critère \[
+			-f_2' > -e + f'_1 > 0
+		.\]
+		On en conclut que \[
+			f'_1 + f'_2 < e < f'_1
+		.\]
+	\item On suppose le bâtiment à l'infini. On applique les relations de conjugaison : \[
+			\frac{1}{\overline{\mathrm{OA'}}} - \frac{1}{\overline{\mathrm{OA}}} = \frac{1}{f'}
+		.\]
+		Ceci donne donc, avec le montage actuel, \[
+			\frac{1}{\overline{\mathrm{O_2A'}}} - \frac{1}{\overline{\mathrm{O_2F'_1}}} = \frac{1}{f'_2}
+		.\]
+		Simplifions cette expression afin de pouvoir extraire $\overline{\mathrm{O_2A'}}$ :
+		\begin{align*}
+			\overline{\mathrm{O_2A'}} &= \left( \frac{1}{\overline{\mathrm{O_2F'_1}}} - \frac{1}{f'_2} \right)^{-1} \\
+			&= \left( \frac{1}{\overline{\mathrm{O_2O_1}} + \overline{\mathrm{O_1F'_1}}} + \frac{1}{f'_2}  \right)^{-1} \\
+			{}_{\text{(AN.)}}&= \left( \frac{1}{-3 + 5} - \frac{1}{2{,}5} \right)^{-1} \\
+		\end{align*}
+\end{enumerate}

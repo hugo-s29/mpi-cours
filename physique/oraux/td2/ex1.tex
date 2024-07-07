@@ -1,0 +1,58 @@
+\section{Fibre optique}
+
+\begin{enumerate}
+	\item L'angle $\theta_\mathrm{lim}$ est atteint dès lors que l'angle $\beta_\mathrm{lim}$ limite de réflexion total est atteint, d'où $\beta_\mathrm{lim} = \Arcsin(n_\mathrm{g} / n_\mathrm{c})$.
+
+		\begin{figure}[H]
+			\centering
+			\includesvg[width=\linewidth]{figures/fibre1.svg}
+			\caption{Fibre optique}
+		\end{figure}
+
+		En appliquant les formules de trigonométrie, on en déduit ainsi que $\alpha_\mathrm{lim} = \pi / 2 - \Arcsin(n_\mathrm{g} / n_\mathrm{c})$.
+		Et, en appliquant la loi de~\textsc{Snell--Descartes} pour la réfraction entre l'air et le cœur de la gaine, on trouve que
+		\begin{align*}
+			n_0 \sin \theta_\mathrm{lim}
+			&= n_\mathrm{c} \sin \alpha_\mathrm{lim}\\
+			&= n_\mathrm{c} \cos\left( \Arcsin \frac{n_\mathrm{g}}{n_\mathrm{c}} \right) \\
+			&= n_\mathrm{c} \cdot \sqrt{1 - \left( \frac{n_\mathrm{g}}{n_\mathrm{c}} \right)^2}. \\
+		\end{align*}
+		On en conclut : \[
+			\mathrm{ON} = \sqrt{n_\mathrm{c}{}^2 - n_\mathrm{g}{}^2}
+		\] et \[
+			\theta_\mathrm{lim} = \Arcsin\left(\frac{\mathrm{ON}}{n_0}\right)
+		.\]
+
+		\underline{AN.} $\mathrm{ON} \simeq 9{,}341 \times 10^{-2}$\/ et $\theta_\mathrm{lim} \simeq 5{,}360\:^\circ$.
+	\item On suppose que l'on peut découper le parcours de la fibre de longueur $L = 1\:\mathrm{km}$ en tronçons de la forme ci-dessous.
+
+		\begin{figure}[H]
+			\centering
+			\includesvg[width=\linewidth]{figures/troncon.svg}
+			\caption{Tronçon du parcours dans la fibre optique}
+		\end{figure}
+
+		Ainsi, on a $h = \ell / \cos \alpha_\mathrm{lim}$. Or, en utilisant les formules des angles de la question précédente, on trouve que :
+		\begin{align*}
+			\upDelta \ell &= h - \ell \\
+			&= \ell \cdot \left( \frac{1}{\cos \alpha_\mathrm{lim}} - 1 \right)  \\
+			&= \ell\cdot \left( \frac{n_\mathrm{c}}{n_\mathrm{g}} - 1 \right). \\
+		\end{align*}
+		De plus, $\upDelta t = v_\mathrm{c} / \upDelta \ell$, et $n_\mathrm{c} = c / v_\mathrm{c}$. Ainsi, on en déduit que \[
+			\upDelta t_\text{tronçon}  = \ell \cdot c \cdot \left( \frac{1}{n_\mathrm{g}} - \frac{1}{n_\mathrm{c}} \right)
+		.\]
+		En ajoutant ces différences, on en déduit que \[
+			\upDelta t = \frac{L \cdot n_\mathrm{c}}{c} \cdot \left( \frac{n_\mathrm{c}}{n_\mathrm{g}} - 1 \right)
+		.\]
+		\underline{AN.} $\upDelta t \simeq 425{,}4\:\mathrm{s}$.
+	\item Afin d'éviter qu'un paquet d'onde se \guillemotleft~confonde~\guillemotright\ avec un autre, on doit laisser un intervalle d'au moins $\upDelta t$ entre deux signaux. Autrement dit, le débit maximal, $d_\mathrm{max}$, vaut : \[
+			d_\mathrm{max} = \frac{1}{\upDelta t} = \frac{1}{Lc} \cdot \frac{1}{\dfrac{1}{n_\mathrm{g}} - \dfrac{1}{n_\mathrm{c}}}
+		.\]
+		\underline{AN.} $d_\mathrm{max} \simeq 1 \times 10^8\:\mathrm{bit/s}$.
+
+		\begin{figure}[H]
+			\centering
+			\includesvg[width=\linewidth]{figures/onde-1.svg}
+			\caption{Chevauchement des paquets d'ondes}
+		\end{figure}
+\end{enumerate}

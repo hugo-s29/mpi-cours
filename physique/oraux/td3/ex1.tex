@@ -1,0 +1,35 @@
+\section{Perle sur un cercle en rotation}
+
+\begin{figure}[H]
+	\centering
+	\includesvg[width=\linewidth]{figures/ex1.svg}
+	\caption{Système étudié}
+\end{figure}
+
+\begin{enumerate}
+	\item On considère le système \{~point $\mathrm{M}$ de masse $m$~\} dans le référentiel $\mathcal{R}_\mathrm{t}$, et on réalise un bilan des forces :
+		\begin{itemize}
+			\item le poids $\vec{P} = m g (\cos \theta \vec{e}_r - \sin \theta \vec{e}_\theta)$,
+			\item la réaction du support $\vec{R} = - N \vec{e}_r$,
+			\item l'inertie d'entraînement
+				\begin{align*}
+					\vec{f}_\mathrm{i,e} &= - m \vec{a}_\mathrm{e}\\
+					&= m \omega^2 \vv{\mathrm{HM}}\\
+					&= m \omega^2 a \cdot (1 + \sin \theta) \cdot (\sin \theta \vec{e}_r + \cos \theta \vec{e}_\theta),			\\
+				\end{align*}
+			\item l'inertie de \textsc{Coriolis} \[
+				\vec{f}_\mathrm{i,c} = -2 m \vec{\omega} \wedge \vec{v}(\mathrm{M}, \mathcal{R}_\mathrm{t}) = \vec{0}
+			.\] 
+		\end{itemize}
+		D'où, d'après le PFD projeté selon $\vec{e}_\theta$, on obtient l'équation \[
+			m a \ddot{\theta} = - m g \sin \theta + m \omega^2 a(1 + \sin \theta) \cos \theta
+		.\]
+	\item Avec le système à l'équilibre, l'équation devient \[
+			-mg \sin \theta + m \omega^2 a (1 + \sin \theta) \cos \theta = 0
+		,\] et donc \[
+			\omega^2 \cdot a (1 + \sin \theta) = g \tan \theta
+		.\]
+	\item D'après l'équation de la question précédente, on a \[
+			\omega^2 = \frac{g \tan \theta_0}{a \cdot (1 + \sin \theta_0)}
+		.\] Après application numérique, on trouve que $\omega = \pm 4{,}3 \: \mathrm{rad / s}$.
+\end{enumerate}

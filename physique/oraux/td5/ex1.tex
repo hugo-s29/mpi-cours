@@ -1,0 +1,26 @@
+\section{Distance de visibilité d'une bougie}
+
+Pour trouver la distance maximale de visibilité de la bougie, on analyse l'inégalité \[
+	\mathcal{E}_\text{reçue} > 10 \cdot \mathcal{E}_\mathrm{photon}
+.\] 
+
+L'énergie par un photon est donnée par $\mathcal{E}_\mathrm{photon} = h \nu$.
+La puissance de la bougie est $P = 0{,}1\:\mathrm{W}$, et le temps de réaction est $t_\mathrm{r}  = 0{,}05\:\mathrm{s}$.
+L'énergie produite par la bouge est donc $\mathcal{E}_\mathrm{bougie} = P \times t_\mathrm{r}$.
+
+En notant $d_\text{œuil} = 5\:\mathrm{mm}$, on a \[
+	\mathcal{E}_\text{reçue} = \frac{\pi \cdot ( d_ \text{œuil} / 2 ) }{4\pi d^2}
+.\]
+Ainsi, en reprenant l'inégalité précédente, elle est équivalente à \[
+	\frac{(d_ \text{œuil} / 2)^2}{4 d^2} \mathcal{E}_\mathrm{bougie} > 10 h \frac{c}{\lambda}
+\] \textit{i.e.} \[
+	\sqrt{\frac{P \cdot t_\mathrm{r}}{40 h \frac{c}{\lambda}}}  \cdot \left( \frac{d_\text{œuil}}{2} \right) > d
+.\]
+
+On choisit $\lambda = 600\:\mathrm{nm}$, on a donc $d < 48\:\mathrm{km}$.
+
+\begin{figure}[H]
+	\centering
+	\includesvg[width=0.8\linewidth]{figures/bougie.svg}
+	\caption{Modèle bougie-œuil}
+\end{figure}

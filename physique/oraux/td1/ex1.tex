@@ -1,0 +1,23 @@
+\section{Filtre RC double}
+
+\begin{enumerate}
+	\item En basse fréquence, un condensateur est équivalent à un interrupteur ouvert. En haute fréquence, un condensateur est équivalent à un interrupteur fermé. D'où, le circuit est un filtre passe-bas.
+	\item Par une loi des nœuds, et une loi des mailles, on trouve que
+		\[
+			\ubar{H}(\mathrm{j}\omega) = \dfrac{1}{1 - \left( \dfrac{\omega}{\omega_0} \right)^2 + \mathrm{j} \dfrac{\omega}{Q\cdot \omega_0}}
+		\] en notant $\omega_0 = 1 / {RC}$ et $Q = 1 / 3$
+	\item On représente le diagramme de \textsc{Bode} du filtre dans la figure ci-dessous.
+		\begin{figure}[H]
+			\centering
+			\includesvg[width=\linewidth]{figures/bode-1.svg}
+			\caption{Diagramme de \textsc{Bode} du filtre (échelle logarithmique)}
+		\end{figure}
+	\item On calcule $\omega_0 \simeq 6\:\mathrm{rad/s}$, ce qui correspond à une fréquence de coupure de $1\:\mathrm{kHz}$. Le signal de sortie est donc \[
+			s(t) = \frac{2E}{3\pi}\cdot \sin(\omega t)
+		,\] on le représente sur la figure ci-dessous. En effet, on a un déphasage de $-\pi / 2$, et un gain valant $1 / 3$ à $\omega \simeq \omega_0$.
+		\begin{figure}[H]
+			\centering
+			\includesvg[width=\linewidth]{figures/signal-1.svg}
+			\caption{Signal résultant}
+		\end{figure}
+\end{enumerate}

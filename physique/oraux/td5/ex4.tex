@@ -1,0 +1,38 @@
+\section{Barres en triangle}
+
+
+On note $a(x)$ le côté du triangule équilatéral, et donc $x = a(x) \sqrt{3}  / 2$.
+
+On calcule le flux $\Phi$ magnétique : \[
+	\Phi = B \frac{a x}{2} = B x^2 / \sqrt{3}
+.\]
+Ainsi, d'après la loi de \textsc{Faraday}, on a \[
+	e = - \frac{\mathrm{d}\Phi}{\mathrm{d}t} = - \frac{2B}{\sqrt{3}}  \: x\,\dot{x}
+.\]
+Or, par loi d'\textsc{Ohm}, $i = e / R(x)$.
+Et, on connait la resistance du circuit $R(x) = 3 a(x) / \gamma S$.
+Alors, 
+\begin{align*}
+	i(x) &= \frac{-2B\,x\,\dot{x}}{\sqrt{3} \cdot \frac{3a(x)}{\gamma S}} = - \frac{2B \gamma S}{3 \sqrt{3}} \cdot \frac{x\,\dot{x}}{2 \frac{x}{\sqrt{3}}}\\
+	&= - B \gamma S \dot{x} / 3. \\
+\end{align*}
+On calcule donc la force de \textsc{Laplace} :
+\begin{align*}
+	\vec{F}_{\mathcal{L}} &= i \cdot [\mathrm{CD}] \cdot B \cdot \vec{e}_x\\
+	&= i \cdot \frac{2\dot{x}}{\sqrt{3}} B \vec{e}_x \\
+	&= -\underbrace{\frac{2 B^2 \gamma S}{3\sqrt{3}}}_\alpha  \cdot x \dot{x} \\
+\end{align*}
+
+D'après le \textsc{pfd}, on a donc \[
+	m \ddot{x} = - \alpha x \dot{x} \text{ d'où }  \ddot{x} = - \frac{\alpha}{m} x\dot{x} 
+.\] où $m = \rho S L$. 
+
+On intègre les deux côtés de l'équation, \[
+	[\dot{x}]_0^{t_\mathrm{f}} = -\frac{\alpha}{m} \cdot \left[ \frac{x^2}{2} \right]_0^{t_\mathrm{f}}
+.\]
+D'où, \[
+	0 - v_0 = \frac{-\alpha}{m} \cdot x_\mathrm{f}^2 / 2
+.\] On en conclut \[
+	x_\mathrm{f} = \sqrt{\frac{2m}{\alpha} v_0} 
+.\] 
+

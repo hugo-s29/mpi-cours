@@ -1,0 +1,25 @@
+\documentclass[a4paper,twocolumn]{article}
+
+\input{../../preamble.tex}
+
+\definecolor{black}{HTML}{000000}
+\definecolor{white}{HTML}{ffffff}
+\color{black}
+\pagecolor{white}
+
+\begin{asydef}
+	white = rgb("ffffff");
+	black = rgb("000000");
+	defaultpen(black + fontsize(8pt));
+\end{asydef}
+
+\fancyfoot{}\fancyhead{}
+\fancyfoot[R]{\textsc{hugo salou mpi}}
+\fancyhead[L]{{\scshape td--oraux 1}}
+\fancyhead[R]{\thepage}
+
+\begin{document}
+	\input{ex1.tex}
+	\input{ex2.tex}
+	\input{ex3.tex}
+\end{document}
